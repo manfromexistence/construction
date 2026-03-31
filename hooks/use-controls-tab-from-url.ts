@@ -7,6 +7,8 @@ export type ControlTab = (typeof TABS)[number];
 export const useControlsTabFromUrl = () => {
   const [tab, setTab] = useQueryState("tab", {
     defaultValue: DEFAULT_TAB,
+    history: "push",
+    shallow: false,
     parse: (value: string) => {
       // Synchronously validate the tab value, and if it's invalid, fallback to the default tab
       if (!TABS.includes(value as ControlTab)) {
