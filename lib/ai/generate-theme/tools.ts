@@ -1,7 +1,7 @@
 import { streamObject, tool } from "ai";
 import z from "zod";
 import { themeStylesOutputSchema } from "@/lib/ai/generate-theme";
-import { baseProviderOptions, myProvider } from "@/lib/ai/providers";
+import { myProvider } from "@/lib/ai/providers";
 import { AdditionalAIContext } from "@/types/ai";
 
 export const THEME_GENERATION_TOOLS = {
@@ -15,7 +15,6 @@ export const THEME_GENERATION_TOOLS = {
       const { partialObjectStream, object } = streamObject({
         abortSignal,
         model: myProvider.languageModel("theme-generation"),
-        providerOptions: baseProviderOptions,
         schema: themeStylesOutputSchema,
         messages,
       });

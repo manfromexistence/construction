@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 import { recordAIUsage } from "@/actions/ai-usage";
 import { THEME_GENERATION_TOOLS } from "@/lib/ai/generate-theme/tools";
 import { GENERATE_THEME_SYSTEM } from "@/lib/ai/prompts";
-import { baseProviderOptions, myProvider } from "@/lib/ai/providers";
+import { myProvider } from "@/lib/ai/providers";
 import { handleError } from "@/lib/error-response";
 import { getCurrentUserId, logError } from "@/lib/shared";
 import { validateSubscriptionAndUsage } from "@/lib/subscription";
@@ -59,7 +59,6 @@ export async function POST(req: NextRequest) {
         const result = streamText({
           abortSignal: req.signal,
           model: model,
-          providerOptions: baseProviderOptions,
           system: GENERATE_THEME_SYSTEM,
           messages: modelMessages,
           tools: THEME_GENERATION_TOOLS,
