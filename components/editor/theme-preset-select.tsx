@@ -187,7 +187,14 @@ const ThemePresetSelect: React.FC<ThemePresetSelectProps> = ({
   const applyThemePreset = useEditorStore((store) => store.applyThemePreset);
   const hasUnsavedChanges = useEditorStore((store) => store.hasUnsavedChanges);
   const currentPreset = themeState.preset;
-  const mode = themeState.currentMode;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use light mode as default during SSR to prevent hydration mismatch
+  const mode = mounted ? themeState.currentMode : "light";
 
   const presets = useThemePresetStore((store) => store.getAllPresets());
   const loadSavedPresets = useThemePresetStore((store) => store.loadSavedPresets);
