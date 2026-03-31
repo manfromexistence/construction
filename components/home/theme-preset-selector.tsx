@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ThemePresetButtons } from "@/components/home/theme-preset-buttons";
 import { Badge } from "@/components/ui/badge";
 import { useEditorStore } from "@/store/editor-store";
@@ -14,7 +14,14 @@ const DemoMail = lazy(() => import("@/components/examples/mail"));
 
 export function ThemePresetSelector() {
   const { themeState, applyThemePreset } = useEditorStore();
-  const mode = themeState.currentMode;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use light mode as default during SSR to prevent hydration mismatch
+  const mode = mounted ? themeState.currentMode : "light";
   const presetNames = Object.keys(defaultPresets);
 
   return (

@@ -1,8 +1,8 @@
 "use client";
 
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
 import { Switch as SwitchPrimitives } from "radix-ui";
+import { useEffect, useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { cn } from "@/lib/utils";

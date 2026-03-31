@@ -3,6 +3,7 @@
 import { ArrowRight, Check } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { ThemePresetButtons } from "@/components/home/theme-preset-buttons";
 import { Button } from "@/components/ui/button";
 import { useEditorStore } from "@/store/editor-store";
@@ -12,7 +13,14 @@ const presetNames = Object.keys(defaultPresets);
 
 export function Hero() {
   const { themeState, applyThemePreset } = useEditorStore();
-  const mode = themeState.currentMode;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use light mode as default during SSR to prevent hydration mismatch
+  const mode = mounted ? themeState.currentMode : "light";
 
   return (
     <section className="relative isolate w-full overflow-hidden bg-background pt-20 pb-32 md:pt-32 md:pb-40">

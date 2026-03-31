@@ -2,6 +2,7 @@
 
 import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { ThemePresetButtons } from "@/components/home/theme-preset-buttons";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
@@ -12,7 +13,14 @@ import { defaultPresets } from "@/utils/theme-presets";
 export default function NotFound() {
   const { theme, toggleTheme } = useTheme();
   const { themeState, applyThemePreset } = useEditorStore();
-  const mode = themeState.currentMode;
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use light mode as default during SSR to prevent hydration mismatch
+  const mode = mounted ? themeState.currentMode : "light";
   const presetNames = Object.keys(defaultPresets);
   return (
     <div className="bg-background flex min-h-screen flex-col items-center justify-center px-4">
