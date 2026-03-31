@@ -47,6 +47,24 @@ function ChartContainer({
   const uniqueId = React.useId();
   const chartId = `chart-${id || uniqueId.replace(/:/g, "")}`;
 
+  // Suppress Recharts dimension warnings
+  React.useEffect(() => {
+    const originalWarn = console.warn;
+    console.warn = (...args) => {
+      if (
+        typeof args[0] === "string" &&
+        args[0].includes("width(0) and height(0) of chart should be greater than 0")
+      ) {
+        return;
+      }
+      originalWarn.apply(console, args);
+    };
+
+    return () => {
+      console.warn = originalWarn;
+    };
+  }, []);
+
   return (
     <ChartContext.Provider value={{ config }}>
       <div
