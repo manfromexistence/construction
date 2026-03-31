@@ -3,7 +3,7 @@
 import { useQueryState } from "nuqs";
 import { useEffect, useState } from "react";
 
-const TABS = ["colors", "typography", "other", "ai"] as const;
+const TABS = ["colors", "typography", "other" /* , "ai" */] as const;
 export const DEFAULT_TAB = TABS[0];
 export type ControlTab = (typeof TABS)[number];
 
