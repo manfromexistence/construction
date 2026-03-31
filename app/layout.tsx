@@ -78,7 +78,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
         <meta name="darkreader-lock" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <NuqsAdapter>
           <Suspense>
             <QueryProvider>
