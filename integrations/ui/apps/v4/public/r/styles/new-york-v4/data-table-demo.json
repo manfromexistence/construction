@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "data-table-demo",
-  "registryDependencies": [
-    "data-table"
-  ],
+  "registryDependencies": ["data-table"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/data-table-demo.tsx",

@@ -1,6 +1,6 @@
-import { isOlSymbol } from 'platejs';
+import { isOlSymbol } from "platejs";
 
-import { getDocxListNode } from './getDocxListNode';
+import { getDocxListNode } from "./getDocxListNode";
 
 export const isDocxOl = (element: Element): boolean => {
   const listNode = getDocxListNode(element);
@@ -9,5 +9,5 @@ export const isDocxOl = (element: Element): boolean => {
     return false;
   }
 
-  return isOlSymbol(listNode.textContent || '');
+  return isOlSymbol(listNode.textContent || "");
 };

@@ -1,4 +1,4 @@
-import { Button } from "@/styles/base-nova/ui/button"
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/styles/base-nova/ui/dialog"
-import { Input } from "@/styles/base-nova/ui/input"
-import { Label } from "@/styles/base-nova/ui/label"
+} from "@/styles/base-nova/ui/dialog";
+import { Input } from "@/styles/base-nova/ui/input";
+import { Label } from "@/styles/base-nova/ui/label";
 
 export function DialogCloseButton() {
   return (
@@ -19,20 +19,14 @@ export function DialogCloseButton() {
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Share link</DialogTitle>
-          <DialogDescription>
-            Anyone who has this link will be able to view this.
-          </DialogDescription>
+          <DialogDescription>Anyone who has this link will be able to view this.</DialogDescription>
         </DialogHeader>
         <div className="flex items-center gap-2">
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">
               Link
             </Label>
-            <Input
-              id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
-              readOnly
-            />
+            <Input id="link" defaultValue="https://ui.shadcn.com/docs/installation" readOnly />
           </div>
         </div>
         <DialogFooter className="sm:justify-start">
@@ -40,5 +34,5 @@ export function DialogCloseButton() {
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

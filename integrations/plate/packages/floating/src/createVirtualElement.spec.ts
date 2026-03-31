@@ -1,10 +1,7 @@
-import {
-  createVirtualElement,
-  getDefaultBoundingClientRect,
-} from './createVirtualElement';
+import { createVirtualElement, getDefaultBoundingClientRect } from "./createVirtualElement";
 
-describe('createVirtualElement', () => {
-  it('returns the default offscreen fallback rect', () => {
+describe("createVirtualElement", () => {
+  it("returns the default offscreen fallback rect", () => {
     expect(getDefaultBoundingClientRect()).toEqual({
       bottom: 9999,
       height: 0,
@@ -17,9 +14,7 @@ describe('createVirtualElement', () => {
     });
   });
 
-  it('creates a virtual element that uses the default rect', () => {
-    expect(createVirtualElement().getBoundingClientRect()).toEqual(
-      getDefaultBoundingClientRect()
-    );
+  it("creates a virtual element that uses the default rect", () => {
+    expect(createVirtualElement().getBoundingClientRect()).toEqual(getDefaultBoundingClientRect());
   });
 });

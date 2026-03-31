@@ -1,13 +1,11 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
-
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseListPlugin } from '../BaseListPlugin';
-import { unwrapList } from './unwrapList';
-import * as platejs from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import * as platejs from "platejs";
+import { createSlateEditor } from "platejs";
+import { BaseListPlugin } from "../BaseListPlugin";
+import { unwrapList } from "./unwrapList";
 
 jsxt;
 
@@ -15,8 +13,8 @@ afterEach(() => {
   mock.restore();
 });
 
-describe('li list unwrapping', () => {
-  it('unwrap a nested list ul > single li', () => {
+describe("li list unwrapping", () => {
+  it("unwrap a nested list ul > single li", () => {
     const input = (
       <editor>
         <hul>
@@ -57,7 +55,7 @@ describe('li list unwrapping', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('unwrap a nested list ul > single li, collapsed selection', () => {
+  it("unwrap a nested list ul > single li, collapsed selection", () => {
     const input = (
       <editor>
         <hul>
@@ -97,7 +95,7 @@ describe('li list unwrapping', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('unwrap a nested list ul > multiple li', () => {
+  it("unwrap a nested list ul > multiple li", () => {
     const input = (
       <editor>
         <hul>
@@ -140,7 +138,7 @@ describe('li list unwrapping', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('unwrap a nested list ul > multiple li, collapsed selection', () => {
+  it("unwrap a nested list ul > multiple li, collapsed selection", () => {
     const input = (
       <editor>
         <hul>
@@ -189,14 +187,12 @@ describe('li list unwrapping', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('treats the selection common node as a list root when there is no direct ancestor match', () => {
-    const commonSpy = spyOn(platejs.NodeApi, 'common').mockImplementation(
-      () => {
-        editor.selection = null;
+  it("treats the selection common node as a list root when there is no direct ancestor match", () => {
+    const commonSpy = spyOn(platejs.NodeApi, "common").mockImplementation(() => {
+      editor.selection = null;
 
-        return [{ children: [], type: 'ul' } as any, [0]];
-      }
-    );
+      return [{ children: [], type: "ul" } as any, [0]];
+    });
     const editor = {
       api: {
         above: mock(() => {}),

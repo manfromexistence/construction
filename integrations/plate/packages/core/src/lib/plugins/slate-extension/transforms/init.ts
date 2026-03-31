@@ -1,19 +1,13 @@
-import type { EditorTransforms, TSelection, Value } from '@platejs/slate';
-
-import type { SlateEditor } from '../../../editor';
-
-import { pipeNormalizeInitialValue } from '../../../../internal/plugin/pipeNormalizeInitialValue';
+import type { EditorTransforms, TSelection, Value } from "@platejs/slate";
+import { pipeNormalizeInitialValue } from "../../../../internal/plugin/pipeNormalizeInitialValue";
+import type { SlateEditor } from "../../../editor";
 
 export type InitOptions = {
-  autoSelect?: boolean | 'end' | 'start';
+  autoSelect?: boolean | "end" | "start";
   selection?: TSelection;
   shouldNormalizeEditor?: boolean;
   value?: any;
-  onReady?: (ctx: {
-    editor: SlateEditor;
-    isAsync: boolean;
-    value: Value;
-  }) => void;
+  onReady?: (ctx: { editor: SlateEditor; isAsync: boolean; value: Value }) => void;
 };
 
 export const init = (
@@ -28,9 +22,8 @@ export const init = (
     if (selection) {
       editor.selection = selection;
     } else if (autoSelect) {
-      const edge = autoSelect === 'start' ? 'start' : 'end';
-      const target =
-        edge === 'start' ? editor.api.start([]) : editor.api.end([]);
+      const edge = autoSelect === "start" ? "start" : "end";
+      const target = edge === "start" ? editor.api.start([]) : editor.api.end([]);
 
       editor.tf.select(target!);
     }
@@ -49,16 +42,16 @@ export const init = (
 
   if (value === null) {
     onValueLoaded();
-  } else if (typeof value === 'string') {
+  } else if (typeof value === "string") {
     editor.children = editor.api.html.deserialize({
       element: value,
     }) as Value;
     onValueLoaded();
-  } else if (typeof value === 'function') {
+  } else if (typeof value === "function") {
     const result = value(editor);
 
     // Check if result is a promise (async function)
-    if (result && typeof result.then === 'function') {
+    if (result && typeof result.then === "function") {
       result.then((resolvedValue: any) => {
         editor.children = resolvedValue;
         onValueLoaded(true);

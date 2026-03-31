@@ -1,9 +1,6 @@
 {
   "name": "hitbox-positions-demo",
-  "registryDependencies": [
-    "checkbox",
-    "hitbox"
-  ],
+  "registryDependencies": ["checkbox", "hitbox"],
   "files": [
     {
       "path": "examples/hitbox-positions-demo.tsx",

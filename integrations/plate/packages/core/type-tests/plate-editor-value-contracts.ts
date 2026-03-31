@@ -1,27 +1,23 @@
-import type { PluginConfig } from '@platejs/core';
-import {
-  createPlateEditor,
-  createPlatePlugin,
-  createTPlatePlugin,
-} from '@platejs/core/react';
+import type { PluginConfig } from "@platejs/core";
+import { createPlateEditor, createPlatePlugin, createTPlatePlugin } from "@platejs/core/react";
 
 type BodyValue = [
   {
-    align: 'left' | 'right';
+    align: "left" | "right";
     children: [{ text: string }];
-    type: 'p';
+    type: "p";
   },
   {
     children: [{ text: string }];
-    type: 'quote';
+    type: "quote";
   },
 ];
 
-type LayoutVariant = 'compact' | 'full';
+type LayoutVariant = "compact" | "full";
 type EditorSummary = `${LayoutVariant}:@`;
 
 type LayoutConfig = PluginConfig<
-  'layout',
+  "layout",
   {
     density: 1 | 2;
     variant: LayoutVariant;
@@ -38,10 +34,10 @@ type LayoutConfig = PluginConfig<
 >;
 
 const LayoutPlugin = createTPlatePlugin<LayoutConfig>({
-  key: 'layout',
+  key: "layout",
   options: {
     density: 1,
-    variant: 'full',
+    variant: "full",
   },
 })
   .extendSelectors(({ getOptions }) => ({
@@ -58,7 +54,7 @@ const LayoutPlugin = createTPlatePlugin<LayoutConfig>({
 
 const ConfiguredLayoutPlugin = LayoutPlugin.configure({
   options: {
-    variant: 'compact',
+    variant: "compact",
   },
 }).extend({
   options: {
@@ -67,16 +63,16 @@ const ConfiguredLayoutPlugin = LayoutPlugin.configure({
 });
 
 const MentionPlugin = createPlatePlugin({
-  key: 'mention',
+  key: "mention",
   options: {
-    trigger: '@' as const,
+    trigger: "@" as const,
   },
 }).extendEditorApi(({ getOptions }) => ({
   getTrigger: () => getOptions().trigger,
 }));
 
 const ToolbarPlugin = createPlatePlugin({
-  key: 'toolbar',
+  key: "toolbar",
 })
   .extendEditorApi(({ editor }) => ({
     describeEditor: () =>
@@ -90,13 +86,13 @@ const ToolbarPlugin = createPlatePlugin({
 
 const initialValue = [
   {
-    align: 'left',
-    children: [{ text: 'hello' }],
-    type: 'p',
+    align: "left",
+    children: [{ text: "hello" }],
+    type: "p",
   },
   {
-    children: [{ text: 'world' }],
-    type: 'quote',
+    children: [{ text: "world" }],
+    type: "quote",
   },
 ] satisfies BodyValue;
 
@@ -109,12 +105,9 @@ const expectBodyValue = (value: BodyValue) => value;
 
 const bodyValue: BodyValue = plateEditor.children;
 const layoutVariant: LayoutVariant = plateEditor.api.getVariant();
-const mentionTrigger: '@' = plateEditor.api.getTrigger();
+const mentionTrigger: "@" = plateEditor.api.getTrigger();
 const editorSummary: EditorSummary = plateEditor.api.describeEditor();
-const isDense: boolean = plateEditor.getOption(
-  ConfiguredLayoutPlugin,
-  'isDense'
-);
+const isDense: boolean = plateEditor.getOption(ConfiguredLayoutPlugin, "isDense");
 
 plateEditor.transforms.setDensity(1);
 plateEditor.transforms.setDensity(2);
@@ -141,21 +134,21 @@ plateEditor.transforms.setDensity(3);
 plateEditor.transforms.setCompact(true);
 
 // @ts-expect-error invalid selector arguments
-plateEditor.getOption(ConfiguredLayoutPlugin, 'isDense', true);
+plateEditor.getOption(ConfiguredLayoutPlugin, "isDense", true);
 
 // @ts-expect-error invalid merged editor api
-plateEditor.api.describeEditor('extra');
+plateEditor.api.describeEditor("extra");
 
 const invalidBodyValue: BodyValue = [
   {
-    align: 'left',
-    children: [{ text: 'nope' }],
+    align: "left",
+    children: [{ text: "nope" }],
     // @ts-expect-error createPlateEditor value inference should stay narrow
-    type: 'h1',
+    type: "h1",
   },
   {
-    children: [{ text: 'world' }],
-    type: 'quote',
+    children: [{ text: "world" }],
+    type: "quote",
   },
 ];
 

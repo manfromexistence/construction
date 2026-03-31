@@ -1,8 +1,8 @@
-import type { OverrideEditor } from '@platejs/core';
+import type { OverrideEditor } from "@platejs/core";
 
-import { PathApi, queryNode } from '@platejs/slate';
+import { PathApi, queryNode } from "@platejs/slate";
 
-import type { TrailingBlockConfig } from './TrailingBlockPlugin';
+import type { TrailingBlockConfig } from "./TrailingBlockPlugin";
 
 /**
  * Add a trailing block when the last node type is not `type` and when the
@@ -21,10 +21,7 @@ export const withTrailingBlock: OverrideEditor<TrailingBlockConfig> = ({
         const lastChild = editor.api.last([], { level });
         const lastChildNode = lastChild?.[0];
 
-        if (
-          !lastChildNode ||
-          (lastChildNode.type !== type && queryNode(lastChild, query))
-        ) {
+        if (!lastChildNode || (lastChildNode.type !== type && queryNode(lastChild, query))) {
           const at = lastChild ? PathApi.next(lastChild[1]) : [0];
 
           editor.tf.insertNodes(editor.api.create.block({ type }, at), { at });

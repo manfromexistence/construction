@@ -1,8 +1,4 @@
-import {
-  AnimatedSpan,
-  Terminal,
-  TypingAnimation,
-} from "@/registry/magicui/terminal"
+import { AnimatedSpan, Terminal, TypingAnimation } from "@/registry/magicui/terminal";
 
 export default function TerminalDemo2() {
   return (
@@ -21,5 +17,5 @@ export default function TerminalDemo2() {
         /home/user/Documents
       </AnimatedSpan>
     </Terminal>
-  )
+  );
 }

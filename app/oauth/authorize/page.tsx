@@ -1,12 +1,12 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Github from "@/assets/github.svg";
 import Google from "@/assets/google.svg";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
-import { Loader2 } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 const SCOPE_LABELS: Record<string, string> = {
   "themes:read": "Read your saved themes",
@@ -93,9 +93,7 @@ export default function OAuthAuthorizePage() {
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
           <p className="text-sm text-muted-foreground">Sign in to</p>
-          <h1 className="mt-1 text-lg font-semibold text-foreground">
-            {appName}
-          </h1>
+          <h1 className="mt-1 text-lg font-semibold text-foreground">{appName}</h1>
         </div>
 
         <div className="space-y-3">

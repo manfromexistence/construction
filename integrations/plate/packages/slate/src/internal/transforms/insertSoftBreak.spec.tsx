@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('insertSoftBreak', () => {
-  it('inserts a newline at a collapsed selection', () => {
+describe("insertSoftBreak", () => {
+  it("inserts a newline at a collapsed selection", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -22,16 +22,14 @@ describe('insertSoftBreak', () => {
 
     editor.insertSoftBreak();
 
-    expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'one\ntwo' }] },
-    ]);
+    expect(editor.children).toEqual([{ type: "p", children: [{ text: "one\ntwo" }] }]);
     expect(editor.selection).toEqual({
       anchor: { offset: 4, path: [0, 0] },
       focus: { offset: 4, path: [0, 0] },
     });
   });
 
-  it('replaces an expanded selection before inserting the newline', () => {
+  it("replaces an expanded selection before inserting the newline", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -48,9 +46,7 @@ describe('insertSoftBreak', () => {
 
     editor.insertSoftBreak();
 
-    expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'o\ntwo' }] },
-    ]);
+    expect(editor.children).toEqual([{ type: "p", children: [{ text: "o\ntwo" }] }]);
     expect(editor.selection).toEqual({
       anchor: { offset: 2, path: [0, 0] },
       focus: { offset: 2, path: [0, 0] },

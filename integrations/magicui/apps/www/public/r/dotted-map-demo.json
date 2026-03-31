@@ -4,12 +4,8 @@
   "type": "registry:example",
   "title": "Dotted Map Demo",
   "description": "Example showing a dotted map.",
-  "dependencies": [
-    "countries-list"
-  ],
-  "registryDependencies": [
-    "@magicui/dotted-map"
-  ],
+  "dependencies": ["countries-list"],
+  "registryDependencies": ["@magicui/dotted-map"],
   "files": [
     {
       "path": "registry/example/dotted-map-demo.tsx",

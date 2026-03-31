@@ -1,34 +1,31 @@
 import {
+  bindFirst,
+  createSlatePlugin,
+  createTSlatePlugin,
   type Descendant,
   type HtmlDeserializer,
+  KEYS,
   type OmitFirst,
   type PluginConfig,
   type TElement,
   type TTableCellElement,
-  bindFirst,
-  createSlatePlugin,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
-
-import type { CellIndices } from './utils';
-
-import { getEmptyCellNode, getEmptyRowNode, getEmptyTableNode } from './api';
-import { mergeTableCells, splitTableCell } from './merge';
-import { normalizeInitialValueTable } from './normalizeInitialValueTable';
+} from "platejs";
+import { getEmptyCellNode, getEmptyRowNode, getEmptyTableNode } from "./api";
+import { mergeTableCells, splitTableCell } from "./merge";
+import { normalizeInitialValueTable } from "./normalizeInitialValueTable";
 import {
   getColSpan,
+  getRowSpan,
   getSelectedCell,
   getSelectedCellIds,
   getSelectedCells,
   getSelectedTableIds,
   getSelectedTables,
-  getRowSpan,
   getTableCellBorders,
   getTableCellSize,
   isCellSelected,
   isSelectingCell,
-} from './queries';
+} from "./queries";
 import {
   deleteColumn,
   deleteRow,
@@ -36,10 +33,11 @@ import {
   insertTable,
   insertTableColumn,
   insertTableRow,
-} from './transforms/index';
-import { withTable } from './withTable';
+} from "./transforms/index";
+import type { CellIndices } from "./utils";
+import { withTable } from "./withTable";
 
-const parse: HtmlDeserializer['parse'] = ({ element, type }) => {
+const parse: HtmlDeserializer["parse"] = ({ element, type }) => {
   const background = element.style.background || element.style.backgroundColor;
 
   if (background) {
@@ -58,7 +56,7 @@ export const BaseTableRowPlugin = createSlatePlugin({
   parsers: {
     html: {
       deserializer: {
-        rules: [{ validNodeName: 'TR' }],
+        rules: [{ validNodeName: "TR" }],
       },
     },
   },
@@ -67,7 +65,7 @@ export const BaseTableRowPlugin = createSlatePlugin({
 export const BaseTableCellPlugin = createSlatePlugin({
   key: KEYS.td,
   node: {
-    dangerouslyAllowAttributes: ['colspan', 'rowspan'],
+    dangerouslyAllowAttributes: ["colspan", "rowspan"],
     isContainer: true,
     isElement: true,
     isStrictSiblings: true,
@@ -79,9 +77,9 @@ export const BaseTableCellPlugin = createSlatePlugin({
   parsers: {
     html: {
       deserializer: {
-        attributeNames: ['rowspan', 'colspan'],
+        attributeNames: ["rowspan", "colspan"],
         parse,
-        rules: [{ validNodeName: 'TD' }],
+        rules: [{ validNodeName: "TD" }],
       },
     },
   },
@@ -93,7 +91,7 @@ export const BaseTableCellPlugin = createSlatePlugin({
 export const BaseTableCellHeaderPlugin = createSlatePlugin({
   key: KEYS.th,
   node: {
-    dangerouslyAllowAttributes: ['colspan', 'rowspan'],
+    dangerouslyAllowAttributes: ["colspan", "rowspan"],
     isContainer: true,
     isElement: true,
     isStrictSiblings: true,
@@ -105,9 +103,9 @@ export const BaseTableCellHeaderPlugin = createSlatePlugin({
   parsers: {
     html: {
       deserializer: {
-        attributeNames: ['rowspan', 'colspan'],
+        attributeNames: ["rowspan", "colspan"],
         parse,
-        rules: [{ validNodeName: 'TH' }],
+        rules: [{ validNodeName: "TH" }],
       },
     },
   },
@@ -117,7 +115,7 @@ export const BaseTableCellHeaderPlugin = createSlatePlugin({
 });
 
 export type TableConfig = PluginConfig<
-  'table',
+  "table",
   {
     /** @private Keeps Track of cell indices by id. */
     _cellIndices: Record<string, { col: number; row: number }>;
@@ -230,13 +228,13 @@ export const BaseTablePlugin = createTSlatePlugin<TableConfig>({
   parsers: {
     html: {
       deserializer: {
-        rules: [{ validNodeName: 'TABLE' }],
+        rules: [{ validNodeName: "TABLE" }],
       },
     },
   },
   plugins: [BaseTableRowPlugin, BaseTableCellPlugin, BaseTableCellHeaderPlugin],
 })
-  .extendSelectors<TableConfig['selectors']>(({ editor, getOptions }) => ({
+  .extendSelectors<TableConfig["selectors"]>(({ editor, getOptions }) => ({
     cellIndices: (id) => getOptions()._cellIndices[id],
     isCellSelected: (id) => {
       const selectedCellIds = getOptions()._selectedCellIds;
@@ -290,7 +288,7 @@ export const BaseTablePlugin = createTSlatePlugin<TableConfig>({
       return getSelectedTables(editor);
     },
   }))
-  .extendEditorApi<TableConfig['api']>(({ editor }) => ({
+  .extendEditorApi<TableConfig["api"]>(({ editor }) => ({
     create: {
       table: bindFirst(getEmptyTableNode, editor),
       tableCell: bindFirst(getEmptyCellNode, editor),
@@ -311,7 +309,7 @@ export const BaseTablePlugin = createTSlatePlugin<TableConfig>({
       isSelectingCell: bindFirst(isSelectingCell, editor),
     },
   }))
-  .extendEditorTransforms<TableConfig['transforms']>(({ editor }) => ({
+  .extendEditorTransforms<TableConfig["transforms"]>(({ editor }) => ({
     insert: {
       table: bindFirst(insertTable, editor),
       tableColumn: bindFirst(insertTableColumn, editor),

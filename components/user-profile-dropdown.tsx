@@ -1,5 +1,12 @@
 "use client";
 
+import { BookLock, Gem, Loader2, LogOut, Moon, Settings, Sun } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { usePostHog } from "posthog-js/react";
+import { Switch as SwitchPrimitives } from "radix-ui";
+import { useTheme } from "@/components/theme-provider";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,17 +17,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useTheme } from "@/components/theme-provider";
 import { useSubscription } from "@/hooks/use-subscription";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useAuthStore } from "@/store/auth-store";
-import { Switch as SwitchPrimitives } from "radix-ui";
-import { BookLock, Gem, Loader2, LogOut, Moon, Settings, Sun } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { usePostHog } from "posthog-js/react";
 
 export function UserProfileDropdown() {
   const { data: session, isPending } = authClient.useSession();
@@ -141,7 +141,11 @@ export function UserProfileDropdown() {
                       "bg-background pointer-events-none flex size-4 items-center justify-center rounded-full shadow-sm ring-0 transition-transform data-[state=checked]:translate-x-4 data-[state=unchecked]:translate-x-0"
                     )}
                   >
-                    {theme === "dark" ? <Moon className="size-2.5" /> : <Sun className="size-2.5" />}
+                    {theme === "dark" ? (
+                      <Moon className="size-2.5" />
+                    ) : (
+                      <Sun className="size-2.5" />
+                    )}
                   </SwitchPrimitives.Thumb>
                 </SwitchPrimitives.Root>
               </DropdownMenuItem>
@@ -152,7 +156,7 @@ export function UserProfileDropdown() {
                   Privacy Policy
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem 
+              <DropdownMenuItem
                 onClick={handleLogOut}
                 className="text-destructive focus:text-destructive"
               >

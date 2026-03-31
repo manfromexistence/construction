@@ -1,30 +1,30 @@
-import { useFormInputProps } from './useFormInputProps';
+import { useFormInputProps } from "./useFormInputProps";
 
-describe('useFormInputProps', () => {
+describe("useFormInputProps", () => {
   beforeEach(() => {
     // Mocks cleared in afterEach
   });
 
-  it('will return an object with a props key regardless of whether the user provides a callback or sets preventDefaultOnEnterKeydown to true', () => {
+  it("will return an object with a props key regardless of whether the user provides a callback or sets preventDefaultOnEnterKeydown to true", () => {
     const output = useFormInputProps();
     expect(output.props).toBeDefined();
     expect(Object.keys(output.props)).toHaveLength(0);
   });
 
-  it('will return a callback for onKeyDownCapture when preventDefaultOnEnterKeydown is true', () => {
+  it("will return a callback for onKeyDownCapture when preventDefaultOnEnterKeydown is true", () => {
     const output = useFormInputProps({ preventDefaultOnEnterKeydown: true });
     expect(output.props).toBeDefined();
     expect(Object.keys(output.props)).toHaveLength(1);
     expect(output.props.onKeyDownCapture).toBeDefined();
-    expect(typeof output.props.onKeyDownCapture === 'function').toBe(true);
+    expect(typeof output.props.onKeyDownCapture === "function").toBe(true);
   });
 
-  it('will call event.preventDefault if the key is enter, and only if the key is enter', () => {
+  it("will call event.preventDefault if the key is enter, and only if the key is enter", () => {
     // Define mock for preventdefault
     const preventDefaultMock = mock();
     // should trigger preventDefault
     const eventWithEKeyEnter = {
-      key: 'Enter',
+      key: "Enter",
       preventDefault: preventDefaultMock,
     } as any;
     // should trigger preventDefault

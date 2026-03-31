@@ -1,6 +1,6 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import { TogglePlugin } from '../TogglePlugin';
+import { TogglePlugin } from "../TogglePlugin";
 
 // When creating a toggle, we open it by default.
 // So before inserting the toggle, we update the store to mark the id of the blocks about to be turned into toggles as open.
@@ -8,7 +8,7 @@ export const openNextToggles = (editor: SlateEditor) => {
   const nodeEntries = Array.from(
     editor.api.nodes({
       block: true,
-      mode: 'lowest',
+      mode: "lowest",
     })
   ) as [any, number[]][];
 

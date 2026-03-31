@@ -4,8 +4,8 @@ import {
   FieldDescription,
   FieldLabel,
   FieldTitle,
-} from "@/styles/radix-nova/ui/field"
-import { RadioGroup, RadioGroupItem } from "@/styles/radix-nova/ui/radio-group"
+} from "@/styles/radix-nova/ui/field";
+import { RadioGroup, RadioGroupItem } from "@/styles/radix-nova/ui/radio-group";
 
 export function RadioGroupChoiceCard() {
   return (
@@ -14,9 +14,7 @@ export function RadioGroupChoiceCard() {
         <Field orientation="horizontal">
           <FieldContent>
             <FieldTitle>Plus</FieldTitle>
-            <FieldDescription>
-              For individuals and small teams.
-            </FieldDescription>
+            <FieldDescription>For individuals and small teams.</FieldDescription>
           </FieldContent>
           <RadioGroupItem value="plus" id="plus-plan" />
         </Field>
@@ -34,13 +32,11 @@ export function RadioGroupChoiceCard() {
         <Field orientation="horizontal">
           <FieldContent>
             <FieldTitle>Enterprise</FieldTitle>
-            <FieldDescription>
-              For large teams and enterprises.
-            </FieldDescription>
+            <FieldDescription>For large teams and enterprises.</FieldDescription>
           </FieldContent>
           <RadioGroupItem value="enterprise" id="enterprise-plan" />
         </Field>
       </FieldLabel>
     </RadioGroup>
-  )
+  );
 }

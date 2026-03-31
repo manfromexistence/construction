@@ -1,6 +1,6 @@
-import { type SlateEditor, getEditorPlugin } from 'platejs';
+import { getEditorPlugin, type SlateEditor } from "platejs";
 
-import { LinkPlugin } from '../LinkPlugin';
+import { LinkPlugin } from "../LinkPlugin";
 
 /**
  * Trigger floating link.
@@ -20,10 +20,7 @@ export const triggerFloatingLinkInsert = (
     focused?: boolean;
   } = {}
 ) => {
-  const { api, getOptions, setOption, type } = getEditorPlugin(
-    editor,
-    LinkPlugin
-  );
+  const { api, getOptions, setOption, type } = getEditorPlugin(editor, LinkPlugin);
 
   const { mode } = getOptions();
 
@@ -37,8 +34,8 @@ export const triggerFloatingLinkInsert = (
 
   if (hasLink) return;
 
-  setOption('text', editor.api.string(editor.selection));
-  api.floatingLink.show('insert', editor.id);
+  setOption("text", editor.api.string(editor.selection));
+  api.floatingLink.show("insert", editor.id);
 
   return true;
 };

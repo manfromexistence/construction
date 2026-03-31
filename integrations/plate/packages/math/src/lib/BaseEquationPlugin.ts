@@ -1,8 +1,8 @@
-import { bindFirst, createSlatePlugin, KEYS } from 'platejs';
+import { bindFirst, createSlatePlugin, KEYS } from "platejs";
 
-import { insertEquation } from './transforms';
+import { insertEquation } from "./transforms";
 
-import 'katex/dist/katex.min.css';
+import "katex/dist/katex.min.css";
 
 export const BaseEquationPlugin = createSlatePlugin({
   key: KEYS.equation,

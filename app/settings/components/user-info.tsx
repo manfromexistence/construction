@@ -1,8 +1,8 @@
 "use client";
 
+import { Gem } from "lucide-react";
 import { useSubscription } from "@/hooks/use-subscription";
 import { authClient } from "@/lib/auth-client";
-import { Gem } from "lucide-react";
 
 export function UserInfo() {
   const { data: session } = authClient.useSession();

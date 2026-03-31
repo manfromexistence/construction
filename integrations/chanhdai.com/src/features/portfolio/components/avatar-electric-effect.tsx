@@ -1,41 +1,41 @@
-"use client"
+"use client";
 
-import type { JSX } from "react"
-import { useEffect, useRef, useState } from "react"
+import type { JSX } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { ElectricBorder } from "@/components/react-bits/electric-border"
+import { ElectricBorder } from "@/components/react-bits/electric-border";
 
-const HOVER_DELAY_MS = 150
+const HOVER_DELAY_MS = 150;
 
 export function AvatarElectricEffect({ children }: { children: JSX.Element }) {
-  const [isHovered, setIsHovered] = useState(false)
-  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const [isHovered, setIsHovered] = useState(false);
+  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearHoverTimeout = () => {
-    if (!hoverTimeoutRef.current) return
+    if (!hoverTimeoutRef.current) return;
 
-    clearTimeout(hoverTimeoutRef.current)
-    hoverTimeoutRef.current = null
-  }
+    clearTimeout(hoverTimeoutRef.current);
+    hoverTimeoutRef.current = null;
+  };
 
   useEffect(() => {
     return () => {
-      clearHoverTimeout()
-    }
-  }, [])
+      clearHoverTimeout();
+    };
+  }, []);
 
   const handleMouseEnter = () => {
-    clearHoverTimeout()
+    clearHoverTimeout();
 
     hoverTimeoutRef.current = setTimeout(() => {
-      setIsHovered(true)
-    }, HOVER_DELAY_MS)
-  }
+      setIsHovered(true);
+    }, HOVER_DELAY_MS);
+  };
 
   const handleMouseLeave = () => {
-    clearHoverTimeout()
-    setIsHovered(false)
-  }
+    clearHoverTimeout();
+    setIsHovered(false);
+  };
 
   return (
     <ElectricBorder
@@ -48,5 +48,5 @@ export function AvatarElectricEffect({ children }: { children: JSX.Element }) {
     >
       {children}
     </ElectricBorder>
-  )
+  );
 }

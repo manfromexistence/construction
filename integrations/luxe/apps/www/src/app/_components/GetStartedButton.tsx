@@ -1,24 +1,19 @@
-import Link from "next/link";
-
 import { ChevronRightIcon } from "lucide-react";
+import Link from "next/link";
 import { cn } from "@/utils/cn";
 
 type GetStartedButtonProps = React.ComponentProps<typeof Link>;
 
-export function GetStartedButton({
-  className,
-  href,
-  ...props
-}: GetStartedButtonProps) {
+export function GetStartedButton({ className, href, ...props }: GetStartedButtonProps) {
   return (
     <Link
       {...props}
       href={href}
       className={cn(
         "group flex items-center justify-center gap-1.5 rounded-xl bg-background p-4 h-10 sm:h-11 text-sm sm:text-base font-semibold text-neutral-600",
-				"duration-300 hover:bg-neutral-200 dark:border-transparent dark:bg-transparent dark:text-foreground dark:hover:bg-neutral-800 dark:hover:text-primary",
+        "duration-300 hover:bg-neutral-200 dark:border-transparent dark:bg-transparent dark:text-foreground dark:hover:bg-neutral-800 dark:hover:text-primary",
         "outline-none dark:focus-visible:text-primary focus-visible:bg-neutral-200 dark:focus-visible:bg-neutral-800",
-				className,
+        className
       )}
     >
       Get started

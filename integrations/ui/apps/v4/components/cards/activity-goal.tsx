@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { MinusIcon, PlusIcon } from "lucide-react"
-import { Bar, BarChart } from "recharts"
+import { MinusIcon, PlusIcon } from "lucide-react";
+import * as React from "react";
+import { Bar, BarChart } from "recharts";
 
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardContent,
@@ -12,11 +12,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
-import {
-  ChartContainer,
-  type ChartConfig,
-} from "@/registry/new-york-v4/ui/chart"
+} from "@/registry/new-york-v4/ui/card";
+import { type ChartConfig, ChartContainer } from "@/registry/new-york-v4/ui/chart";
 
 const data = [
   {
@@ -58,20 +55,20 @@ const data = [
   {
     goal: 349,
   },
-]
+];
 
 const chartConfig = {
   goal: {
     label: "Goal",
     color: "var(--primary)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function CardsActivityGoal() {
-  const [goal, setGoal] = React.useState(350)
+  const [goal, setGoal] = React.useState(350);
 
   function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)))
+    setGoal(Math.max(200, Math.min(400, goal + adjustment)));
   }
 
   return (
@@ -93,12 +90,8 @@ export function CardsActivityGoal() {
             <span className="sr-only">Decrease</span>
           </Button>
           <div className="text-center">
-            <div className="text-4xl font-bold tracking-tighter tabular-nums">
-              {goal}
-            </div>
-            <div className="text-xs text-muted-foreground uppercase">
-              Calories/day
-            </div>
+            <div className="text-4xl font-bold tracking-tighter tabular-nums">{goal}</div>
+            <div className="text-xs text-muted-foreground uppercase">Calories/day</div>
           </div>
           <Button
             variant="outline"
@@ -112,10 +105,7 @@ export function CardsActivityGoal() {
           </Button>
         </div>
         <div className="flex-1">
-          <ChartContainer
-            config={chartConfig}
-            className="aspect-auto h-full w-full"
-          >
+          <ChartContainer config={chartConfig} className="aspect-auto h-full w-full">
             <BarChart data={data}>
               <Bar dataKey="goal" radius={4} fill="var(--color-goal)" />
             </BarChart>
@@ -128,5 +118,5 @@ export function CardsActivityGoal() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

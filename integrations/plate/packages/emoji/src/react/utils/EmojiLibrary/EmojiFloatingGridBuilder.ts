@@ -1,14 +1,6 @@
-import type {
-  EmojiCategoryList,
-  EmojiSettingsType,
-  GridElements,
-} from '../../../lib';
-import type { IFrequentEmojiStorage } from './EmojiFloatingLibrary.types';
-
-import {
-  EmojiFloatingGrid,
-  EmojiGridSectionWithRoot,
-} from './EmojiFloatingGrid';
+import type { EmojiCategoryList, EmojiSettingsType, GridElements } from "../../../lib";
+import { EmojiFloatingGrid, EmojiGridSectionWithRoot } from "./EmojiFloatingGrid";
+import type { IFrequentEmojiStorage } from "./EmojiFloatingLibrary.types";
 
 export class EmojiFloatingGridBuilder {
   protected grid = new EmojiFloatingGrid();
@@ -31,14 +23,10 @@ export class EmojiFloatingGridBuilder {
 
   private addFrequent() {
     if (this.settings.showFrequent.value) {
-      const id = 'frequent';
-      this.grid.addSection(
-        id,
-        new EmojiGridSectionWithRoot(id, this.settings.perLine.value),
-        {
-          [id]: this.localStorage.getList(),
-        }
-      );
+      const id = "frequent";
+      this.grid.addSection(id, new EmojiGridSectionWithRoot(id, this.settings.perLine.value), {
+        [id]: this.localStorage.getList(),
+      });
     }
   }
 

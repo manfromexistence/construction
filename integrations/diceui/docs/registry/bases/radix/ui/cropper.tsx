@@ -97,12 +97,7 @@ function lruGet<K, V>(map: Map<K, V>, key: K): V | undefined {
   return v;
 }
 
-function lruSet<K, V>(
-  map: Map<K, V>,
-  key: K,
-  val: V,
-  max = MAX_CACHE_SIZE,
-): void {
+function lruSet<K, V>(map: Map<K, V>, key: K, val: V, max = MAX_CACHE_SIZE): void {
   if (map.has(key)) {
     map.delete(key);
   }
@@ -160,7 +155,7 @@ function getCropSize(
   contentWidth: number,
   contentHeight: number,
   aspect: number,
-  rotation = 0,
+  rotation = 0
 ): Size {
   const cacheKey = `${quantize(mediaWidth, 8)}-${quantize(mediaHeight, 8)}-${quantize(contentWidth, 8)}-${quantize(contentHeight, 8)}-${quantize(aspect, 0.01)}-${quantizeRotation(rotation)}`;
 
@@ -192,7 +187,7 @@ function onPositionClamp(
   mediaSize: Size,
   cropSize: Size,
   zoom: number,
-  rotation = 0,
+  rotation = 0
 ): Point {
   const quantizedX = quantizePosition(position.x);
   const quantizedY = quantizePosition(position.y);
@@ -203,11 +198,7 @@ function onPositionClamp(
   if (cached) {
     return cached;
   }
-  const { width, height } = rotateSize(
-    mediaSize.width,
-    mediaSize.height,
-    rotation,
-  );
+  const { width, height } = rotateSize(mediaSize.width, mediaSize.height, rotation);
 
   const maxPositionX = width * zoom * 0.5 - cropSize.width * 0.5;
   const maxPositionY = height * zoom * 0.5 - cropSize.height * 0.5;
@@ -228,7 +219,7 @@ function getCroppedArea(
   aspect: number,
   zoom: number,
   rotation = 0,
-  allowOverflow = false,
+  allowOverflow = false
 ): { croppedAreaPercentages: Area; croppedAreaPixels: Area } {
   const cacheKey = `${quantizePosition(crop.x)}-${quantizePosition(crop.y)}-${quantize(mediaSize.width)}-${quantize(mediaSize.height)}-${quantize(mediaSize.naturalWidth)}-${quantize(mediaSize.naturalHeight)}-${quantize(cropSize.width)}-${quantize(cropSize.height)}-${quantize(aspect, 0.01)}-${quantizeZoom(zoom)}-${quantizeRotation(rotation)}-${allowOverflow}`;
 
@@ -244,46 +235,38 @@ function getCroppedArea(
   const mediaNaturalBBoxSize = rotateSize(
     mediaSize.naturalWidth,
     mediaSize.naturalHeight,
-    rotation,
+    rotation
   );
 
   const croppedAreaPercentages: Area = {
     x: onAreaLimit(
       100,
-      (((mediaBBoxSize.width - cropSize.width / zoom) / 2 - crop.x / zoom) /
-        mediaBBoxSize.width) *
-        100,
+      (((mediaBBoxSize.width - cropSize.width / zoom) / 2 - crop.x / zoom) / mediaBBoxSize.width) *
+        100
     ),
     y: onAreaLimit(
       100,
       (((mediaBBoxSize.height - cropSize.height / zoom) / 2 - crop.y / zoom) /
         mediaBBoxSize.height) *
-        100,
+        100
     ),
-    width: onAreaLimit(
-      100,
-      ((cropSize.width / mediaBBoxSize.width) * 100) / zoom,
-    ),
-    height: onAreaLimit(
-      100,
-      ((cropSize.height / mediaBBoxSize.height) * 100) / zoom,
-    ),
+    width: onAreaLimit(100, ((cropSize.width / mediaBBoxSize.width) * 100) / zoom),
+    height: onAreaLimit(100, ((cropSize.height / mediaBBoxSize.height) * 100) / zoom),
   };
 
   const widthInPixels = Math.round(
     onAreaLimit(
       mediaNaturalBBoxSize.width,
-      (croppedAreaPercentages.width * mediaNaturalBBoxSize.width) / 100,
-    ),
+      (croppedAreaPercentages.width * mediaNaturalBBoxSize.width) / 100
+    )
   );
   const heightInPixels = Math.round(
     onAreaLimit(
       mediaNaturalBBoxSize.height,
-      (croppedAreaPercentages.height * mediaNaturalBBoxSize.height) / 100,
-    ),
+      (croppedAreaPercentages.height * mediaNaturalBBoxSize.height) / 100
+    )
   );
-  const isImageWiderThanHigh =
-    mediaNaturalBBoxSize.width >= mediaNaturalBBoxSize.height * aspect;
+  const isImageWiderThanHigh = mediaNaturalBBoxSize.width >= mediaNaturalBBoxSize.height * aspect;
 
   const sizePixels: Size = isImageWiderThanHigh
     ? {
@@ -300,14 +283,14 @@ function getCroppedArea(
     x: Math.round(
       onAreaLimit(
         mediaNaturalBBoxSize.width - sizePixels.width,
-        (croppedAreaPercentages.x * mediaNaturalBBoxSize.width) / 100,
-      ),
+        (croppedAreaPercentages.x * mediaNaturalBBoxSize.width) / 100
+      )
     ),
     y: Math.round(
       onAreaLimit(
         mediaNaturalBBoxSize.height - sizePixels.height,
-        (croppedAreaPercentages.y * mediaNaturalBBoxSize.height) / 100,
-      ),
+        (croppedAreaPercentages.y * mediaNaturalBBoxSize.height) / 100
+      )
     ),
   };
 
@@ -348,10 +331,7 @@ function useStoreContext(consumerName: string) {
 function useStore<T>(selector: (state: StoreState) => T): T {
   const store = useStoreContext("useStore");
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
@@ -477,12 +457,9 @@ function Cropper(props: CropperProps) {
             s.cropSize,
             aspectRatio,
             s.zoom,
-            s.rotation,
+            s.rotation
           );
-          propsRef.current.onCropAreaChange(
-            croppedAreaPercentages,
-            croppedAreaPixels,
-          );
+          propsRef.current.onCropAreaChange(croppedAreaPercentages, croppedAreaPixels);
         }
       });
     }
@@ -498,23 +475,13 @@ function Cropper(props: CropperProps) {
 
         stateRef.current[key] = value;
 
-        if (
-          key === "crop" &&
-          typeof value === "object" &&
-          value &&
-          "x" in value
-        ) {
+        if (key === "crop" && typeof value === "object" && value && "x" in value) {
           propsRef.current.onCropChange?.(value);
         } else if (key === "zoom" && typeof value === "number") {
           propsRef.current.onZoomChange?.(value);
         } else if (key === "rotation" && typeof value === "number") {
           propsRef.current.onRotationChange?.(value);
-        } else if (
-          key === "cropSize" &&
-          typeof value === "object" &&
-          value &&
-          "width" in value
-        ) {
+        } else if (key === "cropSize" && typeof value === "object" && value && "width" in value) {
           propsRef.current.onCropSizeChange?.(value);
         } else if (
           key === "mediaSize" &&
@@ -534,19 +501,15 @@ function Cropper(props: CropperProps) {
               currentState.cropSize &&
               propsRef.current.onCropComplete
             ) {
-              const { croppedAreaPercentages, croppedAreaPixels } =
-                getCroppedArea(
-                  currentState.crop,
-                  currentState.mediaSize,
-                  currentState.cropSize,
-                  aspectRatio,
-                  currentState.zoom,
-                  currentState.rotation,
-                );
-              propsRef.current.onCropComplete(
-                croppedAreaPercentages,
-                croppedAreaPixels,
+              const { croppedAreaPercentages, croppedAreaPixels } = getCroppedArea(
+                currentState.crop,
+                currentState.mediaSize,
+                currentState.cropSize,
+                aspectRatio,
+                currentState.zoom,
+                currentState.rotation
               );
+              propsRef.current.onCropComplete(croppedAreaPercentages, croppedAreaPixels);
             }
           }
         }
@@ -635,7 +598,7 @@ function Cropper(props: CropperProps) {
                   currentState.mediaSize,
                   currentState.cropSize,
                   currentState.zoom,
-                  currentState.rotation,
+                  currentState.rotation
                 )
               : currentState.crop;
 
@@ -676,7 +639,7 @@ function Cropper(props: CropperProps) {
       preventScrollZoom,
       allowOverflow,
       withGrid,
-    ],
+    ]
   );
 
   return (
@@ -769,7 +732,7 @@ function CropperImpl(props: CropperImplProps) {
       x: Number(event.clientX),
       y: Number(event.clientY),
     }),
-    [],
+    []
   );
 
   const getTouchPoint = React.useCallback(
@@ -777,7 +740,7 @@ function CropperImpl(props: CropperImplProps) {
       x: Number(touch.clientX),
       y: Number(touch.clientY),
     }),
-    [],
+    []
   );
 
   const onContentPositionChange = React.useCallback(() => {
@@ -798,7 +761,7 @@ function CropperImpl(props: CropperImplProps) {
         y: contentRect.height / 2 - (y - contentTopLeft.y),
       };
     },
-    [context.rootRef],
+    [context.rootRef]
   );
 
   const getPointOnMedia = React.useCallback(
@@ -808,7 +771,7 @@ function CropperImpl(props: CropperImplProps) {
         y: (y + crop.y) / zoom,
       };
     },
-    [crop, zoom],
+    [crop, zoom]
   );
 
   const recomputeCropPosition = React.useCallback(() => {
@@ -818,10 +781,7 @@ function CropperImpl(props: CropperImplProps) {
       ? onPositionClamp(crop, mediaSize, cropSize, zoom, rotation)
       : crop;
 
-    if (
-      Math.abs(newPosition.x - crop.x) > 0.001 ||
-      Math.abs(newPosition.y - crop.y) > 0.001
-    ) {
+    if (Math.abs(newPosition.x - crop.x) > 0.001 || Math.abs(newPosition.y - crop.y) > 0.001) {
       store.setState("crop", newPosition);
     }
   }, [cropSize, mediaSize, context.allowOverflow, crop, zoom, rotation, store]);
@@ -834,10 +794,7 @@ function CropperImpl(props: CropperImplProps) {
 
       store.batch(() => {
         if (shouldUpdatePosition) {
-          const zoomPoint = getPointOnContent(
-            point,
-            contentPositionRef.current,
-          );
+          const zoomPoint = getPointOnContent(point, contentPositionRef.current);
           const zoomTarget = getPointOnMedia(zoomPoint);
           const requestedPosition = {
             x: zoomTarget.x * clampedZoom - zoomPoint.x,
@@ -845,13 +802,7 @@ function CropperImpl(props: CropperImplProps) {
           };
 
           const newPosition = !context.allowOverflow
-            ? onPositionClamp(
-                requestedPosition,
-                mediaSize,
-                cropSize,
-                clampedZoom,
-                rotation,
-              )
+            ? onPositionClamp(requestedPosition, mediaSize, cropSize, clampedZoom, rotation)
             : requestedPosition;
 
           store.setState("crop", newPosition);
@@ -874,7 +825,7 @@ function CropperImpl(props: CropperImplProps) {
       rotation,
       store,
       recomputeCropPosition,
-    ],
+    ]
   );
 
   const onDragStart = React.useCallback(
@@ -883,7 +834,7 @@ function CropperImpl(props: CropperImplProps) {
       dragStartCropRef.current = { ...crop };
       store.setState("isDragging", true);
     },
-    [crop, store],
+    [crop, store]
   );
 
   const onDrag = React.useCallback(
@@ -909,13 +860,7 @@ function CropperImpl(props: CropperImplProps) {
         };
 
         const newPosition = !context.allowOverflow
-          ? onPositionClamp(
-              requestedPosition,
-              mediaSize,
-              cropSize,
-              zoom,
-              rotation,
-            )
+          ? onPositionClamp(requestedPosition, mediaSize, cropSize, zoom, rotation)
           : requestedPosition;
 
         const currentCrop = store.getState().crop;
@@ -927,12 +872,12 @@ function CropperImpl(props: CropperImplProps) {
         }
       });
     },
-    [cropSize, mediaSize, context.allowOverflow, zoom, rotation, store],
+    [cropSize, mediaSize, context.allowOverflow, zoom, rotation, store]
   );
 
   const onMouseMove = React.useCallback(
     (event: MouseEvent) => onDrag(getMousePoint(event)),
-    [getMousePoint, onDrag],
+    [getMousePoint, onDrag]
   );
 
   const onTouchMove = React.useCallback(
@@ -977,7 +922,7 @@ function CropperImpl(props: CropperImplProps) {
         }
       }
     },
-    [getTouchPoint, onDrag, zoom, onZoomChange, rotation, store],
+    [getTouchPoint, onDrag, zoom, onZoomChange, rotation, store]
   );
 
   const onGestureChange = React.useCallback(
@@ -994,43 +939,31 @@ function CropperImpl(props: CropperImplProps) {
       const newRotation = gestureRotationStartRef.current + event.rotation;
       store.setState("rotation", newRotation);
     },
-    [onZoomChange, store],
+    [onZoomChange, store]
   );
 
   const onGestureEnd = React.useCallback(() => {
-    document.removeEventListener(
-      "gesturechange",
-      onGestureChange as EventListener,
-    );
+    document.removeEventListener("gesturechange", onGestureChange as EventListener);
     document.removeEventListener("gestureend", onGestureEnd as EventListener);
   }, [onGestureChange]);
 
   const onGestureStart = React.useCallback(
     (event: GestureEvent) => {
       event.preventDefault();
-      document.addEventListener(
-        "gesturechange",
-        onGestureChange as EventListener,
-      );
+      document.addEventListener("gesturechange", onGestureChange as EventListener);
       document.addEventListener("gestureend", onGestureEnd as EventListener);
       gestureZoomStartRef.current = zoom;
       gestureRotationStartRef.current = rotation;
     },
-    [zoom, rotation, onGestureChange, onGestureEnd],
+    [zoom, rotation, onGestureChange, onGestureEnd]
   );
 
-  const onSafariZoomPrevent = React.useCallback(
-    (event: Event) => event.preventDefault(),
-    [],
-  );
+  const onSafariZoomPrevent = React.useCallback((event: Event) => event.preventDefault(), []);
 
   const onEventsCleanup = React.useCallback(() => {
     document.removeEventListener("mousemove", onMouseMove);
     document.removeEventListener("touchmove", onTouchMove);
-    document.removeEventListener(
-      "gesturechange",
-      onGestureChange as EventListener,
-    );
+    document.removeEventListener("gesturechange", onGestureChange as EventListener);
     document.removeEventListener("gestureend", onGestureEnd as EventListener);
   }, [onMouseMove, onTouchMove, onGestureChange, onGestureEnd]);
 
@@ -1092,15 +1025,7 @@ function CropperImpl(props: CropperImplProps) {
         });
       }, 250);
     },
-    [
-      propsRef,
-      getMousePoint,
-      zoom,
-      context.zoomSpeed,
-      onZoomChange,
-      getWheelDelta,
-      store,
-    ],
+    [propsRef, getMousePoint, zoom, context.zoomSpeed, onZoomChange, getWheelDelta, store]
   );
 
   const onKeyUp = React.useCallback(
@@ -1108,19 +1033,14 @@ function CropperImpl(props: CropperImplProps) {
       propsRef.current.onKeyUp?.(event);
       if (event.defaultPrevented) return;
 
-      const arrowKeys = new Set([
-        "ArrowUp",
-        "ArrowDown",
-        "ArrowLeft",
-        "ArrowRight",
-      ]);
+      const arrowKeys = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"]);
 
       if (arrowKeys.has(event.key)) {
         event.preventDefault();
         store.setState("isDragging", false);
       }
     },
-    [propsRef, store],
+    [propsRef, store]
   );
 
   const onKeyDown = React.useCallback(
@@ -1167,7 +1087,7 @@ function CropperImpl(props: CropperImplProps) {
       zoom,
       rotation,
       store,
-    ],
+    ]
   );
 
   const onMouseDown = React.useCallback(
@@ -1181,14 +1101,7 @@ function CropperImpl(props: CropperImplProps) {
       onContentPositionChange();
       onDragStart(getMousePoint(event));
     },
-    [
-      propsRef,
-      getMousePoint,
-      onDragStart,
-      onDragStopped,
-      onMouseMove,
-      onContentPositionChange,
-    ],
+    [propsRef, getMousePoint, onDragStart, onDragStopped, onMouseMove, onContentPositionChange]
   );
 
   const onTouchStart = React.useCallback(
@@ -1202,20 +1115,12 @@ function CropperImpl(props: CropperImplProps) {
       onContentPositionChange();
 
       if (event.touches.length === 2) {
-        const [firstTouch, secondTouch] = event.touches
-          ? Array.from(event.touches)
-          : [];
+        const [firstTouch, secondTouch] = event.touches ? Array.from(event.touches) : [];
         if (firstTouch && secondTouch) {
           const pointA = getTouchPoint(firstTouch);
           const pointB = getTouchPoint(secondTouch);
-          lastPinchDistanceRef.current = getDistanceBetweenPoints(
-            pointA,
-            pointB,
-          );
-          lastPinchRotationRef.current = getRotationBetweenPoints(
-            pointA,
-            pointB,
-          );
+          lastPinchDistanceRef.current = getDistanceBetweenPoints(pointA, pointB);
+          lastPinchRotationRef.current = getRotationBetweenPoints(pointA, pointB);
           onDragStart(getCenter(pointA, pointB));
         }
       } else if (event.touches.length === 1) {
@@ -1225,14 +1130,7 @@ function CropperImpl(props: CropperImplProps) {
         }
       }
     },
-    [
-      propsRef,
-      onDragStopped,
-      onTouchMove,
-      onContentPositionChange,
-      getTouchPoint,
-      onDragStart,
-    ],
+    [propsRef, onDragStopped, onTouchMove, onContentPositionChange, getTouchPoint, onDragStart]
   );
 
   React.useEffect(() => {
@@ -1251,10 +1149,7 @@ function CropperImpl(props: CropperImplProps) {
         content.removeEventListener("wheel", onWheelZoom);
       }
       content.removeEventListener("gesturestart", onSafariZoomPrevent);
-      content.removeEventListener(
-        "gesturestart",
-        onGestureStart as EventListener,
-      );
+      content.removeEventListener("gesturestart", onGestureStart as EventListener);
       onRefsCleanup();
     };
   }, [
@@ -1283,7 +1178,7 @@ function CropperImpl(props: CropperImplProps) {
       ref={composedRef}
       className={cn(
         "absolute inset-0 flex cursor-move touch-none select-none items-center justify-center overflow-hidden outline-none",
-        className,
+        className
       )}
       onKeyUp={onKeyUp}
       onKeyDown={onKeyDown}
@@ -1307,9 +1202,7 @@ const cropperMediaVariants = cva("will-change-transform", {
   },
 });
 
-interface UseMediaComputationProps<
-  T extends HTMLImageElement | HTMLVideoElement,
-> {
+interface UseMediaComputationProps<T extends HTMLImageElement | HTMLVideoElement> {
   mediaRef: React.RefObject<T | null>;
   context: CropperContextValue;
   store: Store;
@@ -1331,10 +1224,8 @@ function useMediaComputation<T extends HTMLImageElement | HTMLVideoElement>({
 
     const contentRect = content.getBoundingClientRect();
     const containerAspect = contentRect.width / contentRect.height;
-    const { width: naturalWidth, height: naturalHeight } =
-      getNaturalDimensions(media);
-    const isScaledDown =
-      media.offsetWidth < naturalWidth || media.offsetHeight < naturalHeight;
+    const { width: naturalWidth, height: naturalHeight } = getNaturalDimensions(media);
+    const isScaledDown = media.offsetWidth < naturalWidth || media.offsetHeight < naturalHeight;
     const mediaAspect = naturalWidth / naturalHeight;
 
     let renderedMediaSize: Size;
@@ -1404,7 +1295,7 @@ function useMediaComputation<T extends HTMLImageElement | HTMLVideoElement>({
       contentRect.width,
       contentRect.height,
       context.aspectRatio,
-      rotation,
+      rotation
     );
 
     store.setState("cropSize", cropSize);
@@ -1417,7 +1308,7 @@ function useMediaComputation<T extends HTMLImageElement | HTMLVideoElement>({
           currentState.mediaSize,
           currentState.cropSize,
           currentState.zoom,
-          currentState.rotation,
+          currentState.rotation
         );
 
         if (
@@ -1476,7 +1367,7 @@ function CropperImage(props: CropperImageProps) {
       width: image.naturalWidth,
       height: image.naturalHeight,
     }),
-    [],
+    []
   );
 
   const { computeSizes } = useMediaComputation({
@@ -1493,9 +1384,7 @@ function CropperImage(props: CropperImageProps) {
 
     computeSizes();
 
-    onLoad?.(
-      new Event("load") as unknown as React.SyntheticEvent<HTMLImageElement>,
-    );
+    onLoad?.(new Event("load") as unknown as React.SyntheticEvent<HTMLImageElement>);
   }, [computeSizes, onLoad]);
 
   React.useEffect(() => {
@@ -1562,7 +1451,7 @@ function CropperImage(props: CropperImageProps) {
         cropperMediaVariants({
           objectFit: objectFit ?? context.objectFit,
           className,
-        }),
+        })
       )}
       style={{
         transform: snapPixels
@@ -1608,7 +1497,7 @@ function CropperVideo(props: CropperVideoProps) {
       width: video.videoWidth,
       height: video.videoHeight,
     }),
-    [],
+    []
   );
 
   const { computeSizes } = useMediaComputation({
@@ -1626,9 +1515,7 @@ function CropperVideo(props: CropperVideoProps) {
     computeSizes();
 
     onLoadedMetadata?.(
-      new Event(
-        "loadedmetadata",
-      ) as unknown as React.SyntheticEvent<HTMLVideoElement>,
+      new Event("loadedmetadata") as unknown as React.SyntheticEvent<HTMLVideoElement>
     );
   }, [computeSizes, onLoadedMetadata]);
 
@@ -1694,7 +1581,7 @@ function CropperVideo(props: CropperVideoProps) {
         cropperMediaVariants({
           objectFit: objectFit ?? context.objectFit,
           className,
-        }),
+        })
       )}
       style={{
         transform: snapPixels
@@ -1724,12 +1611,10 @@ const cropperAreaVariants = cva(
       shape: "rectangle",
       withGrid: false,
     },
-  },
+  }
 );
 
-interface CropperAreaProps
-  extends DivProps,
-    VariantProps<typeof cropperAreaVariants> {
+interface CropperAreaProps extends DivProps, VariantProps<typeof cropperAreaVariants> {
   snapPixels?: boolean;
 }
 
@@ -1762,7 +1647,7 @@ function CropperArea(props: CropperAreaProps) {
           shape: shape ?? context.shape,
           withGrid: withGrid ?? context.withGrid,
           className,
-        }),
+        })
       )}
       style={{
         width: snapPixels ? Math.round(cropSize.width) : cropSize.width,

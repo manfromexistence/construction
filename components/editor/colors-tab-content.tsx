@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { RefreshCw, Search, X } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ColorPicker from "@/components/editor/color-picker";
 import ControlSection from "@/components/editor/control-section";
+import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { cn } from "@/lib/utils";
 import { FocusColorId } from "@/store/color-control-focus-store";
 import { ThemeStyleProps } from "@/types/theme";
@@ -106,7 +106,11 @@ const COLOR_GROUPS: ColorGroup[] = [
       { key: "sidebar", name: "sidebar", label: "Background" },
       { key: "sidebar-foreground", name: "sidebar-foreground", label: "Foreground" },
       { key: "sidebar-primary", name: "sidebar-primary", label: "Primary" },
-      { key: "sidebar-primary-foreground", name: "sidebar-primary-foreground", label: "Primary FG" },
+      {
+        key: "sidebar-primary-foreground",
+        name: "sidebar-primary-foreground",
+        label: "Primary FG",
+      },
       { key: "sidebar-accent", name: "sidebar-accent", label: "Accent" },
       { key: "sidebar-accent-foreground", name: "sidebar-accent-foreground", label: "Accent FG" },
       { key: "sidebar-border", name: "sidebar-border", label: "Border" },
@@ -138,7 +142,11 @@ interface ColorsTabContentProps {
   updateStyles: (updates: Partial<ThemeStyleProps>) => void;
 }
 
-export function ColorsTabContent({ currentStyles, updateStyle, updateStyles }: ColorsTabContentProps) {
+export function ColorsTabContent({
+  currentStyles,
+  updateStyle,
+  updateStyles,
+}: ColorsTabContentProps) {
   const [search, setSearch] = useState("");
   const [sidebarSyncEnabled, setSidebarSyncEnabled] = useState(false);
 
@@ -165,7 +173,7 @@ export function ColorsTabContent({ currentStyles, updateStyle, updateStyles }: C
     }
     // Only run when sync is toggled on, not when syncSidebarToBase changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sidebarSyncEnabled]);
+  }, [sidebarSyncEnabled, syncSidebarToBase]);
 
   // Keep sidebar in sync when base colors change while sync is enabled
   const wrappedUpdateStyle = useCallback(
@@ -268,7 +276,9 @@ export function ColorsTabContent({ currentStyles, updateStyle, updateStyles }: C
                 key={color.name}
                 name={color.name}
                 color={currentStyles[color.key] as string}
-                onChange={(value) => wrappedUpdateStyle(color.key, value as ThemeStyleProps[typeof color.key])}
+                onChange={(value) =>
+                  wrappedUpdateStyle(color.key, value as ThemeStyleProps[typeof color.key])
+                }
                 label={color.label}
               />
             ))}

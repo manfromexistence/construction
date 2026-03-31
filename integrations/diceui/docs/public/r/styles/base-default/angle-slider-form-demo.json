@@ -1,16 +1,7 @@
 {
   "name": "angle-slider-form-demo",
-  "dependencies": [
-    "@hookform/resolvers",
-    "react-hook-form",
-    "zod",
-    "sonner"
-  ],
-  "registryDependencies": [
-    "angle-slider",
-    "button",
-    "form"
-  ],
+  "dependencies": ["@hookform/resolvers", "react-hook-form", "zod", "sonner"],
+  "registryDependencies": ["angle-slider", "button", "form"],
   "files": [
     {
       "path": "examples/angle-slider-form-demo.tsx",

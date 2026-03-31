@@ -1,21 +1,11 @@
-import type {
-  GridElements,
-  IGrid,
-  IGridSection,
-  SectionElements,
-  SectionId,
-} from './Grid.types';
+import type { GridElements, IGrid, IGridSection, SectionElements, SectionId } from "./Grid.types";
 
 export class Grid<R, T extends SectionId = SectionId> implements IGrid<R, T> {
   protected grid = new Map<T, IGridSection<R, T>>();
   protected rowsCount = 1;
   protected sectionsIds: T[] = [];
 
-  addSection(
-    sectionId: T,
-    section: IGridSection<R, T>,
-    elements: GridElements
-  ) {
+  addSection(sectionId: T, section: IGridSection<R, T>, elements: GridElements) {
     section.setIndexRowStart(this.rowsCount).addElements(elements[sectionId]);
     this.rowsCount += section.rowsNum;
     this.grid.set(sectionId, section);

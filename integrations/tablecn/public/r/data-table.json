@@ -3,11 +3,7 @@
   "name": "data-table",
   "title": "Data Table",
   "description": "A feature-rich data table component with server-side filtering, sorting, and pagination",
-  "dependencies": [
-    "@tanstack/react-table",
-    "lucide-react",
-    "nuqs"
-  ],
+  "dependencies": ["@tanstack/react-table", "lucide-react", "nuqs"],
   "registryDependencies": [
     "badge",
     "button",

@@ -1,16 +1,13 @@
-import { slateNodesToInsertDelta, yTextToSlateElement } from '@slate-yjs/core';
-import { createSlateEditor } from 'platejs';
-import { Awareness } from 'y-protocols/awareness';
-import * as Y from 'yjs';
+import { slateNodesToInsertDelta, yTextToSlateElement } from "@slate-yjs/core";
+import { createSlateEditor } from "platejs";
+import { Awareness } from "y-protocols/awareness";
+import * as Y from "yjs";
+import { BaseYjsPlugin } from "../../BaseYjsPlugin";
+import { registerProviderType } from "../../providers";
+import { createMockProvider } from "../createMockProvider";
 
-import { createMockProvider } from '../createMockProvider';
-import { BaseYjsPlugin } from '../../BaseYjsPlugin';
-import { registerProviderType } from '../../providers';
-
-const REMOTE_ORIGIN = Symbol('yjs-test-remote');
-const PROVIDER_TYPE = `test-collaboration-${Math.random()
-  .toString(36)
-  .slice(2)}`;
+const REMOTE_ORIGIN = Symbol("yjs-test-remote");
+const PROVIDER_TYPE = `test-collaboration-${Math.random().toString(36).slice(2)}`;
 
 type CollaborationProviderOptions = {
   connector: CollaborationConnector;
@@ -18,7 +15,7 @@ type CollaborationProviderOptions = {
 };
 
 type FlushOptions = {
-  order?: 'fifo' | 'reverse';
+  order?: "fifo" | "reverse";
 };
 
 export class CollaborationConnector {
@@ -37,8 +34,7 @@ export class CollaborationConnector {
     peer.handleConnect();
 
     const connectedPeers = [...this.peers.values()].filter(
-      (currentPeer) =>
-        currentPeer.peerId !== peer.peerId && currentPeer.isConnected
+      (currentPeer) => currentPeer.peerId !== peer.peerId && currentPeer.isConnected
     );
 
     if (connectedPeers.length === 0) {
@@ -73,11 +69,11 @@ export class CollaborationConnector {
     }
   }
 
-  async flushAll({ order = 'fifo' }: FlushOptions = {}) {
+  async flushAll({ order = "fifo" }: FlushOptions = {}) {
     while (this.queue.length > 0) {
       const batch = this.queue.splice(0);
 
-      if (order === 'reverse') {
+      if (order === "reverse") {
         batch.reverse();
       }
 
@@ -121,10 +117,7 @@ export class CollaborationConnector {
     });
   }
 
-  private queueState(
-    fromPeer: TestCollaborationProvider,
-    toPeer: TestCollaborationProvider
-  ) {
+  private queueState(fromPeer: TestCollaborationProvider, toPeer: TestCollaborationProvider) {
     this.queue.push({
       to: toPeer.peerId,
       update: Y.encodeStateAsUpdate(fromPeer.document),
@@ -195,7 +188,7 @@ class TestCollaborationProvider {
       this.connector.enqueue(this, update);
     };
 
-    this.document.on('update', this.updateHandler);
+    this.document.on("update", this.updateHandler);
   }
 
   detach() {
@@ -203,7 +196,7 @@ class TestCollaborationProvider {
       return;
     }
 
-    this.document.off('update', this.updateHandler);
+    this.document.off("update", this.updateHandler);
     this.updateHandler = undefined;
   }
 
@@ -276,7 +269,7 @@ export const createMixedProviderEditor = ({
   const passiveProvider = createMockProvider({
     awareness,
     document: ydoc,
-    type: 'passive',
+    type: "passive",
   });
   const editor = createSlateEditor({
     plugins: [
@@ -301,8 +294,7 @@ export const getDocChildren = ({
   sharedType?: Y.XmlText | null;
   ydoc: Y.Doc;
 }) => {
-  const content =
-    sharedType ?? (ydoc.get('content', Y.XmlText) as Y.XmlText | null);
+  const content = sharedType ?? (ydoc.get("content", Y.XmlText) as Y.XmlText | null);
 
   if (!content) {
     return [];
@@ -344,11 +336,10 @@ export const replaceSharedContent = async ({
   value: any;
   ydoc: Y.Doc;
 }) => {
-  const content =
-    sharedType ?? (ydoc.get('content', Y.XmlText) as Y.XmlText | null);
+  const content = sharedType ?? (ydoc.get("content", Y.XmlText) as Y.XmlText | null);
 
   if (!content) {
-    throw new Error('Missing shared content');
+    throw new Error("Missing shared content");
   }
 
   if (content.length > 0) {
@@ -368,22 +359,18 @@ export const appendSharedContent = async ({
   value: any;
   ydoc: Y.Doc;
 }) => {
-  const content =
-    sharedType ?? (ydoc.get('content', Y.XmlText) as Y.XmlText | null);
+  const content = sharedType ?? (ydoc.get("content", Y.XmlText) as Y.XmlText | null);
 
   if (!content) {
-    throw new Error('Missing shared content');
+    throw new Error("Missing shared content");
   }
 
-  content.applyDelta([
-    { retain: content.length },
-    ...slateNodesToInsertDelta(value),
-  ]);
+  content.applyDelta([{ retain: content.length }, ...slateNodesToInsertDelta(value)]);
   await settle();
 };
 
 export const runWithImmediateTimeout = async (fn: () => Promise<void>) => {
-  const setTimeoutSpy = spyOn(globalThis, 'setTimeout').mockImplementation(((
+  const setTimeoutSpy = spyOn(globalThis, "setTimeout").mockImplementation(((
     callback: TimerHandler
   ) => {
     queueMicrotask(() => {

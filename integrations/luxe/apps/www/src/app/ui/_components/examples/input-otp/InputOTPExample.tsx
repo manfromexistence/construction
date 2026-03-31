@@ -1,8 +1,8 @@
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSlot,
   InputOTPSeparator,
+  InputOTPSlot,
 } from "@/app/_components/ui/input-otp";
 
 export function InputOTPExample() {

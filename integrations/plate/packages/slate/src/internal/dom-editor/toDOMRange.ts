@@ -1,7 +1,7 @@
-import { DOMEditor } from 'slate-dom';
+import { DOMEditor } from "slate-dom";
 
-import type { Editor } from '../../interfaces/editor';
-import type { TRange } from '../../interfaces/range';
+import type { Editor } from "../../interfaces/editor";
+import type { TRange } from "../../interfaces/range";
 
 export const toDOMRange = (editor: Editor, range: TRange) => {
   try {

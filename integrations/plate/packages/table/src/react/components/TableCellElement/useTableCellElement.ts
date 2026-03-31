@@ -1,15 +1,15 @@
-import type { TTableCellElement } from 'platejs';
+import type { TTableCellElement } from "platejs";
 
-import { useEditorPlugin, useEditorSelector, useElement } from 'platejs/react';
+import { useEditorPlugin, useEditorSelector, useElement } from "platejs/react";
 
-import type { BorderStylesDefault } from '../../../lib';
+import type { BorderStylesDefault } from "../../../lib";
 
-import { useCellIndices } from '../../hooks/useCellIndices';
-import { useTableValue } from '../../stores';
-import { TablePlugin } from '../../TablePlugin';
-import { useIsCellSelected } from './useIsCellSelected';
-import { useTableCellBorders } from './useTableCellBorders';
-import { useTableCellSize } from './useTableCellSize';
+import { useCellIndices } from "../../hooks/useCellIndices";
+import { useTableValue } from "../../stores";
+import { TablePlugin } from "../../TablePlugin";
+import { useIsCellSelected } from "./useIsCellSelected";
+import { useTableCellBorders } from "./useTableCellBorders";
+import { useTableCellSize } from "./useTableCellSize";
 
 export type TableCellElementState = {
   borders: BorderStylesDefault;
@@ -31,7 +31,7 @@ export const useTableCellElement = (): TableCellElementState => {
     []
   );
 
-  const rowSizeOverrides = useTableValue('rowSizeOverrides');
+  const rowSizeOverrides = useTableValue("rowSizeOverrides");
   const { minHeight, width } = useTableCellSize({ element });
   const borders = useTableCellBorders({ element });
 

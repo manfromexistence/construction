@@ -1,7 +1,7 @@
-import type { ElementEntry, SlateEditor } from 'platejs';
+import type { ElementEntry, SlateEditor } from "platejs";
 
-import { isListNested } from '../queries/isListNested';
-import { moveListItemUp } from './moveListItemUp';
+import { isListNested } from "../queries/isListNested";
+import { moveListItemUp } from "./moveListItemUp";
 
 /** If list is not nested and if li is not the first child, move li up. */
 export const removeFirstListItem = (

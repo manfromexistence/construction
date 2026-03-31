@@ -1,26 +1,26 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { MaximizeIcon, MinimizeIcon } from "lucide-react"
+import { MaximizeIcon, MinimizeIcon } from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/styles/radix-nova/ui/card"
+} from "@/styles/radix-nova/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/radix-nova/ui/collapsible"
-import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+} from "@/styles/radix-nova/ui/collapsible";
+import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 
 export function CollapsibleSettings() {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <Card className="mx-auto w-full max-w-xs" size="sm">
@@ -29,11 +29,7 @@ export function CollapsibleSettings() {
         <CardDescription>Set the corner radius of the element.</CardDescription>
       </CardHeader>
       <CardContent>
-        <Collapsible
-          open={isOpen}
-          onOpenChange={setIsOpen}
-          className="flex items-start gap-2"
-        >
+        <Collapsible open={isOpen} onOpenChange={setIsOpen} className="flex items-start gap-2">
           <FieldGroup className="grid w-full grid-cols-2 gap-2">
             <Field>
               <FieldLabel htmlFor="radius-x" className="sr-only">
@@ -70,5 +66,5 @@ export function CollapsibleSettings() {
         </Collapsible>
       </CardContent>
     </Card>
-  )
+  );
 }

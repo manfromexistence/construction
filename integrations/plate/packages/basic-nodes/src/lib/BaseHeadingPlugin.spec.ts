@@ -1,4 +1,4 @@
-import { KEYS, createSlateEditor } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
 import {
   BaseH1Plugin,
@@ -8,15 +8,15 @@ import {
   BaseH5Plugin,
   BaseH6Plugin,
   BaseHeadingPlugin,
-} from './BaseHeadingPlugin';
+} from "./BaseHeadingPlugin";
 
-describe('BaseHeadingPlugin', () => {
+describe("BaseHeadingPlugin", () => {
   afterEach(() => {
     mock.restore();
   });
 
-  describe('when using default options', () => {
-    it('creates plugins for all 6 heading levels', () => {
+  describe("when using default options", () => {
+    it("creates plugins for all 6 heading levels", () => {
       const editor = createSlateEditor({
         plugins: [BaseHeadingPlugin],
       } as any);
@@ -35,8 +35,8 @@ describe('BaseHeadingPlugin', () => {
     });
   });
 
-  describe('when configuring custom levels', () => {
-    it('creates plugins only for specified levels', () => {
+  describe("when configuring custom levels", () => {
+    it("creates plugins only for specified levels", () => {
       const editor = createSlateEditor({
         plugins: [
           BaseHeadingPlugin.configure({
@@ -48,7 +48,7 @@ describe('BaseHeadingPlugin', () => {
       const headingPlugin = editor.getPlugin(BaseHeadingPlugin);
       expect(headingPlugin.plugins).toHaveLength(3);
 
-      const expectedLevels = ['h1', 'h3', 'h5'];
+      const expectedLevels = ["h1", "h3", "h5"];
       expectedLevels.forEach((level, index) => {
         const plugin = headingPlugin.plugins[index];
         expect(plugin.key).toBe(level);
@@ -56,8 +56,8 @@ describe('BaseHeadingPlugin', () => {
     });
   });
 
-  describe('when using a single level', () => {
-    it('creates plugins up to the configured level', () => {
+  describe("when using a single level", () => {
+    it("creates plugins up to the configured level", () => {
       const editor = createSlateEditor({
         plugins: [
           BaseHeadingPlugin.configure({
@@ -71,8 +71,8 @@ describe('BaseHeadingPlugin', () => {
     });
   });
 
-  describe('nested plugins', () => {
-    it('preserves heading element metadata on nested plugins', () => {
+  describe("nested plugins", () => {
+    it("preserves heading element metadata on nested plugins", () => {
       const editor = createSlateEditor({
         plugins: [BaseHeadingPlugin],
       } as any);
@@ -90,17 +90,17 @@ describe('BaseHeadingPlugin', () => {
   });
 
   it.each([
-    ['h1', BaseH1Plugin],
-    ['h2', BaseH2Plugin],
-    ['h3', BaseH3Plugin],
-    ['h4', BaseH4Plugin],
-    ['h5', BaseH5Plugin],
-    ['h6', BaseH6Plugin],
-  ])('binds the %s toggle transform to toggleBlock', (key, plugin) => {
+    ["h1", BaseH1Plugin],
+    ["h2", BaseH2Plugin],
+    ["h3", BaseH3Plugin],
+    ["h4", BaseH4Plugin],
+    ["h5", BaseH5Plugin],
+    ["h6", BaseH6Plugin],
+  ])("binds the %s toggle transform to toggleBlock", (key, plugin) => {
     const editor = createSlateEditor({
       plugins: [plugin as any],
     } as any);
-    const toggleBlockSpy = spyOn(editor.tf, 'toggleBlock');
+    const toggleBlockSpy = spyOn(editor.tf, "toggleBlock");
 
     (editor.getTransforms(plugin as any) as any)[key].toggle();
 

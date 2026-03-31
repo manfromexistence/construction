@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { IconMinus, IconPlus } from "@tabler/icons-react"
+import { IconMinus, IconPlus } from "@tabler/icons-react";
+import * as React from "react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
-import { ButtonGroup } from "@/styles/radix-nova/ui/button-group"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { ButtonGroup } from "@/styles/radix-nova/ui/button-group";
 import {
   Field,
   FieldContent,
@@ -15,53 +15,41 @@ import {
   FieldSeparator,
   FieldSet,
   FieldTitle,
-} from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
-import { RadioGroup, RadioGroupItem } from "@/styles/radix-nova/ui/radio-group"
-import { Switch } from "@/styles/radix-nova/ui/switch"
+} from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/styles/radix-nova/ui/radio-group";
+import { Switch } from "@/styles/radix-nova/ui/switch";
 
 export function AppearanceSettings() {
-  const [gpuCount, setGpuCount] = React.useState(8)
+  const [gpuCount, setGpuCount] = React.useState(8);
 
   const handleGpuAdjustment = React.useCallback((adjustment: number) => {
-    setGpuCount((prevCount) =>
-      Math.max(1, Math.min(99, prevCount + adjustment))
-    )
-  }, [])
+    setGpuCount((prevCount) => Math.max(1, Math.min(99, prevCount + adjustment)));
+  }, []);
 
-  const handleGpuInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = parseInt(e.target.value, 10)
-      if (!isNaN(value) && value >= 1 && value <= 99) {
-        setGpuCount(value)
-      }
-    },
-    []
-  )
+  const handleGpuInputChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= 99) {
+      setGpuCount(value);
+    }
+  }, []);
 
   return (
     <FieldSet>
       <FieldGroup>
         <FieldSet>
           <FieldLegend>Compute Environment</FieldLegend>
-          <FieldDescription>
-            Select the compute environment for your cluster.
-          </FieldDescription>
+          <FieldDescription>Select the compute environment for your cluster.</FieldDescription>
           <RadioGroup defaultValue="kubernetes">
             <FieldLabel htmlFor="kubernetes-r2h">
               <Field orientation="horizontal">
                 <FieldContent>
                   <FieldTitle>Kubernetes</FieldTitle>
                   <FieldDescription>
-                    Run GPU workloads on a K8s configured cluster. This is the
-                    default.
+                    Run GPU workloads on a K8s configured cluster. This is the default.
                   </FieldDescription>
                 </FieldContent>
-                <RadioGroupItem
-                  value="kubernetes"
-                  id="kubernetes-r2h"
-                  aria-label="Kubernetes"
-                />
+                <RadioGroupItem value="kubernetes" id="kubernetes-r2h" aria-label="Kubernetes" />
               </Field>
             </FieldLabel>
             <FieldLabel htmlFor="vm-z4k">
@@ -69,15 +57,10 @@ export function AppearanceSettings() {
                 <FieldContent>
                   <FieldTitle>Virtual Machine</FieldTitle>
                   <FieldDescription>
-                    Access a VM configured cluster to run workloads. (Coming
-                    soon)
+                    Access a VM configured cluster to run workloads. (Coming soon)
                   </FieldDescription>
                 </FieldContent>
-                <RadioGroupItem
-                  value="vm"
-                  id="vm-z4k"
-                  aria-label="Virtual Machine"
-                />
+                <RadioGroupItem value="vm" id="vm-z4k" aria-label="Virtual Machine" />
               </Field>
             </FieldLabel>
           </RadioGroup>
@@ -123,13 +106,11 @@ export function AppearanceSettings() {
         <Field orientation="horizontal">
           <FieldContent>
             <FieldLabel htmlFor="tinting">Wallpaper Tinting</FieldLabel>
-            <FieldDescription>
-              Allow the wallpaper to be tinted.
-            </FieldDescription>
+            <FieldDescription>Allow the wallpaper to be tinted.</FieldDescription>
           </FieldContent>
           <Switch id="tinting" defaultChecked />
         </Field>
       </FieldGroup>
     </FieldSet>
-  )
+  );
 }

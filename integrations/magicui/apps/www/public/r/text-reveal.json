@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Text Reveal",
   "description": "Fade in text as you scroll down the page.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/text-reveal.tsx",

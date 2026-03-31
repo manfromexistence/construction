@@ -28,7 +28,7 @@ export const isEditOnly = (
   }
 
   // If editOnly is an object, use its value if specified, otherwise use default
-  if (typeof plugin.editOnly === 'object') {
+  if (typeof plugin.editOnly === "object") {
     return plugin.editOnly[feature] ?? DEFAULT[feature];
   }
 

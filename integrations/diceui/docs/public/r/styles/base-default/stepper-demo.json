@@ -1,8 +1,6 @@
 {
   "name": "stepper-demo",
-  "registryDependencies": [
-    "stepper"
-  ],
+  "registryDependencies": ["stepper"],
   "files": [
     {
       "path": "examples/stepper-demo.tsx",

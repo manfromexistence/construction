@@ -1,13 +1,9 @@
-import type { Page } from '@playwright/test';
-import type { TLocation } from 'platejs';
+import type { Page } from "@playwright/test";
+import type { TLocation } from "platejs";
 
-import type { EditorHandle } from './types';
+import type { EditorHandle } from "./types";
 
-export const setSelection = async (
-  page: Page,
-  editorHandle: EditorHandle,
-  at: TLocation
-) => {
+export const setSelection = async (page: Page, editorHandle: EditorHandle, at: TLocation) => {
   await page.evaluate(
     ([editor, at]) => {
       const range = editor.api.range(at)!;

@@ -1,16 +1,15 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { MarkdownPlugin, remarkMdx, remarkMention } from "@platejs/markdown";
+import { Plate, usePlateEditor } from "platejs/react";
+import * as React from "react";
+import remarkEmoji from "remark-emoji";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 
-import { MarkdownPlugin, remarkMdx, remarkMention } from '@platejs/markdown';
-import { Plate, usePlateEditor } from 'platejs/react';
-import remarkEmoji from 'remark-emoji';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-
-import { EditorKit } from '@/registry/components/editor/editor-kit';
-import { useDebounce } from '@/registry/hooks/use-debounce';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { EditorKit } from "@/registry/components/editor/editor-kit";
+import { useDebounce } from "@/registry/hooks/use-debounce";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 const initialMarkdown = `## Basic Markdown
 
@@ -98,7 +97,7 @@ export default function MarkdownDemo() {
 
   const markdownEditor = usePlateEditor({
     plugins: [],
-    value: [{ children: [{ text: markdownValue }], type: 'p' }],
+    value: [{ children: [{ text: markdownValue }], type: "p" }],
   });
 
   const editor = usePlateEditor(
@@ -106,13 +105,7 @@ export default function MarkdownDemo() {
       plugins: EditorKit,
       value: (editor) =>
         editor.getApi(MarkdownPlugin).markdown.deserialize(initialMarkdown, {
-          remarkPlugins: [
-            remarkMath,
-            remarkGfm,
-            remarkMdx,
-            remarkMention,
-            remarkEmoji as any,
-          ],
+          remarkPlugins: [remarkMath, remarkGfm, remarkMdx, remarkMention, remarkEmoji as any],
         }),
     },
     []
@@ -123,13 +116,7 @@ export default function MarkdownDemo() {
       editor.tf.reset();
       editor.tf.setValue(
         editor.api.markdown.deserialize(debouncedMarkdownValue, {
-          remarkPlugins: [
-            remarkMath,
-            remarkGfm,
-            remarkMdx,
-            remarkMention,
-            remarkEmoji as any,
-          ],
+          remarkPlugins: [remarkMath, remarkGfm, remarkMdx, remarkMention, remarkEmoji as any],
         })
       );
     }
@@ -141,16 +128,13 @@ export default function MarkdownDemo() {
         onValueChange={() => {
           const value = markdownEditor.children
             .map((node: any) => markdownEditor.api.string(node))
-            .join('\n');
+            .join("\n");
           setMarkdownValue(value);
         }}
         editor={markdownEditor}
       >
         <EditorContainer>
-          <Editor
-            variant="none"
-            className="bg-muted/50 p-2 font-mono text-sm"
-          />
+          <Editor variant="none" className="bg-muted/50 p-2 font-mono text-sm" />
         </EditorContainer>
       </Plate>
 

@@ -1,16 +1,9 @@
-import {
-  type TElement,
-  type TText,
-  ElementApi,
-  NodeApi,
-  PathApi,
-} from '@platejs/slate';
-import { type NodeEntry, Path } from 'slate';
+import { ElementApi, NodeApi, PathApi, type TElement, type TText } from "@platejs/slate";
+import { type NodeEntry, Path } from "slate";
 
-import type { SlateEditor } from '../../../editor';
-import type { EdgeNodes } from '../types';
-
-import { getPluginByType } from '../../../plugin/getSlatePlugin';
+import type { SlateEditor } from "../../../editor";
+import { getPluginByType } from "../../../plugin/getSlatePlugin";
+import type { EdgeNodes } from "../types";
 
 /**
  * When the cursor is at a mark edge, this function returns the inward node and
@@ -28,46 +21,37 @@ export const getEdgeNodes = (editor: SlateEditor): EdgeNodes | null => {
   if (!textRange) return null;
 
   const edge = editor.api.isStart(cursor, textRange)
-    ? 'start'
+    ? "start"
     : editor.api.isEnd(cursor, textRange)
-      ? 'end'
+      ? "end"
       : null;
 
   if (!edge) return null;
 
-  const parent: TElement | null = (NodeApi.parent(editor, cursor.path) ??
-    null) as TElement | null;
+  const parent: TElement | null = (NodeApi.parent(editor, cursor.path) ?? null) as TElement | null;
 
   /** Inline elements */
 
   const isAffinityInlineElement = (() => {
     if (!parent || !ElementApi.isElement(parent)) return false;
 
-    const parentAffinity = getPluginByType(editor, parent.type)?.rules.selection
-      ?.affinity;
+    const parentAffinity = getPluginByType(editor, parent.type)?.rules.selection?.affinity;
 
-    return parentAffinity === 'hard' || parentAffinity === 'directional';
+    return parentAffinity === "hard" || parentAffinity === "directional";
   })();
 
   const nodeEntry: NodeEntry<TElement | TText> = isAffinityInlineElement
     ? [parent!, PathApi.parent(cursor.path)]
     : [NodeApi.get(editor, cursor.path)!, cursor.path];
 
-  if (
-    edge === 'start' &&
-    cursor.path.at(-1) === 0 &&
-    !isAffinityInlineElement
-  ) {
+  if (edge === "start" && cursor.path.at(-1) === 0 && !isAffinityInlineElement) {
     return [null, nodeEntry];
   }
 
-  const siblingPath =
-    edge === 'end' ? Path.next(nodeEntry[1]) : Path.previous(nodeEntry[1]);
+  const siblingPath = edge === "end" ? Path.next(nodeEntry[1]) : Path.previous(nodeEntry[1]);
   const siblingNode = NodeApi.get<TText>(editor, siblingPath);
 
-  const siblingEntry: NodeEntry<TText> | null = siblingNode
-    ? [siblingNode, siblingPath]
-    : null;
+  const siblingEntry: NodeEntry<TText> | null = siblingNode ? [siblingNode, siblingPath] : null;
 
-  return edge === 'end' ? [nodeEntry, siblingEntry] : [siblingEntry, nodeEntry];
+  return edge === "end" ? [nodeEntry, siblingEntry] : [siblingEntry, nodeEntry];
 };

@@ -1,7 +1,7 @@
-import type { cva, VariantProps } from 'class-variance-authority';
-import React from 'react';
+import type { cva, VariantProps } from "class-variance-authority";
+import React from "react";
 
-import { cn } from './cn';
+import { cn } from "./cn";
 
 /**
  * Set default `className` with `cn` and `variants`.
@@ -12,10 +12,11 @@ import { cn } from './cn';
  * @param onlyVariantsProps - Props to exclude from `Component`. Set the props
  *   that are only used for variants.
  */
-export function withVariants<
-  T extends React.ElementType,
-  V extends ReturnType<typeof cva>,
->(Component: T, variants: V, onlyVariantsProps?: (keyof VariantProps<V>)[]) {
+export function withVariants<T extends React.ElementType, V extends ReturnType<typeof cva>>(
+  Component: T,
+  variants: V,
+  onlyVariantsProps?: (keyof VariantProps<V>)[]
+) {
   return React.forwardRef<
     React.ComponentRef<T>,
     React.ComponentPropsWithoutRef<T> &
@@ -35,11 +36,7 @@ export function withVariants<
     }
 
     return (
-      <Component
-        className={cn(variants(variantProps), className)}
-        ref={ref}
-        {...componentProps}
-      />
+      <Component className={cn(variants(variantProps), className)} ref={ref} {...componentProps} />
     );
   });
 }

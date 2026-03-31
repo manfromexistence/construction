@@ -1,14 +1,14 @@
-import { NextResponse } from 'next/server';
-import { z } from 'zod';
+import { NextResponse } from "next/server";
+import { z } from "zod";
 
-import { highlightFiles } from '@/lib/highlight-code';
-import { getRegistryItem } from '@/lib/rehype-utils';
-import { registry } from '@/registry/registry';
+import { highlightFiles } from "@/lib/highlight-code";
+import { getRegistryItem } from "@/lib/rehype-utils";
+import { registry } from "@/registry/registry";
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 const ParamsSchema = z.object({
-  name: z.string().min(1, 'Name parameter is required'),
+  name: z.string().min(1, "Name parameter is required"),
 });
 
 export function generateStaticParams() {
@@ -34,23 +34,13 @@ export async function GET(_: Request, { params }: any) {
     });
   } catch (error) {
     if (error instanceof z.ZodError) {
-      console.error(
-        'Failed to get registry files:',
-        name,
-        error.issues[0].message
-      );
+      console.error("Failed to get registry files:", name, error.issues[0].message);
 
-      return NextResponse.json(
-        { error: error.issues[0].message },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: error.issues[0].message }, { status: 400 });
     }
 
-    console.error('Failed to get registry files:', name, error);
+    console.error("Failed to get registry files:", name, error);
 
-    return NextResponse.json(
-      { error: `Failed to get registry files: ${name}` },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: `Failed to get registry files: ${name}` }, { status: 500 });
   }
 }

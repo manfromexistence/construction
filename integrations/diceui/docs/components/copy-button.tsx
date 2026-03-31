@@ -21,7 +21,7 @@ export function CopyButton({ value, className, ...props }: CopyButtonProps) {
       variant="ghost"
       className={cn(
         "size-7 text-muted-foreground hover:text-foreground [&_svg]:size-3.5",
-        className,
+        className
       )}
       onClick={onClick}
       {...props}

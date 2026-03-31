@@ -1,14 +1,14 @@
-import type { RegistryItem } from 'shadcn/registry';
+import type { RegistryItem } from "shadcn/registry";
 
 export function getRegistryTitle(item: Partial<RegistryItem>): string {
   return (
     item.title ??
     item.name
-      ?.replace('-demo', '')
-      ?.split('-')
+      ?.replace("-demo", "")
+      ?.split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ') ??
-    ''
+      .join(" ") ??
+    ""
   );
 }
 
@@ -16,11 +16,11 @@ export function getDocTitle(item: { route?: string; title?: string }): string {
   return (
     item.title ??
     item.route
-      ?.split('/')
+      ?.split("/")
       .pop()
-      ?.split('-')
+      ?.split("-")
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ') ??
-    ''
+      .join(" ") ??
+    ""
   );
 }

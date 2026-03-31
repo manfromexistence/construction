@@ -1,52 +1,49 @@
-'use client';
+"use client";
 
-import React from 'react';
-
-import type { TocItem } from '@/lib/toc';
-import type { Doc } from '@/.contentlayer/generated';
-import type { RegistryItem } from 'shadcn/registry';
-
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
-import { ExternalLinkIcon } from 'lucide-react';
-import Link from 'next/link';
-
-import { DocsTableOfContents } from '@/components/docs-toc';
-import { LLMCopyButton } from '@/components/llm-copy-button';
-import { OpenInPlus } from '@/components/open-in-plus';
-import { getPagerForDoc } from '@/components/pager';
-import { badgeVariants } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ViewOptions } from '@/components/view-options';
-import { categoryNavGroups, docSections } from '@/config/docs-utils';
-import { useDedupeNavItems } from '@/hooks/use-dedupe-nav-items';
-import { getDocTitle, getRegistryTitle } from '@/lib/registry-utils';
-import { cn } from '@/lib/utils';
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import { ExternalLinkIcon } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import type { RegistryItem } from "shadcn/registry";
+import type { Doc } from "@/.contentlayer/generated";
+import { DocsTableOfContents } from "@/components/docs-toc";
+import { LLMCopyButton } from "@/components/llm-copy-button";
+import { OpenInPlus } from "@/components/open-in-plus";
+import { getPagerForDoc } from "@/components/pager";
+import { badgeVariants } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ViewOptions } from "@/components/view-options";
+import { categoryNavGroups, docSections } from "@/config/docs-utils";
+import { useDedupeNavItems } from "@/hooks/use-dedupe-nav-items";
+import { getDocTitle, getRegistryTitle } from "@/lib/registry-utils";
+import type { TocItem } from "@/lib/toc";
+import { cn } from "@/lib/utils";
 
 // import { formatBytes, getPackageData } from '@/lib/bundlephobia';
 
 const getItemVariant = (item: any) => {
-  const allowedHosts = ['pro.platejs.org'];
+  const allowedHosts = ["pro.platejs.org"];
 
   try {
     const url = new URL(item.route);
 
-    if (allowedHosts.includes(url.hostname)) return 'plus';
+    if (allowedHosts.includes(url.hostname)) return "plus";
   } catch (_error) {
     // console.error('Invalid URL:', item.route, error);
   }
 
   // if (item.route?.includes('components')) return 'default';
-  if (item.route?.includes('components')) return 'secondary';
+  if (item.route?.includes("components")) return "secondary";
 
-  return 'outline';
+  return "outline";
 };
 
 const _searchCategories = {
-  api: 'Search API',
-  component: 'Search components',
-  example: 'Search examples',
-  guide: 'Search guides',
-  plugin: 'Search plugins',
+  api: "Search API",
+  component: "Search components",
+  example: "Search examples",
+  guide: "Search guides",
+  plugin: "Search plugins",
 };
 
 export function DocContent({
@@ -56,7 +53,7 @@ export function DocContent({
   toc,
   ...file
 }: {
-  category: 'api' | 'component' | 'example' | 'guide' | 'plugin';
+  category: "api" | "component" | "example" | "guide" | "plugin";
   children: React.ReactNode;
   doc: Partial<Doc>;
   toc?: TocItem[];
@@ -64,9 +61,7 @@ export function DocContent({
   const title = doc?.title ?? getRegistryTitle(file);
   const hasToc = doc?.toc && toc;
 
-  const _docSection = docSections[0].items!.find(
-    (item) => item.value === category
-  );
+  const _docSection = docSections[0].items!.find((item) => item.value === category);
 
   const _items = useDedupeNavItems(categoryNavGroups[category]);
 
@@ -79,7 +74,7 @@ export function DocContent({
         <div className="h-(--top-spacing) shrink-0" />
         <div
           className={cn(
-            'mx-auto flex w-full min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 lg:px-0 lg:py-8 dark:text-neutral-300'
+            "mx-auto flex w-full min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 lg:px-0 lg:py-8 dark:text-neutral-300"
             // v4
             // 'max-w-3xl'
           )}
@@ -164,10 +159,7 @@ export function DocContent({
               <div className="flex flex-wrap items-center gap-1">
                 {doc?.links?.doc && (
                   <Link
-                    className={cn(
-                      badgeVariants({ variant: 'secondary' }),
-                      'gap-1'
-                    )}
+                    className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
                     href={doc?.links.doc}
                     rel="noreferrer"
                     target="_blank"
@@ -178,10 +170,7 @@ export function DocContent({
                 )}
                 {doc?.links?.api && (
                   <Link
-                    className={cn(
-                      badgeVariants({ variant: 'secondary' }),
-                      'gap-1'
-                    )}
+                    className={cn(badgeVariants({ variant: "secondary" }), "gap-1")}
                     href={doc?.links.api}
                     rel="noreferrer"
                     target="_blank"
@@ -215,32 +204,22 @@ export function DocContent({
         </div>
         <div
           className={cn(
-            'mx-auto flex h-16 w-full items-center gap-2 px-4 lg:px-0',
+            "mx-auto flex h-16 w-full items-center gap-2 px-4 lg:px-0",
             // v4
             // 'max-w-2xl',
             // no footer
-            'mb-12'
+            "mb-12"
           )}
         >
           {neighbours.previous?.href && (
-            <Button
-              asChild
-              size="sm"
-              variant="secondary"
-              className="shadow-none"
-            >
+            <Button asChild size="sm" variant="secondary" className="shadow-none">
               <Link href={neighbours.previous.href}>
                 <IconArrowLeft /> {neighbours.previous.title}
               </Link>
             </Button>
           )}
           {neighbours.next?.href && (
-            <Button
-              asChild
-              size="sm"
-              variant="secondary"
-              className="ml-auto shadow-none"
-            >
+            <Button asChild size="sm" variant="secondary" className="ml-auto shadow-none">
               <Link href={neighbours.next.href}>
                 {neighbours.next.title} <IconArrowRight />
               </Link>

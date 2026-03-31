@@ -1,32 +1,24 @@
-"use client"
+"use client";
 
-import { ChevronDownIcon, InfoIcon, StarIcon } from "lucide-react"
-import { toast } from "sonner"
+import { ChevronDownIcon, InfoIcon, StarIcon } from "lucide-react";
+import { toast } from "sonner";
 
-import { Button } from "@/styles/radix-nova/ui/button"
-import {
-  ButtonGroup,
-  ButtonGroupText,
-} from "@/styles/radix-nova/ui/button-group"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { ButtonGroup, ButtonGroupText } from "@/styles/radix-nova/ui/button-group";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+} from "@/styles/radix-nova/ui/dropdown-menu";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/radix-nova/ui/input-group"
+} from "@/styles/radix-nova/ui/input-group";
 import {
   Popover,
   PopoverContent,
@@ -34,19 +26,15 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@/styles/radix-nova/ui/popover"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/radix-nova/ui/tooltip"
+} from "@/styles/radix-nova/ui/popover";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/radix-nova/ui/tooltip";
 
 export function InputGroupWithTooltip({
   country,
   setCountry,
 }: {
-  country: string
-  setCountry: (value: string) => void
+  country: string;
+  setCountry: (value: string) => void;
 }) {
   return (
     <FieldGroup>
@@ -65,9 +53,7 @@ export function InputGroupWithTooltip({
             </Tooltip>
           </InputGroupAddon>
         </InputGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
       <Field>
         <FieldLabel htmlFor="input-dropdown-21">Dropdown</FieldLabel>
@@ -86,22 +72,14 @@ export function InputGroupWithTooltip({
                 sideOffset={10}
                 alignOffset={-8}
               >
-                <DropdownMenuItem onClick={() => setCountry("+1")}>
-                  +1
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCountry("+44")}>
-                  +44
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => setCountry("+46")}>
-                  +46
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCountry("+1")}>+1</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCountry("+44")}>+44</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setCountry("+46")}>+46</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </InputGroupAddon>
         </InputGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
       <Field>
         <FieldLabel htmlFor="input-secure-19">Popover</FieldLabel>
@@ -123,22 +101,15 @@ export function InputGroupWithTooltip({
               </PopoverHeader>
             </PopoverContent>
           </Popover>
-          <InputGroupAddon className="pl-1 text-muted-foreground">
-            https://
-          </InputGroupAddon>
+          <InputGroupAddon className="pl-1 text-muted-foreground">https://</InputGroupAddon>
           <InputGroupInput id="input-secure-19" />
           <InputGroupAddon align="inline-end">
-            <InputGroupButton
-              size="icon-xs"
-              onClick={() => toast("Added to favorites")}
-            >
+            <InputGroupButton size="icon-xs" onClick={() => toast("Added to favorites")}>
               <StarIcon />
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
       <Field>
         <FieldLabel htmlFor="url">Button Group</FieldLabel>
@@ -152,10 +123,8 @@ export function InputGroupWithTooltip({
           </InputGroup>
           <ButtonGroupText>.com</ButtonGroupText>
         </ButtonGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
     </FieldGroup>
-  )
+  );
 }

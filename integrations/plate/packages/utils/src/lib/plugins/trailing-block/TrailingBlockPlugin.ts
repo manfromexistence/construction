@@ -1,11 +1,11 @@
-import { createTSlatePlugin, type PluginConfig } from '@platejs/core';
-import type { QueryNodeOptions } from '@platejs/slate';
+import { createTSlatePlugin, type PluginConfig } from "@platejs/core";
+import type { QueryNodeOptions } from "@platejs/slate";
 
-import { KEYS } from '../../plate-keys';
-import { withTrailingBlock } from './withTrailingBlock';
+import { KEYS } from "../../plate-keys";
+import { withTrailingBlock } from "./withTrailingBlock";
 
 export type TrailingBlockConfig = PluginConfig<
-  'trailingBlock',
+  "trailingBlock",
   {
     /** Level where the trailing node should be, the first level being 0. */
     level?: number;

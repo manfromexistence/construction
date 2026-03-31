@@ -1,6 +1,6 @@
-import { ArrowUpRightIcon } from "lucide-react"
+import { ArrowUpRightIcon } from "lucide-react";
 
-import { Badge } from "@/styles/radix-nova/ui/badge"
+import { Badge } from "@/styles/radix-nova/ui/badge";
 
 export function BadgeAsLink() {
   return (
@@ -9,5 +9,5 @@ export function BadgeAsLink() {
         Open Link <ArrowUpRightIcon data-icon="inline-end" />
       </a>
     </Badge>
-  )
+  );
 }

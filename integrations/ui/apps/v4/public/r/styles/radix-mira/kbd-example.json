@@ -2,13 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "kbd-example",
   "title": "Kbd",
-  "registryDependencies": [
-    "button",
-    "input-group",
-    "kbd",
-    "tooltip",
-    "example"
-  ],
+  "registryDependencies": ["button", "input-group", "kbd", "tooltip", "example"],
   "files": [
     {
       "path": "registry/radix-mira/examples/kbd-example.tsx",

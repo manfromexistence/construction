@@ -1,8 +1,7 @@
-import type { PlateEditor } from 'platejs/react';
+import { NodeApi, type Path, PathApi, type TElement } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import { type Path, type TElement, NodeApi, PathApi } from 'platejs';
-
-import { BlockSelectionPlugin } from '../BlockSelectionPlugin';
+import { BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 export const insertBlocksAndSelect = (
   editor: PlateEditor,
@@ -27,7 +26,7 @@ export const insertBlocksAndSelect = (
   setTimeout(() => {
     editor.setOption(
       BlockSelectionPlugin,
-      'selectedIds',
+      "selectedIds",
       new Set(insertedNodes.map((n) => n.id as string))
     );
   }, 0);

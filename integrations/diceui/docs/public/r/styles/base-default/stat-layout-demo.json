@@ -1,11 +1,7 @@
 {
   "name": "stat-layout-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "stat"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["stat"],
   "files": [
     {
       "path": "examples/stat-layout-demo.tsx",

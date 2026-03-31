@@ -1,10 +1,6 @@
 {
   "name": "pending-switch-demo",
-  "registryDependencies": [
-    "pending",
-    "switch",
-    "label"
-  ],
+  "registryDependencies": ["pending", "switch", "label"],
   "files": [
     {
       "path": "examples/pending-switch-demo.tsx",

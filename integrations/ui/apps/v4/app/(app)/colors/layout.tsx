@@ -1,19 +1,19 @@
-import { type Metadata } from "next"
-import Link from "next/link"
+import { type Metadata } from "next";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
-import { ColorsNav } from "@/components/colors-nav"
+import { Announcement } from "@/components/announcement";
+import { ColorsNav } from "@/components/colors-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { Button } from "@/registry/new-york-v4/ui/button"
+} from "@/components/page-header";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
-const title = "Tailwind Colors in Every Format"
+const title = "Tailwind Colors in Every Format";
 const description =
-  "The complete Tailwind color palette in HEX, RGB, HSL, CSS variables, and classes. Ready to copy and paste into your project."
+  "The complete Tailwind color palette in HEX, RGB, HSL, CSS variables, and classes. Ready to copy and paste into your project.";
 
 export const metadata: Metadata = {
   title,
@@ -37,13 +37,9 @@ export const metadata: Metadata = {
       },
     ],
   },
-}
+};
 
-export default function ColorsLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function ColorsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <PageHeader>
@@ -74,5 +70,5 @@ export default function ColorsLayout({
         </div>
       </div>
     </div>
-  )
+  );
 }

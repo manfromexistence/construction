@@ -1,20 +1,16 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { MarkdownPlugin } from '@platejs/markdown';
+import { MarkdownPlugin } from "@platejs/markdown";
 import {
   BaseTableCellHeaderPlugin,
   BaseTableCellPlugin,
   BaseTablePlugin,
   BaseTableRowPlugin,
-} from '@platejs/table';
-import {
-  BaseParagraphPlugin,
-  type SlateEditor,
-  createSlateEditor,
-} from 'platejs';
+} from "@platejs/table";
+import { jsxt } from "@platejs/test-utils";
+import { BaseParagraphPlugin, createSlateEditor, type SlateEditor } from "platejs";
 
-import { getMarkdown } from './getMarkdown';
+import { getMarkdown } from "./getMarkdown";
 
 jsxt;
 
@@ -32,9 +28,9 @@ const createTestEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('getMarkdown', () => {
-  describe('tableCellWithId', () => {
-    it('use CellRef placeholder in table and Cell blocks after', () => {
+describe("getMarkdown", () => {
+  describe("tableCellWithId", () => {
+    it("use CellRef placeholder in table and Cell blocks after", () => {
       const input = (
         <editor>
           <htable id="t1">
@@ -93,7 +89,7 @@ describe('getMarkdown', () => {
       const editor = createTestEditor(input);
 
       const result = getMarkdown(editor, {
-        type: 'tableCellWithId',
+        type: "tableCellWithId",
       });
 
       // Table should have CellRef placeholders for selected cells
@@ -106,10 +102,10 @@ describe('getMarkdown', () => {
 
       // Non-selected cells should NOT have CellRef
       expect(result).not.toContain('<CellRef id="t1_r1_c4"');
-      expect(result).toContain('| 工程师 |');
+      expect(result).toContain("| 工程师 |");
     });
 
-    it('handle single cell selection', () => {
+    it("handle single cell selection", () => {
       const input = (
         <editor>
           <htable id="t1">
@@ -132,7 +128,7 @@ describe('getMarkdown', () => {
       const editor = createTestEditor(input);
 
       const result = getMarkdown(editor, {
-        type: 'tableCellWithId',
+        type: "tableCellWithId",
       });
 
       // Table should have CellRef placeholder
@@ -145,7 +141,7 @@ describe('getMarkdown', () => {
       expect(result).not.toContain('<CellRef id="t1_r1_c2"');
     });
 
-    it('handle cells with multiple paragraphs (multi-block support)', () => {
+    it("handle cells with multiple paragraphs (multi-block support)", () => {
       const input = (
         <editor>
           <htable id="t1">
@@ -168,16 +164,14 @@ describe('getMarkdown', () => {
       const editor = createTestEditor(input);
 
       const result = getMarkdown(editor, {
-        type: 'tableCellWithId',
+        type: "tableCellWithId",
       });
 
       // Table should have CellRef placeholder
       expect(result).toContain('<CellRef id="t1_r1_c1" />');
 
       // Cell content block should preserve multiple paragraphs
-      expect(result).toContain(
-        '<Cell id="t1_r1_c1">\n第一行\n\n第二行\n</Cell>'
-      );
+      expect(result).toContain('<Cell id="t1_r1_c1">\n第一行\n\n第二行\n</Cell>');
     });
   });
 });

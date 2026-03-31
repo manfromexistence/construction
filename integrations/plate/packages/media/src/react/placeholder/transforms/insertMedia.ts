@@ -1,42 +1,41 @@
-import type { PlateEditor } from 'platejs/react';
-
 import {
   type InsertNodesOptions,
-  type Path,
-  type TPlaceholderElement,
   KEYS,
   nanoid,
+  type Path,
   PathApi,
-} from 'platejs';
+  type TPlaceholderElement,
+} from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import { PlaceholderPlugin } from '../PlaceholderPlugin';
-import { UploadErrorCode } from '../type';
-import { createUploadError, isUploadError } from '../utils/createUploadError';
-import { getMediaType } from '../utils/getMediaType';
-import { withHistoryMark } from '../utils/history';
-import { validateFiles } from '../utils/validateFiles';
+import { PlaceholderPlugin } from "../PlaceholderPlugin";
+import { UploadErrorCode } from "../type";
+import { createUploadError, isUploadError } from "../utils/createUploadError";
+import { getMediaType } from "../utils/getMediaType";
+import { withHistoryMark } from "../utils/history";
+import { validateFiles } from "../utils/validateFiles";
 
 export const insertMedia = (
   editor: PlateEditor,
   files: FileList,
-  options?: Omit<InsertNodesOptions, 'at'> & { at?: Path }
+  options?: Omit<InsertNodesOptions, "at"> & { at?: Path }
 ): any => {
   const api = editor.getApi(PlaceholderPlugin);
-  const uploadConfig = editor.getOption(PlaceholderPlugin, 'uploadConfig');
-  const multiple = editor.getOption(PlaceholderPlugin, 'multiple');
+  const uploadConfig = editor.getOption(PlaceholderPlugin, "uploadConfig");
+  const multiple = editor.getOption(PlaceholderPlugin, "multiple");
 
   try {
     validateFiles(files, uploadConfig);
   } catch (error) {
     if (!isUploadError(error)) throw error;
 
-    return editor.setOption(PlaceholderPlugin, 'error', error);
+    return editor.setOption(PlaceholderPlugin, "error", error);
   }
 
   if (!multiple && files.length > 1) {
     return editor.setOption(
       PlaceholderPlugin,
-      'error',
+      "error",
       createUploadError(UploadErrorCode.TOO_MANY_FILES, {
         files: Array.from(files),
         fileType: null,
@@ -45,12 +44,12 @@ export const insertMedia = (
     );
   }
 
-  const maxFileCount = editor.getOption(PlaceholderPlugin, 'maxFileCount') ?? 3;
+  const maxFileCount = editor.getOption(PlaceholderPlugin, "maxFileCount") ?? 3;
 
   if (files.length > maxFileCount) {
     return editor.setOption(
       PlaceholderPlugin,
-      'error',
+      "error",
       createUploadError(UploadErrorCode.TOO_MANY_FILES, {
         files: Array.from(files),
         fileType: null,
@@ -79,7 +78,7 @@ export const insertMedia = (
       editor.tf.insertNodes<TPlaceholderElement>(
         {
           id,
-          children: [{ text: '' }],
+          children: [{ text: "" }],
           mediaType: getMediaType(file, uploadConfig)!,
           type: editor.getType(KEYS.placeholder),
         },
@@ -87,10 +86,7 @@ export const insertMedia = (
       );
     };
 
-    const disableEmptyPlaceholder = editor.getOption(
-      PlaceholderPlugin,
-      'disableEmptyPlaceholder'
-    );
+    const disableEmptyPlaceholder = editor.getOption(PlaceholderPlugin, "disableEmptyPlaceholder");
 
     if (disableEmptyPlaceholder) {
       editor.tf.withoutMerging(() => {

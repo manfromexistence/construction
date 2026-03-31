@@ -1,11 +1,6 @@
-import type {
-  EditorAboveOptions,
-  SlateEditor,
-  TTableElement,
-  TTableRowElement,
-} from 'platejs';
+import type { EditorAboveOptions, SlateEditor, TTableElement, TTableRowElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const setTableRowSize = (
   editor: SlateEditor,

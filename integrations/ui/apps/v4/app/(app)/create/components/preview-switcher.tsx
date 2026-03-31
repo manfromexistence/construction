@@ -1,21 +1,20 @@
-"use client"
+"use client";
 
-import { Button } from "@/registry/new-york-v4/ui/button"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
 const PREVIEW_ITEMS = [
   { label: "01", value: "preview-02" },
   { label: "02", value: "preview" },
-]
+];
 
 export function PreviewSwitcher() {
-  const [params, setParams] = useDesignSystemSearchParams()
+  const [params, setParams] = useDesignSystemSearchParams();
 
-  const isPreview =
-    params.item === "preview" || params.item.startsWith("preview-0")
+  const isPreview = params.item === "preview" || params.item.startsWith("preview-0");
 
   if (!isPreview) {
-    return null
+    return null;
   }
 
   return (
@@ -33,5 +32,5 @@ export function PreviewSwitcher() {
         </Button>
       ))}
     </div>
-  )
+  );
 }

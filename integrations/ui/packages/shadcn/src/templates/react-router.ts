@@ -1,7 +1,7 @@
-import dedent from "dedent"
+import dedent from "dedent";
 
-import { createTemplate } from "./create-template"
-import { fontsourceMonorepoInit } from "./monorepo"
+import { createTemplate } from "./create-template";
+import { fontsourceMonorepoInit } from "./monorepo";
 
 export const reactRouter = createTemplate({
   name: "react-router",
@@ -42,4 +42,4 @@ export default function Home() {
       },
     ],
   },
-})
+});

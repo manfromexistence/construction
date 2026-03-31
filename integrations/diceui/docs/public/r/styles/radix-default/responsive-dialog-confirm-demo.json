@@ -1,12 +1,7 @@
 {
   "name": "responsive-dialog-confirm-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "button",
-    "responsive-dialog"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["button", "responsive-dialog"],
   "files": [
     {
       "path": "examples/responsive-dialog-confirm-demo.tsx",

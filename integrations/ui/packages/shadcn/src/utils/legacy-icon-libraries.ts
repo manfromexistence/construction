@@ -9,4 +9,4 @@ export const LEGACY_ICON_LIBRARIES = {
     package: "@radix-ui/react-icons",
     import: "@radix-ui/react-icons",
   },
-}
+};

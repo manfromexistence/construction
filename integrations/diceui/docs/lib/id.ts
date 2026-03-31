@@ -9,18 +9,16 @@ interface GenerateIdOptions {
 
 export function generateId(
   prefixOrOptions?: keyof typeof prefixes | GenerateIdOptions,
-  inputOptions: GenerateIdOptions = {},
+  inputOptions: GenerateIdOptions = {}
 ) {
-  const finalOptions =
-    typeof prefixOrOptions === "object" ? prefixOrOptions : inputOptions;
+  const finalOptions = typeof prefixOrOptions === "object" ? prefixOrOptions : inputOptions;
 
-  const prefix =
-    typeof prefixOrOptions === "object" ? undefined : prefixOrOptions;
+  const prefix = typeof prefixOrOptions === "object" ? undefined : prefixOrOptions;
 
   const { length = 12, separator = "_" } = finalOptions;
   const id = customAlphabet(
     "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz",
-    length,
+    length
   )();
 
   return prefix ? `${prefixes[prefix]}${separator}${id}` : id;

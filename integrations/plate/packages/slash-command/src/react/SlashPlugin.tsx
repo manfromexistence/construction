@@ -1,6 +1,6 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseSlashInputPlugin, BaseSlashPlugin } from '../lib';
+import { BaseSlashInputPlugin, BaseSlashPlugin } from "../lib";
 
 export const SlashInputPlugin = toPlatePlugin(BaseSlashInputPlugin);
 

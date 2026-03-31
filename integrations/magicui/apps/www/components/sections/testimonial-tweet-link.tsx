@@ -1,60 +1,54 @@
-"use client"
+"use client";
 
-import type { KeyboardEvent, MouseEvent, ReactNode } from "react"
-import Link from "next/link"
-import { ArrowUpRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
+import type { KeyboardEvent, MouseEvent, ReactNode } from "react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 interface TestimonialTweetLinkProps {
-  children: ReactNode
-  tweetUrl: string
+  children: ReactNode;
+  tweetUrl: string;
 }
 
 const interactiveSelector =
-  'a, button, input, select, textarea, summary, [role="button"], [role="link"]'
+  'a, button, input, select, textarea, summary, [role="button"], [role="link"]';
 
-const isInteractiveTarget = (
-  target: EventTarget | null,
-  container: Element
-) => {
+const isInteractiveTarget = (target: EventTarget | null, container: Element) => {
   if (!(target instanceof Element)) {
-    return false
+    return false;
   }
 
-  const interactiveElement = target.closest(interactiveSelector)
+  const interactiveElement = target.closest(interactiveSelector);
 
-  return interactiveElement !== null && interactiveElement !== container
-}
+  return interactiveElement !== null && interactiveElement !== container;
+};
 
-export function TestimonialTweetLink({
-  children,
-  tweetUrl,
-}: TestimonialTweetLinkProps) {
+export function TestimonialTweetLink({ children, tweetUrl }: TestimonialTweetLinkProps) {
   const navigateToTweet = () => {
-    window.location.assign(tweetUrl)
-  }
+    window.location.assign(tweetUrl);
+  };
 
   const handleClick = (event: MouseEvent<HTMLDivElement>) => {
     if (isInteractiveTarget(event.target, event.currentTarget)) {
-      return
+      return;
     }
 
-    navigateToTweet()
-  }
+    navigateToTweet();
+  };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.target !== event.currentTarget) {
-      return
+      return;
     }
 
     if (event.key !== "Enter" && event.key !== " ") {
-      return
+      return;
     }
 
-    event.preventDefault()
-    navigateToTweet()
-  }
+    event.preventDefault();
+    navigateToTweet();
+  };
 
   return (
     <div
@@ -79,5 +73,5 @@ export function TestimonialTweetLink({
         </Button>
       </div>
     </div>
-  )
+  );
 }

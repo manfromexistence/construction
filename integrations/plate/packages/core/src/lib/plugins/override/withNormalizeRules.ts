@@ -1,9 +1,8 @@
-import { ElementApi } from '@platejs/slate';
+import { ElementApi } from "@platejs/slate";
 
-import type { NormalizeRules } from '../../plugin/BasePlugin';
-import type { OverrideEditor } from '../../plugin/SlatePlugin';
-
-import { getPluginByType } from '../../plugin/getSlatePlugin';
+import type { NormalizeRules } from "../../plugin/BasePlugin";
+import { getPluginByType } from "../../plugin/getSlatePlugin";
+import type { OverrideEditor } from "../../plugin/SlatePlugin";
 
 export const withNormalizeRules: OverrideEditor = (ctx) => {
   const {
@@ -11,11 +10,7 @@ export const withNormalizeRules: OverrideEditor = (ctx) => {
     tf: { normalizeNode },
   } = ctx;
 
-  const checkMatchRulesOverride = (
-    rule: string,
-    node: any,
-    path: any
-  ): NormalizeRules | null => {
+  const checkMatchRulesOverride = (rule: string, node: any, path: any): NormalizeRules | null => {
     const matchRulesKeys = editor.meta.pluginCache.rules.match;
     for (const key of matchRulesKeys) {
       const overridePlugin = editor.getPlugin({ key });
@@ -43,17 +38,13 @@ export const withNormalizeRules: OverrideEditor = (ctx) => {
 
           // Handle 'removeEmpty' scenario
           const overridenormalizeRules = checkMatchRulesOverride(
-            'normalize.removeEmpty',
+            "normalize.removeEmpty",
             node,
             path
           );
-          const effectivenormalizeRules =
-            overridenormalizeRules || normalizeRules;
+          const effectivenormalizeRules = overridenormalizeRules || normalizeRules;
 
-          if (
-            effectivenormalizeRules?.removeEmpty &&
-            editor.api.isEmpty(node)
-          ) {
+          if (effectivenormalizeRules?.removeEmpty && editor.api.isEmpty(node)) {
             editor.tf.removeNodes({ at: path });
             return;
           }

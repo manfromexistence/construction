@@ -1,16 +1,7 @@
-import {
-  BadgeCheckIcon,
-  BellIcon,
-  CreditCardIcon,
-  LogOutIcon,
-} from "lucide-react"
+import { BadgeCheckIcon, BellIcon, CreditCardIcon, LogOutIcon } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/radix-nova/ui/avatar"
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/styles/radix-nova/ui/avatar";
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
+} from "@/styles/radix-nova/ui/dropdown-menu";
 
 export function DropdownMenuAvatar() {
   return (
@@ -53,5 +44,5 @@ export function DropdownMenuAvatar() {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

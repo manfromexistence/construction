@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Grid Pattern Linear Gradient",
   "description": "Example showing a grid pattern with linear gradient effects.",
-  "registryDependencies": [
-    "@magicui/grid-pattern"
-  ],
+  "registryDependencies": ["@magicui/grid-pattern"],
   "files": [
     {
       "path": "registry/example/grid-pattern-linear-gradient.tsx",

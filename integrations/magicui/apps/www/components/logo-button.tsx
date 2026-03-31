@@ -1,53 +1,46 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { toast } from "sonner"
-
-import { siteConfig } from "@/config/site"
+import Link from "next/link";
+import { toast } from "sonner";
+import { Icons } from "@/components/icons";
 import {
   ContextMenu,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuTrigger,
-} from "@/components/ui/context-menu"
-import { Icons } from "@/components/icons"
+} from "@/components/ui/context-menu";
+import { siteConfig } from "@/config/site";
 
 export function LogoButton() {
   function copyLogoAsSVG(path: string) {
     fetch(path)
       .then((response) => response.blob())
       .then((blob) => {
-        const reader = new FileReader()
+        const reader = new FileReader();
         reader.onload = function (event) {
-          const svgContent = event.target?.result
-          navigator.clipboard.writeText(svgContent as string)
-        }
-        reader.readAsText(blob)
-        toast.success("Logo copied to clipboard")
-      })
+          const svgContent = event.target?.result;
+          navigator.clipboard.writeText(svgContent as string);
+        };
+        reader.readAsText(blob);
+        toast.success("Logo copied to clipboard");
+      });
   }
 
   function copyLogoAsPNG(path: string) {
     fetch(path)
       .then((response) => response.blob())
       .then((blob) => {
-        const item = new ClipboardItem({ "image/png": blob })
-        navigator.clipboard.write([item])
-        toast.success("Logo copied to clipboard")
-      })
+        const item = new ClipboardItem({ "image/png": blob });
+        navigator.clipboard.write([item]);
+        toast.success("Logo copied to clipboard");
+      });
   }
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>
-        <Link
-          href="/"
-          className="relative mr-6 flex items-center space-x-2"
-          aria-label="Home"
-        >
+        <Link href="/" className="relative mr-6 flex items-center space-x-2" aria-label="Home">
           <Icons.logo className="size-6" />
-          <span className="hidden font-bold md:inline-block">
-            {siteConfig.name}
-          </span>
+          <span className="hidden font-bold md:inline-block">{siteConfig.name}</span>
         </Link>
       </ContextMenuTrigger>
       <ContextMenuContent>
@@ -67,5 +60,5 @@ export function LogoButton() {
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>
-  )
+  );
 }

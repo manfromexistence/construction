@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import type { AutoformatRule } from '../../../types';
-import { createAutoformatEditor } from '../createAutoformatEditor';
+import type { AutoformatRule } from "../../../types";
+import { createAutoformatEditor } from "../createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin basic mark rules', () => {
+describe("AutoformatPlugin basic mark rules", () => {
   it.each([
     {
       input: (
@@ -26,11 +26,9 @@ describe('AutoformatPlugin basic mark rules', () => {
           </hp>
         </fragment>
       ) as any,
-      rules: [
-        { match: '**', mode: 'mark', type: KEYS.bold },
-      ] satisfies AutoformatRule[],
-      text: ['*', '*'],
-      title: 'formats bold text',
+      rules: [{ match: "**", mode: "mark", type: KEYS.bold }] satisfies AutoformatRule[],
+      text: ["*", "*"],
+      title: "formats bold text",
     },
     {
       input: (
@@ -48,11 +46,9 @@ describe('AutoformatPlugin basic mark rules', () => {
           </hp>
         </fragment>
       ) as any,
-      rules: [
-        { match: '*', mode: 'mark', type: KEYS.italic },
-      ] satisfies AutoformatRule[],
-      text: ['*'],
-      title: 'formats italic text',
+      rules: [{ match: "*", mode: "mark", type: KEYS.italic }] satisfies AutoformatRule[],
+      text: ["*"],
+      title: "formats italic text",
     },
     {
       input: (
@@ -70,11 +66,9 @@ describe('AutoformatPlugin basic mark rules', () => {
           </hp>
         </fragment>
       ) as any,
-      rules: [
-        { match: '`', mode: 'mark', type: KEYS.code },
-      ] satisfies AutoformatRule[],
-      text: ['`'],
-      title: 'formats code text',
+      rules: [{ match: "`", mode: "mark", type: KEYS.code }] satisfies AutoformatRule[],
+      text: ["`"],
+      title: "formats code text",
     },
     {
       input: (
@@ -92,13 +86,11 @@ describe('AutoformatPlugin basic mark rules', () => {
           </hp>
         </fragment>
       ) as any,
-      rules: [
-        { match: '~~', mode: 'mark', type: KEYS.strikethrough },
-      ] satisfies AutoformatRule[],
-      text: ['~'],
-      title: 'formats strikethrough text',
+      rules: [{ match: "~~", mode: "mark", type: KEYS.strikethrough }] satisfies AutoformatRule[],
+      text: ["~"],
+      title: "formats strikethrough text",
     },
-  ])('$title', ({ input, output, rules, text }) => {
+  ])("$title", ({ input, output, rules, text }) => {
     const editor = createAutoformatEditor({
       rules,
       value: input,

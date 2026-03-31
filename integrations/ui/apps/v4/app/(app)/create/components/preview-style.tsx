@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 export function PreviewStyle() {
   return (
@@ -12,5 +12,5 @@ export function PreviewStyle() {
         }
       }
     `}</style>
-  )
+  );
 }

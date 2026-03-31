@@ -1,5 +1,5 @@
-import { isHtmlElement } from './isHtmlElement';
-import { traverseHtmlNode } from './traverseHtmlNode';
+import { isHtmlElement } from "./isHtmlElement";
+import { traverseHtmlNode } from "./traverseHtmlNode";
 
 type Callback = (node: Element) => boolean;
 
@@ -9,10 +9,7 @@ type Callback = (node: Element) => boolean;
  * @param rootNode The root HTML node to traverse.
  * @param callback The callback to call for each HTML element.
  */
-export const traverseHtmlElements = (
-  rootNode: Node,
-  callback: Callback
-): void => {
+export const traverseHtmlElements = (rootNode: Node, callback: Callback): void => {
   traverseHtmlNode(rootNode, (node) => {
     if (!isHtmlElement(node)) {
       return true;

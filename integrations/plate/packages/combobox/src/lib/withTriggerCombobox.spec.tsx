@@ -1,22 +1,18 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlatePlugin } from 'platejs';
-import { createSlateEditor } from 'platejs';
-import { ParagraphPlugin } from 'platejs/react';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, createSlatePlugin } from "platejs";
+import { ParagraphPlugin } from "platejs/react";
 
-import type { TriggerComboboxPluginOptions } from './types';
+import type { TriggerComboboxPluginOptions } from "./types";
 
-import { withTriggerCombobox } from './withTriggerCombobox';
+import { withTriggerCombobox } from "./withTriggerCombobox";
 
-const ExampleComboboxPlugin = createSlatePlugin<
-  string,
-  TriggerComboboxPluginOptions
->({
-  key: 'exampleCombobox',
+const ExampleComboboxPlugin = createSlatePlugin<string, TriggerComboboxPluginOptions>({
+  key: "exampleCombobox",
   plugins: [
     createSlatePlugin({
-      key: 'mention_input',
+      key: "mention_input",
       node: { isElement: true, isInline: true, isVoid: true },
     }),
   ],
@@ -26,55 +22,53 @@ const plugins = [
   ParagraphPlugin,
 
   ExampleComboboxPlugin.extend<TriggerComboboxPluginOptions>({
-    key: 'exampleCombobox1',
+    key: "exampleCombobox1",
     options: {
-      trigger: ['@', '#'],
+      trigger: ["@", "#"],
       triggerPreviousCharPattern: /^$|^[\s"']$/,
       createComboboxInput: (trigger: string) => ({
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         trigger,
-        type: 'mention_input',
+        type: "mention_input",
       }),
     },
   }),
 
   ExampleComboboxPlugin.extend<TriggerComboboxPluginOptions>({
-    key: 'exampleCombobox2',
+    key: "exampleCombobox2",
     options: {
-      trigger: ':',
+      trigger: ":",
       triggerPreviousCharPattern: /^\s?$/,
       createComboboxInput: () => ({
-        children: [{ text: '' }],
-        trigger: ':',
-        type: 'mention_input',
+        children: [{ text: "" }],
+        trigger: ":",
+        type: "mention_input",
       }),
     },
   }),
 ];
 
-const RegexComboboxPlugin =
-  ExampleComboboxPlugin.extend<TriggerComboboxPluginOptions>({
-    key: 'regexCombobox',
-    options: {
-      trigger: /[@#]/,
-      triggerPreviousCharPattern: /^$|^[\s"']$/,
-    },
-  });
+const RegexComboboxPlugin = ExampleComboboxPlugin.extend<TriggerComboboxPluginOptions>({
+  key: "regexCombobox",
+  options: {
+    trigger: /[@#]/,
+    triggerPreviousCharPattern: /^$|^[\s"']$/,
+  },
+});
 
-const QueryComboboxPlugin =
-  ExampleComboboxPlugin.extend<TriggerComboboxPluginOptions>({
-    key: 'queryCombobox',
-    options: {
-      trigger: '@',
-      triggerPreviousCharPattern: /^$|^[\s"']$/,
-      createComboboxInput: () => ({
-        children: [{ text: '' }],
-        trigger: '@',
-        type: 'mention_input',
-      }),
-      triggerQuery: () => false,
-    },
-  });
+const QueryComboboxPlugin = ExampleComboboxPlugin.extend<TriggerComboboxPluginOptions>({
+  key: "queryCombobox",
+  options: {
+    trigger: "@",
+    triggerPreviousCharPattern: /^$|^[\s"']$/,
+    createComboboxInput: () => ({
+      children: [{ text: "" }],
+      trigger: "@",
+      type: "mention_input",
+    }),
+    triggerQuery: () => false,
+  },
+});
 
 const createEditorWithCombobox = (chidren: any, editorPlugins = plugins) => {
   const editor = (<editor>{chidren}</editor>) as any;
@@ -88,10 +82,10 @@ const createEditorWithCombobox = (chidren: any, editorPlugins = plugins) => {
 
 jsxt;
 
-describe('withTriggerCombobox', () => {
-  ['@', '#', ':'].forEach((trigger) => {
+describe("withTriggerCombobox", () => {
+  ["@", "#", ":"].forEach((trigger) => {
     describe(`when typing "${trigger}"`, () => {
-      it('insert a combobox input when the trigger is inserted between words', () => {
+      it("insert a combobox input when the trigger is inserted between words", () => {
         const editor = createEditorWithCombobox(
           <hp>
             hello <cursor /> world
@@ -112,7 +106,7 @@ describe('withTriggerCombobox', () => {
         ]);
       });
 
-      it('insert a combobox input when the trigger is inserted at line beginning followed by a whitespace', () => {
+      it("insert a combobox input when the trigger is inserted at line beginning followed by a whitespace", () => {
         const editor = createEditorWithCombobox(
           <hp>
             <cursor /> hello world
@@ -133,7 +127,7 @@ describe('withTriggerCombobox', () => {
         ]);
       });
 
-      it('insert a combobox input when the trigger is inserted at line end preceded by a whitespace', () => {
+      it("insert a combobox input when the trigger is inserted at line end preceded by a whitespace", () => {
         const editor = createEditorWithCombobox(
           <hp>
             hello world <cursor />
@@ -154,7 +148,7 @@ describe('withTriggerCombobox', () => {
         ]);
       });
 
-      it('insert the trigger as text when the trigger is appended to a word', () => {
+      it("insert the trigger as text when the trigger is appended to a word", () => {
         const editor = createEditorWithCombobox(
           <hp>
             hello
@@ -172,7 +166,7 @@ describe('withTriggerCombobox', () => {
         ]);
       });
 
-      it('insert a combobox input when the trigger is prepended to a word', () => {
+      it("insert a combobox input when the trigger is prepended to a word", () => {
         const editor = createEditorWithCombobox(
           <hp>
             <cursor />
@@ -194,7 +188,7 @@ describe('withTriggerCombobox', () => {
         ]);
       });
 
-      it('insert the trigger as text when the trigger is inserted into a word', () => {
+      it("insert the trigger as text when the trigger is inserted into a word", () => {
         const editor = createEditorWithCombobox(
           <hp>
             hel
@@ -216,26 +210,26 @@ describe('withTriggerCombobox', () => {
     });
   });
 
-  it('insert text when not trigger', () => {
+  it("insert text when not trigger", () => {
     const editor = createEditorWithCombobox(
       <hp>
         <cursor />
       </hp>
     );
 
-    editor.tf.insertText('a');
+    editor.tf.insertText("a");
 
     expect(editor.children).toEqual([<hp>a</hp>]);
   });
 
-  it('insert a combobox input when the trigger is inserted after the specified pattern', () => {
+  it("insert a combobox input when the trigger is inserted after the specified pattern", () => {
     const editor = createEditorWithCombobox(
       <hp>
         hello "<cursor />"
       </hp>
     );
 
-    editor.tf.insertText('@');
+    editor.tf.insertText("@");
 
     expect(editor.children).toEqual([
       <hp>
@@ -249,7 +243,7 @@ describe('withTriggerCombobox', () => {
     ]);
   });
 
-  it('insert the default combobox node and forwards userId when a regex trigger matches', () => {
+  it("insert the default combobox node and forwards userId when a regex trigger matches", () => {
     const editor = createEditorWithCombobox(
       <hp>
         <cursor />
@@ -257,22 +251,22 @@ describe('withTriggerCombobox', () => {
       [ParagraphPlugin, RegexComboboxPlugin]
     );
 
-    editor.meta.userId = 'user-1';
-    editor.tf.insertText('@');
+    editor.meta.userId = "user-1";
+    editor.tf.insertText("@");
 
     expect(editor.children).toEqual([
       <hp>
         <htext />
       </hp>,
       {
-        children: [{ text: '' }],
-        type: 'exampleCombobox',
-        userId: 'user-1',
+        children: [{ text: "" }],
+        type: "exampleCombobox",
+        userId: "user-1",
       },
     ]);
   });
 
-  it('insert plain text when triggerQuery vetoes the combobox', () => {
+  it("insert plain text when triggerQuery vetoes the combobox", () => {
     const editor = createEditorWithCombobox(
       <hp>
         <cursor />
@@ -280,15 +274,15 @@ describe('withTriggerCombobox', () => {
       [ParagraphPlugin, QueryComboboxPlugin]
     );
 
-    editor.tf.insertText('@');
+    editor.tf.insertText("@");
 
     expect(editor.children).toEqual([<hp>@</hp>]);
   });
 
-  it('insert plain text when insertion uses an explicit at location', () => {
+  it("insert plain text when insertion uses an explicit at location", () => {
     const editor = createEditorWithCombobox(<hp>hello</hp>);
 
-    editor.tf.insertText('@', {
+    editor.tf.insertText("@", {
       at: { offset: 0, path: [0, 0] },
     });
 

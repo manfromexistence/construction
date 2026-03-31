@@ -30,9 +30,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "sidebar",
-    "dashboard"
-  ],
+  "categories": ["sidebar", "dashboard"],
   "type": "registry:block"
 }

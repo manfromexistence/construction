@@ -1,31 +1,19 @@
-import type { Modify } from '@udecode/utils';
+import type { Modify } from "@udecode/utils";
+import { type AnyPluginConfig, createSlatePlugin, type PluginConfig } from "../../lib";
+import type { PlateEditor } from "../editor/PlateEditor";
+import type { PlatePlugin, PlatePluginMethods } from "./PlatePlugin";
+import { toPlatePlugin } from "./toPlatePlugin";
 
-import type { PlateEditor } from '../editor/PlateEditor';
-import type { PlatePlugin, PlatePluginMethods } from './PlatePlugin';
-
-import {
-  type AnyPluginConfig,
-  type PluginConfig,
-  createSlatePlugin,
-} from '../../lib';
-import { toPlatePlugin } from './toPlatePlugin';
-
-type PlatePluginConfig<
-  K extends string = any,
-  O = {},
-  A = {},
-  T = {},
-  S = {},
-> = Omit<
+type PlatePluginConfig<K extends string = any, O = {}, A = {}, T = {}, S = {}> = Omit<
   Partial<
     Modify<
       PlatePlugin<PluginConfig<K, O, A, T, S>>,
       {
-        node: Partial<PlatePlugin<PluginConfig<K, O, A, T, S>>['node']>;
+        node: Partial<PlatePlugin<PluginConfig<K, O, A, T, S>>["node"]>;
       }
     >
   >,
-  keyof PlatePluginMethods | 'optionsStore' | 'useOptionsStore'
+  keyof PlatePluginMethods | "optionsStore" | "useOptionsStore"
 >;
 
 type TPlatePluginConfig<C extends AnyPluginConfig = PluginConfig> = Omit<
@@ -33,20 +21,14 @@ type TPlatePluginConfig<C extends AnyPluginConfig = PluginConfig> = Omit<
     Modify<
       PlatePlugin<C>,
       {
-        node: Partial<PlatePlugin<C>['node']>;
+        node: Partial<PlatePlugin<C>["node"]>;
       }
     >
   >,
-  keyof PlatePluginMethods | 'optionsStore' | 'useOptionsStore'
+  keyof PlatePluginMethods | "optionsStore" | "useOptionsStore"
 >;
 
-export const createPlatePlugin = <
-  K extends string = any,
-  O = {},
-  A = {},
-  T = {},
-  S = {},
->(
+export const createPlatePlugin = <K extends string = any, O = {}, A = {}, T = {}, S = {}>(
   config:
     | ((editor: PlateEditor) => PlatePluginConfig<K, O, A, T, S>)
     | PlatePluginConfig<K, O, A, T, S> = {}
@@ -66,9 +48,7 @@ export const createPlatePlugin = <
  *   result.
  */
 export function createTPlatePlugin<C extends AnyPluginConfig = PluginConfig>(
-  config:
-    | ((editor: PlateEditor) => TPlatePluginConfig<C>)
-    | TPlatePluginConfig<C> = {}
+  config: ((editor: PlateEditor) => TPlatePluginConfig<C>) | TPlatePluginConfig<C> = {}
 ): PlatePlugin<C> {
   return createPlatePlugin(config as any) as any;
 }

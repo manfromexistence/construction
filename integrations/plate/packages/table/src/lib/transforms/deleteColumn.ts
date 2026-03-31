@@ -1,12 +1,12 @@
-import type { SlateEditor, TElement, TTableElement } from 'platejs';
+import type { SlateEditor, TElement, TTableElement } from "platejs";
 
-import { getEditorPlugin, KEYS } from 'platejs';
+import { getEditorPlugin, KEYS } from "platejs";
 
-import type { TableConfig } from '../BaseTablePlugin';
+import type { TableConfig } from "../BaseTablePlugin";
 
-import { deleteTableMergeColumn } from '../merge/deleteColumn';
-import { deleteColumnWhenExpanded } from '../merge/deleteColumnWhenExpanded';
-import { getCellTypes } from '../utils';
+import { deleteTableMergeColumn } from "../merge/deleteColumn";
+import { deleteColumnWhenExpanded } from "../merge/deleteColumnWhenExpanded";
+import { getCellTypes } from "../utils";
 
 export const deleteColumn = (editor: SlateEditor) => {
   const { getOptions, type } = getEditorPlugin<TableConfig>(editor, {
@@ -26,8 +26,7 @@ export const deleteColumn = (editor: SlateEditor) => {
 
       return;
     }
-    if (editor.api.isExpanded())
-      return deleteColumnWhenExpanded(editor, tableEntry);
+    if (editor.api.isExpanded()) return deleteColumnWhenExpanded(editor, tableEntry);
 
     const tdEntry = editor.api.above({
       match: { type: getCellTypes(editor) },
@@ -72,10 +71,7 @@ export const deleteColumn = (editor: SlateEditor) => {
         const newColSizes = [...colSizes];
         newColSizes.splice(colIndex, 1);
 
-        editor.tf.setNodes<TTableElement>(
-          { colSizes: newColSizes },
-          { at: tablePath }
-        );
+        editor.tf.setNodes<TTableElement>({ colSizes: newColSizes }, { at: tablePath });
       }
     }
   });

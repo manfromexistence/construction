@@ -34,9 +34,7 @@ function downloadFont(url, filepath, name) {
   return new Promise((resolve, reject) => {
     // Skip if no URL provided
     if (!url) {
-      console.log(
-        `⚠️  No download URL for ${name}, checking if file exists locally...`
-      );
+      console.log(`⚠️  No download URL for ${name}, checking if file exists locally...`);
 
       if (fs.existsSync(filepath)) {
         console.log(`✓ ${name} found locally`);
@@ -100,9 +98,7 @@ async function downloadAllFonts() {
 
   try {
     await Promise.all(
-      fonts.map((font) =>
-        downloadFont(font.url, path.join(fontsDir, font.filename), font.name)
-      )
+      fonts.map((font) => downloadFont(font.url, path.join(fontsDir, font.filename), font.name))
     );
 
     console.log("\n✅ Font setup complete!\n");

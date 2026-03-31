@@ -1,12 +1,12 @@
-import { docsConfig } from "@/config/docs"
-import { Separator } from "@/components/ui/separator"
-import { CommandMenu } from "@/components/command-menu"
-import { DiscordLink } from "@/components/discord-link"
-import { GitHubLink } from "@/components/github-link"
-import { LogoButton } from "@/components/logo-button"
-import { MainNav } from "@/components/main-nav"
-import { MobileNav } from "@/components/mobile-nav"
-import { ModeToggle } from "@/components/mode-toggle"
+import { CommandMenu } from "@/components/command-menu";
+import { DiscordLink } from "@/components/discord-link";
+import { GitHubLink } from "@/components/github-link";
+import { LogoButton } from "@/components/logo-button";
+import { MainNav } from "@/components/main-nav";
+import { MobileNav } from "@/components/mobile-nav";
+import { ModeToggle } from "@/components/mode-toggle";
+import { Separator } from "@/components/ui/separator";
+import { docsConfig } from "@/config/docs";
 
 export function SiteHeader() {
   return (
@@ -21,10 +21,7 @@ export function SiteHeader() {
               <div className="hidden w-full flex-1 md:flex md:w-auto md:flex-none">
                 <CommandMenu />
               </div>
-              <Separator
-                orientation="vertical"
-                className="ml-2 hidden lg:block"
-              />
+              <Separator orientation="vertical" className="ml-2 hidden lg:block" />
               <GitHubLink />
               <Separator orientation="vertical" className="3xl:flex hidden" />
               <DiscordLink />
@@ -35,5 +32,5 @@ export function SiteHeader() {
         </div>
       </div>
     </header>
-  )
+  );
 }

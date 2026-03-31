@@ -1,1 +1,1 @@
-export * from "@/app/(app)/create/lib/fonts"
+export * from "@/app/(app)/create/lib/fonts";

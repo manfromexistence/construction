@@ -1,6 +1,6 @@
-import { normalizeNode as normalizeNodeBase } from 'slate';
+import { normalizeNode as normalizeNodeBase } from "slate";
 
-import type { Editor, NodeEntry, Operation } from '../../interfaces';
+import type { Editor, NodeEntry, Operation } from "../../interfaces";
 
 export const normalizeNode = (
   editor: Editor,

@@ -408,11 +408,7 @@
     {
       "name": "sidebar",
       "type": "registry:ui",
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
-      ],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
       "registryDependencies": [
         "button",
         "separator",
@@ -667,13 +663,7 @@
       "name": "sidebar-01",
       "type": "registry:block",
       "description": "A simple sidebar with navigation grouped by section.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "dropdown-menu"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-01/page.tsx",
@@ -699,13 +689,7 @@
       "name": "sidebar-02",
       "type": "registry:block",
       "description": "A sidebar with collapsible sections.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "dropdown-menu"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-02/page.tsx",
@@ -767,13 +751,7 @@
       "name": "sidebar-05",
       "type": "registry:block",
       "description": "A sidebar with collapsible submenus.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "collapsible"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "collapsible"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-05/page.tsx",
@@ -795,13 +773,7 @@
       "name": "sidebar-06",
       "type": "registry:block",
       "description": "A sidebar with submenus as dropdowns.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "card",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "card", "dropdown-menu"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-06/page.tsx",
@@ -989,12 +961,7 @@
       "name": "sidebar-11",
       "type": "registry:block",
       "description": "A sidebar with a collapsible file tree.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "collapsible"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "collapsible"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-11/page.tsx",

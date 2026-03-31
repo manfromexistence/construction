@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "radio-group-demo",
-  "registryDependencies": [
-    "radio-group"
-  ],
+  "registryDependencies": ["radio-group"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/radio-group-demo.tsx",

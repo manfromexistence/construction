@@ -1,8 +1,6 @@
 {
   "name": "editable",
-  "dependencies": [
-    "@base-ui/react"
-  ],
+  "dependencies": ["@base-ui/react"],
   "registryDependencies": [
     "direction",
     "visually-hidden-input",

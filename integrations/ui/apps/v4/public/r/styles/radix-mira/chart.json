@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chart",
-  "dependencies": [
-    "recharts@3.8.0"
-  ],
+  "dependencies": ["recharts@3.8.0"],
   "files": [
     {
       "path": "registry/radix-mira/ui/chart.tsx",

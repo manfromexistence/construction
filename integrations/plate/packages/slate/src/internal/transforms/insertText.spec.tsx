@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('insertText', () => {
-  describe('when marks is false', () => {
-    it('insert text without marks', () => {
+describe("insertText", () => {
+  describe("when marks is false", () => {
+    it("insert text without marks", () => {
       const input = createEditor(
         (
           <editor>
@@ -32,14 +32,14 @@ describe('insertText', () => {
         focus: { offset: 9, path: [0, 0] },
       };
       input.marks = { bold: true };
-      input.tf.insertText('text', { marks: false });
+      input.tf.insertText("text", { marks: false });
 
       expect(input.children).toEqual(output.children);
     });
   });
 
-  describe('when marks are present', () => {
-    it('insert text with marks', () => {
+  describe("when marks are present", () => {
+    it("insert text with marks", () => {
       const input = createEditor(
         (
           <editor>
@@ -64,14 +64,14 @@ describe('insertText', () => {
         focus: { offset: 9, path: [0, 0] },
       };
       input.marks = { bold: true };
-      input.tf.insertText('bold text');
+      input.tf.insertText("bold text");
 
       expect(input.children).toEqual(output.children);
     });
   });
 
-  describe('when no marks are present', () => {
-    it('insert plain text', () => {
+  describe("when no marks are present", () => {
+    it("insert plain text", () => {
       const input = createEditor(
         (
           <editor>
@@ -95,14 +95,14 @@ describe('insertText', () => {
         focus: { offset: 9, path: [0, 0] },
       };
       input.marks = null;
-      input.tf.insertText('plain text');
+      input.tf.insertText("plain text");
 
       expect(input.children).toEqual(output.children);
     });
   });
 
-  describe('when selection is null', () => {
-    it('does not insert text', () => {
+  describe("when selection is null", () => {
+    it("does not insert text", () => {
       const input = createEditor(
         (
           <editor>
@@ -123,14 +123,14 @@ describe('insertText', () => {
 
       input.selection = null;
       input.marks = { bold: true };
-      input.tf.insertText('new text');
+      input.tf.insertText("new text");
 
       expect(input.children).toEqual(output.children);
     });
   });
 
-  describe('when inserting at specific path', () => {
-    it('insert text at given path without marks', () => {
+  describe("when inserting at specific path", () => {
+    it("insert text at given path without marks", () => {
       const input = createEditor(
         (
           <editor>
@@ -156,7 +156,7 @@ describe('insertText', () => {
       ) as any;
 
       input.marks = { bold: true };
-      input.tf.insertText(' inserted', {
+      input.tf.insertText(" inserted", {
         at: {
           offset: 6,
           path: [1, 0],

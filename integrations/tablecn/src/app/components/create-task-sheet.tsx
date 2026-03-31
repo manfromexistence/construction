@@ -57,9 +57,7 @@ export function CreateTaskSheet() {
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Create task</SheetTitle>
-          <SheetDescription>
-            Fill in the details below to create a new task
-          </SheetDescription>
+          <SheetDescription>Fill in the details below to create a new task</SheetDescription>
         </SheetHeader>
         <TaskForm form={form} onSubmit={onSubmit}>
           <SheetFooter className="gap-2 pt-2 sm:space-x-0">

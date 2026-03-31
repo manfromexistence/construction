@@ -1,15 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
-import { PathApi } from '../../interfaces';
+import { createEditor } from "../../create-editor";
+import { PathApi } from "../../interfaces";
 
 jsxt;
 
-describe('moveNodes', () => {
-  describe('when moving children', () => {
-    it('move all children to target path', () => {
+describe("moveNodes", () => {
+  describe("when moving children", () => {
+    it("move all children to target path", () => {
       const input = createEditor(
         (
           <editor>
@@ -55,8 +55,8 @@ describe('moveNodes', () => {
         </editor>
       ) as any;
 
-      const at = input.api.node({ id: '2', at: [] })![1];
-      const to = PathApi.next(input.api.node({ id: '12', at: [] })![1]);
+      const at = input.api.node({ id: "2", at: [] })![1];
+      const to = PathApi.next(input.api.node({ id: "12", at: [] })![1]);
 
       const moved = input.tf.moveNodes({
         at,
@@ -68,7 +68,7 @@ describe('moveNodes', () => {
       expect(moved).toBe(true);
     });
 
-    it('move children from specified index', () => {
+    it("move children from specified index", () => {
       const input = createEditor(
         (
           <editor>
@@ -119,8 +119,8 @@ describe('moveNodes', () => {
         </editor>
       ) as any;
 
-      const at = input.api.node({ id: '2', at: [] })![1];
-      const to = PathApi.next(input.api.node({ id: '12', at: [] })![1]);
+      const at = input.api.node({ id: "2", at: [] })![1];
+      const to = PathApi.next(input.api.node({ id: "12", at: [] })![1]);
 
       const moved = input.tf.moveNodes({
         at,
@@ -133,7 +133,7 @@ describe('moveNodes', () => {
       expect(moved).toBe(true);
     });
 
-    it('move children matching condition', () => {
+    it("move children matching condition", () => {
       const input = createEditor(
         (
           <editor>
@@ -184,21 +184,21 @@ describe('moveNodes', () => {
         </editor>
       ) as any;
 
-      const at = input.api.node({ id: '2', at: [] })![1];
-      const to = PathApi.next(input.api.node({ id: '12', at: [] })![1]);
+      const at = input.api.node({ id: "2", at: [] })![1];
+      const to = PathApi.next(input.api.node({ id: "12", at: [] })![1]);
 
       const moved = input.tf.moveNodes({
         at,
         children: true,
         to,
-        match: (node) => 'id' in node && node.id === 'move',
+        match: (node) => "id" in node && node.id === "move",
       });
 
       expect(input.children).toEqual(output.children);
       expect(moved).toBe(true);
     });
 
-    it('keeps nodes unchanged if the target is not a block node', () => {
+    it("keeps nodes unchanged if the target is not a block node", () => {
       const input = createEditor(
         (
           <editor>
@@ -216,13 +216,11 @@ describe('moveNodes', () => {
       });
 
       expect(moved).toBe(false);
-      expect(input.children).toEqual([
-        { children: [{ text: 'test' }], type: 'p' },
-      ]);
+      expect(input.children).toEqual([{ children: [{ text: "test" }], type: "p" }]);
     });
   });
 
-  it('moves the selection with the moved block', () => {
+  it("moves the selection with the moved block", () => {
     const editor = createEditor(
       (
         <editor>
@@ -236,8 +234,7 @@ describe('moveNodes', () => {
     );
 
     editor.tf.moveNodes({
-      match: (node) =>
-        !!(node as any).children && editor.api.isBlock(node as any),
+      match: (node) => !!(node as any).children && editor.api.isBlock(node as any),
       to: [1],
     });
 

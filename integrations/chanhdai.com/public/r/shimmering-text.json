@@ -4,9 +4,7 @@
   "title": "Shimmering Text",
   "author": "ncdai <dai@chanhdai.com>",
   "description": "Smooth, light-sweeping shimmer animation for text.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "src/registry/components/shimmering-text/shimmering-text.tsx",

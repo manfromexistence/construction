@@ -1,4 +1,4 @@
-import { Backlight } from "@/registry/magicui/backlight"
+import { Backlight } from "@/registry/magicui/backlight";
 
 export default function BacklightVideoDemo() {
   return (
@@ -12,5 +12,5 @@ export default function BacklightVideoDemo() {
         allowFullScreen
       ></iframe>
     </Backlight>
-  )
+  );
 }

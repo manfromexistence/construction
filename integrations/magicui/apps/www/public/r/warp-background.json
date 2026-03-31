@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Warp Background",
   "description": "A card with a time warping background effect.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/warp-background.tsx",

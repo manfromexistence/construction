@@ -1,24 +1,21 @@
-import React from 'react';
-
-import type { SlateRenderElementProps } from 'platejs/static';
-
 import {
-  type PluginConfig,
-  type TElement,
-  type TListElement,
   createTSlatePlugin,
   isDefined,
   isHtmlBlockElement,
   KEYS,
+  type PluginConfig,
   postCleanHtml,
+  type TElement,
+  type TListElement,
   traverseHtmlElements,
-} from 'platejs';
+} from "platejs";
 
-import type { GetSiblingListOptions } from './queries/getSiblingList';
-import type { ListStyleType } from './types';
-
-import { isOrderedList } from './queries';
-import { withList } from './withList';
+import type { SlateRenderElementProps } from "platejs/static";
+import React from "react";
+import { isOrderedList } from "./queries";
+import type { GetSiblingListOptions } from "./queries/getSiblingList";
+import type { ListStyleType } from "./types";
+import { withList } from "./withList";
 
 /**
  * All list items are normalized to have a listStart prop indicating their
@@ -34,7 +31,7 @@ import { withList } from './withList';
  */
 
 export type BaseListConfig = PluginConfig<
-  'list',
+  "list",
   {
     getSiblingListOptions?: GetSiblingListOptions<TElement>;
     /** Map html element to list style type. */
@@ -49,7 +46,7 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
       [KEYS.html]: {
         parser: {
           transformData: ({ data }) => {
-            const document = new DOMParser().parseFromString(data, 'text/html');
+            const document = new DOMParser().parseFromString(data, "text/html");
             const { body } = document;
 
             // First pass: flatten nested UL/OL that are inside LI elements
@@ -60,11 +57,11 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
             }[] = [];
 
             traverseHtmlElements(body, (element) => {
-              if (element.tagName === 'LI') {
+              if (element.tagName === "LI") {
                 const nestedLists: Element[] = [];
                 // Find nested UL/OL elements
                 Array.from(element.children).forEach((child) => {
-                  if (child.tagName === 'UL' || child.tagName === 'OL') {
+                  if (child.tagName === "UL" || child.tagName === "OL") {
                     nestedLists.push(child);
                   }
                 });
@@ -90,7 +87,7 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
 
             // Second pass: process LI elements (now without nested lists inside them)
             traverseHtmlElements(body, (element) => {
-              if (element.tagName === 'LI') {
+              if (element.tagName === "LI") {
                 const htmlElement = element as HTMLElement;
                 const { childNodes } = element;
 
@@ -112,7 +109,7 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
                 element.replaceChildren(...liChildren);
 
                 // Check for aria-level first (Google Docs uses this)
-                const ariaLevel = element.getAttribute('aria-level');
+                const ariaLevel = element.getAttribute("aria-level");
 
                 if (ariaLevel) {
                   // aria-level takes precedence
@@ -122,7 +119,7 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
                   let indent = 0;
                   let parent = element.parentElement;
                   while (parent && parent !== body) {
-                    if (parent.tagName === 'UL' || parent.tagName === 'OL') {
+                    if (parent.tagName === "UL" || parent.tagName === "OL") {
                       indent++;
                     }
                     parent = parent.parentElement;
@@ -140,16 +137,15 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
                   htmlElement.dataset.listStyleType = listStyleType;
                 } else {
                   // Fallback to parent list type
-                  const listParent = element.closest('ul, ol');
+                  const listParent = element.closest("ul, ol");
                   if (listParent) {
-                    const parentListStyleType = (listParent as HTMLElement)
-                      .style.listStyleType;
+                    const parentListStyleType = (listParent as HTMLElement).style.listStyleType;
                     if (parentListStyleType) {
                       htmlElement.dataset.listStyleType = parentListStyleType;
-                    } else if (listParent.tagName === 'UL') {
-                      htmlElement.dataset.listStyleType = 'disc';
-                    } else if (listParent.tagName === 'OL') {
-                      htmlElement.dataset.listStyleType = 'decimal';
+                    } else if (listParent.tagName === "UL") {
+                      htmlElement.dataset.listStyleType = "disc";
+                    } else if (listParent.tagName === "OL") {
+                      htmlElement.dataset.listStyleType = "decimal";
                     }
                   }
                 }
@@ -176,19 +172,18 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
         isElement: true,
         rules: [
           {
-            validNodeName: 'LI',
+            validNodeName: "LI",
           },
         ],
         parse: ({ editor, element, getOptions }) => {
           // Get indent from data-indent or aria-level (gdoc)
           const dataIndent = element.dataset.indent;
-          const ariaLevel = element.getAttribute('aria-level');
+          const ariaLevel = element.getAttribute("aria-level");
           const indent = dataIndent ? Number(dataIndent) : Number(ariaLevel);
 
           // Get list style type from data attribute or use default
           const dataListStyleType = element.dataset.listStyleType;
-          const listStyleType =
-            dataListStyleType || getOptions().getListStyleType?.(element);
+          const listStyleType = dataListStyleType || getOptions().getListStyleType?.(element);
 
           return {
             indent: indent || undefined,
@@ -208,11 +203,11 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
   },
   rules: {
     break: {
-      empty: 'reset',
+      empty: "reset",
       splitReset: false,
     },
     delete: {
-      start: 'reset',
+      start: "reset",
     },
     merge: {
       removeEmpty: false,
@@ -223,13 +218,10 @@ export const BaseListPlugin = createTSlatePlugin<BaseListConfig>({
 
 function List(props: SlateRenderElementProps) {
   const { listStart, listStyleType } = props.element as TListElement;
-  const List = isOrderedList(props.element) ? 'ol' : 'ul';
+  const List = isOrderedList(props.element) ? "ol" : "ul";
 
   return (
-    <List
-      style={{ listStyleType, margin: 0, padding: 0, position: 'relative' }}
-      start={listStart}
-    >
+    <List style={{ listStyleType, margin: 0, padding: 0, position: "relative" }} start={listStart}>
       <li>{props.children}</li>
     </List>
   );

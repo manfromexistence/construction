@@ -1,4 +1,4 @@
-import type { NodeEntry, TNode } from '../interfaces';
+import type { NodeEntry, TNode } from "../interfaces";
 
 function castArray<T>(value: T | T[]): T[] {
   return Array.isArray(value) ? value : [value];

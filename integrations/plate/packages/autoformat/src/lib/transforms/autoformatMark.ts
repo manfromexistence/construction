@@ -1,11 +1,10 @@
-import type { Editor, TRange } from 'platejs';
+import castArray from "lodash/castArray.js";
+import type { Editor, TRange } from "platejs";
 
-import castArray from 'lodash/castArray.js';
+import type { AutoformatMarkRule } from "../types";
 
-import type { AutoformatMarkRule } from '../types';
-
-import { getMatchPoints } from '../utils/getMatchPoints';
-import { getMatchRange } from '../utils/getMatchRange';
+import { getMatchPoints } from "../utils/getMatchPoints";
+import { getMatchRange } from "../utils/getMatchRange";
 
 export interface AutoformatMarkOptions extends AutoformatMarkRule {
   text: string;
@@ -32,8 +31,7 @@ export const autoformatMark = (
 
     if (!matched) continue;
 
-    const { afterStartMatchPoint, beforeEndMatchPoint, beforeStartMatchPoint } =
-      matched;
+    const { afterStartMatchPoint, beforeEndMatchPoint, beforeStartMatchPoint } = matched;
 
     const matchRange: TRange = {
       anchor: afterStartMatchPoint!,
@@ -62,7 +60,7 @@ export const autoformatMark = (
     marks.forEach((mark) => {
       editor.tf.addMark(mark, true);
     });
-    editor.tf.collapse({ edge: 'end' });
+    editor.tf.collapse({ edge: "end" });
     editor.tf.removeMarks(marks, { shouldChange: false });
 
     editor.tf.delete({

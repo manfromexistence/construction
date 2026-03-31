@@ -25,10 +25,7 @@ interface Store {
 
 const StoreContext = React.createContext<Store | null>(null);
 
-function useStore<T>(
-  selector: (state: StoreState) => T,
-  ogStore?: Store | null,
-): T {
+function useStore<T>(selector: (state: StoreState) => T, ogStore?: Store | null): T {
   const contextStore = React.useContext(StoreContext);
 
   const store = ogStore ?? contextStore;
@@ -37,17 +34,12 @@ function useStore<T>(
     throw new Error(`\`useStore\` must be used within \`Swap\``);
   }
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
 
-interface SwapProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {
+interface SwapProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {
   swapped?: boolean;
   defaultSwapped?: boolean;
   onSwappedChange?: (swapped: boolean) => void;
@@ -135,42 +127,31 @@ function Swap(props: SwapProps) {
   const onClick = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       propsRef.current.onClick?.(event);
-      if (event.defaultPrevented || propsRef.current.activationMode !== "click")
-        return;
+      if (event.defaultPrevented || propsRef.current.activationMode !== "click") return;
 
       onToggle();
     },
-    [propsRef, onToggle],
+    [propsRef, onToggle]
   );
 
   const onMouseEnter = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       propsRef.current.onMouseEnter?.(event);
-      if (
-        event.defaultPrevented ||
-        activationMode !== "hover" ||
-        propsRef.current.disabled
-      )
-        return;
+      if (event.defaultPrevented || activationMode !== "hover" || propsRef.current.disabled) return;
 
       store.setState("swapped", true);
     },
-    [propsRef, activationMode, store],
+    [propsRef, activationMode, store]
   );
 
   const onMouseLeave = React.useCallback(
     (event: React.MouseEvent<HTMLDivElement>) => {
       propsRef.current.onMouseLeave?.(event);
-      if (
-        event.defaultPrevented ||
-        activationMode !== "hover" ||
-        propsRef.current.disabled
-      )
-        return;
+      if (event.defaultPrevented || activationMode !== "hover" || propsRef.current.disabled) return;
 
       store.setState("swapped", false);
     },
-    [propsRef, activationMode, store],
+    [propsRef, activationMode, store]
   );
 
   const onKeyDown = React.useCallback(
@@ -188,7 +169,7 @@ function Swap(props: SwapProps) {
         onToggle();
       }
     },
-    [propsRef, onToggle],
+    [propsRef, onToggle]
   );
 
   const element = useRender({
@@ -201,14 +182,14 @@ function Swap(props: SwapProps) {
         tabIndex: isClickMode && !disabled ? 0 : undefined,
         className: cn(
           "relative inline-flex cursor-pointer select-none items-center justify-center data-disabled:cursor-not-allowed data-disabled:opacity-50",
-          className,
+          className
         ),
         onClick,
         onMouseEnter,
         onMouseLeave,
         onKeyDown,
       },
-      rootProps,
+      rootProps
     ),
     render,
     state: {
@@ -222,9 +203,7 @@ function Swap(props: SwapProps) {
   return <StoreContext.Provider value={store}>{element}</StoreContext.Provider>;
 }
 
-interface SwapOnProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {}
+interface SwapOnProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {}
 
 function SwapOn({ render, className, ...props }: SwapOnProps) {
   const swapped = useStore((state) => state.swapped);
@@ -238,10 +217,10 @@ function SwapOn({ render, className, ...props }: SwapOnProps) {
           "[*[data-animation=rotate]_&]:data-[state=off]:rotate-180 [*[data-animation=rotate]_&]:data-[state=on]:rotate-0 motion-reduce:[*[data-animation=rotate]_&]:data-[state=off]:rotate-0",
           "[*[data-animation=flip]_&]:data-[state=off]:transform-[rotateY(180deg)] [*[data-animation=flip]_&]:data-[state=on]:transform-[rotateY(0deg)] motion-reduce:[*[data-animation=flip]_&]:data-[state=off]:transform-[rotateY(0deg)]",
           "[*[data-animation=scale]_&]:data-[state=off]:scale-0 [*[data-animation=scale]_&]:data-[state=on]:scale-100 motion-reduce:[*[data-animation=scale]_&]:data-[state=off]:scale-100",
-          className,
+          className
         ),
       },
-      props,
+      props
     ),
     render,
     state: {
@@ -251,9 +230,7 @@ function SwapOn({ render, className, ...props }: SwapOnProps) {
   });
 }
 
-interface SwapOffProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {}
+interface SwapOffProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {}
 
 function SwapOff({ render, className, ...props }: SwapOffProps) {
   const swapped = useStore((state) => state.swapped);
@@ -267,10 +244,10 @@ function SwapOff({ render, className, ...props }: SwapOffProps) {
           "[*[data-animation=rotate]_&]:data-[state=off]:rotate-0 [*[data-animation=rotate]_&]:data-[state=on]:rotate-180 motion-reduce:[*[data-animation=rotate]_&]:data-[state=on]:rotate-0",
           "[*[data-animation=flip]_&]:data-[state=off]:transform-[rotateY(0deg)] [*[data-animation=flip]_&]:data-[state=on]:transform-[rotateY(180deg)] motion-reduce:[*[data-animation=flip]_&]:data-[state=on]:transform-[rotateY(0deg)]",
           "[*[data-animation=scale]_&]:data-[state=off]:scale-100 [*[data-animation=scale]_&]:data-[state=on]:scale-0 motion-reduce:[*[data-animation=scale]_&]:data-[state=on]:scale-100",
-          className,
+          className
         ),
       },
-      props,
+      props
     ),
     render,
     state: {

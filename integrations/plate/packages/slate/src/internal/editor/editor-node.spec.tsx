@@ -1,12 +1,12 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('when getting node by location', () => {
+describe("when getting node by location", () => {
   const input = createEditor(
     (
       <editor>
@@ -18,14 +18,14 @@ describe('when getting node by location', () => {
     ) as any
   );
 
-  it('get node at path', () => {
+  it("get node at path", () => {
     const res = input.api.node([0]);
 
-    expect(res).toEqual([{ children: [{ text: '1' }], type: 'p' }, [0]]);
+    expect(res).toEqual([{ children: [{ text: "1" }], type: "p" }, [0]]);
   });
 });
 
-describe('when finding node by options', () => {
+describe("when finding node by options", () => {
   const input = createEditor(
     (
       <editor>
@@ -41,36 +41,36 @@ describe('when finding node by options', () => {
     ) as any
   );
 
-  it('find first paragraph', () => {
-    const res = input.api.node({ match: { type: 'p' } });
+  it("find first paragraph", () => {
+    const res = input.api.node({ match: { type: "p" } });
     input.api.node({});
 
-    expect(res).toEqual([{ children: [{ text: '1' }], type: 'p' }, [0, 0, 0]]);
+    expect(res).toEqual([{ children: [{ text: "1" }], type: "p" }, [0, 0, 0]]);
   });
 
-  it('find first paragraph at specific path', () => {
-    const res = input.api.node({ at: [0, 0], match: { type: 'p' } });
+  it("find first paragraph at specific path", () => {
+    const res = input.api.node({ at: [0, 0], match: { type: "p" } });
 
-    expect(res).toEqual([{ children: [{ text: '1' }], type: 'p' }, [0, 0, 0]]);
+    expect(res).toEqual([{ children: [{ text: "1" }], type: "p" }, [0, 0, 0]]);
   });
 
-  it('find first list', () => {
-    const res = input.api.node({ match: { type: 'ul' } });
+  it("find first list", () => {
+    const res = input.api.node({ match: { type: "ul" } });
 
     expect(res![0]).toEqual({
       children: [
         {
-          children: [{ children: [{ text: '1' }], type: 'p' }],
-          type: 'li',
+          children: [{ children: [{ text: "1" }], type: "p" }],
+          type: "li",
         },
       ],
-      type: 'ul',
+      type: "ul",
     });
     expect(res![1]).toEqual([0]);
   });
 });
 
-describe('when node is not found', () => {
+describe("when node is not found", () => {
   const input = createEditor(
     (
       <editor>
@@ -82,14 +82,14 @@ describe('when node is not found', () => {
     ) as any
   );
 
-  it('returns undefined for non-existent path', () => {
+  it("returns undefined for non-existent path", () => {
     const res = input.api.node([1]);
 
     expect(res).toBeUndefined();
   });
 
-  it('returns undefined for non-matching options', () => {
-    const res = input.api.node({ match: { type: 'non-existent' } });
+  it("returns undefined for non-matching options", () => {
+    const res = input.api.node({ match: { type: "non-existent" } });
 
     expect(res).toBeUndefined();
   });

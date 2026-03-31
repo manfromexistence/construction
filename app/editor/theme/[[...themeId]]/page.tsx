@@ -1,6 +1,6 @@
+import { Metadata } from "next";
 import { getTheme } from "@/actions/themes";
 import Editor from "@/components/editor/editor";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "tweakcn — Theme Generator for shadcn/ui",

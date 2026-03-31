@@ -1,13 +1,7 @@
-"use client"
+"use client";
 
-import { Calendar } from "@/styles/base-nova/ui/calendar"
+import { Calendar } from "@/styles/base-nova/ui/calendar";
 
 export function CalendarCaption() {
-  return (
-    <Calendar
-      mode="single"
-      captionLayout="dropdown"
-      className="rounded-lg border"
-    />
-  )
+  return <Calendar mode="single" captionLayout="dropdown" className="rounded-lg border" />;
 }

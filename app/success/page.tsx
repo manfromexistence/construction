@@ -1,3 +1,5 @@
+import { ArrowRight, CheckCircle } from "lucide-react";
+import Link from "next/link";
 import { NoiseEffect } from "@/components/effects/noise-effect";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,8 +10,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowRight, CheckCircle } from "lucide-react";
-import Link from "next/link";
 
 export default function SuccessPage() {
   return (

@@ -1,16 +1,13 @@
-import { type SlateEditor, ElementApi, getPluginType, KEYS } from 'platejs';
+import { ElementApi, getPluginType, KEYS, type SlateEditor } from "platejs";
 
-import {
-  type DeserializeMdOptions,
-  markdownToSlateNodes,
-} from '../deserializeMd';
-import { deserializeInlineMd } from './deserializeInlineMd';
-import { splitIncompleteMdx } from './splitIncompleteMdx';
+import { type DeserializeMdOptions, markdownToSlateNodes } from "../deserializeMd";
+import { deserializeInlineMd } from "./deserializeInlineMd";
+import { splitIncompleteMdx } from "./splitIncompleteMdx";
 
 export const markdownToSlateNodesSafely = (
   editor: SlateEditor,
   data: string,
-  options?: Omit<DeserializeMdOptions, 'editor'>
+  options?: Omit<DeserializeMdOptions, "editor">
 ) => {
   const result = splitIncompleteMdx(data);
 

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { FrameIcon, MapIcon, PieChartIcon, PlusIcon } from "lucide-react"
-import { toast, Toaster } from "sonner"
+import { FrameIcon, MapIcon, PieChartIcon, PlusIcon } from "lucide-react";
+import { Toaster, toast } from "sonner";
 
 import {
   Sidebar,
@@ -14,7 +14,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-} from "@/styles/radix-nova/ui/sidebar"
+} from "@/styles/radix-nova/ui/sidebar";
 
 export default function AppSidebar() {
   return (
@@ -67,5 +67,5 @@ export default function AppSidebar() {
         </SidebarContent>
       </Sidebar>
     </SidebarProvider>
-  )
+  );
 }

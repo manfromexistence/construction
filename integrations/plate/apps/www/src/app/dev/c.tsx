@@ -1,21 +1,22 @@
-'use client';
-import React from 'react';
+"use client";
 
-import { MarkdownPlugin } from '@platejs/markdown';
-import { ElementApi, TextApi } from 'platejs';
-import { createTPlatePlugin, Plate, usePlateEditor } from 'platejs/react';
-import { useFilePicker } from 'use-file-picker';
+import { MarkdownPlugin } from "@platejs/markdown";
+import { ElementApi, TextApi } from "platejs";
+import { createTPlatePlugin, Plate, usePlateEditor } from "platejs/react";
+import React from "react";
+import { useFilePicker } from "use-file-picker";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 const CUSTOM_PREFIX_REGEX = /^custom-/;
-import { EditorKit } from '@/registry/components/editor/editor-kit';
-import { BlockPlaceholderKit } from '@/registry/components/editor/plugins/block-placeholder-kit';
-import { CopilotKit } from '@/registry/components/editor/plugins/copilot-kit';
-import { MarkdownKit } from '@/registry/components/editor/plugins/markdown-kit';
-import { basicBlocksValue } from '@/registry/examples/values/basic-blocks-value';
-import { AIChatEditor } from '@/registry/ui/ai-chat-editor';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+
+import { EditorKit } from "@/registry/components/editor/editor-kit";
+import { BlockPlaceholderKit } from "@/registry/components/editor/plugins/block-placeholder-kit";
+import { CopilotKit } from "@/registry/components/editor/plugins/copilot-kit";
+import { MarkdownKit } from "@/registry/components/editor/plugins/markdown-kit";
+import { basicBlocksValue } from "@/registry/examples/values/basic-blocks-value";
+import { AIChatEditor } from "@/registry/ui/ai-chat-editor";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 const withCustomType = (value: any) => {
   const addCustomType = (item: any): any => {
@@ -40,7 +41,7 @@ const withCustomType = (value: any) => {
 
       return {
         ...props,
-        text: text.replace(CUSTOM_PREFIX_REGEX, ''),
+        text: text.replace(CUSTOM_PREFIX_REGEX, ""),
       };
     }
   };
@@ -81,7 +82,7 @@ export const EditorViewClient = () => {
         ...BlockPlaceholderKit,
 
         createTPlatePlugin({
-          key: 'ai-test',
+          key: "ai-test",
           render: {
             afterEditable: () => (
               <AIChatEditor
@@ -102,11 +103,10 @@ export const EditorViewClient = () => {
     []
   );
 
-  const getFileNodes = (text: string) =>
-    editor.getApi(MarkdownPlugin).markdown.deserialize(text);
+  const getFileNodes = (text: string) => editor.getApi(MarkdownPlugin).markdown.deserialize(text);
 
   const { openFilePicker: openMdFilePicker } = useFilePicker({
-    accept: ['.md', '.mdx'],
+    accept: [".md", ".mdx"],
     multiple: false,
     onFilesSelected: async ({ plainFiles }) => {
       const text = await plainFiles[0].text();

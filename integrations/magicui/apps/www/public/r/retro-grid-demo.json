@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Retro Grid Demo",
   "description": "Example showing an animated scrolling retro grid effect.",
-  "registryDependencies": [
-    "@magicui/retro-grid"
-  ],
+  "registryDependencies": ["@magicui/retro-grid"],
   "files": [
     {
       "path": "registry/example/retro-grid-demo.tsx",

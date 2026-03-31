@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils"
-import { ScrollArea, ScrollBar } from "@/registry/new-york-v4/ui/scroll-area"
+import { cn } from "@/lib/utils";
+import { ScrollArea, ScrollBar } from "@/registry/new-york-v4/ui/scroll-area";
 
 const examples = [
   {
@@ -37,13 +37,10 @@ const examples = [
     code: "https://github.com/shadcn/ui/tree/main/apps/v4/app/(app)/examples/rtl",
     hidden: false,
   },
-]
+];
 
-export function ExamplesNav({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const pathname = usePathname()
+export function ExamplesNav({ className, ...props }: React.ComponentProps<"div">) {
+  const pathname = usePathname();
 
   return (
     <div className={cn("flex items-center", className)} {...props}>
@@ -64,18 +61,18 @@ export function ExamplesNav({
         <ScrollBar orientation="horizontal" className="invisible" />
       </ScrollArea>
     </div>
-  )
+  );
 }
 
 function ExampleLink({
   example,
   isActive,
 }: {
-  example: (typeof examples)[number]
-  isActive: boolean
+  example: (typeof examples)[number];
+  isActive: boolean;
 }) {
   if (example.hidden) {
-    return null
+    return null;
   }
 
   return (
@@ -90,5 +87,5 @@ function ExampleLink({
         <span className="flex size-2 rounded-full bg-blue-500" title="New" />
       )}
     </Link>
-  )
+  );
 }

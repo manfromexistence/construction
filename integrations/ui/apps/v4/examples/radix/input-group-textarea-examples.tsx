@@ -1,26 +1,15 @@
-import {
-  ArrowUpIcon,
-  CodeIcon,
-  CopyIcon,
-  InfoIcon,
-  RefreshCwIcon,
-} from "lucide-react"
+import { ArrowUpIcon, CodeIcon, CopyIcon, InfoIcon, RefreshCwIcon } from "lucide-react";
 
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupText,
   InputGroupTextarea,
-} from "@/styles/radix-nova/ui/input-group"
-import { Textarea } from "@/styles/radix-nova/ui/textarea"
+} from "@/styles/radix-nova/ui/input-group";
+import { Textarea } from "@/styles/radix-nova/ui/textarea";
 
 export function InputGroupTextareaExamples() {
   return (
@@ -29,10 +18,7 @@ export function InputGroupTextareaExamples() {
         <FieldLabel htmlFor="textarea-header-footer-12">
           Default Textarea (No Input Group)
         </FieldLabel>
-        <Textarea
-          id="textarea-header-footer-12"
-          placeholder="Enter your text here..."
-        />
+        <Textarea id="textarea-header-footer-12" placeholder="Enter your text here..." />
       </Field>
       <Field>
         <FieldLabel htmlFor="textarea-header-footer-13">Input Group</FieldLabel>
@@ -42,9 +28,7 @@ export function InputGroupTextareaExamples() {
             placeholder="Enter your text here..."
           />
         </InputGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
       <Field data-invalid="true">
         <FieldLabel htmlFor="textarea-header-footer-14">Invalid</FieldLabel>
@@ -55,9 +39,7 @@ export function InputGroupTextareaExamples() {
             aria-invalid="true"
           />
         </InputGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
       <Field data-disabled="true">
         <FieldLabel htmlFor="textarea-header-footer-15">Disabled</FieldLabel>
@@ -68,9 +50,7 @@ export function InputGroupTextareaExamples() {
             disabled
           />
         </InputGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
       <Field>
         <FieldLabel htmlFor="prompt-31">Addon (block-start)</FieldLabel>
@@ -81,14 +61,10 @@ export function InputGroupTextareaExamples() {
             <InfoIcon className="ml-auto text-muted-foreground" />
           </InputGroupAddon>
         </InputGroup>
-        <FieldDescription>
-          This is a description of the input group.
-        </FieldDescription>
+        <FieldDescription>This is a description of the input group.</FieldDescription>
       </Field>
       <Field>
-        <FieldLabel htmlFor="textarea-header-footer-30">
-          Addon (block-end)
-        </FieldLabel>
+        <FieldLabel htmlFor="textarea-header-footer-30">Addon (block-end)</FieldLabel>
         <InputGroup>
           <InputGroupTextarea
             id="textarea-header-footer-30"
@@ -96,11 +72,7 @@ export function InputGroupTextareaExamples() {
           />
           <InputGroupAddon align="block-end">
             <InputGroupText>0/280 characters</InputGroupText>
-            <InputGroupButton
-              variant="default"
-              size="icon-xs"
-              className="ml-auto rounded-full"
-            >
+            <InputGroupButton variant="default" size="icon-xs" className="ml-auto rounded-full">
               <ArrowUpIcon />
               <span className="sr-only">Send</span>
             </InputGroupButton>
@@ -152,5 +124,5 @@ export function InputGroupTextareaExamples() {
         </InputGroup>
       </Field>
     </FieldGroup>
-  )
+  );
 }

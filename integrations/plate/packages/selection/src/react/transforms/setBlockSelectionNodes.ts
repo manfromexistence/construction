@@ -1,7 +1,7 @@
-import type { NodeProps, SetNodesOptions, TElement, TText } from 'platejs';
-import type { PlateEditor } from 'platejs/react';
+import type { NodeProps, SetNodesOptions, TElement, TText } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import { BlockSelectionPlugin } from '../BlockSelectionPlugin';
+import { BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 export const setBlockSelectionNodes = (
   editor: PlateEditor,
@@ -9,9 +9,7 @@ export const setBlockSelectionNodes = (
   options?: SetNodesOptions
 ) => {
   editor.tf.withoutNormalizing(() => {
-    const blocks = editor
-      .getApi(BlockSelectionPlugin)
-      .blockSelection.getNodes();
+    const blocks = editor.getApi(BlockSelectionPlugin).blockSelection.getNodes();
 
     blocks.forEach(([, path]) => {
       editor.tf.setNodes(props, {
@@ -51,10 +49,10 @@ export const setBlockSelectionIndent = (
 export const setBlockSelectionTexts = (
   editor: PlateEditor,
   props: Partial<NodeProps<TText>>,
-  options?: Omit<SetNodesOptions, 'at'>
+  options?: Omit<SetNodesOptions, "at">
 ) => {
   setBlockSelectionNodes(editor, props, {
-    mode: 'lowest',
+    mode: "lowest",
     ...options,
   });
 };

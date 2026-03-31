@@ -1,13 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
 
-import type { TTableCellElement } from 'platejs';
+import type { TTableCellElement } from "platejs";
+import { KEYS } from "platejs";
+import { useEditorPlugin, useEditorSelector, useReadOnly } from "platejs/react";
+import React from "react";
 
-import { KEYS } from 'platejs';
-import { useEditorPlugin, useEditorSelector, useReadOnly } from 'platejs/react';
-
-import { getSelectedCellEntries, getSelectedCellsBoundingBox } from '../../lib';
-import { TablePlugin } from '../TablePlugin';
+import { getSelectedCellEntries, getSelectedCellsBoundingBox } from "../../lib";
+import { TablePlugin } from "../TablePlugin";
 
 export const useTableMergeState = () => {
   const { api, editor, getOptions } = useEditorPlugin(TablePlugin);
@@ -21,30 +20,18 @@ export const useTableMergeState = () => {
     (editor) => editor.api.some({ match: { type: KEYS.table } }),
     []
   );
-  const selectionExpanded = useEditorSelector(
-    (editor) => editor.api.isExpanded(),
-    []
-  );
+  const selectionExpanded = useEditorSelector((editor) => editor.api.isExpanded(), []);
 
   const collapsed = !readOnly && someTable && !selectionExpanded;
 
-  const selectedCellEntries = useEditorSelector(
-    (editor) => getSelectedCellEntries(editor),
-    []
-  );
+  const selectedCellEntries = useEditorSelector((editor) => getSelectedCellEntries(editor), []);
   const isRectangularSelection = React.useMemo(() => {
     if (selectedCellEntries.length <= 1) return false;
 
-    const selectedCells = selectedCellEntries.map(
-      ([cell]) => cell as TTableCellElement
-    );
-    const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(
-      editor,
-      selectedCells
-    );
+    const selectedCells = selectedCellEntries.map(([cell]) => cell as TTableCellElement);
+    const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(editor, selectedCells);
     const selectedArea = selectedCells.reduce(
-      (total, cell) =>
-        total + api.table.getColSpan(cell) * api.table.getRowSpan(cell),
+      (total, cell) => total + api.table.getColSpan(cell) * api.table.getRowSpan(cell),
       0
     );
 

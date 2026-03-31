@@ -4,13 +4,7 @@
   "type": "registry:block",
   "author": "shadcn (https://ui.shadcn.com)",
   "description": "A sidebar with collapsible sections.",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb",
-    "separator",
-    "label",
-    "dropdown-menu"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "dropdown-menu"],
   "files": [
     {
       "path": "blocks/sidebar-02/page.tsx",
@@ -37,8 +31,5 @@
       "target": ""
     }
   ],
-  "categories": [
-    "sidebar",
-    "dashboard"
-  ]
+  "categories": ["sidebar", "dashboard"]
 }

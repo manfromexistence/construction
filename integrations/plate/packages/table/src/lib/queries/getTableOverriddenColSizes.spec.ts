@@ -1,61 +1,50 @@
-import type { TTableElement } from 'platejs';
+import type { TTableElement } from "platejs";
 
-import { getTableOverriddenColSizes } from './getTableOverriddenColSizes';
+import { getTableOverriddenColSizes } from "./getTableOverriddenColSizes";
 
-const makeTableElement = (
-  columnCount: number,
-  colSizes?: number[]
-): TTableElement =>
+const makeTableElement = (columnCount: number, colSizes?: number[]): TTableElement =>
   ({
     children: [
       {
         children: Array.from({ length: columnCount }).fill({}),
-        type: 'tr',
+        type: "tr",
       },
     ],
     colSizes,
   }) as unknown as TTableElement;
 
-describe('getTableOverriddenColSizes', () => {
-  describe('when colSizes is not defined', () => {
-    it('returns all zeros', () => {
+describe("getTableOverriddenColSizes", () => {
+  describe("when colSizes is not defined", () => {
+    it("returns all zeros", () => {
       const tableElement = makeTableElement(3);
       const overrides = new Map<number, number>();
-      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject(
-        [0, 0, 0]
-      );
+      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject([0, 0, 0]);
     });
 
-    it('apply overrides', () => {
+    it("apply overrides", () => {
       const tableElement = makeTableElement(3);
       const overrides = new Map<number, number>([
         [0, 100],
         [2, 200],
       ]);
-      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject(
-        [100, 0, 200]
-      );
+      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject([100, 0, 200]);
     });
   });
 
-  describe('when colSizes is defined', () => {
-    it('returns colSizes', () => {
+  describe("when colSizes is defined", () => {
+    it("returns colSizes", () => {
       const tableElement = makeTableElement(3, [100, 200, 300]);
       const overrides = new Map<number, number>();
-      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject(
-        [100, 200, 300]
-      );
+      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject([100, 200, 300]);
     });
 
-    it('apply overrides', () => {
+    it("apply overrides", () => {
       const tableElement = makeTableElement(3, [100, 200, 300]);
       const overrides = new Map<number, number>([
         [0, 1000],
         [2, 2000],
       ]);
-      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject(
-        [1000, 200, 2000]
-      );
+      expect(getTableOverriddenColSizes(tableElement, overrides)).toMatchObject([1000, 200, 2000]);
     });
   });
 });

@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Warp Background Demo",
   "description": "Example showing a card with a time warping background effect.",
-  "registryDependencies": [
-    "@magicui/warp-background"
-  ],
+  "registryDependencies": ["@magicui/warp-background"],
   "files": [
     {
       "path": "registry/example/warp-background-demo.tsx",

@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ArrowLeftIcon, ArrowRightIcon, RotateCwIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon, RotateCwIcon } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -22,7 +19,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "@/styles/base-nova/ui-rtl/context-menu"
+} from "@/styles/base-nova/ui-rtl/context-menu";
 
 const translations: Translations = {
   en: {
@@ -91,19 +88,17 @@ const translations: Translations = {
       colm: "Colm Tuite",
     },
   },
-}
+};
 
 export function ContextMenuRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
-  const [people, setPeople] = React.useState("pedro")
+  const { dir, t, language } = useTranslation(translations, "ar");
+  const [people, setPeople] = React.useState("pedro");
 
   return (
     <ContextMenu>
       <ContextMenuTrigger className="flex aspect-video w-full max-w-xs items-center justify-center rounded-xl border border-dashed text-sm">
         <span className="hidden pointer-fine:inline-block">{t.rightClick}</span>
-        <span className="hidden pointer-coarse:inline-block">
-          {t.longPress}
-        </span>
+        <span className="hidden pointer-coarse:inline-block">{t.longPress}</span>
       </ContextMenuTrigger>
       <ContextMenuContent
         className="w-48"
@@ -155,18 +150,14 @@ export function ContextMenuRtl() {
               </ContextMenuGroup>
               <ContextMenuSeparator />
               <ContextMenuGroup>
-                <ContextMenuItem variant="destructive">
-                  {t.delete}
-                </ContextMenuItem>
+                <ContextMenuItem variant="destructive">{t.delete}</ContextMenuItem>
               </ContextMenuGroup>
             </ContextMenuSubContent>
           </ContextMenuSub>
         </ContextMenuGroup>
         <ContextMenuSeparator />
         <ContextMenuGroup>
-          <ContextMenuCheckboxItem checked>
-            {t.showBookmarks}
-          </ContextMenuCheckboxItem>
+          <ContextMenuCheckboxItem checked>{t.showBookmarks}</ContextMenuCheckboxItem>
           <ContextMenuCheckboxItem>{t.showFullUrls}</ContextMenuCheckboxItem>
         </ContextMenuGroup>
         <ContextMenuSeparator />
@@ -179,5 +170,5 @@ export function ContextMenuRtl() {
         </ContextMenuGroup>
       </ContextMenuContent>
     </ContextMenu>
-  )
+  );
 }

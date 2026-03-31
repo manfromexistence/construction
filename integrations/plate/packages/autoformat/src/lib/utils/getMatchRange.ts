@@ -1,23 +1,23 @@
-import castArray from 'lodash/castArray.js';
+import castArray from "lodash/castArray.js";
 
-import type { AutoformatRule, MatchRange } from '../types';
+import type { AutoformatRule, MatchRange } from "../types";
 
 export const getMatchRange = ({
   match,
   trigger,
 }: {
   match: MatchRange | string;
-  trigger: AutoformatRule['trigger'];
+  trigger: AutoformatRule["trigger"];
 }) => {
   let start: string;
   let end: string;
 
-  if (typeof match === 'object') {
+  if (typeof match === "object") {
     start = match.start;
     end = match.end;
   } else {
     start = match;
-    end = start.split('').reverse().join('');
+    end = start.split("").reverse().join("");
   }
 
   const triggers: string[] = trigger ? castArray(trigger) : [end.slice(-1)];

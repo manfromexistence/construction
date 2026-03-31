@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Theme Toggler",
   "description": "A component for theme changing animation.",
-  "dependencies": [
-    "lucide-react"
-  ],
+  "dependencies": ["lucide-react"],
   "files": [
     {
       "path": "registry/magicui/animated-theme-toggler.tsx",

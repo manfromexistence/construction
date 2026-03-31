@@ -1,12 +1,12 @@
-import type { TElement, TText } from '@platejs/slate';
-import type { AnyObject } from '@udecode/utils';
+import type { TElement, TText } from "@platejs/slate";
+import type { AnyObject } from "@udecode/utils";
 
-import pick from 'lodash/pick.js';
+import pick from "lodash/pick.js";
 
-import type { SlateRenderNodeProps } from '../../static/types';
-import type { AnyEditorPlugin } from '../plugin';
+import type { SlateRenderNodeProps } from "../../static/types";
+import type { AnyEditorPlugin } from "../plugin";
 
-import { getNodeDataAttributeKeys } from './getNodeDataAttributeKeys';
+import { getNodeDataAttributeKeys } from "./getNodeDataAttributeKeys";
 
 export const getPluginNodeProps = ({
   attributes: nodeAttributes,
@@ -23,7 +23,7 @@ export const getPluginNodeProps = ({
 
   if (plugin?.node.props) {
     const pluginNodeProps =
-      (typeof plugin.node.props === 'function'
+      (typeof plugin.node.props === "function"
         ? plugin.node.props(newProps as any)
         : plugin.node.props) ?? {};
 

@@ -1,10 +1,10 @@
+import { motion } from "motion/react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { motion } from "motion/react";
 
 const faqs = [
   {
@@ -29,8 +29,7 @@ const faqs = [
   },
   {
     question: "Can I use with existing projects?",
-    answer:
-      "Absolutely. Just copy the generated configuration into your existing project.",
+    answer: "Absolutely. Just copy the generated configuration into your existing project.",
   },
 ];
 
@@ -46,14 +45,18 @@ export function FAQ() {
             transition={{ duration: 0.5 }}
             className="lg:col-span-4"
           >
-            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
-              FAQ
-            </h2>
+            <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">FAQ</h2>
             <p className="text-muted-foreground text-lg mb-8">
-              Got questions? We&apos;ve got answers. If you can&apos;t find what you&apos;re looking for, feel free to reach out.
+              Got questions? We&apos;ve got answers. If you can&apos;t find what you&apos;re looking
+              for, feel free to reach out.
             </p>
             <div className="text-sm text-muted-foreground">
-              <p>Contact us at <a href="#" className="text-primary underline">sahaj@tweakcn.com</a></p>
+              <p>
+                Contact us at{" "}
+                <a href="#" className="text-primary underline">
+                  sahaj@tweakcn.com
+                </a>
+              </p>
             </div>
           </motion.div>
 

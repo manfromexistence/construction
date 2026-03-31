@@ -1,15 +1,15 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import { getMarkdown } from './getMarkdown';
+import { getMarkdown } from "./getMarkdown";
 
 export type MarkdownType =
-  | 'block'
-  | 'blockSelection'
-  | 'blockSelectionWithBlockId'
-  | 'blockWithBlockId'
-  | 'editor'
-  | 'editorWithBlockId'
-  | 'tableCellWithId';
+  | "block"
+  | "blockSelection"
+  | "blockSelectionWithBlockId"
+  | "blockWithBlockId"
+  | "editor"
+  | "editorWithBlockId"
+  | "tableCellWithId";
 
 export const replacePlaceholders = (
   editor: SlateEditor,
@@ -20,16 +20,16 @@ export const replacePlaceholders = (
     prompt?: string;
   } = {}
 ): string => {
-  let result = text.split('{prompt}').join(prompt || '');
+  let result = text.split("{prompt}").join(prompt || "");
 
   const placeholders: Record<string, MarkdownType> = {
-    '{blockSelectionWithBlockId}': 'blockSelectionWithBlockId',
-    '{blockSelection}': 'blockSelection',
-    '{blockWithBlockId}': 'blockWithBlockId',
-    '{block}': 'block',
-    '{editorWithBlockId}': 'editorWithBlockId',
-    '{editor}': 'editor',
-    '{tableCellWithId}': 'tableCellWithId',
+    "{blockSelectionWithBlockId}": "blockSelectionWithBlockId",
+    "{blockSelection}": "blockSelection",
+    "{blockWithBlockId}": "blockWithBlockId",
+    "{block}": "block",
+    "{editorWithBlockId}": "editorWithBlockId",
+    "{editor}": "editor",
+    "{tableCellWithId}": "tableCellWithId",
   };
 
   Object.entries(placeholders).forEach(([placeholder, type]) => {

@@ -1,6 +1,6 @@
-import { Play, SkipBack, SkipForward } from "lucide-react"
+import { Play, SkipBack, SkipForward } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -8,8 +8,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { BorderBeam } from "@/registry/magicui/border-beam"
+} from "@/components/ui/card";
+import { BorderBeam } from "@/registry/magicui/border-beam";
 
 export default function MusicPlayer() {
   return (
@@ -41,11 +41,7 @@ export default function MusicPlayer() {
           <SkipForward className="size-4" />
         </Button>
       </CardFooter>
-      <BorderBeam
-        duration={6}
-        size={400}
-        className="from-transparent via-red-500 to-transparent"
-      />
+      <BorderBeam duration={6} size={400} className="from-transparent via-red-500 to-transparent" />
       <BorderBeam
         duration={6}
         delay={3}
@@ -54,5 +50,5 @@ export default function MusicPlayer() {
         className="from-transparent via-blue-500 to-transparent"
       />
     </Card>
-  )
+  );
 }

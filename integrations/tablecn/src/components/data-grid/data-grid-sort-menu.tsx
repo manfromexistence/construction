@@ -2,12 +2,7 @@
 
 import { useDirection } from "@radix-ui/react-direction";
 import type { ColumnSort, SortDirection, Table } from "@tanstack/react-table";
-import {
-  ArrowDownUp,
-  ChevronsUpDown,
-  GripVertical,
-  Trash2,
-} from "lucide-react";
+import { ArrowDownUp, ChevronsUpDown, GripVertical, Trash2 } from "lucide-react";
 import * as React from "react";
 
 import { Badge } from "@/components/ui/badge";
@@ -20,11 +15,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -49,8 +40,7 @@ const SORT_ORDERS = [
   { label: "Desc", value: "desc" },
 ];
 
-interface DataGridSortMenuProps<TData>
-  extends React.ComponentProps<typeof PopoverContent> {
+interface DataGridSortMenuProps<TData> extends React.ComponentProps<typeof PopoverContent> {
   table: Table<TData>;
   disabled?: boolean;
 }
@@ -96,36 +86,29 @@ export function DataGridSortMenu<TData>({
     const firstColumn = columns[0];
     if (!firstColumn) return;
 
-    onSortingChange((prevSorting) => [
-      ...prevSorting,
-      { id: firstColumn.id, desc: false },
-    ]);
+    onSortingChange((prevSorting) => [...prevSorting, { id: firstColumn.id, desc: false }]);
   }, [columns, onSortingChange]);
 
   const onSortUpdate = React.useCallback(
     (sortId: string, updates: Partial<ColumnSort>) => {
       onSortingChange((prevSorting) => {
         if (!prevSorting) return prevSorting;
-        return prevSorting.map((sort) =>
-          sort.id === sortId ? { ...sort, ...updates } : sort,
-        );
+        return prevSorting.map((sort) => (sort.id === sortId ? { ...sort, ...updates } : sort));
       });
     },
-    [onSortingChange],
+    [onSortingChange]
   );
 
   const onSortRemove = React.useCallback(
     (sortId: string) => {
-      onSortingChange((prevSorting) =>
-        prevSorting.filter((item) => item.id !== sortId),
-      );
+      onSortingChange((prevSorting) => prevSorting.filter((item) => item.id !== sortId));
     },
-    [onSortingChange],
+    [onSortingChange]
   );
 
   const onSortingReset = React.useCallback(
     () => onSortingChange(table.initialState.sorting),
-    [onSortingChange, table.initialState.sorting],
+    [onSortingChange, table.initialState.sorting]
   );
 
   React.useEffect(() => {
@@ -133,8 +116,7 @@ export function DataGridSortMenu<TData>({
       if (
         event.target instanceof HTMLInputElement ||
         event.target instanceof HTMLTextAreaElement ||
-        (event.target instanceof HTMLElement &&
-          event.target.contentEditable === "true")
+        (event.target instanceof HTMLElement && event.target.contentEditable === "true")
       ) {
         return;
       }
@@ -155,23 +137,16 @@ export function DataGridSortMenu<TData>({
 
   const onTriggerKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLButtonElement>) => {
-      if (
-        REMOVE_SORT_SHORTCUTS.has(event.key.toLowerCase()) &&
-        sorting.length > 0
-      ) {
+      if (REMOVE_SORT_SHORTCUTS.has(event.key.toLowerCase()) && sorting.length > 0) {
         event.preventDefault();
         onSortingReset();
       }
     },
-    [sorting.length, onSortingReset],
+    [sorting.length, onSortingReset]
   );
 
   return (
-    <Sortable
-      value={sorting}
-      onValueChange={onSortingChange}
-      getItemValue={(item) => item.id}
-    >
+    <Sortable value={sorting} onValueChange={onSortingChange} getItemValue={(item) => item.id}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
@@ -207,10 +182,7 @@ export function DataGridSortMenu<TData>({
             </h4>
             <p
               id={descriptionId}
-              className={cn(
-                "text-muted-foreground text-sm",
-                sorting.length > 0 && "sr-only",
-              )}
+              className={cn("text-muted-foreground text-sm", sorting.length > 0 && "sr-only")}
             >
               {sorting.length > 0
                 ? "Modify sorting to organize your rows."
@@ -219,10 +191,7 @@ export function DataGridSortMenu<TData>({
           </div>
           {sorting.length > 0 && (
             <SortableContent asChild>
-              <div
-                role="list"
-                className="flex max-h-[300px] flex-col gap-2 overflow-y-auto p-1"
-              >
+              <div role="list" className="flex max-h-[300px] flex-col gap-2 overflow-y-auto p-1">
                 {sorting.map((sort) => (
                   <DataTableSortItem
                     key={sort.id}
@@ -249,12 +218,7 @@ export function DataGridSortMenu<TData>({
               Add sort
             </Button>
             {sorting.length > 0 && (
-              <Button
-                variant="outline"
-                size="sm"
-                className="rounded"
-                onClick={onSortingReset}
-              >
+              <Button variant="outline" size="sm" className="rounded" onClick={onSortingReset}>
                 Reset sorting
               </Button>
             )}
@@ -297,15 +261,11 @@ function DataTableSortItem({
   const directionListboxId = `${sortItemId}-direction-listbox`;
 
   const [showFieldSelector, setShowFieldSelector] = React.useState(false);
-  const [showDirectionSelector, setShowDirectionSelector] =
-    React.useState(false);
+  const [showDirectionSelector, setShowDirectionSelector] = React.useState(false);
 
   const onItemKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      if (
-        event.target instanceof HTMLInputElement ||
-        event.target instanceof HTMLTextAreaElement
-      ) {
+      if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement) {
         return;
       }
 
@@ -318,7 +278,7 @@ function DataTableSortItem({
         onSortRemove(sort.id);
       }
     },
-    [sort.id, showFieldSelector, showDirectionSelector, onSortRemove],
+    [sort.id, showFieldSelector, showDirectionSelector, onSortRemove]
   );
 
   return (
@@ -375,17 +335,10 @@ function DataTableSortItem({
             onSortUpdate(sort.id, { desc: value === "desc" })
           }
         >
-          <SelectTrigger
-            aria-controls={directionListboxId}
-            size="sm"
-            className="w-24 rounded"
-          >
+          <SelectTrigger aria-controls={directionListboxId} size="sm" className="w-24 rounded">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent
-            id={directionListboxId}
-            className="min-w-(--radix-select-trigger-width)"
-          >
+          <SelectContent id={directionListboxId} className="min-w-(--radix-select-trigger-width)">
             {SORT_ORDERS.map((order) => (
               <SelectItem key={order.value} value={order.value}>
                 {order.label}
@@ -403,11 +356,7 @@ function DataTableSortItem({
           <Trash2 />
         </Button>
         <SortableItemHandle asChild>
-          <Button
-            variant="outline"
-            size="icon"
-            className="size-8 shrink-0 rounded"
-          >
+          <Button variant="outline" size="icon" className="size-8 shrink-0 rounded">
             <GripVertical />
           </Button>
         </SortableItemHandle>

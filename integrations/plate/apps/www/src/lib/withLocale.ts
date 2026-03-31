@@ -1,5 +1,5 @@
 export const hrefWithLocale = (href: string, locale: string) => {
-  if (locale === 'cn') {
+  if (locale === "cn") {
     return `/cn${href}`;
   }
 

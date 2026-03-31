@@ -1,5 +1,5 @@
-import { SHADCN_URL } from "@/src/registry/constants"
-import { z } from "zod"
+import { z } from "zod";
+import { SHADCN_URL } from "@/src/registry/constants";
 
 // Error codes for programmatic error handling
 export const RegistryErrorCode = {
@@ -25,40 +25,39 @@ export const RegistryErrorCode = {
 
   // Generic errors
   UNKNOWN_ERROR: "UNKNOWN_ERROR",
-} as const
+} as const;
 
-export type RegistryErrorCode =
-  (typeof RegistryErrorCode)[keyof typeof RegistryErrorCode]
+export type RegistryErrorCode = (typeof RegistryErrorCode)[keyof typeof RegistryErrorCode];
 
 export class RegistryError extends Error {
-  public readonly code: RegistryErrorCode
-  public readonly statusCode?: number
-  public readonly context?: Record<string, unknown>
-  public readonly suggestion?: string
-  public readonly timestamp: Date
-  public readonly cause?: unknown
+  public readonly code: RegistryErrorCode;
+  public readonly statusCode?: number;
+  public readonly context?: Record<string, unknown>;
+  public readonly suggestion?: string;
+  public readonly timestamp: Date;
+  public readonly cause?: unknown;
 
   constructor(
     message: string,
     options: {
-      code?: RegistryErrorCode
-      statusCode?: number
-      cause?: unknown
-      context?: Record<string, unknown>
-      suggestion?: string
+      code?: RegistryErrorCode;
+      statusCode?: number;
+      cause?: unknown;
+      context?: Record<string, unknown>;
+      suggestion?: string;
     } = {}
   ) {
-    super(message)
-    this.name = "RegistryError"
-    this.code = options.code || RegistryErrorCode.UNKNOWN_ERROR
-    this.statusCode = options.statusCode
-    this.cause = options.cause
-    this.context = options.context
-    this.suggestion = options.suggestion
-    this.timestamp = new Date()
+    super(message);
+    this.name = "RegistryError";
+    this.code = options.code || RegistryErrorCode.UNKNOWN_ERROR;
+    this.statusCode = options.statusCode;
+    this.cause = options.cause;
+    this.context = options.context;
+    this.suggestion = options.suggestion;
+    this.timestamp = new Date();
 
     if (Error.captureStackTrace) {
-      Error.captureStackTrace(this, this.constructor)
+      Error.captureStackTrace(this, this.constructor);
     }
   }
 
@@ -72,7 +71,7 @@ export class RegistryError extends Error {
       suggestion: this.suggestion,
       timestamp: this.timestamp,
       stack: this.stack,
-    }
+    };
   }
 }
 
@@ -81,17 +80,16 @@ export class RegistryNotFoundError extends RegistryError {
     public readonly url: string,
     cause?: unknown
   ) {
-    const message = `The item at ${url} was not found. It may not exist at the registry.`
+    const message = `The item at ${url} was not found. It may not exist at the registry.`;
 
     super(message, {
       code: RegistryErrorCode.NOT_FOUND,
       statusCode: 404,
       cause,
       context: { url },
-      suggestion:
-        "Check if the item name is correct and the registry URL is accessible.",
-    })
-    this.name = "RegistryNotFoundError"
+      suggestion: "Check if the item name is correct and the registry URL is accessible.",
+    });
+    this.name = "RegistryNotFoundError";
   }
 }
 
@@ -100,7 +98,7 @@ export class RegistryGoneError extends RegistryError {
     public readonly url: string,
     cause?: unknown
   ) {
-    const message = `The item at ${url} is no longer available. It may have been removed or expired.`
+    const message = `The item at ${url} is no longer available. It may have been removed or expired.`;
 
     super(message, {
       code: RegistryErrorCode.GONE,
@@ -109,8 +107,8 @@ export class RegistryGoneError extends RegistryError {
       context: { url },
       suggestion:
         "This resource was previously available but has been permanently removed. Check if a newer version exists or contact the registry maintainer.",
-    })
-    this.name = "RegistryGoneError"
+    });
+    this.name = "RegistryGoneError";
   }
 }
 
@@ -119,17 +117,16 @@ export class RegistryUnauthorizedError extends RegistryError {
     public readonly url: string,
     cause?: unknown
   ) {
-    const message = `You are not authorized to access the item at ${url}. If this is a remote registry, you may need to authenticate.`
+    const message = `You are not authorized to access the item at ${url}. If this is a remote registry, you may need to authenticate.`;
 
     super(message, {
       code: RegistryErrorCode.UNAUTHORIZED,
       statusCode: 401,
       cause,
       context: { url },
-      suggestion:
-        "Check your authentication credentials and environment variables.",
-    })
-    this.name = "RegistryUnauthorizedError"
+      suggestion: "Check your authentication credentials and environment variables.",
+    });
+    this.name = "RegistryUnauthorizedError";
   }
 }
 
@@ -138,17 +135,16 @@ export class RegistryForbiddenError extends RegistryError {
     public readonly url: string,
     cause?: unknown
   ) {
-    const message = `You are not authorized to access the item at ${url}. If this is a remote registry, you may need to authenticate.`
+    const message = `You are not authorized to access the item at ${url}. If this is a remote registry, you may need to authenticate.`;
 
     super(message, {
       code: RegistryErrorCode.FORBIDDEN,
       statusCode: 403,
       cause,
       context: { url },
-      suggestion:
-        "Check your authentication credentials and environment variables.",
-    })
-    this.name = "RegistryForbiddenError"
+      suggestion: "Check your authentication credentials and environment variables.",
+    });
+    this.name = "RegistryForbiddenError";
   }
 }
 
@@ -162,21 +158,17 @@ export class RegistryFetchError extends RegistryError {
     // Use the error detail from the server if available
     const baseMessage = statusCode
       ? `Failed to fetch from registry (${statusCode}): ${url}`
-      : `Failed to fetch from registry: ${url}`
+      : `Failed to fetch from registry: ${url}`;
 
-    const message =
-      typeof cause === "string" && cause
-        ? `${baseMessage} - ${cause}`
-        : baseMessage
+    const message = typeof cause === "string" && cause ? `${baseMessage} - ${cause}` : baseMessage;
 
-    let suggestion = "Check your network connection and try again."
+    let suggestion = "Check your network connection and try again.";
     if (statusCode === 404) {
-      suggestion =
-        "The requested resource was not found. Check the URL or item name."
+      suggestion = "The requested resource was not found. Check the URL or item name.";
     } else if (statusCode === 500) {
-      suggestion = "The registry server encountered an error. Try again later."
+      suggestion = "The registry server encountered an error. Try again later.";
     } else if (statusCode && statusCode >= 400 && statusCode < 500) {
-      suggestion = "There was a client error. Check your request parameters."
+      suggestion = "There was a client error. Check your request parameters.";
     }
 
     super(message, {
@@ -185,8 +177,8 @@ export class RegistryFetchError extends RegistryError {
       cause,
       context: { url, responseBody },
       suggestion,
-    })
-    this.name = "RegistryFetchError"
+    });
+    this.name = "RegistryFetchError";
   }
 }
 
@@ -199,15 +191,15 @@ export class RegistryNotConfiguredError extends RegistryError {
     "${registryName}": "[URL_TO_REGISTRY]"
   }
 }`
-      : `Unknown registry. Make sure it is defined in components.json under "registries".`
+      : `Unknown registry. Make sure it is defined in components.json under "registries".`;
 
     super(message, {
       code: RegistryErrorCode.NOT_CONFIGURED,
       context: { registryName },
       suggestion:
         "Add the registry configuration to your components.json file. Consult the registry documentation for the correct format.",
-    })
-    this.name = "RegistryNotConfiguredError"
+    });
+    this.name = "RegistryNotConfiguredError";
   }
 }
 
@@ -221,24 +213,24 @@ export class RegistryLocalFileError extends RegistryError {
       cause,
       context: { filePath },
       suggestion: "Check if the file exists and you have read permissions.",
-    })
-    this.name = "RegistryLocalFileError"
+    });
+    this.name = "RegistryLocalFileError";
   }
 }
 
 export class RegistryParseError extends RegistryError {
-  public readonly parseError: unknown
+  public readonly parseError: unknown;
 
   constructor(
     public readonly item: string,
     parseError: unknown
   ) {
-    let message = `Failed to parse registry item: ${item}`
+    let message = `Failed to parse registry item: ${item}`;
 
     if (parseError instanceof z.ZodError) {
       message = `Failed to parse registry item: ${item}\n${parseError.errors
         .map((e) => `  - ${e.path.join(".")}: ${e.message}`)
-        .join("\n")}`
+        .join("\n")}`;
     }
 
     super(message, {
@@ -246,10 +238,10 @@ export class RegistryParseError extends RegistryError {
       cause: parseError,
       context: { item },
       suggestion: `The registry item may be corrupted or have an invalid format. Please make sure it returns a valid JSON object. See ${SHADCN_URL}/schema/registry-item.json.`,
-    })
+    });
 
-    this.parseError = parseError
-    this.name = "RegistryParseError"
+    this.parseError = parseError;
+    this.name = "RegistryParseError";
   }
 }
 
@@ -260,43 +252,42 @@ export class RegistryMissingEnvironmentVariablesError extends RegistryError {
   ) {
     const message =
       `Registry "${registryName}" requires the following environment variables:\n\n` +
-      missingVars.map((v) => `  • ${v}`).join("\n")
+      missingVars.map((v) => `  • ${v}`).join("\n");
 
     super(message, {
       code: RegistryErrorCode.MISSING_ENV_VARS,
       context: { registryName, missingVars },
-      suggestion:
-        "Set the required environment variables to your .env or .env.local file.",
-    })
-    this.name = "RegistryMissingEnvironmentVariablesError"
+      suggestion: "Set the required environment variables to your .env or .env.local file.",
+    });
+    this.name = "RegistryMissingEnvironmentVariablesError";
   }
 }
 
 export class RegistryInvalidNamespaceError extends RegistryError {
   constructor(public readonly name: string) {
-    const message = `Invalid registry namespace: "${name}". Registry names must start with @ (e.g., @shadcn, @v0).`
+    const message = `Invalid registry namespace: "${name}". Registry names must start with @ (e.g., @shadcn, @v0).`;
 
     super(message, {
       code: RegistryErrorCode.VALIDATION_ERROR,
       context: { name },
       suggestion:
         "Use a valid registry name starting with @ or provide a direct URL to the registry.",
-    })
-    this.name = "RegistryInvalidNamespaceError"
+    });
+    this.name = "RegistryInvalidNamespaceError";
   }
 }
 
 export class ConfigMissingError extends RegistryError {
   constructor(public readonly cwd: string) {
-    const message = `No components.json found in ${cwd} or parent directories.`
+    const message = `No components.json found in ${cwd} or parent directories.`;
 
     super(message, {
       code: RegistryErrorCode.NOT_CONFIGURED,
       context: { cwd },
       suggestion:
         "Run 'npx shadcn@latest init' to create a components.json file, or check that you're in the correct directory.",
-    })
-    this.name = "ConfigMissingError"
+    });
+    this.name = "ConfigMissingError";
   }
 }
 
@@ -305,12 +296,12 @@ export class ConfigParseError extends RegistryError {
     public readonly cwd: string,
     parseError: unknown
   ) {
-    let message = `Invalid components.json configuration in ${cwd}.`
+    let message = `Invalid components.json configuration in ${cwd}.`;
 
     if (parseError instanceof z.ZodError) {
       message = `Invalid components.json configuration in ${cwd}:\n${parseError.errors
         .map((e) => `  - ${e.path.join(".")}: ${e.message}`)
-        .join("\n")}`
+        .join("\n")}`;
     }
 
     super(message, {
@@ -319,33 +310,31 @@ export class ConfigParseError extends RegistryError {
       context: { cwd },
       suggestion:
         "Check your components.json file for syntax errors or invalid configuration. Run 'npx shadcn@latest init' to regenerate a valid configuration.",
-    })
-    this.name = "ConfigParseError"
+    });
+    this.name = "ConfigParseError";
   }
 }
 
 export class RegistriesIndexParseError extends RegistryError {
-  public readonly parseError: unknown
+  public readonly parseError: unknown;
 
   constructor(parseError: unknown) {
-    let message = "Failed to parse registries index"
+    let message = "Failed to parse registries index";
 
     if (parseError instanceof z.ZodError) {
       const invalidNamespaces = parseError.errors
         .filter((e) => e.path.length > 0)
         .map((e) => `"${e.path[0]}"`)
-        .filter((v, i, arr) => arr.indexOf(v) === i) // remove duplicates
+        .filter((v, i, arr) => arr.indexOf(v) === i); // remove duplicates
 
       if (invalidNamespaces.length > 0) {
         message = `Failed to parse registries index. Invalid registry namespace(s): ${invalidNamespaces.join(
           ", "
-        )}\n${parseError.errors
-          .map((e) => `  - ${e.path.join(".")}: ${e.message}`)
-          .join("\n")}`
+        )}\n${parseError.errors.map((e) => `  - ${e.path.join(".")}: ${e.message}`).join("\n")}`;
       } else {
         message = `Failed to parse registries index:\n${parseError.errors
           .map((e) => `  - ${e.path.join(".")}: ${e.message}`)
-          .join("\n")}`
+          .join("\n")}`;
       }
     }
 
@@ -355,10 +344,10 @@ export class RegistriesIndexParseError extends RegistryError {
       context: { parseError },
       suggestion:
         "The registries index may be corrupted or have invalid registry namespace format. Registry names must start with @ (e.g., @shadcn, @example).",
-    })
+    });
 
-    this.parseError = parseError
-    this.name = "RegistriesIndexParseError"
+    this.parseError = parseError;
+    this.name = "RegistriesIndexParseError";
   }
 }
 
@@ -369,7 +358,7 @@ export class InvalidConfigIconLibraryError extends RegistryError {
   ) {
     const message = `Invalid icon library "${iconLibrary}". Valid options are: ${validOptions.join(
       ", "
-    )}`
+    )}`;
 
     super(message, {
       code: RegistryErrorCode.INVALID_CONFIG,
@@ -377,7 +366,7 @@ export class InvalidConfigIconLibraryError extends RegistryError {
       suggestion: `Update the "iconLibrary" field in your components.json to one of: ${validOptions.join(
         ", "
       )}`,
-    })
-    this.name = "InvalidConfigIconLibraryError"
+    });
+    this.name = "InvalidConfigIconLibraryError";
   }
 }

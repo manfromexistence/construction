@@ -1,9 +1,6 @@
 {
   "name": "speed-dial",
-  "dependencies": [
-    "@base-ui/react",
-    "react-dom"
-  ],
+  "dependencies": ["@base-ui/react", "react-dom"],
   "registryDependencies": [
     "button",
     "@diceui/use-as-ref",

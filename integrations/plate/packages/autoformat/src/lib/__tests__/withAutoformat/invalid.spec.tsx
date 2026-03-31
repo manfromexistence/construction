@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import type { AutoformatRule } from '../../types';
-import { createAutoformatEditor } from './createAutoformatEditor';
+import type { AutoformatRule } from "../../types";
+import { createAutoformatEditor } from "./createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin invalid match handling', () => {
+describe("AutoformatPlugin invalid match handling", () => {
   it.each([
     {
       input: (
@@ -24,11 +24,9 @@ describe('AutoformatPlugin invalid match handling', () => {
           <hp>hello* </hp>
         </fragment>
       ) as any,
-      rules: [
-        { match: '*', mode: 'mark', type: KEYS.italic },
-      ] satisfies AutoformatRule[],
-      text: [' '],
-      title: 'leaves text alone when only the trailing delimiter exists',
+      rules: [{ match: "*", mode: "mark", type: KEYS.italic }] satisfies AutoformatRule[],
+      text: [" "],
+      title: "leaves text alone when only the trailing delimiter exists",
     },
     {
       input: (
@@ -44,14 +42,11 @@ describe('AutoformatPlugin invalid match handling', () => {
           <hp>a**hello**</hp>
         </fragment>
       ) as any,
-      rules: [
-        { match: '**', mode: 'mark', type: KEYS.bold },
-      ] satisfies AutoformatRule[],
-      text: ['*', '*'],
-      title:
-        'does not format when a non-whitespace character precedes the opening delimiter',
+      rules: [{ match: "**", mode: "mark", type: KEYS.bold }] satisfies AutoformatRule[],
+      text: ["*", "*"],
+      title: "does not format when a non-whitespace character precedes the opening delimiter",
     },
-  ])('$title', ({ input, output, rules, text }) => {
+  ])("$title", ({ input, output, rules, text }) => {
     const editor = createAutoformatEditor({
       rules,
       value: input,
@@ -64,7 +59,7 @@ describe('AutoformatPlugin invalid match handling', () => {
     expect(input.children).toEqual(output.children);
   });
 
-  it('ignores autoformat when selection is null', () => {
+  it("ignores autoformat when selection is null", () => {
     const input = (
       <fragment>
         <hp>**hello**</hp>
@@ -78,11 +73,11 @@ describe('AutoformatPlugin invalid match handling', () => {
     ) as any;
 
     const editor = createAutoformatEditor({
-      rules: [{ match: '**', mode: 'mark', type: KEYS.bold }],
+      rules: [{ match: "**", mode: "mark", type: KEYS.bold }],
       value: input,
     });
 
-    editor.tf.insertText(' ');
+    editor.tf.insertText(" ");
 
     expect(input.children).toEqual(output.children);
   });

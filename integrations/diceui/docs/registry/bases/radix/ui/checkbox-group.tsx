@@ -25,7 +25,7 @@ function CheckboxGroupLabel({
       data-slot="checkbox-group-label"
       className={cn(
         "text-foreground/70 text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
-        className,
+        className
       )}
       {...props}
     />
@@ -41,7 +41,7 @@ function CheckboxGroupList({
       data-slot="checkbox-group-list"
       className={cn(
         "flex gap-3 data-[orientation=horizontal]:flex-row data-[orientation=vertical]:flex-col",
-        className,
+        className
       )}
       {...props}
     />
@@ -59,7 +59,7 @@ function CheckboxGroupItem({
         data-slot="checkbox-group-item"
         className={cn(
           "size-4 shrink-0 rounded-sm border border-primary shadow-sm focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring data-invalid:border-destructive [&[data-state=checked]:not([data-invalid])]:bg-primary [&[data-state=checked]:not([data-invalid])]:text-primary-foreground [&[data-state=checked][data-invalid]]:bg-destructive [&[data-state=checked][data-invalid]]:text-primary-foreground [&[data-state=unchecked][data-invalid]]:bg-transparent",
-          className,
+          className
         )}
         {...props}
       >
@@ -84,7 +84,7 @@ function CheckboxGroupDescription({
       data-slot="checkbox-group-description"
       className={cn(
         "text-[0.8rem] text-muted-foreground leading-none data-invalid:text-destructive",
-        className,
+        className
       )}
       {...props}
     />
@@ -100,7 +100,7 @@ function CheckboxGroupMessage({
       data-slot="checkbox-group-message"
       className={cn(
         "text-[0.8rem] text-muted-foreground leading-none data-invalid:text-destructive",
-        className,
+        className
       )}
       {...props}
     />

@@ -1,8 +1,6 @@
 {
   "name": "dialog",
-  "externalDependencies": [
-    "@radix-ui/react-dialog"
-  ],
+  "externalDependencies": ["@radix-ui/react-dialog"],
   "internalDependencies": [],
   "file": {
     "name": "dialog.tsx",

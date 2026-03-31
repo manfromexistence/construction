@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -14,9 +14,8 @@ export const blockMenuValue: any = (
     </hp> */}
     <hp indent={1} listStyleType="disc">
       <htext>
-        Right-click any unselected block to open the context menu. If you
-        right-click within a selected block, you'll see the browser's native
-        context menu instead.
+        Right-click any unselected block to open the context menu. If you right-click within a
+        selected block, you'll see the browser's native context menu instead.
       </htext>
     </hp>
     <hp>Available options in the block menu:</hp>

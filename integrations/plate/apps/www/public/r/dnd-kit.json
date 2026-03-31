@@ -2,15 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dnd-kit",
   "type": "registry:component",
-  "dependencies": [
-    "@platejs/dnd",
-    "@platejs/media",
-    "react-dnd",
-    "react-dnd-html5-backend"
-  ],
-  "registryDependencies": [
-    "https://platejs.org/r/block-draggable.json"
-  ],
+  "dependencies": ["@platejs/dnd", "@platejs/media", "react-dnd", "react-dnd-html5-backend"],
+  "registryDependencies": ["https://platejs.org/r/block-draggable.json"],
   "files": [
     {
       "path": "src/registry/components/editor/plugins/dnd-kit.tsx",

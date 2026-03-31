@@ -1,5 +1,5 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseTextAlignPlugin } from '../lib/index';
+import { BaseTextAlignPlugin } from "../lib/index";
 
 export const TextAlignPlugin = toPlatePlugin(BaseTextAlignPlugin);

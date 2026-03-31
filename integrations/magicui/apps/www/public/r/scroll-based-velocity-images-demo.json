@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Scroll Based Velocity Images",
   "description": "Example showing Unsplash images scrolling with speed reacting to scroll velocity.",
-  "registryDependencies": [
-    "@magicui/scroll-based-velocity"
-  ],
+  "registryDependencies": ["@magicui/scroll-based-velocity"],
   "files": [
     {
       "path": "registry/example/scroll-based-velocity-images-demo.tsx",

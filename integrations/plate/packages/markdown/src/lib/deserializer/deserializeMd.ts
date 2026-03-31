@@ -1,29 +1,24 @@
-import type { Root } from 'mdast';
-import type { Plugin } from 'unified';
-
+import type { Root } from "mdast";
 import {
   type Descendant,
-  type SlateEditor,
-  type TElement,
-  type Value,
   getPluginKey,
   KEYS,
+  type SlateEditor,
+  type TElement,
   TextApi,
-} from 'platejs';
-import remarkParse from 'remark-parse';
-import { unified } from 'unified';
+  type Value,
+} from "platejs";
+import remarkParse from "remark-parse";
+import type { Plugin } from "unified";
+import { unified } from "unified";
 
-import type { AllowNodeConfig } from '../MarkdownPlugin';
-import type { MdRules, PlateType } from '../types';
+import type { AllowNodeConfig } from "../MarkdownPlugin";
+import type { MdRules, PlateType } from "../types";
 
-import { mdastToSlate } from './mdastToSlate';
-import {
-  type ParseMarkdownBlocksOptions,
-  htmlToJsx,
-  parseMarkdownBlocks,
-} from './utils';
-import { getMergedOptionsDeserialize } from './utils/getMergedOptionsDeserialize';
-import { markdownToSlateNodesSafely } from './utils/markdownToSlateNodesSafely';
+import { mdastToSlate } from "./mdastToSlate";
+import { htmlToJsx, type ParseMarkdownBlocksOptions, parseMarkdownBlocks } from "./utils";
+import { getMergedOptionsDeserialize } from "./utils/getMergedOptionsDeserialize";
+import { markdownToSlateNodesSafely } from "./utils/markdownToSlateNodesSafely";
 
 // TODO: fixes tests
 
@@ -58,7 +53,7 @@ export const markdownToAstProcessor = (
 export const markdownToSlateNodes = (
   editor: SlateEditor,
   data: string,
-  options?: Omit<DeserializeMdOptions, 'editor'>
+  options?: Omit<DeserializeMdOptions, "editor">
 ): Descendant[] => {
   const processedData = options?.withoutMdx ? data : htmlToJsx(data);
 
@@ -70,23 +65,19 @@ export const markdownToSlateNodes = (
     .use(remarkToSlate, mergedOptions);
 
   if (options?.memoize) {
-    return parseMarkdownBlocks(processedData, options.parser).flatMap(
-      (token) => {
-        if (token.type === 'space') {
-          return {
-            ...editor.api.create.block(),
-            _memo: token.raw,
-          };
-        }
-
-        return toSlateProcessor
-          .processSync(token.raw)
-          .result.map((result: any) => ({
-            _memo: token.raw,
-            ...result,
-          }));
+    return parseMarkdownBlocks(processedData, options.parser).flatMap((token) => {
+      if (token.type === "space") {
+        return {
+          ...editor.api.create.block(),
+          _memo: token.raw,
+        };
       }
-    );
+
+      return toSlateProcessor.processSync(token.raw).result.map((result: any) => ({
+        _memo: token.raw,
+        ...result,
+      }));
+    });
   }
 
   return toSlateProcessor.processSync(processedData).result;
@@ -95,7 +86,7 @@ export const markdownToSlateNodes = (
 export const deserializeMd = (
   editor: SlateEditor,
   data: string,
-  options?: Omit<DeserializeMdOptions, 'editor'>
+  options?: Omit<DeserializeMdOptions, "editor">
 ): Value => {
   let output: Descendant[] | null = null;
 
@@ -122,7 +113,7 @@ export const deserializeMd = (
   );
 };
 
-declare module 'unified' {
+declare module "unified" {
   // biome-ignore lint/style/useConsistentTypeDefinitions: module
   interface CompileResultMap {
     remarkToSlateNode: Descendant[];

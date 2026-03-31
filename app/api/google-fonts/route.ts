@@ -1,8 +1,8 @@
+import { unstable_cache } from "next/cache";
+import { NextRequest, NextResponse } from "next/server";
 import { PaginatedFontsResponse } from "@/types/fonts";
 import { FALLBACK_FONTS } from "@/utils/fonts";
 import { fetchGoogleFonts } from "@/utils/fonts/google-fonts";
-import { unstable_cache } from "next/cache";
-import { NextRequest, NextResponse } from "next/server";
 
 const cachedFetchGoogleFonts = unstable_cache(fetchGoogleFonts, ["google-fonts-catalogue"], {
   tags: ["google-fonts-catalogue"],

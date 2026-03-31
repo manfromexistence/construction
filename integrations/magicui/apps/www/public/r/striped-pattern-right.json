@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Striped Pattern (Right)",
   "description": "Example showing a background striped pattern slanting to the right using SVG.",
-  "registryDependencies": [
-    "@magicui/striped-pattern"
-  ],
+  "registryDependencies": ["@magicui/striped-pattern"],
   "files": [
     {
       "path": "registry/example/striped-pattern-right.tsx",

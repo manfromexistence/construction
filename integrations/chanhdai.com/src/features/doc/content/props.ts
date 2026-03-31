@@ -1,47 +1,44 @@
-import type { motion } from "motion/react"
-import type { ComponentProps } from "react"
+import type { motion } from "motion/react";
+import type { ComponentProps } from "react";
 
-import type { Button } from "@/components/ui/button"
-import type { AppleHelloVietnameseEffect } from "@/registry/components/apple-hello-effect"
-import type { CopyButton } from "@/registry/components/copy-button"
-import type { GlowCardGrid } from "@/registry/components/glow-card-grid/glow-card-grid"
-import type { ScrollFadeEffect } from "@/registry/components/scroll-fade-effect"
-import type { ShimmeringText } from "@/registry/components/shimmering-text"
-import type {
-  SlideToUnlock,
-  SlideToUnlockText,
-} from "@/registry/components/slide-to-unlock"
-import type { TestimonialSpotlight } from "@/registry/components/testimonial-spotlight"
+import type { Button } from "@/components/ui/button";
+import type { AppleHelloVietnameseEffect } from "@/registry/components/apple-hello-effect";
+import type { CopyButton } from "@/registry/components/copy-button";
+import type { GlowCardGrid } from "@/registry/components/glow-card-grid/glow-card-grid";
+import type { ScrollFadeEffect } from "@/registry/components/scroll-fade-effect";
+import type { ShimmeringText } from "@/registry/components/shimmering-text";
+import type { SlideToUnlock, SlideToUnlockText } from "@/registry/components/slide-to-unlock";
+import type { TestimonialSpotlight } from "@/registry/components/testimonial-spotlight";
 
 export type AppleHelloEffectProps = Omit<
   ComponentProps<typeof AppleHelloVietnameseEffect>,
   keyof Omit<ComponentProps<typeof motion.svg>, "speed" | "onAnimationComplete">
->
+>;
 
 export type ShimmeringTextProps = Omit<
   ComponentProps<typeof ShimmeringText>,
   keyof ComponentProps<typeof motion.span>
->
+>;
 
 export type SlideToUnlockRootProps = Omit<
   ComponentProps<typeof SlideToUnlock>,
   keyof ComponentProps<"div">
->
+>;
 
 export type SlideToUnlockTextProps = Omit<
   ComponentProps<typeof SlideToUnlockText>,
   keyof Omit<ComponentProps<typeof motion.div>, "children">
->
+>;
 
 export type ScrollFadeEffectProps = Omit<
   ComponentProps<typeof ScrollFadeEffect>,
   keyof ComponentProps<"div">
->
+>;
 
 export type CopyButtonProps = Omit<
   ComponentProps<typeof CopyButton>,
   keyof ComponentProps<typeof Button>
->
+>;
 
 export type HapticProps = {
   /**
@@ -60,14 +57,12 @@ export type HapticProps = {
    * <Button onClick={() => haptic()}>Haptic</Button>
    * ```
    */
-  haptic: (pattern?: number | number[]) => void
-}
+  haptic: (pattern?: number | number[]) => void;
+};
 
-export type TestimonialSpotlightProps = ComponentProps<
-  typeof TestimonialSpotlight
->
+export type TestimonialSpotlightProps = ComponentProps<typeof TestimonialSpotlight>;
 
 export type GlowCardGridProps = Omit<
   ComponentProps<typeof GlowCardGrid>,
   keyof Omit<ComponentProps<"div">, "children">
->
+>;

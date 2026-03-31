@@ -1,7 +1,7 @@
 export type FilterWordsOptions = {
-  prefixMode?: 'all-words' | 'last-word' | 'none';
+  prefixMode?: "all-words" | "last-word" | "none";
   wordBoundary?: RegExp;
-  wordQuantifier?: 'match-all' | 'match-any';
+  wordQuantifier?: "match-all" | "match-any";
 };
 
 const DEFAULT_WORD_BOUNDARY = /\s+/;
@@ -10,26 +10,26 @@ export const filterWords = (
   haystack: string,
   needle: string,
   {
-    prefixMode = 'last-word',
+    prefixMode = "last-word",
     wordBoundary = DEFAULT_WORD_BOUNDARY,
-    wordQuantifier = 'match-all',
+    wordQuantifier = "match-all",
   }: FilterWordsOptions = {}
 ): boolean => {
   const haystackWords = haystack.trim().split(wordBoundary);
   const needleWords = needle.trim().split(wordBoundary);
 
-  const quantifier = wordQuantifier === 'match-all' ? 'every' : 'some';
+  const quantifier = wordQuantifier === "match-all" ? "every" : "some";
 
   return needleWords[quantifier]((needleWord, i) => {
     const allowPrefix = (() => {
       switch (prefixMode) {
-        case 'all-words': {
+        case "all-words": {
           return true;
         }
-        case 'last-word': {
+        case "last-word": {
           return i === needleWords.length - 1;
         }
-        case 'none': {
+        case "none": {
           return false;
         }
       }
@@ -42,8 +42,8 @@ export const filterWords = (
 
       return (
         haystackWord.localeCompare(needleWord, undefined, {
-          sensitivity: 'base',
-          usage: 'search',
+          sensitivity: "base",
+          usage: "search",
         }) === 0
       );
     });

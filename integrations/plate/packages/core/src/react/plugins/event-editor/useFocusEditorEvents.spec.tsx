@@ -1,15 +1,15 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook } from "@testing-library/react";
 
-import { createPlateEditor } from '../../editor';
+import { createPlateEditor } from "../../editor";
 import {
   BLUR_EDITOR_EVENT,
   FOCUS_EDITOR_EVENT,
   useFocusEditorEvents,
-} from './useFocusEditorEvents';
+} from "./useFocusEditorEvents";
 
-describe('useFocusEditorEvents', () => {
-  it('calls focus and blur handlers only for the matching editor id', () => {
-    const editor = createPlateEditor({ id: 'editor-a' });
+describe("useFocusEditorEvents", () => {
+  it("calls focus and blur handlers only for the matching editor id", () => {
+    const editor = createPlateEditor({ id: "editor-a" });
     const onEditorFocus = mock();
     const onEditorBlur = mock();
 
@@ -24,17 +24,17 @@ describe('useFocusEditorEvents', () => {
     act(() => {
       document.dispatchEvent(
         new CustomEvent(FOCUS_EDITOR_EVENT, {
-          detail: { id: 'editor-b' },
+          detail: { id: "editor-b" },
         })
       );
       document.dispatchEvent(
         new CustomEvent(BLUR_EDITOR_EVENT, {
-          detail: { id: 'editor-a' },
+          detail: { id: "editor-a" },
         })
       );
       document.dispatchEvent(
         new CustomEvent(FOCUS_EDITOR_EVENT, {
-          detail: { id: 'editor-a' },
+          detail: { id: "editor-a" },
         })
       );
     });
@@ -47,7 +47,7 @@ describe('useFocusEditorEvents', () => {
     act(() => {
       document.dispatchEvent(
         new CustomEvent(FOCUS_EDITOR_EVENT, {
-          detail: { id: 'editor-a' },
+          detail: { id: "editor-a" },
         })
       );
     });

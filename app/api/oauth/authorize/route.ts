@@ -1,5 +1,10 @@
+import cuid from "cuid";
+import { and, eq } from "drizzle-orm";
+import { headers } from "next/headers";
+import { NextRequest } from "next/server";
 import { db } from "@/db";
 import { oauthApp, oauthAuthorizationCode } from "@/db/schema";
+import { auth } from "@/lib/auth";
 import { OAUTH_AUTHORIZATION_CODE_EXPIRY_SECONDS } from "@/lib/constants";
 import {
   generateSecureToken,
@@ -8,11 +13,6 @@ import {
   validateRedirectUri,
   validateScopes,
 } from "@/lib/oauth";
-import { auth } from "@/lib/auth";
-import { eq, and } from "drizzle-orm";
-import { headers } from "next/headers";
-import cuid from "cuid";
-import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
@@ -34,10 +34,7 @@ export async function GET(req: NextRequest) {
   }
 
   if (responseType !== "code") {
-    return oauthError(
-      "unsupported_response_type",
-      "Only response_type=code is supported"
-    );
+    return oauthError("unsupported_response_type", "Only response_type=code is supported");
   }
 
   // Look up OAuth app
@@ -86,9 +83,7 @@ export async function GET(req: NextRequest) {
     redirectUri,
     codeChallenge: codeChallenge ?? null,
     codeChallengeMethod: codeChallenge ? codeChallengeMethod : null,
-    expiresAt: new Date(
-      now.getTime() + OAUTH_AUTHORIZATION_CODE_EXPIRY_SECONDS * 1000
-    ),
+    expiresAt: new Date(now.getTime() + OAUTH_AUTHORIZATION_CODE_EXPIRY_SECONDS * 1000),
     createdAt: now,
   });
 

@@ -1,27 +1,27 @@
 import {
   type Descendant,
-  type NodeOperation,
-  type TextOperation,
-  type TText,
   NodeApi,
+  type NodeOperation,
   OperationApi,
   PathApi,
-} from '@platejs/slate';
-import { type OmitFirst, bindFirst } from '@udecode/utils';
+  type TextOperation,
+  type TText,
+} from "@platejs/slate";
+import { bindFirst, type OmitFirst } from "@udecode/utils";
 
-import type { SlateEditor } from '../../editor';
-import type { PluginConfig } from '../../plugin';
+import type { SlateEditor } from "../../editor";
+import type { PluginConfig } from "../../plugin";
 
-import { createTSlatePlugin } from '../../plugin';
-import { pipeOnNodeChange } from '../../utils/pipeOnNodeChange';
-import { pipeOnTextChange } from '../../utils/pipeOnTextChange';
-import { init } from './transforms/init';
-import { insertExitBreak } from './transforms/insertExitBreak';
-import { resetBlock } from './transforms/resetBlock';
-import { setValue } from './transforms/setValue';
+import { createTSlatePlugin } from "../../plugin";
+import { pipeOnNodeChange } from "../../utils/pipeOnNodeChange";
+import { pipeOnTextChange } from "../../utils/pipeOnTextChange";
+import { init } from "./transforms/init";
+import { insertExitBreak } from "./transforms/insertExitBreak";
+import { resetBlock } from "./transforms/resetBlock";
+import { setValue } from "./transforms/setValue";
 
 export type SlateExtensionConfig = PluginConfig<
-  'slateExtension',
+  "slateExtension",
   {
     onNodeChange: (options: {
       editor: SlateEditor;
@@ -53,7 +53,7 @@ export const SlateExtensionPlugin = createTSlatePlugin<SlateExtensionConfig>({
   api: {
     redecorate: () => {},
   },
-  key: 'slateExtension',
+  key: "slateExtension",
   options: {
     onNodeChange: () => {},
     onTextChange: () => {},
@@ -75,10 +75,10 @@ export const SlateExtensionPlugin = createTSlatePlugin<SlateExtensionConfig>({
       const noop = () => {};
       const hasNodeHandlers =
         editor.meta.pluginCache.handlers.onNodeChange.length > 0 ||
-        getOption('onNodeChange') !== noop;
+        getOption("onNodeChange") !== noop;
       const hasTextHandlers =
         editor.meta.pluginCache.handlers.onTextChange.length > 0 ||
-        getOption('onTextChange') !== noop;
+        getOption("onTextChange") !== noop;
 
       if (!hasNodeHandlers && !hasTextHandlers) {
         apply(operation);
@@ -94,22 +94,22 @@ export const SlateExtensionPlugin = createTSlatePlugin<SlateExtensionConfig>({
       if (OperationApi.isNodeOperation(operation) && hasNodeHandlers) {
         // Get node states BEFORE applying the operation
         switch (operation.type) {
-          case 'insert_node': {
+          case "insert_node": {
             // Both are the new node being inserted
             prevNode = operation.node;
             node = operation.node;
             break;
           }
 
-          case 'merge_node':
-          case 'move_node':
-          case 'set_node':
-          case 'split_node': {
+          case "merge_node":
+          case "move_node":
+          case "set_node":
+          case "split_node": {
             // Get the node before the operation
             prevNode = NodeApi.get(editor, operation.path);
             break;
           }
-          case 'remove_node': {
+          case "remove_node": {
             // Both are the node being removed
             prevNode = operation.node;
             node = operation.node;
@@ -132,13 +132,13 @@ export const SlateExtensionPlugin = createTSlatePlugin<SlateExtensionConfig>({
       // Get AFTER state for operations where node changes
       if (OperationApi.isNodeOperation(operation) && hasNodeHandlers) {
         switch (operation.type) {
-          case 'insert_node':
-          case 'remove_node': {
+          case "insert_node":
+          case "remove_node": {
             // Already set above, keep the same
             break;
           }
 
-          case 'merge_node': {
+          case "merge_node": {
             // Get the merged result (at previous path)
             const prevPath = PathApi.previous(operation.path);
 
@@ -149,19 +149,19 @@ export const SlateExtensionPlugin = createTSlatePlugin<SlateExtensionConfig>({
             break;
           }
 
-          case 'move_node': {
+          case "move_node": {
             // Get node at new location
             node = NodeApi.get(editor, operation.newPath);
             break;
           }
 
-          case 'set_node': {
+          case "set_node": {
             // Get the updated node
             node = NodeApi.get(editor, operation.path);
             break;
           }
 
-          case 'split_node': {
+          case "split_node": {
             // Get the first part of the split
             node = NodeApi.get(editor, operation.path);
             break;
@@ -174,15 +174,10 @@ export const SlateExtensionPlugin = createTSlatePlugin<SlateExtensionConfig>({
         }
 
         // Call handlers - both node and prevNode are guaranteed to be defined
-        const eventIsHandled = pipeOnNodeChange(
-          editor,
-          node!,
-          prevNode!,
-          operation
-        );
+        const eventIsHandled = pipeOnNodeChange(editor, node!, prevNode!, operation);
 
         if (!eventIsHandled) {
-          const onNodeChange = getOption('onNodeChange');
+          const onNodeChange = getOption("onNodeChange");
           onNodeChange({ editor, node: node!, operation, prevNode: prevNode! });
         }
       }
@@ -194,16 +189,10 @@ export const SlateExtensionPlugin = createTSlatePlugin<SlateExtensionConfig>({
           text = textNodeAfter.text;
         }
 
-        const eventIsHandled = pipeOnTextChange(
-          editor,
-          parentNode!,
-          text!,
-          prevText!,
-          operation
-        );
+        const eventIsHandled = pipeOnTextChange(editor, parentNode!, text!, prevText!, operation);
 
         if (!eventIsHandled) {
-          const onTextChange = getOption('onTextChange');
+          const onTextChange = getOption("onTextChange");
           onTextChange({
             editor,
             node: parentNode!,

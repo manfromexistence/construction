@@ -1,6 +1,6 @@
-import type { TIndentElement } from 'platejs';
+import type { TIndentElement } from "platejs";
 
-import { buildToggleIndex } from '../toggleIndexAtom';
+import { buildToggleIndex } from "../toggleIndexAtom";
 
 export const findElementIdsHiddenInToggle = (
   openToggleIds: Set<string>,
@@ -12,9 +12,7 @@ export const findElementIdsHiddenInToggle = (
     .filter((element) => {
       const enclosingToggleIds = toggleIndex.get(element.id as string) || [];
 
-      return enclosingToggleIds.some(
-        (toggleId) => !openToggleIds.has(toggleId)
-      );
+      return enclosingToggleIds.some((toggleId) => !openToggleIds.has(toggleId));
     })
     .map((element) => element.id as string);
 };

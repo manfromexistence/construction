@@ -2,18 +2,15 @@ import {
   type Editor,
   type ElementEntryOf,
   type ElementOf,
-  type NodeEntry,
   NodeApi,
+  type NodeEntry,
   PathApi,
-} from 'platejs';
+} from "platejs";
 
-import { type GetSiblingListOptions, getSiblingList } from './getSiblingList';
+import { type GetSiblingListOptions, getSiblingList } from "./getSiblingList";
 
 /** Get the previous indent list node. */
-export const getPreviousList = <
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
->(
+export const getPreviousList = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,
   entry: ElementEntryOf<E>,
   options?: Partial<GetSiblingListOptions<N, E>>

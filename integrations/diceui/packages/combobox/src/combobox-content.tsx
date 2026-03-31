@@ -94,7 +94,7 @@ const ComboboxContent = React.forwardRef<ContentElement, ComboboxContentProps>(
     });
 
     const composedRef = useComposedRefs(forwardedRef, context.listRef, (node) =>
-      positionerContext.refs.setFloating(node),
+      positionerContext.refs.setFloating(node)
     );
 
     const composedStyle = React.useMemo<React.CSSProperties>(() => {
@@ -151,7 +151,7 @@ const ComboboxContent = React.forwardRef<ContentElement, ComboboxContentProps>(
         </FloatingFocusManager>
       </ComboboxContentProvider>
     );
-  },
+  }
 );
 
 ComboboxContent.displayName = CONTENT_NAME;

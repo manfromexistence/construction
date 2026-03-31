@@ -1,27 +1,23 @@
-import { BasicBlocksPlugin } from '@platejs/basic-nodes/react';
-import { LinkPlugin } from '@platejs/link/react';
+import { BasicBlocksPlugin } from "@platejs/basic-nodes/react";
+import { LinkPlugin } from "@platejs/link/react";
 
 import {
   resolveCreatePluginTest,
   resolvePluginTest,
-} from '../../internal/plugin/resolveCreatePluginTest';
-import {
-  type PluginConfig,
-  createSlateEditor,
-  createSlatePlugin,
-} from '../index';
+} from "../../internal/plugin/resolveCreatePluginTest";
+import { createSlateEditor, createSlatePlugin, type PluginConfig } from "../index";
 
-describe('createSlatePlugin', () => {
-  describe('extend', () => {
-    it('keeps the original key while merging object config', () => {
+describe("createSlatePlugin", () => {
+  describe("extend", () => {
+    it("keeps the original key while merging object config", () => {
       const plugin = resolvePluginTest(
-        createSlatePlugin({ key: 'a', node: { type: 'a' } }).extend({
+        createSlatePlugin({ key: "a", node: { type: "a" } }).extend({
           inject: {
             nodeProps: {
-              nodeKey: 'b',
+              nodeKey: "b",
             },
           },
-          node: { type: 'b' },
+          node: { type: "b" },
           options: {
             enabled: true,
           },
@@ -35,50 +31,50 @@ describe('createSlatePlugin', () => {
       }).toEqual({
         inject: {
           nodeProps: {
-            nodeKey: 'b',
+            nodeKey: "b",
           },
         },
-        key: 'a',
-        type: 'b',
+        key: "a",
+        type: "b",
       });
     });
 
-    it('resolves function-based plugins against the editor context', () => {
+    it("resolves function-based plugins against the editor context", () => {
       const plugin = resolveCreatePluginTest((editor: any) => ({
-        key: 'functionPlugin',
-        node: { type: 'function' },
+        key: "functionPlugin",
+        node: { type: "function" },
         options: { editorId: editor.id },
       }));
 
-      expect(plugin.key).toBe('functionPlugin');
-      expect(plugin.node.type).toBe('function');
-      expect(plugin.options).toHaveProperty('editorId');
+      expect(plugin.key).toBe("functionPlugin");
+      expect(plugin.node.type).toBe("function");
+      expect(plugin.options).toHaveProperty("editorId");
     });
 
-    it('lets the last extend win for overlapping fields', () => {
+    it("lets the last extend win for overlapping fields", () => {
       const plugin = resolvePluginTest(
         createSlatePlugin({
-          key: 'a',
-          node: { type: 'a' },
+          key: "a",
+          node: { type: "a" },
           options: { first: true },
         })
           .extend({
-            inject: { nodeProps: { nodeKey: 'b' } },
-            node: { type: 'b' },
+            inject: { nodeProps: { nodeKey: "b" } },
+            node: { type: "b" },
             options: { second: true },
           })
           .extend({
-            inject: { nodeProps: { nodeKey: 'c' } },
+            inject: { nodeProps: { nodeKey: "c" } },
             options: { third: true },
           })
       );
 
       expect(plugin.inject).toEqual({
         nodeProps: {
-          nodeKey: 'c',
+          nodeKey: "c",
         },
       });
-      expect(plugin.node.type).toBe('b');
+      expect(plugin.node.type).toBe("b");
       expect(plugin.options).toEqual({
         first: true,
         second: true,
@@ -86,13 +82,13 @@ describe('createSlatePlugin', () => {
       });
     });
 
-    it('can extend shipped nested plugins', () => {
+    it("can extend shipped nested plugins", () => {
       const editor = createSlateEditor({
         plugins: [
           BasicBlocksPlugin.extendPlugin(
-            { key: 'heading' },
+            { key: "heading" },
             {
-              node: { type: 'h' },
+              node: { type: "h" },
               options: {
                 levels: 5,
               },
@@ -102,22 +98,22 @@ describe('createSlatePlugin', () => {
       });
 
       expect(editor.plugins.heading).toMatchObject({
-        node: { type: 'h' },
+        node: { type: "h" },
         options: { levels: 5 },
       });
     });
 
-    it('uses the child plugin context when extending nested plugins', () => {
+    it("uses the child plugin context when extending nested plugins", () => {
       const childPlugin = createSlatePlugin({
-        key: 'child',
-        options: { childOption: 'child' },
+        key: "child",
+        options: { childOption: "child" },
       }).extendEditorApi(() => ({
-        method: () => 'child',
+        method: () => "child",
       }));
 
       const extendedPlugin = createSlatePlugin({
-        key: 'parent',
-        options: { parentOption: 'parent' },
+        key: "parent",
+        options: { parentOption: "parent" },
         plugins: [childPlugin],
       }).extendPlugin(childPlugin, (ctx) => ({
         options: {
@@ -130,107 +126,107 @@ describe('createSlatePlugin', () => {
       });
 
       expect(editor.getOptions(childPlugin)).toEqual({
-        childOption: 'child',
-        extendedOption: 'extended child',
+        childOption: "child",
+        extendedOption: "extended child",
       });
-      expect(editor.getOptions(childPlugin)).not.toHaveProperty('parentOption');
+      expect(editor.getOptions(childPlugin)).not.toHaveProperty("parentOption");
     });
 
-    it('can add missing nested plugins and update them later', () => {
+    it("can add missing nested plugins and update them later", () => {
       const editor = createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'a',
-            node: { type: 'a' },
+            key: "a",
+            node: { type: "a" },
             plugins: [
               createSlatePlugin({
-                key: 'aa',
-                node: { type: 'aa' },
+                key: "aa",
+                node: { type: "aa" },
               }),
             ],
           })
             .extendPlugin(
-              { key: 'bb' },
+              { key: "bb" },
               {
-                node: { type: 'bb' },
+                node: { type: "bb" },
               }
             )
             .extendPlugin(
-              { key: 'aa' },
+              { key: "aa" },
               {
-                node: { type: 'aa1' },
+                node: { type: "aa1" },
               }
             )
             .extendPlugin(
-              { key: 'bb' },
+              { key: "bb" },
               {
-                node: { type: 'bb1' },
+                node: { type: "bb1" },
               }
             ),
         ],
       });
 
-      expect(editor.getPlugin({ key: 'aa' }).node.type).toBe('aa1');
-      expect(editor.getPlugin({ key: 'bb' }).node.type).toBe('bb1');
+      expect(editor.getPlugin({ key: "aa" }).node.type).toBe("aa1");
+      expect(editor.getPlugin({ key: "bb" }).node.type).toBe("bb1");
     });
   });
 
-  describe('configure', () => {
+  describe("configure", () => {
     const basePlugin = createSlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
       options: {
-        optionA: 'initial',
+        optionA: "initial",
         optionB: 10,
       },
     });
 
-    it('overrides options without mutating the original plugin', () => {
+    it("overrides options without mutating the original plugin", () => {
       const configured = basePlugin.configure({
         options: {
-          optionA: 'modified',
+          optionA: "modified",
         },
       });
 
       expect(resolvePluginTest(configured).options).toEqual({
-        optionA: 'modified',
+        optionA: "modified",
         optionB: 10,
       });
       expect(basePlugin.options).toEqual({
-        optionA: 'initial',
+        optionA: "initial",
         optionB: 10,
       });
     });
 
-    it('supports function-based configuration', () => {
+    it("supports function-based configuration", () => {
       const configured = basePlugin.configure((ctx) => ({
         options: {
           optionB: ctx.plugin.options.optionB * 2,
-          optionC: 'new option',
+          optionC: "new option",
         },
       }));
 
       expect(resolvePluginTest(configured).options).toEqual({
-        optionA: 'initial',
+        optionA: "initial",
         optionB: 20,
-        optionC: 'new option',
+        optionC: "new option",
       });
     });
 
-    it('keeps only the last configure result when configure is chained', () => {
+    it("keeps only the last configure result when configure is chained", () => {
       const configured = basePlugin
-        .configure({ options: { optionA: 'first change' } })
+        .configure({ options: { optionA: "first change" } })
         .configure({ options: { optionB: 30 } })
         .configure(() => ({ options: { optionB: 40 } }));
 
       expect(resolvePluginTest(configured).options).toEqual({
-        optionA: 'initial',
+        optionA: "initial",
         optionB: 40,
       });
     });
 
-    it('reads configured types inside parser extensions', () => {
+    it("reads configured types inside parser extensions", () => {
       const tableCellPlugin = createSlatePlugin({
-        key: 'td',
+        key: "td",
       }).extend(({ plugin }) => ({
         parsers: {
           html: {
@@ -242,26 +238,24 @@ describe('createSlatePlugin', () => {
       }));
 
       const configuredPlugin = tableCellPlugin.configure({
-        node: { type: 'custom-td' },
+        node: { type: "custom-td" },
       });
 
       const resolvedPlugin = resolvePluginTest(configuredPlugin);
-      const parsedNode = resolvedPlugin.parsers?.html?.deserializer?.parse?.(
-        {} as any
-      );
+      const parsedNode = resolvedPlugin.parsers?.html?.deserializer?.parse?.({} as any);
 
-      expect(parsedNode).toEqual({ type: 'custom-td' });
+      expect(parsedNode).toEqual({ type: "custom-td" });
     });
 
-    it('reads configured types inside transform extensions', () => {
-      let observedType = 'defaultType';
+    it("reads configured types inside transform extensions", () => {
+      let observedType = "defaultType";
 
       const configuredPlugin = createSlatePlugin({
-        key: 'testPlugin',
-        node: { type: 'defaultType' },
+        key: "testPlugin",
+        node: { type: "defaultType" },
       })
         .configure({
-          node: { type: 'customType' },
+          node: { type: "customType" },
         })
         .extendEditorTransforms(({ plugin }) => ({
           insertText: () => {
@@ -273,12 +267,12 @@ describe('createSlatePlugin', () => {
         plugins: [configuredPlugin],
       });
 
-      editor.tf.insertText('');
+      editor.tf.insertText("");
 
-      expect(observedType).toBe('customType');
+      expect(observedType).toBe("customType");
     });
 
-    it('can override shipped plugin parsers at the root', () => {
+    it("can override shipped plugin parsers at the root", () => {
       const editor = createSlateEditor({
         plugins: [
           LinkPlugin.extend(() => ({
@@ -303,67 +297,67 @@ describe('createSlatePlugin', () => {
     });
   });
 
-  describe('configurePlugin', () => {
-    it('configures an existing nested plugin', () => {
+  describe("configurePlugin", () => {
+    it("configures an existing nested plugin", () => {
       const child = createSlatePlugin({
-        key: 'aa',
-        options: { another: 'b', initialValue: 'aa' },
+        key: "aa",
+        options: { another: "b", initialValue: "aa" },
       });
 
       const editor = createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'a',
+            key: "a",
             plugins: [child],
           }).configurePlugin(child, {
             options: {
-              initialValue: 'aaa',
+              initialValue: "aaa",
             },
           }),
         ],
       });
 
       expect(editor.plugins.aa.options).toEqual({
-        another: 'b',
-        initialValue: 'aaa',
+        another: "b",
+        initialValue: "aaa",
       });
     });
 
-    it('does not add a plugin when the target is missing', () => {
+    it("does not add a plugin when the target is missing", () => {
       const editor = createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'a',
+            key: "a",
             plugins: [
               createSlatePlugin({
-                key: 'aa',
-                options: { initialValue: 'aa' },
+                key: "aa",
+                options: { initialValue: "aa" },
               }),
             ],
-          }).configurePlugin({ key: 'bb' }, { options: { newOption: 'new' } }),
+          }).configurePlugin({ key: "bb" }, { options: { newOption: "new" } }),
         ],
       });
 
       expect(editor.plugins.aa.options).toEqual({
-        initialValue: 'aa',
+        initialValue: "aa",
       });
       expect(editor.plugins.bb).toBeUndefined();
     });
 
-    it('configures deeply nested plugins', () => {
+    it("configures deeply nested plugins", () => {
       const grandchild = createSlatePlugin({
-        key: 'c',
+        key: "c",
         node: { isElement: true },
         options: { a: 1 },
       });
 
       const child = createSlatePlugin({
-        key: 'b',
+        key: "b",
         plugins: [grandchild],
       });
 
       const parent = createSlatePlugin({
-        key: 'a',
+        key: "a",
         plugins: [child],
       });
 
@@ -377,9 +371,7 @@ describe('createSlatePlugin', () => {
       });
 
       expect(editor.plugins.c.node.isElement).toBe(false);
-      expect(
-        editor.getOptions<PluginConfig<any, { a: number }>>({ key: 'c' }).a
-      ).toBe(2);
+      expect(editor.getOptions<PluginConfig<any, { a: number }>>({ key: "c" }).a).toBe(2);
     });
   });
 });

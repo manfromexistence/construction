@@ -1,23 +1,19 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
-
-import { jsxt } from '@platejs/test-utils';
-
-import { getTableGridAbove } from './queries/getTableGridAbove';
-import { getTestTablePlugins } from './__tests__/getTestTablePlugins';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
+import { getTestTablePlugins } from "./__tests__/getTestTablePlugins";
+import { getTableGridAbove } from "./queries/getTableGridAbove";
 
 jsxt;
 
-describe('withGetFragmentTable', () => {
+describe("withGetFragmentTable", () => {
   // https://github.com/udecode/editor-protocol/issues/19
-  describe('when copying cells 11-21', () => {
+  describe("when copying cells 11-21", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('copies a table 2x1 with 11-21 cells (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("copies a table 2x1 with 11-21 cells (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -53,13 +49,11 @@ describe('withGetFragmentTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/63
-  describe('when copying a single cell with 2 blocks', () => {
+  describe("when copying a single cell with 2 blocks", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('copies only the 2 blocks (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("copies only the 2 blocks (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const blocks = (
         <fragment>
           <hp>

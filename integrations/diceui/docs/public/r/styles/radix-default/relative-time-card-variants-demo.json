@@ -1,9 +1,6 @@
 {
   "name": "relative-time-card-variants-demo",
-  "registryDependencies": [
-    "button",
-    "hover-card"
-  ],
+  "registryDependencies": ["button", "hover-card"],
   "files": [
     {
       "path": "examples/relative-time-card-variants-demo.tsx",

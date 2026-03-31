@@ -1,11 +1,7 @@
 {
   "name": "qr-code-overlay-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "qr-code"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["qr-code"],
   "files": [
     {
       "path": "examples/qr-code-overlay-demo.tsx",

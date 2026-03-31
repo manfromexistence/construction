@@ -1,8 +1,6 @@
 {
   "name": "stack-side-demo",
-  "registryDependencies": [
-    "stack"
-  ],
+  "registryDependencies": ["stack"],
   "files": [
     {
       "path": "examples/stack-side-demo.tsx",

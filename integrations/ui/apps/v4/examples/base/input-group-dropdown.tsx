@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { ChevronDownIcon, MoreHorizontal } from "lucide-react"
+import { ChevronDownIcon, MoreHorizontal } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -8,13 +8,13 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui/dropdown-menu"
+} from "@/styles/base-nova/ui/dropdown-menu";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/base-nova/ui/input-group"
+} from "@/styles/base-nova/ui/input-group";
 
 export function InputGroupDropdown() {
   return (
@@ -24,13 +24,7 @@ export function InputGroupDropdown() {
         <InputGroupAddon align="inline-end">
           <DropdownMenu>
             <DropdownMenuTrigger
-              render={
-                <InputGroupButton
-                  variant="ghost"
-                  aria-label="More"
-                  size="icon-xs"
-                />
-              }
+              render={<InputGroupButton variant="ghost" aria-label="More" size="icon-xs" />}
             >
               <MoreHorizontal />
             </DropdownMenuTrigger>
@@ -49,9 +43,7 @@ export function InputGroupDropdown() {
         <InputGroupAddon align="inline-end">
           <DropdownMenu>
             <DropdownMenuTrigger
-              render={
-                <InputGroupButton variant="ghost" className="pr-1.5! text-xs" />
-              }
+              render={<InputGroupButton variant="ghost" className="pr-1.5! text-xs" />}
             >
               Search In... <ChevronDownIcon className="size-3" />
             </DropdownMenuTrigger>
@@ -66,5 +58,5 @@ export function InputGroupDropdown() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

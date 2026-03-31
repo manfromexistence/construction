@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
 import { Upload } from "lucide-react";
 import { useDropzone } from "react-dropzone";
+import { cn } from "@/lib/utils";
 
 interface DragAndDropImageUploaderProps {
   onDrop: (files: File[]) => void;

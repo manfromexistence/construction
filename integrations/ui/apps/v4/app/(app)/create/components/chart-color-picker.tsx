@@ -1,14 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { useMounted } from "@/hooks/use-mounted"
-import {
-  BASE_COLORS,
-  getThemesForBaseColor,
-  type ChartColorName,
-} from "@/registry/config"
-import { LockButton } from "@/app/(app)/create/components/lock-button"
+import * as React from "react";
+import { LockButton } from "@/app/(app)/create/components/lock-button";
 import {
   Picker,
   PickerContent,
@@ -17,40 +10,41 @@ import {
   PickerRadioItem,
   PickerSeparator,
   PickerTrigger,
-} from "@/app/(app)/create/components/picker"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
+} from "@/app/(app)/create/components/picker";
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { useMounted } from "@/hooks/use-mounted";
+import { BASE_COLORS, type ChartColorName, getThemesForBaseColor } from "@/registry/config";
 
 export function ChartColorPicker({
   isMobile,
   anchorRef,
 }: {
-  isMobile: boolean
-  anchorRef: React.RefObject<HTMLDivElement | null>
+  isMobile: boolean;
+  anchorRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  const mounted = useMounted()
-  const [params, setParams] = useDesignSystemSearchParams()
+  const mounted = useMounted();
+  const [params, setParams] = useDesignSystemSearchParams();
 
   const availableChartColors = React.useMemo(
     () => getThemesForBaseColor(params.baseColor),
     [params.baseColor]
-  )
+  );
 
   const currentChartColor = React.useMemo(
-    () =>
-      availableChartColors.find((theme) => theme.name === params.chartColor),
+    () => availableChartColors.find((theme) => theme.name === params.chartColor),
     [availableChartColors, params.chartColor]
-  )
+  );
 
   const currentChartColorIsBaseColor = React.useMemo(
     () => BASE_COLORS.find((baseColor) => baseColor.name === params.chartColor),
     [params.chartColor]
-  )
+  );
 
   React.useEffect(() => {
     if (!currentChartColor && availableChartColors.length > 0) {
-      setParams({ chartColor: availableChartColors[0].name })
+      setParams({ chartColor: availableChartColors[0].name });
     }
-  }, [currentChartColor, availableChartColors, setParams])
+  }, [currentChartColor, availableChartColors, setParams]);
 
   return (
     <div className="group/picker relative">
@@ -58,9 +52,7 @@ export function ChartColorPicker({
         <PickerTrigger>
           <div className="flex flex-col justify-start text-left">
             <div className="text-xs text-muted-foreground">Chart Color</div>
-            <div className="text-sm font-medium text-foreground">
-              {currentChartColor?.title}
-            </div>
+            <div className="text-sm font-medium text-foreground">{currentChartColor?.title}</div>
           </div>
           {mounted && (
             <div
@@ -68,9 +60,7 @@ export function ChartColorPicker({
                 {
                   "--color":
                     currentChartColor?.cssVars?.dark?.[
-                      currentChartColorIsBaseColor
-                        ? "muted-foreground"
-                        : "primary"
+                      currentChartColorIsBaseColor ? "muted-foreground" : "primary"
                     ],
                 } as React.CSSProperties
               }
@@ -87,20 +77,14 @@ export function ChartColorPicker({
           <PickerRadioGroup
             value={currentChartColor?.name}
             onValueChange={(value) => {
-              setParams({ chartColor: value as ChartColorName })
+              setParams({ chartColor: value as ChartColorName });
             }}
           >
             <PickerGroup>
               {availableChartColors
-                .filter((theme) =>
-                  BASE_COLORS.find((baseColor) => baseColor.name === theme.name)
-                )
+                .filter((theme) => BASE_COLORS.find((baseColor) => baseColor.name === theme.name))
                 .map((theme) => (
-                  <PickerRadioItem
-                    key={theme.name}
-                    value={theme.name}
-                    closeOnClick={isMobile}
-                  >
+                  <PickerRadioItem key={theme.name} value={theme.name} closeOnClick={isMobile}>
                     {theme.title}
                   </PickerRadioItem>
                 ))}
@@ -108,18 +92,9 @@ export function ChartColorPicker({
             <PickerSeparator />
             <PickerGroup>
               {availableChartColors
-                .filter(
-                  (theme) =>
-                    !BASE_COLORS.find(
-                      (baseColor) => baseColor.name === theme.name
-                    )
-                )
+                .filter((theme) => !BASE_COLORS.find((baseColor) => baseColor.name === theme.name))
                 .map((theme) => (
-                  <PickerRadioItem
-                    key={theme.name}
-                    value={theme.name}
-                    closeOnClick={isMobile}
-                  >
+                  <PickerRadioItem key={theme.name} value={theme.name} closeOnClick={isMobile}>
                     {theme.title}
                   </PickerRadioItem>
                 ))}
@@ -127,10 +102,7 @@ export function ChartColorPicker({
           </PickerRadioGroup>
         </PickerContent>
       </Picker>
-      <LockButton
-        param="chartColor"
-        className="absolute top-1/2 right-8 -translate-y-1/2"
-      />
+      <LockButton param="chartColor" className="absolute top-1/2 right-8 -translate-y-1/2" />
     </div>
-  )
+  );
 }

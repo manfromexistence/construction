@@ -11,12 +11,7 @@ import { openInV0Action } from "@/actions/open-in-v0";
 import { ANALYTIC_EVENT } from "@/components/analytics";
 import type { IconStatus } from "@/components/ui/icon-state";
 import { IconState } from "@/components/ui/icon-state";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { SITE } from "@/constants";
 import { useTouchDevice } from "@/hooks/use-touch-device";
 import { getPackageManagerPrefix } from "@/lib/get-package-manager-prefix";
@@ -159,17 +154,12 @@ const CopyCLIAction = ({ name }: Pick<Icon, "name">) => {
         tabIndex={0}
       >
         <IconState status={state}>
-          <Terminal
-            aria-hidden="true"
-            className="size-4 text-neutral-800 dark:text-neutral-100"
-          />
+          <Terminal aria-hidden="true" className="size-4 text-neutral-800 dark:text-neutral-100" />
         </IconState>
       </TooltipTrigger>
       <TooltipContent>
         Copy{" "}
-        <code className="rounded-[4px] bg-neutral-50/20 px-1 py-0.5 font-mono">
-          shadcn/cli
-        </code>{" "}
+        <code className="rounded-[4px] bg-neutral-50/20 px-1 py-0.5 font-mono">shadcn/cli</code>{" "}
         command
       </TooltipContent>
     </Tooltip>
@@ -213,18 +203,11 @@ const CopyCodeAction = ({ name }: Pick<Icon, "name">) => {
         tabIndex={0}
       >
         <IconState status={state}>
-          <Copy
-            aria-hidden="true"
-            className="size-4 text-neutral-800 dark:text-neutral-100"
-          />
+          <Copy aria-hidden="true" className="size-4 text-neutral-800 dark:text-neutral-100" />
         </IconState>
       </TooltipTrigger>
       <TooltipContent>
-        Copy{" "}
-        <code className="rounded-[4px] bg-neutral-50/20 px-1 py-0.5 font-mono">
-          .tsx
-        </code>{" "}
-        code
+        Copy <code className="rounded-[4px] bg-neutral-50/20 px-1 py-0.5 font-mono">.tsx</code> code
       </TooltipContent>
     </Tooltip>
   );
@@ -281,17 +264,11 @@ const OpenInV0Action = ({ name }: Pick<Icon, "name">) => {
         tabIndex={0}
       >
         <IconState status={state}>
-          <V0Icon
-            aria-hidden="true"
-            className="size-5 text-neutral-800 dark:text-neutral-100"
-          />
+          <V0Icon aria-hidden="true" className="size-5 text-neutral-800 dark:text-neutral-100" />
         </IconState>
       </TooltipTrigger>
       <TooltipContent>
-        Open in{" "}
-        <code className="rounded-[4px] bg-neutral-50/20 px-1 py-0.5 font-mono">
-          v0
-        </code>
+        Open in <code className="rounded-[4px] bg-neutral-50/20 px-1 py-0.5 font-mono">v0</code>
       </TooltipContent>
     </Tooltip>
   );
@@ -323,4 +300,4 @@ const Actions = ({ name, alwaysVisible = false }: ActionsProps) => {
 const CardTitle = Title;
 const CardActions = Actions;
 
-export { Card, CardTitle, CardActions };
+export { Card, CardActions, CardTitle };

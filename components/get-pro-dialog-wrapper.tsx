@@ -1,11 +1,11 @@
 "use client";
 
+import { Calendar, Check } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 import { PRO_SUB_FEATURES } from "@/utils/subscription";
-import { Calendar, Check } from "lucide-react";
-import Link from "next/link";
 import { NoiseEffect } from "./effects/noise-effect";
 import { AIChatDemo } from "./examples/ai-chat-demo";
 import {

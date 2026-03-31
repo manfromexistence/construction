@@ -1,17 +1,14 @@
+import { type TriggerComboboxPluginOptions, withTriggerCombobox } from "@platejs/combobox";
 import {
-  type TriggerComboboxPluginOptions,
-  withTriggerCombobox,
-} from '@platejs/combobox';
-import {
-  type PluginConfig,
-  type TMentionElement,
   createSlatePlugin,
   createTSlatePlugin,
   KEYS,
-} from 'platejs';
+  type PluginConfig,
+  type TMentionElement,
+} from "platejs";
 
 export type MentionConfig = PluginConfig<
-  'mention',
+  "mention",
   {
     insertSpaceAfterMention?: boolean;
   } & TriggerComboboxPluginOptions,
@@ -33,22 +30,22 @@ export const BaseMentionPlugin = createTSlatePlugin<MentionConfig>({
   key: KEYS.mention,
   node: { isElement: true, isInline: true, isMarkableVoid: true, isVoid: true },
   options: {
-    trigger: '@',
+    trigger: "@",
     triggerPreviousCharPattern: /^\s?$/,
     createComboboxInput: (trigger) => ({
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       trigger,
       type: KEYS.mentionInput,
     }),
   },
   plugins: [BaseMentionInputPlugin],
 })
-  .extendEditorTransforms<MentionConfig['transforms']>(({ editor, type }) => ({
+  .extendEditorTransforms<MentionConfig["transforms"]>(({ editor, type }) => ({
     insert: {
       mention: ({ key, value }: { key?: any; value: any }) => {
         editor.tf.insertNodes<TMentionElement>({
           key,
-          children: [{ text: '' }],
+          children: [{ text: "" }],
           type,
           value,
         });

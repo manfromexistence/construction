@@ -17,7 +17,7 @@ const buttonGroupVariants = cva(
     defaultVariants: {
       orientation: "horizontal",
     },
-  },
+  }
 );
 
 function ButtonGroup({
@@ -49,7 +49,7 @@ function ButtonGroupText({
     <Comp
       className={cn(
         "flex items-center gap-2 rounded-md border bg-muted px-4 font-medium text-sm shadow-xs [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none",
-        className,
+        className
       )}
       {...props}
     />
@@ -67,16 +67,11 @@ function ButtonGroupSeparator({
       orientation={orientation}
       className={cn(
         "relative m-0! self-stretch bg-input data-[orientation=vertical]:h-auto",
-        className,
+        className
       )}
       {...props}
     />
   );
 }
 
-export {
-  ButtonGroup,
-  ButtonGroupSeparator,
-  ButtonGroupText,
-  buttonGroupVariants,
-};
+export { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants };

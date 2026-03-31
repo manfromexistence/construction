@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chart-tooltip-indicator-none",
-  "registryDependencies": [
-    "card",
-    "chart"
-  ],
+  "registryDependencies": ["card", "chart"],
   "files": [
     {
       "path": "registry/new-york-v4/charts/chart-tooltip-indicator-none.tsx",
@@ -12,9 +9,6 @@
       "type": "registry:block"
     }
   ],
-  "categories": [
-    "charts",
-    "charts-tooltip"
-  ],
+  "categories": ["charts", "charts-tooltip"],
   "type": "registry:block"
 }

@@ -1,7 +1,7 @@
-import path from "path"
-import { describe, expect, test } from "vitest"
+import path from "path";
+import { describe, expect, test } from "vitest";
 
-import { getTailwindCssFile } from "../../src/utils/get-project-info"
+import { getTailwindCssFile } from "../../src/utils/get-project-info";
 
 describe("get tailwindcss file", async () => {
   test.each([
@@ -39,38 +39,26 @@ describe("get tailwindcss file", async () => {
     },
   ])(`getTailwindCssFile($name) -> $file`, async ({ name, file }) => {
     expect(
-      await getTailwindCssFile(
-        path.resolve(__dirname, `../fixtures/frameworks/${name}`)
-      )
-    ).toBe(file)
-  })
+      await getTailwindCssFile(path.resolve(__dirname, `../fixtures/frameworks/${name}`))
+    ).toBe(file);
+  });
 
   test("should use configCssFile when provided and file exists", async () => {
-    const cwd = path.resolve(
-      __dirname,
-      "../fixtures/frameworks/next-monorepo"
-    )
-    expect(
-      await getTailwindCssFile(cwd, "packages/ui/src/globals.css")
-    ).toBe("packages/ui/src/globals.css")
-  })
+    const cwd = path.resolve(__dirname, "../fixtures/frameworks/next-monorepo");
+    expect(await getTailwindCssFile(cwd, "packages/ui/src/globals.css")).toBe(
+      "packages/ui/src/globals.css"
+    );
+  });
 
   test("should fall back to glob when configCssFile does not exist", async () => {
-    const cwd = path.resolve(__dirname, "../fixtures/frameworks/next-app")
-    expect(
-      await getTailwindCssFile(cwd, "nonexistent/styles.css")
-    ).toBe("app/globals.css")
-  })
+    const cwd = path.resolve(__dirname, "../fixtures/frameworks/next-app");
+    expect(await getTailwindCssFile(cwd, "nonexistent/styles.css")).toBe("app/globals.css");
+  });
 
   test("should return null when no css file found and no configCssFile", async () => {
-    const cwd = path.resolve(
-      __dirname,
-      "../fixtures/frameworks/next-monorepo"
-    )
+    const cwd = path.resolve(__dirname, "../fixtures/frameworks/next-monorepo");
     // The CSS file is nested under packages/ which the glob finds.
     // Without configCssFile, it should still find it via glob.
-    expect(await getTailwindCssFile(cwd)).toBe(
-      "packages/ui/src/globals.css"
-    )
-  })
-})
+    expect(await getTailwindCssFile(cwd)).toBe("packages/ui/src/globals.css");
+  });
+});

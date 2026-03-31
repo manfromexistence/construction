@@ -3,13 +3,7 @@
   "name": "v0-sidebar-05",
   "type": "registry:internal",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb",
-    "separator",
-    "label",
-    "collapsible"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "collapsible"],
   "files": [
     {
       "path": "internal/sidebar-05.tsx",

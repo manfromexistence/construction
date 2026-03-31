@@ -1,11 +1,11 @@
-import { type SlateEditor, createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS, type SlateEditor } from "platejs";
 
 export const BaseFontColorPlugin = createSlatePlugin({
   key: KEYS.color,
   inject: {
     nodeProps: {
-      defaultNodeValue: 'black',
-      nodeKey: 'color',
+      defaultNodeValue: "black",
+      nodeKey: "color",
     },
   },
   parsers: {
@@ -15,7 +15,7 @@ export const BaseFontColorPlugin = createSlatePlugin({
         rules: [
           {
             validStyle: {
-              color: '*',
+              color: "*",
             },
           },
         ],

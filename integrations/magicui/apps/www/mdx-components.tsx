@@ -1,42 +1,38 @@
-import * as React from "react"
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import Link from "next/link"
-
-import { cn } from "@/lib/utils"
+import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import * as React from "react";
+import { Callout } from "@/components/callout";
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
+import { CodeTabs } from "@/components/code-tabs";
+import { ComponentPreview } from "@/components/component-preview";
+import { ComponentSource } from "@/components/component-source";
+import { ComponentsList } from "@/components/components-list";
+import { CopyButton } from "@/components/copy-button";
+import { getIconForLanguageExtension } from "@/components/icons";
+import { TechStack } from "@/components/tech-stack";
+import { TemplateOpen } from "@/components/template-open";
+import { TemplatePreview } from "@/components/template-preview";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Callout } from "@/components/callout"
-import { CodeBlockCommand } from "@/components/code-block-command"
-import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
-import { CodeTabs } from "@/components/code-tabs"
-import { ComponentPreview } from "@/components/component-preview"
-import { ComponentSource } from "@/components/component-source"
-import { ComponentsList } from "@/components/components-list"
-import { CopyButton } from "@/components/copy-button"
-import { getIconForLanguageExtension } from "@/components/icons"
-import { TechStack } from "@/components/tech-stack"
-import { TemplateOpen } from "@/components/template-open"
-import { TemplatePreview } from "@/components/template-preview"
+} from "@/components/ui/accordion";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 const TweetCard = dynamic(() =>
   import("@/registry/magicui/tweet-card").then((module) => module.TweetCard)
-)
+);
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<"h1">) => (
     <h1
-      className={cn(
-        "font-heading mt-2 scroll-m-28 text-3xl font-bold tracking-tight",
-        className
-      )}
+      className={cn("font-heading mt-2 scroll-m-28 text-3xl font-bold tracking-tight", className)}
       {...props}
     />
   ),
@@ -55,7 +51,7 @@ export const mdxComponents = {
         )}
         {...props}
       />
-    )
+    );
   },
   h3: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
@@ -77,27 +73,18 @@ export const mdxComponents = {
   ),
   h5: ({ className, ...props }: React.ComponentProps<"h5">) => (
     <h5
-      className={cn(
-        "mt-8 scroll-m-28 text-base font-medium tracking-tight",
-        className
-      )}
+      className={cn("mt-8 scroll-m-28 text-base font-medium tracking-tight", className)}
       {...props}
     />
   ),
   h6: ({ className, ...props }: React.ComponentProps<"h6">) => (
     <h6
-      className={cn(
-        "mt-8 scroll-m-28 text-base font-medium tracking-tight",
-        className
-      )}
+      className={cn("mt-8 scroll-m-28 text-base font-medium tracking-tight", className)}
       {...props}
     />
   ),
   a: ({ className, ...props }: React.ComponentProps<"a">) => (
-    <a
-      className={cn("font-medium underline underline-offset-4", className)}
-      {...props}
-    />
+    <a className={cn("font-medium underline underline-offset-4", className)} {...props} />
   ),
   p: ({ className, ...props }: React.ComponentProps<"p">) => (
     <p className={cn("leading-relaxed not-first:mt-6", className)} {...props} />
@@ -116,10 +103,7 @@ export const mdxComponents = {
   ),
   blockquote: ({ className, ...props }: React.ComponentProps<"blockquote">) => (
     <blockquote
-      className={cn(
-        "bg-muted/50 mt-6 rounded-r-md border-l-2 py-4 pr-4 pl-6 italic",
-        className
-      )}
+      className={cn("bg-muted/50 mt-6 rounded-r-md border-l-2 py-4 pr-4 pl-6 italic", className)}
       {...props}
     />
   ),
@@ -131,9 +115,7 @@ export const mdxComponents = {
     <iframe className={cn("mt-6 w-full rounded-md", className)} {...props} />
   ),
   hr: ({ className, ...props }: React.ComponentProps<"hr">) => (
-    <div
-      className={cn("my-4 flex items-center justify-center md:my-8", className)}
-    >
+    <div className={cn("my-4 flex items-center justify-center md:my-8", className)}>
       <hr
         className="via-border mx-4 h-px w-full border-0 bg-linear-to-r from-transparent to-transparent"
         {...props}
@@ -150,10 +132,7 @@ export const mdxComponents = {
   ),
   tr: ({ className, ...props }: React.ComponentProps<"tr">) => (
     <tr
-      className={cn(
-        "hover:bg-muted/50 m-0 border-b transition-colors last:border-b-0",
-        className
-      )}
+      className={cn("hover:bg-muted/50 m-0 border-b transition-colors last:border-b-0", className)}
       {...props}
     />
   ),
@@ -186,20 +165,16 @@ export const mdxComponents = {
       >
         {children}
       </pre>
-    )
+    );
   },
   figure: ({ className, ...props }: React.ComponentProps<"figure">) => {
-    return <figure className={cn(className)} {...props} />
+    return <figure className={cn(className)} {...props} />;
   },
-  figcaption: ({
-    className,
-    children,
-    ...props
-  }: React.ComponentProps<"figcaption">) => {
+  figcaption: ({ className, children, ...props }: React.ComponentProps<"figcaption">) => {
     const iconExtension =
       "data-language" in props && typeof props["data-language"] === "string"
         ? getIconForLanguageExtension(props["data-language"])
-        : null
+        : null;
 
     return (
       <figcaption
@@ -212,7 +187,7 @@ export const mdxComponents = {
         {iconExtension}
         {children}
       </figcaption>
-    )
+    );
   },
   code: ({
     className,
@@ -224,12 +199,12 @@ export const mdxComponents = {
     __bun__,
     ...props
   }: React.ComponentProps<"code"> & {
-    __raw__?: string
-    __src__?: string
-    __npm__?: string
-    __yarn__?: string
-    __pnpm__?: string
-    __bun__?: string
+    __raw__?: string;
+    __src__?: string;
+    __npm__?: string;
+    __yarn__?: string;
+    __pnpm__?: string;
+    __bun__?: string;
   }) => {
     // Inline Code.
     if (typeof props.children === "string") {
@@ -241,11 +216,11 @@ export const mdxComponents = {
           )}
           {...props}
         />
-      )
+      );
     }
 
     // npm command.
-    const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__
+    const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__;
     if (isNpmCommand) {
       return (
         <CodeBlockCommand
@@ -254,7 +229,7 @@ export const mdxComponents = {
           __pnpm__={__pnpm__}
           __bun__={__bun__}
         />
-      )
+      );
     }
 
     // Default codeblock.
@@ -263,28 +238,18 @@ export const mdxComponents = {
         {__raw__ && <CopyButton value={__raw__} src={__src__} />}
         <code {...props} />
       </>
-    )
+    );
   },
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
-      className={cn(
-        "font-heading mt-8 scroll-m-32 text-xl font-medium tracking-tight",
-        className
-      )}
+      className={cn("font-heading mt-8 scroll-m-32 text-xl font-medium tracking-tight", className)}
       {...props}
     />
   ),
   Steps: ({ ...props }) => (
     <div className="[&>h3]:step steps mb-12 [counter-reset:step]" {...props} />
   ),
-  Image: ({
-    src,
-    className,
-    width,
-    height,
-    alt,
-    ...props
-  }: React.ComponentProps<"img">) => (
+  Image: ({ src, className, width, height, alt, ...props }: React.ComponentProps<"img">) => (
     <Image
       className={cn("mt-6 rounded-md border", className)}
       src={(src as string) ?? ""}
@@ -295,24 +260,15 @@ export const mdxComponents = {
     />
   ),
   Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => {
-    return <Tabs className={cn("relative mt-6 w-full", className)} {...props} />
+    return <Tabs className={cn("relative mt-6 w-full", className)} {...props} />;
   },
-  TabsList: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsList>) => (
+  TabsList: ({ className, ...props }: React.ComponentProps<typeof TabsList>) => (
     <TabsList
-      className={cn(
-        "justify-start gap-4 rounded-none bg-transparent px-0",
-        className
-      )}
+      className={cn("justify-start gap-4 rounded-none bg-transparent px-0", className)}
       {...props}
     />
   ),
-  TabsTrigger: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsTrigger>) => (
+  TabsTrigger: ({ className, ...props }: React.ComponentProps<typeof TabsTrigger>) => (
     <TabsTrigger
       className={cn(
         "text-muted-foreground data-[state=active]:text-foreground data-[state=active]:border-primary dark:data-[state=active]:border-primary hover:text-primary rounded-none border-0 border-b-2 border-transparent bg-transparent px-0 pb-3 text-base data-[state=active]:bg-transparent data-[state=active]:shadow-none dark:data-[state=active]:bg-transparent",
@@ -321,10 +277,7 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  TabsContent: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsContent>) => (
+  TabsContent: ({ className, ...props }: React.ComponentProps<typeof TabsContent>) => (
     <TabsContent
       className={cn(
         "relative [&_h3.font-heading]:text-base [&_h3.font-heading]:font-medium *:[figure]:first:mt-0 [&>.steps]:mt-6",
@@ -351,10 +304,7 @@ export const mdxComponents = {
   CodeCollapsibleWrapper,
   ComponentsList,
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
-    <Link
-      className={cn("font-medium underline underline-offset-4", className)}
-      {...props}
-    />
+    <Link className={cn("font-medium underline underline-offset-4", className)} {...props} />
   ),
   LinkedCard: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link
@@ -371,4 +321,4 @@ export const mdxComponents = {
   Tweet: ({ id, className }: { id: string; className?: string }) => (
     <TweetCard id={id} className={cn("mx-auto", className)} />
   ),
-}
+};

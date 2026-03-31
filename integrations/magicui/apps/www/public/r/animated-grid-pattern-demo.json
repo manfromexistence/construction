@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Animated Grid Pattern Demo",
   "description": "Example showing an animated grid pattern background.",
-  "registryDependencies": [
-    "@magicui/animated-grid-pattern"
-  ],
+  "registryDependencies": ["@magicui/animated-grid-pattern"],
   "files": [
     {
       "path": "registry/example/animated-grid-pattern-demo.tsx",

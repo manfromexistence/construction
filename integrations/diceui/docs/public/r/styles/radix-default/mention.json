@@ -1,8 +1,6 @@
 {
   "name": "mention",
-  "dependencies": [
-    "@diceui/mention"
-  ],
+  "dependencies": ["@diceui/mention"],
   "files": [
     {
       "path": "ui/mention.tsx",

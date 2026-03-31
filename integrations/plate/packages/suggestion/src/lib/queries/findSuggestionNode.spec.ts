@@ -1,25 +1,25 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { findInlineSuggestionNode } from './findSuggestionNode';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { findInlineSuggestionNode } from "./findSuggestionNode";
 
-describe('findInlineSuggestionNode', () => {
-  it('returns the first inline suggestion text node', () => {
+describe("findInlineSuggestionNode", () => {
+  it("returns the first inline suggestion text node", () => {
     const editor = createSlateEditor({
       plugins: [BaseSuggestionPlugin],
       value: [
         {
-          type: 'p',
+          type: "p",
           children: [
-            { text: 'plain' },
+            { text: "plain" },
             {
-              text: 'suggested',
+              text: "suggested",
               suggestion: true,
               suggestion_alpha: {
                 createdAt: 1,
-                id: 'alpha',
-                type: 'insert',
-                userId: 'alice',
+                id: "alpha",
+                type: "insert",
+                userId: "alice",
               },
             },
           ],
@@ -30,33 +30,33 @@ describe('findInlineSuggestionNode', () => {
     expect(findInlineSuggestionNode(editor, { at: [] })?.[1]).toEqual([0, 1]);
   });
 
-  it('respects additional match filters', () => {
+  it("respects additional match filters", () => {
     const editor = createSlateEditor({
       plugins: [BaseSuggestionPlugin],
       value: [
         {
-          type: 'p',
+          type: "p",
           children: [
             {
               bold: true,
               suggestion: true,
               suggestion_alpha: {
                 createdAt: 1,
-                id: 'alpha',
-                type: 'insert',
-                userId: 'alice',
+                id: "alpha",
+                type: "insert",
+                userId: "alice",
               },
-              text: 'bold',
+              text: "bold",
             },
             {
               suggestion: true,
               suggestion_beta: {
                 createdAt: 2,
-                id: 'beta',
-                type: 'insert',
-                userId: 'alice',
+                id: "beta",
+                type: "insert",
+                userId: "alice",
               },
-              text: 'plain',
+              text: "plain",
             },
           ],
         },

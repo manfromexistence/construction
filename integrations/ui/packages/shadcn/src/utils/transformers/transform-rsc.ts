@@ -1,18 +1,18 @@
-import { Transformer } from "@/src/utils/transformers"
-import { SyntaxKind } from "ts-morph"
+import { SyntaxKind } from "ts-morph";
+import { Transformer } from "@/src/utils/transformers";
 
-const directiveRegex = /^["']use client["']$/g
+const directiveRegex = /^["']use client["']$/g;
 
 export const transformRsc: Transformer = async ({ sourceFile, config }) => {
   if (config.rsc) {
-    return sourceFile
+    return sourceFile;
   }
 
   // Remove "use client" from the top of the file.
-  const first = sourceFile.getFirstChildByKind(SyntaxKind.ExpressionStatement)
+  const first = sourceFile.getFirstChildByKind(SyntaxKind.ExpressionStatement);
   if (first && directiveRegex.test(first.getText())) {
-    first.remove()
+    first.remove();
   }
 
-  return sourceFile
-}
+  return sourceFile;
+};

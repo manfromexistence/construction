@@ -1,8 +1,6 @@
 {
   "name": "visually-hidden",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "components/visually-hidden.tsx",

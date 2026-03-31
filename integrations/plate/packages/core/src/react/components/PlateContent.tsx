@@ -1,32 +1,24 @@
-import React, { useRef } from 'react';
+import { useComposedRef } from "@udecode/react-utils";
+import { isDefined } from "@udecode/utils";
+import { useAtomStoreValue } from "jotai-x";
+import React, { useRef } from "react";
+import { isEditOnly } from "../../internal/plugin/isEditOnlyDisabled";
+import { SlateExtensionPlugin } from "../../lib";
+import type { EditableProps } from "../../lib/types/EditableProps";
+import type { PlateEditor } from "../editor";
+import { useEditableProps } from "../hooks";
+import { Editable } from "../slate-react";
+import { type PlateStoreState, useEditorReadOnly, useEditorRef, usePlateStore } from "../stores";
+import { EditorHotkeysEffect } from "./EditorHotkeysEffect";
+import { EditorMethodsEffect } from "./EditorMethodsEffect";
+import { EditorRefEffect } from "./EditorRefEffect";
+import { PlateControllerEffect } from "./PlateControllerEffect";
+import { PlateSlate } from "./PlateSlate";
 
-import { useComposedRef } from '@udecode/react-utils';
-import { isDefined } from '@udecode/utils';
-import { useAtomStoreValue } from 'jotai-x';
-
-import type { EditableProps } from '../../lib/types/EditableProps';
-import type { PlateEditor } from '../editor';
-
-import { isEditOnly } from '../../internal/plugin/isEditOnlyDisabled';
-import { SlateExtensionPlugin } from '../../lib';
-import { useEditableProps } from '../hooks';
-import { Editable } from '../slate-react';
-import {
-  type PlateStoreState,
-  useEditorReadOnly,
-  useEditorRef,
-  usePlateStore,
-} from '../stores';
-import { EditorHotkeysEffect } from './EditorHotkeysEffect';
-import { EditorMethodsEffect } from './EditorMethodsEffect';
-import { EditorRefEffect } from './EditorRefEffect';
-import { PlateControllerEffect } from './PlateControllerEffect';
-import { PlateSlate } from './PlateSlate';
-
-export type PlateContentProps = Omit<EditableProps, 'decorate'> & {
+export type PlateContentProps = Omit<EditableProps, "decorate"> & {
   /** Autofocus when it becomes editable (readOnly false -> readOnly true) */
   autoFocusOnEditable?: boolean;
-  decorate?: PlateStoreState['decorate'];
+  decorate?: PlateStoreState["decorate"];
   disabled?: boolean;
   /** R enders the editable content. */
   renderEditable?: (editable: React.ReactElement<any>) => React.ReactNode;
@@ -46,12 +38,7 @@ export type PlateContentProps = Omit<EditableProps, 'decorate'> & {
  */
 const PlateContent = React.forwardRef(
   (
-    {
-      autoFocusOnEditable,
-      readOnly: readOnlyProp,
-      renderEditable,
-      ...props
-    }: PlateContentProps,
+    { autoFocusOnEditable, readOnly: readOnlyProp, renderEditable, ...props }: PlateContentProps,
     ref
   ) => {
     const { id } = props;
@@ -65,9 +52,7 @@ const PlateContent = React.forwardRef(
     editor.dom.readOnly = readOnly;
 
     if (!editor) {
-      throw new Error(
-        'Editor not found. Please ensure that PlateContent is rendered below Plate.'
-      );
+      throw new Error("Editor not found. Please ensure that PlateContent is rendered below Plate.");
     }
 
     const editableProps = useEditableProps({ ...props, readOnly });
@@ -87,7 +72,7 @@ const PlateContent = React.forwardRef(
 
     editor.meta.pluginCache.render.beforeEditable.forEach((key) => {
       const plugin = editor.getPlugin({ key });
-      if (isEditOnly(readOnly, plugin, 'render')) return;
+      if (isEditOnly(readOnly, plugin, "render")) return;
 
       const BeforeEditable = plugin.render.beforeEditable!;
 
@@ -101,7 +86,7 @@ const PlateContent = React.forwardRef(
 
     editor.meta.pluginCache.render.afterEditable.forEach((key) => {
       const plugin = editor.getPlugin({ key });
-      if (isEditOnly(readOnly, plugin, 'render')) return;
+      if (isEditOnly(readOnly, plugin, "render")) return;
 
       const AfterEditable = plugin.render.afterEditable!;
 
@@ -126,7 +111,7 @@ const PlateContent = React.forwardRef(
 
     editor.meta.pluginCache.render.aboveEditable.forEach((key) => {
       const plugin = editor.getPlugin({ key });
-      if (isEditOnly(readOnly, plugin, 'render')) return;
+      if (isEditOnly(readOnly, plugin, "render")) return;
 
       const AboveEditable = plugin.render.aboveEditable!;
 
@@ -150,7 +135,7 @@ const PlateContent = React.forwardRef(
     );
   }
 );
-PlateContent.displayName = 'PlateContent';
+PlateContent.displayName = "PlateContent";
 
 export { PlateContent };
 
@@ -182,26 +167,18 @@ function EditorStateEffect({
   }, [disabled, editor.dom, readOnly, store]);
 
   // Sync onNodeChange from store to SlateExtensionPlugin
-  const onNodeChange = useAtomStoreValue(store, 'onNodeChange');
+  const onNodeChange = useAtomStoreValue(store, "onNodeChange");
   React.useLayoutEffect(() => {
     if (onNodeChange) {
-      editor.setOption(
-        SlateExtensionPlugin,
-        'onNodeChange',
-        onNodeChange as any
-      );
+      editor.setOption(SlateExtensionPlugin, "onNodeChange", onNodeChange as any);
     }
   }, [editor, onNodeChange]);
 
   // Sync onTextChange from store to SlateExtensionPlugin
-  const onTextChange = useAtomStoreValue(store, 'onTextChange');
+  const onTextChange = useAtomStoreValue(store, "onTextChange");
   React.useLayoutEffect(() => {
     if (onTextChange) {
-      editor.setOption(
-        SlateExtensionPlugin,
-        'onTextChange',
-        onTextChange as any
-      );
+      editor.setOption(SlateExtensionPlugin, "onTextChange", onTextChange as any);
     }
   }, [editor, onTextChange]);
 
@@ -209,7 +186,7 @@ function EditorStateEffect({
 
   React.useEffect(() => {
     if (autoFocusOnEditable && prevReadOnly.current && !readOnly) {
-      editor.tf.focus({ edge: 'endEditor' });
+      editor.tf.focus({ edge: "endEditor" });
     }
 
     prevReadOnly.current = readOnly;

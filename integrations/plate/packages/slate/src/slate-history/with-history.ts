@@ -5,8 +5,8 @@ import {
   OperationApi,
   PathApi,
   type TRange,
-} from '../interfaces/index';
-import { syncLegacyMethods } from '../utils/assignLegacyTransforms';
+} from "../interfaces/index";
+import { syncLegacyMethods } from "../utils/assignLegacyTransforms";
 
 const cloneRange = (range: TRange | null | undefined) =>
   range
@@ -47,7 +47,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
       }
 
       history.redos.pop();
-      e.writeHistory('undos', batch);
+      e.writeHistory("undos", batch);
     }
   };
 
@@ -61,9 +61,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
 
       e.tf.withoutSaving(() => {
         e.tf.withoutNormalizing(() => {
-          const inverseOps = batch.operations
-            .map(OperationApi.inverse)
-            .reverse();
+          const inverseOps = batch.operations.map(OperationApi.inverse).reverse();
 
           for (const op of inverseOps) {
             e.apply(op);
@@ -75,7 +73,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
         });
       });
 
-      e.writeHistory('redos', {
+      e.writeHistory("redos", {
         ...batch,
         selectionAfter,
       });
@@ -115,7 +113,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
           operations: [op],
           selectionBefore: e.selection,
         };
-        e.writeHistory('undos', batch);
+        e.writeHistory("undos", batch);
       }
 
       while (undos.length > 100) {
@@ -128,7 +126,7 @@ export const withHistory = <T extends Editor>(editor: T) => {
     apply(op);
   };
 
-  e.writeHistory = (stack: 'redos' | 'undos', batch: any) => {
+  e.writeHistory = (stack: "redos" | "undos", batch: any) => {
     e.history[stack].push(batch);
   };
 
@@ -142,8 +140,8 @@ export const withHistory = <T extends Editor>(editor: T) => {
 const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
   if (
     prev &&
-    op.type === 'insert_text' &&
-    prev.type === 'insert_text' &&
+    op.type === "insert_text" &&
+    prev.type === "insert_text" &&
     op.offset === prev.offset + prev.text.length &&
     PathApi.equals(op.path, prev.path)
   ) {
@@ -151,8 +149,8 @@ const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
   }
   if (
     prev &&
-    op.type === 'remove_text' &&
-    prev.type === 'remove_text' &&
+    op.type === "remove_text" &&
+    prev.type === "remove_text" &&
     op.offset + op.text.length === prev.offset &&
     PathApi.equals(op.path, prev.path)
   ) {
@@ -165,7 +163,7 @@ const shouldMerge = (op: Operation, prev: Operation | undefined): boolean => {
 /** Check whether an operation needs to be saved to the history. */
 
 const shouldSave = (op: Operation, _: Operation | undefined): boolean => {
-  if (op.type === 'set_selection') {
+  if (op.type === "set_selection") {
     return false;
   }
 

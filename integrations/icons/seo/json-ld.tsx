@@ -96,11 +96,7 @@ const OrganizationJsonLd = () => {
   );
 };
 
-const BreadcrumbJsonLd = ({
-  items,
-}: {
-  items: { name: string; url: string }[];
-}) => {
+const BreadcrumbJsonLd = ({ items }: { items: { name: string; url: string }[] }) => {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -176,10 +172,10 @@ const JsonLdScripts = () => {
 };
 
 export {
-  JsonLdScripts,
-  WebsiteJsonLd,
-  SoftwareSourceCodeJsonLd,
-  OrganizationJsonLd,
   BreadcrumbJsonLd,
   FAQJsonLd,
+  JsonLdScripts,
+  OrganizationJsonLd,
+  SoftwareSourceCodeJsonLd,
+  WebsiteJsonLd,
 };

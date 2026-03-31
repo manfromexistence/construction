@@ -1,12 +1,9 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import {
-  BaseCodeDrawingPlugin,
-  CODE_DRAWING_KEY,
-} from './BaseCodeDrawingPlugin';
+import { BaseCodeDrawingPlugin, CODE_DRAWING_KEY } from "./BaseCodeDrawingPlugin";
 
-describe('BaseCodeDrawingPlugin', () => {
-  it('configures code drawing as a void element node', () => {
+describe("BaseCodeDrawingPlugin", () => {
+  it("configures code drawing as a void element node", () => {
     const editor = createSlateEditor({
       plugins: [BaseCodeDrawingPlugin],
     } as any);

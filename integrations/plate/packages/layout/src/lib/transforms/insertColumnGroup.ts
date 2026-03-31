@@ -1,10 +1,6 @@
-import type {
-  InsertNodesOptions,
-  SlateEditor,
-  TColumnGroupElement,
-} from 'platejs';
+import type { InsertNodesOptions, SlateEditor, TColumnGroupElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const insertColumnGroup = (
   editor: SlateEditor,

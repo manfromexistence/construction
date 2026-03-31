@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Typing Animation Without Cursor",
   "description": "Example showing typing animation without cursor.",
-  "registryDependencies": [
-    "@magicui/typing-animation"
-  ],
+  "registryDependencies": ["@magicui/typing-animation"],
   "files": [
     {
       "path": "registry/example/typing-animation-demo-5.tsx",

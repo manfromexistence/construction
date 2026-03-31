@@ -1,8 +1,8 @@
+import { eq } from "drizzle-orm";
+import { NextRequest } from "next/server";
 import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
 import { oauthError, requireAuth } from "@/lib/oauth";
-import { eq } from "drizzle-orm";
-import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const auth = await requireAuth(req, "profile:read");

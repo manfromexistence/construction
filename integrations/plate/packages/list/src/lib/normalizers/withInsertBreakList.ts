@@ -1,6 +1,6 @@
-import { type OverrideEditor, type TElement, isDefined, KEYS } from 'platejs';
+import { isDefined, KEYS, type OverrideEditor, type TElement } from "platejs";
 
-import type { BaseListConfig } from '../BaseListPlugin';
+import type { BaseListConfig } from "../BaseListPlugin";
 
 export const withInsertBreakList: OverrideEditor<BaseListConfig> = ({
   editor,

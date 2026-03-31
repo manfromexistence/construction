@@ -12,7 +12,7 @@ export const makeClientRect = ({
   const width = right - left;
   const height = bottom - top;
 
-  const props: Omit<DOMRect, 'toJSON'> = {
+  const props: Omit<DOMRect, "toJSON"> = {
     bottom,
     height,
     left,

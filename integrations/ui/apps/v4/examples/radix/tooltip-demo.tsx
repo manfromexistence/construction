@@ -1,9 +1,5 @@
-import { Button } from "@/styles/radix-nova/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/radix-nova/ui/tooltip"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/radix-nova/ui/tooltip";
 
 export function TooltipDemo() {
   return (
@@ -15,5 +11,5 @@ export function TooltipDemo() {
         <p>Add to library</p>
       </TooltipContent>
     </Tooltip>
-  )
+  );
 }

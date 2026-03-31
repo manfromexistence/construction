@@ -12,9 +12,7 @@ export declare type DeepPartial<T> = T extends (infer U)[]
 
 /** 2 levels deep of partial */
 export type Deep2Partial<T> = {
-  [K in keyof T]?: T[K] extends (...args: any[]) => any
-    ? T[K]
-    : Deep2Partial<T[K]>;
+  [K in keyof T]?: T[K] extends (...args: any[]) => any ? T[K] : Deep2Partial<T[K]>;
 };
 
 export type DeepRequired<T> = {

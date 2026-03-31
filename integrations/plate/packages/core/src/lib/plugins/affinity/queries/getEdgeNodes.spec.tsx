@@ -1,17 +1,16 @@
 /** @jsx jsxt */
 
-import { BaseLinkPlugin } from '@platejs/link';
-import { jsxt } from '@platejs/test-utils';
-
-import type { PlateEditor } from '../../../../react/editor';
-import { createPlateTestEditor } from '../../../../react/__tests__/createPlateTestEditor';
-import { getEdgeNodes } from './getEdgeNodes';
+import { BaseLinkPlugin } from "@platejs/link";
+import { jsxt } from "@platejs/test-utils";
+import { createPlateTestEditor } from "../../../../react/__tests__/createPlateTestEditor";
+import type { PlateEditor } from "../../../../react/editor";
+import { getEdgeNodes } from "./getEdgeNodes";
 
 jsxt;
 
-describe('getEdgeNodes', () => {
-  describe('Text node edges', () => {
-    it('returns edge nodes when cursor is at start of text', async () => {
+describe("getEdgeNodes", () => {
+  describe("Text node edges", () => {
+    it("returns edge nodes when cursor is at start of text", async () => {
       const input = (
         <editor>
           <hp>
@@ -31,11 +30,11 @@ describe('getEdgeNodes', () => {
 
       const [before, after] = getEdgeNodes(editor)!;
 
-      expect(before).toEqual([{ text: 'first' }, [0, 0]]);
-      expect(after).toEqual([{ bold: true, text: 'second' }, [0, 1]]);
+      expect(before).toEqual([{ text: "first" }, [0, 0]]);
+      expect(after).toEqual([{ bold: true, text: "second" }, [0, 1]]);
     });
 
-    it('returns edge nodes when cursor is at end of text', async () => {
+    it("returns edge nodes when cursor is at end of text", async () => {
       const input = (
         <editor>
           <hp>
@@ -55,11 +54,11 @@ describe('getEdgeNodes', () => {
 
       const [before, after] = getEdgeNodes(editor)!;
 
-      expect(before).toEqual([{ text: 'first' }, [0, 0]]);
-      expect(after).toEqual([{ bold: true, text: 'second' }, [0, 1]]);
+      expect(before).toEqual([{ text: "first" }, [0, 0]]);
+      expect(after).toEqual([{ bold: true, text: "second" }, [0, 1]]);
     });
 
-    it('returns null for second element when no next sibling exists', async () => {
+    it("returns null for second element when no next sibling exists", async () => {
       const input = (
         <editor>
           <hp>
@@ -78,11 +77,11 @@ describe('getEdgeNodes', () => {
 
       const [before, after] = getEdgeNodes(editor)!;
 
-      expect(before).toEqual([{ text: 'test' }, [0, 0]]);
+      expect(before).toEqual([{ text: "test" }, [0, 0]]);
       expect(after).toEqual(null);
     });
 
-    it('returns [null, textEntry] when cursor is at start of first text node', async () => {
+    it("returns [null, textEntry] when cursor is at start of first text node", async () => {
       const input = (
         <editor>
           <hp>
@@ -102,12 +101,12 @@ describe('getEdgeNodes', () => {
       const [before, after] = getEdgeNodes(editor)!;
 
       expect(before).toEqual(null);
-      expect(after).toEqual([{ text: 'test' }, [0, 0]]);
+      expect(after).toEqual([{ text: "test" }, [0, 0]]);
     });
   });
 
-  describe('Link element edges', () => {
-    it('handle cursor at start of link element', async () => {
+  describe("Link element edges", () => {
+    it("handle cursor at start of link element", async () => {
       const input = (
         <editor>
           <hp>
@@ -129,19 +128,19 @@ describe('getEdgeNodes', () => {
 
       const [before, after] = getEdgeNodes(editor)!;
 
-      expect(before).toEqual([{ text: 'before' }, [0, 0]]);
+      expect(before).toEqual([{ text: "before" }, [0, 0]]);
       expect(after).toEqual([
         {
-          children: [{ text: 'link text' }],
-          target: '_blank',
-          type: 'a',
-          url: 'https://example.com',
+          children: [{ text: "link text" }],
+          target: "_blank",
+          type: "a",
+          url: "https://example.com",
         },
         [0, 1],
       ]);
     });
 
-    it('handle cursor at end of link element', async () => {
+    it("handle cursor at end of link element", async () => {
       const input = (
         <editor>
           <hp>
@@ -165,14 +164,14 @@ describe('getEdgeNodes', () => {
 
       expect(before).toEqual([
         {
-          children: [{ text: 'link text' }],
-          target: '_blank',
-          type: 'a',
-          url: 'https://example.com',
+          children: [{ text: "link text" }],
+          target: "_blank",
+          type: "a",
+          url: "https://example.com",
         },
         [0, 1],
       ]);
-      expect(after).toEqual([{ text: 'after' }, [0, 2]]);
+      expect(after).toEqual([{ text: "after" }, [0, 2]]);
     });
   });
 });

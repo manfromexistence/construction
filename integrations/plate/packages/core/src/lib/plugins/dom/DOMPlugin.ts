@@ -1,20 +1,18 @@
-import type { Operation, ScrollIntoViewOptions, TRange } from '@platejs/slate';
+import type { Operation, ScrollIntoViewOptions, TRange } from "@platejs/slate";
 
-import { bindFirst } from '@udecode/utils';
+import { bindFirst } from "@udecode/utils";
 
-import type { SlateEditor } from '../../';
+import type { SlateEditor } from "../../";
 
-import { type PluginConfig, createTSlatePlugin } from '../../plugin';
-import { withScrolling } from './withScrolling';
+import { createTSlatePlugin, type PluginConfig } from "../../plugin";
+import { withScrolling } from "./withScrolling";
 
 export const AUTO_SCROLL = new WeakMap<SlateEditor, boolean>();
 
-export type AutoScrollOperationsMap = Partial<
-  Record<Operation['type'], boolean>
->;
+export type AutoScrollOperationsMap = Partial<Record<Operation["type"], boolean>>;
 
 export type DomConfig = PluginConfig<
-  'dom',
+  "dom",
   {
     /** Choose the first or last matching operation as the scroll target */
     scrollMode?: ScrollMode;
@@ -29,22 +27,22 @@ export type DomConfig = PluginConfig<
 >;
 
 /** Mode for picking target op when multiple enabled */
-export type ScrollMode = 'first' | 'last';
+export type ScrollMode = "first" | "last";
 
 /**
  * Placeholder plugin for DOM interaction, that could be replaced with
  * ReactPlugin.
  */
 export const DOMPlugin = createTSlatePlugin<DomConfig>({
-  key: 'dom',
+  key: "dom",
   options: {
-    scrollMode: 'last',
+    scrollMode: "last",
     scrollOperations: {
       insert_node: true,
       insert_text: true,
     },
     scrollOptions: {
-      scrollMode: 'if-needed',
+      scrollMode: "if-needed",
     },
   },
 })
@@ -61,21 +59,19 @@ export const DOMPlugin = createTSlatePlugin<DomConfig>({
           apply(operation);
 
           // Check if this op type is enabled (default true)
-          const scrollOperations = getOption('scrollOperations')!;
+          const scrollOperations = getOption("scrollOperations")!;
 
           if (!scrollOperations[operation.type]) return;
 
           // Gather enabled ops in this batch
-          const matched = editor.operations.filter(
-            (op) => !!scrollOperations[op.type]
-          );
+          const matched = editor.operations.filter((op) => !!scrollOperations[op.type]);
 
           if (matched.length === 0) return;
 
-          const mode = getOption('scrollMode')!;
+          const mode = getOption("scrollMode")!;
 
           // Pick target
-          const targetOp = mode === 'first' ? matched[0] : matched.at(-1);
+          const targetOp = mode === "first" ? matched[0] : matched.at(-1);
 
           if (!targetOp) return;
 
@@ -85,7 +81,7 @@ export const DOMPlugin = createTSlatePlugin<DomConfig>({
 
           if (!path) return;
 
-          const scrollOptions = getOption('scrollOptions')!;
+          const scrollOptions = getOption("scrollOptions")!;
 
           const scrollTarget = {
             offset: offset ?? 0,
@@ -104,7 +100,7 @@ export const DOMPlugin = createTSlatePlugin<DomConfig>({
   .overrideEditor(({ editor, tf: { apply } }) => ({
     transforms: {
       apply(operation) {
-        if (operation.type === 'set_selection') {
+        if (operation.type === "set_selection") {
           const { properties } = operation;
           editor.dom.prevSelection = properties as TRange | null;
           apply(operation);

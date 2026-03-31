@@ -1,33 +1,28 @@
-"use client"
+"use client";
 
-import React, { useEffect, useState } from "react"
-import { AnimatePresence, HTMLMotionProps, motion } from "motion/react"
+import { AnimatePresence, HTMLMotionProps, motion } from "motion/react";
+import React, { useEffect, useState } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-interface AnimatedSubscribeButtonProps extends Omit<
-  HTMLMotionProps<"button">,
-  "ref"
-> {
-  subscribeStatus?: boolean
-  children: React.ReactNode
-  className?: string
+interface AnimatedSubscribeButtonProps extends Omit<HTMLMotionProps<"button">, "ref"> {
+  subscribeStatus?: boolean;
+  children: React.ReactNode;
+  className?: string;
 }
 
 export const AnimatedSubscribeButton = React.forwardRef<
   HTMLButtonElement,
   AnimatedSubscribeButtonProps
 >(({ subscribeStatus, onClick, className, children, ...props }, ref) => {
-  const isControlled = subscribeStatus !== undefined // controlled vs uncontrolled check
-  const [isSubscribed, setIsSubscribed] = useState<boolean>(
-    subscribeStatus ?? false
-  )
+  const isControlled = subscribeStatus !== undefined; // controlled vs uncontrolled check
+  const [isSubscribed, setIsSubscribed] = useState<boolean>(subscribeStatus ?? false);
 
   useEffect(() => {
     if (isControlled) {
-      setIsSubscribed(subscribeStatus!)
+      setIsSubscribed(subscribeStatus!);
     }
-  }, [subscribeStatus, isControlled])
+  }, [subscribeStatus, isControlled]);
 
   if (
     React.Children.count(children) !== 2 ||
@@ -37,12 +32,12 @@ export const AnimatedSubscribeButton = React.forwardRef<
   ) {
     throw new Error(
       "AnimatedSubscribeButton expects two children, both of which must be <span> elements."
-    )
+    );
   }
 
-  const childrenArray = React.Children.toArray(children)
-  const initialChild = childrenArray[0]
-  const changeChild = childrenArray[1]
+  const childrenArray = React.Children.toArray(children);
+  const initialChild = childrenArray[0];
+  const changeChild = childrenArray[1];
 
   return (
     <AnimatePresence mode="wait">
@@ -55,9 +50,9 @@ export const AnimatedSubscribeButton = React.forwardRef<
           )}
           onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
             if (!isControlled) {
-              setIsSubscribed(false) // Only toggle manually if uncontrolled
+              setIsSubscribed(false); // Only toggle manually if uncontrolled
             }
-            onClick?.(e)
+            onClick?.(e);
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -82,9 +77,9 @@ export const AnimatedSubscribeButton = React.forwardRef<
           )}
           onClick={(e) => {
             if (!isControlled) {
-              setIsSubscribed(true) // Only toggle manually if uncontrolled
+              setIsSubscribed(true); // Only toggle manually if uncontrolled
             }
-            onClick?.(e)
+            onClick?.(e);
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -102,7 +97,7 @@ export const AnimatedSubscribeButton = React.forwardRef<
         </motion.button>
       )}
     </AnimatePresence>
-  )
-})
+  );
+});
 
-AnimatedSubscribeButton.displayName = "AnimatedSubscribeButton"
+AnimatedSubscribeButton.displayName = "AnimatedSubscribeButton";

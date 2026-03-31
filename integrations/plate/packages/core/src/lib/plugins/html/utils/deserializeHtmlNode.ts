@@ -1,20 +1,19 @@
-import type { SlateEditor } from '../../../editor';
-import type { DeserializeHtmlNodeReturnType } from '../types';
-
-import { isSlateNode } from '../../../utils';
-import { htmlBodyToFragment } from './htmlBodyToFragment';
-import { htmlBrToNewLine } from './htmlBrToNewLine';
-import { htmlElementToElement } from './htmlElementToElement';
-import { htmlElementToLeaf } from './htmlElementToLeaf';
-import { htmlTextNodeToString } from './htmlTextNodeToString';
-import { isHtmlElement } from './isHtmlElement';
+import type { SlateEditor } from "../../../editor";
+import { isSlateNode } from "../../../utils";
+import type { DeserializeHtmlNodeReturnType } from "../types";
+import { htmlBodyToFragment } from "./htmlBodyToFragment";
+import { htmlBrToNewLine } from "./htmlBrToNewLine";
+import { htmlElementToElement } from "./htmlElementToElement";
+import { htmlElementToLeaf } from "./htmlElementToLeaf";
+import { htmlTextNodeToString } from "./htmlTextNodeToString";
+import { isHtmlElement } from "./isHtmlElement";
 
 /** Check if a BR tag should be converted to an empty paragraph. */
 const shouldBrBecomeEmptyParagraph = (node: Element): boolean => {
-  if (node.nodeName !== 'BR') return false;
+  if (node.nodeName !== "BR") return false;
 
   // Skip Apple-interchange-newline BR tags
-  if ((node as HTMLBRElement).className === 'Apple-interchange-newline') {
+  if ((node as HTMLBRElement).className === "Apple-interchange-newline") {
     return false;
   }
 
@@ -23,7 +22,7 @@ const shouldBrBecomeEmptyParagraph = (node: Element): boolean => {
 
   // Check immediate parent for text-containing elements
   // BR tags inside P or SPAN should remain as line breaks
-  if (parent.tagName === 'P' || parent.tagName === 'SPAN') {
+  if (parent.tagName === "P" || parent.tagName === "SPAN") {
     return false;
   }
 
@@ -74,15 +73,15 @@ export const deserializeHtmlNode =
     // Convert BR tags to empty paragraphs when appropriate (e.g., from Google Docs)
     if (shouldBrBecomeEmptyParagraph(node)) {
       return {
-        children: [{ text: '' }],
-        type: editor.getType('p'),
+        children: [{ text: "" }],
+        type: editor.getType("p"),
       };
     }
 
     // Skip Apple-interchange-newline BR tags (already handled in shouldBrBecomeEmptyParagraph)
     if (
-      node.nodeName === 'BR' &&
-      (node as HTMLBRElement).className === 'Apple-interchange-newline'
+      node.nodeName === "BR" &&
+      (node as HTMLBRElement).className === "Apple-interchange-newline"
     ) {
       return null;
     }

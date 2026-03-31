@@ -1,9 +1,9 @@
-import { type PluginConfig, createTSlatePlugin, KEYS } from 'platejs';
+import { createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
-import { withIndent } from './withIndent';
+import { withIndent } from "./withIndent";
 
 export type IndentConfig = PluginConfig<
-  'indent',
+  "indent",
   {
     /** Maximum number of indentation. */
     indentMax?: number;
@@ -27,8 +27,8 @@ export const BaseIndentPlugin = createTSlatePlugin<IndentConfig>({
   inject: {
     isBlock: true,
     nodeProps: {
-      nodeKey: 'indent',
-      styleKey: 'marginLeft',
+      nodeKey: "indent",
+      styleKey: "marginLeft",
       transformNodeValue: ({ getOptions, nodeValue }) => {
         const { offset, unit } = getOptions();
 
@@ -39,6 +39,6 @@ export const BaseIndentPlugin = createTSlatePlugin<IndentConfig>({
   },
   options: {
     offset: 24,
-    unit: 'px',
+    unit: "px",
   },
 }).overrideEditor(withIndent);

@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Code Comparison",
   "description": "A component which compares two code snippets.",
-  "dependencies": [
-    "shiki",
-    "next-themes"
-  ],
+  "dependencies": ["shiki", "next-themes"],
   "files": [
     {
       "path": "registry/magicui/code-comparison.tsx",

@@ -1,13 +1,13 @@
 import type {
   HocuspocusProviderConfiguration,
   HocuspocusProviderWebsocketConfiguration,
-} from '@hocuspocus/provider';
-import type { WithCursorsOptions } from '@slate-yjs/core';
-import type { PluginConfig } from 'platejs';
-import type { Awareness } from 'y-protocols/awareness';
-import type * as Y from 'yjs';
+} from "@hocuspocus/provider";
+import type { WithCursorsOptions } from "@slate-yjs/core";
+import type { PluginConfig } from "platejs";
+import type { Awareness } from "y-protocols/awareness";
+import type * as Y from "yjs";
 
-import type { WithYjsOptions } from '../withTYjs';
+import type { WithYjsOptions } from "../withTYjs";
 
 // Base config structure for provider configurations
 export interface BaseYjsProviderConfig extends ProviderEventHandlers {
@@ -16,11 +16,11 @@ export interface BaseYjsProviderConfig extends ProviderEventHandlers {
 }
 
 // Built-in provider types
-export type DefaultYjsProviderType = 'hocuspocus' | 'webrtc';
+export type DefaultYjsProviderType = "hocuspocus" | "webrtc";
 
 export type HocuspocusProviderConfig = BaseYjsProviderConfig & {
   options: HocuspocusProviderConfiguration;
-  type: 'hocuspocus';
+  type: "hocuspocus";
   wsOptions?: HocuspocusProviderWebsocketConfiguration;
 };
 
@@ -72,7 +72,7 @@ export type UnifiedProvider = {
 
 export type WebRTCProviderConfig = BaseYjsProviderConfig & {
   options: WebRTCProviderOptions;
-  type: 'webrtc';
+  type: "webrtc";
 };
 
 export type WebRTCProviderOptions = {
@@ -95,7 +95,7 @@ export type WebRTCProviderOptions = {
 };
 
 export type YjsConfig = PluginConfig<
-  'yjs',
+  "yjs",
   {
     /** Whether any provider is currently connected. */
     _isConnected: boolean;
@@ -152,11 +152,8 @@ export type YjsConfig = PluginConfig<
     /** Called when the plugin encounters an error. */
     onError?: (props: { error: Error; type: YjsProviderType }) => void;
     /** Called when the plugin's sync state changes. */
-    onSyncChange?: (props: {
-      isSynced: boolean;
-      type: YjsProviderType;
-    }) => void;
-  } & Omit<WithYjsOptions, 'autoConnect'>
+    onSyncChange?: (props: { isSynced: boolean; type: YjsProviderType }) => void;
+  } & Omit<WithYjsOptions, "autoConnect">
 >;
 
 // Union type for all known provider configurations

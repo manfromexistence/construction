@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "multiple-editors-demo",
   "type": "registry:example",
-  "dependencies": [
-    "@platejs/basic-nodes",
-    "@platejs/basic-nodes",
-    "@platejs/media"
-  ],
+  "dependencies": ["@platejs/basic-nodes", "@platejs/basic-nodes", "@platejs/media"],
   "registryDependencies": [
     "@shadcn/separator",
     "https://platejs.org/r/basic-nodes-kit.json",

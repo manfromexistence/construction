@@ -1,14 +1,9 @@
-import {
-  type PluginConfig,
-  type SlateEditor,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
+import { createTSlatePlugin, KEYS, type PluginConfig, type SlateEditor } from "platejs";
 
-import type { Heading } from './types';
+import type { Heading } from "./types";
 
 export type TocConfig = PluginConfig<
-  'toc',
+  "toc",
   {
     isScroll: boolean;
     topOffset: number;

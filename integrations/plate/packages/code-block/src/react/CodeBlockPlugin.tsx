@@ -1,10 +1,10 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
 import {
   BaseCodeBlockPlugin,
   BaseCodeLinePlugin,
   BaseCodeSyntaxPlugin,
-} from '../lib/BaseCodeBlockPlugin';
+} from "../lib/BaseCodeBlockPlugin";
 
 export const CodeSyntaxPlugin = toPlatePlugin(BaseCodeSyntaxPlugin);
 

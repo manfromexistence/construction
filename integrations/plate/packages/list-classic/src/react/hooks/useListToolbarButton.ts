@@ -1,15 +1,12 @@
-import { KEYS } from 'platejs';
-import { useEditorRef, useEditorSelector } from 'platejs/react';
+import { KEYS } from "platejs";
+import { useEditorRef, useEditorSelector } from "platejs/react";
 
-import { ListPlugin } from '../ListPlugin';
+import { ListPlugin } from "../ListPlugin";
 
-export const useListToolbarButtonState = ({
-  nodeType = KEYS.ulClassic as string,
-} = {}) => {
+export const useListToolbarButtonState = ({ nodeType = KEYS.ulClassic as string } = {}) => {
   const pressed = useEditorSelector(
     (editor) =>
-      !!editor.selection &&
-      editor.api.some({ match: { type: editor.getType(nodeType) } }),
+      !!editor.selection && editor.api.some({ match: { type: editor.getType(nodeType) } }),
     [nodeType]
   );
 
@@ -19,9 +16,7 @@ export const useListToolbarButtonState = ({
   };
 };
 
-export const useListToolbarButton = (
-  state: ReturnType<typeof useListToolbarButtonState>
-) => {
+export const useListToolbarButton = (state: ReturnType<typeof useListToolbarButtonState>) => {
   const editor = useEditorRef();
   const tf = editor.getTransforms(ListPlugin);
 

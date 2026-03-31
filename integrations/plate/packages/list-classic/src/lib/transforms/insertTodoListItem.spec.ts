@@ -1,10 +1,10 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { BaseTodoListPlugin } from '../BaseTodoListPlugin';
-import { insertTodoListItem } from './insertTodoListItem';
+import { BaseTodoListPlugin } from "../BaseTodoListPlugin";
+import { insertTodoListItem } from "./insertTodoListItem";
 
-describe('insertTodoListItem', () => {
-  it('returns false when there is no selection', () => {
+describe("insertTodoListItem", () => {
+  it("returns false when there is no selection", () => {
     const editor = {
       getOptions: () => ({
         inheritCheckStateOnLineEndBreak: false,
@@ -17,7 +17,7 @@ describe('insertTodoListItem', () => {
     expect(insertTodoListItem(editor)).toBe(false);
   });
 
-  it('inserts a todo before when the cursor is at the start', () => {
+  it("inserts a todo before when the cursor is at the start", () => {
     const insertNodes = mock();
     const editor = {
       api: {
@@ -47,22 +47,19 @@ describe('insertTodoListItem', () => {
     expect(insertNodes).toHaveBeenCalledWith(
       {
         checked: true,
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         type: KEYS.listTodoClassic,
       },
       { at: [0] }
     );
   });
 
-  it('inserts a todo after at the end and preserves marks', () => {
+  it("inserts a todo after at the end and preserves marks", () => {
     const insertNodes = mock();
     const select = mock();
     const editor = {
       api: {
-        above: mock(() => [
-          { checked: false, type: KEYS.listTodoClassic },
-          [0],
-        ]),
+        above: mock(() => [{ checked: false, type: KEYS.listTodoClassic }, [0]]),
         isCollapsed: mock(() => true),
         isEmpty: mock(() => true),
         isStart: mock(() => false),
@@ -86,7 +83,7 @@ describe('insertTodoListItem', () => {
     expect(insertNodes).toHaveBeenCalledWith(
       {
         checked: false,
-        children: [{ italic: true, text: '' }],
+        children: [{ italic: true, text: "" }],
         type: KEYS.listTodoClassic,
       },
       { at: [1] }
@@ -94,7 +91,7 @@ describe('insertTodoListItem', () => {
     expect(select).toHaveBeenCalledWith([1]);
   });
 
-  it('deletes expanded selections and splits nodes for middle breaks', () => {
+  it("deletes expanded selections and splits nodes for middle breaks", () => {
     const deleteSelection = mock();
     const splitNodes = mock();
     const editor = {

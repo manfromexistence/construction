@@ -1,18 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import { type CreatePlateEditorOptions, createPlateEditor } from '../editor';
-import { type PlateProps, Plate } from './Plate';
-import { type PlateContentProps, PlateContent } from './PlateContent';
+import { type CreatePlateEditorOptions, createPlateEditor } from "../editor";
+import { Plate, type PlateProps } from "./Plate";
+import { PlateContent, type PlateContentProps } from "./PlateContent";
 
 export function PlateTest({
   editableProps,
   shouldNormalizeEditor,
-  variant = 'wordProcessor',
+  variant = "wordProcessor",
   ...props
 }: CreatePlateEditorOptions &
   PlateProps & {
     editableProps?: PlateContentProps;
-    variant?: 'comment' | 'wordProcessor';
+    variant?: "comment" | "wordProcessor";
   }) {
   const { id, editor: _editor, plugins } = props;
 

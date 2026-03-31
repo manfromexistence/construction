@@ -1,14 +1,14 @@
 "use client";
 
-import { useChatContext } from "@/hooks/use-chat-context";
+import dynamic from "next/dynamic";
+import React from "react";
 import { useAIThemeGenerationCore } from "@/hooks/use-ai-theme-generation-core";
+import { useChatContext } from "@/hooks/use-chat-context";
 import { useGuards } from "@/hooks/use-guards";
 import { usePostLoginAction } from "@/hooks/use-post-login-action";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import { AIPromptData } from "@/types/ai";
-import dynamic from "next/dynamic";
-import React from "react";
 import { ChatInput } from "./chat-input";
 import { ClosableSuggestedPillActions } from "./closeable-suggested-pill-actions";
 

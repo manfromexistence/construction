@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Provider as JotaiProvider } from "jotai";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
-import { Provider as JotaiProvider } from 'jotai';
-
-import { ThemeProvider } from './theme-provider';
+import { ThemeProvider } from "./theme-provider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (

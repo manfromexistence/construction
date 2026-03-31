@@ -1,23 +1,20 @@
-import type { SlateEditor, TTableCellElement } from 'platejs';
+import type { SlateEditor, TTableCellElement } from "platejs";
 
-import type { BorderDirection } from '../types';
+import type { BorderDirection } from "../types";
 
-import { getCellTypes } from '../utils';
-import { getLeftTableCell } from './getLeftTableCell';
-import { getTopTableCell } from './getTopTableCell';
+import { getCellTypes } from "../utils";
+import { getLeftTableCell } from "./getLeftTableCell";
+import { getTopTableCell } from "./getTopTableCell";
 
-export const isTableBorderHidden = (
-  editor: SlateEditor,
-  border: BorderDirection
-) => {
-  if (border === 'left') {
+export const isTableBorderHidden = (editor: SlateEditor, border: BorderDirection) => {
+  if (border === "left") {
     const node = getLeftTableCell(editor)?.[0];
 
     if (node) {
       return node.borders?.right?.size === 0;
     }
   }
-  if (border === 'top') {
+  if (border === "top") {
     const node = getTopTableCell(editor)?.[0];
 
     if (node) {

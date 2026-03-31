@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pagination-demo",
-  "registryDependencies": [
-    "pagination"
-  ],
+  "registryDependencies": ["pagination"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/pagination-demo.tsx",

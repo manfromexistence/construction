@@ -40,5 +40,5 @@ export function TypographyTable() {
         </tbody>
       </table>
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -100,8 +100,8 @@ export const tableValue: any = (
   <fragment>
     <hh2>Table</hh2>
     <hp>
-      Create customizable tables with resizable columns and rows, allowing you
-      to design structured layouts.
+      Create customizable tables with resizable columns and rows, allowing you to design structured
+      layouts.
     </hp>
     {createTable()}
   </fragment>
@@ -111,8 +111,7 @@ export const tableMergeValue: any = (
   <fragment>
     <hh3>Table Merge</hh3>
     <hp>
-      You can disable merging using <htext code>disableMerge: true</htext>{' '}
-      option. Try it out:
+      You can disable merging using <htext code>disableMerge: true</htext> option. Try it out:
     </hp>
     {createTable(true)}
   </fragment>

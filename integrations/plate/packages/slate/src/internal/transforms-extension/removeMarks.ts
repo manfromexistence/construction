@@ -1,4 +1,4 @@
-import castArray from 'lodash/castArray.js';
+import castArray from "lodash/castArray.js";
 
 import {
   type Editor,
@@ -8,7 +8,7 @@ import {
   type TElement,
   TextApi,
   type TNode,
-} from '../../interfaces';
+} from "../../interfaces";
 
 export const removeMarks = (
   editor: Editor,
@@ -26,9 +26,7 @@ export const removeMarks = (
 
     const [parentNode] = editor.api.parent<TElement>(path)!;
 
-    return (
-      !editor.api.isVoid(parentNode) || editor.api.markableVoid(parentNode)
-    );
+    return !editor.api.isVoid(parentNode) || editor.api.markableVoid(parentNode);
   };
 
   const expandedSelection = RangeApi.isExpanded(selection);
@@ -39,8 +37,7 @@ export const removeMarks = (
 
     if (selectedNode && match(selectedNode, selectedPath)) {
       const [parentNode] = editor.api.parent<TElement>(selectedPath)!;
-      markAcceptingVoidSelected =
-        parentNode && editor.api.markableVoid(parentNode);
+      markAcceptingVoidSelected = parentNode && editor.api.markableVoid(parentNode);
     }
   }
   if (keys && (expandedSelection || markAcceptingVoidSelected)) {

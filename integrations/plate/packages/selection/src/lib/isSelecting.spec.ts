@@ -1,7 +1,7 @@
-import { isSelecting } from './isSelecting';
+import { isSelecting } from "./isSelecting";
 
-describe('isSelecting', () => {
-  it('returns true when the editor selection is expanded', () => {
+describe("isSelecting", () => {
+  it("returns true when the editor selection is expanded", () => {
     const editor = {
       api: {
         isExpanded: () => true,
@@ -12,7 +12,7 @@ describe('isSelecting', () => {
     expect(isSelecting(editor)).toBe(true);
   });
 
-  it('returns true when block selection says some blocks are being selected', () => {
+  it("returns true when block selection says some blocks are being selected", () => {
     const editor = {
       api: {
         isExpanded: () => false,
@@ -23,7 +23,7 @@ describe('isSelecting', () => {
     expect(isSelecting(editor)).toBe(true);
   });
 
-  it('returns false when neither selection state is active', () => {
+  it("returns false when neither selection state is active", () => {
     const editor = {
       api: {
         isExpanded: () => false,

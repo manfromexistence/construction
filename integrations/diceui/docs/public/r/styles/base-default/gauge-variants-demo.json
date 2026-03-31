@@ -1,8 +1,6 @@
 {
   "name": "gauge-variants-demo",
-  "registryDependencies": [
-    "gauge"
-  ],
+  "registryDependencies": ["gauge"],
   "files": [
     {
       "path": "examples/gauge-variants-demo.tsx",

@@ -25,7 +25,7 @@ export function parseAttributes(attributes: any[]): Record<string, any> {
 export function propsToAttributes(props: Record<string, any>): any[] {
   return Object.entries(props).map(([name, value]) => ({
     name,
-    type: 'mdxJsxAttribute',
-    value: typeof value === 'string' ? value : JSON.stringify(value),
+    type: "mdxJsxAttribute",
+    value: typeof value === "string" ? value : JSON.stringify(value),
   }));
 }

@@ -90,12 +90,7 @@ const FolderRootIcon = forwardRef<FolderRootIconHandle, FolderRootIconProps>(
             r="2"
             variants={ROOT_VARIANTS}
           />
-          <motion.path
-            animate={controls}
-            d="M12 15v5"
-            initial="normal"
-            variants={ROOT_VARIANTS}
-          />
+          <motion.path animate={controls} d="M12 15v5" initial="normal" variants={ROOT_VARIANTS} />
         </svg>
       </div>
     );

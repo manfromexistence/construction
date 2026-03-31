@@ -1,8 +1,8 @@
-import type { SlateEditor, TElement } from 'platejs';
+import type { SlateEditor, TElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { CreateCellOptions } from '../types';
+import type { CreateCellOptions } from "../types";
 
 export const getEmptyCellNode = (
   editor: SlateEditor,
@@ -10,11 +10,7 @@ export const getEmptyCellNode = (
 ) => {
   header =
     header ??
-    (row
-      ? (row as TElement).children.every(
-          (c) => c.type === editor.getType(KEYS.th)
-        )
-      : false);
+    (row ? (row as TElement).children.every((c) => c.type === editor.getType(KEYS.th)) : false);
 
   return {
     children: children ?? [editor.api.create.block()],

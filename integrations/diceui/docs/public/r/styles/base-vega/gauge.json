@@ -1,8 +1,6 @@
 {
   "name": "gauge",
-  "dependencies": [
-    "@base-ui/react"
-  ],
+  "dependencies": ["@base-ui/react"],
   "files": [
     {
       "path": "ui/gauge.tsx",

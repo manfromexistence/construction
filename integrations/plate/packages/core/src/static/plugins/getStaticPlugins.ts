@@ -1,4 +1,4 @@
-import { ViewPlugin } from './ViewPlugin';
+import { ViewPlugin } from "./ViewPlugin";
 
 export const getStaticPlugins = () => {
   const staticPlugins = [ViewPlugin];

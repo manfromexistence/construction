@@ -1,6 +1,6 @@
-import defaultsDeep from 'lodash/defaultsDeep.js';
+import defaultsDeep from "lodash/defaultsDeep.js";
 
-import type { AnySlatePlugin } from '../plugin/SlatePlugin';
+import type { AnySlatePlugin } from "../plugin/SlatePlugin";
 
 /**
  * Recursive deep merge of each plugin from `override.plugins` into plugin with
@@ -24,10 +24,7 @@ export const overridePluginsByKey = (
 
     // Merge __extensions
     if (pluginOverridesExtensions) {
-      plugin.__extensions = [
-        ...(plugin.__extensions || []),
-        ...pluginOverridesExtensions,
-      ];
+      plugin.__extensions = [...(plugin.__extensions || []), ...pluginOverridesExtensions];
     }
     if (!nested) {
       // Concat new pluginOverrides.plugins to plugin.plugins
@@ -42,9 +39,7 @@ export const overridePluginsByKey = (
   }
   if (plugin.plugins) {
     // Override plugin.plugins
-    plugin.plugins = plugin.plugins.map((p) =>
-      overridePluginsByKey(p, overrideByKey, true)
-    );
+    plugin.plugins = plugin.plugins.map((p) => overridePluginsByKey(p, overrideByKey, true));
   }
 
   return plugin;

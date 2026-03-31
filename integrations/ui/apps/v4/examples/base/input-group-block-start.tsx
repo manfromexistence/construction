@@ -1,11 +1,6 @@
-import { CopyIcon, FileCodeIcon } from "lucide-react"
+import { CopyIcon, FileCodeIcon } from "lucide-react";
 
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/styles/base-nova/ui/field"
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -13,7 +8,7 @@ import {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea,
-} from "@/styles/base-nova/ui/input-group"
+} from "@/styles/base-nova/ui/input-group";
 
 export function InputGroupBlockStart() {
   return (
@@ -21,10 +16,7 @@ export function InputGroupBlockStart() {
       <Field>
         <FieldLabel htmlFor="block-start-input">Input</FieldLabel>
         <InputGroup className="h-auto">
-          <InputGroupInput
-            id="block-start-input"
-            placeholder="Enter your name"
-          />
+          <InputGroupInput id="block-start-input" placeholder="Enter your name" />
           <InputGroupAddon align="block-start">
             <InputGroupText>Full Name</InputGroupText>
           </InputGroupAddon>
@@ -48,10 +40,8 @@ export function InputGroupBlockStart() {
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
-        <FieldDescription>
-          Header positioned above the textarea.
-        </FieldDescription>
+        <FieldDescription>Header positioned above the textarea.</FieldDescription>
       </Field>
     </FieldGroup>
-  )
+  );
 }

@@ -1,20 +1,20 @@
 import {
   type InsertNodesOptions,
+  isDefined,
+  KEYS,
+  NodeApi,
+  RangeApi,
   type SlateEditor,
   type TLinkElement,
   type UnwrapNodesOptions,
   type WrapNodesOptions,
-  isDefined,
-  NodeApi,
-  RangeApi,
-} from 'platejs';
-import { KEYS } from 'platejs';
+} from "platejs";
 
-import { type CreateLinkNodeOptions, validateUrl } from '../utils';
-import { insertLink } from './insertLink';
-import { unwrapLink } from './unwrapLink';
-import { upsertLinkText } from './upsertLinkText';
-import { wrapLink } from './wrapLink';
+import { type CreateLinkNodeOptions, validateUrl } from "../utils";
+import { insertLink } from "./insertLink";
+import { unwrapLink } from "./unwrapLink";
+import { upsertLinkText } from "./upsertLinkText";
+import { wrapLink } from "./wrapLink";
 
 export type UpsertLinkOptions = {
   insertNodesOptions?: InsertNodesOptions;

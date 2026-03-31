@@ -1,25 +1,25 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
 
-import { type BaseLinkConfig, BaseLinkPlugin } from '../BaseLinkPlugin';
-import { upsertLink } from './upsertLink';
+import { type BaseLinkConfig, BaseLinkPlugin } from "../BaseLinkPlugin";
+import { upsertLink } from "./upsertLink";
 
 jsxt;
 
-const url = 'http://google.com';
-const urlOutput = 'http://output.com';
+const url = "http://google.com";
+const urlOutput = "http://output.com";
 
-const createTestEditor = (editor: any, options?: BaseLinkConfig['options']) =>
+const createTestEditor = (editor: any, options?: BaseLinkConfig["options"]) =>
   createSlateEditor({
     editor,
     plugins: [BaseLinkPlugin.configure({ options })],
   });
 
-describe('upsertLink', () => {
-  describe('when selection is collapsed', () => {
-    describe('when custom isUrl rejects an internal path', () => {
+describe("upsertLink", () => {
+  describe("when selection is collapsed", () => {
+    describe("when custom isUrl rejects an internal path", () => {
       const input = createEditor(
         (
           <editor>
@@ -40,18 +40,18 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('does not insert the link', () => {
+      it("does not insert the link", () => {
         const editor = createTestEditor(input, {
-          isUrl: (inputUrl: string) => !inputUrl.startsWith('/'),
+          isUrl: (inputUrl: string) => !inputUrl.startsWith("/"),
         });
 
-        expect(upsertLink(editor, { url: '/internal/path' })).toBeUndefined();
+        expect(upsertLink(editor, { url: "/internal/path" })).toBeUndefined();
         expect(editor.children).toEqual(output.children);
       });
     });
 
     // https://github.com/udecode/editor-protocol/issues/46
-    describe('when not in link, url only', () => {
+    describe("when not in link, url only", () => {
       const input = createEditor(
         (
           <editor>
@@ -71,7 +71,7 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert link', () => {
+      it("insert link", () => {
         const editor = createTestEditor(input);
         upsertLink(editor, { url });
 
@@ -80,7 +80,7 @@ describe('upsertLink', () => {
     });
 
     // https://github.com/udecode/editor-protocol/issues/47
-    describe('when not in link, url+text', () => {
+    describe("when not in link, url+text", () => {
       const input = createEditor(
         (
           <editor>
@@ -100,16 +100,16 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert link with text', () => {
+      it("insert link with text", () => {
         const editor = createTestEditor(input);
-        upsertLink(editor, { text: 'another', url });
+        upsertLink(editor, { text: "another", url });
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
     // https://github.com/udecode/editor-protocol/issues/35
-    describe('when in a link, insert url', () => {
+    describe("when in a link, insert url", () => {
       const input = createEditor(
         (
           <editor>
@@ -132,7 +132,7 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert text', () => {
+      it("insert text", () => {
         const editor = createTestEditor(input);
         upsertLink(editor, { insertTextInLink: true, url });
 
@@ -140,7 +140,7 @@ describe('upsertLink', () => {
       });
     });
 
-    describe('when in a link, edit same url, same text', () => {
+    describe("when in a link, edit same url, same text", () => {
       const input = createEditor(
         (
           <editor>
@@ -164,16 +164,16 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('keeps the existing link unchanged', () => {
+      it("keeps the existing link unchanged", () => {
         const editor = createTestEditor(input);
-        upsertLink(editor, { text: 'insert link', url });
+        upsertLink(editor, { text: "insert link", url });
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
     // https://github.com/udecode/editor-protocol/issues/59
-    describe('when in a link, edit url', () => {
+    describe("when in a link, edit url", () => {
       const input = createEditor(
         (
           <editor>
@@ -197,7 +197,7 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('update link url', () => {
+      it("update link url", () => {
         const editor = createTestEditor(input);
         upsertLink(editor, { url: urlOutput });
 
@@ -206,7 +206,7 @@ describe('upsertLink', () => {
     });
 
     // https://github.com/udecode/editor-protocol/issues/58
-    describe('when in a link, edit text + same url', () => {
+    describe("when in a link, edit text + same url", () => {
       const input = createEditor(
         (
           <editor>
@@ -235,15 +235,15 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert text', () => {
+      it("insert text", () => {
         const editor = createTestEditor(input);
-        upsertLink(editor, { text: 'edit link', url });
+        upsertLink(editor, { text: "edit link", url });
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
-    describe('when in a link, insertTextInLink + same url', () => {
+    describe("when in a link, insertTextInLink + same url", () => {
       const input = createEditor(
         (
           <editor>
@@ -266,7 +266,7 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert text', () => {
+      it("insert text", () => {
         const editor = createTestEditor(input);
         upsertLink(editor, { insertTextInLink: true, url });
 
@@ -275,7 +275,7 @@ describe('upsertLink', () => {
     });
 
     // https://github.com/udecode/editor-protocol/issues/60
-    describe('when in a link, set empty text', () => {
+    describe("when in a link, set empty text", () => {
       const input = createEditor(
         (
           <editor>
@@ -298,18 +298,18 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('set text to url', () => {
+      it("set text to url", () => {
         const editor = createTestEditor(input);
-        upsertLink(editor, { text: '', url });
+        upsertLink(editor, { text: "", url });
 
         expect(editor.children).toEqual(output.children);
       });
     });
   });
 
-  describe('when selection is expanded', () => {
+  describe("when selection is expanded", () => {
     // https://github.com/udecode/editor-protocol/issues/50
-    describe('when not in link, insert url + same text', () => {
+    describe("when not in link, insert url + same text", () => {
       const input = createEditor(
         (
           <editor>
@@ -330,16 +330,16 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert link', () => {
+      it("insert link", () => {
         const editor = createTestEditor(input);
-        upsertLink(editor, { text: 'insert link', url });
+        upsertLink(editor, { text: "insert link", url });
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
     // https://github.com/udecode/editor-protocol/issues/50
-    describe('when not in link, insert url+text', () => {
+    describe("when not in link, insert url+text", () => {
       const input = createEditor(
         (
           <editor>
@@ -360,16 +360,16 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert link', () => {
+      it("insert link", () => {
         const editor = createTestEditor(input);
-        upsertLink(editor, { text: 'another', url });
+        upsertLink(editor, { text: "another", url });
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
     // done
-    describe('when in a link', () => {
+    describe("when in a link", () => {
       const input = createEditor(
         (
           <editor>
@@ -394,7 +394,7 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('insert text', () => {
+      it("insert text", () => {
         const editor = createTestEditor(input);
         upsertLink(editor, { url });
 
@@ -403,7 +403,7 @@ describe('upsertLink', () => {
     });
 
     // done
-    describe('when containing a link', () => {
+    describe("when containing a link", () => {
       const input = createEditor(
         (
           <editor>
@@ -424,7 +424,7 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('delete and insert link', () => {
+      it("delete and insert link", () => {
         const editor = createTestEditor(input);
         upsertLink(editor, { url: urlOutput });
 
@@ -432,7 +432,7 @@ describe('upsertLink', () => {
       });
     });
 
-    describe('when containing a link and replacing its text', () => {
+    describe("when containing a link and replacing its text", () => {
       const input = createEditor(
         (
           <editor>
@@ -453,21 +453,21 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('replaces the wrapped text instead of keeping the original link text', () => {
+      it("replaces the wrapped text instead of keeping the original link text", () => {
         const editor = createTestEditor(input);
-        upsertLink(editor, { text: 'renamed', url });
+        upsertLink(editor, { text: "renamed", url });
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
     // https://github.com/udecode/editor-protocol/issues/70
-    describe('when inserting a link in a marked text', () => {
+    describe("when inserting a link in a marked text", () => {
       const input = createEditor(
         (
           <editor>
             <hp>
-              insert{' '}
+              insert{" "}
               <htext bold>
                 link <cursor /> here
               </htext>
@@ -489,7 +489,7 @@ describe('upsertLink', () => {
         </editor>
       ) as any;
 
-      it('preserves marks on the new link', () => {
+      it("preserves marks on the new link", () => {
         const editor = createTestEditor(input);
         upsertLink(editor, { url: urlOutput });
 
@@ -498,7 +498,7 @@ describe('upsertLink', () => {
     });
   });
 
-  describe('when skipValidation is false and url is invalid', () => {
+  describe("when skipValidation is false and url is invalid", () => {
     const input = createEditor(
       (
         <editor>
@@ -516,18 +516,18 @@ describe('upsertLink', () => {
       </editor>
     ) as any;
 
-    it('keeps content unchanged for invalid URLs', () => {
+    it("keeps content unchanged for invalid URLs", () => {
       const editor = createTestEditor(input);
       upsertLink(editor, {
         skipValidation: false,
-        url: 'invalid',
+        url: "invalid",
       });
 
       expect(editor.children).toEqual(output.children);
     });
   });
 
-  describe('when skipValidation is true and url is invalid', () => {
+  describe("when skipValidation is true and url is invalid", () => {
     const input = createEditor(
       (
         <editor>
@@ -547,19 +547,19 @@ describe('upsertLink', () => {
       </editor>
     ) as any;
 
-    it('insert', () => {
+    it("insert", () => {
       const editor = createTestEditor(input);
       upsertLink(editor, {
         skipValidation: true,
-        url: 'invalid',
+        url: "invalid",
       });
 
       expect(editor.children).toEqual(output.children);
     });
   });
 
-  describe('when selection is missing', () => {
-    it('returns undefined and keeps content unchanged', () => {
+  describe("when selection is missing", () => {
+    it("returns undefined and keeps content unchanged", () => {
       const editor = createTestEditor(
         createEditor(
           (
@@ -575,14 +575,14 @@ describe('upsertLink', () => {
       expect(upsertLink(editor, { url })).toBeUndefined();
       expect(editor.children).toEqual([
         {
-          children: [{ text: 'plain text' }],
-          type: 'p',
+          children: [{ text: "plain text" }],
+          type: "p",
         },
       ]);
     });
   });
 
-  describe('when in a link and updating target only', () => {
+  describe("when in a link and updating target only", () => {
     const input = createEditor(
       (
         <editor>
@@ -610,10 +610,10 @@ describe('upsertLink', () => {
       </editor>
     ) as any;
 
-    it('updates target without replacing the existing text', () => {
+    it("updates target without replacing the existing text", () => {
       const editor = createTestEditor(input);
 
-      upsertLink(editor, { target: '_blank', url });
+      upsertLink(editor, { target: "_blank", url });
 
       expect(editor.children).toEqual(output.children);
     });

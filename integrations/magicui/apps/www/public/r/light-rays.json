@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Light Rays",
   "description": "A component with animated light rays which shine down from above.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/light-rays.tsx",

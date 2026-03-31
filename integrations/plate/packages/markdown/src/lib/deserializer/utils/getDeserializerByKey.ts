@@ -1,11 +1,7 @@
-import type { DeserializeMdOptions } from '../deserializeMd';
+import { buildRules } from "../../rules/defaultRules";
+import type { DeserializeMdOptions } from "../deserializeMd";
 
-import { buildRules } from '../../rules/defaultRules';
-
-export const getDeserializerByKey = (
-  key: string,
-  options: DeserializeMdOptions
-) => {
+export const getDeserializerByKey = (key: string, options: DeserializeMdOptions) => {
   const rules = options.rules;
 
   return rules?.[key]?.deserialize === undefined

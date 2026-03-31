@@ -1,8 +1,8 @@
-import type { Editor, ElementEntryOf, ElementOf, NodeEntry } from 'platejs';
+import type { Editor, ElementEntryOf, ElementOf, NodeEntry } from "platejs";
 
-import { isDefined, KEYS } from 'platejs';
+import { isDefined, KEYS } from "platejs";
 
-import { getListChildren } from './getListChildren';
+import { getListChildren } from "./getListChildren";
 
 /**
  * Expands a list of blocks to include list item children. For each list item in
@@ -12,10 +12,7 @@ import { getListChildren } from './getListChildren';
  * @returns Array of block entries with list items expanded to include their
  *   children
  */
-export const expandListItemsWithChildren = <
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
->(
+export const expandListItemsWithChildren = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,
   entries: ElementEntryOf<E>[]
 ): NodeEntry<N>[] => {
@@ -33,8 +30,7 @@ export const expandListItemsWithChildren = <
 
     // Check if it's a list item
     const isListItem =
-      isDefined((node as any)[KEYS.listType]) &&
-      isDefined((node as any)[KEYS.indent]);
+      isDefined((node as any)[KEYS.listType]) && isDefined((node as any)[KEYS.indent]);
 
     if (isListItem) {
       // Get all children (items with bigger indent)

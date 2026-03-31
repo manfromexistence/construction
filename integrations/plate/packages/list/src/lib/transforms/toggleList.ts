@@ -1,26 +1,17 @@
-import type { ElementEntryOf, ElementOf, SlateEditor, TElement } from 'platejs';
+import type { ElementEntryOf, ElementOf, SlateEditor, TElement } from "platejs";
 
-import { getInjectMatch, KEYS } from 'platejs';
-
-import type { ListOptions } from './indentList';
-
-import { BaseListPlugin } from '../BaseListPlugin';
-import {
-  type GetSiblingListOptions,
-  getListAbove,
-  getPreviousList,
-} from '../queries';
-import { areEqListStyleType } from '../queries/areEqListStyleType';
-import { setListNodes } from './setListNodes';
-import { setListSiblingNodes } from './setListSiblingNodes';
-import { toggleListSet } from './toggleListSet';
-import { toggleListUnset } from './toggleListUnset';
+import { getInjectMatch, KEYS } from "platejs";
+import { BaseListPlugin } from "../BaseListPlugin";
+import { type GetSiblingListOptions, getListAbove, getPreviousList } from "../queries";
+import { areEqListStyleType } from "../queries/areEqListStyleType";
+import type { ListOptions } from "./indentList";
+import { setListNodes } from "./setListNodes";
+import { setListSiblingNodes } from "./setListSiblingNodes";
+import { toggleListSet } from "./toggleListSet";
+import { toggleListUnset } from "./toggleListUnset";
 
 /** Toggle indent list. */
-export const toggleList = <
-  N extends ElementOf<E>,
-  E extends SlateEditor = SlateEditor,
->(
+export const toggleList = <N extends ElementOf<E>, E extends SlateEditor = SlateEditor>(
   editor: E,
   options: ListOptions,
   getSiblingListOptions?: GetSiblingListOptions<N, E>
@@ -36,8 +27,7 @@ export const toggleList = <
    * Null - No action was taken.
    */
   const setList = ((): boolean | null => {
-    const { getSiblingListOptions: _getSiblingListOptions } =
-      editor.getOptions(BaseListPlugin);
+    const { getSiblingListOptions: _getSiblingListOptions } = editor.getOptions(BaseListPlugin);
 
     if (editor.api.isCollapsed()) {
       const entry = editor.api.block<TElement>();
@@ -61,10 +51,7 @@ export const toggleList = <
       return true;
     }
     if (editor.api.isExpanded()) {
-      const match = getInjectMatch(
-        editor,
-        editor.getPlugin({ key: KEYS.list })
-      );
+      const match = getInjectMatch(editor, editor.getPlugin({ key: KEYS.list }));
       const _entries = editor.api.nodes<TElement>({ block: true, match });
       const entries = [..._entries];
 

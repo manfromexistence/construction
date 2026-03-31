@@ -1,12 +1,11 @@
-'use client';
+"use client";
 
-import React, { type ReactNode, createContext, useState } from 'react';
-
-import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import * as SeparatorPrimitive from '@radix-ui/react-separator';
-import { type VariantProps, cva } from 'class-variance-authority';
-import { cn } from 'fumadocs-ui/utils/cn';
-import { ChevronDownIcon, PlusIcon } from 'lucide-react';
+import * as AccordionPrimitive from "@radix-ui/react-accordion";
+import * as SeparatorPrimitive from "@radix-ui/react-separator";
+import { cva, type VariantProps } from "class-variance-authority";
+import { cn } from "fumadocs-ui/utils/cn";
+import { ChevronDownIcon, PlusIcon } from "lucide-react";
+import React, { createContext, type ReactNode, useState } from "react";
 
 type Item = {
   children: ReactNode;
@@ -22,37 +21,34 @@ type Item = {
 const APIContext = createContext<{ listType?: string; name?: string }>({});
 
 const listTypeToId: Record<string, string> = {
-  api: 'api',
-  attributes: 'attrs',
-  methods: 'methods',
-  options: 'opt',
-  parameters: 'params',
-  props: 'props',
-  returns: 'returns',
-  state: 'state',
-  transforms: 'tf',
+  api: "api",
+  attributes: "attrs",
+  methods: "methods",
+  options: "opt",
+  parameters: "params",
+  props: "props",
+  returns: "returns",
+  state: "state",
+  transforms: "tf",
 };
 
 const listTypeToBadgeStyles: Record<string, string> = {
-  api: 'bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300',
-  attributes: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
-  methods: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
-  options: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-  parameters: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
-  props: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
-  returns: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
-  state: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
-  transforms:
-    'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
+  api: "bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300",
+  attributes: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300",
+  methods: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300",
+  options: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
+  parameters: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
+  props: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
+  returns: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300",
+  state: "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300",
+  transforms: "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300",
 };
 
 export function API({ children, name }: { children: ReactNode; name: string }) {
   return (
     <APIContext.Provider value={{ name }}>
       <Card className="mt-6 mb-16 bg-white p-0 dark:bg-zinc-800">
-        <CardContent className="space-y-6 py-6 **:[p]:m-0">
-          {children}
-        </CardContent>
+        <CardContent className="space-y-6 py-6 **:[p]:m-0">{children}</CardContent>
       </Card>
     </APIContext.Provider>
   );
@@ -62,10 +58,10 @@ export function APIItem({ children, name, optional, required, type }: Item) {
   const { listType, name: contextName } = React.useContext(APIContext);
 
   const id = contextName
-    ? `${contextName}-${listType ? `${listTypeToId[listType]}-` : ''}${name}`
+    ? `${contextName}-${listType ? `${listTypeToId[listType]}-` : ""}${name}`
         .toLowerCase()
-        .replace(/[^\da-z]+/g, '-')
-        .replace(/^-|-$/g, '')
+        .replace(/[^\da-z]+/g, "-")
+        .replace(/^-|-$/g, "")
     : undefined;
 
   return (
@@ -75,9 +71,7 @@ export function APIItem({ children, name, optional, required, type }: Item) {
           <h4 className="!my-0 relative py-2 text-start font-semibold leading-none tracking-tight">
             {id && (
               <a
-                className={cn(
-                  'opacity-0 hover:opacity-100 group-hover:opacity-100'
-                )}
+                className={cn("opacity-0 hover:opacity-100 group-hover:opacity-100")}
                 onClick={(e) => e.stopPropagation()}
                 href={`#${id}`}
               >
@@ -90,13 +84,10 @@ export function APIItem({ children, name, optional, required, type }: Item) {
               {name}
             </span>
             {required && (
-              <span className="font-mono text-orange-500 text-xs leading-none">
-                {' '}
-                REQUIRED
-              </span>
+              <span className="font-mono text-orange-500 text-xs leading-none"> REQUIRED</span>
             )}
             <span className="text-left font-medium font-mono text-muted-foreground text-sm leading-none">
-              {!required && optional && ' optional'} {type}
+              {!required && optional && " optional"} {type}
             </span>
           </h4>
         </li>
@@ -185,15 +176,11 @@ type APIListProps = {
   type?: string;
 };
 
-export function APIList({
-  children,
-  listType = 'parameters',
-  type,
-}: APIListProps) {
+export function APIList({ children, listType = "parameters", type }: APIListProps) {
   const { name } = React.useContext(APIContext);
   const childCount = React.Children.count(children);
 
-  if (listType === 'returns' && !childCount) return null;
+  if (listType === "returns" && !childCount) return null;
 
   const id = name ? `${name}-${listTypeToId[listType]}` : undefined;
 
@@ -209,9 +196,7 @@ export function APIList({
               >
                 {id && (
                   <a
-                    className={cn(
-                      'opacity-0 hover:opacity-100 group-hover:opacity-100'
-                    )}
+                    className={cn("opacity-0 hover:opacity-100 group-hover:opacity-100")}
                     onClick={(e) => e.stopPropagation()}
                     href={`#${id}`}
                   >
@@ -223,20 +208,20 @@ export function APIList({
 
                 <span
                   className={cn(
-                    'inline-flex items-center rounded-md px-2 py-0.5 font-medium text-base',
-                    'ring-1 ring-black/5 ring-inset dark:ring-white/5',
+                    "inline-flex items-center rounded-md px-2 py-0.5 font-medium text-base",
+                    "ring-1 ring-black/5 ring-inset dark:ring-white/5",
                     listTypeToBadgeStyles[listType]
                   )}
                 >
-                  {listType === 'parameters' && 'Parameters'}
-                  {listType === 'attributes' && 'Attributes'}
-                  {listType === 'returns' && 'Returns'}
-                  {listType === 'props' && 'Props'}
-                  {listType === 'state' && 'State'}
-                  {listType === 'options' && 'Options'}
-                  {listType === 'api' && 'API'}
-                  {listType === 'methods' && 'Methods'}
-                  {listType === 'transforms' && 'Transforms'}
+                  {listType === "parameters" && "Parameters"}
+                  {listType === "attributes" && "Attributes"}
+                  {listType === "returns" && "Returns"}
+                  {listType === "props" && "Props"}
+                  {listType === "state" && "State"}
+                  {listType === "options" && "Options"}
+                  {listType === "api" && "API"}
+                  {listType === "methods" && "Methods"}
+                  {listType === "transforms" && "Transforms"}
                 </span>
 
                 {type && (
@@ -255,9 +240,7 @@ export function APIList({
                 {childCount > 0 ? (
                   children
                 ) : (
-                  <div className="py-4 text-muted-foreground text-sm">
-                    No parameters.
-                  </div>
+                  <div className="py-4 text-muted-foreground text-sm">No parameters.</div>
                 )}
               </div>
             </ul>
@@ -286,12 +269,10 @@ export function APISubListItem({
   const { listType, name: contextName } = React.useContext(APIContext);
 
   const id = contextName
-    ? `${contextName}-${
-        listType ? `${listTypeToId[listType]}-` : ''
-      }${parent}-${name}`
+    ? `${contextName}-${listType ? `${listTypeToId[listType]}-` : ""}${parent}-${name}`
         .toLowerCase()
-        .replace(/[^\da-z]+/g, '-')
-        .replace(/^-|-$/g, '')
+        .replace(/[^\da-z]+/g, "-")
+        .replace(/^-|-$/g, "")
     : undefined;
 
   return (
@@ -299,9 +280,7 @@ export function APISubListItem({
       <h4 className="relative py-2 font-mono font-semibold tracking-tight">
         {id && (
           <a
-            className={cn(
-              'opacity-0 hover:opacity-100 group-hover:opacity-100'
-            )}
+            className={cn("opacity-0 hover:opacity-100 group-hover:opacity-100")}
             onClick={(e) => e.stopPropagation()}
             href={`#${id}`}
           >
@@ -310,18 +289,13 @@ export function APISubListItem({
             </div>
           </a>
         )}
-        <span className="font-semibold text-muted-foreground leading-none">
-          {parent}.
-        </span>
+        <span className="font-semibold text-muted-foreground leading-none">{parent}.</span>
         <span className="font-semibold leading-none">{name}</span>
         {required && (
-          <span className="ml-1 font-mono text-orange-500 text-xs leading-none">
-            {' '}
-            REQUIRED
-          </span>
+          <span className="ml-1 font-mono text-orange-500 text-xs leading-none"> REQUIRED</span>
         )}
         <span className="text-left font-medium font-mono text-muted-foreground text-sm leading-none group-hover:no-underline">
-          {!required && optional && ' optional'} {type}
+          {!required && optional && " optional"} {type}
         </span>
       </h4>
       <div>{children}</div>
@@ -329,27 +303,21 @@ export function APISubListItem({
   );
 }
 
-export function APISubList({
-  children,
-  open,
-}: {
-  children: ReactNode;
-  open?: boolean;
-}) {
-  const [value, setValue] = useState(open ? '1' : '');
+export function APISubList({ children, open }: { children: ReactNode; open?: boolean }) {
+  const [value, setValue] = useState(open ? "1" : "");
 
   return (
     <Card className="my-2 p-0">
       <Accordion
         className="w-full py-0"
-        defaultValue={open ? '1' : ''}
+        defaultValue={open ? "1" : ""}
         onValueChange={setValue}
         type="single"
         collapsible
       >
         <AccordionItem className="border-none" value="1">
           <AccordionTrigger className="group px-3 py-2" iconVariant="plus">
-            {value ? 'Hide' : 'Show'} child attributes
+            {value ? "Hide" : "Show"} child attributes
           </AccordionTrigger>
           <AccordionContent>{children}</AccordionContent>
         </AccordionItem>
@@ -383,14 +351,14 @@ function LinkIcon({ className }: { className?: string }) {
 function Separator({
   className,
   decorative = true,
-  orientation = 'horizontal',
+  orientation = "horizontal",
   ...props
 }: React.ComponentProps<typeof SeparatorPrimitive.Root>) {
   return (
     <SeparatorPrimitive.Root
       orientation={orientation}
       className={cn(
-        'shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px',
+        "shrink-0 bg-border data-[orientation=horizontal]:h-px data-[orientation=vertical]:h-full data-[orientation=horizontal]:w-full data-[orientation=vertical]:w-px",
         className
       )}
       data-slot="separator-root"
@@ -400,9 +368,7 @@ function Separator({
   );
 }
 
-function Accordion({
-  ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Root>) {
+function Accordion({ ...props }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
   return <AccordionPrimitive.Root data-slot="accordion" {...props} />;
 }
 
@@ -412,7 +378,7 @@ function AccordionItem({
 }: React.ComponentProps<typeof AccordionPrimitive.Item>) {
   return (
     <AccordionPrimitive.Item
-      className={cn('border-b **:my-0 last:border-b-0', className)}
+      className={cn("border-b **:my-0 last:border-b-0", className)}
       data-slot="accordion-item"
       {...props}
     />
@@ -422,26 +388,26 @@ function AccordionItem({
 function AccordionTrigger({
   children,
   className,
-  iconVariant = 'chevron',
+  iconVariant = "chevron",
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger> & {
-  iconVariant?: 'chevron' | 'plus';
+  iconVariant?: "chevron" | "plus";
 }) {
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         className={cn(
-          'flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left font-medium text-sm outline-none transition-all **:my-0 hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180',
+          "flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left font-medium text-sm outline-none transition-all **:my-0 hover:underline focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
           className
         )}
         data-slot="accordion-trigger"
         {...props}
       >
-        {iconVariant === 'plus' && (
+        {iconVariant === "plus" && (
           <PlusIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200" />
         )}
         {children}
-        {iconVariant === 'chevron' && (
+        {iconVariant === "chevron" && (
           <ChevronDownIcon className="pointer-events-none size-4 shrink-0 translate-y-0.5 text-muted-foreground transition-transform duration-200" />
         )}
       </AccordionPrimitive.Trigger>
@@ -460,7 +426,7 @@ function AccordionContent({
       data-slot="accordion-content"
       {...props}
     >
-      <div className={cn('pt-0 pb-4', className)}>{children}</div>
+      <div className={cn("pt-0 pb-4", className)}>{children}</div>
     </AccordionPrimitive.Content>
   );
 }
@@ -470,44 +436,41 @@ export { Accordion, AccordionContent, AccordionItem, AccordionTrigger };
 export const Steps = ({ ...props }) => (
   <div
     className={cn(
-      'mb-12 ml-4 border-l pl-8 [counter-reset:step]',
-      '*:[h3,h4]:[counter-increment:step]',
-      '*:[h3,h4]:first-child:mt-0',
-      '*:[h3,h4]:mt-8',
-      '*:[h3,h4]:mb-4',
-      '*:[h3,h4]:text-base',
-      '*:[h3,h4]:font-semibold',
-      '*:[h3,h4]:before:absolute',
-      '*:[h3,h4]:before:inline-flex',
-      '*:[h3,h4]:before:h-9',
-      '*:[h3,h4]:before:w-9',
-      '*:[h3,h4]:before:items-center',
-      '*:[h3,h4]:before:justify-center',
-      '*:[h3,h4]:before:rounded-full',
-      '*:[h3,h4]:before:border-4',
-      '*:[h3,h4]:before:border-background',
-      '*:[h3,h4]:before:bg-muted',
-      '*:[h3,h4]:before:text-center',
-      '*:[h3,h4]:before:-indent-px',
-      '*:[h3,h4]:before:font-mono',
-      '*:[h3,h4]:before:text-base',
-      '*:[h3,h4]:before:font-medium',
-      '*:[h3,h4]:before:mt-[-4px]',
-      '*:[h3,h4]:before:ml-[-50px]',
-      '*:[h3,h4]:before:[content:counter(step)]'
+      "mb-12 ml-4 border-l pl-8 [counter-reset:step]",
+      "*:[h3,h4]:[counter-increment:step]",
+      "*:[h3,h4]:first-child:mt-0",
+      "*:[h3,h4]:mt-8",
+      "*:[h3,h4]:mb-4",
+      "*:[h3,h4]:text-base",
+      "*:[h3,h4]:font-semibold",
+      "*:[h3,h4]:before:absolute",
+      "*:[h3,h4]:before:inline-flex",
+      "*:[h3,h4]:before:h-9",
+      "*:[h3,h4]:before:w-9",
+      "*:[h3,h4]:before:items-center",
+      "*:[h3,h4]:before:justify-center",
+      "*:[h3,h4]:before:rounded-full",
+      "*:[h3,h4]:before:border-4",
+      "*:[h3,h4]:before:border-background",
+      "*:[h3,h4]:before:bg-muted",
+      "*:[h3,h4]:before:text-center",
+      "*:[h3,h4]:before:-indent-px",
+      "*:[h3,h4]:before:font-mono",
+      "*:[h3,h4]:before:text-base",
+      "*:[h3,h4]:before:font-medium",
+      "*:[h3,h4]:before:mt-[-4px]",
+      "*:[h3,h4]:before:ml-[-50px]",
+      "*:[h3,h4]:before:[content:counter(step)]"
     )}
     {...props}
   />
 );
 
-function Table({ className, ...props }: React.ComponentProps<'table'>) {
+function Table({ className, ...props }: React.ComponentProps<"table">) {
   return (
-    <div
-      className="relative w-full overflow-x-auto"
-      data-slot="table-container"
-    >
+    <div className="relative w-full overflow-x-auto" data-slot="table-container">
       <table
-        className={cn('w-full caption-bottom text-sm', className)}
+        className={cn("w-full caption-bottom text-sm", className)}
         data-slot="table"
         {...props}
       />
@@ -515,44 +478,35 @@ function Table({ className, ...props }: React.ComponentProps<'table'>) {
   );
 }
 
-function TableHeader({ className, ...props }: React.ComponentProps<'thead'>) {
-  return (
-    <thead
-      className={cn('[&_tr]:border-b', className)}
-      data-slot="table-header"
-      {...props}
-    />
-  );
+function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
+  return <thead className={cn("[&_tr]:border-b", className)} data-slot="table-header" {...props} />;
 }
 
-function TableBody({ className, ...props }: React.ComponentProps<'tbody'>) {
+function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
   return (
     <tbody
-      className={cn('[&_tr:last-child]:border-0', className)}
+      className={cn("[&_tr:last-child]:border-0", className)}
       data-slot="table-body"
       {...props}
     />
   );
 }
 
-function TableFooter({ className, ...props }: React.ComponentProps<'tfoot'>) {
+function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
   return (
     <tfoot
-      className={cn(
-        'border-t bg-muted/50 font-medium [&>tr]:last:border-b-0',
-        className
-      )}
+      className={cn("border-t bg-muted/50 font-medium [&>tr]:last:border-b-0", className)}
       data-slot="table-footer"
       {...props}
     />
   );
 }
 
-function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
+function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   return (
     <tr
       className={cn(
-        'border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted',
+        "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         className
       )}
       data-slot="table-row"
@@ -561,11 +515,11 @@ function TableRow({ className, ...props }: React.ComponentProps<'tr'>) {
   );
 }
 
-function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
+function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   return (
     <th
       className={cn(
-        'h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        "h-10 whitespace-nowrap px-2 text-left align-middle font-medium text-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       data-slot="table-head"
@@ -574,11 +528,11 @@ function TableHead({ className, ...props }: React.ComponentProps<'th'>) {
   );
 }
 
-function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
+function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   return (
     <td
       className={cn(
-        'whitespace-nowrap p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        "whitespace-nowrap p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         className
       )}
       data-slot="table-cell"
@@ -587,41 +541,29 @@ function TableCell({ className, ...props }: React.ComponentProps<'td'>) {
   );
 }
 
-function TableCaption({
-  className,
-  ...props
-}: React.ComponentProps<'caption'>) {
+function TableCaption({ className, ...props }: React.ComponentProps<"caption">) {
   return (
     <caption
-      className={cn('mt-4 text-muted-foreground text-sm', className)}
+      className={cn("mt-4 text-muted-foreground text-sm", className)}
       data-slot="table-caption"
       {...props}
     />
   );
 }
 
-export {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-};
+export { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow };
 
 const alertVariants = cva(
-  'relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current',
+  "relative grid w-full grid-cols-[0_1fr] items-start gap-y-0.5 rounded-lg border px-4 py-3 text-sm has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-0.5 [&>svg]:text-current",
   {
     defaultVariants: {
-      variant: 'default',
+      variant: "default",
     },
     variants: {
       variant: {
-        default: 'bg-card text-card-foreground',
+        default: "bg-card text-card-foreground",
         destructive:
-          'bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 [&>svg]:text-current',
+          "bg-card text-destructive *:data-[slot=alert-description]:text-destructive/90 [&>svg]:text-current",
       },
     },
   }
@@ -631,7 +573,7 @@ function Alert({
   className,
   variant,
   ...props
-}: React.ComponentProps<'div'> & VariantProps<typeof alertVariants>) {
+}: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
   return (
     <div
       className={cn(alertVariants({ variant }), className)}
@@ -642,27 +584,21 @@ function Alert({
   );
 }
 
-function AlertTitle({ className, ...props }: React.ComponentProps<'div'>) {
+function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn(
-        'col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight',
-        className
-      )}
+      className={cn("col-start-2 line-clamp-1 min-h-4 font-medium tracking-tight", className)}
       data-slot="alert-title"
       {...props}
     />
   );
 }
 
-function AlertDescription({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+function AlertDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        'col-start-2 grid justify-items-start gap-1 text-muted-foreground text-sm [&_p]:leading-relaxed',
+        "col-start-2 grid justify-items-start gap-1 text-muted-foreground text-sm [&_p]:leading-relaxed",
         className
       )}
       data-slot="alert-description"
@@ -673,11 +609,11 @@ function AlertDescription({
 
 export { Alert, AlertDescription, AlertTitle };
 
-function Card({ className, ...props }: React.ComponentProps<'div'>) {
+function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        'flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm',
+        "flex flex-col gap-6 rounded-xl border bg-card py-6 text-card-foreground shadow-sm",
         className
       )}
       data-slot="card"
@@ -686,11 +622,11 @@ function Card({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
+function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        '@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6',
+        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
         className
       )}
       data-slot="card-header"
@@ -699,75 +635,54 @@ function CardHeader({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<'div'>) {
+function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn('font-semibold leading-none', className)}
+      className={cn("font-semibold leading-none", className)}
       data-slot="card-title"
       {...props}
     />
   );
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<'div'>) {
+function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn('text-muted-foreground text-sm', className)}
+      className={cn("text-muted-foreground text-sm", className)}
       data-slot="card-description"
       {...props}
     />
   );
 }
 
-function CardAction({ className, ...props }: React.ComponentProps<'div'>) {
+function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn(
-        'col-start-2 row-span-2 row-start-1 self-start justify-self-end',
-        className
-      )}
+      className={cn("col-start-2 row-span-2 row-start-1 self-start justify-self-end", className)}
       data-slot="card-action"
       {...props}
     />
   );
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<'div'>) {
-  return (
-    <div
-      className={cn('px-6', className)}
-      data-slot="card-content"
-      {...props}
-    />
-  );
+function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+  return <div className={cn("px-6", className)} data-slot="card-content" {...props} />;
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<'div'>) {
+function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      className={cn('flex items-center px-6 [.border-t]:pt-6', className)}
+      className={cn("flex items-center px-6 [.border-t]:pt-6", className)}
       data-slot="card-footer"
       {...props}
     />
   );
 }
 
-export {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-};
+export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
 
-export const KeyTable = ({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<typeof Table>) => (
-  <Table className={cn('my-4', className)} {...props}>
+export const KeyTable = ({ children, className, ...props }: React.ComponentProps<typeof Table>) => (
+  <Table className={cn("my-4", className)} {...props}>
     <TableHeader>
       <TableRow>
         <TableHead className="w-[100px]">Key</TableHead>
@@ -795,8 +710,4 @@ export const KeyTableItem = ({
   </TableRow>
 );
 
-export const EmptyComponent = ({
-  children,
-}: {
-  children?: React.ReactNode;
-}) => <>{children}</>;
+export const EmptyComponent = ({ children }: { children?: React.ReactNode }) => <>{children}</>;

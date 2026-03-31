@@ -1,27 +1,20 @@
-import React from 'react';
+import clsx from "clsx";
+import React from "react";
 
-import clsx from 'clsx';
+import type { RenderLeafProps, SlateEditor, SlatePlugin } from "../lib";
 
-import type { RenderLeafProps, SlateEditor, SlatePlugin } from '../lib';
+import { SlateLeaf } from "./components";
+import { getNodeDataAttributes } from "./utils/getNodeDataAttributes";
+import { getRenderNodeStaticProps } from "./utils/getRenderNodeStaticProps";
 
-import { SlateLeaf } from './components';
-import { getNodeDataAttributes } from './utils/getNodeDataAttributes';
-import { getRenderNodeStaticProps } from './utils/getRenderNodeStaticProps';
+export type SlateRenderLeaf = (props: RenderLeafProps) => React.ReactElement<any> | undefined;
 
-export type SlateRenderLeaf = (
-  props: RenderLeafProps
-) => React.ReactElement<any> | undefined;
-
-export const pluginRenderLeafStatic = (
-  editor: SlateEditor,
-  plugin: SlatePlugin
-): SlateRenderLeaf =>
+export const pluginRenderLeafStatic = (editor: SlateEditor, plugin: SlatePlugin): SlateRenderLeaf =>
   function render(props) {
     const { children, leaf } = props;
 
     if (leaf[plugin.node.type]) {
-      const Component = (plugin.render.leaf ??
-        editor.meta.components?.[plugin.key]) as any;
+      const Component = (plugin.render.leaf ?? editor.meta.components?.[plugin.key]) as any;
       const Leaf = Component ?? SlateLeaf;
 
       const ctxProps = getRenderNodeStaticProps({
@@ -80,15 +73,12 @@ export const pipeRenderLeafStatic = (
     leafPropsPlugins.forEach((plugin) => {
       if (props.leaf[plugin.node.type]) {
         const pluginLeafProps =
-          typeof plugin.node.leafProps === 'function'
+          typeof plugin.node.leafProps === "function"
             ? plugin.node.leafProps(props as any)
             : (plugin.node.leafProps ?? {});
 
         if (pluginLeafProps.className) {
-          pluginLeafProps.className = clsx(
-            (props as any).className,
-            pluginLeafProps.className
-          );
+          pluginLeafProps.className = clsx((props as any).className, pluginLeafProps.className);
         }
 
         attributes = {

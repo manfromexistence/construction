@@ -1,45 +1,20 @@
-"use client"
+"use client";
 
-import { CheckIcon, ChevronRightIcon } from "lucide-react"
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
-import type { PanelImperativeHandle } from "react-resizable-panels"
-import type {
-  RegistryItem,
-  registryItemFileSchema,
-  registryItemSchema,
-} from "shadcn/schema"
-import type { z } from "zod"
+import { CheckIcon, ChevronRightIcon } from "lucide-react";
+import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import type { PanelImperativeHandle } from "react-resizable-panels";
+import type { RegistryItem, registryItemFileSchema, registryItemSchema } from "shadcn/schema";
+import type { z } from "zod";
 
-import { sendToIframe } from "@/app/(preview)/hooks/use-iframe-sync"
-import type { PreviewSearchParams } from "@/app/(preview)/lib/search-params"
-import { serializePreviewSearchParams } from "@/app/(preview)/lib/search-params"
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from "@/components/base/ui/tabs"
-import { ToggleGroup, ToggleGroupItem } from "@/components/base/ui/toggle-group"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
-import { getIconForLanguageExtension, Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+import { sendToIframe } from "@/app/(preview)/hooks/use-iframe-sync";
+import type { PreviewSearchParams } from "@/app/(preview)/lib/search-params";
+import { serializePreviewSearchParams } from "@/app/(preview)/lib/search-params";
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+import { ToggleGroup, ToggleGroupItem } from "@/components/base/ui/toggle-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/base/ui/tooltip";
+import { getIconForLanguageExtension, Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   Command,
   CommandEmpty,
@@ -47,18 +22,10 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable"
-import { Separator } from "@/components/ui/separator"
+} from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
 import {
   Sidebar,
   SidebarGroup,
@@ -69,53 +36,50 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarProvider,
-} from "@/components/ui/sidebar"
-import { OpenInV0Button } from "@/components/v0-open-button"
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
-import { trackEvent } from "@/lib/events"
-import type {
-  createFileTreeForRegistryItemFiles,
-  FileTree,
-} from "@/lib/registry"
-import { cn } from "@/lib/utils"
-import { CopyButton, CopyStateIcon } from "@/registry/components/copy-button"
-import { getRegistryItemNamespace, getRegistryItemUrl } from "@/utils/registry"
+} from "@/components/ui/sidebar";
+import { OpenInV0Button } from "@/components/v0-open-button";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { trackEvent } from "@/lib/events";
+import type { createFileTreeForRegistryItemFiles, FileTree } from "@/lib/registry";
+import { cn } from "@/lib/utils";
+import { CopyButton, CopyStateIcon } from "@/registry/components/copy-button";
+import { getRegistryItemNamespace, getRegistryItemUrl } from "@/utils/registry";
 
-type View = "preview" | "code"
+type View = "preview" | "code";
 
 type BlockViewerContext = {
-  item: z.infer<typeof registryItemSchema>
+  item: z.infer<typeof registryItemSchema>;
 
-  setView: (view: View) => void
+  setView: (view: View) => void;
 
-  activeFile: string | null
-  setActiveFile: (file: string) => void
+  activeFile: string | null;
+  setActiveFile: (file: string) => void;
 
-  tree: ReturnType<typeof createFileTreeForRegistryItemFiles> | null
+  tree: ReturnType<typeof createFileTreeForRegistryItemFiles> | null;
   highlightedFiles:
     | (z.infer<typeof registryItemFileSchema> & {
-        highlightedContent: string
+        highlightedContent: string;
       })[]
-    | null
+    | null;
 
-  iframeKey?: number
-  setIframeKey?: React.Dispatch<React.SetStateAction<number>>
+  iframeKey?: number;
+  setIframeKey?: React.Dispatch<React.SetStateAction<number>>;
 
-  resizablePanelRef: React.RefObject<PanelImperativeHandle | null> | null
+  resizablePanelRef: React.RefObject<PanelImperativeHandle | null> | null;
 
-  themes: Map<string, RegistryItem>
-  theme: PreviewSearchParams["theme"]
-  setTheme: (theme: PreviewSearchParams["theme"]) => void
-}
+  themes: Map<string, RegistryItem>;
+  theme: PreviewSearchParams["theme"];
+  setTheme: (theme: PreviewSearchParams["theme"]) => void;
+};
 
-const BlockViewerContext = createContext<BlockViewerContext | null>(null)
+const BlockViewerContext = createContext<BlockViewerContext | null>(null);
 
 function useBlockViewer() {
-  const context = useContext(BlockViewerContext)
+  const context = useContext(BlockViewerContext);
   if (!context) {
-    throw new Error("useBlockViewer must be used within a BlockViewerProvider.")
+    throw new Error("useBlockViewer must be used within a BlockViewerProvider.");
   }
-  return context
+  return context;
 }
 
 function BlockViewerProvider({
@@ -125,18 +89,18 @@ function BlockViewerProvider({
   themes,
   children,
 }: Pick<BlockViewerContext, "item" | "tree" | "highlightedFiles" | "themes"> & {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const [view, setView] = useState<View>("preview")
-  const [theme, setTheme] = useState<PreviewSearchParams["theme"]>(null)
+  const [view, setView] = useState<View>("preview");
+  const [theme, setTheme] = useState<PreviewSearchParams["theme"]>(null);
 
-  const [activeFile, setActiveFile] = useState<
-    BlockViewerContext["activeFile"]
-  >(highlightedFiles?.[0].target ?? null)
+  const [activeFile, setActiveFile] = useState<BlockViewerContext["activeFile"]>(
+    highlightedFiles?.[0].target ?? null
+  );
 
-  const [iframeKey, setIframeKey] = useState(0)
+  const [iframeKey, setIframeKey] = useState(0);
 
-  const resizablePanelRef = useRef<PanelImperativeHandle>(null)
+  const resizablePanelRef = useRef<PanelImperativeHandle>(null);
 
   return (
     <BlockViewerContext.Provider
@@ -169,21 +133,12 @@ function BlockViewerProvider({
         </Tabs>
       </div>
     </BlockViewerContext.Provider>
-  )
+  );
 }
 
-type BlockViewerProps = Pick<
-  BlockViewerContext,
-  "item" | "tree" | "highlightedFiles" | "themes"
->
+type BlockViewerProps = Pick<BlockViewerContext, "item" | "tree" | "highlightedFiles" | "themes">;
 
-export function BlockViewer({
-  item,
-  tree,
-  highlightedFiles,
-  themes,
-  ...props
-}: BlockViewerProps) {
+export function BlockViewer({ item, tree, highlightedFiles, themes, ...props }: BlockViewerProps) {
   return (
     <BlockViewerProvider
       item={item}
@@ -198,14 +153,13 @@ export function BlockViewer({
       <BlockViewerCode />
       <BlockViewerMobile />
     </BlockViewerProvider>
-  )
+  );
 }
 
 function BlockViewerToolbar() {
-  const { setView, item, resizablePanelRef, setIframeKey, theme } =
-    useBlockViewer()
+  const { setView, item, resizablePanelRef, setIframeKey, theme } = useBlockViewer();
 
-  const { state, copy } = useCopyToClipboard()
+  const { state, copy } = useCopyToClipboard();
 
   return (
     <div className="flex w-full items-center gap-2 px-2 max-lg:hidden">
@@ -235,8 +189,8 @@ function BlockViewerToolbar() {
             className="gap-0.75 *:data-[slot=toggle-group-item]:h-6 *:data-[slot=toggle-group-item]:min-w-6 *:data-[slot=toggle-group-item]:rounded-sm! *:data-[slot=toggle-group-item]:px-0"
             defaultValue={["100%"]}
             onValueChange={([value]) => {
-              setView("preview")
-              resizablePanelRef?.current?.resize(value || "100%")
+              setView("preview");
+              resizablePanelRef?.current?.resize(value || "100%");
             }}
           >
             <ToggleGroupItem aria-label="Mobile" value="30%">
@@ -285,8 +239,8 @@ function BlockViewerToolbar() {
             variant="ghost"
             size="icon-xs"
             onClick={() => {
-              setView("preview")
-              setIframeKey?.((v) => v + 1)
+              setView("preview");
+              setIframeKey?.((v) => v + 1);
             }}
           >
             <Icons.refresh className="size-4" />
@@ -304,19 +258,15 @@ function BlockViewerToolbar() {
           variant="outline"
           size="sm"
           onClick={() => {
-            const code = `npx shadcn@latest add ${getRegistryItemNamespace(item.name)}`
-            copy(code)
+            const code = `npx shadcn@latest add ${getRegistryItemNamespace(item.name)}`;
+            copy(code);
             trackEvent({
               name: "copy_npm_command",
               properties: { code },
-            })
+            });
           }}
         >
-          <CopyStateIcon
-            state={state}
-            idleIcon={<Icons.terminal />}
-            doneIcon={<CheckIcon />}
-          />
+          <CopyStateIcon state={state} idleIcon={<Icons.terminal />} doneIcon={<CheckIcon />} />
           <span>
             <span className="text-muted-foreground">npx shadcn add</span>{" "}
             {getRegistryItemNamespace(item.name)}
@@ -331,18 +281,14 @@ function BlockViewerToolbar() {
         <OpenInV0Button url={getRegistryItemUrl(item.name)} />
       </div>
     </div>
-  )
+  );
 }
 
 function BlockViewerView() {
-  const { resizablePanelRef } = useBlockViewer()
+  const { resizablePanelRef } = useBlockViewer();
 
   return (
-    <TabsContent
-      className="flex h-(--height) flex-none max-lg:hidden"
-      value="preview"
-      keepMounted
-    >
+    <TabsContent className="flex h-(--height) flex-none max-lg:hidden" value="preview" keepMounted>
       <div className="relative w-full">
         <div className="absolute inset-0 right-2 rounded-xl bg-black/0.75 bg-[radial-gradient(var(--pattern-foreground)_1px,transparent_0)] bg-size-[10px_10px] bg-center [--pattern-foreground:var(--color-zinc-950)]/5 dark:bg-white/0.75 dark:[--pattern-foreground:var(--color-white)]/5" />
 
@@ -362,33 +308,33 @@ function BlockViewerView() {
         </ResizablePanelGroup>
       </div>
     </TabsContent>
-  )
+  );
 }
 
 function BlockViewerIframe({ className }: { className?: string }) {
-  const { iframeKey, item, theme } = useBlockViewer()
+  const { iframeKey, item, theme } = useBlockViewer();
 
-  const iframeRef = useRef<HTMLIFrameElement>(null)
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
-    const iframe = iframeRef.current
+    const iframe = iframeRef.current;
     if (!iframe) {
-      return
+      return;
     }
 
     const sendParams = () => {
-      sendToIframe(iframe, "preview-params", { theme })
-    }
+      sendToIframe(iframe, "preview-params", { theme });
+    };
 
     if (iframe.contentWindow) {
-      sendParams()
+      sendParams();
     }
 
-    iframe.addEventListener("load", sendParams)
+    iframe.addEventListener("load", sendParams);
     return () => {
-      iframe.removeEventListener("load", sendParams)
-    }
-  }, [theme])
+      iframe.removeEventListener("load", sendParams);
+    };
+  }, [theme]);
 
   const iframeSrc = useMemo(
     () => {
@@ -397,11 +343,11 @@ function BlockViewerIframe({ className }: { className?: string }) {
       // full-iframe reloads on every param change (flashes & loss of state).
       // Further updates of the search params will be sent to the iframe
       // via a postMessage channel, for it to sync its own history onto the host's.
-      return serializePreviewSearchParams(`/preview/${item.name}`, { theme })
+      return serializePreviewSearchParams(`/preview/${item.name}`, { theme });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [iframeKey]
-  )
+  );
 
   return (
     <iframe
@@ -412,21 +358,21 @@ function BlockViewerIframe({ className }: { className?: string }) {
       loading="lazy"
       height={item.meta?.iframeHeight ?? 768}
     />
-  )
+  );
 }
 
 function BlockViewerCode() {
-  const { highlightedFiles, activeFile } = useBlockViewer()
+  const { highlightedFiles, activeFile } = useBlockViewer();
 
   const file = useMemo(() => {
-    return highlightedFiles?.find((file) => file.target === activeFile)
-  }, [highlightedFiles, activeFile])
+    return highlightedFiles?.find((file) => file.target === activeFile);
+  }, [highlightedFiles, activeFile]);
 
   if (!file) {
-    return null
+    return null;
   }
 
-  const language = file.path.split(".").pop() ?? "tsx"
+  const language = file.path.split(".").pop() ?? "tsx";
 
   return (
     <TabsContent
@@ -461,14 +407,14 @@ function BlockViewerCode() {
         />
       </figure>
     </TabsContent>
-  )
+  );
 }
 
 function BlockViewerFileTree() {
-  const { tree } = useBlockViewer()
+  const { tree } = useBlockViewer();
 
   if (!tree) {
-    return null
+    return null;
   }
 
   return (
@@ -489,14 +435,14 @@ function BlockViewerFileTree() {
         </SidebarGroup>
       </Sidebar>
     </SidebarProvider>
-  )
+  );
 }
 
 function Tree({ item, index }: { item: FileTree; index: number }) {
-  const { activeFile, setActiveFile } = useBlockViewer()
+  const { activeFile, setActiveFile } = useBlockViewer();
 
   if (!item.children) {
-    const language = item.name.split(".").pop() ?? "tsx"
+    const language = item.name.split(".").pop() ?? "tsx";
     return (
       <SidebarMenuItem>
         <SidebarMenuButton
@@ -515,7 +461,7 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
           {item.name}
         </SidebarMenuButton>
       </SidebarMenuItem>
-    )
+    );
   }
 
   return (
@@ -552,20 +498,20 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
         </CollapsibleContent>
       </Collapsible>
     </SidebarMenuItem>
-  )
+  );
 }
 
 function BlockCopyCodeButton() {
-  const { item, activeFile } = useBlockViewer()
+  const { item, activeFile } = useBlockViewer();
 
   const file = useMemo(() => {
-    return item.files?.find((file) => file.target === activeFile)
-  }, [item.files, activeFile])
+    return item.files?.find((file) => file.target === activeFile);
+  }, [item.files, activeFile]);
 
-  const content = file?.content
+  const content = file?.content;
 
   if (!content) {
-    return null
+    return null;
   }
 
   return (
@@ -581,14 +527,14 @@ function BlockCopyCodeButton() {
             name: item.name,
             file: file.path,
           },
-        })
+        });
       }}
     />
-  )
+  );
 }
 
 function BlockViewerMobile() {
-  const { item } = useBlockViewer()
+  const { item } = useBlockViewer();
 
   return (
     <div className="flex flex-col gap-2 lg:hidden">
@@ -608,21 +554,21 @@ function BlockViewerMobile() {
         <BlockViewerIframe />
       </div>
     </div>
-  )
+  );
 }
 
 function ThemePicker() {
-  const { themes, theme, setTheme } = useBlockViewer()
+  const { themes, theme, setTheme } = useBlockViewer();
 
-  const themeItem = theme ? themes.get(theme) : null
+  const themeItem = theme ? themes.get(theme) : null;
 
   const { shadcnThemes, tweakcnThemes } = useMemo(() => {
-    const themesArray = Array.from(themes.values())
+    const themesArray = Array.from(themes.values());
     return {
       shadcnThemes: themesArray.filter((t) => t.meta?.source === "shadcn"),
       tweakcnThemes: themesArray.filter((t) => t.meta?.source === "tweakcn"),
-    }
-  }, [themes])
+    };
+  }, [themes]);
 
   return (
     <Popover modal>
@@ -641,9 +587,7 @@ function ThemePicker() {
             </PopoverTrigger>
           }
         />
-        <TooltipContent>
-          {themeItem?.title || themeItem?.name || "Default"}
-        </TooltipContent>
+        <TooltipContent>{themeItem?.title || themeItem?.name || "Default"}</TooltipContent>
       </Tooltip>
 
       <PopoverContent className="rounded-2xl p-0">
@@ -685,7 +629,7 @@ function ThemePicker() {
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 function ThemePickerGroup({
@@ -694,10 +638,10 @@ function ThemePickerGroup({
   activeTheme,
   onThemeSelect,
 }: {
-  title: string
-  themes: RegistryItem[]
-  activeTheme: PreviewSearchParams["theme"]
-  onThemeSelect: (theme: PreviewSearchParams["theme"]) => void
+  title: string;
+  themes: RegistryItem[];
+  activeTheme: PreviewSearchParams["theme"];
+  onThemeSelect: (theme: PreviewSearchParams["theme"]) => void;
 }) {
   return (
     <CommandGroup heading={`${title} themes (${themes.length})`}>
@@ -705,16 +649,14 @@ function ThemePickerGroup({
         <CommandItem key={item.name} onSelect={() => onThemeSelect(item.name)}>
           <ThemePalette cssVars={item.cssVars} />
           {item.title || item.name}
-          {activeTheme === item.name && (
-            <CheckIcon className="ml-auto" strokeWidth={3} />
-          )}
+          {activeTheme === item.name && <CheckIcon className="ml-auto" strokeWidth={3} />}
         </CommandItem>
       ))}
     </CommandGroup>
-  )
+  );
 }
 
-const THEME_PALETTE_KEYS = ["primary", "accent", "muted", "secondary"] as const
+const THEME_PALETTE_KEYS = ["primary", "accent", "muted", "secondary"] as const;
 
 function ThemePalette({ cssVars }: { cssVars?: RegistryItem["cssVars"] }) {
   return (
@@ -735,5 +677,5 @@ function ThemePalette({ cssVars }: { cssVars?: RegistryItem["cssVars"] }) {
         />
       ))}
     </div>
-  )
+  );
 }

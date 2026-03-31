@@ -1,9 +1,6 @@
 {
   "name": "masonry-linear-demo",
-  "registryDependencies": [
-    "masonry",
-    "skeleton"
-  ],
+  "registryDependencies": ["masonry", "skeleton"],
   "files": [
     {
       "path": "examples/masonry-linear-demo.tsx",

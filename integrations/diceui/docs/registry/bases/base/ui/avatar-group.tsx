@@ -68,14 +68,10 @@ function AvatarGroup(props: AvatarGroupProps) {
     ...rootProps
   } = props;
 
-  const childrenArray = React.Children.toArray(children).filter(
-    React.isValidElement,
-  );
+  const childrenArray = React.Children.toArray(children).filter(React.isValidElement);
   const itemCount = childrenArray.length;
   const shouldTruncate = max && itemCount > max;
-  const visibleItems = shouldTruncate
-    ? childrenArray.slice(0, max - 1)
-    : childrenArray;
+  const visibleItems = shouldTruncate ? childrenArray.slice(0, max - 1) : childrenArray;
   const overflowCount = shouldTruncate ? itemCount - (max - 1) : 0;
   const totalRenderedItems = shouldTruncate ? max : itemCount;
 
@@ -121,7 +117,7 @@ function AvatarGroup(props: AvatarGroupProps) {
           </>
         ),
       },
-      rootProps,
+      rootProps
     ),
     render,
     state: {
@@ -217,7 +213,7 @@ function AvatarGroupItem(props: AvatarGroupItemProps) {
     className: cn(
       "size-full shrink-0 overflow-hidden rounded-full [&_img]:size-full",
       className,
-      child.props.className,
+      child.props.className
     ),
     style: {
       ...maskStyle,

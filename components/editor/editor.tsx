@@ -1,13 +1,13 @@
 "use client";
 
+import { Sliders } from "lucide-react";
+import React, { use, useEffect } from "react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DialogActionsProvider } from "@/hooks/use-dialog-actions";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useEditorStore } from "@/store/editor-store";
 import { Theme, ThemeStyles } from "@/types/theme";
-import { Sliders } from "lucide-react";
-import React, { use, useEffect } from "react";
 import { ActionBar } from "./action-bar/action-bar";
 import ThemeControlPanel from "./theme-control-panel";
 import ThemePreviewPanel from "./theme-preview-panel";
@@ -106,12 +106,7 @@ const Editor: React.FC<EditorProps> = ({ themePromise }) => {
       <div className="relative isolate flex flex-1 overflow-hidden">
         <div className="size-full">
           <ResizablePanelGroup orientation="horizontal" className="isolate">
-            <ResizablePanel
-              defaultSize="30%"
-              minSize="20%"
-              maxSize="40%"
-              className="z-1"
-            >
+            <ResizablePanel defaultSize="30%" minSize="20%" maxSize="40%" className="z-1">
               <div className="relative isolate flex h-full flex-1 flex-col overflow-hidden">
                 <ThemeControlPanel
                   styles={styles}

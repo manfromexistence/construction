@@ -1,9 +1,9 @@
-import { PointApi, RangeApi } from '@platejs/slate';
+import { PointApi, RangeApi } from "@platejs/slate";
 
-import type { OverrideEditor } from '../../plugin';
-import type { DeleteRules } from '../../plugin/BasePlugin';
+import type { OverrideEditor } from "../../plugin";
+import type { DeleteRules } from "../../plugin/BasePlugin";
 
-import { getPluginByType } from '../../plugin/getSlatePlugin';
+import { getPluginByType } from "../../plugin/getSlatePlugin";
 
 export const withDeleteRules: OverrideEditor = (ctx) => {
   const {
@@ -40,11 +40,8 @@ export const withDeleteRules: OverrideEditor = (ctx) => {
     return null;
   };
 
-  const executeDeleteAction = (
-    action: string | undefined,
-    blockPath: any
-  ): boolean => {
-    if (action === 'reset') {
+  const executeDeleteAction = (action: string | undefined, blockPath: any): boolean => {
+    if (action === "reset") {
       editor.tf.resetBlock({ at: blockPath });
       return true;
     }
@@ -65,7 +62,7 @@ export const withDeleteRules: OverrideEditor = (ctx) => {
             // Handle 'start' scenario
             if (editor.api.isAt({ start: true })) {
               const overrideDeleteRules = checkMatchRulesOverride(
-                'delete.start',
+                "delete.start",
                 blockNode,
                 blockPath
               );
@@ -80,7 +77,7 @@ export const withDeleteRules: OverrideEditor = (ctx) => {
             // Handle 'empty' scenario
             if (editor.api.isEmpty(editor.selection, { block: true })) {
               const overrideDeleteRules = checkMatchRulesOverride(
-                'delete.empty',
+                "delete.empty",
                 blockNode,
                 blockPath
               );
@@ -92,9 +89,7 @@ export const withDeleteRules: OverrideEditor = (ctx) => {
           }
 
           // Default behavior: reset first block when deleting at start of the document
-          if (
-            PointApi.equals(editor.selection!.anchor, editor.api.start([])!)
-          ) {
+          if (PointApi.equals(editor.selection!.anchor, editor.api.start([])!)) {
             editor.tf.resetBlock({ at: [0] });
             return;
           }
@@ -109,10 +104,7 @@ export const withDeleteRules: OverrideEditor = (ctx) => {
       },
       deleteFragment(options) {
         // Default behavior: reset entire editor when deleting full selection
-        if (
-          editor.selection &&
-          RangeApi.equals(editor.selection, editor.api.range([])!)
-        ) {
+        if (editor.selection && RangeApi.equals(editor.selection, editor.api.range([])!)) {
           editor.tf.reset({
             children: true,
             select: true,

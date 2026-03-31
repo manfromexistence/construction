@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 import { Slider } from "../ui/slider";
 
 export const SliderWithInput = ({
@@ -29,7 +29,7 @@ export const SliderWithInput = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const raw = e.target.value;
     setLocalValue(raw);
-    const num = parseFloat(raw.replace(',', '.'));
+    const num = parseFloat(raw.replace(",", "."));
     if (!isNaN(num)) {
       onChange(Math.max(min, Math.min(max, num)));
     }

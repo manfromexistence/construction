@@ -6,8 +6,8 @@ export type CollapseWhiteSpaceState = {
   whiteSpaceRule: WhiteSpaceRule;
 };
 
-export type TrimEndRule = 'collapse' | 'single-newline';
+export type TrimEndRule = "collapse" | "single-newline";
 
-export type TrimStartRule = 'all' | 'collapse';
+export type TrimStartRule = "all" | "collapse";
 
-export type WhiteSpaceRule = 'normal' | 'pre' | 'pre-line';
+export type WhiteSpaceRule = "normal" | "pre" | "pre-line";

@@ -1,9 +1,8 @@
-import React from 'react';
+import { useEditorPlugin, useEditorSelector, useReadOnly } from "platejs/react";
+import React from "react";
 
-import { useEditorPlugin, useEditorSelector, useReadOnly } from 'platejs/react';
-
-import { getSelectedCellIds } from '../../../lib';
-import { BaseTablePlugin } from '../../../lib/BaseTablePlugin';
+import { getSelectedCellIds } from "../../../lib";
+import { BaseTablePlugin } from "../../../lib/BaseTablePlugin";
 
 const hasSameIds = (
   nextValue: string[] | null | undefined,

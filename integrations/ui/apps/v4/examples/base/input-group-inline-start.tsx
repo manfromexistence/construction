@@ -1,15 +1,7 @@
-import { SearchIcon } from "lucide-react"
+import { SearchIcon } from "lucide-react";
 
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/base-nova/ui/field"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/styles/base-nova/ui/input-group"
+import { Field, FieldDescription, FieldLabel } from "@/styles/base-nova/ui/field";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/styles/base-nova/ui/input-group";
 
 export function InputGroupInlineStart() {
   return (
@@ -23,5 +15,5 @@ export function InputGroupInlineStart() {
       </InputGroup>
       <FieldDescription>Icon positioned at the start.</FieldDescription>
     </Field>
-  )
+  );
 }

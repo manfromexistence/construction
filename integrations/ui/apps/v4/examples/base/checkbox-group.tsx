@@ -1,4 +1,4 @@
-import { Checkbox } from "@/styles/base-nova/ui/checkbox"
+import { Checkbox } from "@/styles/base-nova/ui/checkbox";
 import {
   Field,
   FieldDescription,
@@ -6,17 +6,13 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from "@/styles/base-nova/ui/field"
+} from "@/styles/base-nova/ui/field";
 
 export function CheckboxGroup() {
   return (
     <FieldSet>
-      <FieldLegend variant="label">
-        Show these items on the desktop:
-      </FieldLegend>
-      <FieldDescription>
-        Select the items you want to show on the desktop.
-      </FieldDescription>
+      <FieldLegend variant="label">Show these items on the desktop:</FieldLegend>
+      <FieldDescription>Select the items you want to show on the desktop.</FieldDescription>
       <FieldGroup className="gap-3">
         <Field orientation="horizontal">
           <Checkbox
@@ -24,10 +20,7 @@ export function CheckboxGroup() {
             name="finder-pref-9k2-hard-disks-ljj-checkbox"
             defaultChecked
           />
-          <FieldLabel
-            htmlFor="finder-pref-9k2-hard-disks-ljj-checkbox"
-            className="font-normal"
-          >
+          <FieldLabel htmlFor="finder-pref-9k2-hard-disks-ljj-checkbox" className="font-normal">
             Hard disks
           </FieldLabel>
         </Field>
@@ -37,10 +30,7 @@ export function CheckboxGroup() {
             name="finder-pref-9k2-external-disks-1yg-checkbox"
             defaultChecked
           />
-          <FieldLabel
-            htmlFor="finder-pref-9k2-external-disks-1yg-checkbox"
-            className="font-normal"
-          >
+          <FieldLabel htmlFor="finder-pref-9k2-external-disks-1yg-checkbox" className="font-normal">
             External disks
           </FieldLabel>
         </Field>
@@ -49,10 +39,7 @@ export function CheckboxGroup() {
             id="finder-pref-9k2-cds-dvds-fzt-checkbox"
             name="finder-pref-9k2-cds-dvds-fzt-checkbox"
           />
-          <FieldLabel
-            htmlFor="finder-pref-9k2-cds-dvds-fzt-checkbox"
-            className="font-normal"
-          >
+          <FieldLabel htmlFor="finder-pref-9k2-cds-dvds-fzt-checkbox" className="font-normal">
             CDs, DVDs, and iPods
           </FieldLabel>
         </Field>
@@ -70,5 +57,5 @@ export function CheckboxGroup() {
         </Field>
       </FieldGroup>
     </FieldSet>
-  )
+  );
 }

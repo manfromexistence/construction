@@ -1,18 +1,18 @@
-import { NextResponse } from "next/server"
+import { NextResponse } from "next/server";
 
-import { getChangelogPages, type ChangelogPageData } from "@/lib/changelog"
-import { siteConfig } from "@/lib/config"
+import { type ChangelogPageData, getChangelogPages } from "@/lib/changelog";
+import { siteConfig } from "@/lib/config";
 
-export const revalidate = false
+export const revalidate = false;
 
 export async function GET() {
-  const pages = getChangelogPages()
+  const pages = getChangelogPages();
 
   const items = pages
     .map((page) => {
-      const data = page.data as ChangelogPageData
-      const date = page.date?.toUTCString() ?? new Date().toUTCString()
-      const link = `${siteConfig.url}/docs/${page.slugs.join("/")}`
+      const data = page.data as ChangelogPageData;
+      const date = page.date?.toUTCString() ?? new Date().toUTCString();
+      const link = `${siteConfig.url}/docs/${page.slugs.join("/")}`;
 
       return `    <item>
       <title><![CDATA[${data.title}]]></title>
@@ -20,9 +20,9 @@ export async function GET() {
       <guid>${link}</guid>
       <description><![CDATA[${data.description || ""}]]></description>
       <pubDate>${date}</pubDate>
-    </item>`
+    </item>`;
     })
-    .join("\n")
+    .join("\n");
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
@@ -34,11 +34,11 @@ export async function GET() {
     <atom:link href="${siteConfig.url}/rss.xml" rel="self" type="application/rss+xml"/>
 ${items}
   </channel>
-</rss>`
+</rss>`;
 
   return new NextResponse(xml, {
     headers: {
       "Content-Type": "application/rss+xml; charset=utf-8",
     },
-  })
+  });
 }

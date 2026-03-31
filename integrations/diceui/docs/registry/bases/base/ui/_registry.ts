@@ -69,12 +69,7 @@ export const ui: Registry["items"] = [
       "@diceui/use-isomorphic-layout-effect",
       "@diceui/use-lazy-ref",
     ],
-    dependencies: [
-      "@base-ui/react",
-      "react-dom",
-      "lucide-react",
-      "class-variance-authority",
-    ],
+    dependencies: ["@base-ui/react", "react-dom", "lucide-react", "class-variance-authority"],
   },
   {
     name: "file-upload",
@@ -85,11 +80,7 @@ export const ui: Registry["items"] = [
         type: "registry:ui",
       },
     ],
-    registryDependencies: [
-      "direction",
-      "@diceui/use-as-ref",
-      "@diceui/use-lazy-ref",
-    ],
+    registryDependencies: ["direction", "@diceui/use-as-ref", "@diceui/use-lazy-ref"],
     dependencies: ["@base-ui/react", "react-dom", "lucide-react"],
   },
   {
@@ -501,12 +492,7 @@ export const ui: Registry["items"] = [
       "@diceui/compose-refs",
       "@diceui/use-lazy-ref",
     ],
-    dependencies: [
-      "@base-ui/react",
-      "media-chrome",
-      "react-dom",
-      "lucide-react",
-    ],
+    dependencies: ["@base-ui/react", "media-chrome", "react-dom", "lucide-react"],
   },
   {
     name: "phone-input",
@@ -726,11 +712,6 @@ export const ui: Registry["items"] = [
       "@diceui/use-isomorphic-layout-effect",
       "@diceui/use-lazy-ref",
     ],
-    dependencies: [
-      "@base-ui/react",
-      "@floating-ui/react-dom",
-      "lucide-react",
-      "react-dom",
-    ],
+    dependencies: ["@base-ui/react", "@floating-ui/react-dom", "lucide-react", "react-dom"],
   },
 ];

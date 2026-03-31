@@ -1,26 +1,23 @@
-import React from 'react';
+import { useStableFn } from "@udecode/react-utils";
 
-import type { WritableAtom } from 'jotai/vanilla/atom';
+import type { WritableAtom } from "jotai/vanilla/atom";
+import { focusAtom } from "jotai-optics";
+import { type JotaiStore, useAtomStoreSet, useAtomStoreValue } from "jotai-x";
+import React from "react";
 
-import { useStableFn } from '@udecode/react-utils';
-import { focusAtom } from 'jotai-optics';
-import { type JotaiStore, useAtomStoreSet, useAtomStoreValue } from 'jotai-x';
-
-import { useFocused } from '../slate-react';
+import { useFocused } from "../slate-react";
 import {
   plateControllerStore,
   useEditorId,
   usePlateControllerLocalStore,
   usePlateStore,
-} from '../stores';
+} from "../stores";
 
 export type PlateControllerEffectProps = {
   id?: string;
 };
 
-export const PlateControllerEffect = ({
-  id: idProp,
-}: PlateControllerEffectProps) => {
+export const PlateControllerEffect = ({ id: idProp }: PlateControllerEffectProps) => {
   const idFromStore = useEditorId();
   const id = idProp ?? idFromStore;
 
@@ -38,21 +35,18 @@ export const PlateControllerEffect = ({
     [id]
   );
 
-  const setCurrentStore = useStableFn(
-    usePlateControllerLocalStore().setAtom(currentStoreAtom),
-    [currentStoreAtom]
-  );
+  const setCurrentStore = useStableFn(usePlateControllerLocalStore().setAtom(currentStoreAtom), [
+    currentStoreAtom,
+  ]);
 
   const setPrimaryEditorIds = useStableFn(
-    useAtomStoreSet(usePlateControllerLocalStore(), 'primaryEditorIds')
+    useAtomStoreSet(usePlateControllerLocalStore(), "primaryEditorIds")
   );
 
-  const setActiveId = useStableFn(
-    useAtomStoreSet(usePlateControllerLocalStore(), 'activeId')
-  );
+  const setActiveId = useStableFn(useAtomStoreSet(usePlateControllerLocalStore(), "activeId"));
 
   const store = usePlateStore(id);
-  const primary = useAtomStoreValue(store, 'primary');
+  const primary = useAtomStoreValue(store, "primary");
   const focused = useFocused();
 
   // Keep the store up to date for the editor's ID

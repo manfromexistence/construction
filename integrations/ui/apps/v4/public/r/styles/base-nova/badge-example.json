@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "badge-example",
   "title": "Badge",
-  "registryDependencies": [
-    "badge",
-    "spinner",
-    "example"
-  ],
+  "registryDependencies": ["badge", "spinner", "example"],
   "files": [
     {
       "path": "registry/base-nova/examples/badge-example.tsx",

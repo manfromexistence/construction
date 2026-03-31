@@ -1,6 +1,6 @@
-import { type SlateEditor, KEYS, PathApi } from 'platejs';
+import { KEYS, PathApi, type SlateEditor } from "platejs";
 
-import { BaseTodoListPlugin } from '../BaseTodoListPlugin';
+import { BaseTodoListPlugin } from "../BaseTodoListPlugin";
 
 /** Insert todo list item if selection in li>p. TODO: test */
 export const insertTodoListItem = (editor: SlateEditor): boolean => {
@@ -35,7 +35,7 @@ export const insertTodoListItem = (editor: SlateEditor): boolean => {
       editor.tf.insertNodes(
         {
           checked: inheritCheckStateOnLineStartBreak ? todo.checked : false,
-          children: [{ text: '' }],
+          children: [{ text: "" }],
           type: todoType,
         },
         { at: paragraphPath }
@@ -52,7 +52,7 @@ export const insertTodoListItem = (editor: SlateEditor): boolean => {
       editor.tf.insertNodes(
         {
           checked: inheritCheckStateOnLineEndBreak ? todo.checked : false,
-          children: [{ text: '', ...marks }],
+          children: [{ text: "", ...marks }],
           type: todoType,
         },
         { at: nextParagraphPath }

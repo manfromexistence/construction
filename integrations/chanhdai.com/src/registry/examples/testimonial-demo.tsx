@@ -8,7 +8,7 @@ import {
   TestimonialAvatarRing,
   TestimonialQuote,
   TestimonialVerifiedBadge,
-} from "@/registry/components/testimonial"
+} from "@/registry/components/testimonial";
 
 export default function TestimonialDemo() {
   return (
@@ -20,17 +20,12 @@ export default function TestimonialDemo() {
     >
       <Testimonial>
         <TestimonialQuote>
-          <p>
-            awesome. Love the components, especially slide-to-unlock. Great job
-          </p>
+          <p>awesome. Love the components, especially slide-to-unlock. Great job</p>
         </TestimonialQuote>
 
         <TestimonialAuthor>
           <TestimonialAvatar>
-            <TestimonialAvatarImg
-              src="https://unavatar.io/x/rauchg"
-              alt="Guillermo Rauch"
-            />
+            <TestimonialAvatarImg src="https://unavatar.io/x/rauchg" alt="Guillermo Rauch" />
             <TestimonialAvatarRing />
           </TestimonialAvatar>
 
@@ -49,5 +44,5 @@ export default function TestimonialDemo() {
         </TestimonialAuthor>
       </Testimonial>
     </a>
-  )
+  );
 }

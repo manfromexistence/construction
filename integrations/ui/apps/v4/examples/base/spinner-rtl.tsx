@@ -1,18 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
-  Item,
-  ItemContent,
-  ItemMedia,
-  ItemTitle,
-} from "@/styles/base-nova/ui-rtl/item"
-import { Spinner } from "@/styles/base-nova/ui-rtl/spinner"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Item, ItemContent, ItemMedia, ItemTitle } from "@/styles/base-nova/ui-rtl/item";
+import { Spinner } from "@/styles/base-nova/ui-rtl/spinner";
 
 const translations: Translations = {
   en: {
@@ -36,16 +28,13 @@ const translations: Translations = {
       amount: "$100.00",
     },
   },
-}
+};
 
 export function SpinnerRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
-    <div
-      className="flex w-full max-w-xs flex-col gap-4 [--radius:1rem]"
-      dir={dir}
-    >
+    <div className="flex w-full max-w-xs flex-col gap-4 [--radius:1rem]" dir={dir}>
       <Item variant="muted" dir={dir}>
         <ItemMedia>
           <Spinner />
@@ -58,5 +47,5 @@ export function SpinnerRtl() {
         </ItemContent>
       </Item>
     </div>
-  )
+  );
 }

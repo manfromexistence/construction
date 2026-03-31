@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Command,
   CommandDialog,
@@ -11,10 +11,10 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/styles/radix-nova/ui/command"
+} from "@/styles/radix-nova/ui/command";
 
 export function CommandBasic() {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   return (
     <div className="flex flex-col gap-4">
@@ -35,5 +35,5 @@ export function CommandBasic() {
         </Command>
       </CommandDialog>
     </div>
-  )
+  );
 }

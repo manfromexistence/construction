@@ -1,22 +1,22 @@
-import { promises as fs } from "fs"
-import path from "path"
-import { afterEach, beforeEach, describe, expect, test, vi } from "vitest"
+import { promises as fs } from "fs";
+import path from "path";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 
-import { FRAMEWORKS } from "../../src/utils/frameworks"
+import { FRAMEWORKS } from "../../src/utils/frameworks";
 import {
   getFrameworkVersion,
   getProjectComponents,
   getProjectInfo,
-} from "../../src/utils/get-project-info"
+} from "../../src/utils/get-project-info";
 
 vi.mock("../../src/utils/get-config", () => ({
   getConfig: vi.fn(),
   resolveConfigPaths: vi.fn(),
-}))
+}));
 
 vi.mock("../../src/registry/api", () => ({
   getShadcnRegistryIndex: vi.fn(),
-}))
+}));
 
 describe("get project info", async () => {
   test.each([
@@ -148,12 +148,10 @@ describe("get project info", async () => {
     },
   ])(`getProjectType($name) -> $type`, async ({ name, type }) => {
     expect(
-      await getProjectInfo(
-        path.resolve(__dirname, `../fixtures/frameworks/${name}`)
-      )
-    ).toStrictEqual(type)
-  })
-})
+      await getProjectInfo(path.resolve(__dirname, `../fixtures/frameworks/${name}`))
+    ).toStrictEqual(type);
+  });
+});
 
 describe("getFrameworkVersion", () => {
   describe("Next.js version detection", () => {
@@ -200,53 +198,44 @@ describe("getFrameworkVersion", () => {
         framework: "next-app",
         expected: "rc",
       },
-    ])(
-      `should extract $name ($input) -> $expected`,
-      async ({ input, framework, expected }) => {
-        const packageJson = {
-          dependencies: {
-            next: input,
-          },
-        }
-        const version = await getFrameworkVersion(
-          FRAMEWORKS[framework as keyof typeof FRAMEWORKS],
-          packageJson
-        )
-        expect(version).toBe(expected)
-      }
-    )
+    ])(`should extract $name ($input) -> $expected`, async ({ input, framework, expected }) => {
+      const packageJson = {
+        dependencies: {
+          next: input,
+        },
+      };
+      const version = await getFrameworkVersion(
+        FRAMEWORKS[framework as keyof typeof FRAMEWORKS],
+        packageJson
+      );
+      expect(version).toBe(expected);
+    });
 
     test("should handle version in devDependencies", async () => {
       const packageJson = {
         devDependencies: {
           next: "16.0.0",
         },
-      }
-      const version = await getFrameworkVersion(
-        FRAMEWORKS["next-pages"],
-        packageJson
-      )
-      expect(version).toBe("16.0.0")
-    })
+      };
+      const version = await getFrameworkVersion(FRAMEWORKS["next-pages"], packageJson);
+      expect(version).toBe("16.0.0");
+    });
 
     test("should return null when next is not in dependencies", async () => {
       const packageJson = {
         dependencies: {
           react: "^18.0.0",
         },
-      }
-      const version = await getFrameworkVersion(
-        FRAMEWORKS["next-app"],
-        packageJson
-      )
-      expect(version).toBe(null)
-    })
+      };
+      const version = await getFrameworkVersion(FRAMEWORKS["next-app"], packageJson);
+      expect(version).toBe(null);
+    });
 
     test("should return null when packageJson is null", async () => {
-      const version = await getFrameworkVersion(FRAMEWORKS["next-app"], null)
-      expect(version).toBe(null)
-    })
-  })
+      const version = await getFrameworkVersion(FRAMEWORKS["next-app"], null);
+      expect(version).toBe(null);
+    });
+  });
 
   describe("Other frameworks", () => {
     test.each([
@@ -268,151 +257,140 @@ describe("getFrameworkVersion", () => {
         package: "astro",
         version: "^4.0.0",
       },
-    ])(
-      `should return null for $name`,
-      async ({ framework, package: pkg, version: ver }) => {
-        const packageJson = {
-          dependencies: {
-            [pkg]: ver,
-          },
-        }
-        const version = await getFrameworkVersion(
-          FRAMEWORKS[framework as keyof typeof FRAMEWORKS],
-          packageJson
-        )
-        expect(version).toBe(null)
-      }
-    )
-  })
-})
+    ])(`should return null for $name`, async ({ framework, package: pkg, version: ver }) => {
+      const packageJson = {
+        dependencies: {
+          [pkg]: ver,
+        },
+      };
+      const version = await getFrameworkVersion(
+        FRAMEWORKS[framework as keyof typeof FRAMEWORKS],
+        packageJson
+      );
+      expect(version).toBe(null);
+    });
+  });
+});
 
-import { getShadcnRegistryIndex } from "../../src/registry/api"
-import { getConfig, resolveConfigPaths } from "../../src/utils/get-config"
+import { getShadcnRegistryIndex } from "../../src/registry/api";
+import { getConfig, resolveConfigPaths } from "../../src/utils/get-config";
 
 describe("getProjectComponents", () => {
-  let tmpDir: string
+  let tmpDir: string;
 
   beforeEach(async () => {
-    tmpDir = await fs.mkdtemp(
-      path.join(process.env.TMPDIR || "/tmp", "test-")
-    )
-  })
+    tmpDir = await fs.mkdtemp(path.join(process.env.TMPDIR || "/tmp", "test-"));
+  });
 
   afterEach(async () => {
-    vi.resetAllMocks()
-    await fs.rm(tmpDir, { recursive: true, force: true })
-  })
+    vi.resetAllMocks();
+    await fs.rm(tmpDir, { recursive: true, force: true });
+  });
 
   test("should return empty array when no config exists", async () => {
-    vi.mocked(getConfig).mockResolvedValue(null)
+    vi.mocked(getConfig).mockResolvedValue(null);
 
-    const result = await getProjectComponents(tmpDir)
+    const result = await getProjectComponents(tmpDir);
 
-    expect(result).toEqual([])
-  })
+    expect(result).toEqual([]);
+  });
 
   test("should return empty array when ui directory does not exist", async () => {
-    vi.mocked(getConfig).mockResolvedValue({} as any)
+    vi.mocked(getConfig).mockResolvedValue({} as any);
     vi.mocked(resolveConfigPaths).mockResolvedValue({
       resolvedPaths: { ui: path.join(tmpDir, "ui") },
-    } as any)
+    } as any);
 
-    const result = await getProjectComponents(tmpDir)
+    const result = await getProjectComponents(tmpDir);
 
-    expect(result).toEqual([])
-  })
+    expect(result).toEqual([]);
+  });
 
   test("should return only components that exist in the registry", async () => {
-    const uiDir = path.join(tmpDir, "ui")
-    await fs.mkdir(uiDir, { recursive: true })
-    await fs.writeFile(path.join(uiDir, "button.tsx"), "")
-    await fs.writeFile(path.join(uiDir, "card.tsx"), "")
-    await fs.writeFile(path.join(uiDir, "my-custom-component.tsx"), "")
+    const uiDir = path.join(tmpDir, "ui");
+    await fs.mkdir(uiDir, { recursive: true });
+    await fs.writeFile(path.join(uiDir, "button.tsx"), "");
+    await fs.writeFile(path.join(uiDir, "card.tsx"), "");
+    await fs.writeFile(path.join(uiDir, "my-custom-component.tsx"), "");
 
-    vi.mocked(getConfig).mockResolvedValue({} as any)
+    vi.mocked(getConfig).mockResolvedValue({} as any);
     vi.mocked(resolveConfigPaths).mockResolvedValue({
       resolvedPaths: { ui: uiDir },
-    } as any)
+    } as any);
     vi.mocked(getShadcnRegistryIndex).mockResolvedValue([
       { name: "button" },
       { name: "card" },
       { name: "dialog" },
-    ] as any)
+    ] as any);
 
-    const result = await getProjectComponents(tmpDir)
+    const result = await getProjectComponents(tmpDir);
 
-    expect(result).toEqual(["button", "card"])
-  })
+    expect(result).toEqual(["button", "card"]);
+  });
 
   test("should handle jsx files", async () => {
-    const uiDir = path.join(tmpDir, "ui")
-    await fs.mkdir(uiDir, { recursive: true })
-    await fs.writeFile(path.join(uiDir, "button.jsx"), "")
+    const uiDir = path.join(tmpDir, "ui");
+    await fs.mkdir(uiDir, { recursive: true });
+    await fs.writeFile(path.join(uiDir, "button.jsx"), "");
 
-    vi.mocked(getConfig).mockResolvedValue({} as any)
+    vi.mocked(getConfig).mockResolvedValue({} as any);
     vi.mocked(resolveConfigPaths).mockResolvedValue({
       resolvedPaths: { ui: uiDir },
-    } as any)
-    vi.mocked(getShadcnRegistryIndex).mockResolvedValue([
-      { name: "button" },
-    ] as any)
+    } as any);
+    vi.mocked(getShadcnRegistryIndex).mockResolvedValue([{ name: "button" }] as any);
 
-    const result = await getProjectComponents(tmpDir)
+    const result = await getProjectComponents(tmpDir);
 
-    expect(result).toEqual(["button"])
-  })
+    expect(result).toEqual(["button"]);
+  });
 
   test("should ignore non-tsx/jsx files", async () => {
-    const uiDir = path.join(tmpDir, "ui")
-    await fs.mkdir(uiDir, { recursive: true })
-    await fs.writeFile(path.join(uiDir, "button.tsx"), "")
-    await fs.writeFile(path.join(uiDir, "utils.ts"), "")
-    await fs.writeFile(path.join(uiDir, "styles.css"), "")
-    await fs.writeFile(path.join(uiDir, "README.md"), "")
+    const uiDir = path.join(tmpDir, "ui");
+    await fs.mkdir(uiDir, { recursive: true });
+    await fs.writeFile(path.join(uiDir, "button.tsx"), "");
+    await fs.writeFile(path.join(uiDir, "utils.ts"), "");
+    await fs.writeFile(path.join(uiDir, "styles.css"), "");
+    await fs.writeFile(path.join(uiDir, "README.md"), "");
 
-    vi.mocked(getConfig).mockResolvedValue({} as any)
+    vi.mocked(getConfig).mockResolvedValue({} as any);
     vi.mocked(resolveConfigPaths).mockResolvedValue({
       resolvedPaths: { ui: uiDir },
-    } as any)
-    vi.mocked(getShadcnRegistryIndex).mockResolvedValue([
-      { name: "button" },
-    ] as any)
+    } as any);
+    vi.mocked(getShadcnRegistryIndex).mockResolvedValue([{ name: "button" }] as any);
 
-    const result = await getProjectComponents(tmpDir)
+    const result = await getProjectComponents(tmpDir);
 
-    expect(result).toEqual(["button"])
-  })
+    expect(result).toEqual(["button"]);
+  });
 
   test("should return empty array when registry index returns undefined", async () => {
-    const uiDir = path.join(tmpDir, "ui")
-    await fs.mkdir(uiDir, { recursive: true })
-    await fs.writeFile(path.join(uiDir, "button.tsx"), "")
+    const uiDir = path.join(tmpDir, "ui");
+    await fs.mkdir(uiDir, { recursive: true });
+    await fs.writeFile(path.join(uiDir, "button.tsx"), "");
 
-    vi.mocked(getConfig).mockResolvedValue({} as any)
+    vi.mocked(getConfig).mockResolvedValue({} as any);
     vi.mocked(resolveConfigPaths).mockResolvedValue({
       resolvedPaths: { ui: uiDir },
-    } as any)
-    vi.mocked(getShadcnRegistryIndex).mockResolvedValue(undefined)
+    } as any);
+    vi.mocked(getShadcnRegistryIndex).mockResolvedValue(undefined);
 
-    const result = await getProjectComponents(tmpDir)
+    const result = await getProjectComponents(tmpDir);
 
-    expect(result).toEqual([])
-  })
+    expect(result).toEqual([]);
+  });
 
   test("should return empty array when ui directory is empty", async () => {
-    const uiDir = path.join(tmpDir, "ui")
-    await fs.mkdir(uiDir, { recursive: true })
+    const uiDir = path.join(tmpDir, "ui");
+    await fs.mkdir(uiDir, { recursive: true });
 
-    vi.mocked(getConfig).mockResolvedValue({} as any)
+    vi.mocked(getConfig).mockResolvedValue({} as any);
     vi.mocked(resolveConfigPaths).mockResolvedValue({
       resolvedPaths: { ui: uiDir },
-    } as any)
-    vi.mocked(getShadcnRegistryIndex).mockResolvedValue([
-      { name: "button" },
-    ] as any)
+    } as any);
+    vi.mocked(getShadcnRegistryIndex).mockResolvedValue([{ name: "button" }] as any);
 
-    const result = await getProjectComponents(tmpDir)
+    const result = await getProjectComponents(tmpDir);
 
-    expect(result).toEqual([])
-  })
-})
+    expect(result).toEqual([]);
+  });
+});

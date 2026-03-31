@@ -1,4 +1,4 @@
-import { Trash2Icon } from "lucide-react"
+import { Trash2Icon } from "lucide-react";
 
 import {
   AlertDialog,
@@ -11,15 +11,13 @@ import {
   AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/styles/base-nova/ui/alert-dialog"
-import { Button } from "@/styles/base-nova/ui/button"
+} from "@/styles/base-nova/ui/alert-dialog";
+import { Button } from "@/styles/base-nova/ui/button";
 
 export function AlertDialogDestructive() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger
-        render={<Button variant="destructive">Delete Chat</Button>}
-      />
+      <AlertDialogTrigger render={<Button variant="destructive">Delete Chat</Button>} />
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogMedia className="bg-destructive/10 text-destructive dark:bg-destructive/20 dark:text-destructive">
@@ -27,8 +25,8 @@ export function AlertDialogDestructive() {
           </AlertDialogMedia>
           <AlertDialogTitle>Delete chat?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete this chat conversation. View{" "}
-            <a href="#">Settings</a> delete any memories saved during this chat.
+            This will permanently delete this chat conversation. View <a href="#">Settings</a>{" "}
+            delete any memories saved during this chat.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
@@ -37,5 +35,5 @@ export function AlertDialogDestructive() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

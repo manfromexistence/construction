@@ -1,21 +1,15 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Menu } from "lucide-react"
+import { Menu } from "lucide-react";
+import { useState } from "react";
 
-import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 
-import { BlogTableOfContents } from "./table-of-contents"
+import { BlogTableOfContents } from "./table-of-contents";
 
 export function MobileTOC() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   return (
     <div className="fixed right-8 bottom-8 z-50 lg:hidden">
@@ -48,5 +42,5 @@ export function MobileTOC() {
         </SheetContent>
       </Sheet>
     </div>
-  )
+  );
 }

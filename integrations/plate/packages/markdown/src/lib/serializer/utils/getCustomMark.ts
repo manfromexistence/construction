@@ -1,4 +1,4 @@
-import type { SerializeMdOptions } from '../serializeMd';
+import type { SerializeMdOptions } from "../serializeMd";
 
 export const getCustomMark = (options?: SerializeMdOptions): string[] => {
   if (!options?.rules) {

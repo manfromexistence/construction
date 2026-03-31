@@ -1,41 +1,36 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import * as matchRangeModule from '../utils/getMatchRange';
-import {
-  autoformatBlock,
-  type AutoformatBlockOptions,
-} from './autoformatBlock';
+import * as matchRangeModule from "../utils/getMatchRange";
+import { type AutoformatBlockOptions, autoformatBlock } from "./autoformatBlock";
 
 const createOptions = (
   overrides: Partial<AutoformatBlockOptions> = {}
 ): AutoformatBlockOptions => ({
-  match: '##',
-  mode: 'block',
-  text: '#',
-  trigger: '#',
+  match: "##",
+  mode: "block",
+  text: "#",
+  trigger: "#",
   ...overrides,
 });
 
-describe('autoformatBlock', () => {
-  it('returns false when the trigger does not match', () => {
-    const rangeSpy = spyOn(matchRangeModule, 'getMatchRange').mockReturnValue({
-      end: '##',
-      start: '',
-      triggers: ['!'],
+describe("autoformatBlock", () => {
+  it("returns false when the trigger does not match", () => {
+    const rangeSpy = spyOn(matchRangeModule, "getMatchRange").mockReturnValue({
+      end: "##",
+      start: "",
+      triggers: ["!"],
     });
 
-    expect(autoformatBlock({ selection: {} } as any, createOptions())).toBe(
-      false
-    );
+    expect(autoformatBlock({ selection: {} } as any, createOptions())).toBe(false);
 
     rangeSpy.mockRestore();
   });
 
-  it('returns false when a void node is inside the match range', () => {
-    const rangeSpy = spyOn(matchRangeModule, 'getMatchRange').mockReturnValue({
-      end: '##',
-      start: '',
-      triggers: ['#'],
+  it("returns false when a void node is inside the match range", () => {
+    const rangeSpy = spyOn(matchRangeModule, "getMatchRange").mockReturnValue({
+      end: "##",
+      start: "",
+      triggers: ["#"],
     });
     const editor = {
       api: {
@@ -51,11 +46,11 @@ describe('autoformatBlock', () => {
     rangeSpy.mockRestore();
   });
 
-  it('returns false when the same block type already exists above', () => {
-    const rangeSpy = spyOn(matchRangeModule, 'getMatchRange').mockReturnValue({
-      end: '##',
-      start: '',
-      triggers: ['#'],
+  it("returns false when the same block type already exists above", () => {
+    const rangeSpy = spyOn(matchRangeModule, "getMatchRange").mockReturnValue({
+      end: "##",
+      start: "",
+      triggers: ["#"],
     });
     const some = mock((_options: any) => {
       if (_options?.at) return false;
@@ -67,7 +62,7 @@ describe('autoformatBlock', () => {
         isVoid: mock(() => false),
         range: mock(() => ({ anchor: {}, focus: {} })),
         some,
-        string: mock(() => '##'),
+        string: mock(() => "##"),
       },
       selection: {},
     } as any;
@@ -84,24 +79,19 @@ describe('autoformatBlock', () => {
     rangeSpy.mockRestore();
   });
 
-  it('deletes the trigger text and runs preFormat and format callbacks', () => {
-    const rangeSpy = spyOn(matchRangeModule, 'getMatchRange').mockReturnValue({
-      end: '##',
-      start: '',
-      triggers: ['#'],
+  it("deletes the trigger text and runs preFormat and format callbacks", () => {
+    const rangeSpy = spyOn(matchRangeModule, "getMatchRange").mockReturnValue({
+      end: "##",
+      start: "",
+      triggers: ["#"],
     });
     const del = mock();
     const preFormatCalls: any[] = [];
     const formatCalls: any[] = [];
-    const preFormat: NonNullable<AutoformatBlockOptions['preFormat']> = (
-      currentEditor
-    ) => {
+    const preFormat: NonNullable<AutoformatBlockOptions["preFormat"]> = (currentEditor) => {
       preFormatCalls.push(currentEditor);
     };
-    const format: NonNullable<AutoformatBlockOptions['format']> = (
-      currentEditor,
-      ctx
-    ) => {
+    const format: NonNullable<AutoformatBlockOptions["format"]> = (currentEditor, ctx) => {
       formatCalls.push([currentEditor, ctx]);
     };
     const editor = {
@@ -114,7 +104,7 @@ describe('autoformatBlock', () => {
 
           return false;
         }),
-        string: mock(() => '##'),
+        string: mock(() => "##"),
       },
       selection: {},
       tf: {
@@ -137,16 +127,16 @@ describe('autoformatBlock', () => {
       at: { anchor: { offset: 0 }, focus: { offset: 2 } },
     });
     expect(preFormatCalls).toEqual([editor]);
-    expect(formatCalls).toEqual([[editor, { matchString: '##' }]]);
+    expect(formatCalls).toEqual([[editor, { matchString: "##" }]]);
 
     rangeSpy.mockRestore();
   });
 
-  it('uses the before-range path and setNodes when formatting is allowed mid-block', () => {
-    const rangeSpy = spyOn(matchRangeModule, 'getMatchRange').mockReturnValue({
-      end: '##',
-      start: '',
-      triggers: ['#'],
+  it("uses the before-range path and setNodes when formatting is allowed mid-block", () => {
+    const rangeSpy = spyOn(matchRangeModule, "getMatchRange").mockReturnValue({
+      end: "##",
+      start: "",
+      triggers: ["#"],
     });
     const deleteNodes = mock();
     const setNodes = mock();
@@ -154,14 +144,14 @@ describe('autoformatBlock', () => {
       api: {
         isBlock: mock(() => true),
         range: mock((location: string) => {
-          if (location === 'before') {
+          if (location === "before") {
             return { anchor: { offset: 1 }, focus: { offset: 3 } };
           }
 
           return;
         }),
         some: mock(() => false),
-        string: mock(() => '##'),
+        string: mock(() => "##"),
       },
       selection: {},
       tf: {
@@ -183,19 +173,16 @@ describe('autoformatBlock', () => {
     expect(deleteNodes).toHaveBeenCalledWith({
       at: { anchor: { offset: 1 }, focus: { offset: 3 } },
     });
-    expect(setNodes).toHaveBeenCalledWith(
-      { type: KEYS.h2 },
-      { match: expect.any(Function) }
-    );
+    expect(setNodes).toHaveBeenCalledWith({ type: KEYS.h2 }, { match: expect.any(Function) });
 
     rangeSpy.mockRestore();
   });
 
-  it('formats even when the same block type exists above if explicitly allowed', () => {
-    const rangeSpy = spyOn(matchRangeModule, 'getMatchRange').mockReturnValue({
-      end: '##',
-      start: '',
-      triggers: ['#'],
+  it("formats even when the same block type exists above if explicitly allowed", () => {
+    const rangeSpy = spyOn(matchRangeModule, "getMatchRange").mockReturnValue({
+      end: "##",
+      start: "",
+      triggers: ["#"],
     });
     const setNodes = mock();
     const editor = {
@@ -208,7 +195,7 @@ describe('autoformatBlock', () => {
 
           return true;
         }),
-        string: mock(() => '##'),
+        string: mock(() => "##"),
       },
       selection: {},
       tf: {
@@ -232,11 +219,11 @@ describe('autoformatBlock', () => {
     rangeSpy.mockRestore();
   });
 
-  it('does not delete unrelated text for single-character matches', () => {
-    const rangeSpy = spyOn(matchRangeModule, 'getMatchRange').mockReturnValue({
-      end: '#',
-      start: '',
-      triggers: ['#'],
+  it("does not delete unrelated text for single-character matches", () => {
+    const rangeSpy = spyOn(matchRangeModule, "getMatchRange").mockReturnValue({
+      end: "#",
+      start: "",
+      triggers: ["#"],
     });
     const deleteNodes = mock();
     const setNodes = mock();
@@ -250,7 +237,7 @@ describe('autoformatBlock', () => {
 
           return false;
         }),
-        string: mock(() => '#'),
+        string: mock(() => "#"),
       },
       selection: {},
       tf: {
@@ -263,17 +250,14 @@ describe('autoformatBlock', () => {
       autoformatBlock(
         editor,
         createOptions({
-          match: '#',
+          match: "#",
           type: KEYS.h1,
         })
       )
     ).toBe(true);
 
     expect(deleteNodes).not.toHaveBeenCalled();
-    expect(setNodes).toHaveBeenCalledWith(
-      { type: KEYS.h1 },
-      { match: expect.any(Function) }
-    );
+    expect(setNodes).toHaveBeenCalledWith({ type: KEYS.h1 }, { match: expect.any(Function) });
 
     rangeSpy.mockRestore();
   });

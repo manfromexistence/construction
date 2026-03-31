@@ -1,6 +1,6 @@
-import { type Descendant, ElementApi, NodeApi } from '@platejs/slate';
+import { type Descendant, ElementApi, NodeApi } from "@platejs/slate";
 
-import type { SlateEditor } from '../../lib';
+import type { SlateEditor } from "../../lib";
 
 export const getSelectedDomFragment = (editor: SlateEditor): Descendant[] => {
   const selection = window.getSelection();
@@ -10,9 +10,7 @@ export const getSelectedDomFragment = (editor: SlateEditor): Descendant[] => {
   const range = selection.getRangeAt(0);
   const fragment = range.cloneContents();
 
-  const _domBlocks = fragment.querySelectorAll(
-    '[data-slate-node="element"][data-slate-id]'
-  );
+  const _domBlocks = fragment.querySelectorAll('[data-slate-node="element"][data-slate-id]');
 
   const domBlocks = Array.from(_domBlocks);
 
@@ -37,7 +35,7 @@ export const getSelectedDomFragment = (editor: SlateEditor): Descendant[] => {
       ElementApi.isElement(block[0]) &&
       !editor.api.isVoid(block[0])
     ) {
-      const html = document.createElement('div');
+      const html = document.createElement("div");
       html.append(node);
       const results = editor.api.html.deserialize({ element: html });
       nodes.push(results[0]);

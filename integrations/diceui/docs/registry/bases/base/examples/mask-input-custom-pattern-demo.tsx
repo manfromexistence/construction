@@ -2,10 +2,7 @@
 
 import * as React from "react";
 import { z } from "zod";
-import {
-  MaskInput,
-  type MaskPattern,
-} from "@/registry/bases/base/ui/mask-input";
+import { MaskInput, type MaskPattern } from "@/registry/bases/base/ui/mask-input";
 import { Label } from "@/registry/bases/radix/ui/label";
 
 // Custom license plate pattern (e.g., ABC-1234)
@@ -69,9 +66,7 @@ export default function MaskInputCustomPatternDemo() {
           invalid={!isLicenseValid}
           onValidate={setIsLicenseValid}
         />
-        <p className="text-muted-foreground text-sm">
-          Enter license plate (3 letters, 4 numbers)
-        </p>
+        <p className="text-muted-foreground text-sm">Enter license plate (3 letters, 4 numbers)</p>
       </div>
       <div className="flex flex-col gap-2">
         <Label htmlFor="product">Product code</Label>
@@ -85,9 +80,7 @@ export default function MaskInputCustomPatternDemo() {
           invalid={!isProductCodeValid}
           onValidate={setIsProductCodeValid}
         />
-        <p className="text-muted-foreground text-sm">
-          Enter product code (PRD-XXX-XXX format)
-        </p>
+        <p className="text-muted-foreground text-sm">Enter product code (PRD-XXX-XXX format)</p>
       </div>
     </div>
   );

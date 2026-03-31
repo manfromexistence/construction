@@ -1,4 +1,4 @@
-import { Skeleton } from "@/styles/radix-nova/ui/skeleton"
+import { Skeleton } from "@/styles/radix-nova/ui/skeleton";
 
 export function SkeletonText() {
   return (
@@ -7,5 +7,5 @@ export function SkeletonText() {
       <Skeleton className="h-4 w-full" />
       <Skeleton className="h-4 w-3/4" />
     </div>
-  )
+  );
 }

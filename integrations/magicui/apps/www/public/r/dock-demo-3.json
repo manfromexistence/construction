@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Dock Demo 3",
   "description": "Third example showing a MacOS-style dock implementation.",
-  "registryDependencies": [
-    "@magicui/dock"
-  ],
+  "registryDependencies": ["@magicui/dock"],
   "files": [
     {
       "path": "registry/example/dock-demo-3.tsx",

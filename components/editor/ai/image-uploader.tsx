@@ -1,10 +1,10 @@
+import { ImagePlus } from "lucide-react";
+import { ComponentProps } from "react";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { MAX_IMAGE_FILE_SIZE, MAX_IMAGE_FILES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { ALLOWED_IMAGE_TYPES } from "@/utils/ai/image-upload";
-import { ImagePlus } from "lucide-react";
-import { ComponentProps } from "react";
 
 interface ImageUploaderProps extends ComponentProps<typeof Button> {
   fileInputRef: React.RefObject<HTMLInputElement | null>;

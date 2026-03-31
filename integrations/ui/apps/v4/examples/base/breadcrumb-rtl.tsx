@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { ChevronDownIcon, DotIcon } from "lucide-react"
+import { ChevronDownIcon, DotIcon } from "lucide-react";
+import Link from "next/link";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,14 +11,14 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/styles/base-nova/ui-rtl/breadcrumb"
+} from "@/styles/base-nova/ui-rtl/breadcrumb";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui-rtl/dropdown-menu"
+} from "@/styles/base-nova/ui-rtl/dropdown-menu";
 
 const translations: Translations = {
   en: {
@@ -57,10 +54,10 @@ const translations: Translations = {
       breadcrumb: "פירורי לחם",
     },
   },
-}
+};
 
 export function BreadcrumbRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
+  const { dir, t, language } = useTranslation(translations, "ar");
 
   return (
     <Breadcrumb dir={dir}>
@@ -73,9 +70,7 @@ export function BreadcrumbRtl() {
         </BreadcrumbSeparator>
         <BreadcrumbItem>
           <DropdownMenu>
-            <DropdownMenuTrigger
-              render={<button className="flex items-center gap-1" />}
-            >
+            <DropdownMenuTrigger render={<button className="flex items-center gap-1" />}>
               {t.components}
               <ChevronDownIcon data-icon="inline-end" className="size-3.5" />
             </DropdownMenuTrigger>
@@ -100,5 +95,5 @@ export function BreadcrumbRtl() {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-  )
+  );
 }

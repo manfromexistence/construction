@@ -1,4 +1,4 @@
-import { MyErrorResponseSchema, type ApiErrorCode } from "@/types/errors";
+import { type ApiErrorCode, MyErrorResponseSchema } from "@/types/errors";
 
 // This utility is specific to the Vercel AI SDK DefaultChatTransport behavior, where on
 // non-2xx responses it throws an Error whose `message` is set to the raw `response.text()`.

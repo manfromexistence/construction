@@ -1,31 +1,29 @@
-import type { PlateEditor } from 'platejs/react';
-
-import { BlockSelectionPlugin } from '@platejs/selection/react';
-import cloneDeep from 'lodash/cloneDeep.js';
+import { BlockSelectionPlugin } from "@platejs/selection/react";
+import cloneDeep from "lodash/cloneDeep.js";
 import {
-  type NodeEntry,
   KEYS,
+  type NodeEntry,
   PathApi,
   RangeApi,
   type SlateEditor,
   type TIdElement,
-} from 'platejs';
+} from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import { BaseAIPlugin } from '../../../lib/BaseAIPlugin';
-import { withAIBatch } from '../../../lib/transforms/withAIBatch';
-import { type AIChatPluginConfig, AIChatPlugin } from '../AIChatPlugin';
-import { acceptAISuggestions } from '../utils';
-import { createFormattedBlocks } from './replaceSelectionAIChat';
+import { BaseAIPlugin } from "../../../lib/BaseAIPlugin";
+import { withAIBatch } from "../../../lib/transforms/withAIBatch";
+import { AIChatPlugin, type AIChatPluginConfig } from "../AIChatPlugin";
+import { acceptAISuggestions } from "../utils";
+import { createFormattedBlocks } from "./replaceSelectionAIChat";
 
 export const insertBelowAIChat = (
   editor: PlateEditor,
   sourceEditor: SlateEditor,
-  { format = 'single' }: { format?: 'all' | 'none' | 'single' } = {}
+  { format = "single" }: { format?: "all" | "none" | "single" } = {}
 ) => {
   const { toolName } = editor.getOptions(AIChatPlugin);
 
-  if (toolName === 'generate')
-    return insertBelowGenerate(editor, sourceEditor, { format });
+  if (toolName === "generate") return insertBelowGenerate(editor, sourceEditor, { format });
 
   const selectedBlocks: NodeEntry<TIdElement>[] = editor
     .getApi(BlockSelectionPlugin)
@@ -36,8 +34,7 @@ export const insertBelowAIChat = (
   editor.getTransforms(BaseAIPlugin).ai.undo();
 
   const insertBlocksAndSelect =
-    editor.getTransforms(BlockSelectionPlugin).blockSelection
-      .insertBlocksAndSelect;
+    editor.getTransforms(BlockSelectionPlugin).blockSelection.insertBlocksAndSelect;
 
   if (!selectedIds || selectedIds.size === 0) return;
 
@@ -64,25 +61,19 @@ export const insertBelowAIChat = (
 export const insertBelowGenerate = (
   editor: PlateEditor,
   sourceEditor: SlateEditor,
-  { format = 'single' }: { format?: 'all' | 'none' | 'single' } = {}
+  { format = "single" }: { format?: "all" | "none" | "single" } = {}
 ) => {
   if (!sourceEditor || sourceEditor.api.isEmpty()) return;
 
-  const isBlockSelecting = editor.getOption(
-    BlockSelectionPlugin,
-    'isSelectingSome'
-  );
+  const isBlockSelecting = editor.getOption(BlockSelectionPlugin, "isSelectingSome");
 
   editor.getApi<AIChatPluginConfig>({ key: KEYS.ai }).aiChat.hide();
 
   const insertBlocksAndSelect =
-    editor.getTransforms(BlockSelectionPlugin).blockSelection
-      .insertBlocksAndSelect;
+    editor.getTransforms(BlockSelectionPlugin).blockSelection.insertBlocksAndSelect;
 
   if (isBlockSelecting) {
-    const selectedBlocks = editor
-      .getApi(BlockSelectionPlugin)
-      .blockSelection.getNodes();
+    const selectedBlocks = editor.getApi(BlockSelectionPlugin).blockSelection.getNodes();
 
     const selectedIds = editor.getOptions(BlockSelectionPlugin).selectedIds;
 
@@ -94,7 +85,7 @@ export const insertBelowGenerate = (
 
     const nextPath = PathApi.next(lastBlock[1]);
 
-    if (format === 'none') {
+    if (format === "none") {
       insertBlocksAndSelect(cloneDeep(sourceEditor.children), {
         at: nextPath,
       });
@@ -119,11 +110,11 @@ export const insertBelowGenerate = (
     const currentBlock = editor.api.node({
       at: endPath,
       block: true,
-      mode: 'lowest',
+      mode: "lowest",
     });
 
     if (!currentBlock) return;
-    if (format === 'none') {
+    if (format === "none") {
       insertBlocksAndSelect(cloneDeep(sourceEditor.children), {
         at: PathApi.next(endPath),
       });

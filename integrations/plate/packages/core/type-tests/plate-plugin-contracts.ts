@@ -1,15 +1,14 @@
-import { createEditor } from '@platejs/slate';
-
-import type { PluginConfig } from '@platejs/core';
+import type { PluginConfig } from "@platejs/core";
 import {
   createPlateEditor,
   createPlatePlugin,
   createTPlatePlugin,
   withPlate,
-} from '@platejs/core/react';
+} from "@platejs/core/react";
+import { createEditor } from "@platejs/slate";
 
 type ToolbarConfig = PluginConfig<
-  'toolbar',
+  "toolbar",
   {
     floating: boolean;
   },
@@ -22,7 +21,7 @@ type ToolbarConfig = PluginConfig<
 >;
 
 const ToolbarPlugin = createTPlatePlugin<ToolbarConfig>({
-  key: 'toolbar',
+  key: "toolbar",
   options: {
     floating: true,
   },
@@ -34,9 +33,9 @@ const ToolbarPlugin = createTPlatePlugin<ToolbarConfig>({
 }));
 
 const MentionPlugin = createPlatePlugin({
-  key: 'mention',
+  key: "mention",
   options: {
-    trigger: '@' as const,
+    trigger: "@" as const,
   },
 }).extendEditorApi(({ getOptions }) => ({
   getTrigger: () => getOptions().trigger,
@@ -51,16 +50,12 @@ const createdPlateEditor = createPlateEditor({
 });
 
 const floating: boolean = plateEditor.api.toggleFloating();
-const nestedFloating: boolean = plateEditor
-  .getApi(ToolbarPlugin)
-  .plugin.isFloating();
-const mentionTrigger: '@' = plateEditor.api.getTrigger();
+const nestedFloating: boolean = plateEditor.getApi(ToolbarPlugin).plugin.isFloating();
+const mentionTrigger: "@" = plateEditor.api.getTrigger();
 const createdFloating: boolean = createdPlateEditor.api.toggleFloating();
-const createdMentionTrigger: '@' = createdPlateEditor.api.getTrigger();
-const toolbarFloating: boolean =
-  createdPlateEditor.getOptions(ToolbarPlugin).floating;
-const createdMentionOption: '@' =
-  createdPlateEditor.getOptions(MentionPlugin).trigger;
+const createdMentionTrigger: "@" = createdPlateEditor.api.getTrigger();
+const toolbarFloating: boolean = createdPlateEditor.getOptions(ToolbarPlugin).floating;
+const createdMentionOption: "@" = createdPlateEditor.getOptions(MentionPlugin).trigger;
 
 void createdFloating;
 void createdMentionOption;
@@ -77,4 +72,4 @@ plateEditor.api.notReal();
 createdPlateEditor.getApi(ToolbarPlugin).plugin.isFloating(true);
 
 // @ts-expect-error literal option type must stay stable
-createdPlateEditor.getOptions(MentionPlugin).trigger = '#';
+createdPlateEditor.getOptions(MentionPlugin).trigger = "#";

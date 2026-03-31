@@ -1,19 +1,19 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { deleteSuggestion } from './deleteSuggestion';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { deleteSuggestion } from "./deleteSuggestion";
 
 const createSuggestionNode = ({
   createdAt = 1,
-  id = 's1',
-  text = '',
-  type = 'insert',
-  userId = 'alice',
+  id = "s1",
+  text = "",
+  type = "insert",
+  userId = "alice",
 }: {
   createdAt?: number;
   id?: string;
   text?: string;
-  type?: 'insert' | 'remove';
+  type?: "insert" | "remove";
   userId?: string;
 } = {}) => ({
   [KEYS.suggestion]: true,
@@ -21,8 +21,8 @@ const createSuggestionNode = ({
   text,
 });
 
-describe('deleteSuggestion', () => {
-  it('removes empty inserted block suggestions instead of converting them to remove suggestions', () => {
+describe("deleteSuggestion", () => {
+  it("removes empty inserted block suggestions instead of converting them to remove suggestions", () => {
     const pointCurrent = { offset: 0, path: [0, 0] };
     const pointTarget = { offset: 1, path: [0, 0] };
     const suggestionNode = createSuggestionNode();
@@ -38,7 +38,7 @@ describe('deleteSuggestion', () => {
         isStart: () => true,
         node: () => [suggestionNode, [0, 0]],
         pointRef: () => ({ current: pointTarget }),
-        string: () => 'x',
+        string: () => "x",
         unhangRange: (range: unknown) => range,
       },
       getApi: () => ({
@@ -47,7 +47,7 @@ describe('deleteSuggestion', () => {
         },
       }),
       getOptions: () => ({
-        currentUserId: 'alice',
+        currentUserId: "alice",
       }),
       selection: {
         anchor: pointCurrent,
@@ -67,11 +67,11 @@ describe('deleteSuggestion', () => {
     expect(removeNodes).toHaveBeenCalledWith({ at: [0, 0] });
   });
 
-  it('deletes inline inserted text directly instead of wrapping it in a remove suggestion', () => {
+  it("deletes inline inserted text directly instead of wrapping it in a remove suggestion", () => {
     const pointCurrent = { offset: 0, path: [0, 0] };
     const pointNext = { offset: 1, path: [0, 0] };
     const target = { offset: 2, path: [0, 0] };
-    const suggestionNode = createSuggestionNode({ text: 'x' });
+    const suggestionNode = createSuggestionNode({ text: "x" });
     const move = mock(() => {
       editor.selection = {
         anchor: pointNext,
@@ -84,12 +84,11 @@ describe('deleteSuggestion', () => {
 
     const editor = {
       api: {
-        after: (point: typeof pointCurrent) =>
-          point.offset === 0 ? pointNext : undefined,
+        after: (point: typeof pointCurrent) => (point.offset === 0 ? pointNext : undefined),
         isAt: () => false,
         node: () => {},
         pointRef: () => ({ current: target }),
-        string: () => 'x',
+        string: () => "x",
         unhangRange: (range: unknown) => range,
       },
       getApi: (plugin: unknown) => {
@@ -103,7 +102,7 @@ describe('deleteSuggestion', () => {
         };
       },
       getOptions: () => ({
-        currentUserId: 'alice',
+        currentUserId: "alice",
       }),
       selection: {
         anchor: pointCurrent,
@@ -123,18 +122,18 @@ describe('deleteSuggestion', () => {
 
     expect(move).toHaveBeenCalledWith({
       reverse: undefined,
-      unit: 'character',
+      unit: "character",
     });
     expect(deleteChar).toHaveBeenCalledWith({
       at: {
         anchor: pointCurrent,
         focus: pointNext,
       },
-      unit: 'character',
+      unit: "character",
     });
   });
 
-  it('stops cleanly when deletion would cross blocks without a previous block element', () => {
+  it("stops cleanly when deletion would cross blocks without a previous block element", () => {
     const pointCurrent = { offset: 0, path: [1, 0] };
     const pointTarget = { offset: 0, path: [0, 0] };
     const move = mock();
@@ -147,7 +146,7 @@ describe('deleteSuggestion', () => {
         isAt: ({ blocks }: any = {}) => !!blocks,
         node: () => {},
         pointRef: () => ({ current: pointTarget }),
-        string: () => '\n',
+        string: () => "\n",
         unhangRange: (range: unknown) => range,
       },
       getApi: () => ({
@@ -156,7 +155,7 @@ describe('deleteSuggestion', () => {
         },
       }),
       getOptions: () => ({
-        currentUserId: 'alice',
+        currentUserId: "alice",
       }),
       selection: {
         anchor: pointCurrent,

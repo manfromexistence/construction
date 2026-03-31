@@ -1,14 +1,14 @@
 import {
+  isUrl,
   type PluginConfig,
   type SlateEditor,
   type TMediaElement,
   type WithRequiredKey,
-  isUrl,
-} from 'platejs';
+} from "platejs";
 
-import type { MediaPluginOptions } from '../../../lib/media/types';
+import type { MediaPluginOptions } from "../../../lib/media/types";
 
-import { FloatingMediaStore } from './FloatingMediaStore';
+import { FloatingMediaStore } from "./FloatingMediaStore";
 
 export const submitFloatingMedia = (
   editor: SlateEditor,
@@ -20,7 +20,7 @@ export const submitFloatingMedia = (
     plugin: WithRequiredKey;
   }
 ) => {
-  let url = FloatingMediaStore.get('url');
+  let url = FloatingMediaStore.get("url");
 
   if (url === element.url) {
     FloatingMediaStore.actions.reset();

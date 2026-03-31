@@ -21,8 +21,7 @@ const features = [
   },
   {
     title: "Detailed Properties",
-    description:
-      "Fine-tune every aspect including radius, spacing, shadows, and other properties.",
+    description: "Fine-tune every aspect including radius, spacing, shadows, and other properties.",
     icon: <Layers className="size-6" />,
   },
   {
@@ -92,19 +91,19 @@ export function Features() {
                 whileHover={{ y: -5, transition: { duration: 0.2 } }}
               >
                 <div className="group h-full rounded-2xl border border-border/40 bg-card/50 p-6 transition-all hover:bg-card hover:shadow-lg">
-                    <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
-                      {feature.icon}
-                    </div>
-                    <h3 className="mb-2 flex items-center gap-2 text-xl font-bold">
-                      {feature.title}
-                      {feature.pro && (
-                        <span className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold">
-                          <Gem className="size-3" />
-                          Pro
-                        </span>
-                      )}
-                    </h3>
-                    <p className="text-muted-foreground">{feature.description}</p>
+                  <div className="mb-4 flex size-12 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                    {feature.icon}
+                  </div>
+                  <h3 className="mb-2 flex items-center gap-2 text-xl font-bold">
+                    {feature.title}
+                    {feature.pro && (
+                      <span className="bg-primary/10 text-primary inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold">
+                        <Gem className="size-3" />
+                        Pro
+                      </span>
+                    )}
+                  </h3>
+                  <p className="text-muted-foreground">{feature.description}</p>
                 </div>
               </motion.div>
             ))}

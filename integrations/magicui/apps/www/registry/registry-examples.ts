@@ -1,4 +1,4 @@
-import { type Registry } from "shadcn/schema"
+import { type Registry } from "shadcn/schema";
 
 export const examples: Registry["items"] = [
   {
@@ -71,8 +71,7 @@ export const examples: Registry["items"] = [
     name: "warp-background-demo",
     type: "registry:example",
     title: "Warp Background Demo",
-    description:
-      "Example showing a card with a time warping background effect.",
+    description: "Example showing a card with a time warping background effect.",
     registryDependencies: ["@magicui/warp-background"],
     files: [
       {
@@ -201,8 +200,7 @@ export const examples: Registry["items"] = [
     name: "progressive-blur-demo",
     type: "registry:example",
     title: "Progressive Blur Demo",
-    description:
-      "Example showing progressive blur effect for scrollable content.",
+    description: "Example showing progressive blur effect for scrollable content.",
     registryDependencies: ["@magicui/progressive-blur"],
     files: [
       {
@@ -268,8 +266,7 @@ export const examples: Registry["items"] = [
     name: "striped-pattern-dashed",
     type: "registry:example",
     title: "Striped Pattern (Dashed)",
-    description:
-      "Example showing a background striped pattern with a dashed stroke.",
+    description: "Example showing a background striped pattern with a dashed stroke.",
     registryDependencies: ["@magicui/striped-pattern"],
     files: [
       {
@@ -283,8 +280,7 @@ export const examples: Registry["items"] = [
     name: "striped-pattern-right",
     type: "registry:example",
     title: "Striped Pattern (Right)",
-    description:
-      "Example showing a background striped pattern slanting to the right using SVG.",
+    description: "Example showing a background striped pattern slanting to the right using SVG.",
     registryDependencies: ["@magicui/striped-pattern"],
     files: [
       {
@@ -376,8 +372,7 @@ export const examples: Registry["items"] = [
     name: "flickering-grid-rounded-demo",
     type: "registry:example",
     title: "Flickering Grid Rounded Demo",
-    description:
-      "Example showing a flickering grid background with rounded corners.",
+    description: "Example showing a flickering grid background with rounded corners.",
     registryDependencies: ["@magicui/flickering-grid"],
     files: [
       {
@@ -403,8 +398,7 @@ export const examples: Registry["items"] = [
     name: "hero-video-dialog-demo-top-in-bottom-out",
     type: "registry:example",
     title: "Hero Video Dialog Top In Bottom Out Demo",
-    description:
-      "Example showing a hero video dialog with top-in bottom-out animation.",
+    description: "Example showing a hero video dialog with top-in bottom-out animation.",
     registryDependencies: ["@magicui/hero-video-dialog"],
     files: [
       {
@@ -417,8 +411,7 @@ export const examples: Registry["items"] = [
     name: "code-comparison-demo",
     type: "registry:example",
     title: "Code Comparison Demo",
-    description:
-      "Example showing a component which compares two code snippets.",
+    description: "Example showing a component which compares two code snippets.",
     registryDependencies: ["@magicui/code-comparison"],
     files: [
       {
@@ -717,8 +710,7 @@ export const examples: Registry["items"] = [
     name: "interactive-grid-pattern-demo-2",
     type: "registry:example",
     title: "Interactive Grid Pattern Demo 2",
-    description:
-      "Second example showing an interactive grid pattern background.",
+    description: "Second example showing an interactive grid pattern background.",
     registryDependencies: ["@magicui/interactive-grid-pattern"],
     files: [
       {
@@ -758,13 +750,7 @@ export const examples: Registry["items"] = [
     type: "registry:example",
     title: "Border Beam Demo 3",
     description: "Example showing an animated border beam effect.",
-    registryDependencies: [
-      "button",
-      "card",
-      "input",
-      "label",
-      "@magicui/border-beam",
-    ],
+    registryDependencies: ["button", "card", "input", "label", "@magicui/border-beam"],
     files: [
       {
         path: "example/border-beam-demo-3.tsx",
@@ -882,8 +868,7 @@ export const examples: Registry["items"] = [
     name: "animated-gradient-text-demo-2",
     type: "registry:example",
     title: "Animated Gradient Text Demo 2",
-    description:
-      "Second example showing text with animated gradient backgrounds.",
+    description: "Second example showing text with animated gradient backgrounds.",
     registryDependencies: ["@magicui/animated-gradient-text"],
     files: [
       {
@@ -1080,8 +1065,7 @@ export const examples: Registry["items"] = [
     name: "typing-animation-demo-8",
     type: "registry:example",
     title: "Typing Animation Cursor Styles",
-    description:
-      "Example showing different cursor styles (line, block, underscore).",
+    description: "Example showing different cursor styles (line, block, underscore).",
     registryDependencies: ["@magicui/typing-animation"],
     files: [
       {
@@ -1537,8 +1521,7 @@ export const examples: Registry["items"] = [
     name: "file-tree-demo",
     type: "registry:example",
     title: "File Tree Demo",
-    description:
-      "Example showing a component that displays folder and file structure.",
+    description: "Example showing a component that displays folder and file structure.",
     registryDependencies: ["@magicui/file-tree"],
     files: [
       {
@@ -1720,8 +1703,7 @@ export const examples: Registry["items"] = [
     name: "terminal-demo-2",
     type: "registry:example",
     title: "Terminal Demo",
-    description:
-      "Example showing a terminal with animated text and custom delays",
+    description: "Example showing a terminal with animated text and custom delays",
     registryDependencies: ["@magicui/terminal"],
     files: [
       {
@@ -1789,8 +1771,7 @@ export const examples: Registry["items"] = [
   },
   {
     name: "light-rays-demo",
-    description:
-      "Demo of the light-rays component showcasing animated light rays",
+    description: "Demo of the light-rays component showcasing animated light rays",
     type: "registry:example",
     registryDependencies: ["@magicui/light-rays"],
     files: [
@@ -1876,4 +1857,4 @@ export const examples: Registry["items"] = [
       },
     ],
   },
-]
+];

@@ -4,17 +4,14 @@ import {
   type Path,
   PathApi,
   type Span,
-} from '../../interfaces';
-import type { Editor, ValueOf } from '../../interfaces/editor/editor-type';
-import type { NodeEntry } from '../../interfaces/node-entry';
-import { combineMatch, getAt, getMatch, getQueryOptions } from '../../utils';
+} from "../../interfaces";
+import type { Editor, ValueOf } from "../../interfaces/editor/editor-type";
+import type { NodeEntry } from "../../interfaces/node-entry";
+import { combineMatch, getAt, getMatch, getQueryOptions } from "../../utils";
 
 // Slate fork
-const previousBase = (
-  editor: Editor,
-  options: EditorPreviousOptions<ValueOf<Editor>>
-) => {
-  const { from = 'after', mode = 'lowest', voids = false } = options;
+const previousBase = (editor: Editor, options: EditorPreviousOptions<ValueOf<Editor>>) => {
+  const { from = "after", mode = "lowest", voids = false } = options;
   let match = getMatch(editor, options);
 
   const at = getAt(editor, options.at) ?? editor.selection;
@@ -26,7 +23,7 @@ const previousBase = (
   let start: Path | undefined;
 
   // FORK: from
-  if (from === 'parent' && PathApi.isPath(at) && at.length > 1) {
+  if (from === "parent" && PathApi.isPath(at) && at.length > 1) {
     start = at;
 
     match = combineMatch((_n, p) => {

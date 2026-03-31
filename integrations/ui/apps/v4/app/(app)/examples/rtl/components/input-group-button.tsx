@@ -1,21 +1,17 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { IconInfoCircle, IconStar } from "@tabler/icons-react"
+import { IconInfoCircle, IconStar } from "@tabler/icons-react";
+import * as React from "react";
 
-import { useLanguageContext } from "@/components/language-selector"
+import { useLanguageContext } from "@/components/language-selector";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/base-nova/ui-rtl/input-group"
-import { Label } from "@/styles/base-nova/ui-rtl/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/base-nova/ui-rtl/popover"
+} from "@/styles/base-nova/ui-rtl/input-group";
+import { Label } from "@/styles/base-nova/ui-rtl/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/base-nova/ui-rtl/popover";
 
 const translations = {
   ar: {
@@ -36,13 +32,13 @@ const translations = {
     favorite: "מועדף",
     currency: "₪",
   },
-}
+};
 
 export function InputGroupButtonExample() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
-  const [isFavorite, setIsFavorite] = React.useState(false)
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
   return (
     <div dir={t.dir} className="grid w-full max-w-sm gap-6">
@@ -54,13 +50,7 @@ export function InputGroupButtonExample() {
         <InputGroupAddon>
           <Popover>
             <PopoverTrigger
-              render={
-                <InputGroupButton
-                  variant="secondary"
-                  size="icon-xs"
-                  aria-label={t.info}
-                />
-              }
+              render={<InputGroupButton variant="secondary" size="icon-xs" aria-label={t.info} />}
             >
               <IconInfoCircle />
             </PopoverTrigger>
@@ -76,9 +66,7 @@ export function InputGroupButtonExample() {
             </PopoverContent>
           </Popover>
         </InputGroupAddon>
-        <InputGroupAddon className="text-muted-foreground">
-          {t.currency}
-        </InputGroupAddon>
+        <InputGroupAddon className="text-muted-foreground">{t.currency}</InputGroupAddon>
         <InputGroupAddon align="inline-end">
           <InputGroupButton
             onClick={() => setIsFavorite(!isFavorite)}
@@ -93,5 +81,5 @@ export function InputGroupButtonExample() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

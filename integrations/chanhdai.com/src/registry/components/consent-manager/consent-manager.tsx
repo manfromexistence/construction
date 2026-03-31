@@ -1,11 +1,7 @@
-import {
-  ConsentManagerDialog,
-  ConsentManagerProvider,
-  CookieBanner,
-} from "@c15t/nextjs"
+import { ConsentManagerDialog, ConsentManagerProvider, CookieBanner } from "@c15t/nextjs";
 
-import { buttonVariants } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export function ConsentManager({ children }: { children: React.ReactNode }) {
   return (
@@ -69,8 +65,7 @@ export function ConsentManager({ children }: { children: React.ReactNode }) {
               "--dialog-border-color-dark": "var(--border)",
 
               "--dialog-card-radius": "1rem",
-              "--dialog-card-shadow":
-                "0 0 0 1px var(--dialog-card-shadow-color)",
+              "--dialog-card-shadow": "0 0 0 1px var(--dialog-card-shadow-color)",
             },
             className:
               "[--dialog-card-shadow-color:var(--foreground)]/10 dark:[--dialog-card-shadow-color:var(--border)]",
@@ -83,8 +78,7 @@ export function ConsentManager({ children }: { children: React.ReactNode }) {
           },
           "dialog.title": {
             noStyle: true,
-            className:
-              "text-base leading-none font-medium tracking-tight text-foreground",
+            className: "text-base leading-none font-medium tracking-tight text-foreground",
           },
           "dialog.description": {
             noStyle: true,
@@ -106,8 +100,7 @@ export function ConsentManager({ children }: { children: React.ReactNode }) {
               "--dialog-branding-icon-height": "1.125rem",
               "--dialog-branding-font-size": "0.875rem",
 
-              "--dialog-branding-focus-color":
-                "color-mix(in oklab, var(--ring) 50%, transparent)",
+              "--dialog-branding-focus-color": "color-mix(in oklab, var(--ring) 50%, transparent)",
               "--dialog-branding-focus-color-dark":
                 "color-mix(in oklab, var(--ring) 50%, transparent)",
 
@@ -180,5 +173,5 @@ export function ConsentManager({ children }: { children: React.ReactNode }) {
 
       {children}
     </ConsentManagerProvider>
-  )
+  );
 }

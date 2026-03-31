@@ -1,8 +1,8 @@
-import { DOMEditor } from 'slate-dom';
+import { DOMEditor } from "slate-dom";
 
-import type { Path } from '../../interfaces';
-import type { Editor, EditorFindPathOptions } from '../../interfaces/editor';
-import type { TNode } from '../../interfaces/node';
+import type { Path } from "../../interfaces";
+import type { Editor, EditorFindPathOptions } from "../../interfaces/editor";
+import type { TNode } from "../../interfaces/node";
 
 export const findPath = (
   editor: Editor,

@@ -1,4 +1,4 @@
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Card,
   CardContent,
@@ -6,21 +6,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/styles/radix-nova/ui/card"
+} from "@/styles/radix-nova/ui/card";
 
 export function CardSmall() {
   return (
     <Card size="sm" className="mx-auto w-full max-w-sm">
       <CardHeader>
         <CardTitle>Small Card</CardTitle>
-        <CardDescription>
-          This card uses the small size variant.
-        </CardDescription>
+        <CardDescription>This card uses the small size variant.</CardDescription>
       </CardHeader>
       <CardContent>
         <p>
-          The card component supports a size prop that can be set to
-          &quot;sm&quot; for a more compact appearance.
+          The card component supports a size prop that can be set to &quot;sm&quot; for a more
+          compact appearance.
         </p>
       </CardContent>
       <CardFooter>
@@ -29,5 +27,5 @@ export function CardSmall() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

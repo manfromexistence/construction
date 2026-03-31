@@ -1,43 +1,37 @@
-import { promises as fsPromises } from "fs"
-import path from "path"
-import { getShadcnRegistryIndex } from "@/src/registry/api"
-import { SHADCN_URL } from "@/src/registry/constants"
-import { rawConfigSchema } from "@/src/schema"
-import { Framework, FRAMEWORKS } from "@/src/utils/frameworks"
-import { Config, getConfig, resolveConfigPaths } from "@/src/utils/get-config"
-import { getPackageInfo } from "@/src/utils/get-package-info"
-import fg from "fast-glob"
-import fs from "fs-extra"
-import { loadConfig } from "tsconfig-paths"
-import { z } from "zod"
+import fg from "fast-glob";
+import { promises as fsPromises } from "fs";
+import fs from "fs-extra";
+import path from "path";
+import { loadConfig } from "tsconfig-paths";
+import { z } from "zod";
+import { getShadcnRegistryIndex } from "@/src/registry/api";
+import { SHADCN_URL } from "@/src/registry/constants";
+import { rawConfigSchema } from "@/src/schema";
+import { FRAMEWORKS, Framework } from "@/src/utils/frameworks";
+import { Config, getConfig, resolveConfigPaths } from "@/src/utils/get-config";
+import { getPackageInfo } from "@/src/utils/get-package-info";
 
-export type TailwindVersion = "v3" | "v4" | null
+export type TailwindVersion = "v3" | "v4" | null;
 
 export type ProjectInfo = {
-  framework: Framework
-  isSrcDir: boolean
-  isRSC: boolean
-  isTsx: boolean
-  tailwindConfigFile: string | null
-  tailwindCssFile: string | null
-  tailwindVersion: TailwindVersion
-  frameworkVersion: string | null
-  aliasPrefix: string | null
-}
+  framework: Framework;
+  isSrcDir: boolean;
+  isRSC: boolean;
+  isTsx: boolean;
+  tailwindConfigFile: string | null;
+  tailwindCssFile: string | null;
+  tailwindVersion: TailwindVersion;
+  frameworkVersion: string | null;
+  aliasPrefix: string | null;
+};
 
-const PROJECT_SHARED_IGNORE = [
-  "**/node_modules/**",
-  ".next",
-  "public",
-  "dist",
-  "build",
-]
+const PROJECT_SHARED_IGNORE = ["**/node_modules/**", ".next", "public", "dist", "build"];
 
 const TS_CONFIG_SCHEMA = z.object({
   compilerOptions: z.object({
     paths: z.record(z.string().or(z.array(z.string()))),
   }),
-})
+});
 
 export async function getProjectInfo(
   cwd: string,
@@ -68,11 +62,9 @@ export async function getProjectInfo(
     getTailwindVersion(cwd),
     getTsConfigAliasPrefix(cwd),
     getPackageInfo(cwd, false),
-  ])
+  ]);
 
-  const isUsingAppDir = await fs.pathExists(
-    path.resolve(cwd, `${isSrcDir ? "src/" : ""}app`)
-  )
+  const isUsingAppDir = await fs.pathExists(path.resolve(cwd, `${isSrcDir ? "src/" : ""}app`));
 
   const type: ProjectInfo = {
     framework: FRAMEWORKS["manual"],
@@ -84,47 +76,38 @@ export async function getProjectInfo(
     tailwindVersion,
     frameworkVersion: null,
     aliasPrefix,
-  }
+  };
 
   // Next.js.
   if (configFiles.find((file) => file.startsWith("next.config."))?.length) {
-    type.framework = isUsingAppDir
-      ? FRAMEWORKS["next-app"]
-      : FRAMEWORKS["next-pages"]
-    type.isRSC = isUsingAppDir
-    type.frameworkVersion = await getFrameworkVersion(
-      type.framework,
-      packageJson
-    )
-    return type
+    type.framework = isUsingAppDir ? FRAMEWORKS["next-app"] : FRAMEWORKS["next-pages"];
+    type.isRSC = isUsingAppDir;
+    type.frameworkVersion = await getFrameworkVersion(type.framework, packageJson);
+    return type;
   }
 
   // Astro.
   if (configFiles.find((file) => file.startsWith("astro.config."))?.length) {
-    type.framework = FRAMEWORKS["astro"]
-    return type
+    type.framework = FRAMEWORKS["astro"];
+    return type;
   }
 
   // Gatsby.
   if (configFiles.find((file) => file.startsWith("gatsby-config."))?.length) {
-    type.framework = FRAMEWORKS["gatsby"]
-    return type
+    type.framework = FRAMEWORKS["gatsby"];
+    return type;
   }
 
   // Laravel.
   if (configFiles.find((file) => file.startsWith("composer.json"))?.length) {
-    type.framework = FRAMEWORKS["laravel"]
-    return type
+    type.framework = FRAMEWORKS["laravel"];
+    return type;
   }
 
   // Remix.
-  if (
-    Object.keys(packageJson?.dependencies ?? {}).find((dep) =>
-      dep.startsWith("@remix-run/")
-    )
-  ) {
-    type.framework = FRAMEWORKS["remix"]
-    return type
+  if (Object.keys(packageJson?.dependencies ?? {}).find((dep) => dep.startsWith("@remix-run/"))) {
+    type.framework = FRAMEWORKS["remix"];
+    return type;
   }
 
   // TanStack Start.
@@ -134,47 +117,42 @@ export async function getProjectInfo(
       ...Object.keys(packageJson?.devDependencies ?? {}),
     ].find((dep) => dep.startsWith("@tanstack/react-start"))
   ) {
-    type.framework = FRAMEWORKS["tanstack-start"]
-    return type
+    type.framework = FRAMEWORKS["tanstack-start"];
+    return type;
   }
 
   // React Router.
-  if (
-    configFiles.find((file) => file.startsWith("react-router.config."))?.length
-  ) {
-    type.framework = FRAMEWORKS["react-router"]
-    return type
+  if (configFiles.find((file) => file.startsWith("react-router.config."))?.length) {
+    type.framework = FRAMEWORKS["react-router"];
+    return type;
   }
 
   // Vite.
   // Some Remix templates also have a vite.config.* file.
   // We'll assume that it got caught by the Remix check above.
   if (configFiles.find((file) => file.startsWith("vite.config."))?.length) {
-    type.framework = FRAMEWORKS["vite"]
-    return type
+    type.framework = FRAMEWORKS["vite"];
+    return type;
   }
 
   // Vinxi-based (such as @tanstack/start and @solidjs/solid-start)
   // They are vite-based, and the same configurations used for Vite should work flawlessly
-  const appConfig = configFiles.find((file) => file.startsWith("app.config"))
+  const appConfig = configFiles.find((file) => file.startsWith("app.config"));
   if (appConfig?.length) {
-    const appConfigContents = await fs.readFile(
-      path.resolve(cwd, appConfig),
-      "utf8"
-    )
+    const appConfigContents = await fs.readFile(path.resolve(cwd, appConfig), "utf8");
     if (appConfigContents.includes("defineConfig")) {
-      type.framework = FRAMEWORKS["vite"]
-      return type
+      type.framework = FRAMEWORKS["vite"];
+      return type;
     }
   }
 
   // Expo.
   if (packageJson?.dependencies?.expo) {
-    type.framework = FRAMEWORKS["expo"]
-    return type
+    type.framework = FRAMEWORKS["expo"];
+    return type;
   }
 
-  return type
+  return type;
 }
 
 export async function getFrameworkVersion(
@@ -182,76 +160,65 @@ export async function getFrameworkVersion(
   packageJson: ReturnType<typeof getPackageInfo>
 ) {
   if (!packageJson) {
-    return null
+    return null;
   }
 
   // Only detect Next.js version for now.
   if (!["next-app", "next-pages"].includes(framework.name)) {
-    return null
+    return null;
   }
 
-  const version =
-    packageJson.dependencies?.next || packageJson.devDependencies?.next
+  const version = packageJson.dependencies?.next || packageJson.devDependencies?.next;
 
   if (!version) {
-    return null
+    return null;
   }
 
   // Extract full semver (major.minor.patch), handling ^, ~, etc.
-  const versionMatch = version.match(/^[\^~]?(\d+\.\d+\.\d+)/)
+  const versionMatch = version.match(/^[\^~]?(\d+\.\d+\.\d+)/);
   if (versionMatch) {
-    return versionMatch[1] // e.g., "16.0.0"
+    return versionMatch[1]; // e.g., "16.0.0"
   }
 
   // For ranges like ">=15.0.0 <16.0.0", extract the first version.
-  const rangeMatch = version.match(/(\d+\.\d+\.\d+)/)
+  const rangeMatch = version.match(/(\d+\.\d+\.\d+)/);
   if (rangeMatch) {
-    return rangeMatch[1]
+    return rangeMatch[1];
   }
 
   // For "latest", "canary", "rc", etc., return the tag as-is.
-  return version
+  return version;
 }
 
-export async function getTailwindVersion(
-  cwd: string
-): Promise<ProjectInfo["tailwindVersion"]> {
-  const [packageInfo, config] = await Promise.all([
-    getPackageInfo(cwd, false),
-    getConfig(cwd),
-  ])
+export async function getTailwindVersion(cwd: string): Promise<ProjectInfo["tailwindVersion"]> {
+  const [packageInfo, config] = await Promise.all([getPackageInfo(cwd, false), getConfig(cwd)]);
 
   // If the config file is empty, we can assume that it's a v4 project.
   if (config?.tailwind?.config === "") {
-    return "v4"
+    return "v4";
   }
 
-  if (
-    !packageInfo?.dependencies?.tailwindcss &&
-    !packageInfo?.devDependencies?.tailwindcss
-  ) {
-    return null
+  if (!packageInfo?.dependencies?.tailwindcss && !packageInfo?.devDependencies?.tailwindcss) {
+    return null;
   }
 
   if (
     /^(?:\^|~)?3(?:\.\d+)*(?:-.*)?$/.test(
-      packageInfo?.dependencies?.tailwindcss ||
-        packageInfo?.devDependencies?.tailwindcss ||
-        ""
+      packageInfo?.dependencies?.tailwindcss || packageInfo?.devDependencies?.tailwindcss || ""
     )
   ) {
-    return "v3"
+    return "v3";
   }
 
-  return "v4"
+  return "v4";
 }
 
 export async function getTailwindCssFile(cwd: string, configCssFile?: string) {
   // If the existing config has a known CSS file, check it first.
   if (configCssFile) {
-    const resolvedPath = path.resolve(cwd, configCssFile)
+    const resolvedPath = path.resolve(cwd, configCssFile);
     if (await fs.pathExists(resolvedPath)) {
-      return configCssFile
+      return configCssFile;
     }
   }
 
@@ -262,26 +229,25 @@ export async function getTailwindCssFile(cwd: string, configCssFile?: string) {
       ignore: PROJECT_SHARED_IGNORE,
     }),
     getTailwindVersion(cwd),
-  ])
+  ]);
 
   if (!files.length) {
-    return null
+    return null;
   }
 
-  const needle =
-    tailwindVersion === "v4" ? `@import "tailwindcss"` : "@tailwind base"
+  const needle = tailwindVersion === "v4" ? `@import "tailwindcss"` : "@tailwind base";
   for (const file of files) {
-    const contents = await fs.readFile(path.resolve(cwd, file), "utf8")
+    const contents = await fs.readFile(path.resolve(cwd, file), "utf8");
     if (
       contents.includes(`@import "tailwindcss"`) ||
       contents.includes(`@import 'tailwindcss'`) ||
       contents.includes(`@tailwind base`)
     ) {
-      return file
+      return file;
     }
   }
 
-  return null
+  return null;
 }
 
 export async function getTailwindConfigFile(cwd: string) {
@@ -289,23 +255,20 @@ export async function getTailwindConfigFile(cwd: string) {
     cwd,
     deep: 3,
     ignore: PROJECT_SHARED_IGNORE,
-  })
+  });
 
   if (!files.length) {
-    return null
+    return null;
   }
 
-  return files[0]
+  return files[0];
 }
 
 export async function getTsConfigAliasPrefix(cwd: string) {
-  const tsConfig = await loadConfig(cwd)
+  const tsConfig = await loadConfig(cwd);
 
-  if (
-    tsConfig?.resultType === "failed" ||
-    !Object.entries(tsConfig?.paths).length
-  ) {
-    return null
+  if (tsConfig?.resultType === "failed" || !Object.entries(tsConfig?.paths).length) {
+    return null;
   }
 
   // This assume that the first alias is the prefix.
@@ -316,12 +279,12 @@ export async function getTsConfigAliasPrefix(cwd: string) {
       paths.includes("./app/*") ||
       paths.includes("./resources/js/*") // Laravel.
     ) {
-      return alias.replace(/\/\*$/, "") ?? null
+      return alias.replace(/\/\*$/, "") ?? null;
     }
   }
 
   // Use the first alias as the prefix.
-  return Object.keys(tsConfig?.paths)?.[0].replace(/\/\*$/, "") ?? null
+  return Object.keys(tsConfig?.paths)?.[0].replace(/\/\*$/, "") ?? null;
 }
 
 export async function isTypeScriptProject(cwd: string) {
@@ -329,35 +292,31 @@ export async function isTypeScriptProject(cwd: string) {
     cwd,
     deep: 1,
     ignore: PROJECT_SHARED_IGNORE,
-  })
+  });
 
-  return files.length > 0
+  return files.length > 0;
 }
 
 export async function getTsConfig(cwd: string) {
-  for (const fallback of [
-    "tsconfig.json",
-    "tsconfig.web.json",
-    "tsconfig.app.json",
-  ]) {
-    const filePath = path.resolve(cwd, fallback)
+  for (const fallback of ["tsconfig.json", "tsconfig.web.json", "tsconfig.app.json"]) {
+    const filePath = path.resolve(cwd, fallback);
     if (!(await fs.pathExists(filePath))) {
-      continue
+      continue;
     }
 
     // We can't use fs.readJSON because it doesn't support comments.
-    const contents = await fs.readFile(filePath, "utf8")
-    const cleanedContents = contents.replace(/\/\*\s*\*\//g, "")
-    const result = TS_CONFIG_SCHEMA.safeParse(JSON.parse(cleanedContents))
+    const contents = await fs.readFile(filePath, "utf8");
+    const cleanedContents = contents.replace(/\/\*\s*\*\//g, "");
+    const result = TS_CONFIG_SCHEMA.safeParse(JSON.parse(cleanedContents));
 
     if (result.error) {
-      continue
+      continue;
     }
 
-    return result.data
+    return result.data;
   }
 
-  return null
+  return null;
 }
 
 export async function getProjectConfig(
@@ -367,13 +326,11 @@ export async function getProjectConfig(
   // Check for existing component config.
   const [existingConfig, projectInfo] = await Promise.all([
     getConfig(cwd),
-    !defaultProjectInfo
-      ? getProjectInfo(cwd)
-      : Promise.resolve(defaultProjectInfo),
-  ])
+    !defaultProjectInfo ? getProjectInfo(cwd) : Promise.resolve(defaultProjectInfo),
+  ]);
 
   if (existingConfig) {
-    return existingConfig
+    return existingConfig;
   }
 
   if (
@@ -381,7 +338,7 @@ export async function getProjectConfig(
     !projectInfo.tailwindCssFile ||
     (projectInfo.tailwindVersion === "v3" && !projectInfo.tailwindConfigFile)
   ) {
-    return null
+    return null;
   }
 
   const config: z.infer<typeof rawConfigSchema> = {
@@ -404,45 +361,45 @@ export async function getProjectConfig(
       lib: `${projectInfo.aliasPrefix}/lib`,
       utils: `${projectInfo.aliasPrefix}/lib/utils`,
     },
-  }
+  };
 
-  return await resolveConfigPaths(cwd, config)
+  return await resolveConfigPaths(cwd, config);
 }
 
 export async function getProjectTailwindVersionFromConfig(config: {
-  resolvedPaths: Pick<Config["resolvedPaths"], "cwd">
+  resolvedPaths: Pick<Config["resolvedPaths"], "cwd">;
 }): Promise<TailwindVersion> {
   if (!config.resolvedPaths?.cwd) {
-    return "v3"
+    return "v3";
   }
 
-  const projectInfo = await getProjectInfo(config.resolvedPaths.cwd)
+  const projectInfo = await getProjectInfo(config.resolvedPaths.cwd);
 
   if (!projectInfo?.tailwindVersion) {
-    return null
+    return null;
   }
 
-  return projectInfo.tailwindVersion
+  return projectInfo.tailwindVersion;
 }
 
 export async function getProjectComponents(cwd: string) {
-  const existingConfig = await getConfig(cwd)
+  const existingConfig = await getConfig(cwd);
   if (!existingConfig) {
-    return []
+    return [];
   }
 
-  const resolvedConfig = await resolveConfigPaths(cwd, existingConfig)
-  const uiDir = resolvedConfig.resolvedPaths.ui
+  const resolvedConfig = await resolveConfigPaths(cwd, existingConfig);
+  const uiDir = resolvedConfig.resolvedPaths.ui;
   if (!fs.existsSync(uiDir)) {
-    return []
+    return [];
   }
 
-  const registryIndex = await getShadcnRegistryIndex()
-  const registryNames = new Set(registryIndex?.map((item) => item.name) ?? [])
+  const registryIndex = await getShadcnRegistryIndex();
+  const registryNames = new Set(registryIndex?.map((item) => item.name) ?? []);
 
-  const files = await fsPromises.readdir(uiDir)
+  const files = await fsPromises.readdir(uiDir);
   return files
     .filter((f) => /\.(tsx|jsx)$/.test(f))
     .map((f) => path.basename(f, path.extname(f)))
-    .filter((name) => registryNames.has(name))
+    .filter((name) => registryNames.has(name));
 }

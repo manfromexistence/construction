@@ -1,12 +1,12 @@
 import {
+  combineMatchOptions,
   type EditorNodesOptions,
+  KEYS,
   type SlateEditor,
+  TextApi,
   type TSuggestionText,
   type ValueOf,
-  combineMatchOptions,
-  KEYS,
-  TextApi,
-} from 'platejs';
+} from "platejs";
 
 export const findInlineSuggestionNode = <E extends SlateEditor>(
   editor: E,

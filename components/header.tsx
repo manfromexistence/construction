@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+import { useState } from "react";
 import DiscordIcon from "@/assets/discord.svg";
 import FigmaIcon from "@/assets/figma.svg";
 import GitHubIcon from "@/assets/github.svg";
@@ -12,8 +14,6 @@ import { Separator } from "@/components/ui/separator";
 import { UserProfileDropdown } from "@/components/user-profile-dropdown";
 import { useGithubStars } from "@/hooks/use-github-stars";
 import { formatCompactNumber } from "@/utils/format";
-import Link from "next/link";
-import { useState } from "react";
 import { GetProCTA } from "./get-pro-cta";
 
 export function Header() {

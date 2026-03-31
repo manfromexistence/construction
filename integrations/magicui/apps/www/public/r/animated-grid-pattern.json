@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Animated Grid Pattern",
   "description": "A animated background grid pattern made with SVGs, fully customizable using Tailwind CSS.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/animated-grid-pattern.tsx",

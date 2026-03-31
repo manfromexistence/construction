@@ -19,7 +19,7 @@ const REQUIRED_SHADCN_VARS = [
   "--border",
   "--input",
   "--ring",
-]
+];
 
 function checkShadcnSupport() {
   const rootStyles = getComputedStyle(document.documentElement);
@@ -27,7 +27,7 @@ function checkShadcnSupport() {
     (v) => rootStyles.getPropertyValue(v).trim() !== ""
   );
   return { supported: hasSupport };
-};
+}
 
 // ----- FONT LOADING UTILITIES -----
 const DEFAULT_FONT_WEIGHTS = ["400", "500", "600", "700"];
@@ -37,8 +37,15 @@ function extractFontFamily(fontFamilyValue) {
   const firstFont = fontFamilyValue.split(",")[0].trim();
   const cleanFont = firstFont.replace(/['"]/g, "");
   const systemFonts = [
-    "ui-sans-serif", "ui-serif", "ui-monospace", "system-ui",
-    "sans-serif", "serif", "monospace", "cursive", "fantasy"
+    "ui-sans-serif",
+    "ui-serif",
+    "ui-monospace",
+    "system-ui",
+    "sans-serif",
+    "serif",
+    "monospace",
+    "cursive",
+    "fantasy",
   ];
   if (systemFonts.includes(cleanFont.toLowerCase())) return null;
   return cleanFont;
@@ -47,7 +54,7 @@ function extractFontFamily(fontFamilyValue) {
 function buildFontCssUrl(family, weights) {
   weights = weights || DEFAULT_FONT_WEIGHTS;
   const encodedFamily = encodeURIComponent(family);
-  const weightsParam = weights.join(";"); 
+  const weightsParam = weights.join(";");
   return `https://fonts.googleapis.com/css2?family=${encodedFamily}:wght@${weightsParam}&display=swap`;
 }
 
@@ -67,7 +74,7 @@ function overrideFontClasses(root, fonts) {
   const doc = root.ownerDocument || document;
   const styleId = "tweakcn-font-overrides";
   let styleElement = doc.getElementById(styleId);
-  
+
   // Create style element if it doesn't exist
   if (!styleElement) {
     styleElement = doc.createElement("style");
@@ -91,9 +98,8 @@ function overrideFontClasses(root, fonts) {
 }
 
 function overrideShadowClass(root, themeStyles, mode) {
-
   const getShadowMap = (themeStyles, mode) => {
-    const styles = themeStyles[mode]
+    const styles = themeStyles[mode];
 
     const shadowColor = styles["shadow-color"];
     const offsetX = styles["shadow-offset-x"];
@@ -151,7 +157,7 @@ function overrideShadowClass(root, themeStyles, mode) {
   const doc = root.ownerDocument || document;
   const styleId = "tweakcn-shadow-overrides";
   let styleElement = doc.getElementById(styleId);
-  
+
   // Create style element if it doesn't exist
   if (!styleElement) {
     styleElement = doc.createElement("style");
@@ -159,7 +165,7 @@ function overrideShadowClass(root, themeStyles, mode) {
     doc.head.appendChild(styleElement);
   }
 
-  const shadowMap = getShadowMap(themeStyles, mode)
+  const shadowMap = getShadowMap(themeStyles, mode);
 
   // Build CSS rules for font class overrides
   const cssRules = [];
@@ -177,13 +183,13 @@ function loadThemeFonts(root, themeStyles) {
       serif: themeStyles["font-serif"],
       mono: themeStyles["font-mono"],
     };
-  
-     Object.entries(currentFonts).forEach(([_type, fontValue]) => {
+
+    Object.entries(currentFonts).forEach(([_type, fontValue]) => {
       const fontFamily = extractFontFamily(fontValue);
       if (fontFamily) {
         loadGoogleFont(fontFamily, DEFAULT_FONT_WEIGHTS);
       }
-    });    
+    });
 
     // Override font classes with theme fonts
     overrideFontClasses(root, currentFonts);
@@ -197,11 +203,11 @@ function applyStyleProperty(root, key, value) {
   if (typeof value === "string" && value.trim()) {
     root.style.setProperty(`--${key}`, value);
   }
-};
+}
 
 function updateThemeModeClass(root, mode) {
   root.classList.toggle("dark", mode === "dark");
-};
+}
 
 function applyThemeStyles(root, themeStyles, mode) {
   updateThemeModeClass(root, mode);
@@ -219,9 +225,9 @@ function applyThemeStyles(root, themeStyles, mode) {
     }
   }
 
-  loadThemeFonts(root, lightStyles);  
-  overrideShadowClass(root, themeStyles, mode)
-};
+  loadThemeFonts(root, lightStyles);
+  overrideShadowClass(root, themeStyles, mode);
+}
 
 function applyTheme(themeState) {
   const root = document.documentElement;
@@ -230,9 +236,9 @@ function applyTheme(themeState) {
     return;
   }
 
-  const { currentMode: mode, styles: themeStyles } = themeState; 
+  const { currentMode: mode, styles: themeStyles } = themeState;
   applyThemeStyles(root, themeStyles, mode);
-};
+}
 
 // ----- MESSAGE SENDING -----
 function sendMessageToParent(message) {
@@ -243,7 +249,7 @@ function sendMessageToParent(message) {
       console.warn("Tweakcn Embed: Failed to send message to parent:", error);
     }
   }
-};
+}
 
 const TWEAKCN_MESSAGE = {
   PING: "TWEAKCN_PING",
@@ -259,9 +265,9 @@ const TWEAKCN_MESSAGE = {
 // ----- MAIN SCRIPT -----
 (() => {
   "use strict";
-  
+
   // Prevent multiple initialization
-  if (window.tweakcnEmbed) return; 
+  if (window.tweakcnEmbed) return;
 
   const handleMessage = (event) => {
     // Verify the message is from the parent window
@@ -270,12 +276,17 @@ const TWEAKCN_MESSAGE = {
     if (!event.data || typeof event.data.type !== "string") return;
 
     // TODO: Remove localhost once this is live
-    const ALLOWED_ORIGINS = ['https://tweakcn.com', 'http://localhost:3000'];
-    if (!ALLOWED_ORIGINS.includes(event.origin)){
-      sendMessageToParent({ type: TWEAKCN_MESSAGE.EMBED_ERROR, payload: { error: "Origin not allowed. Preview failed to establish the connection with tweakcn." } });
+    const ALLOWED_ORIGINS = ["https://tweakcn.com", "http://localhost:3000"];
+    if (!ALLOWED_ORIGINS.includes(event.origin)) {
+      sendMessageToParent({
+        type: TWEAKCN_MESSAGE.EMBED_ERROR,
+        payload: {
+          error: "Origin not allowed. Preview failed to establish the connection with tweakcn.",
+        },
+      });
       return;
-    } ;    
-    
+    }
+
     const { type, payload } = event.data;
 
     switch (type) {
@@ -309,8 +320,11 @@ const TWEAKCN_MESSAGE = {
   // ----- NAVIGATION TRACKING -----
   const emitNavigationUpdate = () => {
     try {
-      sendMessageToParent({ type: TWEAKCN_MESSAGE.NAVIGATION_UPDATE, payload: { url: window.location.href } });
-    } catch (e) {
+      sendMessageToParent({
+        type: TWEAKCN_MESSAGE.NAVIGATION_UPDATE,
+        payload: { url: window.location.href },
+      });
+    } catch (_e) {
       // noop
     }
   };
@@ -335,7 +349,7 @@ const TWEAKCN_MESSAGE = {
   // Initial and subsequent navigation events
   try {
     patchHistory();
-  } catch (e) {}
+  } catch (_e) {}
   window.addEventListener("popstate", emitNavigationUpdate);
   window.addEventListener("hashchange", emitNavigationUpdate);
 
@@ -351,4 +365,4 @@ const TWEAKCN_MESSAGE = {
   // Announce that the embed script is ready and send initial URL
   sendMessageToParent({ type: TWEAKCN_MESSAGE.EMBED_LOADED });
   emitNavigationUpdate();
-})(); 
+})();

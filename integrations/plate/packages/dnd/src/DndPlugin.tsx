@@ -1,23 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
+import type { Path, PluginConfig } from "platejs";
+import { KEYS } from "platejs";
+import { createTPlatePlugin, type PlateEditor } from "platejs/react";
+import React, { useCallback, useEffect } from "react";
+import type { DropTargetMonitor } from "react-dnd";
+import { DndScroller, type ScrollerProps } from "./components/Scroller";
+import type { DragItemNode, DropLineDirection, FileDragItemNode } from "./types";
 
-import type { Path, PluginConfig } from 'platejs';
-import type { DropTargetMonitor } from 'react-dnd';
-
-import { KEYS } from 'platejs';
-import { type PlateEditor, createTPlatePlugin } from 'platejs/react';
-
-import type {
-  DragItemNode,
-  DropLineDirection,
-  FileDragItemNode,
-} from './types';
-
-import { type ScrollerProps, DndScroller } from './components/Scroller';
-
-export const DRAG_ITEM_BLOCK = 'block';
+export const DRAG_ITEM_BLOCK = "block";
 
 export type DndConfig = PluginConfig<
-  'dnd',
+  "dnd",
   {
     _isOver?: boolean;
     draggingId?: string[] | string | null;
@@ -45,41 +37,39 @@ export const DndPlugin = createTPlatePlugin<DndConfig>({
   editOnly: true,
   handlers: {
     onDragEnd: ({ editor, plugin }) => {
-      editor.setOption(plugin, 'isDragging', false);
-      editor.setOption(plugin, 'dropTarget', { id: null, line: '' });
+      editor.setOption(plugin, "isDragging", false);
+      editor.setOption(plugin, "dropTarget", { id: null, line: "" });
     },
     onDragEnter: ({ editor, plugin }) => {
-      editor.setOption(plugin, '_isOver', true);
+      editor.setOption(plugin, "_isOver", true);
     },
     onDragStart: ({ editor, event, plugin }) => {
       const target = event.target as HTMLElement;
 
       const dataTransfer = (event as React.DragEvent).dataTransfer!;
-      dataTransfer.effectAllowed = 'move';
-      dataTransfer.dropEffect = 'move';
+      dataTransfer.effectAllowed = "move";
+      dataTransfer.dropEffect = "move";
 
       const id = target.dataset.blockId;
 
       if (!id) return;
 
-      editor.setOption(plugin, 'draggingId', id);
-      editor.setOption(plugin, 'isDragging', true);
-      editor.setOption(plugin, '_isOver', true);
+      editor.setOption(plugin, "draggingId", id);
+      editor.setOption(plugin, "isDragging", true);
+      editor.setOption(plugin, "_isOver", true);
     },
     onDrop: ({ getOptions }) => getOptions().isDragging,
     onFocus: ({ editor, plugin }) => {
-      editor.setOption(plugin, 'isDragging', false);
-      editor.setOption(plugin, 'dropTarget', { id: null, line: '' });
-      editor.setOption(plugin, '_isOver', false);
-      editor
-        .getOption(plugin, 'multiplePreviewRef')
-        ?.current?.replaceChildren();
+      editor.setOption(plugin, "isDragging", false);
+      editor.setOption(plugin, "dropTarget", { id: null, line: "" });
+      editor.setOption(plugin, "_isOver", false);
+      editor.getOption(plugin, "multiplePreviewRef")?.current?.replaceChildren();
     },
   },
   options: {
     _isOver: false,
     draggingId: null,
-    dropTarget: { id: null, line: '' },
+    dropTarget: { id: null, line: "" },
     isDragging: false,
     multiplePreviewRef: null,
   },
@@ -94,11 +84,8 @@ export const DndPlugin = createTPlatePlugin<DndConfig>({
         if (e.target instanceof Node) {
           const editorDOMNode = editor.api.toDOMNode(editor);
 
-          if (
-            editorDOMNode &&
-            !(e.target === editorDOMNode || editorDOMNode.contains(e.target))
-          ) {
-            setOption('dropTarget', undefined);
+          if (editorDOMNode && !(e.target === editorDOMNode || editorDOMNode.contains(e.target))) {
+            setOption("dropTarget", undefined);
           }
         }
       },
@@ -110,17 +97,17 @@ export const DndPlugin = createTPlatePlugin<DndConfig>({
     // the editor. Needed, if the drag did not start inside the editor, but for example by dragging a
     // file from the filesystem
     const handleDrop = useCallback(() => {
-      setOption('_isOver', false);
-      setOption('dropTarget', undefined);
+      setOption("_isOver", false);
+      setOption("dropTarget", undefined);
     }, [setOption]);
 
     useEffect(() => {
-      document.addEventListener('dragleave', handleDragLeave, true);
-      document.addEventListener('drop', handleDrop, true);
+      document.addEventListener("dragleave", handleDragLeave, true);
+      document.addEventListener("drop", handleDrop, true);
 
       return () => {
-        document.removeEventListener('dragleave', handleDragLeave, true);
-        document.removeEventListener('drop', handleDrop, true);
+        document.removeEventListener("dragleave", handleDragLeave, true);
+        document.removeEventListener("drop", handleDrop, true);
       };
     }, [handleDragLeave, handleDrop]);
   },

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 // biome-ignore lint/nursery/noUnusedExpressions: test
 jsx;
@@ -25,19 +25,19 @@ export const tableInput = Object.freeze([
     children: [
       {
         children: [
-          { children: [{ text: 'A1' }], type: 'td' },
-          { children: [{ text: 'B1' }], type: 'td' },
+          { children: [{ text: "A1" }], type: "td" },
+          { children: [{ text: "B1" }], type: "td" },
         ],
-        type: 'tr',
+        type: "tr",
       },
       {
         children: [
-          { children: [{ text: 'A2' }], type: 'td' },
-          { children: [{ text: 'B2' }], type: 'td' },
+          { children: [{ text: "A2" }], type: "td" },
+          { children: [{ text: "B2" }], type: "td" },
         ],
-        type: 'tr',
+        type: "tr",
       },
     ],
-    type: 'table',
+    type: "table",
   },
 ]) as any;

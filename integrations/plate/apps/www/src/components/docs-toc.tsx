@@ -1,17 +1,16 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { IconMenu3 } from "@tabler/icons-react";
+import * as React from "react";
 
-import { IconMenu3 } from '@tabler/icons-react';
-
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 function useActiveItem(itemIds: string[]) {
   const [activeId, setActiveId] = React.useState<string | null>(null);
@@ -25,7 +24,7 @@ function useActiveItem(itemIds: string[]) {
           }
         }
       },
-      { rootMargin: '0% 0% -80% 0%' }
+      { rootMargin: "0% 0% -80% 0%" }
     );
 
     for (const id of itemIds ?? []) {
@@ -51,7 +50,7 @@ function useActiveItem(itemIds: string[]) {
 export function DocsTableOfContents({
   className,
   toc,
-  variant = 'list',
+  variant = "list",
 }: {
   toc: {
     depth: number;
@@ -59,35 +58,25 @@ export function DocsTableOfContents({
     title?: React.ReactNode;
   }[];
   className?: string;
-  variant?: 'dropdown' | 'list';
+  variant?: "dropdown" | "list";
 }) {
   const [open, setOpen] = React.useState(false);
-  const itemIds = React.useMemo(
-    () => toc.map((item) => item.url.replace('#', '')),
-    [toc]
-  );
+  const itemIds = React.useMemo(() => toc.map((item) => item.url.replace("#", "")), [toc]);
   const activeHeading = useActiveItem(itemIds);
 
   if (!toc?.length) {
     return null;
   }
 
-  if (variant === 'dropdown') {
+  if (variant === "dropdown") {
     return (
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
-          <Button
-            size="sm"
-            variant="outline"
-            className={cn('h-8 md:h-7', className)}
-          >
+          <Button size="sm" variant="outline" className={cn("h-8 md:h-7", className)}>
             <IconMenu3 /> On This Page
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="no-scrollbar max-h-[70svh]"
-          align="start"
-        >
+        <DropdownMenuContent className="no-scrollbar max-h-[70svh]" align="start">
           {toc.map((item) => (
             <DropdownMenuItem
               key={item.url}
@@ -107,10 +96,8 @@ export function DocsTableOfContents({
   }
 
   return (
-    <div className={cn('flex flex-col gap-2 p-4 pt-0 text-sm', className)}>
-      <p className="sticky top-0 h-6 bg-background text-muted-foreground text-xs">
-        On This Page
-      </p>
+    <div className={cn("flex flex-col gap-2 p-4 pt-0 text-sm", className)}>
+      <p className="sticky top-0 h-6 bg-background text-muted-foreground text-xs">On This Page</p>
       {toc.map((item) => (
         <a
           key={item.url}

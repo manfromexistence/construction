@@ -1,32 +1,30 @@
-import React, { useId } from 'react';
-
-import type { EditableProps } from '../../lib/types/EditableProps';
-import type { PlateEditor } from '../editor/PlateEditor';
-
-import { usePlateInstancesWarn } from '../../internal/hooks/usePlateInstancesWarn';
-import { type PlateStoreState, PlateStoreProvider } from '../stores';
+import React, { useId } from "react";
+import { usePlateInstancesWarn } from "../../internal/hooks/usePlateInstancesWarn";
+import type { EditableProps } from "../../lib/types/EditableProps";
+import type { PlateEditor } from "../editor/PlateEditor";
+import { PlateStoreProvider, type PlateStoreState } from "../stores";
 
 export interface PlateProps<E extends PlateEditor = PlateEditor>
   extends Partial<
     Pick<
       PlateStoreState<E>,
-      | 'decorate'
-      | 'onChange'
-      | 'onNodeChange'
-      | 'onSelectionChange'
-      | 'onTextChange'
-      | 'onValueChange'
-      | 'primary'
-      | 'readOnly'
+      | "decorate"
+      | "onChange"
+      | "onNodeChange"
+      | "onSelectionChange"
+      | "onTextChange"
+      | "onValueChange"
+      | "primary"
+      | "readOnly"
     >
   > {
   children: React.ReactNode;
 
   editor: E | null;
 
-  renderElement?: EditableProps['renderElement'];
+  renderElement?: EditableProps["renderElement"];
 
-  renderLeaf?: EditableProps['renderLeaf'];
+  renderLeaf?: EditableProps["renderLeaf"];
 
   suppressInstanceWarning?: boolean;
 }
@@ -72,9 +70,7 @@ function PlateInner({
   );
 }
 
-export function Plate<E extends PlateEditor = PlateEditor>(
-  props: PlateProps<E>
-) {
+export function Plate<E extends PlateEditor = PlateEditor>(props: PlateProps<E>) {
   const id = useId();
 
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -84,7 +80,7 @@ export function Plate<E extends PlateEditor = PlateEditor>(
 
   if (!props.editor) return null;
 
-  props.editor.meta.uid = `e-${id.replaceAll(':', '')}`;
+  props.editor.meta.uid = `e-${id.replaceAll(":", "")}`;
 
   return (
     <PlateInner

@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
-
+import { defaultThemeState } from "@/config/theme";
+import { ThemeStyles } from "@/types/theme";
 import { generateThemeRegistryItemFromStyles } from "@/utils/registry/themes";
 import { generateV0RegistryPayload } from "@/utils/registry/v0";
 import { defaultPresets } from "@/utils/theme-presets";
-import { defaultThemeState } from "@/config/theme";
-import { ThemeStyles } from "@/types/theme";
 
 const THEMES_DIR = path.join(process.cwd(), "public", "r", "themes");
 const V0_DIR = path.join(process.cwd(), "public", "r", "v0");

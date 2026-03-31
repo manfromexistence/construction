@@ -1,8 +1,7 @@
-import React from 'react';
+import { fireEvent, render } from "@testing-library/react";
+import React from "react";
 
-import { fireEvent, render } from '@testing-library/react';
-
-import { DEFAULT_IGNORE_CLASS, useOnClickOutside } from './useOnClickOutside';
+import { DEFAULT_IGNORE_CLASS, useOnClickOutside } from "./useOnClickOutside";
 
 const renderUseOnClickOutside = ({
   disabled,
@@ -46,13 +45,13 @@ const renderUseOnClickOutside = ({
 
   return {
     getCallCount: () => callCount,
-    inside: view.getByTestId('inside'),
-    outside: view.getByTestId('outside'),
+    inside: view.getByTestId("inside"),
+    outside: view.getByTestId("outside"),
   };
 };
 
-describe('useOnClickOutside', () => {
-  it('triggers on outside clicks', () => {
+describe("useOnClickOutside", () => {
+  it("triggers on outside clicks", () => {
     const { getCallCount, outside } = renderUseOnClickOutside();
 
     fireEvent.mouseDown(outside);
@@ -60,7 +59,7 @@ describe('useOnClickOutside', () => {
     expect(getCallCount()).toBe(1);
   });
 
-  it('does not trigger on inside clicks', () => {
+  it("does not trigger on inside clicks", () => {
     const { getCallCount, inside } = renderUseOnClickOutside();
 
     fireEvent.mouseDown(inside);
@@ -68,7 +67,7 @@ describe('useOnClickOutside', () => {
     expect(getCallCount()).toBe(0);
   });
 
-  it('ignores clicks on elements with the ignore class', () => {
+  it("ignores clicks on elements with the ignore class", () => {
     const { getCallCount, outside } = renderUseOnClickOutside({
       ignoreClass: DEFAULT_IGNORE_CLASS,
       outsideClassName: DEFAULT_IGNORE_CLASS,
@@ -79,7 +78,7 @@ describe('useOnClickOutside', () => {
     expect(getCallCount()).toBe(0);
   });
 
-  it('does not register listeners when disabled', () => {
+  it("does not register listeners when disabled", () => {
     const { getCallCount, outside } = renderUseOnClickOutside({
       disabled: true,
     });
@@ -89,9 +88,9 @@ describe('useOnClickOutside', () => {
     expect(getCallCount()).toBe(0);
   });
 
-  it('uses custom eventTypes when provided', () => {
+  it("uses custom eventTypes when provided", () => {
     const { getCallCount, outside } = renderUseOnClickOutside({
-      eventTypes: ['mouseup'],
+      eventTypes: ["mouseup"],
     });
 
     fireEvent.mouseDown(outside);
@@ -100,12 +99,12 @@ describe('useOnClickOutside', () => {
     expect(getCallCount()).toBe(1);
   });
 
-  it('ignores scrollbar clicks when excludeScrollbar is enabled', () => {
-    Object.defineProperty(document.documentElement, 'clientWidth', {
+  it("ignores scrollbar clicks when excludeScrollbar is enabled", () => {
+    Object.defineProperty(document.documentElement, "clientWidth", {
       configurable: true,
       value: 100,
     });
-    Object.defineProperty(document.documentElement, 'clientHeight', {
+    Object.defineProperty(document.documentElement, "clientHeight", {
       configurable: true,
       value: 100,
     });
@@ -115,7 +114,7 @@ describe('useOnClickOutside', () => {
     });
 
     document.dispatchEvent(
-      new MouseEvent('mousedown', {
+      new MouseEvent("mousedown", {
         bubbles: true,
         clientX: 101,
         clientY: 10,
@@ -125,7 +124,7 @@ describe('useOnClickOutside', () => {
     expect(getCallCount()).toBe(0);
   });
 
-  it('supports explicit refs', () => {
+  it("supports explicit refs", () => {
     const { getCallCount, inside, outside } = renderUseOnClickOutside({
       useExplicitRefs: true,
     });

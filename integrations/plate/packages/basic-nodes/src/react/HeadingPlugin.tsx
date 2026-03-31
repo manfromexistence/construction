@@ -1,4 +1,4 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
 import {
   BaseH1Plugin,
@@ -8,7 +8,7 @@ import {
   BaseH5Plugin,
   BaseH6Plugin,
   BaseHeadingPlugin,
-} from '../lib/BaseHeadingPlugin';
+} from "../lib/BaseHeadingPlugin";
 
 export const HeadingPlugin = toPlatePlugin(BaseHeadingPlugin);
 

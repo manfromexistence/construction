@@ -1,15 +1,15 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsx;
 
-describe('select', () => {
-  describe('when edge option', () => {
-    describe('block edges', () => {
-      it('select end of block', () => {
+describe("select", () => {
+  describe("when edge option", () => {
+    describe("block edges", () => {
+      it("select end of block", () => {
         const editor = createEditor(
           (
             <editor>
@@ -22,7 +22,7 @@ describe('select', () => {
           ) as any
         );
 
-        editor.tf.select(editor.selection!, { edge: 'end' });
+        editor.tf.select(editor.selection!, { edge: "end" });
 
         expect(editor.selection).toEqual({
           anchor: { offset: 4, path: [0, 0] },
@@ -30,7 +30,7 @@ describe('select', () => {
         });
       });
 
-      it('select start of block', () => {
+      it("select start of block", () => {
         const editor = createEditor(
           (
             <editor>
@@ -43,7 +43,7 @@ describe('select', () => {
           ) as any
         );
 
-        editor.tf.select(editor.selection!, { edge: 'start' });
+        editor.tf.select(editor.selection!, { edge: "start" });
 
         expect(editor.selection).toEqual({
           anchor: { offset: 0, path: [0, 0] },
@@ -51,7 +51,7 @@ describe('select', () => {
         });
       });
 
-      it('select edge of specified block', () => {
+      it("select edge of specified block", () => {
         const editor = createEditor(
           (
             <editor>
@@ -61,7 +61,7 @@ describe('select', () => {
           ) as any
         );
 
-        editor.tf.select([1], { edge: 'end' });
+        editor.tf.select([1], { edge: "end" });
 
         expect(editor.selection!).toEqual({
           anchor: { offset: 5, path: [1, 0] },
@@ -71,8 +71,8 @@ describe('select', () => {
     });
   });
 
-  describe('when at is defined', () => {
-    it('select at specific point', () => {
+  describe("when at is defined", () => {
+    it("select at specific point", () => {
       const editor = createEditor(
         (
           <editor>
@@ -98,11 +98,11 @@ describe('select', () => {
       });
     });
 
-    it('creates a selection from an explicit range when current selection is null', () => {
+    it("creates a selection from an explicit range when current selection is null", () => {
       const editor: any = createEditor({
         children: [
-          { type: 'p', children: [{ text: 'hello' }] },
-          { type: 'p', children: [{ text: 'world' }] },
+          { type: "p", children: [{ text: "hello" }] },
+          { type: "p", children: [{ text: "world" }] },
         ] as any,
         selection: null,
       });
@@ -127,8 +127,8 @@ describe('select', () => {
     });
   });
 
-  describe('when focus option', () => {
-    it('focus editor before selecting', () => {
+  describe("when focus option", () => {
+    it("focus editor before selecting", () => {
       const editor = createEditor(
         (
           <editor>
@@ -143,10 +143,10 @@ describe('select', () => {
         ) as any
       );
 
-      const focusSpy = spyOn(editor.tf, 'focus');
+      const focusSpy = spyOn(editor.tf, "focus");
 
       editor.tf.select([], {
-        edge: 'end',
+        edge: "end",
         focus: true,
       });
 
@@ -159,7 +159,7 @@ describe('select', () => {
       focusSpy.mockRestore();
     });
 
-    it('focus editor before selecting at specific point', () => {
+    it("focus editor before selecting at specific point", () => {
       const editor = createEditor(
         (
           <editor>
@@ -174,7 +174,7 @@ describe('select', () => {
         ) as any
       );
 
-      const focusSpy = spyOn(editor.tf, 'focus');
+      const focusSpy = spyOn(editor.tf, "focus");
 
       editor.tf.select(
         {
@@ -194,8 +194,8 @@ describe('select', () => {
     });
   });
 
-  describe('when sibling option', () => {
-    it('select start of next sibling', () => {
+  describe("when sibling option", () => {
+    it("select start of next sibling", () => {
       const editor = createEditor(
         (
           <editor>
@@ -216,7 +216,7 @@ describe('select', () => {
       });
     });
 
-    it('select end of previous sibling', () => {
+    it("select end of previous sibling", () => {
       const editor = createEditor(
         (
           <editor>
@@ -237,7 +237,7 @@ describe('select', () => {
       });
     });
 
-    it('focus when selecting sibling', () => {
+    it("focus when selecting sibling", () => {
       const editor = createEditor(
         (
           <editor>
@@ -250,7 +250,7 @@ describe('select', () => {
         ) as any
       );
 
-      const focusSpy = spyOn(editor.tf, 'focus');
+      const focusSpy = spyOn(editor.tf, "focus");
 
       editor.tf.select([1], { focus: true, previous: true });
 
@@ -264,11 +264,11 @@ describe('select', () => {
     });
   });
 
-  it('does not overwrite additive future selection fields', () => {
+  it("does not overwrite additive future selection fields", () => {
     const editor: any = createEditor({
       children: [
-        { type: 'p', children: [{ text: 'one' }] },
-        { type: 'p', children: [{ text: 'two' }] },
+        { type: "p", children: [{ text: "one" }] },
+        { type: "p", children: [{ text: "two" }] },
       ] as any,
       selection: {
         anchor: { offset: 1, path: [0, 0] },
@@ -283,7 +283,7 @@ describe('select', () => {
     ];
 
     editor.selections = selections;
-    editor.tf.select([1], { edge: 'start' });
+    editor.tf.select([1], { edge: "start" });
 
     expect(editor.selection).toEqual({
       anchor: { offset: 0, path: [1, 0] },

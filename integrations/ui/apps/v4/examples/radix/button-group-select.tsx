@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ArrowRightIcon } from "lucide-react"
+import { ArrowRightIcon } from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
-import { ButtonGroup } from "@/styles/radix-nova/ui/button-group"
-import { Input } from "@/styles/radix-nova/ui/input"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { ButtonGroup } from "@/styles/radix-nova/ui/button-group";
+import { Input } from "@/styles/radix-nova/ui/input";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
-} from "@/styles/radix-nova/ui/select"
+} from "@/styles/radix-nova/ui/select";
 
 const CURRENCIES = [
   {
@@ -27,10 +27,10 @@ const CURRENCIES = [
     value: "£",
     label: "British Pound",
   },
-]
+];
 
 export default function ButtonGroupSelect() {
-  const [currency, setCurrency] = React.useState("$")
+  const [currency, setCurrency] = React.useState("$");
 
   return (
     <ButtonGroup>
@@ -41,10 +41,7 @@ export default function ButtonGroupSelect() {
             <SelectGroup>
               {CURRENCIES.map((currency) => (
                 <SelectItem key={currency.value} value={currency.value}>
-                  {currency.value}{" "}
-                  <span className="text-muted-foreground">
-                    {currency.label}
-                  </span>
+                  {currency.value} <span className="text-muted-foreground">{currency.label}</span>
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -58,5 +55,5 @@ export default function ButtonGroupSelect() {
         </Button>
       </ButtonGroup>
     </ButtonGroup>
-  )
+  );
 }

@@ -1,9 +1,6 @@
 {
   "name": "hitbox-sizes-demo",
-  "registryDependencies": [
-    "checkbox",
-    "hitbox"
-  ],
+  "registryDependencies": ["checkbox", "hitbox"],
   "files": [
     {
       "path": "examples/hitbox-sizes-demo.tsx",

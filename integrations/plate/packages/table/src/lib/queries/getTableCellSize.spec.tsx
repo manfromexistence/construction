@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { getTableCellSize } from './getTableCellSize';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { getTableCellSize } from "./getTableCellSize";
 
 jsxt;
 
@@ -16,8 +15,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('getTableCellSize', () => {
-  it('falls back to zero width and height when the cell has no row parent', () => {
+describe("getTableCellSize", () => {
+  it("falls back to zero width and height when the cell has no row parent", () => {
     const input = (
       <editor>
         <htd>
@@ -35,7 +34,7 @@ describe('getTableCellSize', () => {
     });
   });
 
-  it('sums the table column widths across the current cell colSpan', () => {
+  it("sums the table column widths across the current cell colSpan", () => {
     const input = (
       <editor>
         <htable colSizes={[40, 50, 60]}>
@@ -52,8 +51,7 @@ describe('getTableCellSize', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const element = ((editor.children[0] as any).children[0] as any)
-      .children[1];
+    const element = ((editor.children[0] as any).children[0] as any).children[1];
 
     expect(getTableCellSize(editor, { element })).toEqual({
       minHeight: 72,
@@ -61,7 +59,7 @@ describe('getTableCellSize', () => {
     });
   });
 
-  it('uses explicit row and column sizes when provided', () => {
+  it("uses explicit row and column sizes when provided", () => {
     const input = (
       <editor>
         <htable colSizes={[40, 50, 60]}>
@@ -78,8 +76,7 @@ describe('getTableCellSize', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const element = ((editor.children[0] as any).children[0] as any)
-      .children[1];
+    const element = ((editor.children[0] as any).children[0] as any).children[1];
 
     expect(
       getTableCellSize(editor, {

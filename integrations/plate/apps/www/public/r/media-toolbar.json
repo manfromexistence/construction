@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Media Toolbar",
   "description": "A toolbar interface for media settings.",
-  "dependencies": [
-    "@platejs/media"
-  ],
+  "dependencies": ["@platejs/media"],
   "registryDependencies": [
     "@shadcn/button",
     "@shadcn/input",
@@ -26,9 +24,6 @@
         "route": "/docs/media"
       }
     ],
-    "examples": [
-      "media-demo",
-      "media-pro"
-    ]
+    "examples": ["media-demo", "media-pro"]
   }
 }

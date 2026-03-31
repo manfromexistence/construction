@@ -1,4 +1,4 @@
-import type { Editor, TElement } from 'platejs';
+import type { Editor, TElement } from "platejs";
 
 /** Get table column index of a cell node. */
 export const getTableColumnIndex = (editor: Editor, cellNode: TElement) => {

@@ -1,39 +1,36 @@
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { mdxComponents } from "@/mdx-components"
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react"
-import { findNeighbour } from "fumadocs-core/page-tree"
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import { findNeighbour } from "fumadocs-core/page-tree";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { DocsBaseSwitcher } from "@/components/docs-base-switcher";
+import { DocsCopyPage } from "@/components/docs-copy-page";
+import { DocsTableOfContents } from "@/components/docs-toc";
+import { OpenInV0Cta } from "@/components/open-in-v0-cta";
+import { source } from "@/lib/source";
+import { absoluteUrl } from "@/lib/utils";
+import { mdxComponents } from "@/mdx-components";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
-import { source } from "@/lib/source"
-import { absoluteUrl } from "@/lib/utils"
-import { DocsBaseSwitcher } from "@/components/docs-base-switcher"
-import { DocsCopyPage } from "@/components/docs-copy-page"
-import { DocsTableOfContents } from "@/components/docs-toc"
-import { OpenInV0Cta } from "@/components/open-in-v0-cta"
-import { Button } from "@/registry/new-york-v4/ui/button"
-
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return source.generateParams()
+  return source.generateParams();
 }
 
-export async function generateMetadata(props: {
-  params: Promise<{ slug: string[] }>
-}) {
-  const params = await props.params
-  const page = source.getPage(params.slug)
+export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }) {
+  const params = await props.params;
+  const page = source.getPage(params.slug);
 
   if (!page) {
-    notFound()
+    notFound();
   }
 
-  const doc = page.data
+  const doc = page.data;
 
   if (!doc.title || !doc.description) {
-    notFound()
+    notFound();
   }
 
   return {
@@ -65,25 +62,23 @@ export async function generateMetadata(props: {
       ],
       creator: "@shadcn",
     },
-  }
+  };
 }
 
-export default async function Page(props: {
-  params: Promise<{ slug: string[] }>
-}) {
-  const params = await props.params
-  const page = source.getPage(params.slug)
+export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
+  const params = await props.params;
+  const page = source.getPage(params.slug);
   if (!page) {
-    notFound()
+    notFound();
   }
 
-  const doc = page.data
-  const MDX = doc.body
-  const isChangelog = params.slug?.[0] === "changelog"
+  const doc = page.data;
+  const MDX = doc.body;
+  const isChangelog = params.slug?.[0] === "changelog";
   const neighbours = isChangelog
     ? { previous: null, next: null }
-    : findNeighbour(source.pageTree, page.url)
-  const raw = await page.data.getText("raw")
+    : findNeighbour(source.pageTree, page.url);
+  const raw = await page.data.getText("raw");
 
   return (
     <div
@@ -141,38 +136,21 @@ export default async function Page(props: {
             </div>
           </div>
           <div className="w-full flex-1 pb-16 *:data-[slot=alert]:first:mt-0 sm:pb-0">
-            {params.slug &&
-              params.slug[0] === "components" &&
-              params.slug[1] &&
-              params.slug[2] && (
-                <DocsBaseSwitcher
-                  base={params.slug[1]}
-                  component={params.slug[2]}
-                  className="mb-4"
-                />
-              )}
+            {params.slug && params.slug[0] === "components" && params.slug[1] && params.slug[2] && (
+              <DocsBaseSwitcher base={params.slug[1]} component={params.slug[2]} className="mb-4" />
+            )}
             <MDX components={mdxComponents} />
           </div>
           <div className="hidden h-16 w-full items-center gap-2 px-4 sm:flex sm:px-0">
             {neighbours.previous && (
-              <Button
-                variant="secondary"
-                size="sm"
-                asChild
-                className="shadow-none"
-              >
+              <Button variant="secondary" size="sm" asChild className="shadow-none">
                 <Link href={neighbours.previous.url}>
                   <IconArrowLeft /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
-              <Button
-                variant="secondary"
-                size="sm"
-                className="ml-auto shadow-none"
-                asChild
-              >
+              <Button variant="secondary" size="sm" className="ml-auto shadow-none" asChild>
                 <Link href={neighbours.next.url}>
                   {neighbours.next.name} <IconArrowRight />
                 </Link>
@@ -193,5 +171,5 @@ export default async function Page(props: {
         </div>
       </div>
     </div>
-  )
+  );
 }

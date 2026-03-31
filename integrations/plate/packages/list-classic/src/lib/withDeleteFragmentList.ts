@@ -1,16 +1,10 @@
-import {
-  type OverrideEditor,
-  type SlateEditor,
-  type TRange,
-  deleteMerge,
-  KEYS,
-} from 'platejs';
+import { deleteMerge, KEYS, type OverrideEditor, type SlateEditor, type TRange } from "platejs";
 
-import type { ListConfig } from './BaseListPlugin';
+import type { ListConfig } from "./BaseListPlugin";
 
-import { getHighestEmptyList } from './queries/getHighestEmptyList';
-import { hasListChild } from './queries/index';
-import { isAcrossListItems } from './queries/isAcrossListItems';
+import { getHighestEmptyList } from "./queries/getHighestEmptyList";
+import { hasListChild } from "./queries/index";
+import { isAcrossListItems } from "./queries/isAcrossListItems";
 
 const getLiStart = (editor: SlateEditor) => {
   const start = editor.api.start(editor.selection as TRange);
@@ -44,9 +38,7 @@ export const withDeleteFragmentList: OverrideEditor<ListConfig> = ({
             match: { type: editor.getType(KEYS.li) },
           });
           const liEndCanBeDeleted = liEnd && !hasListChild(editor, liEnd[0]);
-          const liEndPathRef = liEndCanBeDeleted
-            ? editor.api.pathRef(liEnd![1])
-            : undefined;
+          const liEndPathRef = liEndCanBeDeleted ? editor.api.pathRef(liEnd![1]) : undefined;
 
           // use deleteFragment when selection wrapped around list
           if (!getLiStart(editor) || !liEnd) {

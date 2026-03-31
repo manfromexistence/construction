@@ -1,15 +1,9 @@
-import {
-  type Path,
-  type TElement,
-  ElementApi,
-  PathApi,
-  TextApi,
-} from '@platejs/slate';
+import { ElementApi, type Path, PathApi, type TElement, TextApi } from "@platejs/slate";
 
-import type { OverrideEditor } from '../../plugin';
-import type { MergeRules } from '../../plugin/BasePlugin';
+import type { OverrideEditor } from "../../plugin";
+import type { MergeRules } from "../../plugin/BasePlugin";
 
-import { getPluginByType } from '../../plugin/getSlatePlugin';
+import { getPluginByType } from "../../plugin/getSlatePlugin";
 
 export const withMergeRules: OverrideEditor = (ctx) => {
   const {
@@ -46,15 +40,9 @@ export const withMergeRules: OverrideEditor = (ctx) => {
         const [prevNode, prevPath] = prevNodeEntry;
         const [, nextPath] = nextNodeEntry;
         const [curNode, curPath] = reverse ? prevNodeEntry : nextNodeEntry;
-        const [targetNode, targetPath] = reverse
-          ? nextNodeEntry
-          : prevNodeEntry;
+        const [targetNode, targetPath] = reverse ? nextNodeEntry : prevNodeEntry;
 
-        if (
-          TextApi.isText(prevNode) &&
-          prevNode.text === '' &&
-          prevPath.at(-1) !== 0
-        ) {
+        if (TextApi.isText(prevNode) && prevNode.text === "" && prevPath.at(-1) !== 0) {
           editor.tf.removeNodes({ at: prevPath });
           return false;
         }
@@ -72,11 +60,7 @@ export const withMergeRules: OverrideEditor = (ctx) => {
           }
 
           // Check if any plugin with matchRules overrides the merge behavior
-          const overrideMergeRules = checkMatchRulesOverride(
-            'merge.removeEmpty',
-            node,
-            path
-          );
+          const overrideMergeRules = checkMatchRulesOverride("merge.removeEmpty", node, path);
 
           if (overrideMergeRules?.removeEmpty === false) {
             return false;
@@ -92,10 +76,7 @@ export const withMergeRules: OverrideEditor = (ctx) => {
             editor.tf.removeNodes({ at: prevPath });
           }
           // Remove current node if empty before selecting the void block
-          else if (
-            ElementApi.isElement(curNode) &&
-            editor.api.isEmpty(curNode)
-          ) {
+          else if (ElementApi.isElement(curNode) && editor.api.isEmpty(curNode)) {
             editor.tf.removeNodes({ at: curPath });
           }
           return false;
@@ -117,7 +98,7 @@ export const withMergeRules: OverrideEditor = (ctx) => {
     },
     transforms: {
       removeNodes(options = {}) {
-        if (options.event?.type === 'mergeNodes' && options.at) {
+        if (options.event?.type === "mergeNodes" && options.at) {
           const nodeEntry = editor.api.node(options.at);
           if (nodeEntry) {
             const [node, path] = nodeEntry;
@@ -129,15 +110,10 @@ export const withMergeRules: OverrideEditor = (ctx) => {
                 const mergeRules = plugin.rules.merge;
 
                 // Check for override rules
-                const overrideMergeRules = checkMatchRulesOverride(
-                  'merge.removeEmpty',
-                  node,
-                  path
-                );
+                const overrideMergeRules = checkMatchRulesOverride("merge.removeEmpty", node, path);
 
                 const shouldNotRemove =
-                  overrideMergeRules?.removeEmpty === false ||
-                  mergeRules?.removeEmpty === false;
+                  overrideMergeRules?.removeEmpty === false || mergeRules?.removeEmpty === false;
 
                 if (shouldNotRemove) {
                   // Don't remove the node, just return without calling removeNodes

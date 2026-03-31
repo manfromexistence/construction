@@ -1,4 +1,4 @@
-import { getSelectedDomNode } from './getSelectedDomNode';
+import { getSelectedDomNode } from "./getSelectedDomNode";
 
 /** Check if the DOM selection is outside the editor */
 export const isSelectOutside = (html?: HTMLElement): boolean => {

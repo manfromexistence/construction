@@ -1,9 +1,9 @@
-import type { Editor, NodeEntry } from 'platejs';
+import type { Editor, NodeEntry } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { ListStyleType } from '../types';
-import { outdentList } from './outdentList';
+import { ListStyleType } from "../types";
+import { outdentList } from "./outdentList";
 
 /** Unset list style type if already set. */
 export const toggleListUnset = (
@@ -15,10 +15,7 @@ export const toggleListUnset = (
     listStyleType?: string;
   }
 ) => {
-  if (
-    listStyleType === KEYS.listTodo &&
-    Object.hasOwn(node, KEYS.listChecked)
-  ) {
+  if (listStyleType === KEYS.listTodo && Object.hasOwn(node, KEYS.listChecked)) {
     editor.tf.unsetNodes(KEYS.listChecked, { at: path });
     outdentList(editor as any, { listStyleType });
 

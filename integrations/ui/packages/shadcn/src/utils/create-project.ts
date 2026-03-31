@@ -1,12 +1,12 @@
-import path from "path"
-import { initOptionsSchema } from "@/src/commands/init"
-import { resolveTemplate, templates } from "@/src/templates/index"
-import { getPackageManager } from "@/src/utils/get-package-manager"
-import { highlighter } from "@/src/utils/highlighter"
-import { logger } from "@/src/utils/logger"
-import fs from "fs-extra"
-import prompts from "prompts"
-import { z } from "zod"
+import fs from "fs-extra";
+import path from "path";
+import prompts from "prompts";
+import { z } from "zod";
+import { initOptionsSchema } from "@/src/commands/init";
+import { resolveTemplate, templates } from "@/src/templates/index";
+import { getPackageManager } from "@/src/utils/get-package-manager";
+import { highlighter } from "@/src/utils/highlighter";
+import { logger } from "@/src/utils/logger";
 
 export async function createProject(
   options: Pick<
@@ -17,20 +17,19 @@ export async function createProject(
   let template: keyof typeof templates =
     options.template && options.template in templates
       ? (options.template as keyof typeof templates)
-      : "next"
+      : "next";
 
   const resolved = resolveTemplate(templates[template], {
     monorepo: options.monorepo,
-  })
-  let projectName: string = options.name ?? resolved.defaultProjectName
+  });
+  let projectName: string = options.name ?? resolved.defaultProjectName;
 
   const isRemoteComponent =
-    options.components?.length === 1 &&
-    !!options.components[0].match(/\/chat\/b\//)
+    options.components?.length === 1 && !!options.components[0].match(/\/chat\/b\//);
 
   // Force template to next for remote components.
   if (isRemoteComponent) {
-    template = "next"
+    template = "next";
   }
 
   if (!options.force) {
@@ -55,61 +54,57 @@ export async function createProject(
         initial: projectName,
         format: (value: string) => value.trim(),
         validate: (value: string) =>
-          value.length > 128
-            ? `Name should be less than 128 characters.`
-            : true,
+          value.length > 128 ? `Name should be less than 128 characters.` : true,
       },
-    ])
+    ]);
 
-    template = type ?? template
-    projectName = name ?? projectName
+    template = type ?? template;
+    projectName = name ?? projectName;
   }
 
   // Re-resolve after potential template change from prompt.
   const effectiveTemplate = resolveTemplate(templates[template], {
     monorepo: options.monorepo,
-  })
+  });
 
   const packageManager = await getPackageManager(options.cwd, {
     withFallback: true,
-  })
+  });
 
-  const projectPath = path.join(options.cwd, projectName)
+  const projectPath = path.join(options.cwd, projectName);
 
   // Check if path is writable.
   try {
-    await fs.access(options.cwd, fs.constants.W_OK)
+    await fs.access(options.cwd, fs.constants.W_OK);
   } catch (error) {
-    logger.break()
-    logger.error(`The path ${highlighter.info(options.cwd)} is not writable.`)
+    logger.break();
+    logger.error(`The path ${highlighter.info(options.cwd)} is not writable.`);
     logger.error(
       `It is likely you do not have write permissions for this folder or the path ${highlighter.info(
         options.cwd
       )} does not exist.`
-    )
-    logger.break()
-    process.exit(1)
+    );
+    logger.break();
+    process.exit(1);
   }
 
   if (fs.existsSync(path.resolve(options.cwd, projectName, "package.json"))) {
-    logger.break()
-    logger.error(
-      `A project with the name ${highlighter.info(projectName)} already exists.`
-    )
-    logger.error(`Please choose a different name and try again.`)
-    logger.break()
-    process.exit(1)
+    logger.break();
+    logger.error(`A project with the name ${highlighter.info(projectName)} already exists.`);
+    logger.error(`Please choose a different name and try again.`);
+    logger.break();
+    process.exit(1);
   }
 
   await effectiveTemplate.scaffold({
     projectPath,
     packageManager,
     cwd: options.cwd,
-  })
+  });
 
   return {
     projectPath,
     projectName,
     template,
-  }
+  };
 }

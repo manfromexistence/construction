@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { ChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
-import { trackEvent } from "@/lib/events"
+import { trackEvent } from "@/lib/events";
 
 export function ProBanner() {
   return (
@@ -19,15 +19,15 @@ export function ProBanner() {
           ✨{" "}
           <span className="ml-1 font-[580] dark:font-[550]">
             {" "}
-            Introducing Magic UI Pro - 50+ blocks and templates to build
-            beautiful landing pages in minutes
+            Introducing Magic UI Pro - 50+ blocks and templates to build beautiful landing pages in
+            minutes
           </span>{" "}
           <ChevronRight className="mt-[3px] ml-1 hidden size-4 transition-all duration-300 ease-out group-hover:translate-x-1 lg:inline-block" />
         </Link>
       </div>
       <hr className="absolute bottom-0 m-0 h-px w-full bg-neutral-200/30" />
     </div>
-  )
+  );
 }
 
 export function ProductHuntBanner() {
@@ -44,17 +44,16 @@ export function ProductHuntBanner() {
           ✨{" "}
           <span className="ml-1 font-[580] dark:font-[550]">
             {" "}
-            Magic UI is live on Product Hunt Today! Show your support and vote
-            for us.
+            Magic UI is live on Product Hunt Today! Show your support and vote for us.
           </span>{" "}
           <ChevronRight className="mt-[3px] ml-1 hidden size-4 transition-all duration-300 ease-out group-hover:translate-x-1 lg:inline-block" />
         </Link>
       </div>
       <hr className="absolute bottom-0 m-0 h-px w-full bg-neutral-200/30" />
     </div>
-  )
+  );
 }
 
 export function SiteBanner() {
-  return <ProBanner />
+  return <ProBanner />;
 }

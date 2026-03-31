@@ -2,9 +2,7 @@
   {
     "name": "action-bar",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "button",
       "@diceui/use-as-ref",
@@ -24,9 +22,7 @@
   {
     "name": "angle-slider",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",
@@ -50,9 +46,7 @@
   {
     "name": "avatar-group",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/avatar-group.tsx",
@@ -63,9 +57,7 @@
   {
     "name": "badge-overflow",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/badge-overflow.tsx",
@@ -80,9 +72,7 @@
   {
     "name": "checkbox-group",
     "type": "registry:ui",
-    "dependencies": [
-      "@diceui/checkbox-group"
-    ],
+    "dependencies": ["@diceui/checkbox-group"],
     "files": [
       {
         "path": "ui/checkbox-group.tsx",
@@ -93,9 +83,7 @@
   {
     "name": "circular-progress",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "cssVars": {
       "theme": {
         "--animate-spin-around": "spin-around 0.8s linear infinite"
@@ -121,9 +109,7 @@
   {
     "name": "color-picker",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "button",
       "input",
@@ -151,9 +137,7 @@
   {
     "name": "color-swatch",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/color-swatch.tsx",
@@ -164,9 +148,7 @@
   {
     "name": "compare-slider",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",
@@ -186,9 +168,7 @@
   {
     "name": "cropper",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",
@@ -226,9 +206,7 @@
   {
     "name": "editable",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",
@@ -252,13 +230,8 @@
   {
     "name": "file-upload",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
-    "registryDependencies": [
-      "@diceui/use-as-ref",
-      "@diceui/use-lazy-ref"
-    ],
+    "dependencies": ["radix-ui"],
+    "registryDependencies": ["@diceui/use-as-ref", "@diceui/use-lazy-ref"],
     "files": [
       {
         "path": "ui/file-upload.tsx",
@@ -280,9 +253,7 @@
   {
     "name": "gauge",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/gauge.tsx",
@@ -318,9 +289,7 @@
   {
     "name": "key-value",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "button",
       "input",
@@ -347,9 +316,7 @@
   {
     "name": "listbox",
     "type": "registry:ui",
-    "dependencies": [
-      "@diceui/listbox"
-    ],
+    "dependencies": ["@diceui/listbox"],
     "files": [
       {
         "path": "ui/listbox.tsx",
@@ -360,9 +327,7 @@
   {
     "name": "marquee",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "cssVars": {
       "theme": {
         "--animate-marquee-left": "marquee-left var(--marquee-duration) linear var(--marquee-loop-count)",
@@ -437,9 +402,7 @@
   {
     "name": "mask-input",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/mask-input.tsx",
@@ -454,13 +417,8 @@
   {
     "name": "masonry",
     "type": "registry:ui",
-    "dependencies": [
-      "@diceui/masonry",
-      "radix-ui"
-    ],
-    "registryDependencies": [
-      "@diceui/use-isomorphic-layout-effect"
-    ],
+    "dependencies": ["@diceui/masonry", "radix-ui"],
+    "registryDependencies": ["@diceui/use-isomorphic-layout-effect"],
     "files": [
       {
         "path": "ui/masonry.tsx",
@@ -475,10 +433,7 @@
   {
     "name": "media-player",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui",
-      "media-chrome"
-    ],
+    "dependencies": ["radix-ui", "media-chrome"],
     "registryDependencies": [
       "badge",
       "button",
@@ -502,9 +457,7 @@
   {
     "name": "mention",
     "type": "registry:ui",
-    "dependencies": [
-      "@diceui/mention"
-    ],
+    "dependencies": ["@diceui/mention"],
     "files": [
       {
         "path": "ui/mention.tsx",
@@ -515,9 +468,7 @@
   {
     "name": "phone-input",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "command",
       "input",
@@ -544,12 +495,8 @@
   {
     "name": "relative-time-card",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
-    "registryDependencies": [
-      "hover-card"
-    ],
+    "dependencies": ["radix-ui"],
+    "registryDependencies": ["hover-card"],
     "files": [
       {
         "path": "ui/relative-time-card.tsx",
@@ -560,9 +507,7 @@
   {
     "name": "responsive-dialog",
     "type": "registry:ui",
-    "dependencies": [
-      "vaul"
-    ],
+    "dependencies": ["vaul"],
     "registryDependencies": [
       "dialog",
       "drawer",
@@ -581,9 +526,7 @@
   {
     "name": "scroller",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/scroller.tsx",
@@ -598,9 +541,7 @@
   {
     "name": "scroll-spy",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",
@@ -620,12 +561,8 @@
   {
     "name": "segmented-input",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
-    "registryDependencies": [
-      "input"
-    ],
+    "dependencies": ["radix-ui"],
+    "registryDependencies": ["input"],
     "files": [
       {
         "path": "ui/segmented-input.tsx",
@@ -636,10 +573,7 @@
   {
     "name": "selection-toolbar",
     "type": "registry:ui",
-    "dependencies": [
-      "@floating-ui/react-dom",
-      "radix-ui"
-    ],
+    "dependencies": ["@floating-ui/react-dom", "radix-ui"],
     "registryDependencies": [
       "button",
       "@diceui/use-as-ref",
@@ -681,9 +615,7 @@
   {
     "name": "speed-dial",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "button",
       "@diceui/use-as-ref",
@@ -704,9 +636,7 @@
   {
     "name": "stack",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/stack.tsx",
@@ -718,9 +648,7 @@
     "name": "stat",
     "type": "registry:ui",
     "dependencies": [],
-    "registryDependencies": [
-      "separator"
-    ],
+    "registryDependencies": ["separator"],
     "files": [
       {
         "path": "ui/stat.tsx",
@@ -731,9 +659,7 @@
   {
     "name": "status",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "files": [
       {
         "path": "ui/status.tsx",
@@ -744,9 +670,7 @@
   {
     "name": "stepper",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "button",
       "@diceui/use-as-ref",
@@ -767,9 +691,7 @@
   {
     "name": "swap",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",
@@ -785,16 +707,9 @@
   {
     "name": "qr-code",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui",
-      "qrcode"
-    ],
-    "devDependencies": [
-      "@types/qrcode"
-    ],
-    "registryDependencies": [
-      "@diceui/use-lazy-ref"
-    ],
+    "dependencies": ["radix-ui", "qrcode"],
+    "devDependencies": ["@types/qrcode"],
+    "registryDependencies": ["@diceui/use-lazy-ref"],
     "files": [
       {
         "path": "ui/qr-code.tsx",
@@ -805,9 +720,7 @@
   {
     "name": "rating",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",
@@ -831,9 +744,7 @@
   {
     "name": "tags-input",
     "type": "registry:ui",
-    "dependencies": [
-      "@diceui/tags-input"
-    ],
+    "dependencies": ["@diceui/tags-input"],
     "files": [
       {
         "path": "ui/tags-input.tsx",
@@ -844,13 +755,8 @@
   {
     "name": "timeline",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
-    "registryDependencies": [
-      "@diceui/use-isomorphic-layout-effect",
-      "@diceui/use-lazy-ref"
-    ],
+    "dependencies": ["radix-ui"],
+    "registryDependencies": ["@diceui/use-isomorphic-layout-effect", "@diceui/use-lazy-ref"],
     "files": [
       {
         "path": "ui/timeline.tsx",
@@ -865,9 +771,7 @@
   {
     "name": "time-picker",
     "type": "registry:ui",
-    "dependencies": [
-      "radix-ui"
-    ],
+    "dependencies": ["radix-ui"],
     "registryDependencies": [
       "popover",
       "@diceui/use-as-ref",
@@ -900,10 +804,7 @@
   {
     "name": "tour",
     "type": "registry:ui",
-    "dependencies": [
-      "@floating-ui/react-dom",
-      "radix-ui"
-    ],
+    "dependencies": ["@floating-ui/react-dom", "radix-ui"],
     "registryDependencies": [
       "@diceui/use-as-ref",
       "@diceui/use-isomorphic-layout-effect",

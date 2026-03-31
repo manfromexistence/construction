@@ -15,9 +15,7 @@ type AmountSelectorProps = {
 };
 
 const AmountSelector = ({ amounts }: AmountSelectorProps) => {
-  const [selectedAmount, setSelectedAmount] = useState(
-    amounts[0].price.toString()
-  );
+  const [selectedAmount, setSelectedAmount] = useState(amounts[0].price.toString());
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(0);
 
@@ -48,9 +46,7 @@ const AmountSelector = ({ amounts }: AmountSelectorProps) => {
   };
 
   const isLastItemOdd = amounts.length % 2 !== 0;
-  const buyLink = amounts.find(
-    (amount) => amount.price.toString() === selectedAmount
-  )?.link;
+  const buyLink = amounts.find((amount) => amount.price.toString() === selectedAmount)?.link;
 
   return (
     <div className="mx-auto mt-8 flex w-full max-w-[1016px] flex-col items-center gap-6 px-4">
@@ -79,12 +75,8 @@ const AmountSelector = ({ amounts }: AmountSelectorProps) => {
                 "min-[610px]:last:rounded-r-[20px] min-[610px]:last:supports-[corner-shape:squircle]:rounded-r-[30px]",
                 "has-focus-visible:outline-2 has-focus-visible:outline-primary has-focus-visible:outline-offset-2"
               )}
-              data-checked={
-                selectedAmount === amount.price.toString() ? "" : undefined
-              }
-              data-unchecked={
-                selectedAmount !== amount.price.toString() ? "" : undefined
-              }
+              data-checked={selectedAmount === amount.price.toString() ? "" : undefined}
+              data-unchecked={selectedAmount !== amount.price.toString() ? "" : undefined}
               htmlFor={amount.price.toString()}
               key={amount.price}
             >
@@ -127,9 +119,7 @@ const AmountSelector = ({ amounts }: AmountSelectorProps) => {
             <p className="font-sans text-[#525252] text-[42px] dark:text-[#D4D4D4]">
               Chill Guy Certificate
             </p>
-            <p className="font-sans text-[#737373] text-[24px] dark:text-[#D4D4D4]">
-              Supporter
-            </p>
+            <p className="font-sans text-[#737373] text-[24px] dark:text-[#D4D4D4]">Supporter</p>
           </div>
           <div
             aria-hidden="true"
@@ -184,18 +174,8 @@ const AmountSelector = ({ amounts }: AmountSelectorProps) => {
                   />
                   <circle cx="91.0027" cy="155.021" fill="white" r="18.3677" />
                   <circle cx="140.3" cy="155.021" fill="white" r="18.3677" />
-                  <circle
-                    cx="92.6623"
-                    cy="157.391"
-                    fill="#09090B"
-                    r="5.33255"
-                  />
-                  <circle
-                    cx="136.743"
-                    cy="157.391"
-                    fill="#09090B"
-                    r="5.33255"
-                  />
+                  <circle cx="92.6623" cy="157.391" fill="#09090B" r="5.33255" />
+                  <circle cx="136.743" cy="157.391" fill="#09090B" r="5.33255" />
                   <path
                     d="M117.653 35.7343C116.161 32.7765 114.169 30.8566 113.209 29.9355C112.93 29.6696 112.762 29.5074 112.658 29.3712C112.029 28.5474 111.899 27.821 111.769 27.114C111.698 26.7313 111.627 26.3291 111.471 25.875C111.276 25.3107 110.868 24.1302 109.798 23.3843C109.324 23.0665 108.332 22.5541 107.106 22.7746C105.594 23.073 104.816 24.5908 103.843 26.5107C102.773 28.6318 101.553 31.0382 98.8876 32.5041C97.8043 33.1009 96.8768 33.3278 96.0335 33.49C96.0335 33.49 90.4034 34.6057 88.4899 34.9883C88.2824 35.0273 88.1461 34.7938 88.2759 34.6251C88.5353 34.2943 88.7883 33.957 89.0542 33.6327C92.0704 29.9355 93.1471 25.2783 92.0055 20.8741C89.9688 12.9867 81.4198 8.35546 72.9551 10.5414C70.873 11.0797 68.8947 12.0202 67.1693 13.3045C65.4699 14.5629 64.0169 16.152 62.9337 17.9682C61.2473 20.7962 60.3392 24.461 60.9489 27.8015C60.9878 28.0285 60.9035 28.2555 60.7154 28.3917C59.9824 28.9171 59.2106 30.0263 58.5619 30.396C57.0571 31.2522 55.4874 30.182 53.8918 30.7852C53.3469 30.9863 52.8929 31.4209 52.7177 31.9722C52.2507 33.4381 53.6907 34.7289 54.8518 35.3776C56.6096 36.357 59.3792 36.8889 62.4213 36.5905C62.577 36.5775 62.6872 36.7332 62.6159 36.8694C62.1424 37.8424 61.8764 38.9321 61.844 39.4574C61.7727 40.7353 62.5186 41.812 63.8548 41.8444C64.5683 41.8639 65.2558 41.5979 65.8915 41.2866C66.9034 40.7872 68.0774 39.8077 69.0568 38.5299C69.193 38.3548 69.4266 38.2899 69.6341 38.3807C70.1011 38.5818 71.8524 39.1721 72.8708 39.5094C73.1303 39.5937 73.1368 39.9504 72.8903 40.0607C72.1573 40.372 71.606 40.5991 71.366 40.7288C69.699 41.598 67.766 42.7525 66.0212 44.7308C64.4515 46.5211 63.2515 48.7329 62.6483 50.9578C61.6559 54.6874 62.1878 57.5868 62.8105 59.3575C64.9315 65.3898 71.0157 67.6341 72.8319 68.179C73.4416 68.3606 74.0902 68.3736 74.7064 68.2114L110.654 58.9165C111.867 58.6051 112.976 58.1057 113.949 57.4441C114.234 57.2495 114.416 57.1003 114.572 56.9706C118.074 53.9933 119.313 50.0561 119.683 48.4994C119.696 48.441 121.097 42.2141 117.646 35.7732V35.7343H117.653Z"
                     fill="#FDC700"
@@ -255,14 +235,11 @@ const AmountSelector = ({ amounts }: AmountSelectorProps) => {
             </div>
             <div className="flex flex-col gap-[18px]">
               <h3 className="font-sans text-[#0A0A0A] text-[42px] dark:text-white">
-                <span className="tabular-nums">
-                  {formatCurrency(Number(selectedAmount))}
-                </span>{" "}
+                <span className="tabular-nums">{formatCurrency(Number(selectedAmount))}</span>{" "}
                 Donation
               </h3>
               <p className="max-w-[345px] font-mono text-[#404040] text-[14px] dark:text-[#D4D4D4]">
-                The icons will always be free and open-source, regardless of
-                donations
+                The icons will always be free and open-source, regardless of donations
               </p>
               <a
                 className="mt-[16px] flex w-fit cursor-pointer items-center justify-center bg-primary px-[24px] py-[8px] font-sans text-[18px] text-white transition-colors duration-100 hover:bg-[color-mix(in_oklab,var(--color-primary),black_10%)] focus-visible:outline-1 focus-visible:outline-primary focus-visible:outline-offset-1"

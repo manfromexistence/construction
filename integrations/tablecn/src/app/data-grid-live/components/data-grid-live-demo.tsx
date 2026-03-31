@@ -20,10 +20,7 @@ import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu";
 import { DataGridViewMenu } from "@/components/data-grid/data-grid-view-menu";
 import { skaters } from "@/db/schema";
 import { type UseDataGridProps, useDataGrid } from "@/hooks/use-data-grid";
-import {
-  type UndoRedoCellUpdate,
-  useDataGridUndoRedo,
-} from "@/hooks/use-data-grid-undo-redo";
+import { type UndoRedoCellUpdate, useDataGridUndoRedo } from "@/hooks/use-data-grid-undo-redo";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { getFilterFn } from "@/lib/data-grid-filters";
 import { generateId } from "@/lib/id";
@@ -95,7 +92,7 @@ export function DataGridLiveDemo() {
 
       return query;
     },
-    [sorting],
+    [sorting]
   );
 
   const { startUpload } = useUploadThing("skaterMedia");
@@ -247,7 +244,7 @@ export function DataGridLiveDemo() {
         },
       },
     ],
-    [filterFn],
+    [filterFn]
   );
 
   // Undo/redo support - wraps data changes to track history
@@ -274,17 +271,13 @@ export function DataGridLiveDemo() {
           const existingSkater = data.find((s) => s.id === skater.id);
           if (!existingSkater) continue;
 
-          const hasChanges = (
-            Object.keys(skater) as Array<keyof SkaterSchema>
-          ).some((key) => {
+          const hasChanges = (Object.keys(skater) as Array<keyof SkaterSchema>).some((key) => {
             const existingValue =
               existingSkater[key] instanceof Date
                 ? (existingSkater[key] as Date).toISOString()
                 : existingSkater[key];
             const newValue =
-              skater[key] instanceof Date
-                ? (skater[key] as Date).toISOString()
-                : skater[key];
+              skater[key] instanceof Date ? (skater[key] as Date).toISOString() : skater[key];
 
             return JSON.stringify(existingValue) !== JSON.stringify(newValue);
           });
@@ -297,69 +290,65 @@ export function DataGridLiveDemo() {
         }
       }
     },
-    [data],
+    [data]
   );
 
-  const { trackCellsUpdate, trackRowsAdd, trackRowsDelete } =
-    useDataGridUndoRedo({
-      data,
-      onDataChange: undoRedoOnDataChange,
-      getRowId: (row) => row.id,
-    });
+  const { trackCellsUpdate, trackRowsAdd, trackRowsDelete } = useDataGridUndoRedo({
+    data,
+    onDataChange: undoRedoOnDataChange,
+    getRowId: (row) => row.id,
+  });
 
-  const onDataChange: NonNullable<
-    UseDataGridProps<SkaterSchema>["onDataChange"]
-  > = React.useCallback(
-    (newData) => {
-      // Track cell updates for undo/redo
-      const cellUpdates: Array<UndoRedoCellUpdate> = [];
+  const onDataChange: NonNullable<UseDataGridProps<SkaterSchema>["onDataChange"]> =
+    React.useCallback(
+      (newData) => {
+        // Track cell updates for undo/redo
+        const cellUpdates: Array<UndoRedoCellUpdate> = [];
 
-      // Diff and update changed skaters via TanStack DB for optimistic updates
-      for (const skater of newData) {
-        const existingSkater = data.find((s) => s.id === skater.id);
+        // Diff and update changed skaters via TanStack DB for optimistic updates
+        for (const skater of newData) {
+          const existingSkater = data.find((s) => s.id === skater.id);
 
-        // For new rows (not yet in our stale closure data), still update them
-        // because onRowsAdd already created them in the collection
-        if (!existingSkater) {
-          skatersCollection.update(skater.id, (draft) => {
-            Object.assign(draft, skater);
-          });
-          continue;
-        }
-
-        // Check if any field changed using JSON comparison for arrays/objects
-        for (const key of Object.keys(skater) as Array<keyof SkaterSchema>) {
-          const existingValue =
-            existingSkater[key] instanceof Date
-              ? (existingSkater[key] as Date).toISOString()
-              : existingSkater[key];
-          const newValue =
-            skater[key] instanceof Date
-              ? (skater[key] as Date).toISOString()
-              : skater[key];
-
-          if (JSON.stringify(existingValue) !== JSON.stringify(newValue)) {
-            cellUpdates.push({
-              rowId: existingSkater.id,
-              columnId: key,
-              previousValue: existingSkater[key],
-              newValue: skater[key],
-            });
-
+          // For new rows (not yet in our stale closure data), still update them
+          // because onRowsAdd already created them in the collection
+          if (!existingSkater) {
             skatersCollection.update(skater.id, (draft) => {
-              (draft as Record<string, unknown>)[key] = skater[key];
+              Object.assign(draft, skater);
             });
+            continue;
+          }
+
+          // Check if any field changed using JSON comparison for arrays/objects
+          for (const key of Object.keys(skater) as Array<keyof SkaterSchema>) {
+            const existingValue =
+              existingSkater[key] instanceof Date
+                ? (existingSkater[key] as Date).toISOString()
+                : existingSkater[key];
+            const newValue =
+              skater[key] instanceof Date ? (skater[key] as Date).toISOString() : skater[key];
+
+            if (JSON.stringify(existingValue) !== JSON.stringify(newValue)) {
+              cellUpdates.push({
+                rowId: existingSkater.id,
+                columnId: key,
+                previousValue: existingSkater[key],
+                newValue: skater[key],
+              });
+
+              skatersCollection.update(skater.id, (draft) => {
+                (draft as Record<string, unknown>)[key] = skater[key];
+              });
+            }
           }
         }
-      }
 
-      // Track cell updates if there are any
-      if (cellUpdates.length > 0) {
-        trackCellsUpdate(cellUpdates);
-      }
-    },
-    [data, trackCellsUpdate],
-  );
+        // Track cell updates if there are any
+        if (cellUpdates.length > 0) {
+          trackCellsUpdate(cellUpdates);
+        }
+      },
+      [data, trackCellsUpdate]
+    );
 
   const onRowAdd: NonNullable<UseDataGridProps<SkaterSchema>["onRowAdd"]> =
     React.useCallback(() => {
@@ -378,101 +367,97 @@ export function DataGridLiveDemo() {
       };
     }, [data, trackRowsAdd]);
 
-  const onRowsAdd: NonNullable<UseDataGridProps<SkaterSchema>["onRowsAdd"]> =
-    React.useCallback(
-      (count: number) => {
-        const maxOrder = data.reduce((max, s) => Math.max(max, s.order), 0);
-        const newRows: SkaterSchema[] = [];
+  const onRowsAdd: NonNullable<UseDataGridProps<SkaterSchema>["onRowsAdd"]> = React.useCallback(
+    (count: number) => {
+      const maxOrder = data.reduce((max, s) => Math.max(max, s.order), 0);
+      const newRows: SkaterSchema[] = [];
 
-        for (let i = 0; i < count; i++) {
-          const newSkater: SkaterSchema = {
-            id: generateId(),
-            name: null,
-            email: null,
-            stance: "regular",
-            style: "street",
-            status: "amateur",
-            yearsSkating: 0,
-            startedSkating: null,
-            isPro: false,
-            tricks: null,
-            media: null,
-            order: maxOrder + i + 1,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-          };
-          newRows.push(newSkater);
-          skatersCollection.insert(newSkater);
-        }
-
-        // Track for undo/redo
-        trackRowsAdd(newRows);
-      },
-      [data, trackRowsAdd],
-    );
-
-  const onRowsDelete: NonNullable<
-    UseDataGridProps<SkaterSchema>["onRowsDelete"]
-  > = React.useCallback(
-    (rowsToDelete) => {
-      // Track for undo/redo (before deletion to capture the rows)
-      trackRowsDelete(rowsToDelete);
-
-      // Use batch delete - single transaction for all deletions
-      skatersCollection.delete(rowsToDelete.map((skater) => skater.id));
-    },
-    [trackRowsDelete],
-  );
-
-  const onFilesUpload: NonNullable<
-    UseDataGridProps<SkaterSchema>["onFilesUpload"]
-  > = React.useCallback(
-    async ({ files }) => {
-      // Try to upload via UploadThing, fall back to simulation if not configured
-      try {
-        const uploadedFiles = await startUpload(files);
-
-        if (uploadedFiles) {
-          return uploadedFiles.map((file) => ({
-            id: file.key,
-            name: file.name,
-            size: file.size,
-            type: file.type,
-            url: file.ufsUrl,
-          }));
-        }
-      } catch {
-        // UploadThing not configured, fall back to simulation
+      for (let i = 0; i < count; i++) {
+        const newSkater: SkaterSchema = {
+          id: generateId(),
+          name: null,
+          email: null,
+          stance: "regular",
+          style: "street",
+          status: "amateur",
+          yearsSkating: 0,
+          startedSkating: null,
+          isPro: false,
+          tricks: null,
+          media: null,
+          order: maxOrder + i + 1,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        };
+        newRows.push(newSkater);
+        skatersCollection.insert(newSkater);
       }
 
-      // Simulate upload for demo/development without UploadThing
-      await new Promise((resolve) => setTimeout(resolve, 800));
-
-      return files.map((file) => ({
-        id: crypto.randomUUID(),
-        name: file.name,
-        size: file.size,
-        type: file.type,
-        url: URL.createObjectURL(file),
-      }));
+      // Track for undo/redo
+      trackRowsAdd(newRows);
     },
-    [startUpload],
+    [data, trackRowsAdd]
   );
 
-  const onFilesDelete: NonNullable<
-    UseDataGridProps<SkaterSchema>["onFilesDelete"]
-  > = React.useCallback(async ({ fileIds }) => {
-    // Try to delete from UploadThing, silently fail if not configured
-    try {
-      await fetch("/api/uploadthing/delete", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fileKeys: fileIds }),
-      });
-    } catch {
-      // UploadThing not configured or delete failed, ignore
-    }
-  }, []);
+  const onRowsDelete: NonNullable<UseDataGridProps<SkaterSchema>["onRowsDelete"]> =
+    React.useCallback(
+      (rowsToDelete) => {
+        // Track for undo/redo (before deletion to capture the rows)
+        trackRowsDelete(rowsToDelete);
+
+        // Use batch delete - single transaction for all deletions
+        skatersCollection.delete(rowsToDelete.map((skater) => skater.id));
+      },
+      [trackRowsDelete]
+    );
+
+  const onFilesUpload: NonNullable<UseDataGridProps<SkaterSchema>["onFilesUpload"]> =
+    React.useCallback(
+      async ({ files }) => {
+        // Try to upload via UploadThing, fall back to simulation if not configured
+        try {
+          const uploadedFiles = await startUpload(files);
+
+          if (uploadedFiles) {
+            return uploadedFiles.map((file) => ({
+              id: file.key,
+              name: file.name,
+              size: file.size,
+              type: file.type,
+              url: file.ufsUrl,
+            }));
+          }
+        } catch {
+          // UploadThing not configured, fall back to simulation
+        }
+
+        // Simulate upload for demo/development without UploadThing
+        await new Promise((resolve) => setTimeout(resolve, 800));
+
+        return files.map((file) => ({
+          id: crypto.randomUUID(),
+          name: file.name,
+          size: file.size,
+          type: file.type,
+          url: URL.createObjectURL(file),
+        }));
+      },
+      [startUpload]
+    );
+
+  const onFilesDelete: NonNullable<UseDataGridProps<SkaterSchema>["onFilesDelete"]> =
+    React.useCallback(async ({ fileIds }) => {
+      // Try to delete from UploadThing, silently fail if not configured
+      try {
+        await fetch("/api/uploadthing/delete", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ fileKeys: fileIds }),
+        });
+      } catch {
+        // UploadThing not configured or delete failed, ignore
+      }
+    }, []);
 
   const { table, tableMeta, ...dataGridProps } = useDataGrid({
     data,
@@ -511,14 +496,12 @@ export function DataGridLiveDemo() {
           for (const draft of drafts) {
             draft.status = value as never;
           }
-        },
+        }
       );
 
-      toast.success(
-        `${selectedRows.length} skater${selectedRows.length === 1 ? "" : "s"} updated`,
-      );
+      toast.success(`${selectedRows.length} skater${selectedRows.length === 1 ? "" : "s"} updated`);
     },
-    [table],
+    [table]
   );
 
   const onStyleUpdate = React.useCallback(
@@ -536,14 +519,12 @@ export function DataGridLiveDemo() {
           for (const draft of drafts) {
             draft.style = value as never;
           }
-        },
+        }
       );
 
-      toast.success(
-        `${selectedRows.length} skater${selectedRows.length === 1 ? "" : "s"} updated`,
-      );
+      toast.success(`${selectedRows.length} skater${selectedRows.length === 1 ? "" : "s"} updated`);
     },
-    [table],
+    [table]
   );
 
   const onDelete = React.useCallback(() => {
@@ -557,9 +538,7 @@ export function DataGridLiveDemo() {
 
     tableMeta.onRowsDelete?.(rowIndices);
 
-    toast.success(
-      `${selectedRows.length} skater${selectedRows.length === 1 ? "" : "s"} deleted`,
-    );
+    toast.success(`${selectedRows.length} skater${selectedRows.length === 1 ? "" : "s"} deleted`);
     table.toggleAllRowsSelected(false);
   }, [table, tableMeta]);
 
@@ -585,12 +564,7 @@ export function DataGridLiveDemo() {
         <DataGridRowHeightMenu table={table} align="end" />
         <DataGridViewMenu table={table} align="end" />
       </div>
-      <DataGrid
-        {...dataGridProps}
-        table={table}
-        tableMeta={tableMeta}
-        height={height}
-      />
+      <DataGrid {...dataGridProps} table={table} tableMeta={tableMeta} height={height} />
       <DataGridActionBar
         table={table}
         tableMeta={tableMeta}

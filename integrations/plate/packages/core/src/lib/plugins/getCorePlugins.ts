@@ -1,22 +1,19 @@
-import type { AnyPluginConfig, PluginConfig } from '../plugin/BasePlugin';
-import type { SlatePlugin } from '../plugin/SlatePlugin';
+import type { AnyPluginConfig, PluginConfig } from "../plugin/BasePlugin";
+import type { SlatePlugin } from "../plugin/SlatePlugin";
 
-import { AstPlugin } from './AstPlugin';
-import { HistoryPlugin } from './HistoryPlugin';
-import { OverridePlugin } from './override/OverridePlugin';
-import { ParserPlugin } from './ParserPlugin';
-import { type DebugErrorType, type LogLevel, DebugPlugin } from './debug';
-import { DOMPlugin } from './dom';
-import { HtmlPlugin } from './html';
-import { LengthPlugin } from './length';
-import { AffinityPlugin } from './affinity';
-import { type NodeIdConfig, NodeIdPlugin } from './node-id/NodeIdPlugin';
-import { BaseParagraphPlugin } from './paragraph';
-import {
-  type SlateExtensionConfig,
-  SlateExtensionPlugin,
-} from './slate-extension';
-import { type ChunkingConfig, ChunkingPlugin } from './chunking/ChunkingPlugin';
+import { AstPlugin } from "./AstPlugin";
+import { AffinityPlugin } from "./affinity";
+import { type ChunkingConfig, ChunkingPlugin } from "./chunking/ChunkingPlugin";
+import { type DebugErrorType, DebugPlugin, type LogLevel } from "./debug";
+import { DOMPlugin } from "./dom";
+import { HistoryPlugin } from "./HistoryPlugin";
+import { HtmlPlugin } from "./html";
+import { LengthPlugin } from "./length";
+import { type NodeIdConfig, NodeIdPlugin } from "./node-id/NodeIdPlugin";
+import { OverridePlugin } from "./override/OverridePlugin";
+import { ParserPlugin } from "./ParserPlugin";
+import { BaseParagraphPlugin } from "./paragraph";
+import { type SlateExtensionConfig, SlateExtensionPlugin } from "./slate-extension";
 
 export type CorePlugin = ReturnType<typeof getCorePlugins>[number];
 
@@ -24,11 +21,11 @@ export type GetCorePluginsOptions = {
   /** Enable mark/element affinity. */
   affinity?: boolean;
   /** Configure Slate's chunking optimization. */
-  chunking?: ChunkingConfig['options'] | boolean;
+  chunking?: ChunkingConfig["options"] | boolean;
   /** Specifies the maximum number of characters allowed in the editor. */
   maxLength?: number;
   /** Configure the node id plugin. */
-  nodeId?: NodeIdConfig['options'] | boolean;
+  nodeId?: NodeIdConfig["options"] | boolean;
   /** Override the core plugins using the same key. */
   plugins?: AnyPluginConfig[];
 };
@@ -42,7 +39,7 @@ export const getCorePlugins = ({
 }: GetCorePluginsOptions) => {
   // Disable nodeId by default in test environment for deterministic tests
   let resolvedNodeId: any = nodeId;
-  if (process.env.NODE_ENV === 'test' && nodeId === undefined) {
+  if (process.env.NODE_ENV === "test" && nodeId === undefined) {
     resolvedNodeId = false;
   }
 
@@ -53,9 +50,7 @@ export const getCorePlugins = ({
     HistoryPlugin,
     OverridePlugin,
     ParserPlugin,
-    maxLength
-      ? LengthPlugin.configure({ options: { maxLength } })
-      : LengthPlugin,
+    maxLength ? LengthPlugin.configure({ options: { maxLength } }) : LengthPlugin,
     HtmlPlugin,
     AstPlugin,
     NodeIdPlugin.configure({
@@ -66,14 +61,12 @@ export const getCorePlugins = ({
     BaseParagraphPlugin,
     ChunkingPlugin.configure({
       enabled: chunking !== false,
-      options: typeof chunking === 'boolean' ? undefined : chunking,
+      options: typeof chunking === "boolean" ? undefined : chunking,
     }),
   ];
 
   // Create a map for quick lookup of custom plugins
-  const customPluginsMap = new Map(
-    plugins.map((plugin) => [plugin.key, plugin])
-  );
+  const customPluginsMap = new Map(plugins.map((plugin) => [plugin.key, plugin]));
 
   // Replace core plugins with custom plugins if they exist and remove them from plugins
   corePlugins = corePlugins.map((corePlugin) => {
@@ -96,11 +89,11 @@ export const getCorePlugins = ({
   return corePlugins;
 };
 
-export type CorePluginTransforms = SlateExtensionConfig['transforms'];
-export type CorePluginApi = SlateExtensionConfig['api'];
+export type CorePluginTransforms = SlateExtensionConfig["transforms"];
+export type CorePluginApi = SlateExtensionConfig["api"];
 
 export type DebugConfig = PluginConfig<
-  'debug',
+  "debug",
   {
     isProduction: boolean;
     logger: Partial<Record<LogLevel, LogFunction>>;
@@ -109,11 +102,7 @@ export type DebugConfig = PluginConfig<
   },
   {
     debug: {
-      error: (
-        message: string | unknown,
-        type?: DebugErrorType,
-        details?: any
-      ) => void;
+      error: (message: string | unknown, type?: DebugErrorType, details?: any) => void;
       info: (message: string, type?: DebugErrorType, details?: any) => void;
       log: (message: string, type?: DebugErrorType, details?: any) => void;
       warn: (message: string, type?: DebugErrorType, details?: any) => void;
@@ -122,14 +111,10 @@ export type DebugConfig = PluginConfig<
 >;
 
 export type LengthConfig = PluginConfig<
-  'length',
+  "length",
   {
     maxLength: number;
   }
 >;
 
-type LogFunction = (
-  message: string,
-  type?: DebugErrorType,
-  details?: any
-) => void;
+type LogFunction = (message: string, type?: DebugErrorType, details?: any) => void;

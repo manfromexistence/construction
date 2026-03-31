@@ -1,10 +1,10 @@
-import { ArrowUpRightIcon } from "lucide-react"
-import Image from "next/image"
+import { ArrowUpRightIcon } from "lucide-react";
+import Image from "next/image";
 
-import { UTM_PARAMS } from "@/config/site"
-import type { SocialLink } from "@/features/portfolio/types/social-links"
-import { cn } from "@/lib/utils"
-import { addQueryParams } from "@/utils/url"
+import { UTM_PARAMS } from "@/config/site";
+import type { SocialLink } from "@/features/portfolio/types/social-links";
+import { cn } from "@/lib/utils";
+import { addQueryParams } from "@/utils/url";
 
 export function SocialLinkItem({ icon, title, href }: SocialLink) {
   return (
@@ -35,5 +35,5 @@ export function SocialLinkItem({ icon, title, href }: SocialLink) {
 
       <ArrowUpRightIcon className="size-4 text-muted-foreground" />
     </a>
-  )
+  );
 }

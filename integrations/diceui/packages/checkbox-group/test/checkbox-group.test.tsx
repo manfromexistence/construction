@@ -15,15 +15,11 @@ class ResizeObserverMock {
 global.ResizeObserver = ResizeObserverMock;
 
 describe("CheckboxGroup", () => {
-  function renderCheckboxGroup(
-    props: CheckboxGroup.CheckboxGroupRootProps = {},
-  ) {
+  function renderCheckboxGroup(props: CheckboxGroup.CheckboxGroupRootProps = {}) {
     return render(
       <CheckboxGroup.Root {...props}>
         <CheckboxGroup.Label>Favorite tricks</CheckboxGroup.Label>
-        <CheckboxGroup.Description>
-          Select your favorite tricks
-        </CheckboxGroup.Description>
+        <CheckboxGroup.Description>Select your favorite tricks</CheckboxGroup.Description>
         <CheckboxGroup.List>
           <CheckboxGroup.Item value="kickflip">
             <CheckboxGroup.Indicator />
@@ -39,7 +35,7 @@ describe("CheckboxGroup", () => {
           </CheckboxGroup.Item>
         </CheckboxGroup.List>
         <CheckboxGroup.Message />
-      </CheckboxGroup.Root>,
+      </CheckboxGroup.Root>
     );
   }
 
@@ -47,9 +43,7 @@ describe("CheckboxGroup", () => {
     renderCheckboxGroup();
     expect(screen.getByText("Favorite tricks")).toBeInTheDocument();
     expect(screen.getByText("Select your favorite tricks")).toBeInTheDocument();
-    expect(
-      screen.getByRole("group", { name: "Favorite tricks" }),
-    ).toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Favorite tricks" })).toBeInTheDocument();
   });
 
   test("handles controlled state", async () => {
@@ -68,7 +62,7 @@ describe("CheckboxGroup", () => {
             Heelflip
           </CheckboxGroup.Item>
         </CheckboxGroup.List>
-      </CheckboxGroup.Root>,
+      </CheckboxGroup.Root>
     );
 
     const kickflipCheckbox = screen.getByRole("checkbox", { name: "Kickflip" });
@@ -115,16 +109,14 @@ describe("CheckboxGroup", () => {
           <CheckboxGroup.Item value="fs-540">FS 540</CheckboxGroup.Item>
         </CheckboxGroup.List>
         <CheckboxGroup.Message />
-      </CheckboxGroup.Root>,
+      </CheckboxGroup.Root>
     );
 
     // Select first two items
     await user.click(screen.getByRole("checkbox", { name: "Kickflip" }));
     await user.click(screen.getByRole("checkbox", { name: "Heelflip" }));
     expect(onValidate).toHaveBeenCalledWith(["kickflip", "heelflip"]);
-    expect(
-      screen.queryByText("Maximum 2 items allowed"),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByText("Maximum 2 items allowed")).not.toBeInTheDocument();
 
     // Try to select third item
     await user.click(screen.getByRole("checkbox", { name: "FS 540" }));
@@ -143,9 +135,7 @@ describe("CheckboxGroup", () => {
     expect(checkboxes[1]).toHaveAttribute("disabled");
     expect(checkboxes[2]).toHaveAttribute("disabled");
 
-    await user.click(
-      checkboxes[0] ?? screen.getByRole("checkbox", { name: "Kickflip" }),
-    );
+    await user.click(checkboxes[0] ?? screen.getByRole("checkbox", { name: "Kickflip" }));
     expect(onValueChange).not.toHaveBeenCalled();
   });
 
@@ -181,7 +171,7 @@ describe("CheckboxGroup", () => {
           </CheckboxGroup.List>
         </CheckboxGroup.Root>
         <button type="submit">Submit</button>
-      </form>,
+      </form>
     );
 
     const submitButton = screen.getByText("Submit");

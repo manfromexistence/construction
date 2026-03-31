@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS } from "platejs";
 
 /**
  * Enables support for highlights, useful when reviewing content or highlighting
@@ -12,14 +12,14 @@ export const BaseHighlightPlugin = createSlatePlugin({
       deserializer: {
         rules: [
           {
-            validNodeName: ['MARK'],
+            validNodeName: ["MARK"],
           },
         ],
       },
     },
   },
-  render: { as: 'mark' },
-  rules: { selection: { affinity: 'directional' } },
+  render: { as: "mark" },
+  rules: { selection: { affinity: "directional" } },
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
     editor.tf.toggleMark(type);

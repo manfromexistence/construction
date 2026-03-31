@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
-import type { Metadata } from "next"
-import Link from "next/link"
-import type { Blog, BreadcrumbList, WithContext } from "schema-dts"
-
-import { siteConfig } from "@/config/site"
-import { blogSource } from "@/lib/source"
+import type { Metadata } from "next";
+import Link from "next/link";
+import type { Blog, BreadcrumbList, WithContext } from "schema-dts";
+import { Badge } from "@/components/ui/badge";
+import { siteConfig } from "@/config/site";
+import { blogSource } from "@/lib/source";
 import {
   absoluteUrl,
   calculateReadingTime,
@@ -12,47 +12,42 @@ import {
   formatDate,
   normalizeTag,
   pluralize,
-} from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
+} from "@/lib/utils";
 
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return []
+  return [];
 }
 
 const BLOG_DESCRIPTION =
-  "Latest articles about UI components, animations, and web development best practices."
+  "Latest articles about UI components, animations, and web development best practices.";
 
 export const metadata: Metadata = constructMetadata({
   title: `Blog | ${siteConfig.name}`,
   description: BLOG_DESCRIPTION,
-})
+});
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams?: Promise<{ tag?: string }>
-}) {
-  const params = await searchParams
-  const selectedTag = params?.tag ?? ""
+export default async function Page({ searchParams }: { searchParams?: Promise<{ tag?: string }> }) {
+  const params = await searchParams;
+  const selectedTag = params?.tag ?? "";
 
   const posts = blogSource.getPages().sort((a, b) => {
-    const dateA = new Date(a.data?.publishedOn || 0).getTime()
-    const dateB = new Date(b.data?.publishedOn || 0).getTime()
-    return dateB - dateA
-  })
+    const dateA = new Date(a.data?.publishedOn || 0).getTime();
+    const dateB = new Date(b.data?.publishedOn || 0).getTime();
+    return dateB - dateA;
+  });
 
   const filteredPosts = selectedTag
     ? posts.filter((p) => normalizeTag(p.data?.tags).includes(selectedTag))
-    : posts
+    : posts;
 
   const breadcrumbs = [
     { name: "Home", url: "/" },
     { name: "Blog", url: "/blog" },
-  ] as const
+  ] as const;
 
   const breadcrumbStructuredData: WithContext<BreadcrumbList> = {
     "@context": "https://schema.org",
@@ -63,7 +58,7 @@ export default async function Page({
       name: breadcrumb.name,
       item: absoluteUrl(breadcrumb.url),
     })),
-  }
+  };
 
   // Generate structured data
   const structuredData: WithContext<Blog> = {
@@ -96,24 +91,20 @@ export default async function Page({
       },
       image: post.data?.image ? [post.data?.image] : undefined,
       keywords:
-        normalizeTag(post.data?.tags).length > 0
-          ? normalizeTag(post.data?.tags)
-          : undefined,
+        normalizeTag(post.data?.tags).length > 0 ? normalizeTag(post.data?.tags) : undefined,
       publisher: {
         "@type": "Organization",
         name: siteConfig.name,
         url: siteConfig.url,
       },
     })),
-  }
+  };
 
-  const serializedStructuredData = JSON.stringify(structuredData).replace(
+  const serializedStructuredData = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+  const serializedBreadcrumbStructuredData = JSON.stringify(breadcrumbStructuredData).replace(
     /</g,
     "\\u003c"
-  )
-  const serializedBreadcrumbStructuredData = JSON.stringify(
-    breadcrumbStructuredData
-  ).replace(/</g, "\\u003c")
+  );
 
   return (
     <>
@@ -131,9 +122,7 @@ export default async function Page({
         <header className="mb-12 space-y-3">
           <div>
             <h1 className="text-3xl font-semibold tracking-tight">Blog</h1>
-            <p className="text-muted-foreground mt-2 text-lg">
-              {BLOG_DESCRIPTION}
-            </p>
+            <p className="text-muted-foreground mt-2 text-lg">{BLOG_DESCRIPTION}</p>
           </div>
 
           {filteredPosts.length > 0 && (
@@ -178,9 +167,7 @@ export default async function Page({
         {filteredPosts.length === 0 ? (
           <div className="py-16 text-center">
             <p className="text-muted-foreground text-lg">
-              {selectedTag
-                ? `No articles found for "${selectedTag}".`
-                : "No posts yet."}
+              {selectedTag ? `No articles found for "${selectedTag}".` : "No posts yet."}
             </p>
             {selectedTag && (
               <Link
@@ -194,12 +181,9 @@ export default async function Page({
         ) : (
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {filteredPosts.map(async (post) => {
-              const content = await post.data?.getText("raw")
+              const content = await post.data?.getText("raw");
               return (
-                <article
-                  key={post.url}
-                  className="group flex flex-col rounded-lg border"
-                >
+                <article key={post.url} className="group flex flex-col rounded-lg border">
                   <Link href={post.url} className="flex h-full flex-col">
                     {post.data?.image && (
                       <div className="overflow-hidden rounded-t-lg border-b">
@@ -232,9 +216,7 @@ export default async function Page({
                           </time>
                         )}
                         {post.data?.publishedOn && <span>·</span>}
-                        <span>
-                          {calculateReadingTime(content ?? "")} min read
-                        </span>
+                        <span>{calculateReadingTime(content ?? "")} min read</span>
                       </div>
 
                       {normalizeTag(post.data?.tags).length > 0 && (
@@ -255,11 +237,11 @@ export default async function Page({
                     </div>
                   </Link>
                 </article>
-              )
+              );
             })}
           </div>
         )}
       </main>
     </>
-  )
+  );
 }

@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Blur Fade Text Demo",
   "description": "Example showing blur fade animations with text.",
-  "registryDependencies": [
-    "@magicui/blur-fade"
-  ],
+  "registryDependencies": ["@magicui/blur-fade"],
   "files": [
     {
       "path": "registry/example/blur-fade-text-demo.tsx",

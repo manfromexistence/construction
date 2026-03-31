@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Bento Demo",
   "description": "Example showing a bento grid layout for showcasing features.",
-  "dependencies": [
-    "@radix-ui/react-icons"
-  ],
+  "dependencies": ["@radix-ui/react-icons"],
   "registryDependencies": [
     "button",
     "calendar",

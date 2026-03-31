@@ -1,6 +1,6 @@
-import { expect, test } from "vitest"
+import { expect, test } from "vitest";
 
-import { transform } from "../../src/utils/transformers"
+import { transform } from "../../src/utils/transformers";
 
 test("transform rsc", async () => {
   expect(
@@ -14,7 +14,7 @@ import { Foo } from "bar"
         rsc: true,
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -29,7 +29,7 @@ import { Foo } from "bar"
         rsc: true,
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -44,7 +44,7 @@ import { Foo } from "bar"
         rsc: false,
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -61,8 +61,7 @@ import { Foo } from "bar"
         rsc: false,
       },
     })
-  ).toMatchSnapshot()
-
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -77,7 +76,7 @@ import { Foo } from 'bar'
         rsc: true,
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -92,7 +91,7 @@ import { Foo } from 'bar'
         rsc: false,
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -109,5 +108,5 @@ import { Foo } from 'bar'
         rsc: false,
       },
     })
-  ).toMatchSnapshot()
-})
+  ).toMatchSnapshot();
+});

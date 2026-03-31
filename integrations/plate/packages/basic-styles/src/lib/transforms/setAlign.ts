@@ -1,32 +1,17 @@
-import {
-  type SetNodesOptions,
-  type SlateEditor,
-  getInjectMatch,
-  KEYS,
-} from 'platejs';
+import { getInjectMatch, KEYS, type SetNodesOptions, type SlateEditor } from "platejs";
 
-import { BaseTextAlignPlugin } from '../BaseTextAlignPlugin';
+import { BaseTextAlignPlugin } from "../BaseTextAlignPlugin";
 
-export type Alignment =
-  | 'center'
-  | 'end'
-  | 'justify'
-  | 'left'
-  | 'right'
-  | 'start';
+export type Alignment = "center" | "end" | "justify" | "left" | "right" | "start";
 
 export const setAlign = (
   editor: SlateEditor,
   value: Alignment,
   setNodesOptions?: SetNodesOptions
 ) => {
-  const { defaultNodeValue, nodeKey } =
-    editor.getInjectProps(BaseTextAlignPlugin);
+  const { defaultNodeValue, nodeKey } = editor.getInjectProps(BaseTextAlignPlugin);
 
-  const match = getInjectMatch(
-    editor,
-    editor.getPlugin({ key: KEYS.textAlign })
-  );
+  const match = getInjectMatch(editor, editor.getPlugin({ key: KEYS.textAlign }));
 
   if (value === defaultNodeValue) {
     editor.tf.unsetNodes(nodeKey!, {

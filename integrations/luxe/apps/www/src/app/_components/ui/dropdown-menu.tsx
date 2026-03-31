@@ -1,12 +1,10 @@
 "use client"; // @NOTE: Add in case you are using Next.js
 
-import { createContext, useContext, useState } from "react";
-
-import { type Variants, motion } from "motion/react";
-
-import { cn } from "@/utils/cn";
-
 import { Slot } from "@radix-ui/react-slot";
+
+import { motion, type Variants } from "motion/react";
+import { createContext, useContext, useState } from "react";
+import { cn } from "@/utils/cn";
 
 const content: Variants = {
   hidden: {
@@ -39,17 +37,10 @@ const item: Variants = {
 
 type DropdownMenuProps = React.ComponentProps<"nav">;
 
-export function DropdownMenu({
-  className,
-  children,
-  ...props
-}: DropdownMenuProps) {
+export function DropdownMenu({ className, children, ...props }: DropdownMenuProps) {
   return (
     <DropdownMenuProvider>
-      <nav
-        className={cn("mx-auto w-full max-w-[200px] space-y-2", className)}
-        {...props}
-      >
+      <nav className={cn("mx-auto w-full max-w-[200px] space-y-2", className)} {...props}>
         {children}
       </nav>
     </DropdownMenuProvider>
@@ -75,7 +66,7 @@ export function DropdownMenuTrigger({
       className={cn(
         "flex w-full max-w-[300px] items-center justify-between rounded-xl border border-border bg-main-secondary px-3 py-2 ease-out",
         "duration-200 focus-visible:border-border focus-visible:outline-none active:scale-[0.97]",
-        className,
+        className
       )}
       onClick={() => setIsOpen((prev) => !prev)}
       {...props}
@@ -85,10 +76,7 @@ export function DropdownMenuTrigger({
         width="15"
         height="15"
         viewBox="0 0 24 24"
-        className={cn(
-          "text-neutral-400 duration-300 ease-out",
-          isOpen && "rotate-180",
-        )}
+        className={cn("text-neutral-400 duration-300 ease-out", isOpen && "rotate-180")}
         fill="none"
         stroke="currentColor"
         strokeWidth="2"
@@ -122,7 +110,7 @@ export function DropdownMenuContent({
         "border border-border bg-main-secondary",
         isOpen ? "pointer-events-auto" : "pointer-events-none",
         floating ? "absolute" : "relative",
-        className,
+        className
       )}
       variants={content}
       initial="hidden"
@@ -155,7 +143,7 @@ export function DropdownMenuItem({
           "flex w-full items-center gap-2 rounded-lg border border-transparent py-1 text-primary-muted transition-colors",
           "hover:text-primary-foreground focus-visible:border-border focus-visible:text-primary-foreground focus-visible:outline-none",
           "select-none px-1.5 hover:bg-main-foreground/60 focus-visible:bg-main-foreground/60",
-          className,
+          className
         )}
         {...props}
       >
@@ -169,7 +157,7 @@ const Context = createContext(
   {} as {
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  },
+  }
 );
 
 function DropdownMenuProvider({ children }: { children: React.ReactNode }) {

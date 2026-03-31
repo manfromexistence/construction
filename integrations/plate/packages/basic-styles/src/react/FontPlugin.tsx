@@ -1,4 +1,4 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
 import {
   BaseFontBackgroundColorPlugin,
@@ -6,7 +6,7 @@ import {
   BaseFontFamilyPlugin,
   BaseFontSizePlugin,
   BaseFontWeightPlugin,
-} from '../lib';
+} from "../lib";
 
 export const FontColorPlugin = toPlatePlugin(BaseFontColorPlugin);
 
@@ -14,8 +14,6 @@ export const FontSizePlugin = toPlatePlugin(BaseFontSizePlugin);
 
 export const FontFamilyPlugin = toPlatePlugin(BaseFontFamilyPlugin);
 
-export const FontBackgroundColorPlugin = toPlatePlugin(
-  BaseFontBackgroundColorPlugin
-);
+export const FontBackgroundColorPlugin = toPlatePlugin(BaseFontBackgroundColorPlugin);
 
 export const FontWeightPlugin = toPlatePlugin(BaseFontWeightPlugin);

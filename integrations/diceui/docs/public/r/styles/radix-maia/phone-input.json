@@ -1,8 +1,6 @@
 {
   "name": "phone-input",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "command",
     "input",

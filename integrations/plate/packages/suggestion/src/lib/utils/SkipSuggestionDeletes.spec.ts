@@ -1,22 +1,21 @@
 /** @jsx jsxt */
 
-import type { SlateEditor, TSuggestionText } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor, TSuggestionText } from "platejs";
+import { createSlateEditor, KEYS } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor, KEYS } from 'platejs';
-
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { SkipSuggestionDeletes } from './SkipSuggestionDeletes';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { SkipSuggestionDeletes } from "./SkipSuggestionDeletes";
 
 jsxt;
 
 const suggestionPlugin = BaseSuggestionPlugin.configure({
   options: {
-    currentUserId: 'testId',
+    currentUserId: "testId",
   },
 });
 
-describe('SkipSuggestionDeletes', () => {
+describe("SkipSuggestionDeletes", () => {
   let editor: SlateEditor;
 
   beforeEach(() => {
@@ -25,216 +24,216 @@ describe('SkipSuggestionDeletes', () => {
     });
   });
 
-  describe('text nodes', () => {
-    it('returns full text for node without suggestion', () => {
-      const node = { text: 'hello world' };
+  describe("text nodes", () => {
+    it("returns full text for node without suggestion", () => {
+      const node = { text: "hello world" };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('hello world');
+      expect(result).toBe("hello world");
     });
 
-    it('returns empty string for text node with remove suggestion', () => {
+    it("returns empty string for text node with remove suggestion", () => {
       const node: TSuggestionText = {
         [KEYS.suggestion]: true,
         suggestion_1: {
-          id: '1',
+          id: "1",
           createdAt: Date.now(),
-          type: 'remove',
-          userId: 'testId',
+          type: "remove",
+          userId: "testId",
         },
-        text: 'deleted text',
+        text: "deleted text",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('');
+      expect(result).toBe("");
     });
 
-    it('returns full text for text node with insert suggestion', () => {
+    it("returns full text for text node with insert suggestion", () => {
       const node: TSuggestionText = {
         [KEYS.suggestion]: true,
         suggestion_1: {
-          id: '1',
+          id: "1",
           createdAt: Date.now(),
-          type: 'insert',
-          userId: 'testId',
+          type: "insert",
+          userId: "testId",
         },
-        text: 'inserted text',
+        text: "inserted text",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('inserted text');
+      expect(result).toBe("inserted text");
     });
 
-    it('returns full text for text node with update suggestion', () => {
+    it("returns full text for text node with update suggestion", () => {
       const node: TSuggestionText = {
         [KEYS.suggestion]: true,
         suggestion_1: {
-          id: '1',
+          id: "1",
           createdAt: Date.now(),
-          type: 'update',
-          userId: 'testId',
+          type: "update",
+          userId: "testId",
         },
-        text: 'updated text',
+        text: "updated text",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('updated text');
+      expect(result).toBe("updated text");
     });
   });
 
-  describe('element nodes', () => {
-    it('concatenate text from all children', () => {
+  describe("element nodes", () => {
+    it("concatenate text from all children", () => {
       const node = {
-        children: [{ text: 'first ' }, { text: 'second ' }, { text: 'third' }],
-        type: 'paragraph',
+        children: [{ text: "first " }, { text: "second " }, { text: "third" }],
+        type: "paragraph",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('first second third');
+      expect(result).toBe("first second third");
     });
 
-    it('skip deleted text nodes in children', () => {
+    it("skip deleted text nodes in children", () => {
       const node = {
         children: [
-          { text: 'keep this ' },
+          { text: "keep this " },
           {
             [KEYS.suggestion]: true,
             suggestion_1: {
-              id: '1',
+              id: "1",
               createdAt: Date.now(),
-              type: 'remove',
-              userId: 'testId',
+              type: "remove",
+              userId: "testId",
             },
-            text: 'delete this ',
+            text: "delete this ",
           } as TSuggestionText,
-          { text: 'keep this too' },
+          { text: "keep this too" },
         ],
-        type: 'paragraph',
+        type: "paragraph",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('keep this keep this too');
+      expect(result).toBe("keep this keep this too");
     });
 
-    it('handle nested elements', () => {
+    it("handle nested elements", () => {
       const node = {
         children: [
           {
-            children: [{ text: 'nested ' }, { text: 'text' }],
-            type: 'paragraph',
+            children: [{ text: "nested " }, { text: "text" }],
+            type: "paragraph",
           },
           {
-            children: [{ text: 'another ' }, { text: 'paragraph' }],
-            type: 'paragraph',
+            children: [{ text: "another " }, { text: "paragraph" }],
+            type: "paragraph",
           },
         ],
-        type: 'blockquote',
+        type: "blockquote",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('nested textanother paragraph');
+      expect(result).toBe("nested textanother paragraph");
     });
 
-    it('handle deeply nested elements with mixed suggestions', () => {
+    it("handle deeply nested elements with mixed suggestions", () => {
       const node = {
         children: [
           {
             children: [
               {
                 children: [
-                  { text: 'item 1 ' },
+                  { text: "item 1 " },
                   {
                     [KEYS.suggestion]: true,
                     suggestion_1: {
-                      id: '1',
+                      id: "1",
                       createdAt: Date.now(),
-                      type: 'remove',
-                      userId: 'testId',
+                      type: "remove",
+                      userId: "testId",
                     },
-                    text: 'deleted ',
+                    text: "deleted ",
                   } as TSuggestionText,
-                  { text: 'content' },
+                  { text: "content" },
                 ],
-                type: 'paragraph',
+                type: "paragraph",
               },
             ],
-            type: 'list-item',
+            type: "list-item",
           },
           {
             children: [
               {
-                children: [{ text: 'item 2' }],
-                type: 'paragraph',
+                children: [{ text: "item 2" }],
+                type: "paragraph",
               },
             ],
-            type: 'list-item',
+            type: "list-item",
           },
         ],
-        type: 'list',
+        type: "list",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('item 1 contentitem 2');
+      expect(result).toBe("item 1 contentitem 2");
     });
 
-    it('handle empty children array', () => {
+    it("handle empty children array", () => {
       const node = {
         children: [],
-        type: 'paragraph',
+        type: "paragraph",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('');
+      expect(result).toBe("");
     });
 
-    it('handle children with only deleted text', () => {
+    it("handle children with only deleted text", () => {
       const node = {
         children: [
           {
             [KEYS.suggestion]: true,
             suggestion_1: {
-              id: '1',
+              id: "1",
               createdAt: Date.now(),
-              type: 'remove',
-              userId: 'testId',
+              type: "remove",
+              userId: "testId",
             },
-            text: 'all deleted',
+            text: "all deleted",
           } as TSuggestionText,
         ],
-        type: 'paragraph',
+        type: "paragraph",
       };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('');
+      expect(result).toBe("");
     });
   });
 
-  describe('edge cases', () => {
-    it('handle empty text node', () => {
-      const node = { text: '' };
+  describe("edge cases", () => {
+    it("handle empty text node", () => {
+      const node = { text: "" };
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('');
+      expect(result).toBe("");
     });
 
-    it('handle text node with suggestion but no suggestion data', () => {
+    it("handle text node with suggestion but no suggestion data", () => {
       const node = {
         [KEYS.suggestion]: true,
-        text: 'text with suggestion flag',
+        text: "text with suggestion flag",
       } as TSuggestionText;
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('text with suggestion flag');
+      expect(result).toBe("text with suggestion flag");
     });
 
-    it('handle multiple suggestion keys on same node', () => {
+    it("handle multiple suggestion keys on same node", () => {
       const node: TSuggestionText = {
         [KEYS.suggestion]: true,
         suggestion_1: {
-          id: '1',
+          id: "1",
           createdAt: Date.now() - 1000,
-          type: 'insert',
-          userId: 'user1',
+          type: "insert",
+          userId: "user1",
         },
         suggestion_2: {
-          id: '2',
+          id: "2",
           createdAt: Date.now(),
-          type: 'remove',
-          userId: 'user2',
+          type: "remove",
+          userId: "user2",
         },
-        text: 'multiple suggestions',
+        text: "multiple suggestions",
       };
       // Should use the most recent suggestion (suggestion_2 with type 'remove')
       const result = SkipSuggestionDeletes(editor, node);
-      expect(result).toBe('');
+      expect(result).toBe("");
     });
   });
 });

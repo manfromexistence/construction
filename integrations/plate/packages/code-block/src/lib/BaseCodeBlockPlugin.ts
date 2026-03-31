@@ -1,24 +1,21 @@
-import type { createLowlight } from 'lowlight';
+import type { createLowlight } from "lowlight";
 
 import {
-  type PluginConfig,
-  type TCodeBlockElement,
-  type TElement,
   createSlatePlugin,
   createTSlatePlugin,
   KEYS,
-} from 'platejs';
+  type PluginConfig,
+  type TCodeBlockElement,
+  type TElement,
+} from "platejs";
 
-import { htmlDeserializerCodeBlock } from './deserializer/htmlDeserializerCodeBlock';
-import { isCodeBlockEmpty } from './queries';
-import {
-  CODE_LINE_TO_DECORATIONS,
-  setCodeBlockToDecorations,
-} from './setCodeBlockToDecorations';
-import { withCodeBlock } from './withCodeBlock';
+import { htmlDeserializerCodeBlock } from "./deserializer/htmlDeserializerCodeBlock";
+import { isCodeBlockEmpty } from "./queries";
+import { CODE_LINE_TO_DECORATIONS, setCodeBlockToDecorations } from "./setCodeBlockToDecorations";
+import { withCodeBlock } from "./withCodeBlock";
 
 export type CodeBlockConfig = PluginConfig<
-  'code_block',
+  "code_block",
   {
     /**
      * Default language to use when no language is specified. Set to null to
@@ -66,14 +63,13 @@ export const BaseCodeBlockPlugin = createTSlatePlugin<CodeBlockConfig>({
   },
   parsers: { html: { deserializer: htmlDeserializerCodeBlock } },
   plugins: [BaseCodeLinePlugin, BaseCodeSyntaxPlugin],
-  render: { as: 'pre' },
+  render: { as: "pre" },
   rules: {
     delete: {
-      empty: 'reset',
+      empty: "reset",
     },
     match: ({ editor, rule }) =>
-      ['break.empty', 'delete.empty'].includes(rule) &&
-      isCodeBlockEmpty(editor),
+      ["break.empty", "delete.empty"].includes(rule) && isCodeBlockEmpty(editor),
   },
   decorate: ({ editor, entry: [node, path], getOptions, type }) => {
     if (!getOptions().lowlight) return [];
@@ -81,10 +77,7 @@ export const BaseCodeBlockPlugin = createTSlatePlugin<CodeBlockConfig>({
     const codeLineType = editor.getType(KEYS.codeLine);
 
     // Initialize decorations for the code block, we assume code line decorate will be called next.
-    if (
-      node.type === type &&
-      !CODE_LINE_TO_DECORATIONS.get((node.children as TElement[])[0])
-    ) {
+    if (node.type === type && !CODE_LINE_TO_DECORATIONS.get((node.children as TElement[])[0])) {
       setCodeBlockToDecorations(editor, [node as TCodeBlockElement, path]);
     }
 

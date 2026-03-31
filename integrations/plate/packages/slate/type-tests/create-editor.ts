@@ -1,4 +1,4 @@
-import { createEditor, PointApi, type TRange } from '@platejs/slate';
+import { createEditor, PointApi, type TRange } from "@platejs/slate";
 
 const editor = createEditor();
 
@@ -6,9 +6,9 @@ editor.api.marks();
 editor.api.point([0]);
 editor.api.string([]);
 editor.tf.duplicateNodes({ block: true });
-editor.tf.toggleMark('bold', { remove: 'italic' });
+editor.tf.toggleMark("bold", { remove: "italic" });
 editor.tf.reset({ children: true });
-editor.tf.insertText('text');
+editor.tf.insertText("text");
 editor.tf.select(editor.selection!);
 
 type FutureSelectionEditor = typeof editor & {
@@ -20,7 +20,7 @@ const futureEditor: FutureSelectionEditor = editor;
 futureEditor.selections = editor.selection ? [editor.selection] : [];
 futureEditor.api.point([0]);
 futureEditor.api.string([]);
-futureEditor.tf.insertText('future');
+futureEditor.tf.insertText("future");
 futureEditor.tf.select(futureEditor.selection!);
 
 const maybePoint = PointApi.get(editor.selection);
@@ -37,7 +37,7 @@ if (maybePoint) {
 editor.tf.toggleMark(true);
 
 // @ts-expect-error duplicateNodes expects object options
-editor.tf.duplicateNodes('invalid');
+editor.tf.duplicateNodes("invalid");
 
 // @ts-expect-error non-existent api must not typecheck
 editor.api.notReal();

@@ -1,26 +1,25 @@
-import Link from "next/link"
-import { ChevronRight } from "lucide-react"
-
-import { source } from "@/lib/source"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import { TechStack } from "@/components/tech-stack"
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { TechStack } from "@/components/tech-stack";
+import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { source } from "@/lib/source";
+import { cn } from "@/lib/utils";
 
 export function Hero() {
   const pages = source.getPages() as Array<{
-    data?: { title?: string; date?: string }
-    url?: string
-  }>
+    data?: { title?: string; date?: string };
+    url?: string;
+  }>;
   const page = pages.sort((a, b) => {
-    const dateA = a?.data?.date
-    const dateB = b?.data?.date
-    if (!dateA && !dateB) return 0
-    if (!dateA) return 1
-    if (!dateB) return -1
-    return new Date(dateB).getTime() - new Date(dateA).getTime()
-  })[0]
-  const pageTitle = page?.data?.title
+    const dateA = a?.data?.date;
+    const dateB = b?.data?.date;
+    if (!dateA && !dateB) return 0;
+    if (!dateA) return 1;
+    if (!dateB) return -1;
+    return new Date(dateB).getTime() - new Date(dateA).getTime();
+  })[0];
+  const pageTitle = page?.data?.title;
 
   return (
     <section id="hero">
@@ -56,15 +55,14 @@ export function Hero() {
               </div>
 
               <p className="text-primary max-w-xl text-left text-base tracking-tight text-balance md:text-center md:text-lg">
-                150+ free and open-source animated components and effects built
-                with <b className="font-[550] dark:font-[580]">React</b>,{" "}
+                150+ free and open-source animated components and effects built with{" "}
+                <b className="font-[550] dark:font-[580]">React</b>,{" "}
                 <b className="font-[550] dark:font-[580]">Typescript</b>,{" "}
                 <b className="font-[550] dark:font-[580]">Tailwind CSS</b>, and{" "}
                 <b className="font-[550] dark:font-[580]">Motion</b>
                 .
                 <br />
-                Perfect companion for{" "}
-                <b className="font-[550] dark:font-[580]">shadcn/ui</b>.
+                Perfect companion for <b className="font-[550] dark:font-[580]">shadcn/ui</b>.
               </p>
 
               <div className="flex w-full flex-col gap-4 gap-y-2 md:mx-auto md:max-w-xs md:flex-row md:justify-center">
@@ -101,17 +99,11 @@ export function Hero() {
           <div className="relative mx-auto flex w-full max-w-56 items-center justify-center">
             <TechStack
               className="mx-auto flex w-full items-center justify-between"
-              technologies={[
-                "react",
-                "typescript",
-                "tailwindcss",
-                "motion",
-                "shadcn",
-              ]}
+              technologies={["react", "typescript", "tailwindcss", "motion", "shadcn"]}
             />
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

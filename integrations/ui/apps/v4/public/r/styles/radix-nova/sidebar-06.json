@@ -3,13 +3,7 @@
   "name": "sidebar-06",
   "title": "Sidebar 06",
   "description": "A sidebar with submenus as dropdowns.",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb",
-    "separator",
-    "card",
-    "dropdown-menu"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb", "separator", "card", "dropdown-menu"],
   "files": [
     {
       "path": "registry/radix-nova/blocks/sidebar-06/page.tsx",
@@ -33,9 +27,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "sidebar",
-    "dashboard"
-  ],
+  "categories": ["sidebar", "dashboard"],
   "type": "registry:block"
 }

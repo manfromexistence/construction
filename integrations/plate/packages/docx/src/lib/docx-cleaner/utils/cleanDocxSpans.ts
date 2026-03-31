@@ -1,12 +1,12 @@
-import { traverseHtmlElements } from 'platejs';
+import { traverseHtmlElements } from "platejs";
 
-import { cleanDocxSpacerun } from './cleanDocxSpacerun';
-import { cleanDocxTabCount } from './cleanDocxTabCount';
+import { cleanDocxSpacerun } from "./cleanDocxSpacerun";
+import { cleanDocxTabCount } from "./cleanDocxTabCount";
 
 /** Clean docx spaceruns and tab counts. */
 export const cleanDocxSpans = (rootNode: Node): void => {
   traverseHtmlElements(rootNode, (element) => {
-    if (element.nodeName !== 'SPAN') {
+    if (element.nodeName !== "SPAN") {
       return true;
     }
 

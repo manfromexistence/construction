@@ -1,11 +1,11 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'custom-style-reference';
+const name = "custom-style-reference";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
@@ -16,8 +16,8 @@ describe(getDocxTestName(name), () => {
           <htext />
         </hp>
         <hp>
-          This is text with an <htext italic>emphasized</htext> text style. And
-          this is text with a <htext bold>strengthened</htext> text style.
+          This is text with an <htext italic>emphasized</htext> text style. And this is text with a{" "}
+          <htext bold>strengthened</htext> text style.
         </hp>
         <hp>
           <htext />

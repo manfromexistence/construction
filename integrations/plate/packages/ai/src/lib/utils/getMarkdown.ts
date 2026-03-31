@@ -1,23 +1,20 @@
-import { serializeMd } from '@platejs/markdown';
-import { getTableGridAbove } from '@platejs/table';
+import { serializeMd } from "@platejs/markdown";
+import { getTableGridAbove } from "@platejs/table";
 import {
+  KEYS,
   type SlateEditor,
   type TElement,
   type TTableCellElement,
   type TTableElement,
-  KEYS,
-} from 'platejs';
+} from "platejs";
 
-import type { MarkdownType } from './replacePlaceholders';
+import type { MarkdownType } from "./replacePlaceholders";
 
 /**
  * Serialize table cell content to markdown string. Multiple paragraphs are
  * joined with <br/>.
  */
-const serializeCellContent = (
-  editor: SlateEditor,
-  cell: TTableCellElement
-): string => {
+const serializeCellContent = (editor: SlateEditor, cell: TTableCellElement): string => {
   const parts: string[] = [];
 
   for (const child of cell.children) {
@@ -27,7 +24,7 @@ const serializeCellContent = (
     }
   }
 
-  return parts.join('<br/>');
+  return parts.join("<br/>");
 };
 
 /**
@@ -44,7 +41,7 @@ const serializeTableWithCellRefs = (
 } => {
   const rows: string[] = [];
   const selectedCells: Array<{ cell: TTableCellElement; id: string }> = [];
-  let headerSeparator = '';
+  let headerSeparator = "";
 
   for (let rowIdx = 0; rowIdx < table.children.length; rowIdx++) {
     const row = table.children[rowIdx];
@@ -64,11 +61,11 @@ const serializeTableWithCellRefs = (
       }
     }
 
-    rows.push(`| ${cellTexts.join(' | ')} |`);
+    rows.push(`| ${cellTexts.join(" | ")} |`);
 
     // Add header separator after first row
     if (rowIdx === 0) {
-      headerSeparator = `| ${cellTexts.map(() => '---').join(' | ')} |`;
+      headerSeparator = `| ${cellTexts.map(() => "---").join(" | ")} |`;
     }
   }
 
@@ -79,7 +76,7 @@ const serializeTableWithCellRefs = (
 
   return {
     selectedCells,
-    tableMarkdown: `${rows.join('\n')}\n`,
+    tableMarkdown: `${rows.join("\n")}\n`,
   };
 };
 
@@ -102,7 +99,7 @@ const serializeCellBlocks = (
     blocks.push(`<Cell id="${id}">\n${content}\n</Cell>`);
   }
 
-  return blocks.join('\n\n');
+  return blocks.join("\n\n");
 };
 
 // Internal
@@ -114,22 +111,22 @@ export const getMarkdown = (
     type: MarkdownType;
   }
 ) => {
-  if (type === 'editor' || type === 'editorWithBlockId') {
+  if (type === "editor" || type === "editorWithBlockId") {
     return serializeMd(editor, {
-      withBlockId: type === 'editorWithBlockId',
+      withBlockId: type === "editorWithBlockId",
     });
   }
 
-  if (type === 'block' || type === 'blockWithBlockId') {
-    const blocks = editor.api.blocks({ mode: 'lowest' }).map(([node]) => node);
+  if (type === "block" || type === "blockWithBlockId") {
+    const blocks = editor.api.blocks({ mode: "lowest" }).map(([node]) => node);
 
     return serializeMd(editor, {
       value: blocks,
-      withBlockId: type === 'blockWithBlockId',
+      withBlockId: type === "blockWithBlockId",
     });
   }
 
-  if (type === 'blockSelection' || type === 'blockSelectionWithBlockId') {
+  if (type === "blockSelection" || type === "blockSelectionWithBlockId") {
     const fragment = editor.api.fragment<TElement>();
 
     // Remove any block formatting
@@ -143,22 +140,22 @@ export const getMarkdown = (
 
       return serializeMd(editor, {
         value: modifiedFragment,
-        withBlockId: type === 'blockSelectionWithBlockId',
+        withBlockId: type === "blockSelectionWithBlockId",
       });
     }
 
     return serializeMd(editor, {
       value: fragment,
-      withBlockId: type === 'blockSelectionWithBlockId',
+      withBlockId: type === "blockSelectionWithBlockId",
     });
   }
 
-  if (type === 'tableCellWithId') {
+  if (type === "tableCellWithId") {
     // Get selected cells
-    const cellEntries = getTableGridAbove(editor, { format: 'cell' });
+    const cellEntries = getTableGridAbove(editor, { format: "cell" });
 
     if (cellEntries.length === 0) {
-      return '';
+      return "";
     }
 
     // Collect selected cell IDs
@@ -179,7 +176,7 @@ export const getMarkdown = (
     });
 
     if (!tableEntry) {
-      return '';
+      return "";
     }
 
     const table = tableEntry[0] as TTableElement;
@@ -198,5 +195,5 @@ export const getMarkdown = (
     return `${tableMarkdown}\n${cellBlocks}`;
   }
 
-  return '';
+  return "";
 };

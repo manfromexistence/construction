@@ -13,23 +13,11 @@ interface BaseSwitcherProps extends React.ComponentProps<"div"> {
   pathname: string;
 }
 
-export function BaseSwitcher({
-  base,
-  pathname,
-  className,
-  ...props
-}: BaseSwitcherProps) {
+export function BaseSwitcher({ base, pathname, className, ...props }: BaseSwitcherProps) {
   return (
-    <div
-      role="tablist"
-      className={cn("inline-flex h-9 items-center gap-6", className)}
-      {...props}
-    >
+    <div role="tablist" className={cn("inline-flex h-9 items-center gap-6", className)} {...props}>
       {bases.map((baseItem) => {
-        const href = pathname.replace(
-          `/components/${base}/`,
-          `/components/${baseItem.value}/`,
-        );
+        const href = pathname.replace(`/components/${base}/`, `/components/${baseItem.value}/`);
         const isActive = base === baseItem.value;
 
         return (
@@ -40,7 +28,7 @@ export function BaseSwitcher({
             aria-selected={isActive}
             className={cn(
               "inline-flex items-center justify-center whitespace-nowrap border-b-2 pb-1.5 font-medium text-sm transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring/50",
-              "not-aria-selected:border-transparent not-aria-selected:text-muted-foreground not-aria-selected:hover:text-foreground aria-selected:border-foreground aria-selected:text-foreground",
+              "not-aria-selected:border-transparent not-aria-selected:text-muted-foreground not-aria-selected:hover:text-foreground aria-selected:border-foreground aria-selected:text-foreground"
             )}
           >
             {baseItem.label}

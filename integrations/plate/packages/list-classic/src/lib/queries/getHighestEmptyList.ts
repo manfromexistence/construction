@@ -1,7 +1,6 @@
-import { type Path, type SlateEditor, PathApi } from 'platejs';
-import { KEYS } from 'platejs';
+import { KEYS, type Path, PathApi, type SlateEditor } from "platejs";
 
-import { getListTypes } from './getListTypes';
+import { getListTypes } from "./getListTypes";
 
 /**
  * Find the highest end list that can be deleted. Its path should be different
@@ -38,10 +37,7 @@ export const getHighestEmptyList = (
       });
 
       if (liParent) {
-        return (
-          getHighestEmptyList(editor, { diffListPath, liPath: liParent[1] }) ||
-          listPath
-        );
+        return getHighestEmptyList(editor, { diffListPath, liPath: liParent[1] }) || listPath;
       }
     }
 

@@ -1,6 +1,6 @@
-import { KEYS, createSlateEditor } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { getTodoListItemEntry } from './getTodoListItemEntry';
+import { getTodoListItemEntry } from "./getTodoListItemEntry";
 
 const createTodoEditor = ({
   at,
@@ -10,19 +10,19 @@ const createTodoEditor = ({
       children: [
         {
           checked: false,
-          children: [{ text: 'one' }],
+          children: [{ text: "one" }],
           type: KEYS.listTodoClassic,
         },
         {
           checked: true,
-          children: [{ text: 'two' }],
+          children: [{ text: "two" }],
           type: KEYS.listTodoClassic,
         },
       ],
     },
     {
-      type: 'p',
-      children: [{ text: 'tail' }],
+      type: "p",
+      children: [{ text: "tail" }],
     },
   ],
 }: {
@@ -34,8 +34,8 @@ const createTodoEditor = ({
     value,
   });
 
-describe('getTodoListItemEntry', () => {
-  it('returns the nearest todo item and parent task list for a collapsed selection', () => {
+describe("getTodoListItemEntry", () => {
+  it("returns the nearest todo item and parent task list for a collapsed selection", () => {
     const editor = createTodoEditor({
       at: {
         anchor: { offset: 1, path: [0, 1, 0] },
@@ -54,7 +54,7 @@ describe('getTodoListItemEntry', () => {
     expect(result?.listItem[1]).toEqual([0, 1]);
   });
 
-  it('uses the focus path for expanded selections', () => {
+  it("uses the focus path for expanded selections", () => {
     const editor = createTodoEditor({
       at: {
         anchor: { offset: 2, path: [1, 0] },
@@ -72,7 +72,7 @@ describe('getTodoListItemEntry', () => {
     });
   });
 
-  it('accepts an explicit path', () => {
+  it("accepts an explicit path", () => {
     const editor = createTodoEditor();
 
     const result = getTodoListItemEntry(editor, { at: [0, 1, 0] });
@@ -81,7 +81,7 @@ describe('getTodoListItemEntry', () => {
     expect(result?.listItem[1]).toEqual([0, 1]);
   });
 
-  it('returns undefined for non-todo and missing paths', () => {
+  it("returns undefined for non-todo and missing paths", () => {
     const editor = createTodoEditor();
 
     expect(getTodoListItemEntry(editor, { at: [1, 0] })).toBeUndefined();

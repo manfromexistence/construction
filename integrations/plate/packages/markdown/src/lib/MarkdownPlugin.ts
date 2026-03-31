@@ -1,19 +1,16 @@
-import type { Options as RemarkStringifyOptions } from 'remark-stringify';
-import type { Plugin } from 'unified';
-
 import {
-  type OmitFirst,
-  type PluginConfig,
   bindFirst,
   createTSlatePlugin,
   isUrl,
   KEYS,
-} from 'platejs';
-
-import type { MdRules, PlateType } from './types';
-
-import { deserializeInlineMd, deserializeMd } from './deserializer';
-import { serializeMd } from './serializer';
+  type OmitFirst,
+  type PluginConfig,
+} from "platejs";
+import type { Options as RemarkStringifyOptions } from "remark-stringify";
+import type { Plugin } from "unified";
+import { deserializeInlineMd, deserializeMd } from "./deserializer";
+import { serializeMd } from "./serializer";
+import type { MdRules, PlateType } from "./types";
 
 export type AllowNodeConfig = {
   /** Custom filter function for nodes during deserialization */
@@ -23,7 +20,7 @@ export type AllowNodeConfig = {
 };
 
 export type MarkdownConfig = PluginConfig<
-  'markdown',
+  "markdown",
   {
     /**
      * Configuration for allowed node types. Cannot be combined with
@@ -106,10 +103,10 @@ export const MarkdownPlugin = createTSlatePlugin<MarkdownConfig>({
   }))
   .extend(({ api }) => ({
     parser: {
-      format: 'text/plain',
+      format: "text/plain",
       deserialize: ({ data }) => api.markdown.deserialize(data),
       query: ({ data, dataTransfer }) => {
-        const htmlData = dataTransfer.getData('text/html');
+        const htmlData = dataTransfer.getData("text/html");
 
         if (htmlData) return false;
 

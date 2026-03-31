@@ -2,12 +2,12 @@ import {
   type Editor,
   type ElementEntryOf,
   type ElementOf,
-  type NodeEntry,
   NodeApi,
+  type NodeEntry,
   PathApi,
-} from 'platejs';
+} from "platejs";
 
-import { type GetSiblingListOptions, getSiblingList } from './getSiblingList';
+import { type GetSiblingListOptions, getSiblingList } from "./getSiblingList";
 
 /** Get the next indent list. */
 export const getNextList = <N extends ElementOf<E>, E extends Editor = Editor>(

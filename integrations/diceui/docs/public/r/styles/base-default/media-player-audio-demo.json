@@ -1,8 +1,6 @@
 {
   "name": "media-player-audio-demo",
-  "registryDependencies": [
-    "media-player"
-  ],
+  "registryDependencies": ["media-player"],
   "files": [
     {
       "path": "examples/media-player-audio-demo.tsx",

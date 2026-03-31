@@ -134,12 +134,7 @@ const AnnoyedIcon = forwardRef<AnnoyedIconHandle, AnnoyedIconProps>(
           xmlns="http://www.w3.org/2000/svg"
         >
           <circle cx="12" cy="12" r="10" />
-          <motion.path
-            animate={controls}
-            d="M8 15h8"
-            initial="normal"
-            variants={mouthVariants}
-          />
+          <motion.path animate={controls} d="M8 15h8" initial="normal" variants={mouthVariants} />
           <motion.path
             animate={controls}
             d="M8 9h2"

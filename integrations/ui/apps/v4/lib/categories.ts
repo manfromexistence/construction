@@ -24,4 +24,4 @@ export const registryCategories = [
     slug: "signup",
     hidden: false,
   },
-]
+];

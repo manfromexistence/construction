@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('removeNodes', () => {
-  describe('when previousEmptyBlock is true', () => {
-    it('remove the previous empty block', () => {
+describe("removeNodes", () => {
+  describe("when previousEmptyBlock is true", () => {
+    it("remove the previous empty block", () => {
       const input = createEditor(
         (
           <editor>
@@ -35,7 +35,7 @@ describe('removeNodes', () => {
       expect(input.children).toEqual(output.children);
     });
 
-    it('keeps the previous block when it is not empty', () => {
+    it("keeps the previous block when it is not empty", () => {
       const input = createEditor(
         (
           <editor>
@@ -66,8 +66,8 @@ describe('removeNodes', () => {
     });
   });
 
-  describe('when previousEmptyBlock is false', () => {
-    it('remove nodes at specified path', () => {
+  describe("when previousEmptyBlock is false", () => {
+    it("remove nodes at specified path", () => {
       const input = createEditor(
         (
           <editor>
@@ -94,7 +94,7 @@ describe('removeNodes', () => {
       expect(input.children).toEqual(output.children);
     });
 
-    it('keeps nodes unchanged if no path is specified', () => {
+    it("keeps nodes unchanged if no path is specified", () => {
       const input = createEditor(
         (
           <editor>
@@ -119,8 +119,8 @@ describe('removeNodes', () => {
     });
   });
 
-  describe('when children option is true', () => {
-    it('remove all children at specified path', () => {
+  describe("when children option is true", () => {
+    it("remove all children at specified path", () => {
       const input = createEditor(
         (
           <editor>
@@ -158,7 +158,7 @@ describe('removeNodes', () => {
       expect(input.children).toEqual(output.children);
     });
 
-    it('keeps nodes unchanged if the path has no children', () => {
+    it("keeps nodes unchanged if the path has no children", () => {
       const input = createEditor(
         (
           <editor>
@@ -188,7 +188,7 @@ describe('removeNodes', () => {
       expect(input.children).toEqual(output.children);
     });
 
-    it('remove nested children in reverse order', () => {
+    it("remove nested children in reverse order", () => {
       const input = createEditor(
         (
           <editor>
@@ -231,7 +231,7 @@ describe('removeNodes', () => {
       expect(input.children).toEqual(output.children);
     });
 
-    it('keeps nodes unchanged if children removal has no path', () => {
+    it("keeps nodes unchanged if children removal has no path", () => {
       const input = createEditor(
         (
           <editor>

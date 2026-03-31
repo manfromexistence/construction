@@ -1,17 +1,16 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { CodeBlockPlugin } from '../../react/CodeBlockPlugin';
-import { insertEmptyCodeBlock } from './insertEmptyCodeBlock';
+import { CodeBlockPlugin } from "../../react/CodeBlockPlugin";
+import { insertEmptyCodeBlock } from "./insertEmptyCodeBlock";
 
 jsxt;
 
-describe('insert empty code block', () => {
-  it('insert empty code block on selected empty line', () => {
+describe("insert empty code block", () => {
+  it("insert empty code block on selected empty line", () => {
     const input = (
       <editor>
         <hp>
@@ -43,7 +42,7 @@ describe('insert empty code block', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('insert empty code block below selected non-empty line', () => {
+  it("insert empty code block below selected non-empty line", () => {
     const input = (
       <editor>
         <hp>
@@ -77,7 +76,7 @@ describe('insert empty code block', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('insert empty code block below expanded selection', () => {
+  it("insert empty code block below expanded selection", () => {
     const input = (
       <editor>
         <hp>line 1</hp>

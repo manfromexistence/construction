@@ -1,11 +1,11 @@
-import { GeistMono } from "geist/font/mono"
-import { GeistPixelSquare } from "geist/font/pixel"
-import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono";
+import { GeistPixelSquare } from "geist/font/pixel";
+import { GeistSans } from "geist/font/sans";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-const fontSans = GeistSans
-const fontMono = GeistMono
+const fontSans = GeistSans;
+const fontMono = GeistMono;
 
 // export const fontPixel = localFont({
 //   src: "../assets/fonts/DepartureMono-Regular.woff2",
@@ -19,4 +19,4 @@ export const fontVariables = cn(
   GeistPixelSquare.variable,
   "[--font-sans:var(--font-geist-sans)]",
   "[--font-mono:var(--font-geist-mono)]"
-)
+);

@@ -1,14 +1,14 @@
 "use client";
 
-import { suggestion } from "@/components/editor/mention-suggestion";
-import { toast } from "@/hooks/use-toast";
-import { cn } from "@/lib/utils";
 import CharacterCount from "@tiptap/extension-character-count";
 import Mention from "@tiptap/extension-mention";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
+import { suggestion } from "@/components/editor/mention-suggestion";
+import { toast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 
 interface CustomTextareaProps {
   className?: string;

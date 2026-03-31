@@ -1,10 +1,10 @@
-import Image from "next/image"
+import Image from "next/image";
 
-import { UTM_PARAMS } from "@/config/site"
-import { addQueryParams } from "@/utils/url"
+import { UTM_PARAMS } from "@/config/site";
+import { addQueryParams } from "@/utils/url";
 
-import type { Experience } from "../../types/experiences"
-import { ExperiencePositionItem } from "./experience-position-item"
+import type { Experience } from "../../types/experiences";
+import { ExperiencePositionItem } from "./experience-position-item";
 
 export function ExperienceItem({ experience }: { experience: Experience }) {
   return (
@@ -60,5 +60,5 @@ export function ExperienceItem({ experience }: { experience: Experience }) {
         ))}
       </div>
     </div>
-  )
+  );
 }

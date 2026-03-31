@@ -15,9 +15,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "content",
-    "portfolio"
-  ],
+  "categories": ["content", "portfolio"],
   "type": "registry:block"
 }

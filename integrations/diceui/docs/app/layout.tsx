@@ -17,14 +17,7 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  keywords: [
-    "react",
-    "ui",
-    "ui-library",
-    "shadcn-ui",
-    "accessibility",
-    "wai-aria",
-  ],
+  keywords: ["react", "ui", "ui-library", "shadcn-ui", "accessibility", "wai-aria"],
   authors: [
     {
       name: "sadmann7",
@@ -81,7 +74,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         className={cn(
           "isolate min-h-screen font-sans antialiased",
           fontSans.variable,
-          fontMono.variable,
+          fontMono.variable
         )}
       >
         <Script defer src="https://assets.onedollarstats.com/stonks.js" />

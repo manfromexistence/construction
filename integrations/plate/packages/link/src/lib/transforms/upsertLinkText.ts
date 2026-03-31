@@ -1,17 +1,14 @@
-import type { SlateEditor, TLinkElement, TText } from 'platejs';
+import type { SlateEditor, TLinkElement, TText } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { UpsertLinkOptions } from './upsertLink';
+import type { UpsertLinkOptions } from "./upsertLink";
 
 /**
  * If the text is different than the link above text, replace link children by a
  * new text. The new text has the same marks than the first text replaced.
  */
-export const upsertLinkText = (
-  editor: SlateEditor,
-  { text }: UpsertLinkOptions
-) => {
+export const upsertLinkText = (editor: SlateEditor, { text }: UpsertLinkOptions) => {
   const newLink = editor.api.above<TLinkElement>({
     match: { type: editor.getType(KEYS.link) },
   });

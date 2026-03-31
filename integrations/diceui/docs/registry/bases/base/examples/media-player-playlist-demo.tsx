@@ -64,35 +64,32 @@ export default function MediaPlayerPlaylistDemo() {
     setIsPlaying(false);
   }, []);
 
-  const onLoadAndPlayTrack = React.useCallback(
-    async (index: number, shouldPlay = true) => {
-      const trackToPlay = tracks[index];
-      if (!trackToPlay) {
-        toast.error("Track not found");
-        return;
-      }
+  const onLoadAndPlayTrack = React.useCallback(async (index: number, shouldPlay = true) => {
+    const trackToPlay = tracks[index];
+    if (!trackToPlay) {
+      toast.error("Track not found");
+      return;
+    }
 
-      if (!audioRef.current) return;
+    if (!audioRef.current) return;
 
-      if (!audioRef.current.paused) {
-        audioRef.current.pause();
-      }
+    if (!audioRef.current.paused) {
+      audioRef.current.pause();
+    }
 
-      setCurrentTrackIndex(index);
-      setIsLoading(true);
-      shouldPlayAfterLoad.current = shouldPlay;
+    setCurrentTrackIndex(index);
+    setIsLoading(true);
+    shouldPlayAfterLoad.current = shouldPlay;
 
-      audioRef.current.src = trackToPlay.src;
-      audioRef.current.load();
-    },
-    [],
-  );
+    audioRef.current.src = trackToPlay.src;
+    audioRef.current.load();
+  }, []);
 
   const onPlayTrack = React.useCallback(
     (index: number) => {
       onLoadAndPlayTrack(index, true);
     },
-    [onLoadAndPlayTrack],
+    [onLoadAndPlayTrack]
   );
 
   const onPreviousTrack = React.useCallback(() => {
@@ -116,9 +113,7 @@ export default function MediaPlayerPlaylistDemo() {
       await audioRef.current.play();
       setIsPlaying(true);
     } catch (error) {
-      toast.error(
-        error instanceof Error ? error.message : "Failed to play track",
-      );
+      toast.error(error instanceof Error ? error.message : "Failed to play track");
       setIsPlaying(false);
     }
   }, []);
@@ -135,13 +130,10 @@ export default function MediaPlayerPlaylistDemo() {
         onPlayTrack(index);
       }
     },
-    [currentTrackIndex, isPlaying, onAudioPlay, onPlayTrack],
+    [currentTrackIndex, isPlaying, onAudioPlay, onPlayTrack]
   );
 
-  const currentTrack = React.useMemo(
-    () => tracks[currentTrackIndex],
-    [currentTrackIndex],
-  );
+  const currentTrack = React.useMemo(() => tracks[currentTrackIndex], [currentTrackIndex]);
 
   React.useEffect(() => {
     const audioElement = audioRef.current;
@@ -177,20 +169,14 @@ export default function MediaPlayerPlaylistDemo() {
   }, [onAudioPlay]);
 
   React.useEffect(() => {
-    if (
-      audioRef.current &&
-      currentTrack &&
-      audioRef.current.src !== currentTrack.src
-    ) {
+    if (audioRef.current && currentTrack && audioRef.current.src !== currentTrack.src) {
       onLoadAndPlayTrack(currentTrackIndex, false);
     }
   }, [currentTrack, currentTrackIndex, onLoadAndPlayTrack]);
 
   const onKeyDown = React.useCallback(
     (event: React.KeyboardEvent<HTMLDivElement>) => {
-      const isMediaFocused = event.currentTarget.contains(
-        document.activeElement,
-      );
+      const isMediaFocused = event.currentTarget.contains(document.activeElement);
 
       if (!isMediaFocused) return;
 
@@ -206,7 +192,7 @@ export default function MediaPlayerPlaylistDemo() {
           break;
       }
     },
-    [onNextTrack, onPreviousTrack],
+    [onNextTrack, onPreviousTrack]
   );
 
   if (!currentTrack) return null;
@@ -219,11 +205,7 @@ export default function MediaPlayerPlaylistDemo() {
       onKeyDown={onKeyDown}
       className="w-full max-w-2xl overflow-hidden rounded-lg border bg-background shadow-lg"
     >
-      <MediaPlayerAudio
-        ref={audioRef}
-        src={currentTrack.src}
-        className="sr-only"
-      />
+      <MediaPlayerAudio ref={audioRef} src={currentTrack.src} className="sr-only" />
       <div className="flex w-full flex-col items-center gap-4 md:items-start">
         <div className="relative w-full overflow-hidden rounded-md rounded-b-none border-b">
           {/* biome-ignore lint/performance/noImgElement: dynamic cover URLs from playlist tracks don't work well with Next.js Image optimization */}
@@ -237,9 +219,7 @@ export default function MediaPlayerPlaylistDemo() {
             <h2 className="font-semibold text-2xl text-white tracking-tight drop-shadow-lg">
               {currentTrack.title}
             </h2>
-            <p className="text-sm text-white/90 drop-shadow-md">
-              {currentTrack.artist}
-            </p>
+            <p className="text-sm text-white/90 drop-shadow-md">{currentTrack.artist}</p>
           </div>
         </div>
         <div className="w-full">
@@ -257,7 +237,7 @@ export default function MediaPlayerPlaylistDemo() {
                 variant="ghost"
                 className={cn(
                   "h-auto w-full rounded-none px-4 py-3 text-left",
-                  index === currentTrackIndex && "bg-accent",
+                  index === currentTrackIndex && "bg-accent"
                 )}
                 onClick={() => onTogglePlayPauseTrack(index)}
                 disabled={isLoading}
@@ -272,14 +252,12 @@ export default function MediaPlayerPlaylistDemo() {
                   <span
                     className={cn(
                       "font-medium leading-tight",
-                      index === currentTrackIndex && "text-primary",
+                      index === currentTrackIndex && "text-primary"
                     )}
                   >
                     {track.title}
                   </span>
-                  <span className="text-muted-foreground text-sm">
-                    {track.artist}
-                  </span>
+                  <span className="text-muted-foreground text-sm">{track.artist}</span>
                 </div>
                 {index === currentTrackIndex && isLoading ? (
                   <Loader2Icon className="size-6 animate-spin text-primary" />

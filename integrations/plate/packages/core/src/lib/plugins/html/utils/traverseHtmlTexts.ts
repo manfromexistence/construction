@@ -1,5 +1,5 @@
-import { isHtmlText } from './isHtmlText';
-import { traverseHtmlNode } from './traverseHtmlNode';
+import { isHtmlText } from "./isHtmlText";
+import { traverseHtmlNode } from "./traverseHtmlNode";
 
 type Callback = (node: Text) => boolean;
 

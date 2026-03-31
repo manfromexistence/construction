@@ -109,13 +109,7 @@
       "type": "registry:component",
       "title": "Data Table Sort List",
       "description": "A sort list component for the data table",
-      "registryDependencies": [
-        "badge",
-        "button",
-        "command",
-        "popover",
-        "select"
-      ],
+      "registryDependencies": ["badge", "button", "command", "popover", "select"],
       "dependencies": ["@tanstack/react-table", "lucide-react"],
       "files": [
         {
@@ -158,12 +152,7 @@
         "popover",
         "select"
       ],
-      "dependencies": [
-        "@tanstack/react-table",
-        "lucide-react",
-        "nanoid",
-        "nuqs"
-      ],
+      "dependencies": ["@tanstack/react-table", "lucide-react", "nanoid", "nuqs"],
       "files": [
         {
           "path": "src/components/data-table/data-table-filter-list.tsx",
@@ -244,13 +233,7 @@
         "popover",
         "select"
       ],
-      "dependencies": [
-        "@tanstack/react-table",
-        "lucide-react",
-        "motion",
-        "nanoid",
-        "nuqs"
-      ],
+      "dependencies": ["@tanstack/react-table", "lucide-react", "motion", "nanoid", "nuqs"],
       "files": [
         {
           "path": "src/components/data-table/data-table-filter-menu.tsx",
@@ -440,18 +423,8 @@
       "type": "registry:component",
       "title": "Data Grid Sort Menu",
       "description": "A sort menu component for the data grid with drag-and-drop reordering",
-      "registryDependencies": [
-        "badge",
-        "button",
-        "command",
-        "popover",
-        "select"
-      ],
-      "dependencies": [
-        "@radix-ui/react-direction",
-        "@tanstack/react-table",
-        "lucide-react"
-      ],
+      "registryDependencies": ["badge", "button", "command", "popover", "select"],
+      "dependencies": ["@radix-ui/react-direction", "@tanstack/react-table", "lucide-react"],
       "files": [
         {
           "path": "src/components/data-grid/data-grid-sort-menu.tsx",
@@ -490,11 +463,7 @@
       "title": "Data Grid View Menu",
       "description": "A view menu component for the data grid to toggle column visibility",
       "registryDependencies": ["button", "command", "popover"],
-      "dependencies": [
-        "@radix-ui/react-direction",
-        "@tanstack/react-table",
-        "lucide-react"
-      ],
+      "dependencies": ["@radix-ui/react-direction", "@tanstack/react-table", "lucide-react"],
       "files": [
         {
           "path": "src/components/data-grid/data-grid-view-menu.tsx",
@@ -532,11 +501,7 @@
         "popover",
         "select"
       ],
-      "dependencies": [
-        "@radix-ui/react-direction",
-        "@tanstack/react-table",
-        "lucide-react"
-      ],
+      "dependencies": ["@radix-ui/react-direction", "@tanstack/react-table", "lucide-react"],
       "files": [
         {
           "path": "src/components/data-grid/data-grid-filter-menu.tsx",

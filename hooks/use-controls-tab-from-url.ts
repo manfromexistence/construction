@@ -1,10 +1,19 @@
+"use client";
+
 import { useQueryState } from "nuqs";
+import { useEffect, useState } from "react";
 
 const TABS = ["colors", "typography", "other", "ai"] as const;
 export const DEFAULT_TAB = TABS[0];
 export type ControlTab = (typeof TABS)[number];
 
 export const useControlsTabFromUrl = () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const [tab, setTab] = useQueryState("tab", {
     defaultValue: DEFAULT_TAB,
     history: "push",
@@ -20,6 +29,8 @@ export const useControlsTabFromUrl = () => {
   });
 
   const handleSetTab = (tab: ControlTab) => {
+    if (!isClient) return;
+
     // If the incoming tab is invalid, fallback to the default tab
     if (!TABS.includes(tab)) {
       console.warn(`Invalid tab value: ${tab}. Falling back to default.`);
@@ -30,5 +41,5 @@ export const useControlsTabFromUrl = () => {
     setTab(tab);
   };
 
-  return { tab, handleSetTab };
+  return { tab: tab ?? DEFAULT_TAB, handleSetTab };
 };

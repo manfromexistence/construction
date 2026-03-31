@@ -1,14 +1,13 @@
-import { DOMEditor } from 'slate-dom';
+import { DOMEditor } from "slate-dom";
 
-import { isTargetInsideNonReadonlyVoid } from './isTargetInsideNonReadonlyVoid';
+import { isTargetInsideNonReadonlyVoid } from "./isTargetInsideNonReadonlyVoid";
 
-describe('isTargetInsideNonReadonlyVoid', () => {
-  it('returns the slate-dom result when the lookup succeeds', () => {
+describe("isTargetInsideNonReadonlyVoid", () => {
+  it("returns the slate-dom result when the lookup succeeds", () => {
     const target = new EventTarget();
-    const domEditorSpy = spyOn(
-      DOMEditor,
-      'isTargetInsideNonReadonlyVoid'
-    ).mockReturnValueOnce(true);
+    const domEditorSpy = spyOn(DOMEditor, "isTargetInsideNonReadonlyVoid").mockReturnValueOnce(
+      true
+    );
 
     try {
       expect(isTargetInsideNonReadonlyVoid({} as any, target)).toBe(true);
@@ -17,14 +16,13 @@ describe('isTargetInsideNonReadonlyVoid', () => {
     }
   });
 
-  it('returns false when slate-dom throws', () => {
+  it("returns false when slate-dom throws", () => {
     const target = new EventTarget();
-    const domEditorSpy = spyOn(
-      DOMEditor,
-      'isTargetInsideNonReadonlyVoid'
-    ).mockImplementation(() => {
-      throw new Error('boom');
-    });
+    const domEditorSpy = spyOn(DOMEditor, "isTargetInsideNonReadonlyVoid").mockImplementation(
+      () => {
+        throw new Error("boom");
+      }
+    );
 
     try {
       expect(isTargetInsideNonReadonlyVoid({} as any, target)).toBe(false);

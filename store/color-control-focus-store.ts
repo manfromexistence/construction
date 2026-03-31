@@ -1,3 +1,5 @@
+"use client";
+
 import { create } from "zustand";
 
 import { DEFAULT_TAB, useControlsTabFromUrl } from "@/hooks/use-controls-tab-from-url";

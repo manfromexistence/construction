@@ -1,14 +1,14 @@
+import bcrypt from "bcryptjs";
+import { createHash, randomBytes } from "crypto";
+import cuid from "cuid";
+import { and, eq, isNull } from "drizzle-orm";
+import { NextRequest } from "next/server";
 import { db } from "@/db";
 import { oauthApp, oauthToken } from "@/db/schema";
 import {
   OAUTH_ACCESS_TOKEN_EXPIRY_SECONDS,
   OAUTH_REFRESH_TOKEN_EXPIRY_SECONDS,
 } from "@/lib/constants";
-import { eq, and, isNull } from "drizzle-orm";
-import { randomBytes, createHash } from "crypto";
-import bcrypt from "bcryptjs";
-import cuid from "cuid";
-import { NextRequest } from "next/server";
 
 // --- Token generation & hashing ---
 
@@ -20,10 +20,7 @@ export async function hashSecret(secret: string): Promise<string> {
   return bcrypt.hash(secret, 10);
 }
 
-export async function verifySecret(
-  secret: string,
-  hash: string
-): Promise<boolean> {
+export async function verifySecret(secret: string, hash: string): Promise<boolean> {
   return bcrypt.compare(secret, hash);
 }
 
@@ -50,10 +47,7 @@ export function parseScopes(scopeString: string): string[] {
 
 // --- Redirect URI validation ---
 
-export function validateRedirectUri(
-  uri: string,
-  registeredUris: string[]
-): boolean {
+export function validateRedirectUri(uri: string, registeredUris: string[]): boolean {
   return registeredUris.includes(uri);
 }
 
@@ -65,9 +59,7 @@ export function verifyCodeChallenge(
   method: string
 ): boolean {
   if (method === "S256") {
-    const hash = createHash("sha256")
-      .update(codeVerifier)
-      .digest("base64url");
+    const hash = createHash("sha256").update(codeVerifier).digest("base64url");
     return hash === codeChallenge;
   }
   if (method === "plain") {
@@ -78,21 +70,13 @@ export function verifyCodeChallenge(
 
 // --- Token creation ---
 
-export async function createTokenPair(
-  appId: string,
-  userId: string,
-  scopes: string[]
-) {
+export async function createTokenPair(appId: string, userId: string, scopes: string[]) {
   const accessToken = generateSecureToken();
   const refreshToken = generateSecureToken();
   const now = new Date();
 
-  const accessTokenExpiresAt = new Date(
-    now.getTime() + OAUTH_ACCESS_TOKEN_EXPIRY_SECONDS * 1000
-  );
-  const refreshTokenExpiresAt = new Date(
-    now.getTime() + OAUTH_REFRESH_TOKEN_EXPIRY_SECONDS * 1000
-  );
+  const accessTokenExpiresAt = new Date(now.getTime() + OAUTH_ACCESS_TOKEN_EXPIRY_SECONDS * 1000);
+  const refreshTokenExpiresAt = new Date(now.getTime() + OAUTH_REFRESH_TOKEN_EXPIRY_SECONDS * 1000);
 
   await db.insert(oauthToken).values({
     id: cuid(),
@@ -133,9 +117,7 @@ export async function resolveUserFromBearerToken(
       accessTokenExpiresAt: oauthToken.accessTokenExpiresAt,
     })
     .from(oauthToken)
-    .where(
-      and(eq(oauthToken.accessTokenHash, tokenHash), isNull(oauthToken.revokedAt))
-    )
+    .where(and(eq(oauthToken.accessTokenHash, tokenHash), isNull(oauthToken.revokedAt)))
     .limit(1);
 
   if (!record) return null;
@@ -155,9 +137,7 @@ export async function requireAuth(
   | { tokenData: { userId: string; scopes: string[] }; error: null }
   | { tokenData: null; error: Response }
 > {
-  const tokenData = await resolveUserFromBearerToken(
-    req.headers.get("authorization")
-  );
+  const tokenData = await resolveUserFromBearerToken(req.headers.get("authorization"));
 
   if (!tokenData) {
     return {
@@ -178,10 +158,7 @@ export async function requireAuth(
 
 // --- Client authentication ---
 
-export async function authenticateClient(
-  clientId: string,
-  clientSecret: string
-) {
+export async function authenticateClient(clientId: string, clientSecret: string) {
   const [app] = await db
     .select({
       id: oauthApp.id,
@@ -201,10 +178,6 @@ export async function authenticateClient(
 
 // --- JSON error responses ---
 
-export function oauthError(
-  error: string,
-  description: string,
-  status: number = 400
-) {
+export function oauthError(error: string, description: string, status: number = 400) {
   return Response.json({ error, error_description: description }, { status });
 }

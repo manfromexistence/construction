@@ -1,9 +1,9 @@
-import { showcaseSource } from "@/lib/source"
-import { ShowcaseCard } from "@/components/sections/showcase"
-import { BlurFade } from "@/registry/magicui/blur-fade"
+import { ShowcaseCard } from "@/components/sections/showcase";
+import { showcaseSource } from "@/lib/source";
+import { BlurFade } from "@/registry/magicui/blur-fade";
 
 export default function Page() {
-  const showcases = showcaseSource.getPages()
+  const showcases = showcaseSource.getPages();
   return (
     <article className="container max-w-[120ch] py-14">
       <h2 className="text-foreground mb-2 text-center text-5xl leading-[1.2] font-bold tracking-tighter">
@@ -26,5 +26,5 @@ export default function Page() {
         ))}
       </div>
     </article>
-  )
+  );
 }

@@ -1,11 +1,7 @@
 {
   "name": "combobox-debounced-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "combobox"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["combobox"],
   "files": [
     {
       "path": "examples/combobox-debounced-demo.tsx",

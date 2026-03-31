@@ -1,8 +1,8 @@
-import type { Editor, Path } from 'platejs';
+import type { Editor, Path } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { ListStyleType } from '../types';
+import { ListStyleType } from "../types";
 
 export const setListNode = (
   editor: Editor,

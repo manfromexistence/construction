@@ -1,4 +1,4 @@
-import { createEditor, withHistory } from '@platejs/slate';
+import { createEditor, withHistory } from "@platejs/slate";
 
 const editor = withHistory(createEditor());
 
@@ -24,4 +24,4 @@ void selectionBefore;
 editor.history.undos.push({ selectionBefore: null });
 
 // @ts-expect-error splitting flag must be boolean or undefined
-editor.tf.setSplittingOnce('invalid');
+editor.tf.setSplittingOnce("invalid");

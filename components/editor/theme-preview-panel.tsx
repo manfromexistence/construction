@@ -1,5 +1,9 @@
 "use client";
 
+import { Inspect, Maximize, Minimize, MoreVertical } from "lucide-react";
+import Link from "next/link";
+import { useQueryState } from "nuqs";
+import { lazy } from "react";
 import ShadcnBlocksLogo from "@/assets/shadcnblocks.svg";
 import { HorizontalScrollArea } from "@/components/horizontal-scroll-area";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -18,10 +22,6 @@ import { useFullscreen } from "@/hooks/use-fullscreen";
 import { useThemeInspector } from "@/hooks/use-theme-inspector";
 import { cn } from "@/lib/utils";
 import { ThemeEditorPreviewProps } from "@/types/theme";
-import { Inspect, Maximize, Minimize, MoreVertical } from "lucide-react";
-import Link from "next/link";
-import { useQueryState } from "nuqs";
-import { lazy } from "react";
 import InspectorOverlay from "./inspector-overlay";
 import ColorPreview from "./theme-preview/color-preview";
 import ExamplesPreviewContainer from "./theme-preview/examples-preview-container";
@@ -119,7 +119,11 @@ const ThemePreviewPanel = ({
 
             <div className="flex items-center gap-0.5">
               <TooltipWrapper label="Open theme in v0" asChild>
-                <Button variant="ghost" onClick={() => handleOpenInV0(themeId, themeName)} className="group px-2.5">
+                <Button
+                  variant="ghost"
+                  onClick={() => handleOpenInV0(themeId, themeName)}
+                  className="group px-2.5"
+                >
                   <span className="flex items-center justify-center gap-1 transition-all group-hover:scale-110">
                     Open in <V0Logo className="mb-0.5 !size-5" />
                   </span>
@@ -168,9 +172,17 @@ const ThemePreviewPanel = ({
             </div>
           </HorizontalScrollArea>
 
-          <section className={cn("relative size-full overflow-hidden", activeTab === "cards" ? "pb-4" : "p-4 pt-1")}>
+          <section
+            className={cn(
+              "relative size-full overflow-hidden",
+              activeTab === "cards" ? "pb-4" : "p-4 pt-1"
+            )}
+          >
             <div
-              className={cn("relative isolate size-full overflow-hidden", activeTab !== "cards" && "rounded-lg")}
+              className={cn(
+                "relative isolate size-full overflow-hidden",
+                activeTab !== "cards" && "rounded-lg"
+              )}
               ref={rootRef}
               onMouseMove={handleMouseMove}
               onMouseLeave={handleMouseLeave}

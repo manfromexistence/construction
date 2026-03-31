@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { Page, PageData } from "fumadocs-core/source"
-import { BugIcon, LightbulbIcon, PencilIcon } from "lucide-react"
+import { Page, PageData } from "fumadocs-core/source";
+import { BugIcon, LightbulbIcon, PencilIcon } from "lucide-react";
+import Link from "next/link";
 
-import { getGithubFileUrl, getGitHubIssueUrl } from "@/lib/github"
+import { getGitHubIssueUrl, getGithubFileUrl } from "@/lib/github";
 
 export function Contribute({ page }: { page: Page<PageData> }) {
   const contributeLinks = [
@@ -37,7 +37,7 @@ export function Contribute({ page }: { page: Page<PageData> }) {
         slug: page.url,
       }),
     },
-  ]
+  ];
 
   return (
     <div className="flex flex-col gap-2 p-4">
@@ -58,5 +58,5 @@ export function Contribute({ page }: { page: Page<PageData> }) {
         ))}
       </ul>
     </div>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import type {
   EmptyText,
@@ -20,22 +20,14 @@ import type {
   TTableElement,
   TText,
   TTextAlignProps,
-} from 'platejs';
+} from "platejs";
 
 export interface MyBlockElement extends TElement, TListProps {
   id?: string;
 }
 
-export interface MyTextBlockElement
-  extends TElement,
-    TLineHeightProps,
-    TTextAlignProps {
-  children: (
-    | MyLinkElement
-    | MyMentionElement
-    | MyMentionInputElement
-    | RichText
-  )[];
+export interface MyTextBlockElement extends TElement, TLineHeightProps, TTextAlignProps {
+  children: (MyLinkElement | MyMentionElement | MyMentionInputElement | RichText)[];
 }
 
 export interface MyBlockquoteElement extends MyTextBlockElement {

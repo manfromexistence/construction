@@ -1,8 +1,7 @@
-import * as React from "react"
-import { Slot } from "radix-ui"
-
-import { cn } from "@/registry/bases/radix/lib/utils"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+import { Slot } from "radix-ui";
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { cn } from "@/registry/bases/radix/lib/utils";
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
   return (
@@ -12,20 +11,17 @@ function Breadcrumb({ className, ...props }: React.ComponentProps<"nav">) {
       className={cn("cn-breadcrumb", className)}
       {...props}
     />
-  )
+  );
 }
 
 function BreadcrumbList({ className, ...props }: React.ComponentProps<"ol">) {
   return (
     <ol
       data-slot="breadcrumb-list"
-      className={cn(
-        "cn-breadcrumb-list flex flex-wrap items-center wrap-break-word",
-        className
-      )}
+      className={cn("cn-breadcrumb-list flex flex-wrap items-center wrap-break-word", className)}
       {...props}
     />
-  )
+  );
 }
 
 function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
@@ -35,7 +31,7 @@ function BreadcrumbItem({ className, ...props }: React.ComponentProps<"li">) {
       className={cn("cn-breadcrumb-item inline-flex items-center", className)}
       {...props}
     />
-  )
+  );
 }
 
 function BreadcrumbLink({
@@ -43,17 +39,13 @@ function BreadcrumbLink({
   className,
   ...props
 }: React.ComponentProps<"a"> & {
-  asChild?: boolean
+  asChild?: boolean;
 }) {
-  const Comp = asChild ? Slot.Root : "a"
+  const Comp = asChild ? Slot.Root : "a";
 
   return (
-    <Comp
-      data-slot="breadcrumb-link"
-      className={cn("cn-breadcrumb-link", className)}
-      {...props}
-    />
-  )
+    <Comp data-slot="breadcrumb-link" className={cn("cn-breadcrumb-link", className)} {...props} />
+  );
 }
 
 function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
@@ -66,14 +58,10 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
       className={cn("cn-breadcrumb-page", className)}
       {...props}
     />
-  )
+  );
 }
 
-function BreadcrumbSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"li">) {
+function BreadcrumbSeparator({ children, className, ...props }: React.ComponentProps<"li">) {
   return (
     <li
       data-slot="breadcrumb-separator"
@@ -93,22 +81,16 @@ function BreadcrumbSeparator({
         />
       )}
     </li>
-  )
+  );
 }
 
-function BreadcrumbEllipsis({
-  className,
-  ...props
-}: React.ComponentProps<"span">) {
+function BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="breadcrumb-ellipsis"
       role="presentation"
       aria-hidden="true"
-      className={cn(
-        "cn-breadcrumb-ellipsis flex items-center justify-center",
-        className
-      )}
+      className={cn("cn-breadcrumb-ellipsis flex items-center justify-center", className)}
       {...props}
     >
       <IconPlaceholder
@@ -120,15 +102,15 @@ function BreadcrumbEllipsis({
       />
       <span className="sr-only">More</span>
     </span>
-  )
+  );
 }
 
 export {
   Breadcrumb,
-  BreadcrumbList,
+  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbLink,
+  BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-  BreadcrumbEllipsis,
-}
+};

@@ -1,13 +1,13 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseBasicMarksPlugin } from '../lib/BaseBasicMarksPlugin';
-import { BoldPlugin } from './BoldPlugin';
-import { CodePlugin } from './CodePlugin';
-import { ItalicPlugin } from './ItalicPlugin';
-import { StrikethroughPlugin } from './StrikethroughPlugin';
-import { SubscriptPlugin } from './SubscriptPlugin';
-import { SuperscriptPlugin } from './SuperscriptPlugin';
-import { UnderlinePlugin } from './UnderlinePlugin';
+import { BaseBasicMarksPlugin } from "../lib/BaseBasicMarksPlugin";
+import { BoldPlugin } from "./BoldPlugin";
+import { CodePlugin } from "./CodePlugin";
+import { ItalicPlugin } from "./ItalicPlugin";
+import { StrikethroughPlugin } from "./StrikethroughPlugin";
+import { SubscriptPlugin } from "./SubscriptPlugin";
+import { SuperscriptPlugin } from "./SuperscriptPlugin";
+import { UnderlinePlugin } from "./UnderlinePlugin";
 
 /**
  * Enables support for basic marks:

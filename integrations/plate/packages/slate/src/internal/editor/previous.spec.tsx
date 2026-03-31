@@ -1,15 +1,15 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsx;
 
-describe('previous', () => {
-  it('returns undefined when there is no location to search from', () => {
+describe("previous", () => {
+  it("returns undefined when there is no location to search from", () => {
     const editor = createEditor({
-      children: [{ children: [{ text: 'one' }], type: 'p' }] as any,
+      children: [{ children: [{ text: "one" }], type: "p" }] as any,
     });
 
     editor.selection = null;
@@ -17,7 +17,7 @@ describe('previous', () => {
     expect(editor.api.previous()).toBeUndefined();
   });
 
-  it('returns undefined instead of throwing when searching from the root path', () => {
+  it("returns undefined instead of throwing when searching from the root path", () => {
     const editor = createEditor(
       (
         <editor>
@@ -30,7 +30,7 @@ describe('previous', () => {
     expect(editor.api.previous({ at: [] })).toBeUndefined();
   });
 
-  describe('when using from option', () => {
+  describe("when using from option", () => {
     const editor = createEditor(
       (
         <editor>
@@ -54,29 +54,29 @@ describe('previous', () => {
 
     it('traverse from point before when from="before"', () => {
       const prev = editor.api.previous({ at: [2] });
-      expect(prev![0].id).toBe('2');
+      expect(prev![0].id).toBe("2");
     });
 
     it('get previous when from="parent"', () => {
       const prev = editor.api.previous({
         at: [1, 1], // at 2-2
         block: true,
-        from: 'parent',
+        from: "parent",
       });
-      expect(prev![0].id).toBe('2-1');
+      expect(prev![0].id).toBe("2-1");
     });
 
     it('traverse from parent when from="parent"', () => {
       const prev = editor.api.previous({
         at: [1, 0], // at 2-1
         block: true,
-        from: 'parent',
+        from: "parent",
       });
-      expect(prev![0].id).toBe('2');
+      expect(prev![0].id).toBe("2");
     });
   });
 
-  describe('when using match option', () => {
+  describe("when using match option", () => {
     const editor = createEditor(
       (
         <editor>
@@ -95,15 +95,15 @@ describe('previous', () => {
       ) as any
     );
 
-    it('find previous node matching criteria', () => {
+    it("find previous node matching criteria", () => {
       const prev = editor.api.previous({
         at: [2],
-        match: (n) => 'type' in n && n.type === 'p',
+        match: (n) => "type" in n && n.type === "p",
       });
-      expect(prev![0].id).toBe('2-1');
+      expect(prev![0].id).toBe("2-1");
     });
 
-    it('returns the previous text node when matching text nodes directly', () => {
+    it("returns the previous text node when matching text nodes directly", () => {
       const editor = createEditor(
         (
           <editor>
@@ -115,14 +115,14 @@ describe('previous', () => {
 
       const prev = editor.api.previous({
         at: [1],
-        match: (n: any) => typeof n.text === 'string',
+        match: (n: any) => typeof n.text === "string",
       });
 
-      expect(prev).toEqual([{ text: 'one' }, [0, 0]]);
+      expect(prev).toEqual([{ text: "one" }, [0, 0]]);
     });
   });
 
-  describe('when using nested blocks', () => {
+  describe("when using nested blocks", () => {
     const editor = createEditor(
       (
         <editor>
@@ -155,25 +155,25 @@ describe('previous', () => {
       const prev = editor.api.previous({
         at: [1, 1, 0], // at cell2-1
         block: true,
-        from: 'parent',
+        from: "parent",
       });
-      expect(prev![0].id).toBe('row2');
+      expect(prev![0].id).toBe("row2");
     });
 
     it('traverse from table to previous block when from="before"', () => {
       const prev = editor.api.previous({
         at: [1], // table path
-        from: 'before',
+        from: "before",
       });
-      expect(prev![0].id).toBe('1');
+      expect(prev![0].id).toBe("1");
     });
   });
 
-  it('falls back to a broad match when the location is a point or range', () => {
+  it("falls back to a broad match when the location is a point or range", () => {
     const editor = createEditor({
       children: [
-        { children: [{ text: 'one' }], type: 'p' },
-        { children: [{ text: 'two' }], type: 'p' },
+        { children: [{ text: "one" }], type: "p" },
+        { children: [{ text: "two" }], type: "p" },
       ] as any,
       selection: {
         anchor: { offset: 1, path: [0, 0] },
@@ -181,144 +181,137 @@ describe('previous', () => {
       },
     });
 
-    expect(editor.api.previous({ at: editor.selection! })).toEqual([
-      { text: 'one' },
-      [0, 0],
-    ]);
+    expect(editor.api.previous({ at: editor.selection! })).toEqual([{ text: "one" }, [0, 0]]);
   });
 });
 
 const nodesFixture5 = [
   {
-    id: '1',
-    children: [{ text: '' }],
-    type: 'p',
+    id: "1",
+    children: [{ text: "" }],
+    type: "p",
   },
   {
-    id: '2',
-    children: [{ text: '' }],
-    type: 'p',
+    id: "2",
+    children: [{ text: "" }],
+    type: "p",
   },
   {
-    id: '3',
-    children: [{ text: '' }],
-    type: 'p',
+    id: "3",
+    children: [{ text: "" }],
+    type: "p",
   },
 ];
 
 const nodesFixtureWithList = [
   {
-    id: '1',
-    children: [{ text: '' }],
-    type: 'p',
+    id: "1",
+    children: [{ text: "" }],
+    type: "p",
   },
   {
-    id: '2',
+    id: "2",
     children: [
       {
-        id: '21',
-        children: [{ id: '211', children: [{ text: 'hi' }], type: 'p' }],
-        type: 'li',
+        id: "21",
+        children: [{ id: "211", children: [{ text: "hi" }], type: "p" }],
+        type: "li",
       },
       {
-        id: '22',
-        children: [{ id: '221', children: [{ text: 'hi' }], type: 'p' }],
-        type: 'li',
+        id: "22",
+        children: [{ id: "221", children: [{ text: "hi" }], type: "p" }],
+        type: "li",
       },
       {
-        id: '23',
-        children: [{ id: '231', children: [{ text: 'hi' }], type: 'p' }],
-        type: 'li',
+        id: "23",
+        children: [{ id: "231", children: [{ text: "hi" }], type: "p" }],
+        type: "li",
       },
     ],
-    type: 'ul',
+    type: "ul",
   },
   {
-    id: '3',
-    children: [{ text: '' }],
-    type: 'p',
+    id: "3",
+    children: [{ text: "" }],
+    type: "p",
   },
 ];
 
-describe('when getting previous node by id', () => {
-  describe('when not first block', () => {
-    it('returns the previous block', () => {
+describe("when getting previous node by id", () => {
+  describe("when not first block", () => {
+    it("returns the previous block", () => {
       const e = createEditor();
       e.children = nodesFixture5;
-      expect(e.api.previous({ id: '3', block: true })?.[0]).toEqual(
-        nodesFixture5[1]
-      );
+      expect(e.api.previous({ id: "3", block: true })?.[0]).toEqual(nodesFixture5[1]);
     });
   });
 
-  describe('when first block', () => {
-    it('returns undefined', () => {
+  describe("when first block", () => {
+    it("returns undefined", () => {
       const e = createEditor();
       e.children = nodesFixture5;
-      expect(e.api.previous({ id: '1', block: true })).toBeUndefined();
+      expect(e.api.previous({ id: "1", block: true })).toBeUndefined();
     });
   });
 
-  describe('when not found', () => {
-    it('returns undefined', () => {
+  describe("when not found", () => {
+    it("returns undefined", () => {
       const e = createEditor();
       e.children = nodesFixture5;
-      expect(e.api.previous({ id: '11', block: true })?.[0]).toBeUndefined();
+      expect(e.api.previous({ id: "11", block: true })?.[0]).toBeUndefined();
     });
   });
 
-  describe('when list', () => {
-    it('returns previous block', () => {
+  describe("when list", () => {
+    it("returns previous block", () => {
       const e = createEditor();
       e.children = nodesFixtureWithList;
-      expect(e.api.previous({ id: '2', block: true })?.[0]).toEqual(
-        nodesFixtureWithList[0]
-      );
+      expect(e.api.previous({ id: "2", block: true })?.[0]).toEqual(nodesFixtureWithList[0]);
     });
   });
 });
 
-describe('sibling', () => {
+describe("sibling", () => {
   const nodesFixture = [
     {
-      id: '1',
-      children: [{ text: 'first' }],
-      type: 'p',
+      id: "1",
+      children: [{ text: "first" }],
+      type: "p",
     },
     {
-      id: '2',
-      children: [{ text: 'second' }],
-      type: 'p',
+      id: "2",
+      children: [{ text: "second" }],
+      type: "p",
     },
     {
-      id: '3',
-      children: [{ text: 'third' }],
-      type: 'p',
+      id: "3",
+      children: [{ text: "third" }],
+      type: "p",
     },
   ];
 
   const nestedNodesFixture = [
     {
-      id: 'parent',
+      id: "parent",
       children: [
         {
-          id: 'child1',
-          children: [{ text: 'first child' }],
-          type: 'p',
+          id: "child1",
+          children: [{ text: "first child" }],
+          type: "p",
         },
         {
-          id: 'child2',
-          children: [{ text: 'second child' }],
-          type: 'p',
+          id: "child2",
+          children: [{ text: "second child" }],
+          type: "p",
         },
       ],
-      type: 'div',
+      type: "div",
     },
   ];
 
-  describe('when getting previous sibling node', () => {
-    describe('when has previous sibling', () => {
-      it('returns the previous sibling', () => {
+  describe("when getting previous sibling node", () => {
+    describe("when has previous sibling", () => {
+      it("returns the previous sibling", () => {
         const editor = createEditor();
         editor.children = nodesFixture;
 
@@ -329,8 +322,8 @@ describe('sibling', () => {
       });
     });
 
-    describe('when is first child', () => {
-      it('returns undefined', () => {
+    describe("when is first child", () => {
+      it("returns undefined", () => {
         const editor = createEditor();
         editor.children = nodesFixture;
 
@@ -340,8 +333,8 @@ describe('sibling', () => {
       });
     });
 
-    describe('when nested nodes', () => {
-      it('returns previous sibling at correct level', () => {
+    describe("when nested nodes", () => {
+      it("returns previous sibling at correct level", () => {
         const editor = createEditor();
         editor.children = nestedNodesFixture;
 
@@ -352,8 +345,8 @@ describe('sibling', () => {
       });
     });
 
-    describe('when path is invalid', () => {
-      it('returns undefined', () => {
+    describe("when path is invalid", () => {
+      it("returns undefined", () => {
         const editor = createEditor();
         editor.children = nodesFixture;
 

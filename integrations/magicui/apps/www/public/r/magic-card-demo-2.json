@@ -4,10 +4,7 @@
   "type": "registry:example",
   "title": "Magic Card Demo 2",
   "description": "Example showing a magic card with an orb effect.",
-  "registryDependencies": [
-    "@magicui/magic-card",
-    "@magicui/avatar-circles"
-  ],
+  "registryDependencies": ["@magicui/magic-card", "@magicui/avatar-circles"],
   "files": [
     {
       "path": "registry/example/magic-card-demo2.tsx",

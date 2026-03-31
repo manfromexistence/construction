@@ -1,17 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Field, FieldLabel } from "@/styles/radix-nova/ui-rtl/field"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/styles/radix-nova/ui-rtl/input-otp"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Field, FieldLabel } from "@/styles/radix-nova/ui-rtl/field";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/styles/radix-nova/ui-rtl/input-otp";
 
 const translations: Translations = {
   en: {
@@ -32,20 +25,15 @@ const translations: Translations = {
       verificationCode: "קוד אימות",
     },
   },
-}
+};
 
 export function InputOTPRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Field className="mx-auto max-w-xs">
       <FieldLabel htmlFor="input-otp-rtl">{t.verificationCode}</FieldLabel>
-      <InputOTP
-        maxLength={6}
-        defaultValue="123456"
-        dir={dir}
-        id="input-otp-rtl"
-      >
+      <InputOTP maxLength={6} defaultValue="123456" dir={dir} id="input-otp-rtl">
         <InputOTPGroup>
           <InputOTPSlot index={0} />
           <InputOTPSlot index={1} />
@@ -56,5 +44,5 @@ export function InputOTPRtl() {
         </InputOTPGroup>
       </InputOTP>
     </Field>
-  )
+  );
 }

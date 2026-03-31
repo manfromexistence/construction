@@ -1,16 +1,12 @@
-"use client"
+"use client";
 
-import { useState } from "react"
+import { useState } from "react";
 
-import {
-  Field,
-  FieldDescription,
-  FieldTitle,
-} from "@/styles/radix-nova/ui/field"
-import { Slider } from "@/styles/radix-nova/ui/slider"
+import { Field, FieldDescription, FieldTitle } from "@/styles/radix-nova/ui/field";
+import { Slider } from "@/styles/radix-nova/ui/slider";
 
 export function FieldSlider() {
-  const [value, setValue] = useState([200, 800])
+  const [value, setValue] = useState([200, 800]);
   return (
     <div className="w-full max-w-md">
       <Field>
@@ -31,5 +27,5 @@ export function FieldSlider() {
         />
       </Field>
     </div>
-  )
+  );
 }

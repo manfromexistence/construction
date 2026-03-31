@@ -1,11 +1,11 @@
 /** @jsx jsxt */
 
-import { BaseCodeBlockPlugin } from '@platejs/code-block';
-import { BaseTablePlugin } from '@platejs/table';
-import { jsxt } from '@platejs/test-utils';
+import { BaseCodeBlockPlugin } from "@platejs/code-block";
+import { BaseTablePlugin } from "@platejs/table";
+import { jsxt } from "@platejs/test-utils";
 
-import { type SlateEditor, createSlateEditor } from '../../editor';
-import { createSlatePlugin } from '../../plugin/createSlatePlugin';
+import { createSlateEditor, type SlateEditor } from "../../editor";
+import { createSlatePlugin } from "../../plugin/createSlatePlugin";
 
 jsxt;
 
@@ -59,9 +59,9 @@ const getEditorAfterAction = ({
   return editor;
 };
 
-describe('withMergeRules', () => {
-  describe('remove-empty merge rules', () => {
-    it('removes an empty previous node when merging backward', () => {
+describe("withMergeRules", () => {
+  describe("remove-empty merge rules", () => {
+    it("removes an empty previous node when merging backward", () => {
       const input = (
         <editor>
           <hp>
@@ -84,11 +84,11 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteBackward('character'),
+        action: (editor) => editor.tf.deleteBackward("character"),
         input,
         plugins: [
           createElementPlugin({
-            key: 'p',
+            key: "p",
             mergeRules: { removeEmpty: true },
           }),
         ],
@@ -98,7 +98,7 @@ describe('withMergeRules', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('keeps previous content when merging into a non-empty node', () => {
+    it("keeps previous content when merging into a non-empty node", () => {
       const input = (
         <editor>
           <hp>previous content</hp>
@@ -120,11 +120,11 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteBackward('character'),
+        action: (editor) => editor.tf.deleteBackward("character"),
         input,
         plugins: [
           createElementPlugin({
-            key: 'p',
+            key: "p",
             mergeRules: { removeEmpty: true },
           }),
         ],
@@ -135,11 +135,11 @@ describe('withMergeRules', () => {
     });
   });
 
-  describe('default merge behavior', () => {
+  describe("default merge behavior", () => {
     it.each([
-      ['with removeEmpty disabled', { removeEmpty: false }],
-      ['without merge rules', undefined],
-    ])('%s keeps the merged node instead of deleting content', (_label, mergeRules) => {
+      ["with removeEmpty disabled", { removeEmpty: false }],
+      ["without merge rules", undefined],
+    ])("%s keeps the merged node instead of deleting content", (_label, mergeRules) => {
       const input = (
         <editor>
           <element type="custom">
@@ -162,11 +162,11 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteBackward('character'),
+        action: (editor) => editor.tf.deleteBackward("character"),
         input,
         plugins: [
           createElementPlugin({
-            key: 'custom',
+            key: "custom",
             mergeRules: mergeRules as Record<string, unknown> | undefined,
           }),
         ],
@@ -177,8 +177,8 @@ describe('withMergeRules', () => {
     });
   });
 
-  describe('match overrides', () => {
-    it('uses the matching override to prevent removeEmpty behavior', () => {
+  describe("match overrides", () => {
+    it("uses the matching override to prevent removeEmpty behavior", () => {
       const input = (
         <editor>
           <hp customProperty="customValue">
@@ -201,18 +201,18 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteBackward('character'),
+        action: (editor) => editor.tf.deleteBackward("character"),
         input,
         plugins: [
           createElementPlugin({
-            key: 'p',
+            key: "p",
             mergeRules: { removeEmpty: true },
           }),
           createElementPlugin({
-            key: 'customOverride',
+            key: "customOverride",
             match: ({ node }: { node: any }) => Boolean(node.customProperty),
             mergeRules: { removeEmpty: false },
-            type: 'override',
+            type: "override",
           }),
         ],
       });
@@ -221,7 +221,7 @@ describe('withMergeRules', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('falls back to the base merge behavior when the override does not match', () => {
+    it("falls back to the base merge behavior when the override does not match", () => {
       const input = (
         <editor>
           <hp>
@@ -244,18 +244,18 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteBackward('character'),
+        action: (editor) => editor.tf.deleteBackward("character"),
         input,
         plugins: [
           createElementPlugin({
-            key: 'p',
+            key: "p",
             mergeRules: { removeEmpty: true },
           }),
           createElementPlugin({
-            key: 'customOverride',
+            key: "customOverride",
             match: ({ node }: { node: any }) => Boolean(node.customProperty),
             mergeRules: { removeEmpty: false },
-            type: 'override',
+            type: "override",
           }),
         ],
       });
@@ -265,8 +265,8 @@ describe('withMergeRules', () => {
     });
   });
 
-  describe('special merge boundaries', () => {
-    it('merges an empty paragraph forward into a code block', () => {
+  describe("special merge boundaries", () => {
+    it("merges an empty paragraph forward into a code block", () => {
       const input = (
         <editor>
           <hp>
@@ -288,7 +288,7 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteForward('character'),
+        action: (editor) => editor.tf.deleteForward("character"),
         input,
         plugins: [BaseCodeBlockPlugin],
       });
@@ -298,10 +298,10 @@ describe('withMergeRules', () => {
     });
   });
 
-  describe('table boundaries', () => {
+  describe("table boundaries", () => {
     it.each([
       [
-        'moves backward from after a table into the last cell',
+        "moves backward from after a table into the last cell",
         (
           <editor>
             <htable>
@@ -336,11 +336,10 @@ describe('withMergeRules', () => {
             </htable>
           </editor>
         ) as any as SlateEditor,
-        (editor: ReturnType<typeof createSlateEditor>) =>
-          editor.tf.deleteBackward(),
+        (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward(),
       ],
       [
-        'moves backward from after a table with an empty last cell into that cell',
+        "moves backward from after a table with an empty last cell into that cell",
         (
           <editor>
             <htable>
@@ -376,11 +375,10 @@ describe('withMergeRules', () => {
             </htable>
           </editor>
         ) as any as SlateEditor,
-        (editor: ReturnType<typeof createSlateEditor>) =>
-          editor.tf.deleteBackward(),
+        (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward(),
       ],
       [
-        'moves forward from before a table into the first cell',
+        "moves forward from before a table into the first cell",
         (
           <editor>
             <hp>
@@ -419,11 +417,10 @@ describe('withMergeRules', () => {
             </htable>
           </editor>
         ) as any as SlateEditor,
-        (editor: ReturnType<typeof createSlateEditor>) =>
-          editor.tf.deleteForward(),
+        (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteForward(),
       ],
       [
-        'moves forward from the last cell into the next block',
+        "moves forward from the last cell into the next block",
         (
           <editor>
             <htable>
@@ -460,11 +457,10 @@ describe('withMergeRules', () => {
             </htable>
           </editor>
         ) as any as SlateEditor,
-        (editor: ReturnType<typeof createSlateEditor>) =>
-          editor.tf.deleteForward(),
+        (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteForward(),
       ],
       [
-        'moves backward from the first table cell into the previous block',
+        "moves backward from the first table cell into the previous block",
         (
           <editor>
             <hp>previous content</hp>
@@ -504,10 +500,9 @@ describe('withMergeRules', () => {
             </htable>
           </editor>
         ) as any as SlateEditor,
-        (editor: ReturnType<typeof createSlateEditor>) =>
-          editor.tf.deleteBackward(),
+        (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward(),
       ],
-    ])('%s', (_label, input, output, action) => {
+    ])("%s", (_label, input, output, action) => {
       const editor = getEditorAfterAction({
         action,
         input,
@@ -520,8 +515,8 @@ describe('withMergeRules', () => {
     });
   });
 
-  describe('missing plugin fallback', () => {
-    it('removes empty previous nodes when there is no plugin definition', () => {
+  describe("missing plugin fallback", () => {
+    it("removes empty previous nodes when there is no plugin definition", () => {
       const input = (
         <editor>
           <element type="unknown">
@@ -544,7 +539,7 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteBackward('character'),
+        action: (editor) => editor.tf.deleteBackward("character"),
         input,
         plugins: [],
       });
@@ -554,20 +549,20 @@ describe('withMergeRules', () => {
     });
   });
 
-  describe('void merge behavior', () => {
+  describe("void merge behavior", () => {
     const VoidPlugin = createSlatePlugin({
-      key: 'void',
+      key: "void",
       node: {
         isElement: true,
         isVoid: true,
-        type: 'void',
+        type: "void",
       },
       rules: {
         merge: { removeEmpty: false },
       },
     });
 
-    it('removes the current empty node instead of the target void block', () => {
+    it("removes the current empty node instead of the target void block", () => {
       const input = (
         <editor>
           <element type="void">
@@ -588,12 +583,12 @@ describe('withMergeRules', () => {
       ) as any;
 
       const editor = getEditorAfterAction({
-        action: (editor) => editor.tf.deleteBackward('character'),
+        action: (editor) => editor.tf.deleteBackward("character"),
         input,
         plugins: [
           VoidPlugin,
           createElementPlugin({
-            key: 'p',
+            key: "p",
             mergeRules: { removeEmpty: false },
           }),
         ],

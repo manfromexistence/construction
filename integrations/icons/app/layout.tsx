@@ -41,8 +41,7 @@ const geist = Geist({
 });
 
 const useProductionFonts =
-  process.env.NODE_ENV === "production" ||
-  process.env.USE_PRODUCTION_FONTS === "true";
+  process.env.NODE_ENV === "production" || process.env.USE_PRODUCTION_FONTS === "true";
 
 const andaleMono = useProductionFonts ? andaleMonoLocal : geistMono;
 const gtCinetype = useProductionFonts ? gtCinetypeLocal : geist;
@@ -71,9 +70,7 @@ export default function RootLayout({
       <head>
         <JsonLdScripts />
       </head>
-      <body
-        className={`${gtCinetype.className} relative bg-background antialiased`}
-      >
+      <body className={`${gtCinetype.className} relative bg-background antialiased`}>
         <div className="root">
           <ThemeProvider
             attribute="class"
@@ -88,9 +85,7 @@ export default function RootLayout({
                   {children}
                   <Toaster
                     icons={{
-                      error: (
-                        <CircleXIcon className="size-4 text-red-600 dark:text-red-400" />
-                      ),
+                      error: <CircleXIcon className="size-4 text-red-600 dark:text-red-400" />,
                       warning: (
                         <TriangleAlertIcon className="size-4 text-yellow-500 dark:text-yellow-400" />
                       ),
@@ -104,8 +99,7 @@ export default function RootLayout({
                         icon: "translate-y-[-9.5px]",
                         actionButton:
                           "!mt-2 w-full flex items-center justify-center !font-sans !bg-primary focus-visible:outline-primary cursor-pointer !h-8 !text-[14px] transition-colors duration-100 hover:!bg-[color-mix(in_oklab,var(--color-primary),black_10%)] focus-visible:outline-1 focus-visible:outline-offset-1 supports-[corner-shape:squircle]:!corner-squircle supports-[corner-shape:squircle]:!rounded-[30px] !rounded-[14px]",
-                        description:
-                          "font-sans text-secondary dark:!text-secondary",
+                        description: "font-sans text-secondary dark:!text-secondary",
                       },
                     }}
                   />

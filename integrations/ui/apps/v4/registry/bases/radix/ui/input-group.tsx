@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva, type VariantProps } from "class-variance-authority";
+import * as React from "react";
 
-import { cn } from "@/registry/bases/radix/lib/utils"
-import { Button } from "@/registry/bases/radix/ui/button"
-import { Input } from "@/registry/bases/radix/ui/input"
-import { Textarea } from "@/registry/bases/radix/ui/textarea"
+import { cn } from "@/registry/bases/radix/lib/utils";
+import { Button } from "@/registry/bases/radix/ui/button";
+import { Input } from "@/registry/bases/radix/ui/input";
+import { Textarea } from "@/registry/bases/radix/ui/textarea";
 
 function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -19,7 +19,7 @@ function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 const inputGroupAddonVariants = cva(
@@ -29,17 +29,15 @@ const inputGroupAddonVariants = cva(
       align: {
         "inline-start": "cn-input-group-addon-align-inline-start order-first",
         "inline-end": "cn-input-group-addon-align-inline-end order-last",
-        "block-start":
-          "cn-input-group-addon-align-block-start order-first w-full justify-start",
-        "block-end":
-          "cn-input-group-addon-align-block-end order-last w-full justify-start",
+        "block-start": "cn-input-group-addon-align-block-start order-first w-full justify-start",
+        "block-end": "cn-input-group-addon-align-block-end order-last w-full justify-start",
       },
     },
     defaultVariants: {
       align: "inline-start",
     },
   }
-)
+);
 
 function InputGroupAddon({
   className,
@@ -54,31 +52,28 @@ function InputGroupAddon({
       className={cn(inputGroupAddonVariants({ align }), className)}
       onClick={(e) => {
         if ((e.target as HTMLElement).closest("button")) {
-          return
+          return;
         }
-        e.currentTarget.parentElement?.querySelector("input")?.focus()
+        e.currentTarget.parentElement?.querySelector("input")?.focus();
       }}
       {...props}
     />
-  )
+  );
 }
 
-const inputGroupButtonVariants = cva(
-  "cn-input-group-button flex items-center shadow-none",
-  {
-    variants: {
-      size: {
-        xs: "cn-input-group-button-size-xs",
-        sm: "cn-input-group-button-size-sm",
-        "icon-xs": "cn-input-group-button-size-icon-xs",
-        "icon-sm": "cn-input-group-button-size-icon-sm",
-      },
+const inputGroupButtonVariants = cva("cn-input-group-button flex items-center shadow-none", {
+  variants: {
+    size: {
+      xs: "cn-input-group-button-size-xs",
+      sm: "cn-input-group-button-size-sm",
+      "icon-xs": "cn-input-group-button-size-icon-xs",
+      "icon-sm": "cn-input-group-button-size-icon-sm",
     },
-    defaultVariants: {
-      size: "xs",
-    },
-  }
-)
+  },
+  defaultVariants: {
+    size: "xs",
+  },
+});
 
 function InputGroupButton({
   className,
@@ -96,52 +91,43 @@ function InputGroupButton({
       className={cn(inputGroupButtonVariants({ size }), className)}
       {...props}
     />
-  )
+  );
 }
 
 function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
-      className={cn(
-        "cn-input-group-text flex items-center [&_svg]:pointer-events-none",
-        className
-      )}
+      className={cn("cn-input-group-text flex items-center [&_svg]:pointer-events-none", className)}
       {...props}
     />
-  )
+  );
 }
 
-function InputGroupInput({
-  className,
-  ...props
-}: React.ComponentProps<"input">) {
+function InputGroupInput({ className, ...props }: React.ComponentProps<"input">) {
   return (
     <Input
       data-slot="input-group-control"
       className={cn("cn-input-group-input flex-1", className)}
       {...props}
     />
-  )
+  );
 }
 
-function InputGroupTextarea({
-  className,
-  ...props
-}: React.ComponentProps<"textarea">) {
+function InputGroupTextarea({ className, ...props }: React.ComponentProps<"textarea">) {
   return (
     <Textarea
       data-slot="input-group-control"
       className={cn("cn-input-group-textarea flex-1 resize-none", className)}
       {...props}
     />
-  )
+  );
 }
 
 export {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
-  InputGroupText,
   InputGroupInput,
+  InputGroupText,
   InputGroupTextarea,
-}
+};

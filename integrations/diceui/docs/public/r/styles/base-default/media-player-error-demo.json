@@ -1,8 +1,6 @@
 {
   "name": "media-player-error-demo",
-  "registryDependencies": [
-    "media-player"
-  ],
+  "registryDependencies": ["media-player"],
   "files": [
     {
       "path": "examples/media-player-error-demo.tsx",

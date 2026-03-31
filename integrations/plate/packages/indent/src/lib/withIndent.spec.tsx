@@ -1,30 +1,23 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import {
-  BaseParagraphPlugin,
-  createSlateEditor,
-  createSlatePlugin,
-  NodeApi,
-} from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { BaseParagraphPlugin, createSlateEditor, createSlatePlugin, NodeApi } from "platejs";
 
-import { BaseIndentPlugin } from './BaseIndentPlugin';
+import { BaseIndentPlugin } from "./BaseIndentPlugin";
 
 jsxt;
 
-const FallbackTabPlugin = (
-  fallbackTab: (options: { reverse: boolean }) => boolean | undefined
-) =>
+const FallbackTabPlugin = (fallbackTab: (options: { reverse: boolean }) => boolean | undefined) =>
   createSlatePlugin({
-    key: 'fallbackTab',
+    key: "fallbackTab",
   }).overrideEditor(() => ({
     transforms: {
       tab: fallbackTab,
     },
   }));
 
-describe('withIndent', () => {
-  it('caps indent during normalization when it exceeds indentMax', () => {
+describe("withIndent", () => {
+  it("caps indent during normalization when it exceeds indentMax", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseParagraphPlugin,
@@ -34,9 +27,9 @@ describe('withIndent', () => {
       ],
       value: [
         {
-          children: [{ text: 'One' }],
+          children: [{ text: "One" }],
           indent: 4,
-          type: 'p',
+          type: "p",
         },
       ],
     });
@@ -49,14 +42,14 @@ describe('withIndent', () => {
     expect((editor.children[0] as any).indent).toBe(2);
   });
 
-  it('unsets indent when the block no longer matches the injected target types', () => {
+  it("unsets indent when the block no longer matches the injected target types", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseIndentPlugin],
       value: [
         {
-          children: [{ text: 'One' }],
+          children: [{ text: "One" }],
           indent: 2,
-          type: 'quote',
+          type: "quote",
         },
       ],
     });
@@ -67,12 +60,12 @@ describe('withIndent', () => {
     editor.tf.normalizeNode([node!, path]);
 
     expect(editor.children[0] as any).toEqual({
-      children: [{ text: 'One' }],
-      type: 'quote',
+      children: [{ text: "One" }],
+      type: "quote",
     });
   });
 
-  it('indents matching blocks on tab and outdents them on reverse tab', () => {
+  it("indents matching blocks on tab and outdents them on reverse tab", () => {
     const input = (
       <editor>
         <hp>
@@ -95,23 +88,19 @@ describe('withIndent', () => {
     expect((editor.children[0] as any).indent).toBeUndefined();
   });
 
-  it('falls through to the previous tab transform when the current block does not match', () => {
+  it("falls through to the previous tab transform when the current block does not match", () => {
     const fallbackTab = mock(() => false);
 
     const editor = createSlateEditor({
-      plugins: [
-        BaseParagraphPlugin,
-        FallbackTabPlugin(fallbackTab as any),
-        BaseIndentPlugin,
-      ],
+      plugins: [BaseParagraphPlugin, FallbackTabPlugin(fallbackTab as any), BaseIndentPlugin],
       selection: {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 0, path: [0, 0] },
       },
       value: [
         {
-          children: [{ text: 'One' }],
-          type: 'quote',
+          children: [{ text: "One" }],
+          type: "quote",
         },
       ],
     });

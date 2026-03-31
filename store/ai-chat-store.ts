@@ -1,6 +1,6 @@
-import { ChatMessage } from "@/types/ai";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { ChatMessage } from "@/types/ai";
 import { idbStorage } from "./idb-storage";
 
 interface AIChatStore {

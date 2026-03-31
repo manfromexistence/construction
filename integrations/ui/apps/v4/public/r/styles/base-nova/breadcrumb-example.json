@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "breadcrumb-example",
   "title": "Breadcrumb",
-  "registryDependencies": [
-    "breadcrumb",
-    "dropdown-menu",
-    "example"
-  ],
+  "registryDependencies": ["breadcrumb", "dropdown-menu", "example"],
   "files": [
     {
       "path": "registry/base-nova/examples/breadcrumb-example.tsx",

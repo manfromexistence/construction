@@ -1,4 +1,4 @@
-import { TypingAnimation } from "@/registry/magicui/typing-animation"
+import { TypingAnimation } from "@/registry/magicui/typing-animation";
 
 export default function Component() {
   return (
@@ -9,5 +9,5 @@ export default function Component() {
       pauseDelay={2000}
       loop
     />
-  )
+  );
 }

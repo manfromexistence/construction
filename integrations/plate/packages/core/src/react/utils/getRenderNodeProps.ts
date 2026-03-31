@@ -1,15 +1,13 @@
-import type { AnyObject } from '@udecode/utils';
+import type { AnyObject } from "@udecode/utils";
 
-import { clsx } from 'clsx';
-
-import type { PlateHTMLProps } from '../components';
-import type { PlateEditor } from '../editor';
-import type { AnyEditorPlatePlugin } from '../plugin/PlatePlugin';
-
-import { pipeInjectNodeProps } from '../../internal/plugin/pipeInjectNodeProps';
-import { getSlateClass } from '../../lib';
-import { getPluginNodeProps } from '../../lib/utils/getPluginNodeProps';
-import { getEditorPlugin } from '../plugin';
+import { clsx } from "clsx";
+import { pipeInjectNodeProps } from "../../internal/plugin/pipeInjectNodeProps";
+import { getSlateClass } from "../../lib";
+import { getPluginNodeProps } from "../../lib/utils/getPluginNodeProps";
+import type { PlateHTMLProps } from "../components";
+import type { PlateEditor } from "../editor";
+import { getEditorPlugin } from "../plugin";
+import type { AnyEditorPlatePlugin } from "../plugin/PlatePlugin";
 
 /**
  * Override node props with plugin props. Allowed properties in
@@ -55,11 +53,8 @@ export const getRenderNodeProps = ({
     attributes: {
       ...pluginProps.attributes,
       className:
-        clsx(
-          getSlateClass(plugin?.node.type),
-          pluginProps.attributes?.className,
-          className
-        ) || undefined,
+        clsx(getSlateClass(plugin?.node.type), pluginProps.attributes?.className, className) ||
+        undefined,
     },
   };
 
@@ -72,10 +67,7 @@ export const getRenderNodeProps = ({
     ) as PlateHTMLProps;
   }
 
-  if (
-    newProps.attributes?.style &&
-    Object.keys(newProps.attributes.style).length === 0
-  ) {
+  if (newProps.attributes?.style && Object.keys(newProps.attributes.style).length === 0) {
     newProps.attributes.style = undefined;
   }
 

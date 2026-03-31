@@ -1,13 +1,13 @@
 import {
+  getEditorPlugin,
+  KEYS,
   type SlateEditor,
   type TTableCellElement,
   type TTableElement,
   type TTableRowElement,
-  getEditorPlugin,
-  KEYS,
-} from 'platejs';
+} from "platejs";
 
-import type { BaseTablePlugin } from '../BaseTablePlugin';
+import type { BaseTablePlugin } from "../BaseTablePlugin";
 
 export function computeCellIndices(
   editor: SlateEditor,
@@ -21,9 +21,7 @@ export function computeCellIndices(
     tableNode?: TTableElement;
   }
 ) {
-  const { api, getOptions, setOption } = getEditorPlugin<
-    typeof BaseTablePlugin
-  >(editor, {
+  const { api, getOptions, setOption } = getEditorPlugin<typeof BaseTablePlugin>(editor, {
     key: KEYS.table,
   });
 
@@ -91,7 +89,7 @@ export function computeCellIndices(
   }
 
   if (hasIndicesChanged) {
-    setOption('_cellIndices', cellIndices);
+    setOption("_cellIndices", cellIndices);
   }
 
   return targetIndices;

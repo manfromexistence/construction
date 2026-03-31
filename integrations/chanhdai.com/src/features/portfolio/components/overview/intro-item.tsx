@@ -1,21 +1,10 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-export function IntroItem({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  return (
-    <div
-      className={cn("flex items-center gap-4 font-mono text-sm", className)}
-      {...props}
-    />
-  )
+export function IntroItem({ className, ...props }: React.ComponentProps<"div">) {
+  return <div className={cn("flex items-center gap-4 font-mono text-sm", className)} {...props} />;
 }
 
-export function IntroItemIcon({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+export function IntroItemIcon({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       className={cn(
@@ -25,20 +14,14 @@ export function IntroItemIcon({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export function IntroItemContent({
-  className,
-  ...props
-}: React.ComponentProps<"p">) {
-  return <p className={cn("text-balance", className)} {...props} />
+export function IntroItemContent({ className, ...props }: React.ComponentProps<"p">) {
+  return <p className={cn("text-balance", className)} {...props} />;
 }
 
-export function IntroItemLink({
-  className,
-  ...props
-}: React.ComponentProps<"a">) {
+export function IntroItemLink({ className, ...props }: React.ComponentProps<"a">) {
   return (
     <a
       className={cn("underline-offset-4 hover:underline", className)}
@@ -46,5 +29,5 @@ export function IntroItemLink({
       rel="noopener"
       {...props}
     />
-  )
+  );
 }

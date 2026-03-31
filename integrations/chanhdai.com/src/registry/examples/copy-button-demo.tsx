@@ -1,4 +1,4 @@
-import { CopyButton } from "@/registry/components/copy-button"
+import { CopyButton } from "@/registry/components/copy-button";
 
 export default function CopyButtonDemo() {
   return (
@@ -14,5 +14,5 @@ export default function CopyButtonDemo() {
         Copy
       </CopyButton>
     </div>
-  )
+  );
 }

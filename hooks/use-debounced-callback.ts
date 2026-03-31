@@ -1,4 +1,4 @@
-import { useRef, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 export function useDebouncedCallback<A extends unknown[]>(
   callback: (...args: A) => void,
@@ -21,7 +21,7 @@ export function useDebouncedCallback<A extends unknown[]>(
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [wait]); // Rerun effect only if wait time changes
+  }, []); // Rerun effect only if wait time changes
 
   // The debounced function
   const debouncedCallback = useCallback(

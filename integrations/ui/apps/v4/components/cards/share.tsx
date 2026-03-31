@@ -1,19 +1,15 @@
-"use client"
+"use client";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/registry/new-york-v4/ui/avatar"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/new-york-v4/ui/avatar";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
-import { Input } from "@/registry/new-york-v4/ui/input"
+} from "@/registry/new-york-v4/ui/card";
+import { Input } from "@/registry/new-york-v4/ui/input";
 import {
   Item,
   ItemActions,
@@ -21,16 +17,16 @@ import {
   ItemDescription,
   ItemGroup,
   ItemTitle,
-} from "@/registry/new-york-v4/ui/item"
-import { Label } from "@/registry/new-york-v4/ui/label"
+} from "@/registry/new-york-v4/ui/item";
+import { Label } from "@/registry/new-york-v4/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/registry/new-york-v4/ui/select"
-import { Separator } from "@/registry/new-york-v4/ui/separator"
+} from "@/registry/new-york-v4/ui/select";
+import { Separator } from "@/registry/new-york-v4/ui/separator";
 
 const people = [
   {
@@ -53,27 +49,20 @@ const people = [
     email: "e@example.com",
     avatar: "/avatars/01.png",
   },
-]
+];
 export function CardsShare() {
   return (
     <Card>
       <CardHeader>
         <CardTitle>Share this document</CardTitle>
-        <CardDescription>
-          Anyone with the link can view this document.
-        </CardDescription>
+        <CardDescription>Anyone with the link can view this document.</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex items-center gap-2">
           <Label htmlFor="link" className="sr-only">
             Link
           </Label>
-          <Input
-            id="link"
-            value="http://example.com/link/to/document"
-            className="h-8"
-            readOnly
-          />
+          <Input id="link" value="http://example.com/link/to/document" className="h-8" readOnly />
           <Button size="sm" variant="outline" className="shadow-none">
             Copy Link
           </Button>
@@ -94,11 +83,7 @@ export function CardsShare() {
                 </ItemContent>
                 <ItemActions>
                   <Select defaultValue="edit">
-                    <SelectTrigger
-                      className="ml-auto pr-2"
-                      aria-label="Edit"
-                      size="sm"
-                    >
+                    <SelectTrigger className="ml-auto pr-2" aria-label="Edit" size="sm">
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent align="end">
@@ -113,5 +98,5 @@ export function CardsShare() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

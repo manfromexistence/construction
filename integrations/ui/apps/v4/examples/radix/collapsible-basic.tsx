@@ -1,11 +1,11 @@
-import { ChevronDownIcon } from "@/registry/icons/__lucide__"
-import { Button } from "@/styles/radix-nova/ui/button"
-import { Card, CardContent } from "@/styles/radix-nova/ui/card"
+import { ChevronDownIcon } from "@/registry/icons/__lucide__";
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Card, CardContent } from "@/styles/radix-nova/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/radix-nova/ui/collapsible"
+} from "@/styles/radix-nova/ui/collapsible";
 
 export function CollapsibleBasic() {
   return (
@@ -19,14 +19,11 @@ export function CollapsibleBasic() {
             </Button>
           </CollapsibleTrigger>
           <CollapsibleContent className="flex flex-col items-start gap-2 p-2.5 pt-0 text-sm">
-            <div>
-              This panel can be expanded or collapsed to reveal additional
-              content.
-            </div>
+            <div>This panel can be expanded or collapsed to reveal additional content.</div>
             <Button size="xs">Learn More</Button>
           </CollapsibleContent>
         </Collapsible>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,17 +1,12 @@
-import React from 'react';
+import { createPrimitiveComponent, useEditorPlugin, usePluginOption } from "platejs/react";
+import React from "react";
 
-import {
-  createPrimitiveComponent,
-  useEditorPlugin,
-  usePluginOption,
-} from 'platejs/react';
-
-import { encodeUrlIfNeeded, safeDecodeUrl } from '../../../lib';
-import { LinkPlugin } from '../../LinkPlugin';
+import { encodeUrlIfNeeded, safeDecodeUrl } from "../../../lib";
+import { LinkPlugin } from "../../LinkPlugin";
 
 export const useFloatingLinkUrlInputState = () => {
   const { getOptions } = useEditorPlugin(LinkPlugin);
-  const updated = usePluginOption(LinkPlugin, 'updated');
+  const updated = usePluginOption(LinkPlugin, "updated");
   const ref = React.useRef<HTMLInputElement>(null);
   const focused = React.useRef(false);
 
@@ -27,7 +22,7 @@ export const useFloatingLinkUrlInputState = () => {
 
         const url = getOptions().url;
         input.focus();
-        input.value = url ? safeDecodeUrl(url) : '';
+        input.value = url ? safeDecodeUrl(url) : "";
       }, 0);
     }
   }, [getOptions, updated]);
@@ -37,19 +32,16 @@ export const useFloatingLinkUrlInputState = () => {
   };
 };
 
-export const useFloatingLinkUrlInput = (
-  state: ReturnType<typeof useFloatingLinkUrlInputState>
-) => {
+export const useFloatingLinkUrlInput = (state: ReturnType<typeof useFloatingLinkUrlInputState>) => {
   const { getOptions, setOption } = useEditorPlugin(LinkPlugin);
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> =
-    React.useCallback(
-      (e) => {
-        const url = encodeUrlIfNeeded(e.target.value);
-        setOption('url', url);
-      },
-      [setOption]
-    );
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+    (e) => {
+      const url = encodeUrlIfNeeded(e.target.value);
+      setOption("url", url);
+    },
+    [setOption]
+  );
 
   return {
     props: {
@@ -60,7 +52,7 @@ export const useFloatingLinkUrlInput = (
   };
 };
 
-export const FloatingLinkUrlInput = createPrimitiveComponent('input')({
+export const FloatingLinkUrlInput = createPrimitiveComponent("input")({
   propsHook: useFloatingLinkUrlInput,
   stateHook: useFloatingLinkUrlInputState,
 });

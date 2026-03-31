@@ -3,10 +3,10 @@
  * contributors. See /packages/diff/LICENSE for more information.
  */
 
-import type { Descendant } from 'platejs';
+import type { Descendant } from "platejs";
 
-import { type ComputeDiffOptions, computeDiff } from '../../lib/computeDiff';
-import { isEqual } from '../utils/is-equal';
+import { type ComputeDiffOptions, computeDiff } from "../../lib/computeDiff";
+import { isEqual } from "../utils/is-equal";
 
 /**
  * We try each of the Handler functions listed below until one of them matches.
@@ -30,7 +30,7 @@ const childrenOnlyStrategy: Handler = (node, nextNode, options) => {
     nextNode.children != null &&
     isEqual(node, nextNode, {
       ignoreDeep: options.ignoreProps,
-      ignoreShallow: ['children'],
+      ignoreShallow: ["children"],
     })
   ) {
     const children = computeDiff(
@@ -59,7 +59,7 @@ const propsOnlyStrategy: Handler = (node, nextNode, { getUpdateProps }) => {
   for (const key in node) {
     if (!isEqual(node[key], nextNode[key])) {
       // 'children' and 'text' cannot be updated with set_node
-      if (key === 'children' || key === 'text') return false;
+      if (key === "children" || key === "text") return false;
 
       properties[key] = node[key];
       newProperties[key] = nextNode[key];
@@ -70,7 +70,7 @@ const propsOnlyStrategy: Handler = (node, nextNode, { getUpdateProps }) => {
   for (const key in nextNode) {
     if (node[key] === undefined) {
       // 'children' and 'text' cannot be updated with set_node
-      if (key === 'children' || key === 'text') return false;
+      if (key === "children" || key === "text") return false;
 
       newProperties[key] = nextNode[key];
     }

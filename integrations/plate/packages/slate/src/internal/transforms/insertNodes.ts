@@ -1,4 +1,4 @@
-import { insertNodes as insertNodesBase } from 'slate';
+import { insertNodes as insertNodesBase } from "slate";
 
 import {
   type Descendant,
@@ -8,13 +8,10 @@ import {
   NodeApi,
   PathApi,
   type ValueOf,
-} from '../../interfaces';
-import { getQueryOptions, type QueryNodeOptions, queryNode } from '../../utils';
+} from "../../interfaces";
+import { getQueryOptions, type QueryNodeOptions, queryNode } from "../../utils";
 
-export const insertNodes = <
-  N extends ElementOrTextOf<E>,
-  E extends Editor = Editor,
->(
+export const insertNodes = <N extends ElementOrTextOf<E>, E extends Editor = Editor>(
   editor: E,
   nodes: N | N[],
   { nextBlock, removeEmpty, ...options }: InsertNodesOptions<ValueOf<E>> = {}
@@ -29,7 +26,7 @@ export const insertNodes = <
         const queryNodeOptions: QueryNodeOptions =
           removeEmpty === true
             ? {
-                allow: ['p'],
+                allow: ["p"],
               }
             : removeEmpty;
 

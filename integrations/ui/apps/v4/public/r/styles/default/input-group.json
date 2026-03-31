@@ -3,11 +3,7 @@
   "name": "input-group",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "button",
-    "input",
-    "textarea"
-  ],
+  "registryDependencies": ["button", "input", "textarea"],
   "files": [
     {
       "path": "ui/input-group.tsx",

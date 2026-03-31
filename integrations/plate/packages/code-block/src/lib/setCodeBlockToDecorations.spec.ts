@@ -1,14 +1,14 @@
-import type { SlateEditor, TCodeBlockElement } from 'platejs';
+import type { SlateEditor, TCodeBlockElement } from "platejs";
 
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { BaseCodeBlockPlugin } from './BaseCodeBlockPlugin';
+import { BaseCodeBlockPlugin } from "./BaseCodeBlockPlugin";
 import {
   CODE_LINE_TO_DECORATIONS,
   codeBlockToDecorations,
   resetCodeBlockDecorations,
   setCodeBlockToDecorations,
-} from './setCodeBlockToDecorations';
+} from "./setCodeBlockToDecorations";
 
 // Mock lowlight
 const mockHighlight = mock();
@@ -27,7 +27,7 @@ beforeEach(() => {
   mockHighlight.mockReset();
   mockHighlightAuto.mockReset();
   mockListLanguages.mockReset();
-  mockListLanguages.mockReturnValue(['javascript', 'typescript']);
+  mockListLanguages.mockReturnValue(["javascript", "typescript"]);
 
   // Create a basic editor
   editor = createSlateEditor({
@@ -46,7 +46,7 @@ beforeEach(() => {
   editor.getOptions = mock().mockImplementation((plugin: any) => {
     if (plugin === BaseCodeBlockPlugin) {
       return {
-        defaultLanguage: 'javascript',
+        defaultLanguage: "javascript",
         lowlight: mockLowlight,
       };
     }
@@ -54,13 +54,13 @@ beforeEach(() => {
   }) as any;
 });
 
-describe('codeBlockToDecorations', () => {
-  it('returns empty decorations for plaintext language', () => {
+describe("codeBlockToDecorations", () => {
+  it("returns empty decorations for plaintext language", () => {
     // Create a code block with plaintext
     const codeBlock: TCodeBlockElement = {
-      children: [{ children: [{ text: 'const x = 1;' }], type: 'code_line' }],
-      lang: 'plaintext',
-      type: 'code_block',
+      children: [{ children: [{ text: "const x = 1;" }], type: "code_line" }],
+      lang: "plaintext",
+      type: "code_block",
     };
 
     const blockPath = [0];
@@ -78,32 +78,32 @@ describe('codeBlockToDecorations', () => {
     expect(mockHighlightAuto).not.toHaveBeenCalled();
   });
 
-  it('returns decorations for specified language', () => {
+  it("returns decorations for specified language", () => {
     // Mock highlight result
     mockHighlight.mockReturnValue({
       value: [
         {
-          properties: { className: ['token', 'keyword'] },
-          value: 'const',
+          properties: { className: ["token", "keyword"] },
+          value: "const",
         },
         {
-          value: ' x = ',
+          value: " x = ",
         },
         {
-          properties: { className: ['token', 'number'] },
-          value: '1',
+          properties: { className: ["token", "number"] },
+          value: "1",
         },
         {
-          value: ';',
+          value: ";",
         },
       ],
     });
 
     // Create a code block with JavaScript
     const codeBlock: TCodeBlockElement = {
-      children: [{ children: [{ text: 'const x = 1;' }], type: 'code_line' }],
-      lang: 'javascript',
-      type: 'code_block',
+      children: [{ children: [{ text: "const x = 1;" }], type: "code_line" }],
+      lang: "javascript",
+      type: "code_block",
     };
 
     const blockPath = [0];
@@ -119,94 +119,94 @@ describe('codeBlockToDecorations', () => {
     // Check first decoration (const)
     expect(lineDecorations?.[0]).toMatchObject({
       anchor: { offset: 0, path: [0, 0, 0] },
-      className: 'token keyword',
+      className: "token keyword",
       focus: { offset: 5, path: [0, 0, 0] },
     });
 
     // Check second decoration (space)
     expect(lineDecorations?.[1]).toMatchObject({
       anchor: { offset: 5, path: [0, 0, 0] },
-      className: '',
+      className: "",
       focus: { offset: 10, path: [0, 0, 0] },
     });
 
     // Check third decoration (number)
     expect(lineDecorations?.[2]).toMatchObject({
       anchor: { offset: 10, path: [0, 0, 0] },
-      className: 'token number',
+      className: "token number",
       focus: { offset: 11, path: [0, 0, 0] },
     });
 
     // Check fourth decoration (semicolon)
     expect(lineDecorations?.[3]).toMatchObject({
       anchor: { offset: 11, path: [0, 0, 0] },
-      className: '',
+      className: "",
       focus: { offset: 12, path: [0, 0, 0] },
     });
 
     // Lowlight highlight should be called with correct params
-    expect(mockHighlight).toHaveBeenCalledWith('javascript', 'const x = 1;');
+    expect(mockHighlight).toHaveBeenCalledWith("javascript", "const x = 1;");
     expect(mockHighlightAuto).not.toHaveBeenCalled();
   });
 
   it('use auto detection when language is "auto"', () => {
     // Mock highlight auto result
     mockHighlightAuto.mockReturnValue({
-      value: [{ value: 'const x = 1;' }],
+      value: [{ value: "const x = 1;" }],
     });
 
     // Create a code block with auto language
     const codeBlock: TCodeBlockElement = {
-      children: [{ children: [{ text: 'const x = 1;' }], type: 'code_line' }],
-      lang: 'auto',
-      type: 'code_block',
+      children: [{ children: [{ text: "const x = 1;" }], type: "code_line" }],
+      lang: "auto",
+      type: "code_block",
     };
 
     const blockPath = [0];
     codeBlockToDecorations(editor, [codeBlock, blockPath]);
 
     // Lowlight highlightAuto should be called with correct params
-    expect(mockHighlightAuto).toHaveBeenCalledWith('const x = 1;');
+    expect(mockHighlightAuto).toHaveBeenCalledWith("const x = 1;");
     expect(mockHighlight).not.toHaveBeenCalled();
   });
 
-  it('use default language when no language is specified', () => {
+  it("use default language when no language is specified", () => {
     // Mock highlight result
     mockHighlight.mockReturnValue({
-      value: [{ value: 'const x = 1;' }],
+      value: [{ value: "const x = 1;" }],
     });
 
     // Create a code block with no language
     const codeBlock: TCodeBlockElement = {
-      children: [{ children: [{ text: 'const x = 1;' }], type: 'code_line' }],
-      type: 'code_block',
+      children: [{ children: [{ text: "const x = 1;" }], type: "code_line" }],
+      type: "code_block",
     };
 
     const blockPath = [0];
     codeBlockToDecorations(editor, [codeBlock, blockPath]);
 
     // Lowlight highlight should be called with default language
-    expect(mockHighlight).toHaveBeenCalledWith('javascript', 'const x = 1;');
+    expect(mockHighlight).toHaveBeenCalledWith("javascript", "const x = 1;");
     expect(mockHighlightAuto).not.toHaveBeenCalled();
   });
 
-  it('handle multiline code blocks', () => {
+  it("handle multiline code blocks", () => {
     // Mock highlight result for multiline code
     mockHighlight.mockReturnValue({
       value: [
         {
-          properties: { className: ['token', 'keyword'] },
-          value: 'function',
+          properties: { className: ["token", "keyword"] },
+          value: "function",
         },
         {
-          value: ' test() {\n  ',
+          value: " test() {\n  ",
         },
         {
-          properties: { className: ['token', 'keyword'] },
-          value: 'return',
+          properties: { className: ["token", "keyword"] },
+          value: "return",
         },
         {
-          value: ' true;\n}',
+          value: " true;\n}",
         },
       ],
     });
@@ -214,12 +214,12 @@ describe('codeBlockToDecorations', () => {
     // Create a multiline code block
     const codeBlock: TCodeBlockElement = {
       children: [
-        { children: [{ text: 'function test() {' }], type: 'code_line' },
-        { children: [{ text: '  return true;' }], type: 'code_line' },
-        { children: [{ text: '}' }], type: 'code_line' },
+        { children: [{ text: "function test() {" }], type: "code_line" },
+        { children: [{ text: "  return true;" }], type: "code_line" },
+        { children: [{ text: "}" }], type: "code_line" },
       ],
-      lang: 'javascript',
-      type: 'code_block',
+      lang: "javascript",
+      type: "code_block",
     };
 
     const blockPath = [0];
@@ -237,17 +237,17 @@ describe('codeBlockToDecorations', () => {
     expect(line2Decorations).toHaveLength(3);
     expect(line2Decorations?.[0]).toMatchObject({
       anchor: { offset: 0, path: [0, 1, 0] },
-      className: '',
+      className: "",
       focus: { offset: 2, path: [0, 1, 0] },
     });
     expect(line2Decorations?.[1]).toMatchObject({
       anchor: { offset: 2, path: [0, 1, 0] },
-      className: 'token keyword',
+      className: "token keyword",
       focus: { offset: 8, path: [0, 1, 0] },
     });
     expect(line2Decorations?.[2]).toMatchObject({
       anchor: { offset: 8, path: [0, 1, 0] },
-      className: '',
+      className: "",
       focus: { offset: 14, path: [0, 1, 0] },
     });
 
@@ -256,39 +256,36 @@ describe('codeBlockToDecorations', () => {
     expect(line3Decorations).toHaveLength(1);
   });
 
-  it('logs debug errors for registered languages that fail to highlight', () => {
-    const error = new Error('boom');
+  it("logs debug errors for registered languages that fail to highlight", () => {
+    const error = new Error("boom");
     mockHighlight.mockImplementation(() => {
       throw error;
     });
 
     const codeBlock: TCodeBlockElement = {
-      children: [{ children: [{ text: 'const x = 1;' }], type: 'code_line' }],
-      lang: 'javascript',
-      type: 'code_block',
+      children: [{ children: [{ text: "const x = 1;" }], type: "code_line" }],
+      lang: "javascript",
+      type: "code_block",
     };
 
     const result = codeBlockToDecorations(editor, [codeBlock, [0]]);
 
     expect(result.get(codeBlock.children[0] as any)).toEqual([]);
-    expect(editor.api.debug.error).toHaveBeenCalledWith(
-      error,
-      'CODE_HIGHLIGHT'
-    );
+    expect(editor.api.debug.error).toHaveBeenCalledWith(error, "CODE_HIGHLIGHT");
     expect(editor.api.debug.warn).not.toHaveBeenCalled();
   });
 
-  it('warns and falls back to plaintext for unregistered languages', () => {
-    const error = new Error('missing');
-    mockListLanguages.mockReturnValue(['javascript']);
+  it("warns and falls back to plaintext for unregistered languages", () => {
+    const error = new Error("missing");
+    mockListLanguages.mockReturnValue(["javascript"]);
     mockHighlight.mockImplementation(() => {
       throw error;
     });
 
     const codeBlock: TCodeBlockElement = {
-      children: [{ children: [{ text: 'SELECT 1' }], type: 'code_line' }],
-      lang: 'sql',
-      type: 'code_block',
+      children: [{ children: [{ text: "SELECT 1" }], type: "code_line" }],
+      lang: "sql",
+      type: "code_block",
     };
 
     const result = codeBlockToDecorations(editor, [codeBlock, [0]]);
@@ -301,21 +298,21 @@ describe('codeBlockToDecorations', () => {
   });
 });
 
-describe('decoration cache helpers', () => {
-  it('stores decorations for each code line in the cache', () => {
+describe("decoration cache helpers", () => {
+  it("stores decorations for each code line in the cache", () => {
     mockHighlight.mockReturnValue({
       value: [
         {
-          properties: { className: ['token', 'keyword'] },
-          value: 'const',
+          properties: { className: ["token", "keyword"] },
+          value: "const",
         },
       ],
     });
 
     const codeBlock: TCodeBlockElement = {
-      children: [{ children: [{ text: 'const' }], type: 'code_line' }],
-      lang: 'javascript',
-      type: 'code_block',
+      children: [{ children: [{ text: "const" }], type: "code_line" }],
+      lang: "javascript",
+      type: "code_block",
     };
     const codeLine = codeBlock.children[0] as any;
 
@@ -323,19 +320,19 @@ describe('decoration cache helpers', () => {
 
     expect(CODE_LINE_TO_DECORATIONS.get(codeLine)).toEqual([
       expect.objectContaining({
-        className: 'token keyword',
+        className: "token keyword",
       }),
     ]);
   });
 
-  it('clears cached decorations for every code line in a block', () => {
+  it("clears cached decorations for every code line in a block", () => {
     const codeBlock: TCodeBlockElement = {
       children: [
-        { children: [{ text: 'const' }], type: 'code_line' },
-        { children: [{ text: 'return' }], type: 'code_line' },
+        { children: [{ text: "const" }], type: "code_line" },
+        { children: [{ text: "return" }], type: "code_line" },
       ],
-      lang: 'javascript',
-      type: 'code_block',
+      lang: "javascript",
+      type: "code_block",
     };
     const firstLine = codeBlock.children[0] as any;
     const secondLine = codeBlock.children[1] as any;

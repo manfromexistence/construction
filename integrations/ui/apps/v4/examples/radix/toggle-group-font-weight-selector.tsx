@@ -1,19 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/radix-nova/ui/field"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/radix-nova/ui/toggle-group"
+import { Field, FieldDescription, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { ToggleGroup, ToggleGroupItem } from "@/styles/radix-nova/ui/toggle-group";
 
 export function ToggleGroupFontWeightSelector() {
-  const [fontWeight, setFontWeight] = React.useState("normal")
+  const [fontWeight, setFontWeight] = React.useState("normal");
   return (
     <Field>
       <FieldLabel>Font Weight</FieldLabel>
@@ -59,12 +52,9 @@ export function ToggleGroupFontWeightSelector() {
         </ToggleGroupItem>
       </ToggleGroup>
       <FieldDescription>
-        Use{" "}
-        <code className="rounded-md bg-muted px-1 py-0.5 font-mono">
-          font-{fontWeight}
-        </code>{" "}
-        to set the font weight.
+        Use <code className="rounded-md bg-muted px-1 py-0.5 font-mono">font-{fontWeight}</code> to
+        set the font weight.
       </FieldDescription>
     </Field>
-  )
+  );
 }

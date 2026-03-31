@@ -18,10 +18,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList } from "@/components/ui/tabs";
 import { COMMON_STYLES, defaultThemeState } from "@/config/theme";
 import { useAIThemeGenerationCore } from "@/hooks/use-ai-theme-generation-core";
-import { useControlsTabFromUrl, type ControlTab } from "@/hooks/use-controls-tab-from-url";
+import { type ControlTab, useControlsTabFromUrl } from "@/hooks/use-controls-tab-from-url";
 import { useEditorStore } from "@/store/editor-store";
 import { type FontInfo } from "@/types/fonts";
-import { ThemeStyles, ThemeStyleProps } from "@/types/theme";
+import { ThemeStyleProps, ThemeStyles } from "@/types/theme";
 import { buildFontFamily } from "@/utils/fonts";
 import { getAppliedThemeFont } from "@/utils/theme-fonts";
 
@@ -116,7 +116,11 @@ const ThemeControlPanel = ({ styles, currentMode, onChange }: ThemeControlPanelP
           </HorizontalScrollArea>
 
           <TabsContent value="colors" className="mt-1 size-full overflow-hidden">
-            <ColorsTabContent currentStyles={currentStyles} updateStyle={updateStyle} updateStyles={updateStyles} />
+            <ColorsTabContent
+              currentStyles={currentStyles}
+              updateStyle={updateStyle}
+              updateStyles={updateStyles}
+            />
           </TabsContent>
 
           <TabsContent value="typography" className="mt-1 size-full overflow-hidden">
@@ -138,7 +142,10 @@ const ThemeControlPanel = ({ styles, currentMode, onChange }: ThemeControlPanelP
               <ControlSection title="Font Family" expanded>
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2">
-                    <Label htmlFor="font-sans" className="text-muted-foreground w-16 shrink-0 text-[11px] font-medium">
+                    <Label
+                      htmlFor="font-sans"
+                      className="text-muted-foreground w-16 shrink-0 text-[11px] font-medium"
+                    >
                       Sans-Serif
                     </Label>
                     <div className="min-w-0 flex-1">
@@ -155,7 +162,10 @@ const ThemeControlPanel = ({ styles, currentMode, onChange }: ThemeControlPanelP
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Label htmlFor="font-serif" className="text-muted-foreground w-16 shrink-0 text-[11px] font-medium">
+                    <Label
+                      htmlFor="font-serif"
+                      className="text-muted-foreground w-16 shrink-0 text-[11px] font-medium"
+                    >
                       Serif
                     </Label>
                     <div className="min-w-0 flex-1">
@@ -172,7 +182,10 @@ const ThemeControlPanel = ({ styles, currentMode, onChange }: ThemeControlPanelP
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Label htmlFor="font-mono" className="text-muted-foreground w-16 shrink-0 text-[11px] font-medium">
+                    <Label
+                      htmlFor="font-mono"
+                      className="text-muted-foreground w-16 shrink-0 text-[11px] font-medium"
+                    >
                       Mono
                     </Label>
                     <div className="min-w-0 flex-1">

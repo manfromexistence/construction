@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -10,7 +10,7 @@ export const imageValue: any = (
     <hp>通过上传或提供图片 URL 来添加图片：</hp>
     <himg
       align="center"
-      caption={[{ children: [{ text: '图片说明' }] }]}
+      caption={[{ children: [{ text: "图片说明" }] }]}
       url="https://images.unsplash.com/photo-1712688930249-98e1963af7bd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
       width="55%"
     >
@@ -36,11 +36,7 @@ export const mediaPlaceholderValue: any = (
     <hp indent={1} listStyleType="disc">
       实时上传状态和进度跟踪
     </hp>
-    <haudio
-      align="center"
-      url="https://samplelib.com/lib/preview/mp3/sample-3s.mp3"
-      width="80%"
-    >
+    <haudio align="center" url="https://samplelib.com/lib/preview/mp3/sample-3s.mp3" width="80%">
       <htext />
     </haudio>
     <hp indent={1} listStyleType="disc">
@@ -70,10 +66,7 @@ export const mediaValue: any = (
 
     <hh2>嵌入</hh2>
     <hp>嵌入各种类型的内容，如视频和推文：</hp>
-    <hmediaembed
-      align="center"
-      url="https://www.youtube.com/watch?v=MyiBAziEWUA"
-    >
+    <hmediaembed align="center" url="https://www.youtube.com/watch?v=MyiBAziEWUA">
       <htext />
     </hmediaembed>
     {/* BUG */}

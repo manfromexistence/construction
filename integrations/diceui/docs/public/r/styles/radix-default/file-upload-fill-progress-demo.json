@@ -1,12 +1,7 @@
 {
   "name": "file-upload-fill-progress-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "button",
-    "file-upload"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["button", "file-upload"],
   "files": [
     {
       "path": "examples/file-upload-fill-progress-demo.tsx",

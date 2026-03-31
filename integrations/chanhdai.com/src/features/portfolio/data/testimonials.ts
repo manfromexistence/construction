@@ -1,4 +1,4 @@
-import type { Testimonial } from "../types/testimonials"
+import type { Testimonial } from "../types/testimonials";
 
 /**
  * TESTIMONIALS_1: Long quotes (more than 50 characters)
@@ -12,8 +12,7 @@ export const TESTIMONIALS_1: Testimonial[] = [
     authorName: "GitHub Projects Community",
     authorTagline: "UNOFFICIAL, but followed by @github",
     url: "https://x.com/GithubProjects/status/1931034244337271044",
-    quote:
-      "Everything you'd want in a picker, minus the styling headaches. Awesome job!",
+    quote: "Everything you'd want in a picker, minus the styling headaches. Awesome job!",
     date: "2025-06-07",
   },
   {
@@ -37,8 +36,7 @@ export const TESTIMONIALS_1: Testimonial[] = [
     authorName: "Jean P.D. Meijer",
     authorTagline: "Building analog.now",
     url: "https://x.com/initjean/status/1948159885960438151",
-    quote:
-      "congrats you deserve it! react wheel picker is so smooth, its insane",
+    quote: "congrats you deserve it! react wheel picker is so smooth, its insane",
     date: "2025-07-24",
   },
   {
@@ -46,8 +44,7 @@ export const TESTIMONIALS_1: Testimonial[] = [
     authorName: "Guillermo Rauch",
     authorTagline: "CEO @Vercel",
     url: "https://x.com/rauchg/status/1978913158514237669",
-    quote:
-      "awesome. Love the components, especially slide-to-unlock. Great job",
+    quote: "awesome. Love the components, especially slide-to-unlock. Great job",
     date: "2025-10-17",
     isFeatured: true,
   },
@@ -56,8 +53,7 @@ export const TESTIMONIALS_1: Testimonial[] = [
     authorName: "OrcDev",
     authorTagline: "Creator of 8bitcn.com",
     url: "https://x.com/orcdev/status/1980378575170859446",
-    quote:
-      "Seriously, this is one of the best portfolio templates I've ever seen.",
+    quote: "Seriously, this is one of the best portfolio templates I've ever seen.",
     date: "2025-10-21",
   },
   {
@@ -74,8 +70,7 @@ export const TESTIMONIALS_1: Testimonial[] = [
     authorName: "Christopher Burns",
     authorTagline: "Creator of c15t.com",
     url: "https://x.com/BurnedChris/status/2000947403571204445",
-    quote:
-      "This is super cool, Full circle moment (the prototype for c15t actually used shadcn).",
+    quote: "This is super cool, Full circle moment (the prototype for c15t actually used shadcn).",
     date: "2025-12-16",
   },
   {
@@ -91,8 +86,7 @@ export const TESTIMONIALS_1: Testimonial[] = [
     authorName: "Francesco Ciulla",
     authorTagline: "Developer Advocate @daily.dev",
     url: "https://x.com/FrancescoCiull4/status/2006332479536529608",
-    quote:
-      "your portfolio is stunning. i created mine some weeks ago but this is another planet.",
+    quote: "your portfolio is stunning. i created mine some weeks ago but this is another planet.",
     date: "2025-12-31",
   },
   {
@@ -152,7 +146,7 @@ export const TESTIMONIALS_1: Testimonial[] = [
       "i like this subtle version a lot more than the over-the-top examples i see everywhere, very nice",
     date: "2026-03-20",
   },
-]
+];
 
 // Short quotes (50 characters or fewer), ordered by date ascending
 export const TESTIMONIALS_2: Testimonial[] = [
@@ -333,4 +327,4 @@ export const TESTIMONIALS_2: Testimonial[] = [
     quote: "Yooo I love this 🎨",
     date: "2026-03-31",
   },
-]
+];

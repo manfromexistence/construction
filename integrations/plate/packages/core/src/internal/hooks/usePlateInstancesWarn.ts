@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 declare global {
   // biome-ignore lint/style/useConsistentTypeDefinitions: Global augmentation must be an interface per TypeScript specification
@@ -8,8 +8,7 @@ declare global {
 }
 
 function checkPlateInstances() {
-  (globalThis as any).__PLATE_INSTANCES__ =
-    ((globalThis as any).__PLATE_INSTANCES__ || 0) + 1;
+  (globalThis as any).__PLATE_INSTANCES__ = ((globalThis as any).__PLATE_INSTANCES__ || 0) + 1;
 }
 
 checkPlateInstances();
@@ -21,7 +20,7 @@ export function usePlateInstancesWarn(disabled?: boolean) {
       (globalThis as any).__PLATE_INSTANCES__ &&
       (globalThis as any).__PLATE_INSTANCES__ > 1
     ) {
-      console.warn('Detected multiple @platejs/core instances!');
+      console.warn("Detected multiple @platejs/core instances!");
     }
   }, [disabled]);
 }

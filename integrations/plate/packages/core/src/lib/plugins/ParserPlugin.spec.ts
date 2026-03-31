@@ -1,26 +1,23 @@
-import { createEditor as createBaseEditor } from '@platejs/slate';
+import { createEditor as createBaseEditor } from "@platejs/slate";
 
-import { createSlateEditor } from '../editor';
-import { createSlatePlugin } from '../plugin';
+import { createSlateEditor } from "../editor";
+import { createSlatePlugin } from "../plugin";
 
 const createParagraph = (text: string) => ({
   children: [{ text }],
-  type: 'p',
+  type: "p",
 });
 
-describe('ParserPlugin', () => {
-  it('pipes matching parser data into fragment insertion', () => {
+describe("ParserPlugin", () => {
+  it("pipes matching parser data into fragment insertion", () => {
     const PlainPlugin = createSlatePlugin({
-      key: 'plain',
+      key: "plain",
       parser: {
-        format: 'plain',
-        query: ({ data }) => data === 'hello',
+        format: "plain",
+        query: ({ data }) => data === "hello",
         transformData: ({ data }) => `${data}-world`,
         deserialize: ({ data }) => [createParagraph(data)],
-        transformFragment: ({ fragment }) => [
-          ...fragment,
-          createParagraph('tail'),
-        ],
+        transformFragment: ({ fragment }) => [...fragment, createParagraph("tail")],
       },
     });
     const editor = createSlateEditor({
@@ -31,18 +28,16 @@ describe('ParserPlugin', () => {
 
     editor.tf.insertData({
       files: [],
-      getData: mock((mimeType: string) =>
-        mimeType === 'text/plain' ? 'hello' : ''
-      ),
+      getData: mock((mimeType: string) => (mimeType === "text/plain" ? "hello" : "")),
     } as any);
 
     expect(editor.tf.insertFragment).toHaveBeenCalledWith([
-      createParagraph('hello-world'),
-      createParagraph('tail'),
+      createParagraph("hello-world"),
+      createParagraph("tail"),
     ]);
   });
 
-  it('falls back to the previous insertData transform when no parser inserts', () => {
+  it("falls back to the previous insertData transform when no parser inserts", () => {
     const fallbackInsertData = mock();
     const baseEditor = createBaseEditor();
 
@@ -50,9 +45,9 @@ describe('ParserPlugin', () => {
     baseEditor.tf.insertData = fallbackInsertData as any;
 
     const PlainPlugin = createSlatePlugin({
-      key: 'plain',
+      key: "plain",
       parser: {
-        format: 'plain',
+        format: "plain",
         deserialize: () => [],
       },
     });
@@ -62,9 +57,7 @@ describe('ParserPlugin', () => {
     });
     const dataTransfer = {
       files: [],
-      getData: mock((mimeType: string) =>
-        mimeType === 'text/plain' ? 'hello' : ''
-      ),
+      getData: mock((mimeType: string) => (mimeType === "text/plain" ? "hello" : "")),
     } as any;
 
     editor.tf.insertData(dataTransfer);

@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
+import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
 import {
   Item,
   ItemActions,
@@ -15,7 +12,7 @@ import {
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from "@/styles/base-nova/ui-rtl/item"
+} from "@/styles/base-nova/ui-rtl/item";
 
 const translations: Translations = {
   en: {
@@ -45,10 +42,10 @@ const translations: Translations = {
       verifiedTitle: "הפרופיל שלך אומת.",
     },
   },
-}
+};
 
 export function ItemRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="flex w-full max-w-md flex-col gap-6" dir={dir}>
@@ -75,5 +72,5 @@ export function ItemRtl() {
         </ItemActions>
       </Item>
     </div>
-  )
+  );
 }

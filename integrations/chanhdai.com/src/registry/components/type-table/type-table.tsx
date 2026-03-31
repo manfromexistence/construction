@@ -1,57 +1,51 @@
-"use client"
+"use client";
 
-import type { ComponentProps, ReactNode } from "react"
+import type { ComponentProps, ReactNode } from "react";
 
-import {
-  Collapsible,
-  CollapsibleChevronDownIcon,
-} from "@/components/base/collapsible-animated"
-import {
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/base/ui/collapsible"
-import { Prose } from "@/components/ui/typography"
-import { cn } from "@/lib/utils"
+import { Collapsible, CollapsibleChevronDownIcon } from "@/components/base/collapsible-animated";
+import { CollapsibleContent, CollapsibleTrigger } from "@/components/base/ui/collapsible";
+import { Prose } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 
 export interface ParameterNode {
-  name: string
-  description: ReactNode
+  name: string;
+  description: ReactNode;
 }
 
 export interface TypeNode {
   /**
    * Additional description of the field
    */
-  description?: ReactNode
+  description?: ReactNode;
 
   /**
    * type signature (short)
    */
-  type: ReactNode
+  type: ReactNode;
 
   /**
    * type signature (full)
    */
-  typeDescription?: ReactNode
+  typeDescription?: ReactNode;
 
   /**
    * Optional `href` for the type
    */
-  typeDescriptionLink?: string
+  typeDescriptionLink?: string;
 
-  default?: ReactNode
+  default?: ReactNode;
 
-  required?: boolean
-  deprecated?: boolean
+  required?: boolean;
+  deprecated?: boolean;
 
   /**
    * a list of parameters info if the type is a function.
    */
-  parameters?: ParameterNode[]
+  parameters?: ParameterNode[];
 
-  example?: ReactNode
+  example?: ReactNode;
 
-  returns?: ReactNode
+  returns?: ReactNode;
 }
 
 export function TypeTable({
@@ -78,7 +72,7 @@ export function TypeTable({
         <Item key={key} parentId={id} name={key} item={value} />
       ))}
     </div>
-  )
+  );
 }
 
 function Item({
@@ -97,11 +91,11 @@ function Item({
     returns,
   },
 }: {
-  parentId?: string
-  name: string
-  item: TypeNode
+  parentId?: string;
+  name: string;
+  item: TypeNode;
 }) {
-  const id = parentId ? `${parentId}-${name}` : undefined
+  const id = parentId ? `${parentId}-${name}` : undefined;
 
   return (
     <Collapsible
@@ -121,10 +115,7 @@ function Item({
         </code>
 
         {typeDescriptionLink ? (
-          <a
-            href={typeDescriptionLink}
-            className="underline underline-offset-4 @max-xl:hidden"
-          >
+          <a href={typeDescriptionLink} className="underline underline-offset-4 @max-xl:hidden">
             {type}
           </a>
         ) : (
@@ -138,39 +129,28 @@ function Item({
 
       <CollapsibleContent>
         <div className="grid grid-cols-[1fr_3fr] gap-y-3 p-3 text-sm">
-          <CustomProse className="col-span-full empty:hidden">
-            {description}
-          </CustomProse>
+          <CustomProse className="col-span-full empty:hidden">{description}</CustomProse>
 
           {typeDescription != null && (
             <>
-              <p className="not-prose pe-3 leading-5 text-muted-foreground">
-                Type
-              </p>
+              <p className="not-prose pe-3 leading-5 text-muted-foreground">Type</p>
               <p className="not-prose my-auto">{typeDescription}</p>
             </>
           )}
 
           {defaultValue != null && (
             <>
-              <p className="not-prose pe-3 leading-6 text-muted-foreground">
-                Default
-              </p>
+              <p className="not-prose pe-3 leading-6 text-muted-foreground">Default</p>
               <p className="not-prose my-auto">{defaultValue}</p>
             </>
           )}
 
           {parameters.length > 0 && (
             <>
-              <p className="not-prose pe-3 leading-6 text-muted-foreground">
-                Parameters
-              </p>
+              <p className="not-prose pe-3 leading-6 text-muted-foreground">Parameters</p>
               <div className="grid gap-3">
                 {parameters.map((param) => (
-                  <div
-                    key={param.name}
-                    className="flex flex-wrap items-center gap-1"
-                  >
+                  <div key={param.name} className="flex flex-wrap items-center gap-1">
                     <p className="not-prose leading-6 font-medium text-nowrap">
                       {param.name}
                       <span className="ml-1 font-normal">–</span>
@@ -184,25 +164,21 @@ function Item({
 
           {example != null && (
             <>
-              <p className="not-prose pe-3 leading-6 text-muted-foreground">
-                Example
-              </p>
+              <p className="not-prose pe-3 leading-6 text-muted-foreground">Example</p>
               <CustomProse className="overflow-hidden">{example}</CustomProse>
             </>
           )}
 
           {returns != null && (
             <>
-              <p className="not-prose pe-3 leading-6 text-muted-foreground">
-                Returns
-              </p>
+              <p className="not-prose pe-3 leading-6 text-muted-foreground">Returns</p>
               <CustomProse className="my-auto">{returns}</CustomProse>
             </>
           )}
         </div>
       </CollapsibleContent>
     </Collapsible>
-  )
+  );
 }
 
 function CustomProse({ className, ...props }: ComponentProps<typeof Prose>) {
@@ -214,5 +190,5 @@ function CustomProse({ className, ...props }: ComponentProps<typeof Prose>) {
       )}
       {...props}
     />
-  )
+  );
 }

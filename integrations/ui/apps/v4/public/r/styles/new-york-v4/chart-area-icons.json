@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chart-area-icons",
-  "registryDependencies": [
-    "card",
-    "chart"
-  ],
+  "registryDependencies": ["card", "chart"],
   "files": [
     {
       "path": "registry/new-york-v4/charts/chart-area-icons.tsx",
@@ -12,9 +9,6 @@
       "type": "registry:block"
     }
   ],
-  "categories": [
-    "charts",
-    "charts-area"
-  ],
+  "categories": ["charts", "charts-area"],
   "type": "registry:block"
 }

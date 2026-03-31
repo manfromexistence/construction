@@ -1,6 +1,6 @@
+import { COMMON_STYLES, defaultThemeState } from "@/config/theme";
 import { ThemeStyleProps } from "@/types/theme";
 import { colorFormatter } from "./color-converter";
-import { COMMON_STYLES, defaultThemeState } from "@/config/theme";
 
 export const variableNames = Object.keys(defaultThemeState.styles.light);
 const nonColorVariables = COMMON_STYLES;
@@ -27,19 +27,12 @@ export const parseCssInput = (input: string) => {
   return { lightColors, darkColors };
 };
 
-const extractCssBlockContent = (
-  input: string,
-  selector: string
-): string | null => {
+const extractCssBlockContent = (input: string, selector: string): string | null => {
   const regex = new RegExp(`${escapeRegExp(selector)}\\s*{([^}]+)}`);
   return input.match(regex)?.[1]?.trim() || null;
 };
 
-const parseColorVariables = (
-  cssContent: string,
-  target: ThemeStyleProps,
-  validNames: string[]
-) => {
+const parseColorVariables = (cssContent: string, target: ThemeStyleProps, validNames: string[]) => {
   const variableDeclarations = cssContent.match(/--[^:]+:\s*[^;]+/g) || [];
 
   variableDeclarations.forEach((declaration) => {

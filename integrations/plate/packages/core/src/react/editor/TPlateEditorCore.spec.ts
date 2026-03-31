@@ -1,22 +1,20 @@
-import type { Value } from '@platejs/slate';
+import { LinkPlugin } from "@platejs/link/react";
+import type { Value } from "@platejs/slate";
+import type { InferPlugins } from "../../lib/editor/SlateEditor";
+import { createSlateEditor } from "../../lib/editor/withSlate";
+import { createSlatePlugin } from "../../lib/plugin/createSlatePlugin";
+import { DebugPlugin } from "../../lib/plugins/debug/DebugPlugin";
+import { someHtmlElement } from "../../lib/plugins/html/utils/findHtmlElement";
+import { createPlateEditor, withPlate } from "./withPlate";
 
-import type { InferPlugins } from '../../lib/editor/SlateEditor';
-
-import { createSlateEditor } from '../../lib/editor/withSlate';
-import { createSlatePlugin } from '../../lib/plugin/createSlatePlugin';
-import { DebugPlugin } from '../../lib/plugins/debug/DebugPlugin';
-import { someHtmlElement } from '../../lib/plugins/html/utils/findHtmlElement';
-import { createPlateEditor, withPlate } from './withPlate';
-import { LinkPlugin } from '@platejs/link/react';
-
-describe('TPlateEditor core package', () => {
+describe("TPlateEditor core package", () => {
   const MyCustomPlugin = createSlatePlugin({
-    key: 'myCustom',
+    key: "myCustom",
     api: { myCustomMethod: () => {} },
   });
 
   const TextFormattingPlugin = createSlatePlugin({
-    key: 'textFormatting',
+    key: "textFormatting",
     api: {
       bold: () => {},
       italic: () => {},
@@ -25,14 +23,14 @@ describe('TPlateEditor core package', () => {
   });
 
   const ListPlugin = createSlatePlugin({
-    key: 'list',
+    key: "list",
     api: {
       createBulletedList: () => {},
     },
   });
 
   const TablePlugin = createSlatePlugin({
-    key: 'table',
+    key: "table",
     api: {
       addRow: () => {},
       insertTable: () => {},
@@ -40,15 +38,15 @@ describe('TPlateEditor core package', () => {
   });
 
   const ImagePlugin = createSlatePlugin({
-    key: 'image',
+    key: "image",
     api: {
       insertImage: () => {},
       resizeImage: () => {},
     },
   });
 
-  describe('Core Plugins', () => {
-    it('exposes DebugPlugin methods on createSlateEditor', () => {
+  describe("Core Plugins", () => {
+    it("exposes DebugPlugin methods on createSlateEditor", () => {
       const editor = createSlateEditor();
 
       expect(editor.api.debug).toBeDefined();
@@ -61,7 +59,7 @@ describe('TPlateEditor core package', () => {
       editor.api.debug.nonExistentMethod;
     });
 
-    it('exposes DebugPlugin methods on createPlateEditor', () => {
+    it("exposes DebugPlugin methods on createPlateEditor", () => {
       const editor = createPlateEditor();
 
       expect(editor.api.debug).toBeDefined();
@@ -74,7 +72,7 @@ describe('TPlateEditor core package', () => {
       editor.api.debug.nonExistentMethod;
     });
 
-    it('combines core and custom plugin APIs on slate and plate editors', () => {
+    it("combines core and custom plugin APIs on slate and plate editors", () => {
       const slateEditor = createSlateEditor({
         plugins: [DebugPlugin, TextFormattingPlugin, ImagePlugin, LinkPlugin],
       });
@@ -98,7 +96,7 @@ describe('TPlateEditor core package', () => {
       editor.api.createBulletedList;
     });
 
-    it('exposes link api after extending a plate plugin', () => {
+    it("exposes link api after extending a plate plugin", () => {
       const editor = createPlateEditor({
         plugins: [
           LinkPlugin.extend({
@@ -121,8 +119,8 @@ describe('TPlateEditor core package', () => {
     });
   });
 
-  describe('Custom Plugins', () => {
-    it('infers plugin APIs across custom plugin sets', () => {
+  describe("Custom Plugins", () => {
+    it("infers plugin APIs across custom plugin sets", () => {
       const singlePluginEditor = createPlateEditor({
         plugins: [MyCustomPlugin],
       });
@@ -139,7 +137,7 @@ describe('TPlateEditor core package', () => {
       multiPluginEditor.api.nonExistentMethod;
     });
 
-    it('exposes custom plugin APIs on createPlateEditor', () => {
+    it("exposes custom plugin APIs on createPlateEditor", () => {
       const editor = createPlateEditor({
         plugins: [MyCustomPlugin, ListPlugin, ImagePlugin],
       });
@@ -152,16 +150,13 @@ describe('TPlateEditor core package', () => {
       editor.api.insertTable;
     });
 
-    it('extends a plate editor with additional plugins', () => {
+    it("extends a plate editor with additional plugins", () => {
       const plugins = [TextFormattingPlugin, ListPlugin];
       const editor1 = createPlateEditor({
         plugins,
       });
 
-      const editor = withPlate<
-        Value,
-        InferPlugins<typeof plugins> | typeof TablePlugin
-      >(editor1, {
+      const editor = withPlate<Value, InferPlugins<typeof plugins> | typeof TablePlugin>(editor1, {
         plugins: [...editor1.meta.pluginList, TablePlugin],
       });
 
@@ -173,9 +168,9 @@ describe('TPlateEditor core package', () => {
       editor.api.insertImage;
     });
 
-    it('merges overlapping api names on createPlateEditor', () => {
+    it("merges overlapping api names on createPlateEditor", () => {
       const OverlappingPlugin = createSlatePlugin({
-        key: 'overlapping',
+        key: "overlapping",
         api: {
           bold: (_: number) => {},
           insertImage: (_: number) => {},
@@ -196,28 +191,25 @@ describe('TPlateEditor core package', () => {
     });
   });
 
-  describe('Plugin', () => {
-    const BoldPlugin = createSlatePlugin<'bold'>({
-      key: 'bold',
+  describe("Plugin", () => {
+    const BoldPlugin = createSlatePlugin<"bold">({
+      key: "bold",
       node: { isLeaf: true },
       parsers: {
         html: {
           deserializer: {
             rules: [
-              { validNodeName: ['STRONG', 'B'] },
-              { validStyle: { fontWeight: ['600', '700', 'bold'] } },
+              { validNodeName: ["STRONG", "B"] },
+              { validStyle: { fontWeight: ["600", "700", "bold"] } },
             ],
             query: ({ element }) =>
-              !someHtmlElement(
-                element,
-                (node) => node.style.fontWeight === 'normal'
-              ),
+              !someHtmlElement(element, (node) => node.style.fontWeight === "normal"),
           },
         },
       },
     });
 
-    it('supports specific plugin generics on createPlateEditor', () => {
+    it("supports specific plugin generics on createPlateEditor", () => {
       const editor = createPlateEditor<Value, typeof BoldPlugin>({
         plugins: [BoldPlugin],
       });

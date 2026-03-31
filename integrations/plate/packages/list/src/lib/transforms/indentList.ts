@@ -1,9 +1,8 @@
-import type { SlateEditor, TLocation } from 'platejs';
+import { setIndent } from "@platejs/indent";
+import type { SlateEditor, TLocation } from "platejs";
+import { KEYS } from "platejs";
 
-import { setIndent } from '@platejs/indent';
-import { KEYS } from 'platejs';
-
-import { ListStyleType } from '../types';
+import { ListStyleType } from "../types";
 
 export type ListOptions = {
   at?: TLocation;

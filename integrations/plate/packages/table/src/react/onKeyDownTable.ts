@@ -1,21 +1,15 @@
-import type { KeyboardHandler } from 'platejs/react';
+import { Hotkeys } from "platejs";
+import type { KeyboardHandler } from "platejs/react";
 
-import { Hotkeys } from 'platejs';
-
-import {
-  type TableConfig,
-  getCellTypes,
-  KEY_SHIFT_EDGES,
-  moveSelectionFromCell,
-} from '../lib';
+import { getCellTypes, KEY_SHIFT_EDGES, moveSelectionFromCell, type TableConfig } from "../lib";
 import {
   getTableMoveSelectionContext,
   hasAdjacentBlockInCell,
   shouldMoveSelectionFromCell,
-} from '../lib/transforms/shouldMoveSelectionFromCell';
+} from "../lib/transforms/shouldMoveSelectionFromCell";
 
 const shouldMoveSingleCellSelection = (
-  editor: Parameters<KeyboardHandler<TableConfig>>[0]['editor'],
+  editor: Parameters<KeyboardHandler<TableConfig>>[0]["editor"],
   key: keyof typeof KEY_SHIFT_EDGES
 ) => {
   const context = getTableMoveSelectionContext(editor, editor.selection?.focus);
@@ -24,11 +18,11 @@ const shouldMoveSingleCellSelection = (
 
   const { blockPath, cellPath, point } = context;
 
-  if (key === 'shift+left') {
+  if (key === "shift+left") {
     return editor.api.isStart(point, cellPath);
   }
 
-  if (key === 'shift+right') {
+  if (key === "shift+right") {
     return editor.api.isEnd(point, cellPath);
   }
 
@@ -36,7 +30,7 @@ const shouldMoveSingleCellSelection = (
     hasAdjacentBlockInCell(editor, {
       blockPath,
       cellPath,
-      reverse: key === 'shift+up',
+      reverse: key === "shift+up",
     })
   ) {
     return false;
@@ -45,14 +39,11 @@ const shouldMoveSingleCellSelection = (
   return shouldMoveSelectionFromCell(editor, {
     blockPath,
     point,
-    reverse: key === 'shift+up',
+    reverse: key === "shift+up",
   });
 };
 
-export const onKeyDownTable: KeyboardHandler<TableConfig> = ({
-  editor,
-  event,
-}) => {
+export const onKeyDownTable: KeyboardHandler<TableConfig> = ({ editor, event }) => {
   if (event.defaultPrevented) return;
 
   const compositeKeyCode = 229;
@@ -73,7 +64,7 @@ export const onKeyDownTable: KeyboardHandler<TableConfig> = ({
 
     if (tdEntries.length > 1) {
       editor.tf.collapse({
-        edge: 'end',
+        edge: "end",
       });
 
       return;
@@ -81,10 +72,10 @@ export const onKeyDownTable: KeyboardHandler<TableConfig> = ({
   }
 
   const isKeyDown: any = {
-    'shift+down': Hotkeys.isExtendDownward(event),
-    'shift+left': Hotkeys.isExtendBackward(event),
-    'shift+right': Hotkeys.isExtendForward(event),
-    'shift+up': Hotkeys.isExtendUpward(event),
+    "shift+down": Hotkeys.isExtendDownward(event),
+    "shift+left": Hotkeys.isExtendBackward(event),
+    "shift+right": Hotkeys.isExtendForward(event),
+    "shift+up": Hotkeys.isExtendUpward(event),
   };
 
   Object.keys(isKeyDown).forEach((key) => {
@@ -93,17 +84,14 @@ export const onKeyDownTable: KeyboardHandler<TableConfig> = ({
     const handled =
       moveSelectionFromCell(editor, {
         edge: (KEY_SHIFT_EDGES as any)[key],
-        reverse: key === 'shift+up',
+        reverse: key === "shift+up",
       }) ||
-      (shouldMoveSingleCellSelection(
-        editor,
-        key as keyof typeof KEY_SHIFT_EDGES
-      ) &&
+      (shouldMoveSingleCellSelection(editor, key as keyof typeof KEY_SHIFT_EDGES) &&
         moveSelectionFromCell(editor, {
           at: editor.selection!,
           edge: (KEY_SHIFT_EDGES as any)[key],
           fromOneCell: true,
-          reverse: key === 'shift+up',
+          reverse: key === "shift+up",
         }));
 
     if (handled) {

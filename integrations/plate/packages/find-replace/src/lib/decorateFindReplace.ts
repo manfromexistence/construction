@@ -1,8 +1,8 @@
-import type { Decorate, TRange } from 'platejs';
+import type { Decorate, TRange } from "platejs";
 
-import { ElementApi, TextApi } from 'platejs';
+import { ElementApi, TextApi } from "platejs";
 
-import type { FindReplaceConfig } from './FindReplacePlugin';
+import type { FindReplaceConfig } from "./FindReplacePlugin";
 
 export const decorateFindReplace: Decorate<FindReplaceConfig> = ({
   entry: [node, path],
@@ -11,18 +11,12 @@ export const decorateFindReplace: Decorate<FindReplaceConfig> = ({
 }) => {
   const { search } = getOptions();
 
-  if (
-    !(
-      search &&
-      ElementApi.isElement(node) &&
-      node.children.every(TextApi.isText)
-    )
-  ) {
+  if (!(search && ElementApi.isElement(node) && node.children.every(TextApi.isText))) {
     return [];
   }
 
   const texts = node.children.map((it) => it.text);
-  const str = texts.join('').toLowerCase();
+  const str = texts.join("").toLowerCase();
   const searchLower = search.toLowerCase();
 
   let start = 0;

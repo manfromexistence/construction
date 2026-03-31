@@ -2,10 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "separator-example",
   "title": "Separator",
-  "registryDependencies": [
-    "separator",
-    "example"
-  ],
+  "registryDependencies": ["separator", "example"],
   "files": [
     {
       "path": "registry/radix-maia/examples/separator-example.tsx",

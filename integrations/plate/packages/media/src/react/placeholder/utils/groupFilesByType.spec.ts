@@ -1,17 +1,16 @@
-import type { UploadConfig } from '../PlaceholderPlugin';
+import type { UploadConfig } from "../PlaceholderPlugin";
 
-import { UploadErrorCode } from '../type';
-import { groupFilesByType } from './groupFilesByType';
+import { UploadErrorCode } from "../type";
+import { groupFilesByType } from "./groupFilesByType";
 
-describe('groupFilesByType', () => {
-  const createFile = (name: string, type: string): File =>
-    new File([], name, { type });
+describe("groupFilesByType", () => {
+  const createFile = (name: string, type: string): File => new File([], name, { type });
 
-  it('group files by their types', () => {
+  it("group files by their types", () => {
     const files = [
-      createFile('image.jpg', 'image/jpeg'),
-      createFile('video.mp4', 'video/mp4'),
-      createFile('doc.pdf', 'application/pdf'),
+      createFile("image.jpg", "image/jpeg"),
+      createFile("video.mp4", "video/mp4"),
+      createFile("doc.pdf", "application/pdf"),
     ];
 
     const fileList = {
@@ -25,9 +24,9 @@ describe('groupFilesByType', () => {
     } as FileList;
 
     const config: UploadConfig = {
-      image: { maxFileSize: '8B', mediaType: 'img' },
-      pdf: { maxFileSize: '64B', mediaType: 'file' },
-      video: { maxFileSize: '1024MB', mediaType: 'video' },
+      image: { maxFileSize: "8B", mediaType: "img" },
+      pdf: { maxFileSize: "64B", mediaType: "file" },
+      video: { maxFileSize: "1024MB", mediaType: "video" },
     };
 
     const result = groupFilesByType(fileList, config);
@@ -40,8 +39,8 @@ describe('groupFilesByType', () => {
     expect(result.text).toHaveLength(0);
   });
 
-  it('throw InvalidFileTypeError for unsupported file types', () => {
-    const files = [createFile('text.txt', 'text/plain')];
+  it("throw InvalidFileTypeError for unsupported file types", () => {
+    const files = [createFile("text.txt", "text/plain")];
     const fileList = {
       length: files.length,
       item: (i: number) => files[i],
@@ -53,7 +52,7 @@ describe('groupFilesByType', () => {
     } as FileList;
 
     const config: UploadConfig = {
-      image: { maxFileSize: '8MB', mediaType: 'img' },
+      image: { maxFileSize: "8MB", mediaType: "img" },
     };
 
     expect(() => {
@@ -65,8 +64,8 @@ describe('groupFilesByType', () => {
     });
   });
 
-  it('accept blob type as fallback', () => {
-    const files = [createFile('unknown.xyz', 'application/octet-stream')];
+  it("accept blob type as fallback", () => {
+    const files = [createFile("unknown.xyz", "application/octet-stream")];
     const fileList = {
       length: files.length,
       item: (i: number) => files[i],
@@ -78,7 +77,7 @@ describe('groupFilesByType', () => {
     } as FileList;
 
     const config: UploadConfig = {
-      blob: { maxFileSize: '1024MB', mediaType: 'file' },
+      blob: { maxFileSize: "1024MB", mediaType: "file" },
     };
 
     const result = groupFilesByType(fileList, config);

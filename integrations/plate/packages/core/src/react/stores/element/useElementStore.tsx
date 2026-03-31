@@ -1,20 +1,14 @@
-import React from 'react';
+import { type ElementEntry, type Path, PathApi, type TElement } from "@platejs/slate";
 
-import type { Nullable } from '@udecode/utils';
+import type { Nullable } from "@udecode/utils";
+import React from "react";
 
-import {
-  type ElementEntry,
-  type Path,
-  type TElement,
-  PathApi,
-} from '@platejs/slate';
+import { createAtomStore } from "../../libs/jotai";
+import { useComposing, useReadOnly } from "../../slate-react";
+import { useEditorRef, usePlateStore } from "../plate";
+import { usePath } from "./usePath";
 
-import { createAtomStore } from '../../libs/jotai';
-import { useComposing, useReadOnly } from '../../slate-react';
-import { useEditorRef, usePlateStore } from '../plate';
-import { usePath } from './usePath';
-
-export const SCOPE_ELEMENT = 'element';
+export const SCOPE_ELEMENT = "element";
 
 export type ElementStoreState = {
   element: TElement;
@@ -28,11 +22,10 @@ const initialState: Nullable<ElementStoreState> = {
   path: null,
 };
 
-export const { ElementProvider, elementStore, useElementStore } =
-  createAtomStore(
-    initialState as ElementStoreState,
-    { effect: Effect, name: 'element', suppressWarnings: true } as const
-  );
+export const { ElementProvider, elementStore, useElementStore } = createAtomStore(
+  initialState as ElementStoreState,
+  { effect: Effect, name: "element", suppressWarnings: true } as const
+);
 
 function Effect() {
   const path = usePath();
@@ -54,7 +47,7 @@ function FirstBlockEffect() {
   editor.dom.composing = composing;
 
   React.useLayoutEffect(() => {
-    store.set('composing', composing);
+    store.set("composing", composing);
   }, [composing, store]);
 
   return null;

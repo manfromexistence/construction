@@ -1,17 +1,7 @@
 {
   "name": "cropper-file-upload-demo",
-  "dependencies": [
-    "@hookform/resolvers",
-    "react-hook-form",
-    "zod"
-  ],
-  "registryDependencies": [
-    "cropper",
-    "button",
-    "dialog",
-    "label",
-    "slider"
-  ],
+  "dependencies": ["@hookform/resolvers", "react-hook-form", "zod"],
+  "registryDependencies": ["cropper", "button", "dialog", "label", "slider"],
   "files": [
     {
       "path": "examples/cropper-file-upload-demo.tsx",

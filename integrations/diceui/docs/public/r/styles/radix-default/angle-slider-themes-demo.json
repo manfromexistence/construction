@@ -1,8 +1,6 @@
 {
   "name": "angle-slider-themes-demo",
-  "registryDependencies": [
-    "angle-slider"
-  ],
+  "registryDependencies": ["angle-slider"],
   "files": [
     {
       "path": "examples/angle-slider-themes-demo.tsx",

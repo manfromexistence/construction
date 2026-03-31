@@ -67,12 +67,7 @@ const SearchInput = ({
               autoFocus
               className="shadow-sm"
               inputMode="search"
-              leadingIcon={
-                <SearchIcon
-                  className="size-4 text-neutral-400"
-                  strokeWidth={2.5}
-                />
-              }
+              leadingIcon={<SearchIcon className="size-4 text-neutral-400" strokeWidth={2.5} />}
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search icons..."
               role="search"

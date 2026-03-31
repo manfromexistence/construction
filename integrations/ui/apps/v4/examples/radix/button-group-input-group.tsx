@@ -1,24 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { AudioLinesIcon, PlusIcon } from "lucide-react"
+import { AudioLinesIcon, PlusIcon } from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
-import { ButtonGroup } from "@/styles/radix-nova/ui/button-group"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { ButtonGroup } from "@/styles/radix-nova/ui/button-group";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/radix-nova/ui/input-group"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/radix-nova/ui/tooltip"
+} from "@/styles/radix-nova/ui/input-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/radix-nova/ui/tooltip";
 
 export default function ButtonGroupInputGroup() {
-  const [voiceEnabled, setVoiceEnabled] = React.useState(false)
+  const [voiceEnabled, setVoiceEnabled] = React.useState(false);
 
   return (
     <ButtonGroup className="[--radius:9999rem]">
@@ -30,9 +26,7 @@ export default function ButtonGroupInputGroup() {
       <ButtonGroup>
         <InputGroup>
           <InputGroupInput
-            placeholder={
-              voiceEnabled ? "Record and send audio..." : "Send a message..."
-            }
+            placeholder={voiceEnabled ? "Record and send audio..." : "Send a message..."}
             disabled={voiceEnabled}
           />
           <InputGroupAddon align="inline-end">
@@ -54,5 +48,5 @@ export default function ButtonGroupInputGroup() {
         </InputGroup>
       </ButtonGroup>
     </ButtonGroup>
-  )
+  );
 }

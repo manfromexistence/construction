@@ -15,10 +15,7 @@ export const DataGridSearch = React.memo(DataGridSearchImpl, (prev, next) => {
 
   if (!next.searchOpen) return true;
 
-  if (
-    prev.searchQuery !== next.searchQuery ||
-    prev.matchIndex !== next.matchIndex
-  ) {
+  if (prev.searchQuery !== next.searchQuery || prev.matchIndex !== next.matchIndex) {
     return false;
   }
 
@@ -30,10 +27,7 @@ export const DataGridSearch = React.memo(DataGridSearchImpl, (prev, next) => {
 
     if (!prevMatch || !nextMatch) return false;
 
-    if (
-      prevMatch.rowIndex !== nextMatch.rowIndex ||
-      prevMatch.columnId !== nextMatch.columnId
-    ) {
+    if (prevMatch.rowIndex !== nextMatch.rowIndex || prevMatch.columnId !== nextMatch.columnId) {
       return false;
     }
   }
@@ -97,7 +91,7 @@ function DataGridSearchImpl({
         }
       }
     },
-    [propsRef],
+    [propsRef]
   );
 
   const debouncedSearch = useDebouncedCallback((query: string) => {
@@ -110,42 +104,37 @@ function DataGridSearchImpl({
       propsRef.current.onSearchQueryChange(value);
       debouncedSearch(value);
     },
-    [propsRef, debouncedSearch],
+    [propsRef, debouncedSearch]
   );
 
-  const onTriggerPointerDown = React.useCallback(
-    (event: React.PointerEvent<HTMLButtonElement>) => {
-      // prevent implicit pointer capture
-      const target = event.target;
-      if (!(target instanceof HTMLElement)) return;
-      if (target.hasPointerCapture(event.pointerId)) {
-        target.releasePointerCapture(event.pointerId);
-      }
+  const onTriggerPointerDown = React.useCallback((event: React.PointerEvent<HTMLButtonElement>) => {
+    // prevent implicit pointer capture
+    const target = event.target;
+    if (!(target instanceof HTMLElement)) return;
+    if (target.hasPointerCapture(event.pointerId)) {
+      target.releasePointerCapture(event.pointerId);
+    }
 
-      // Only prevent default if we're not clicking on the input
-      // This allows text selection in the input while still preventing focus stealing elsewhere
-      if (
-        event.button === 0 &&
-        event.ctrlKey === false &&
-        event.pointerType === "mouse" &&
-        !(event.target instanceof HTMLInputElement)
-      ) {
-        event.preventDefault();
-      }
-    },
-    [],
-  );
+    // Only prevent default if we're not clicking on the input
+    // This allows text selection in the input while still preventing focus stealing elsewhere
+    if (
+      event.button === 0 &&
+      event.ctrlKey === false &&
+      event.pointerType === "mouse" &&
+      !(event.target instanceof HTMLInputElement)
+    ) {
+      event.preventDefault();
+    }
+  }, []);
 
   const onPrevMatchPointerDown = React.useCallback(
-    (event: React.PointerEvent<HTMLButtonElement>) =>
-      onTriggerPointerDown(event),
-    [onTriggerPointerDown],
+    (event: React.PointerEvent<HTMLButtonElement>) => onTriggerPointerDown(event),
+    [onTriggerPointerDown]
   );
 
   const onNextMatchPointerDown = React.useCallback(
-    (event: React.PointerEvent<HTMLButtonElement>) =>
-      onTriggerPointerDown(event),
-    [onTriggerPointerDown],
+    (event: React.PointerEvent<HTMLButtonElement>) => onTriggerPointerDown(event),
+    [onTriggerPointerDown]
   );
 
   const onClose = React.useCallback(() => {

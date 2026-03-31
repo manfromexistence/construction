@@ -1,10 +1,5 @@
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/radix-nova/ui/field"
-import { RadioGroup, RadioGroupItem } from "@/styles/radix-nova/ui/radio-group"
+import { Field, FieldContent, FieldDescription, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { RadioGroup, RadioGroupItem } from "@/styles/radix-nova/ui/radio-group";
 
 export function RadioGroupDescription() {
   return (
@@ -13,9 +8,7 @@ export function RadioGroupDescription() {
         <RadioGroupItem value="default" id="desc-r1" />
         <FieldContent>
           <FieldLabel htmlFor="desc-r1">Default</FieldLabel>
-          <FieldDescription>
-            Standard spacing for most use cases.
-          </FieldDescription>
+          <FieldDescription>Standard spacing for most use cases.</FieldDescription>
         </FieldContent>
       </Field>
       <Field orientation="horizontal">
@@ -29,11 +22,9 @@ export function RadioGroupDescription() {
         <RadioGroupItem value="compact" id="desc-r3" />
         <FieldContent>
           <FieldLabel htmlFor="desc-r3">Compact</FieldLabel>
-          <FieldDescription>
-            Minimal spacing for dense layouts.
-          </FieldDescription>
+          <FieldDescription>Minimal spacing for dense layouts.</FieldDescription>
         </FieldContent>
       </Field>
     </RadioGroup>
-  )
+  );
 }

@@ -1,17 +1,17 @@
-import { serializeHtml } from 'platejs/static';
+import { serializeHtml } from "platejs/static";
 
-import { createStaticEditor } from './create-static-editor';
+import { createStaticEditor } from "./create-static-editor";
 
-describe('core static serializeHtml mark rendering', () => {
-  it('renders bold text', async () => {
+describe("core static serializeHtml mark rendering", () => {
+  it("renders bold text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { bold: true, text: 'bold' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { bold: true, text: "bold" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -25,15 +25,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders italic text', async () => {
+  it("renders italic text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { italic: true, text: 'italic' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { italic: true, text: "italic" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -47,15 +47,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders underlined text', async () => {
+  it("renders underlined text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { text: 'underlined', underline: true },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { text: "underlined", underline: true },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -69,15 +69,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders strikethrough text', async () => {
+  it("renders strikethrough text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { strikethrough: true, text: 'strikethrough' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { strikethrough: true, text: "strikethrough" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -91,15 +91,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders code text', async () => {
+  it("renders code text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { code: true, text: 'some code' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { code: true, text: "some code" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -113,15 +113,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders subscript text', async () => {
+  it("renders subscript text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { subscript: true, text: 'subscripted' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { subscript: true, text: "subscripted" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -135,15 +135,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders superscript text', async () => {
+  it("renders superscript text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { superscript: true, text: 'superscripted' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { superscript: true, text: "superscripted" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -157,15 +157,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders keyboard text', async () => {
+  it("renders keyboard text", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { kbd: true, text: 'keyboard shortcut' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { kbd: true, text: "keyboard shortcut" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 
@@ -179,15 +179,15 @@ describe('core static serializeHtml mark rendering', () => {
     );
   });
 
-  it('renders multiple marks on the same leaf', async () => {
+  it("renders multiple marks on the same leaf", async () => {
     const editor = createStaticEditor([
       {
         children: [
-          { text: 'Some paragraph of text with ' },
-          { bold: true, italic: true, text: 'bold and italic' },
-          { text: ' part.' },
+          { text: "Some paragraph of text with " },
+          { bold: true, italic: true, text: "bold and italic" },
+          { text: " part." },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
 

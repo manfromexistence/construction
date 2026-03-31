@@ -1,6 +1,6 @@
-import { useEditorRef } from 'platejs/react';
+import { useEditorRef } from "platejs/react";
 
-import { indent } from '../../index';
+import { indent } from "../../index";
 
 export const useIndentButton = () => {
   const editor = useEditorRef();

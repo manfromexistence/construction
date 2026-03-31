@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Dot Pattern Linear Gradient",
   "description": "Example showing a dot pattern with linear gradient effects.",
-  "registryDependencies": [
-    "@magicui/dot-pattern"
-  ],
+  "registryDependencies": ["@magicui/dot-pattern"],
   "files": [
     {
       "path": "registry/example/dot-pattern-linear-gradient.tsx",

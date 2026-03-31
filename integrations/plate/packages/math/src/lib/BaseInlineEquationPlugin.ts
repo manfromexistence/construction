@@ -1,6 +1,6 @@
-import { bindFirst, createSlatePlugin, KEYS } from 'platejs';
+import { bindFirst, createSlatePlugin, KEYS } from "platejs";
 
-import { insertInlineEquation } from './transforms';
+import { insertInlineEquation } from "./transforms";
 
 export const BaseInlineEquationPlugin = createSlatePlugin({
   key: KEYS.inlineEquation,

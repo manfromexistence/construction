@@ -23,9 +23,6 @@
   "meta": {
     "previewClassName": "container mx-auto min-h-svh content-center-safe"
   },
-  "categories": [
-    "marketing",
-    "testimonials"
-  ],
+  "categories": ["marketing", "testimonials"],
   "type": "registry:block"
 }

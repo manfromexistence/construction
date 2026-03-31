@@ -1,5 +1,10 @@
-'use client';
+"use client";
 
+import { TablePlugin } from "@platejs/table/react";
+import type { TTableCellElement, TTableElement, TTableRowElement } from "platejs";
+import type { PlateEditor } from "platejs/react";
+import { Plate, useEditorSelector, usePlateEditor } from "platejs/react";
+import type { ProfilerOnRenderCallback, RefObject } from "react";
 import {
   Profiler,
   useCallback,
@@ -7,27 +12,15 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-} from 'react';
-import type { ProfilerOnRenderCallback, RefObject } from 'react';
+} from "react";
 
-import type {
-  TTableCellElement,
-  TTableElement,
-  TTableRowElement,
-} from 'platejs';
-import { TablePlugin } from '@platejs/table/react';
-
-import type { PlateEditor } from 'platejs/react';
-
-import { Plate, useEditorSelector, usePlateEditor } from 'platejs/react';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { cn } from '@/lib/utils';
-import { BasicBlocksKit } from '@/registry/components/editor/plugins/basic-blocks-kit';
-import { BasicMarksKit } from '@/registry/components/editor/plugins/basic-marks-kit';
-import { TableKit } from '@/registry/components/editor/plugins/table-kit';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
+import { BasicBlocksKit } from "@/registry/components/editor/plugins/basic-blocks-kit";
+import { BasicMarksKit } from "@/registry/components/editor/plugins/basic-marks-kit";
+import { TableKit } from "@/registry/components/editor/plugins/table-kit";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 // Types
 type TableConfig = {
@@ -73,37 +66,31 @@ type SelectionSimulationConfig = {
 };
 
 // Presets for O(n²) analysis
-const PRESETS: { cells: number; cols: number; label: string; rows: number }[] =
-  [
-    { cells: 100, cols: 10, label: 'Small', rows: 10 },
-    { cells: 400, cols: 20, label: 'Medium', rows: 20 },
-    { cells: 1600, cols: 40, label: 'Large', rows: 40 },
-    { cells: 3600, cols: 60, label: 'XLarge', rows: 60 },
-  ];
+const PRESETS: { cells: number; cols: number; label: string; rows: number }[] = [
+  { cells: 100, cols: 10, label: "Small", rows: 10 },
+  { cells: 400, cols: 20, label: "Medium", rows: 20 },
+  { cells: 1600, cols: 40, label: "Large", rows: 40 },
+  { cells: 3600, cols: 60, label: "XLarge", rows: 60 },
+];
 
 // Table generator
 function generateTableValue(rows: number, cols: number): TTableElement {
-  const children: TTableRowElement[] = Array.from(
-    { length: rows },
-    (_, rowIndex) => ({
-      children: Array.from(
-        { length: cols },
-        (_, colIndex): TTableCellElement => ({
-          children: [
-            { children: [{ text: `R${rowIndex}C${colIndex}` }], type: 'p' },
-          ],
-          id: `cell-${rowIndex}-${colIndex}`,
-          type: 'td',
-        })
-      ),
-      type: 'tr',
-    })
-  );
+  const children: TTableRowElement[] = Array.from({ length: rows }, (_, rowIndex) => ({
+    children: Array.from(
+      { length: cols },
+      (_, colIndex): TTableCellElement => ({
+        children: [{ children: [{ text: `R${rowIndex}C${colIndex}` }], type: "p" }],
+        id: `cell-${rowIndex}-${colIndex}`,
+        type: "td",
+      })
+    ),
+    type: "tr",
+  }));
 
   return {
     children,
     colSizes: Array.from({ length: cols }, () => 100),
-    type: 'table',
+    type: "table",
   };
 }
 
@@ -183,18 +170,13 @@ function calculateStats(samples: number[]): BenchmarkResult {
   const trimEnd = Math.ceil(n * 0.9);
   const trimmed = sorted.slice(trimStart, trimEnd);
 
-  const mean =
-    trimmed.length > 0
-      ? trimmed.reduce((a, b) => a + b, 0) / trimmed.length
-      : 0;
+  const mean = trimmed.length > 0 ? trimmed.reduce((a, b) => a + b, 0) / trimmed.length : 0;
   const median = sorted[Math.floor(n / 2)] ?? 0;
   const p95 = sorted[Math.floor(n * 0.95)] ?? sorted[n - 1] ?? 0;
   const p99 = sorted[Math.floor(n * 0.99)] ?? sorted[n - 1] ?? 0;
 
   const variance =
-    trimmed.length > 0
-      ? trimmed.reduce((sum, x) => sum + (x - mean) ** 2, 0) / trimmed.length
-      : 0;
+    trimmed.length > 0 ? trimmed.reduce((sum, x) => sum + (x - mean) ** 2, 0) / trimmed.length : 0;
   const stdDev = Math.sqrt(variance);
 
   return {
@@ -228,9 +210,7 @@ function MetricsDisplay({
       <div className="space-y-2 font-mono text-sm">
         <div className="flex justify-between">
           <span>Initial render:</span>
-          <span className="text-primary">
-            {metrics.initialRender?.toFixed(2) ?? '—'} ms
-          </span>
+          <span className="text-primary">{metrics.initialRender?.toFixed(2) ?? "—"} ms</span>
         </div>
         <div className="flex justify-between">
           <span>Re-render count:</span>
@@ -238,9 +218,7 @@ function MetricsDisplay({
         </div>
         <div className="flex justify-between">
           <span>Last render:</span>
-          <span className="text-primary">
-            {metrics.lastRenderDuration?.toFixed(2) ?? '—'} ms
-          </span>
+          <span className="text-primary">{metrics.lastRenderDuration?.toFixed(2) ?? "—"} ms</span>
         </div>
         {metrics.renderDurations.length > 0 && (
           <>
@@ -265,40 +243,29 @@ function MetricsDisplay({
             <div className="font-semibold">Benchmark Results:</div>
             <div className="flex justify-between">
               <span>Mean:</span>
-              <span className="text-green-600">
-                {benchmarkResult.mean.toFixed(2)} ms
-              </span>
+              <span className="text-green-600">{benchmarkResult.mean.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>Median:</span>
-              <span className="text-green-600">
-                {benchmarkResult.median.toFixed(2)} ms
-              </span>
+              <span className="text-green-600">{benchmarkResult.median.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>P95:</span>
-              <span className="text-green-600">
-                {benchmarkResult.p95.toFixed(2)} ms
-              </span>
+              <span className="text-green-600">{benchmarkResult.p95.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>P99:</span>
-              <span className="text-green-600">
-                {benchmarkResult.p99.toFixed(2)} ms
-              </span>
+              <span className="text-green-600">{benchmarkResult.p99.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>Min/Max:</span>
               <span className="text-green-600">
-                {benchmarkResult.min.toFixed(2)} /{' '}
-                {benchmarkResult.max.toFixed(2)} ms
+                {benchmarkResult.min.toFixed(2)} / {benchmarkResult.max.toFixed(2)} ms
               </span>
             </div>
             <div className="flex justify-between">
               <span>Std Dev:</span>
-              <span className="text-green-600">
-                {benchmarkResult.stdDev.toFixed(2)} ms
-              </span>
+              <span className="text-green-600">{benchmarkResult.stdDev.toFixed(2)} ms</span>
             </div>
           </>
         )}
@@ -308,27 +275,20 @@ function MetricsDisplay({
             <div className="font-semibold">Input Latency:</div>
             <div className="flex justify-between">
               <span>Mean:</span>
-              <span className="text-blue-600">
-                {inputLatencyResult.mean.toFixed(2)} ms
-              </span>
+              <span className="text-blue-600">{inputLatencyResult.mean.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>Median:</span>
-              <span className="text-blue-600">
-                {inputLatencyResult.median.toFixed(2)} ms
-              </span>
+              <span className="text-blue-600">{inputLatencyResult.median.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>P95:</span>
-              <span className="text-blue-600">
-                {inputLatencyResult.p95.toFixed(2)} ms
-              </span>
+              <span className="text-blue-600">{inputLatencyResult.p95.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>Min/Max:</span>
               <span className="text-blue-600">
-                {inputLatencyResult.min.toFixed(2)} /{' '}
-                {inputLatencyResult.max.toFixed(2)} ms
+                {inputLatencyResult.min.toFixed(2)} / {inputLatencyResult.max.toFixed(2)} ms
               </span>
             </div>
           </>
@@ -339,9 +299,7 @@ function MetricsDisplay({
             <div className="font-semibold">Table Selection Latency:</div>
             <div className="flex justify-between">
               <span>Selected cells:</span>
-              <span className="text-amber-600">
-                {selectionLatencyResult.selectedCells}
-              </span>
+              <span className="text-amber-600">{selectionLatencyResult.selectedCells}</span>
             </div>
             <div className="flex justify-between">
               <span>Injected delay:</span>
@@ -351,27 +309,20 @@ function MetricsDisplay({
             </div>
             <div className="flex justify-between">
               <span>Mean:</span>
-              <span className="text-amber-600">
-                {selectionLatencyResult.mean.toFixed(2)} ms
-              </span>
+              <span className="text-amber-600">{selectionLatencyResult.mean.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>Median:</span>
-              <span className="text-amber-600">
-                {selectionLatencyResult.median.toFixed(2)} ms
-              </span>
+              <span className="text-amber-600">{selectionLatencyResult.median.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>P95:</span>
-              <span className="text-amber-600">
-                {selectionLatencyResult.p95.toFixed(2)} ms
-              </span>
+              <span className="text-amber-600">{selectionLatencyResult.p95.toFixed(2)} ms</span>
             </div>
             <div className="flex justify-between">
               <span>Min/Max:</span>
               <span className="text-amber-600">
-                {selectionLatencyResult.min.toFixed(2)} /{' '}
-                {selectionLatencyResult.max.toFixed(2)} ms
+                {selectionLatencyResult.min.toFixed(2)} / {selectionLatencyResult.max.toFixed(2)} ms
               </span>
             </div>
           </>
@@ -391,20 +342,17 @@ export default function TablePerfPage() {
     renderCount: 0,
     renderDurations: [],
   });
-  const [benchmarkResult, setBenchmarkResult] =
-    useState<BenchmarkResult | null>(null);
+  const [benchmarkResult, setBenchmarkResult] = useState<BenchmarkResult | null>(null);
   const [isBenchmarking, setIsBenchmarking] = useState(false);
-  const [inputLatencyResult, setInputLatencyResult] =
-    useState<LatencyResult | null>(null);
+  const [inputLatencyResult, setInputLatencyResult] = useState<LatencyResult | null>(null);
   const [isMeasuringLatency, setIsMeasuringLatency] = useState(false);
   const [selectionLatencyResult, setSelectionLatencyResult] =
     useState<SelectionLatencyResult | null>(null);
-  const [selectionSimulation, setSelectionSimulation] =
-    useState<SelectionSimulationConfig>({
-      cols: 3,
-      delayMs: 0,
-      rows: 3,
-    });
+  const [selectionSimulation, setSelectionSimulation] = useState<SelectionSimulationConfig>({
+    cols: 3,
+    delayMs: 0,
+    rows: 3,
+  });
   const [isMeasuringSelection, setIsMeasuringSelection] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
   const plateEditorRef = useRef<PlateEditor | null>(null);
@@ -442,7 +390,7 @@ export default function TablePerfPage() {
       profilerDataRef.current.renderCount += 1;
       profilerDataRef.current.renderDurations.push(actualDuration);
 
-      if (phase === 'mount') {
+      if (phase === "mount") {
         profilerDataRef.current.initialRender = actualDuration;
       }
 
@@ -488,7 +436,7 @@ export default function TablePerfPage() {
   }, []);
 
   const focusEditor = useCallback(async () => {
-    const editorElement = editorRef.current?.querySelector('[contenteditable]');
+    const editorElement = editorRef.current?.querySelector("[contenteditable]");
 
     if (editorElement) {
       (editorElement as HTMLElement).focus();
@@ -530,11 +478,9 @@ export default function TablePerfPage() {
     const COOLDOWN_MS = 100;
     const renderTimes: number[] = [];
 
-    console.log('[Benchmark] Starting benchmark...');
+    console.log("[Benchmark] Starting benchmark...");
     console.log(`[Benchmark] Config: ${config.rows}x${config.cols} cells`);
-    console.log(
-      `[Benchmark] ${WARMUP_RUNS} warmup runs, ${MEASURED_RUNS} measured runs`
-    );
+    console.log(`[Benchmark] ${WARMUP_RUNS} warmup runs, ${MEASURED_RUNS} measured runs`);
 
     for (let i = 0; i < WARMUP_RUNS + MEASURED_RUNS; i++) {
       const isWarmup = i < WARMUP_RUNS;
@@ -575,8 +521,8 @@ export default function TablePerfPage() {
     setBenchmarkResult(result);
     setIsBenchmarking(false);
 
-    console.log('[Benchmark] Complete!');
-    console.log('[Benchmark] Results:', result);
+    console.log("[Benchmark] Complete!");
+    console.log("[Benchmark] Results:", result);
   }, [config.cols, config.rows]);
 
   const measureInputLatency = useCallback(async () => {
@@ -587,11 +533,11 @@ export default function TablePerfPage() {
     const NUM_SAMPLES = 50;
     const WARMUP_SAMPLES = 10;
 
-    console.log('[Input Latency] Starting measurement...');
+    console.log("[Input Latency] Starting measurement...");
 
     const editor = plateEditorRef.current;
     if (!editor) {
-      console.error('[Input Latency] Could not find Plate editor');
+      console.error("[Input Latency] Could not find Plate editor");
       setIsMeasuringLatency(false);
       return;
     }
@@ -602,7 +548,7 @@ export default function TablePerfPage() {
     try {
       collapseSelectionToFirstCell(editor);
     } catch (e) {
-      console.error('[Input Latency] Could not select first cell:', e);
+      console.error("[Input Latency] Could not select first cell:", e);
       setIsMeasuringLatency(false);
       return;
     }
@@ -642,14 +588,14 @@ export default function TablePerfPage() {
     setInputLatencyResult(result);
     setIsMeasuringLatency(false);
 
-    console.log('[Input Latency] Complete!');
-    console.log('[Input Latency] Results:', result);
+    console.log("[Input Latency] Complete!");
+    console.log("[Input Latency] Results:", result);
   }, [collapseSelectionToFirstCell, focusEditor]);
 
   const simulateTableSelection = useCallback(async () => {
     const editor = plateEditorRef.current;
     if (!editor) {
-      console.error('[Selection] Could not find Plate editor');
+      console.error("[Selection] Could not find Plate editor");
       return;
     }
 
@@ -681,7 +627,7 @@ export default function TablePerfPage() {
 
     const editor = plateEditorRef.current;
     if (!editor) {
-      console.error('[Selection] Could not find Plate editor');
+      console.error("[Selection] Could not find Plate editor");
       setIsMeasuringSelection(false);
       return;
     }
@@ -690,7 +636,7 @@ export default function TablePerfPage() {
     const NUM_SAMPLES = 30;
     const WARMUP_SAMPLES = 5;
 
-    console.log('[Selection] Starting latency measurement...');
+    console.log("[Selection] Starting latency measurement...");
     console.log(
       `[Selection] Range: ${selectedRows}x${selectedCols}, injected delay: ${selectionSimulation.delayMs}ms`
     );
@@ -732,8 +678,8 @@ export default function TablePerfPage() {
     setSelectionLatencyResult(result);
     setIsMeasuringSelection(false);
 
-    console.log('[Selection] Complete!');
-    console.log('[Selection] Results:', result);
+    console.log("[Selection] Complete!");
+    console.log("[Selection] Results:", result);
   }, [
     collapseSelectionToFirstCell,
     focusEditor,
@@ -764,10 +710,7 @@ export default function TablePerfPage() {
               type="number"
               value={config.rows}
               onChange={(e) => {
-                const nextRows = Math.max(
-                  1,
-                  Math.min(100, Number(e.target.value) || 1)
-                );
+                const nextRows = Math.max(1, Math.min(100, Number(e.target.value) || 1));
 
                 setConfig((current) => ({ ...current, rows: nextRows }));
                 setSelectionSimulation((current) => ({
@@ -790,10 +733,7 @@ export default function TablePerfPage() {
               type="number"
               value={config.cols}
               onChange={(e) => {
-                const nextCols = Math.max(
-                  1,
-                  Math.min(100, Number(e.target.value) || 1)
-                );
+                const nextCols = Math.max(1, Math.min(100, Number(e.target.value) || 1));
 
                 setConfig((current) => ({ ...current, cols: nextCols }));
                 setSelectionSimulation((current) => ({
@@ -803,9 +743,7 @@ export default function TablePerfPage() {
               }}
             />
           </div>
-          <span className="text-muted-foreground">
-            = {config.rows * config.cols} cells
-          </span>
+          <span className="text-muted-foreground">= {config.rows * config.cols} cells</span>
         </div>
 
         <div className="mb-4 flex gap-2">
@@ -813,9 +751,7 @@ export default function TablePerfPage() {
             <Button
               key={preset.label}
               className={cn(
-                config.rows === preset.rows &&
-                  config.cols === preset.cols &&
-                  'ring-2 ring-primary'
+                config.rows === preset.rows && config.cols === preset.cols && "ring-2 ring-primary"
               )}
               size="sm"
               variant="outline"
@@ -844,10 +780,7 @@ export default function TablePerfPage() {
                 onChange={(e) =>
                   setSelectionSimulation((current) => ({
                     ...current,
-                    rows: Math.max(
-                      1,
-                      Math.min(config.rows, Number(e.target.value) || 1)
-                    ),
+                    rows: Math.max(1, Math.min(config.rows, Number(e.target.value) || 1)),
                   }))
                 }
               />
@@ -867,10 +800,7 @@ export default function TablePerfPage() {
                 onChange={(e) =>
                   setSelectionSimulation((current) => ({
                     ...current,
-                    cols: Math.max(
-                      1,
-                      Math.min(config.cols, Number(e.target.value) || 1)
-                    ),
+                    cols: Math.max(1, Math.min(config.cols, Number(e.target.value) || 1)),
                   }))
                 }
               />
@@ -890,10 +820,7 @@ export default function TablePerfPage() {
                 onChange={(e) =>
                   setSelectionSimulation((current) => ({
                     ...current,
-                    delayMs: Math.max(
-                      0,
-                      Math.min(2000, Number(e.target.value) || 0)
-                    ),
+                    delayMs: Math.max(0, Math.min(2000, Number(e.target.value) || 0)),
                   }))
                 }
               />
@@ -905,19 +832,15 @@ export default function TablePerfPage() {
           </div>
 
           <p className="text-muted-foreground text-sm">
-            Delay is injected only on this page, right before paint, when the
-            table&apos;s multi-cell selection changes.
+            Delay is injected only on this page, right before paint, when the table&apos;s
+            multi-cell selection changes.
           </p>
         </div>
 
         <div className="flex flex-wrap gap-2">
           <Button onClick={handleGenerate}>Generate Table</Button>
-          <Button
-            disabled={isBenchmarking}
-            variant="secondary"
-            onClick={runBenchmark}
-          >
-            {isBenchmarking ? 'Running...' : 'Run Benchmark (20 iter)'}
+          <Button disabled={isBenchmarking} variant="secondary" onClick={runBenchmark}>
+            {isBenchmarking ? "Running..." : "Run Benchmark (20 iter)"}
           </Button>
           <Button
             variant="outline"
@@ -928,14 +851,8 @@ export default function TablePerfPage() {
           >
             Refresh Metrics
           </Button>
-          <Button
-            disabled={isMeasuringLatency}
-            variant="secondary"
-            onClick={measureInputLatency}
-          >
-            {isMeasuringLatency
-              ? 'Measuring...'
-              : 'Test Input Latency (50 samples)'}
+          <Button disabled={isMeasuringLatency} variant="secondary" onClick={measureInputLatency}>
+            {isMeasuringLatency ? "Measuring..." : "Test Input Latency (50 samples)"}
           </Button>
           <Button
             disabled={isMeasuringSelection}
@@ -949,9 +866,7 @@ export default function TablePerfPage() {
             variant="outline"
             onClick={measureTableSelectionLatency}
           >
-            {isMeasuringSelection
-              ? 'Measuring...'
-              : 'Test Selection Latency (30 samples)'}
+            {isMeasuringSelection ? "Measuring..." : "Test Selection Latency (30 samples)"}
           </Button>
         </div>
       </div>
@@ -967,11 +882,7 @@ export default function TablePerfPage() {
 
         {/* Editor */}
         <div ref={editorRef} className="rounded-lg border">
-          <Profiler
-            key={editorKey}
-            id="TableEditor"
-            onRender={onRenderCallback}
-          >
+          <Profiler key={editorKey} id="TableEditor" onRender={onRenderCallback}>
             <TablePerfEditor
               editorRef={plateEditorRef}
               selectionSimulationDelayMs={selectionSimulation.delayMs}

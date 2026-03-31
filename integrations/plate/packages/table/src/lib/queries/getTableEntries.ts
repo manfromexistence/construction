@@ -1,6 +1,6 @@
-import { type SlateEditor, type TLocation, KEYS } from 'platejs';
+import { KEYS, type SlateEditor, type TLocation } from "platejs";
 
-import { getCellTypes } from '../utils';
+import { getCellTypes } from "../utils";
 
 /**
  * If at (default = selection) is in table>tr>td|th, return table, row, and cell

@@ -1,11 +1,6 @@
-import {
-  CodeXmlIcon,
-  DraftingCompassIcon,
-  GraduationCapIcon,
-  LightbulbIcon,
-} from "lucide-react"
+import { CodeXmlIcon, DraftingCompassIcon, GraduationCapIcon, LightbulbIcon } from "lucide-react";
 
-import type { Experience } from "../types/experiences"
+import type { Experience } from "../types/experiences";
 
 export const EXPERIENCES: Experience[] = [
   {
@@ -24,13 +19,7 @@ export const EXPERIENCES: Experience[] = [
         icon: <CodeXmlIcon />,
         description:
           "- Work on the registry and React component library.\n- Design and build Pro application components and blocks, from Figma to production-ready React.",
-        skills: [
-          "TypeScript",
-          "Next.js",
-          "Tailwind CSS",
-          "shadcn/registry",
-          "Figma",
-        ],
+        skills: ["TypeScript", "Next.js", "Tailwind CSS", "shadcn/registry", "Figma"],
         isExpanded: true,
       },
     ],
@@ -164,15 +153,7 @@ In-house Project: [ZaDark](https://zadark.com)
 - Built a complex rich-text editor based on ProseMirror and Slate for customizable content creation.
 - Integrated APIs with the Backend Team to enhance functionality.`,
         icon: <CodeXmlIcon />,
-        skills: [
-          "React",
-          "Redux",
-          "Storybook",
-          "Lerna",
-          "Agile",
-          "Teamwork",
-          "Research",
-        ],
+        skills: ["React", "Redux", "Storybook", "Lerna", "Agile", "Teamwork", "Research"],
       },
       {
         id: "2",
@@ -319,15 +300,7 @@ In-house Project: [ZaDark](https://zadark.com)
 - Developed a feature using Node.js and Pandoc to recognize multiple-choice questions from .docx files and upload them to an [online quiz platform](https://youtu.be/QjR99wdmTyo) I created.
 - Developed websites based on Laravel framework.
 - Built websites with PHP and MySQL, following the MVC architecture.`,
-        skills: [
-          "Algorithms",
-          "C++",
-          "PHP",
-          "MySQL",
-          "Laravel",
-          "Node.js",
-          "Pandoc",
-        ],
+        skills: ["Algorithms", "C++", "PHP", "MySQL", "Laravel", "Node.js", "Pandoc"],
       },
       {
         id: "1",
@@ -348,4 +321,4 @@ In-house Project: [ZaDark](https://zadark.com)
       },
     ],
   },
-]
+];

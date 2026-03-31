@@ -2,9 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "preview-02",
   "title": "Preview 02",
-  "dependencies": [
-    "react-qr-code"
-  ],
+  "dependencies": ["react-qr-code"],
   "registryDependencies": [
     "accordion",
     "badge",

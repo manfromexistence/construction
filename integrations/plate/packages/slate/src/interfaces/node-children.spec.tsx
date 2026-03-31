@@ -1,15 +1,15 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { createEditor } from '../create-editor';
-import { NodeApi } from './node';
+import { createEditor } from "../create-editor";
+import { NodeApi } from "./node";
 
 jsx;
 
-describe('NodeApi.children', () => {
-  describe('when using from option', () => {
-    it('get children starting from index', () => {
+describe("NodeApi.children", () => {
+  describe("when using from option", () => {
+    it("get children starting from index", () => {
       const editor = createEditor(
         (
           <editor>
@@ -23,18 +23,12 @@ describe('NodeApi.children', () => {
         ) as any
       );
 
-      const children = Array.from(
-        NodeApi.children(editor, [0], { from: 1 })
-      ).map(([node]) => node);
+      const children = Array.from(NodeApi.children(editor, [0], { from: 1 })).map(([node]) => node);
 
-      expect(children).toMatchObject([
-        { text: 'two' },
-        { text: 'three' },
-        { text: 'four' },
-      ]);
+      expect(children).toMatchObject([{ text: "two" }, { text: "three" }, { text: "four" }]);
     });
 
-    it('get children in reverse from index', () => {
+    it("get children in reverse from index", () => {
       const editor = createEditor(
         (
           <editor>
@@ -48,43 +42,16 @@ describe('NodeApi.children', () => {
         ) as any
       );
 
-      const children = Array.from(
-        NodeApi.children(editor, [0], { from: 2, reverse: true })
-      ).map(([node]) => node);
-
-      expect(children).toMatchObject([
-        { text: 'three' },
-        { text: 'two' },
-        { text: 'one' },
-      ]);
-    });
-  });
-
-  describe('when using to option', () => {
-    it('get children up to index', () => {
-      const editor = createEditor(
-        (
-          <editor>
-            <element>
-              <text>one</text>
-              <text>two</text>
-              <text>three</text>
-              <text>four</text>
-            </element>
-          </editor>
-        ) as any
-      );
-
-      const children = Array.from(NodeApi.children(editor, [0], { to: 2 })).map(
+      const children = Array.from(NodeApi.children(editor, [0], { from: 2, reverse: true })).map(
         ([node]) => node
       );
 
-      expect(children).toMatchObject([{ text: 'one' }, { text: 'two' }]);
+      expect(children).toMatchObject([{ text: "three" }, { text: "two" }, { text: "one" }]);
     });
   });
 
-  describe('when using both from and to options', () => {
-    it('get children within range', () => {
+  describe("when using to option", () => {
+    it("get children up to index", () => {
       const editor = createEditor(
         (
           <editor>
@@ -98,17 +65,38 @@ describe('NodeApi.children', () => {
         ) as any
       );
 
-      const children = Array.from(
-        NodeApi.children(editor, [0], { from: 1, to: 3 })
-      ).map(([node]) => node);
+      const children = Array.from(NodeApi.children(editor, [0], { to: 2 })).map(([node]) => node);
 
-      expect(children).toMatchObject([{ text: 'two' }, { text: 'three' }]);
+      expect(children).toMatchObject([{ text: "one" }, { text: "two" }]);
     });
   });
 
-  describe('when getting next siblings', () => {
-    describe('when no siblings', () => {
-      it('returns empty array', () => {
+  describe("when using both from and to options", () => {
+    it("get children within range", () => {
+      const editor = createEditor(
+        (
+          <editor>
+            <element>
+              <text>one</text>
+              <text>two</text>
+              <text>three</text>
+              <text>four</text>
+            </element>
+          </editor>
+        ) as any
+      );
+
+      const children = Array.from(NodeApi.children(editor, [0], { from: 1, to: 3 })).map(
+        ([node]) => node
+      );
+
+      expect(children).toMatchObject([{ text: "two" }, { text: "three" }]);
+    });
+  });
+
+  describe("when getting next siblings", () => {
+    describe("when no siblings", () => {
+      it("returns empty array", () => {
         const input = createEditor(
           (
             <editor>

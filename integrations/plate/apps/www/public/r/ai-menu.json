@@ -4,13 +4,7 @@
   "type": "registry:ui",
   "title": "AI Menu",
   "description": "A menu for AI-powered content generation and insertion.",
-  "dependencies": [
-    "@platejs/ai",
-    "@platejs/selection",
-    "ai@6",
-    "cmdk",
-    "@faker-js/faker"
-  ],
+  "dependencies": ["@platejs/ai", "@platejs/selection", "ai@6", "cmdk", "@faker-js/faker"],
   "registryDependencies": [
     "@shadcn/command",
     "@shadcn/popover",
@@ -41,10 +35,7 @@
         "title": "AI Menu"
       }
     ],
-    "examples": [
-      "ai-demo",
-      "ai-pro"
-    ],
+    "examples": ["ai-demo", "ai-pro"],
     "label": "New"
   }
 }

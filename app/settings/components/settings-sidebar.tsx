@@ -1,12 +1,19 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
-import { useSubscription } from "@/hooks/use-subscription";
-import { cn } from "@/lib/utils";
-import { ChartNoAxesCombined, CreditCard, ExternalLink, LucideIcon, Palette, UserCog } from "lucide-react";
+import {
+  ChartNoAxesCombined,
+  CreditCard,
+  ExternalLink,
+  LucideIcon,
+  Palette,
+  UserCog,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
+import { Separator } from "@/components/ui/separator";
+import { useSubscription } from "@/hooks/use-subscription";
+import { cn } from "@/lib/utils";
 
 type NavItem =
   | {

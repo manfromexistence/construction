@@ -3,11 +3,10 @@
  * contributors. See /packages/diff/LICENSE for more information.
  */
 
-import type { Descendant } from 'platejs';
+import isEqual from "lodash/isEqual.js";
+import type { Descendant } from "platejs";
 
-import isEqual from 'lodash/isEqual.js';
-
-import { unusedCharGenerator } from './unused-char-generator';
+import { unusedCharGenerator } from "./unused-char-generator";
 
 export class StringCharMapping {
   private readonly _charGenerator = unusedCharGenerator();
@@ -22,7 +21,7 @@ export class StringCharMapping {
   }
 
   nodesToString(nodes: Descendant[]): string {
-    return nodes.map(this.nodeToChar.bind(this)).join('');
+    return nodes.map(this.nodeToChar.bind(this)).join("");
   }
 
   nodeToChar(node: Descendant): string {
@@ -40,6 +39,6 @@ export class StringCharMapping {
   }
 
   stringToNodes(s: string): Descendant[] {
-    return s.split('').map(this.charToNode.bind(this));
+    return s.split("").map(this.charToNode.bind(this));
   }
 }

@@ -1,17 +1,14 @@
-import { type PluginConfig, createTSlatePlugin, KEYS } from 'platejs';
+import { createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
-export type TextIndentConfig = PluginConfig<
-  'textIndent',
-  { offset: number; unit: string }
->;
+export type TextIndentConfig = PluginConfig<"textIndent", { offset: number; unit: string }>;
 
 export const BaseTextIndentPlugin = createTSlatePlugin<TextIndentConfig>({
   key: KEYS.textIndent,
   inject: {
     isBlock: true,
     nodeProps: {
-      nodeKey: 'textIndent',
-      styleKey: 'textIndent',
+      nodeKey: "textIndent",
+      styleKey: "textIndent",
       transformNodeValue: ({ getOptions, nodeValue }) => {
         const { offset, unit } = getOptions();
 
@@ -22,6 +19,6 @@ export const BaseTextIndentPlugin = createTSlatePlugin<TextIndentConfig>({
   },
   options: {
     offset: 24,
-    unit: 'px',
+    unit: "px",
   },
 });

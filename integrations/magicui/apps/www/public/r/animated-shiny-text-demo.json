@@ -4,12 +4,8 @@
   "type": "registry:example",
   "title": "Animated Shiny Text Demo",
   "description": "Example showing text with a shimmering light effect.",
-  "dependencies": [
-    "@radix-ui/react-icons"
-  ],
-  "registryDependencies": [
-    "@magicui/animated-shiny-text"
-  ],
+  "dependencies": ["@radix-ui/react-icons"],
+  "registryDependencies": ["@magicui/animated-shiny-text"],
   "files": [
     {
       "path": "registry/example/animated-shiny-text-demo.tsx",

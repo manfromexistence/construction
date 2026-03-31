@@ -1,39 +1,32 @@
-import { spawn } from 'node:child_process';
-import { promises as fs } from 'node:fs';
-import path from 'node:path';
-import { rimraf } from 'rimraf';
-import {
-  type RegistryItem,
-  registryItemSchema,
-  type Registry,
-} from 'shadcn/registry';
-import { z } from 'zod';
+import { spawn } from "node:child_process";
+import { promises as fs } from "node:fs";
+import path from "node:path";
+import { rimraf } from "rimraf";
+import { type Registry, type RegistryItem, registryItemSchema } from "shadcn/registry";
+import { z } from "zod";
+import { registryInit } from "@/registry/registry";
+import { registryBlocks } from "@/registry/registry-blocks";
+import { registryComponents } from "@/registry/registry-components";
+import { registryExamples } from "@/registry/registry-examples";
+import { registryHooks } from "@/registry/registry-hooks";
+import { registryLib } from "@/registry/registry-lib";
+import { registryStyles } from "@/registry/registry-styles";
+import { registryUI } from "@/registry/registry-ui";
+import { buildDocsRegistry } from "./build-docs-registry.mts";
 
-import { registryBlocks } from '@/registry/registry-blocks';
-import { registryLib } from '@/registry/registry-lib';
-import { registryUI } from '@/registry/registry-ui';
-import { registryExamples } from '@/registry/registry-examples';
-import { registryHooks } from '@/registry/registry-hooks';
-import { registryComponents } from '@/registry/registry-components';
-import { registryInit } from '@/registry/registry';
-import { registryStyles } from '@/registry/registry-styles';
-import { buildDocsRegistry } from './build-docs-registry.mts';
+const HOMEPAGE = "https://platejs.org";
+const NAME = "plate";
+const BASE_URL = "src/";
 
-const HOMEPAGE = 'https://platejs.org';
-const NAME = 'plate';
-const BASE_URL = 'src/';
-
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === "development";
 const MERGE_DOCS = true;
-const REGISTRY_URL = isDev ? 'http://localhost:3000/rd' : `${HOMEPAGE}/r`;
-const TARGET = isDev ? 'public/rd/registry.json' : 'public/r/registry.json';
+const REGISTRY_URL = isDev ? "http://localhost:3000/rd" : `${HOMEPAGE}/r`;
+const TARGET = isDev ? "public/rd/registry.json" : "public/r/registry.json";
 const REGISTRY_ITEM_SUFFIX =
-  REGISTRY_URL.startsWith('http://') || REGISTRY_URL.startsWith('https://')
-    ? '.json'
-    : '';
+  REGISTRY_URL.startsWith("http://") || REGISTRY_URL.startsWith("https://") ? ".json" : "";
 
 function resolveRegistryDependency(dep: string) {
-  if (dep.startsWith('@')) {
+  if (dep.startsWith("@")) {
     return dep;
   }
 
@@ -50,10 +43,7 @@ const registry: Registry = {
       ...registryComponents,
       ...registryBlocks.map((block) => ({
         ...block,
-        registryDependencies: [
-          'plate-ui',
-          ...(block.registryDependencies ?? []),
-        ],
+        registryDependencies: ["plate-ui", ...(block.registryDependencies ?? [])],
       })),
       ...registryLib,
       ...registryStyles,
@@ -61,9 +51,7 @@ const registry: Registry = {
       ...registryExamples,
     ].map((item) => ({
       ...item,
-      registryDependencies: item.registryDependencies?.map(
-        resolveRegistryDependency
-      ),
+      registryDependencies: item.registryDependencies?.map(resolveRegistryDependency),
     }))
   ),
 } satisfies Registry;
@@ -82,25 +70,23 @@ export const Index: Record<string, any> = {`;
     }
 
     const componentPath =
-      !item.meta?.rsc && item.files?.[0]?.path
-        ? `@/registry/${item.files[0].path}`
-        : '';
+      !item.meta?.rsc && item.files?.[0]?.path ? `@/registry/${item.files[0].path}` : "";
 
     index += `
   "${item.name}": {
     name: "${item.name}",
-    description: "${item.description ?? ''}",
+    description: "${item.description ?? ""}",
     type: "${item.type}",
     registryDependencies: ${JSON.stringify(item.registryDependencies)},
     files: [${item.files?.map((file) => {
-      const filePath = `${BASE_URL}registry/${typeof file === 'string' ? file : file.path}`;
+      const filePath = `${BASE_URL}registry/${typeof file === "string" ? file : file.path}`;
       const resolvedFilePath = path.resolve(filePath);
-      return typeof file === 'string'
+      return typeof file === "string"
         ? `"${resolvedFilePath}"`
         : `{
       path: "${filePath}",
       type: "${file.type}",
-      target: "${file.target ?? ''}"
+      target: "${file.target ?? ""}"
     }`;
     })}],
     component: ${
@@ -110,7 +96,7 @@ export const Index: Record<string, any> = {`;
       const exportName = Object.keys(mod).find(key => typeof mod[key] === 'function' || typeof mod[key] === 'object') || item.name
       return { default: mod.default || mod[exportName] }
     })`
-        : 'null'
+        : "null"
     },
     meta: ${JSON.stringify(item.meta)},
   },`;
@@ -121,10 +107,7 @@ export const Index: Record<string, any> = {`;
 
   // Write style index.
   rimraf.sync(path.join(process.cwd(), `${BASE_URL}__registry__/index.tsx`));
-  await fs.writeFile(
-    path.join(process.cwd(), `${BASE_URL}__registry__/index.tsx`),
-    index
-  );
+  await fs.writeFile(path.join(process.cwd(), `${BASE_URL}__registry__/index.tsx`), index);
 }
 
 function sanitizeRegistry(registry: Registry): Registry {
@@ -163,29 +146,24 @@ async function buildRegistryJsonFile(items: RegistryItem[] = []) {
   const publicTargetDir = path.dirname(path.join(process.cwd(), TARGET));
 
   await fs.mkdir(publicTargetDir, { recursive: true });
-  await fs.writeFile(
-    path.join(process.cwd(), TARGET),
-    JSON.stringify(registryJson, null, 2)
-  );
+  await fs.writeFile(path.join(process.cwd(), TARGET), JSON.stringify(registryJson, null, 2));
 }
 
 async function buildRegistry() {
   return new Promise<void>((resolve, reject) => {
-    const script = `shadcn:${isDev ? 'dev' : 'build'}`;
-    const child = spawn('pnpm', ['run', script], { stdio: 'inherit' });
+    const script = `shadcn:${isDev ? "dev" : "build"}`;
+    const child = spawn("pnpm", ["run", script], { stdio: "inherit" });
 
     console.info(`pnpm run ${script}`);
 
-    child.once('error', reject);
-    child.once('exit', (code, signal) => {
+    child.once("error", reject);
+    child.once("exit", (code, signal) => {
       if (code === 0) {
         resolve(undefined);
       } else {
         reject(
           new Error(
-            signal
-              ? `Process exited with signal ${signal}`
-              : `Process exited with code ${code}`
+            signal ? `Process exited with signal ${signal}` : `Process exited with code ${code}`
           )
         );
       }
@@ -195,25 +173,25 @@ async function buildRegistry() {
 
 try {
   if (!isDev) {
-    console.info('🗂️ Building registry/__index__.tsx...');
+    console.info("🗂️ Building registry/__index__.tsx...");
     await buildRegistryIndex();
 
     // Clean up the entire public/r directory first
-    rimraf.sync(path.join(process.cwd(), 'public/r'));
+    rimraf.sync(path.join(process.cwd(), "public/r"));
   }
 
-  console.info('📖 Building registry-docs.json...');
+  console.info("📖 Building registry-docs.json...");
   const docsItems = await buildDocsRegistry();
 
-  console.info('💅 Building registry.json...');
+  console.info("💅 Building registry.json...");
   if (MERGE_DOCS) {
-    console.info('🔄 Merging docs into registry.json');
+    console.info("🔄 Merging docs into registry.json");
     await buildRegistryJsonFile(docsItems);
   } else {
     await buildRegistryJsonFile();
   }
 
-  console.info(`🏗️ Building ${TARGET.replace('/registry.json', '')}...`);
+  console.info(`🏗️ Building ${TARGET.replace("/registry.json", "")}...`);
   await buildRegistry();
 } catch (error) {
   console.error(error);

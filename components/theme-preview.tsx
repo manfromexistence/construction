@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ThemeStyleProps } from "@/types/theme";
 import { cn } from "@/lib/utils";
+import { ThemeStyleProps } from "@/types/theme";
+import { colorFormatter } from "@/utils/color-converter";
 import { extractFontFamily } from "@/utils/fonts";
 import { loadGoogleFont } from "@/utils/fonts/google-fonts";
-import { colorFormatter } from "@/utils/color-converter";
 
 interface ThemePreviewProps {
   styles: ThemeStyleProps;
@@ -48,10 +48,7 @@ export function ThemePreview({ styles, name, className }: ThemePreviewProps) {
       return;
     }
 
-    if (
-      typeof document !== "undefined" &&
-      document.fonts?.check(`700 46px "${fontFamily}"`)
-    ) {
+    if (typeof document !== "undefined" && document.fonts?.check(`700 46px "${fontFamily}"`)) {
       setFontLoaded(true);
       return;
     }
@@ -86,21 +83,11 @@ export function ThemePreview({ styles, name, className }: ThemePreviewProps) {
 
   const boxShadow = computeBoxShadow(styles);
 
-  const palette = [
-    c.primary,
-    c.secondary,
-    c.accent,
-    c.muted,
-    c.border,
-    c.card,
-  ];
+  const palette = [c.primary, c.secondary, c.accent, c.muted, c.border, c.card];
 
   return (
     <div
-      className={cn(
-        "relative w-full h-full select-none overflow-hidden",
-        className
-      )}
+      className={cn("relative w-full h-full select-none overflow-hidden", className)}
       style={{
         backgroundColor: c.bg,
         color: c.fg,

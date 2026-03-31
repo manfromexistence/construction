@@ -18,33 +18,23 @@ const TooltipProvider = ({
   );
 };
 
-const Tooltip = ({
-  ...props
-}: React.ComponentProps<typeof BaseTooltip.Root>) => {
+const Tooltip = ({ ...props }: React.ComponentProps<typeof BaseTooltip.Root>) => {
   return <BaseTooltip.Root data-slot="tooltip" {...props} />;
 };
 
-const TooltipTrigger = ({
-  ...props
-}: React.ComponentProps<typeof BaseTooltip.Trigger>) => {
+const TooltipTrigger = ({ ...props }: React.ComponentProps<typeof BaseTooltip.Trigger>) => {
   return <BaseTooltip.Trigger data-slot="tooltip-trigger" {...props} />;
 };
 
-const TooltipPortal = ({
-  ...props
-}: React.ComponentProps<typeof BaseTooltip.Portal>) => {
+const TooltipPortal = ({ ...props }: React.ComponentProps<typeof BaseTooltip.Portal>) => {
   return <BaseTooltip.Portal data-slot="tooltip-portal" {...props} />;
 };
 
-const TooltipPositioner = ({
-  ...props
-}: React.ComponentProps<typeof BaseTooltip.Positioner>) => {
+const TooltipPositioner = ({ ...props }: React.ComponentProps<typeof BaseTooltip.Positioner>) => {
   return <BaseTooltip.Positioner data-slot="tooltip-positioner" {...props} />;
 };
 
-const TooltipArrow = ({
-  ...props
-}: React.ComponentProps<typeof BaseTooltip.Arrow>) => {
+const TooltipArrow = ({ ...props }: React.ComponentProps<typeof BaseTooltip.Arrow>) => {
   return <BaseTooltip.Arrow data-slot="tooltip-arrow" {...props} />;
 };
 
@@ -93,10 +83,10 @@ const TooltipContent = ({
 
 export {
   Tooltip,
-  TooltipTrigger,
+  TooltipArrow,
   TooltipContent,
   TooltipPortal,
   TooltipPositioner,
-  TooltipArrow,
   TooltipProvider,
+  TooltipTrigger,
 };

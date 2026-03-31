@@ -1,16 +1,14 @@
 import {
-  KEYS,
   type Descendant,
+  KEYS,
   type TElement,
   type TTableCellElement,
   type TTableElement,
   type TTableRowElement,
-} from 'platejs';
+} from "platejs";
 
 /** Check if nodes is a single table with single cell */
-export const isSingleCellTable = (
-  nodes: Descendant[]
-): nodes is [TTableElement] => {
+export const isSingleCellTable = (nodes: Descendant[]): nodes is [TTableElement] => {
   if (nodes.length !== 1) return false;
 
   const table = nodes[0] as TElement;

@@ -1,8 +1,6 @@
 {
   "name": "stack",
-  "dependencies": [
-    "@base-ui/react"
-  ],
+  "dependencies": ["@base-ui/react"],
   "files": [
     {
       "path": "ui/stack.tsx",

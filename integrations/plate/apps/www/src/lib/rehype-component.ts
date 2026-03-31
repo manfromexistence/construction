@@ -1,21 +1,20 @@
-import type { UnistNode, UnistTree } from '@/types/unist';
+import fs from "node:fs";
+import path from "node:path";
+import { u } from "unist-builder";
+import { visit } from "unist-util-visit";
+import type { UnistNode, UnistTree } from "@/types/unist";
 
-import fs from 'node:fs';
-import path from 'node:path';
-import { u } from 'unist-builder';
-import { visit } from 'unist-util-visit';
-
-import { Index } from '../__registry__';
-import { registryExamples } from '../registry/registry-examples';
-import { proExamples } from '../registry/registry-pro';
-import { highlightFiles } from './highlight-code';
+import { Index } from "../__registry__";
+import { registryExamples } from "../registry/registry-examples";
+import { proExamples } from "../registry/registry-pro";
+import { highlightFiles } from "./highlight-code";
 import {
   createFileTreeForRegistryItemFiles,
   fixImport,
   getAllDependencies,
   getNodeAttributeByName,
   getRegistryItem,
-} from './rehype-utils';
+} from "./rehype-utils";
 
 // NOTE: shadcn fork
 export function rehypeComponent() {
@@ -24,28 +23,28 @@ export function rehypeComponent() {
 
     visit(tree as any, (node: UnistNode) => {
       if (
-        node.name === 'ComponentSource' ||
-        node.name === 'ComponentPreview' ||
-        node.name === 'ComponentPreviewPro' ||
-        node.name === 'ComponentInstallation'
+        node.name === "ComponentSource" ||
+        node.name === "ComponentPreview" ||
+        node.name === "ComponentPreviewPro" ||
+        node.name === "ComponentInstallation"
       ) {
-        const name = getNodeAttributeByName(node, 'name')?.value as string;
+        const name = getNodeAttributeByName(node, "name")?.value as string;
 
         if (name) {
-          if (node.name === 'ComponentPreviewPro') {
+          if (node.name === "ComponentPreviewPro") {
             const registryItem = proExamples.find((item) => item.name === name);
             if (registryItem?.description) {
               node.attributes = [
                 ...(node.attributes || []),
                 {
-                  name: 'description',
-                  type: 'mdxJsxAttribute',
+                  name: "description",
+                  type: "mdxJsxAttribute",
                   value: registryItem.description,
                 },
               ];
             }
           }
-          if (node.name === 'ComponentInstallation') {
+          if (node.name === "ComponentInstallation") {
             promises.push(
               (async () => {
                 try {
@@ -54,8 +53,8 @@ export function rehypeComponent() {
                   node.attributes = [
                     ...(node.attributes || []),
                     {
-                      name: '__dependencies__',
-                      type: 'mdxJsxAttribute',
+                      name: "__dependencies__",
+                      type: "mdxJsxAttribute",
                       value: JSON.stringify(allDependencies),
                     },
                   ];
@@ -70,26 +69,26 @@ export function rehypeComponent() {
 
                     node.attributes.push(
                       {
-                        name: '__item__',
-                        type: 'mdxJsxAttribute',
+                        name: "__item__",
+                        type: "mdxJsxAttribute",
                         value: JSON.stringify(item),
                       },
                       {
-                        name: '__highlightedFiles__',
-                        type: 'mdxJsxAttribute',
+                        name: "__highlightedFiles__",
+                        type: "mdxJsxAttribute",
                         value: JSON.stringify(highlightedFiles),
                       },
                       {
-                        name: '__tree__',
-                        type: 'mdxJsxAttribute',
+                        name: "__tree__",
+                        type: "mdxJsxAttribute",
                         value: JSON.stringify(tree),
                       }
                     );
                   }
-                  if (!node.attributes?.find((item) => item.name === 'name')) {
+                  if (!node.attributes?.find((item) => item.name === "name")) {
                     node.attributes?.push({
-                      name: 'name',
-                      type: 'mdxJsxAttribute',
+                      name: "name",
+                      type: "mdxJsxAttribute",
                       value: name,
                     });
                   }
@@ -97,20 +96,18 @@ export function rehypeComponent() {
                   const component = Index[name];
 
                   if (component.meta?.preview) {
-                    const example = registryExamples.find(
-                      (ex) => ex.name === name
-                    );
+                    const example = registryExamples.find((ex) => ex.name === name);
 
                     if (example) {
                       node.attributes.push(
                         {
-                          name: '__previewFiles__',
-                          type: 'mdxJsxAttribute',
+                          name: "__previewFiles__",
+                          type: "mdxJsxAttribute",
                           value: JSON.stringify(example.dependencies),
                         },
                         {
-                          name: '__previewDependencies__',
-                          type: 'mdxJsxAttribute',
+                          name: "__previewDependencies__",
+                          type: "mdxJsxAttribute",
                           value: JSON.stringify(example.files),
                         }
                       );
@@ -122,7 +119,7 @@ export function rehypeComponent() {
               })()
             );
           }
-          if (node.name === 'ComponentSource') {
+          if (node.name === "ComponentSource") {
             try {
               const component = Index[name];
 
@@ -132,44 +129,44 @@ export function rehypeComponent() {
 
               const file = component.files[0]?.path;
 
-              let source = fs.readFileSync(file, 'utf8');
+              let source = fs.readFileSync(file, "utf8");
               source = fixImport(source);
 
               // Add code as children so that rehype can take over at build time.
               node.children?.push(
-                u('element', {
+                u("element", {
                   attributes: [
                     {
-                      name: 'title',
-                      type: 'mdxJsxAttribute',
+                      name: "title",
+                      type: "mdxJsxAttribute",
                       value: path.basename(file),
                     },
                   ],
                   children: [
-                    u('element', {
+                    u("element", {
                       children: [
                         {
-                          type: 'text',
+                          type: "text",
                           value: source,
                         },
                       ],
                       properties: {
-                        className: ['language-tsx'],
+                        className: ["language-tsx"],
                       },
-                      tagName: 'code',
+                      tagName: "code",
                     }),
                   ],
                   properties: {
                     __src__: file,
                   },
-                  tagName: 'pre',
+                  tagName: "pre",
                 })
               );
             } catch (error) {
               console.error(error);
             }
           }
-          if (node.name === 'ComponentPreview') {
+          if (node.name === "ComponentPreview") {
             promises.push(
               (async () => {
                 try {
@@ -178,8 +175,8 @@ export function rehypeComponent() {
                   node.attributes = [
                     ...(node.attributes || []),
                     {
-                      name: '__dependencies__',
-                      type: 'mdxJsxAttribute',
+                      name: "__dependencies__",
+                      type: "mdxJsxAttribute",
                       value: JSON.stringify(allDependencies),
                     },
                   ];
@@ -194,18 +191,18 @@ export function rehypeComponent() {
 
                     node.attributes.push(
                       {
-                        name: '__item__',
-                        type: 'mdxJsxAttribute',
+                        name: "__item__",
+                        type: "mdxJsxAttribute",
                         value: JSON.stringify(item),
                       },
                       {
-                        name: '__highlightedFiles__',
-                        type: 'mdxJsxAttribute',
+                        name: "__highlightedFiles__",
+                        type: "mdxJsxAttribute",
                         value: JSON.stringify(highlightedFiles),
                       },
                       {
-                        name: '__tree__',
-                        type: 'mdxJsxAttribute',
+                        name: "__tree__",
+                        type: "mdxJsxAttribute",
                         value: JSON.stringify(tree),
                       }
                     );

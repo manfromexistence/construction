@@ -40,7 +40,7 @@ export type {
   UseFloatingOptions,
   UseFloatingReturn,
   VirtualElement,
-} from '@floating-ui/react';
+} from "@floating-ui/react";
 
 export {
   // dom
@@ -49,7 +49,6 @@ export {
   autoUpdate,
   computePosition,
   detectOverflow,
-  flip,
   FloatingArrow,
   FloatingDelayGroup,
   FloatingFocusManager,
@@ -57,6 +56,7 @@ export {
   FloatingOverlay,
   FloatingPortal,
   FloatingTree,
+  flip,
   getOverflowAncestors,
   hide,
   // core
@@ -83,4 +83,4 @@ export {
   useListNavigation,
   useRole,
   useTypeahead,
-} from '@floating-ui/react';
+} from "@floating-ui/react";

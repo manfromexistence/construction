@@ -1,16 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form-tanstack-switch",
-  "dependencies": [
-    "@tanstack/react-form",
-    "zod"
-  ],
-  "registryDependencies": [
-    "field",
-    "switch",
-    "button",
-    "card"
-  ],
+  "dependencies": ["@tanstack/react-form", "zod"],
+  "registryDependencies": ["field", "switch", "button", "card"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/form-tanstack-switch.tsx",

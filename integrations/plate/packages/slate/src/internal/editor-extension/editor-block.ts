@@ -1,9 +1,4 @@
-import type {
-  Editor,
-  EditorBlockOptions,
-  ElementOf,
-  ValueOf,
-} from '../../interfaces/index';
+import type { Editor, EditorBlockOptions, ElementOf, ValueOf } from "../../interfaces/index";
 
 export const block = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,
@@ -30,6 +25,6 @@ export const block = <N extends ElementOf<E>, E extends Editor = Editor>(
   return editor.api.node<N>({
     ...options,
     block: true,
-    mode: 'lowest',
+    mode: "lowest",
   });
 };

@@ -1,15 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/base-nova/ui-rtl/toggle-group"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { ToggleGroup, ToggleGroupItem } from "@/styles/base-nova/ui-rtl/toggle-group";
 
 const translations: Translations = {
   en: {
@@ -36,10 +30,10 @@ const translations: Translations = {
       cards: "כרטיסים",
     },
   },
-}
+};
 
 export function ToggleGroupRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <ToggleGroup variant="outline" defaultValue={["list"]} dir={dir}>
@@ -53,5 +47,5 @@ export function ToggleGroupRtl() {
         {t.cards}
       </ToggleGroupItem>
     </ToggleGroup>
-  )
+  );
 }

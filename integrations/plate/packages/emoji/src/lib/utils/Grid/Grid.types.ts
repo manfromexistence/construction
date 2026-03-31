@@ -10,11 +10,7 @@ export type GridRows = GridRow[];
 // biome-ignore lint/style/useConsistentTypeDefinitions: uses `this` type
 export interface IGrid<R, T extends SectionId> {
   size: number;
-  addSection: (
-    sectionId: T,
-    section: IGridSection<R, T>,
-    elements: GridElements
-  ) => this;
+  addSection: (sectionId: T, section: IGridSection<R, T>, elements: GridElements) => this;
   indexOf: (sectionId: T) => number;
   section: (sectionId: T) => IGridSection<R, T>;
   sections: () => IGridSection<R, T>[];

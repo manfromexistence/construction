@@ -1,6 +1,6 @@
-import { ArrowUpRightIcon, FolderIcon } from "lucide-react"
+import { ArrowUpRightIcon, FolderIcon } from "lucide-react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Empty,
   EmptyContent,
@@ -8,7 +8,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/styles/radix-nova/ui/empty"
+} from "@/styles/radix-nova/ui/empty";
 
 export function EmptyInCard() {
   return (
@@ -19,8 +19,7 @@ export function EmptyInCard() {
         </EmptyMedia>
         <EmptyTitle>No projects yet</EmptyTitle>
         <EmptyDescription>
-          You haven&apos;t created any projects yet. Get started by creating
-          your first project.
+          You haven&apos;t created any projects yet. Get started by creating your first project.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
@@ -37,5 +36,5 @@ export function EmptyInCard() {
         </Button>
       </EmptyContent>
     </Empty>
-  )
+  );
 }

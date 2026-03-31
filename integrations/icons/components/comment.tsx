@@ -1,7 +1,4 @@
-import {
-  CommentAnimationsDevLinkClient,
-  CommentButtonClient,
-} from "./comment.client";
+import { CommentAnimationsDevLinkClient, CommentButtonClient } from "./comment.client";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const CommentBlock = () => {
@@ -11,8 +8,8 @@ const CommentBlock = () => {
         these icons were a way to practice what i learned from the{" "}
         <CommentAnimationsDevLinkClient /> course.
         <br />
-        it really helped me understand how to turn simple transitions into the
-        polished motion you see here
+        it really helped me understand how to turn simple transitions into the polished motion you
+        see here
       </blockquote>
       <div className="mt-4 flex w-full flex-wrap items-center justify-between gap-4 border-neutral-200 border-t pt-4 max-[655px]:pl-4 dark:border-neutral-800">
         <div className="flex items-center gap-2">

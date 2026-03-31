@@ -1,8 +1,6 @@
 {
   "name": "qr-code-customization-demo",
-  "registryDependencies": [
-    "qr-code"
-  ],
+  "registryDependencies": ["qr-code"],
   "files": [
     {
       "path": "examples/qr-code-customization-demo.tsx",

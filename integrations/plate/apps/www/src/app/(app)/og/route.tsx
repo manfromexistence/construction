@@ -1,35 +1,32 @@
-import { ImageResponse } from 'next/og';
+import { ImageResponse } from "next/og";
 
 async function loadAssets(): Promise<
-  { data: Buffer; name: string; style: 'normal'; weight: 400 | 600 }[]
+  { data: Buffer; name: string; style: "normal"; weight: 400 | 600 }[]
 > {
-  const [
-    { base64Font: normal },
-    { base64Font: mono },
-    { base64Font: semibold },
-  ] = await Promise.all([
-    import('./geist-regular-otf.json').then((mod) => mod.default || mod),
-    import('./geistmono-regular-otf.json').then((mod) => mod.default || mod),
-    import('./geist-semibold-otf.json').then((mod) => mod.default || mod),
-  ]);
+  const [{ base64Font: normal }, { base64Font: mono }, { base64Font: semibold }] =
+    await Promise.all([
+      import("./geist-regular-otf.json").then((mod) => mod.default || mod),
+      import("./geistmono-regular-otf.json").then((mod) => mod.default || mod),
+      import("./geist-semibold-otf.json").then((mod) => mod.default || mod),
+    ]);
 
   return [
     {
-      data: Buffer.from(normal, 'base64'),
-      name: 'Geist',
-      style: 'normal' as const,
+      data: Buffer.from(normal, "base64"),
+      name: "Geist",
+      style: "normal" as const,
       weight: 400 as const,
     },
     {
-      data: Buffer.from(mono, 'base64'),
-      name: 'Geist Mono',
-      style: 'normal' as const,
+      data: Buffer.from(mono, "base64"),
+      name: "Geist Mono",
+      style: "normal" as const,
       weight: 400 as const,
     },
     {
-      data: Buffer.from(semibold, 'base64'),
-      name: 'Geist',
-      style: 'normal' as const,
+      data: Buffer.from(semibold, "base64"),
+      name: "Geist",
+      style: "normal" as const,
       weight: 600 as const,
     },
   ];
@@ -37,16 +34,13 @@ async function loadAssets(): Promise<
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const title = searchParams.get('title');
-  const description = searchParams.get('description');
+  const title = searchParams.get("title");
+  const description = searchParams.get("description");
 
   const [fonts] = await Promise.all([loadAssets()]);
 
   return new ImageResponse(
-    <div
-      style={{ fontFamily: 'Geist Sans' }}
-      tw="flex h-full w-full bg-black text-white"
-    >
+    <div style={{ fontFamily: "Geist Sans" }} tw="flex h-full w-full bg-black text-white">
       <div tw="flex border absolute border-stone-700 border-dashed inset-y-0 left-16 w-[1px]" />
       <div tw="flex border absolute border-stone-700 border-dashed inset-y-0 right-16 w-[1px]" />
       <div tw="flex border absolute border-stone-700 inset-x-0 h-[1px] top-16" />
@@ -72,8 +66,8 @@ export async function GET(request: Request) {
           style={{
             fontSize: title && title.length > 20 ? 64 : 80,
             fontWeight: 600,
-            letterSpacing: '-0.04em',
-            textWrap: 'balance',
+            letterSpacing: "-0.04em",
+            textWrap: "balance",
           }}
           tw="tracking-tight flex-grow-1 flex flex-col justify-center leading-[1.1]"
         >
@@ -82,7 +76,7 @@ export async function GET(request: Request) {
         <div
           style={{
             fontWeight: 500,
-            textWrap: 'balance',
+            textWrap: "balance",
           }}
           tw="text-[40px] leading-[1.5] flex-grow-1 text-stone-400"
         >

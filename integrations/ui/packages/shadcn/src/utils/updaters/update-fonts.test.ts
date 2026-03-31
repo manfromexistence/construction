@@ -1,6 +1,6 @@
-import { describe, expect, it, vi } from "vitest"
+import { describe, expect, it, vi } from "vitest";
 
-import { massageTreeForFonts, transformLayoutFonts } from "./update-fonts"
+import { massageTreeForFonts, transformLayoutFonts } from "./update-fonts";
 
 const mockConfig = {
   style: "new-york",
@@ -29,7 +29,7 @@ const mockConfig = {
     hooks: "/test/hooks",
     ui: "/test/components/ui",
   },
-} as any
+} as any;
 
 describe("transformLayoutFonts", () => {
   it("should add a single Google font to empty layout", async () => {
@@ -52,7 +52,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -65,9 +65,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -94,8 +94,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should add multiple Google fonts using cn()", async () => {
     const input = `
@@ -113,7 +113,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -137,9 +137,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -165,8 +165,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should use configured utils alias when adding cn import", async () => {
     const configWithCustomUtilsAlias = {
@@ -175,7 +175,7 @@ export default function RootLayout({
         ...mockConfig.aliases,
         utils: "~/lib/utils",
       },
-    }
+    };
     const input = `
 import type { Metadata } from "next"
 import "./globals.css"
@@ -191,7 +191,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -215,22 +215,14 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const firstRun = await transformLayoutFonts(
-      input,
-      fonts,
-      configWithCustomUtilsAlias
-    )
-    const secondRun = await transformLayoutFonts(
-      firstRun,
-      fonts,
-      configWithCustomUtilsAlias
-    )
+    const firstRun = await transformLayoutFonts(input, fonts, configWithCustomUtilsAlias);
+    const secondRun = await transformLayoutFonts(firstRun, fonts, configWithCustomUtilsAlias);
 
-    expect(firstRun).toContain(`import { cn } from "~/lib/utils";`)
-    expect(secondRun).toBe(firstRun)
-  })
+    expect(firstRun).toContain(`import { cn } from "~/lib/utils";`);
+    expect(secondRun).toBe(firstRun);
+  });
 
   it("should use monorepo utils alias when adding cn import", async () => {
     const monorepoConfig = {
@@ -239,7 +231,7 @@ export default function RootLayout({
         ...mockConfig.aliases,
         utils: "@workspace/ui/lib/utils",
       },
-    }
+    };
     const input = `
 import type { Metadata } from "next"
 import "./globals.css"
@@ -255,7 +247,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -279,12 +271,12 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, monorepoConfig)
+    const result = await transformLayoutFonts(input, fonts, monorepoConfig);
 
-    expect(result).toContain(`import { cn } from "@workspace/ui/lib/utils";`)
-  })
+    expect(result).toContain(`import { cn } from "@workspace/ui/lib/utils";`);
+  });
 
   it("should preserve existing string className", async () => {
     const input = `
@@ -301,7 +293,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -314,9 +306,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -339,8 +331,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should replace existing font with same variable", async () => {
     const input = `
@@ -359,7 +351,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -372,9 +364,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -395,8 +387,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should handle existing cn() className", async () => {
     const input = `
@@ -416,7 +408,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -429,9 +421,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -452,8 +444,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should add font with weight option", async () => {
     const input = `
@@ -468,7 +460,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -482,9 +474,9 @@ export default function RootLayout({
           weight: ["400", "500", "600", "700"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "import { Inter } from "next/font/google";
@@ -505,8 +497,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should add already-imported font to html className", async () => {
     const input = `
@@ -525,7 +517,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -538,9 +530,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     // Font is already imported but not on <html>, so it should be added.
     expect(result).toMatchInlineSnapshot(`
@@ -562,8 +554,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should skip Geist font if already imported (create-next-app scenario)", async () => {
     // This simulates a fresh create-next-app project with Geist already set up.
@@ -602,7 +594,7 @@ export default function RootLayout({
     </html>
   );
 }
-`
+`;
     const fonts = [
       {
         name: "font-geist",
@@ -615,13 +607,13 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     // Geist is already imported, so the layout should remain unchanged.
-    expect(result).toBe(input)
-  })
+    expect(result).toBe(input);
+  });
 
   it("should add to existing next/font/google import", async () => {
     const input = `
@@ -640,7 +632,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -653,9 +645,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -678,8 +670,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should handle expression className that is not cn()", async () => {
     const input = `
@@ -694,7 +686,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -707,9 +699,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "import { Inter } from "next/font/google";
@@ -730,8 +722,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should handle template literal className", async () => {
     const input = `
@@ -749,7 +741,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -762,9 +754,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -788,8 +780,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should be idempotent when run multiple times", async () => {
     const input = `
@@ -806,7 +798,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -819,21 +811,21 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
     // Run once.
-    const firstRun = await transformLayoutFonts(input, fonts, mockConfig)
+    const firstRun = await transformLayoutFonts(input, fonts, mockConfig);
 
     // Run again on the output.
-    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig)
+    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig);
 
     // Run a third time.
-    const thirdRun = await transformLayoutFonts(secondRun, fonts, mockConfig)
+    const thirdRun = await transformLayoutFonts(secondRun, fonts, mockConfig);
 
     // All runs should produce the same result.
-    expect(secondRun).toBe(firstRun)
-    expect(thirdRun).toBe(firstRun)
-  })
+    expect(secondRun).toBe(firstRun);
+    expect(thirdRun).toBe(firstRun);
+  });
 
   it("should add a single serif font to empty layout", async () => {
     const input = `
@@ -855,7 +847,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-lora",
@@ -868,9 +860,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -897,8 +889,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should add serif and sans fonts together", async () => {
     const input = `
@@ -916,7 +908,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-inter",
@@ -940,9 +932,9 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     expect(result).toMatchInlineSnapshot(`
       "
@@ -968,8 +960,8 @@ export default function RootLayout({
         )
       }
       "
-    `)
-  })
+    `);
+  });
 
   it("should replace existing font-sans with font-serif on html", async () => {
     const input = `
@@ -989,7 +981,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-playfair-display",
@@ -1002,17 +994,17 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     // font-sans should be replaced with font-serif.
-    expect(result).toContain('"font-serif"')
-    expect(result).not.toContain('"font-sans"')
-    expect(result).toContain("playfairDisplay.variable")
+    expect(result).toContain('"font-serif"');
+    expect(result).not.toContain('"font-sans"');
+    expect(result).toContain("playfairDisplay.variable");
     // Inter's variable should remain since we only added Playfair.
-    expect(result).toContain("inter.variable")
-  })
+    expect(result).toContain("inter.variable");
+  });
 
   it("should be idempotent with multiple fonts", async () => {
     const input = `
@@ -1027,7 +1019,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "inter",
@@ -1051,17 +1043,17 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
     // Run once.
-    const firstRun = await transformLayoutFonts(input, fonts, mockConfig)
+    const firstRun = await transformLayoutFonts(input, fonts, mockConfig);
 
     // Run again on the output.
-    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig)
+    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig);
 
     // All runs should produce the same result.
-    expect(secondRun).toBe(firstRun)
-  })
+    expect(secondRun).toBe(firstRun);
+  });
 
   it("should be idempotent when font is already imported and on html", async () => {
     // Simulates a layout where the font was already added by a previous preset.
@@ -1082,7 +1074,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-merriweather",
@@ -1096,15 +1088,15 @@ export default function RootLayout({
           weight: ["400", "700"],
         },
       },
-    ]
+    ];
 
-    const firstRun = await transformLayoutFonts(input, fonts, mockConfig)
-    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig)
+    const firstRun = await transformLayoutFonts(input, fonts, mockConfig);
+    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig);
 
     // Should remain unchanged across all runs.
-    expect(firstRun).toBe(input)
-    expect(secondRun).toBe(input)
-  })
+    expect(firstRun).toBe(input);
+    expect(secondRun).toBe(input);
+  });
 
   it("should be idempotent when adding font to pre-existing layout with other fonts", async () => {
     // Layout already has Inter, and we're adding Merriweather.
@@ -1125,7 +1117,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-inter",
@@ -1150,19 +1142,19 @@ export default function RootLayout({
           weight: ["400", "700"],
         },
       },
-    ]
+    ];
 
-    const firstRun = await transformLayoutFonts(input, fonts, mockConfig)
-    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig)
+    const firstRun = await transformLayoutFonts(input, fonts, mockConfig);
+    const secondRun = await transformLayoutFonts(firstRun, fonts, mockConfig);
 
     // Second run should be identical to first.
-    expect(secondRun).toBe(firstRun)
+    expect(secondRun).toBe(firstRun);
     // Inter should still be there, Merriweather should be added.
-    expect(firstRun).toContain("font-sans")
-    expect(firstRun).toContain("font-serif")
-    expect(firstRun).toContain("inter.variable")
-    expect(firstRun).toContain("merriweather.variable")
-  })
+    expect(firstRun).toContain("font-sans");
+    expect(firstRun).toContain("font-serif");
+    expect(firstRun).toContain("inter.variable");
+    expect(firstRun).toContain("merriweather.variable");
+  });
 
   it("should add .variable but not utility class for custom selector font", async () => {
     const input = `
@@ -1180,7 +1172,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-inter",
@@ -1205,17 +1197,17 @@ export default function RootLayout({
           selector: "h1, h2, h3, h4, h5, h6",
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
     // .variable should be on <html> for both fonts.
-    expect(result).toContain("inter.variable")
-    expect(result).toContain("playfairDisplayHeading.variable")
+    expect(result).toContain("inter.variable");
+    expect(result).toContain("playfairDisplayHeading.variable");
     // Only font-sans utility class should be on <html>, not font-heading.
-    expect(result).toContain('"font-sans"')
-    expect(result).not.toContain('"font-heading"')
-  })
+    expect(result).toContain('"font-sans"');
+    expect(result).not.toContain('"font-heading"');
+  });
 
   it("should create a second variable declaration when body and heading use the same Google font", async () => {
     const input = `
@@ -1233,7 +1225,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-inter",
@@ -1257,22 +1249,18 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
-    expect(result).toContain('import { Inter } from "next/font/google";')
-    expect(result).toContain(
-      "const inter = Inter({subsets:['latin'],variable:'--font-sans'});"
-    )
+    expect(result).toContain('import { Inter } from "next/font/google";');
+    expect(result).toContain("const inter = Inter({subsets:['latin'],variable:'--font-sans'});");
     expect(result).toContain(
       "const interHeading = Inter({subsets:['latin'],variable:'--font-heading'});"
-    )
-    expect(result).toContain(
-      'className={cn("font-sans", inter.variable, interHeading.variable)}'
-    )
-    expect(result).not.toContain('"font-heading"')
-  })
+    );
+    expect(result).toContain('className={cn("font-sans", inter.variable, interHeading.variable)}');
+    expect(result).not.toContain('"font-heading"');
+  });
 
   it("should keep an existing heading font when adding the matching body font", async () => {
     const input = `
@@ -1292,7 +1280,7 @@ export default function RootLayout({
     </html>
   )
 }
-`
+`;
     const fonts = [
       {
         name: "font-inter",
@@ -1305,19 +1293,17 @@ export default function RootLayout({
           subsets: ["latin"],
         },
       },
-    ]
+    ];
 
-    const result = await transformLayoutFonts(input, fonts, mockConfig)
+    const result = await transformLayoutFonts(input, fonts, mockConfig);
 
-    expect(result).toContain('import { cn } from "@/lib/utils"')
-    expect(result).toContain(
-      "const inter = Inter({subsets:['latin'],variable:'--font-sans'});"
-    )
-    expect(result).toContain("interHeading.variable")
-    expect(result).toContain('"font-sans"')
-    expect(result).toContain("inter.variable")
-  })
-})
+    expect(result).toContain('import { cn } from "@/lib/utils"');
+    expect(result).toContain("const inter = Inter({subsets:['latin'],variable:'--font-sans'});");
+    expect(result).toContain("interHeading.variable");
+    expect(result).toContain('"font-sans"');
+    expect(result).toContain("inter.variable");
+  });
+});
 
 vi.mock("@/src/utils/get-project-info", () => ({
   getProjectInfo: vi.fn().mockResolvedValue({
@@ -1325,7 +1311,7 @@ vi.mock("@/src/utils/get-project-info", () => ({
     isTsx: true,
     isSrcDir: false,
   }),
-}))
+}));
 
 describe("massageTreeForFonts", () => {
   it("should add font @apply to html when no existing css", async () => {
@@ -1343,16 +1329,16 @@ describe("massageTreeForFonts", () => {
           },
         },
       ],
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
     expect(result.css!["@layer base"].html).toEqual({
       "@apply font-sans": {},
-    })
-  })
+    });
+  });
 
   it("should preserve existing html css rules when adding font classes", async () => {
     const tree = {
@@ -1379,16 +1365,16 @@ describe("massageTreeForFonts", () => {
           },
         },
       },
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
     expect(result.css!["@layer base"].html).toEqual({
       "@apply bg-background text-foreground font-sans": {},
-    })
-  })
+    });
+  });
 
   it("should combine multiple font classes into a single @apply", async () => {
     const tree = {
@@ -1423,16 +1409,16 @@ describe("massageTreeForFonts", () => {
           },
         },
       },
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
     expect(result.css!["@layer base"].html).toEqual({
       "@apply bg-background text-foreground font-sans font-serif": {},
-    })
-  })
+    });
+  });
 
   it("should apply font to custom selector", async () => {
     const tree = {
@@ -1450,17 +1436,17 @@ describe("massageTreeForFonts", () => {
           },
         },
       ],
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
     expect(result.css!["@layer base"]["h1, h2, h3, h4, h5, h6"]).toEqual({
       "@apply font-heading": {},
-    })
-    expect(result.css!["@layer base"].html).toBeUndefined()
-  })
+    });
+    expect(result.css!["@layer base"].html).toBeUndefined();
+  });
 
   it("should handle mixed selectors (default html + custom)", async () => {
     const tree = {
@@ -1489,19 +1475,19 @@ describe("massageTreeForFonts", () => {
           },
         },
       ],
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
     expect(result.css!["@layer base"].html).toEqual({
       "@apply font-sans": {},
-    })
+    });
     expect(result.css!["@layer base"]["h1, h2, h3, h4, h5, h6"]).toEqual({
       "@apply font-heading": {},
-    })
-  })
+    });
+  });
 
   it("should not auto-apply non-root font roles without a selector", async () => {
     const tree = {
@@ -1529,23 +1515,21 @@ describe("massageTreeForFonts", () => {
           },
         },
       ],
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
     expect(result.css!["@layer base"].html).toEqual({
       "@apply font-sans": {},
-    })
+    });
     expect(
       Object.values(result.css!["@layer base"]).some((rule) =>
-        Object.keys(rule as Record<string, unknown>).some((key) =>
-          key.includes("font-heading")
-        )
+        Object.keys(rule as Record<string, unknown>).some((key) => key.includes("font-heading"))
       )
-    ).toBe(false)
-  })
+    ).toBe(false);
+  });
 
   it("should install non-variable font using dependency field", async () => {
     const tree = {
@@ -1563,17 +1547,17 @@ describe("massageTreeForFonts", () => {
           },
         },
       ],
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
-    expect(result.dependencies).toContain("@fontsource/lato")
-    expect(result.dependencies).not.toContain("@fontsource-variable/lato")
-    expect(result.css).toHaveProperty('@import "@fontsource/lato"')
-    expect(result.cssVars!.theme!["--font-sans"]).toBe("'Lato', sans-serif")
-  })
+    expect(result.dependencies).toContain("@fontsource/lato");
+    expect(result.dependencies).not.toContain("@fontsource-variable/lato");
+    expect(result.css).toHaveProperty('@import "@fontsource/lato"');
+    expect(result.cssVars!.theme!["--font-sans"]).toBe("'Lato', sans-serif");
+  });
 
   it("should fall back to @fontsource-variable when no dependency is specified", async () => {
     const tree = {
@@ -1590,13 +1574,13 @@ describe("massageTreeForFonts", () => {
           },
         },
       ],
-    } as any
+    } as any;
 
     const result = await massageTreeForFonts(tree, {
       resolvedPaths: { cwd: "/test" },
-    } as any)
+    } as any);
 
-    expect(result.dependencies).toContain("@fontsource-variable/inter")
-    expect(result.css).toHaveProperty('@import "@fontsource-variable/inter"')
-  })
-})
+    expect(result.dependencies).toContain("@fontsource-variable/inter");
+    expect(result.css).toHaveProperty('@import "@fontsource-variable/inter"');
+  });
+});

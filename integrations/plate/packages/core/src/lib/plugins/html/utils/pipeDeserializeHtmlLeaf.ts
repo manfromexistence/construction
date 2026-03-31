@@ -1,13 +1,10 @@
-import type { AnyObject } from '@udecode/utils';
+import type { AnyObject } from "@udecode/utils";
 
-import type { SlateEditor } from '../../../editor';
+import type { SlateEditor } from "../../../editor";
 
-import { pluginDeserializeHtml } from './pluginDeserializeHtml';
+import { pluginDeserializeHtml } from "./pluginDeserializeHtml";
 
-export const pipeDeserializeHtmlLeaf = (
-  editor: SlateEditor,
-  element: HTMLElement
-) => {
+export const pipeDeserializeHtmlLeaf = (editor: SlateEditor, element: HTMLElement) => {
   let node: AnyObject = {};
 
   [...editor.meta.pluginList].reverse().forEach((plugin) => {

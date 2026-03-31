@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "toggle-group",
-  "registryDependencies": [
-    "toggle"
-  ],
+  "registryDependencies": ["toggle"],
   "files": [
     {
       "path": "registry/radix-lyra/ui/toggle-group.tsx",

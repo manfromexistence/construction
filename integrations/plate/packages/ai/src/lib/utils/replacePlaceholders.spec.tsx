@@ -1,21 +1,17 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { MarkdownPlugin } from '@platejs/markdown';
+import { MarkdownPlugin } from "@platejs/markdown";
 import {
   BaseTableCellHeaderPlugin,
   BaseTableCellPlugin,
   BaseTablePlugin,
   BaseTableRowPlugin,
-} from '@platejs/table';
-import {
-  BaseParagraphPlugin,
-  type SlateEditor,
-  createSlateEditor,
-} from 'platejs';
+} from "@platejs/table";
+import { jsxt } from "@platejs/test-utils";
+import { BaseParagraphPlugin, createSlateEditor, type SlateEditor } from "platejs";
 
-import { getMarkdown } from './getMarkdown';
-import { replacePlaceholders } from './replacePlaceholders';
+import { getMarkdown } from "./getMarkdown";
+import { replacePlaceholders } from "./replacePlaceholders";
 
 jsxt;
 
@@ -33,8 +29,8 @@ const createTestEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('replacePlaceholders', () => {
-  it('replaces prompt and markdown placeholders using real editor markdown', () => {
+describe("replacePlaceholders", () => {
+  it("replaces prompt and markdown placeholders using real editor markdown", () => {
     const input = (
       <editor>
         <hp>
@@ -46,36 +42,36 @@ describe('replacePlaceholders', () => {
       </editor>
     ) as any as SlateEditor;
     const editor = createTestEditor(input);
-    const expectedBlock = getMarkdown(editor, { type: 'block' });
+    const expectedBlock = getMarkdown(editor, { type: "block" });
     const expectedBlockSelection = getMarkdown(editor, {
-      type: 'blockSelection',
+      type: "blockSelection",
     });
-    const expectedEditor = getMarkdown(editor, { type: 'editor' });
+    const expectedEditor = getMarkdown(editor, { type: "editor" });
 
     const result = replacePlaceholders(
       editor,
       [
-        'Prompt: {prompt}',
-        'Prompt again: {prompt}',
-        'Block: {block}',
-        'Selection: {blockSelection}',
-        'Editor: {editor}',
-      ].join('\n'),
-      { prompt: 'Refine this' }
+        "Prompt: {prompt}",
+        "Prompt again: {prompt}",
+        "Block: {block}",
+        "Selection: {blockSelection}",
+        "Editor: {editor}",
+      ].join("\n"),
+      { prompt: "Refine this" }
     );
 
     expect(result).toBe(
       [
-        'Prompt: Refine this',
-        'Prompt again: Refine this',
+        "Prompt: Refine this",
+        "Prompt again: Refine this",
         `Block: ${expectedBlock}`,
         `Selection: ${expectedBlockSelection}`,
         `Editor: ${expectedEditor}`,
-      ].join('\n')
+      ].join("\n")
     );
   });
 
-  it('replaces the tableCellWithId placeholder using the table markdown path', () => {
+  it("replaces the tableCellWithId placeholder using the table markdown path", () => {
     const input = (
       <editor>
         <htable id="t1">
@@ -95,16 +91,16 @@ describe('replacePlaceholders', () => {
       </editor>
     ) as any as SlateEditor;
     const editor = createTestEditor(input);
-    const expectedTable = getMarkdown(editor, { type: 'tableCellWithId' });
+    const expectedTable = getMarkdown(editor, { type: "tableCellWithId" });
 
-    const result = replacePlaceholders(editor, 'Table:\n{tableCellWithId}');
+    const result = replacePlaceholders(editor, "Table:\n{tableCellWithId}");
 
     expect(result).toBe(`Table:\n${expectedTable}`);
     expect(result).toContain('<CellRef id="t1_r1_c1" />');
     expect(result).toContain('<Cell id="t1_r1_c1">\nContent\n</Cell>');
   });
 
-  it('leaves strings without placeholders unchanged', () => {
+  it("leaves strings without placeholders unchanged", () => {
     const editor = createTestEditor(
       (
         <editor>
@@ -113,8 +109,8 @@ describe('replacePlaceholders', () => {
       ) as any as SlateEditor
     );
 
-    expect(replacePlaceholders(editor, 'Nothing to replace here.')).toBe(
-      'Nothing to replace here.'
+    expect(replacePlaceholders(editor, "Nothing to replace here.")).toBe(
+      "Nothing to replace here."
     );
   });
 });

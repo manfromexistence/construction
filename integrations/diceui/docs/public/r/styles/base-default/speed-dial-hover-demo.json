@@ -1,11 +1,7 @@
 {
   "name": "speed-dial-hover-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "speed-dial"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["speed-dial"],
   "files": [
     {
       "path": "examples/speed-dial-hover-demo.tsx",

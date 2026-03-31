@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Checkbox } from "@/styles/base-nova/ui/checkbox"
+import { Checkbox } from "@/styles/base-nova/ui/checkbox";
 import {
   Field,
   FieldContent,
@@ -8,8 +8,8 @@ import {
   FieldGroup,
   FieldLabel,
   FieldTitle,
-} from "@/styles/base-nova/ui/field"
-import { Label } from "@/styles/base-nova/ui/label"
+} from "@/styles/base-nova/ui/field";
+import { Label } from "@/styles/base-nova/ui/label";
 
 export default function CheckboxDemo() {
   return (
@@ -19,18 +19,10 @@ export default function CheckboxDemo() {
         <Label htmlFor="terms-checkbox">Accept terms and conditions</Label>
       </Field>
       <Field orientation="horizontal">
-        <Checkbox
-          id="terms-checkbox-2"
-          name="terms-checkbox-2"
-          defaultChecked
-        />
+        <Checkbox id="terms-checkbox-2" name="terms-checkbox-2" defaultChecked />
         <FieldContent>
-          <FieldLabel htmlFor="terms-checkbox-2">
-            Accept terms and conditions
-          </FieldLabel>
-          <FieldDescription>
-            By clicking this checkbox, you agree to the terms.
-          </FieldDescription>
+          <FieldLabel htmlFor="terms-checkbox-2">Accept terms and conditions</FieldLabel>
+          <FieldDescription>By clicking this checkbox, you agree to the terms.</FieldDescription>
         </FieldContent>
       </Field>
       <Field orientation="horizontal" data-disabled>
@@ -49,5 +41,5 @@ export default function CheckboxDemo() {
         </Field>
       </FieldLabel>
     </FieldGroup>
-  )
+  );
 }

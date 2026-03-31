@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Neon Gradient Card Demo",
   "description": "Example showing a beautiful neon card effect.",
-  "registryDependencies": [
-    "@magicui/neon-gradient-card"
-  ],
+  "registryDependencies": ["@magicui/neon-gradient-card"],
   "files": [
     {
       "path": "registry/example/neon-gradient-card-demo.tsx",

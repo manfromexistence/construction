@@ -1,22 +1,20 @@
 /// <reference types="@testing-library/jest-dom" />
 
-import React from 'react';
-import { act } from 'react';
+import { render } from "@testing-library/react";
+import React, { act } from "react";
 
-import { render } from '@testing-library/react';
-
-import { createSlateEditor } from '../../lib/editor';
-import { type PluginConfig, createSlatePlugin } from '../../lib/plugin';
-import { PlateError } from '../../lib/plugins';
-import { TestPlate as Plate } from '../../react/__tests__/TestPlate';
+import { createSlateEditor } from "../../lib/editor";
+import { createSlatePlugin, type PluginConfig } from "../../lib/plugin";
+import { PlateError } from "../../lib/plugins";
 import {
-  type PlatePlugin,
   createPlateEditor,
   createPlatePlugin,
+  type PlatePlugin,
   useEditorPluginOption,
   useEditorPluginOptions,
   usePluginOption,
-} from '../../react';
+} from "../../react";
+import { TestPlate as Plate } from "../../react/__tests__/TestPlate";
 
 function TestComponent({
   editor,
@@ -38,7 +36,7 @@ const TestComponentInner = ({
 }: {
   plugin: PlatePlugin<PluginConfig<any, { value: number }>>;
 }) => {
-  const value = usePluginOption(plugin, 'value');
+  const value = usePluginOption(plugin, "value");
 
   return (
     <div>
@@ -52,12 +50,10 @@ const TestComponentNested = ({
   plugin,
 }: {
   editor: ReturnType<typeof createPlateEditor>;
-  plugin: PlatePlugin<
-    PluginConfig<any, { value: number; nested?: { subValue: string } }>
-  >;
+  plugin: PlatePlugin<PluginConfig<any, { value: number; nested?: { subValue: string } }>>;
 }) => {
-  const value = useEditorPluginOption(editor, plugin, 'value');
-  const nestedValue = useEditorPluginOption(editor, plugin, 'nested');
+  const value = useEditorPluginOption(editor, plugin, "value");
+  const nestedValue = useEditorPluginOption(editor, plugin, "nested");
 
   return (
     <div>
@@ -67,92 +63,91 @@ const TestComponentNested = ({
   );
 };
 
-const createStoreEditor = (
-  plugins: Parameters<typeof createSlateEditor>[0]['plugins']
-) => createSlateEditor({ plugins });
+const createStoreEditor = (plugins: Parameters<typeof createSlateEditor>[0]["plugins"]) =>
+  createSlateEditor({ plugins });
 
-describe('SlatePlugin store', () => {
-  it('create a store for each plugin', () => {
-    const p1 = createSlatePlugin({ key: 'plugin1', options: { value: 1 } });
-    const p2 = createSlatePlugin({ key: 'plugin2', options: { value: 2 } });
+describe("SlatePlugin store", () => {
+  it("create a store for each plugin", () => {
+    const p1 = createSlatePlugin({ key: "plugin1", options: { value: 1 } });
+    const p2 = createSlatePlugin({ key: "plugin2", options: { value: 2 } });
     const editor = createStoreEditor([p1, p2]);
 
     expect(editor.getOptionsStore(p1)).toBeDefined();
     expect(editor.getOptionsStore(p2)).toBeDefined();
   });
 
-  it('initialize the store with plugin options', () => {
-    const p1 = createSlatePlugin({ key: 'plugin1', options: { value: 1 } });
+  it("initialize the store with plugin options", () => {
+    const p1 = createSlatePlugin({ key: "plugin1", options: { value: 1 } });
     const editor = createSlateEditor({ plugins: [p1] });
 
     expect(editor.getOptions(p1)).toEqual({ value: 1 });
   });
 
-  it('update plugin options when setOption is called', () => {
-    const p1 = createSlatePlugin({ key: 'plugin1', options: { value: 1 } });
+  it("update plugin options when setOption is called", () => {
+    const p1 = createSlatePlugin({ key: "plugin1", options: { value: 1 } });
     const editor = createSlateEditor({ plugins: [p1] });
 
-    editor.setOption(p1, 'value', 2);
+    editor.setOption(p1, "value", 2);
 
     expect(editor.getOptions(p1)).toEqual({ value: 2 });
   });
 
-  it('handle nested options in the store', () => {
+  it("handle nested options in the store", () => {
     const p1 = createSlatePlugin({
-      key: 'plugin1',
+      key: "plugin1",
       options: { nested: { value: 1 } },
     });
     const editor = createSlateEditor({ plugins: [p1] });
 
-    editor.setOption(p1, 'nested', { value: 2 });
+    editor.setOption(p1, "nested", { value: 2 });
 
     expect(editor.getOptions(p1)).toEqual({ nested: { value: 2 } });
   });
 
-  it('maintain separate stores for each plugin', () => {
-    const p1 = createSlatePlugin({ key: 'plugin1', options: { value: 1 } });
-    const p2 = createSlatePlugin({ key: 'plugin2', options: { value: 2 } });
+  it("maintain separate stores for each plugin", () => {
+    const p1 = createSlatePlugin({ key: "plugin1", options: { value: 1 } });
+    const p2 = createSlatePlugin({ key: "plugin2", options: { value: 2 } });
     const editor = createSlateEditor({ plugins: [p1, p2] });
 
-    editor.setOption(p1, 'value', 3);
+    editor.setOption(p1, "value", 3);
 
     expect(editor.getOptions(p1)).toEqual({ value: 3 });
     expect(editor.getOptions(p2)).toEqual({ value: 2 });
   });
 
-  it('handle plugins with no initial options', () => {
-    const p1 = createSlatePlugin({ key: 'plugin1' });
+  it("handle plugins with no initial options", () => {
+    const p1 = createSlatePlugin({ key: "plugin1" });
     const editor = createSlateEditor({ plugins: [p1] });
 
     expect(editor.getOptions(p1)).toEqual({});
   });
 
-  it('preserve other plugin properties when updating store', () => {
+  it("preserve other plugin properties when updating store", () => {
     const p1 = createSlatePlugin({
-      key: 'plugin1',
-      node: { type: 'test' },
+      key: "plugin1",
+      node: { type: "test" },
       options: { value: 1 },
     });
     const editor = createSlateEditor({ plugins: [p1] });
 
-    editor.setOption(p1, 'value', 2);
+    editor.setOption(p1, "value", 2);
 
     expect(editor.getOptions(p1)).toEqual({ value: 2 });
-    expect(editor.getPlugin(p1).node.type).toBe('test');
+    expect(editor.getPlugin(p1).node.type).toBe("test");
   });
 
-  it('allow getting the entire store', () => {
-    const p1 = createSlatePlugin({ key: 'plugin1', options: { value: 1 } });
+  it("allow getting the entire store", () => {
+    const p1 = createSlatePlugin({ key: "plugin1", options: { value: 1 } });
     const editor = createStoreEditor([p1]);
 
     const store = editor.getOptionsStore(p1);
     expect(store).toBeDefined();
   });
 
-  describe('extendSelectors', () => {
-    it('add new selectors to the plugin store', () => {
+  describe("extendSelectors", () => {
+    it("add new selectors to the plugin store", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
+        key: "plugin1",
         options: { value: 1 },
       }).extendSelectors(({ getOptions }) => ({
         doubleValue: () => getOptions().value * 2,
@@ -161,31 +156,31 @@ describe('SlatePlugin store', () => {
 
       const editor = createStoreEditor([p1]);
 
-      expect(editor.getOption(p1, 'doubleValue')).toBe(2);
-      expect(editor.getOption(p1, 'param', 2, 2)).toBe(5);
+      expect(editor.getOption(p1, "doubleValue")).toBe(2);
+      expect(editor.getOption(p1, "param", 2, 2)).toBe(5);
     });
 
-    it('allow chaining multiple extendSelectors calls', () => {
+    it("allow chaining multiple extendSelectors calls", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
+        key: "plugin1",
         options: { value: 1 },
       })
         .extendSelectors(({ getOptions }) => ({
           doubleValue: (mul: number) => getOptions().value * mul,
         }))
         .extendSelectors(({ getOption }) => ({
-          tripleValue: () => getOption('doubleValue', 2) * 3,
+          tripleValue: () => getOption("doubleValue", 2) * 3,
         }));
 
       const editor = createStoreEditor([p1]);
 
-      expect(editor.getOption(p1, 'doubleValue', 2)).toBe(2);
-      expect(editor.getOption(p1, 'tripleValue')).toBe(6);
+      expect(editor.getOption(p1, "doubleValue", 2)).toBe(2);
+      expect(editor.getOption(p1, "tripleValue")).toBe(6);
     });
 
-    it('update extended selectors when options change', () => {
+    it("update extended selectors when options change", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
+        key: "plugin1",
         options: { value: 1 },
       }).extendSelectors(({ getOptions }) => ({
         doubleValue: () => getOptions().value * 2,
@@ -193,134 +188,130 @@ describe('SlatePlugin store', () => {
 
       const editor = createStoreEditor([p1]);
 
-      expect(editor.getOption(p1, 'doubleValue')).toBe(2);
+      expect(editor.getOption(p1, "doubleValue")).toBe(2);
 
-      editor.setOption(p1, 'value', 2);
+      editor.setOption(p1, "value", 2);
 
-      expect(editor.getOption(p1, 'doubleValue')).toBe(4);
+      expect(editor.getOption(p1, "doubleValue")).toBe(4);
     });
   });
 });
 
-describe('PlatePlugin usePluginOption', () => {
-  describe('setOption', () => {
-    it('update a single option', () => {
-      const p1 = createSlatePlugin({ key: 'plugin1', options: { value: 1 } });
+describe("PlatePlugin usePluginOption", () => {
+  describe("setOption", () => {
+    it("update a single option", () => {
+      const p1 = createSlatePlugin({ key: "plugin1", options: { value: 1 } });
       const editor = createStoreEditor([p1]);
 
-      editor.setOption(p1, 'value', 2);
+      editor.setOption(p1, "value", 2);
 
       expect(editor.getOptions(p1)).toEqual({ value: 2 });
     });
 
-    it('merge multiple options', () => {
+    it("merge multiple options", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
-        options: { other: 'test', untouched: 1, value: 1 },
+        key: "plugin1",
+        options: { other: "test", untouched: 1, value: 1 },
       });
       const editor = createStoreEditor([p1]);
 
-      editor.setOptions(p1, { other: 'updated', value: 2 });
+      editor.setOptions(p1, { other: "updated", value: 2 });
 
       expect(editor.getOptions(p1)).toEqual({
-        other: 'updated',
+        other: "updated",
         untouched: 1,
         value: 2,
       });
     });
 
-    it('update with immer', () => {
+    it("update with immer", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
-        options: { other: 'test', value: 1 },
+        key: "plugin1",
+        options: { other: "test", value: 1 },
       });
       const editor = createStoreEditor([p1]);
 
       editor.setOptions(p1, (draft) => {
-        draft.other = 'updated';
+        draft.other = "updated";
       });
 
-      expect(editor.getOptions(p1)).toEqual({ other: 'updated', value: 1 });
+      expect(editor.getOptions(p1)).toEqual({ other: "updated", value: 1 });
     });
 
-    it('update nested options', () => {
+    it("update nested options", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
-        options: { nested: { subValue: 'initial' } },
+        key: "plugin1",
+        options: { nested: { subValue: "initial" } },
       });
       const editor = createStoreEditor([p1]);
 
-      editor.setOption(p1, 'nested', { subValue: 'updated' });
+      editor.setOption(p1, "nested", { subValue: "updated" });
 
       expect(editor.getOptions(p1)).toEqual({
-        nested: { subValue: 'updated' },
+        nested: { subValue: "updated" },
       });
     });
   });
 
-  describe('usePluginOption', () => {
-    it('returns the current option value', () => {
-      const p1 = createSlatePlugin({ key: 'plugin1', options: { value: 1 } });
+  describe("usePluginOption", () => {
+    it("returns the current option value", () => {
+      const p1 = createSlatePlugin({ key: "plugin1", options: { value: 1 } });
       const editor = createPlateEditor({ plugins: [p1] });
 
       const TestHook = () => {
-        const value = useEditorPluginOption(editor, p1, 'value');
+        const value = useEditorPluginOption(editor, p1, "value");
 
         return <div data-testid="test-hook">{value}</div>;
       };
 
       const { getByTestId } = render(<TestHook />);
 
-      (expect(getByTestId('test-hook')) as any).toHaveTextContent('1');
+      (expect(getByTestId("test-hook")) as any).toHaveTextContent("1");
     });
 
-    it('update when option value changes', () => {
-      const p1 = createPlatePlugin({ key: 'plugin1', options: { value: 1 } });
+    it("update when option value changes", () => {
+      const p1 = createPlatePlugin({ key: "plugin1", options: { value: 1 } });
       const editor = createPlateEditor({ plugins: [p1] });
 
-      const { getByTestId } = render(
-        <TestComponent editor={editor} plugin={p1 as any} />
-      );
+      const { getByTestId } = render(<TestComponent editor={editor} plugin={p1 as any} />);
 
-      (expect(getByTestId('test-component')) as any).toHaveTextContent('1');
+      (expect(getByTestId("test-component")) as any).toHaveTextContent("1");
 
       act(() => {
-        editor.setOption(p1, 'value', 2);
+        editor.setOption(p1, "value", 2);
       });
 
-      (expect(getByTestId('test-component')) as any).toHaveTextContent('2');
+      (expect(getByTestId("test-component")) as any).toHaveTextContent("2");
     });
 
-    it('handle nested option values', () => {
+    it("handle nested option values", () => {
       const p1 = createPlatePlugin({
-        key: 'plugin1',
-        options: { nested: { subValue: 'initial' }, value: 1 },
+        key: "plugin1",
+        options: { nested: { subValue: "initial" }, value: 1 },
       });
       const editor = createPlateEditor({ plugins: [p1] });
 
-      const { getByTestId } = render(
-        <TestComponentNested editor={editor} plugin={p1 as any} />
-      );
+      const { getByTestId } = render(<TestComponentNested editor={editor} plugin={p1 as any} />);
 
-      (expect(getByTestId('test-nested')) as any).toHaveTextContent('initial');
+      (expect(getByTestId("test-nested")) as any).toHaveTextContent("initial");
 
       act(() => {
-        editor.setOptions(p1, { nested: { subValue: 'updated' } });
+        editor.setOptions(p1, { nested: { subValue: "updated" } });
       });
 
-      (expect(getByTestId('test-nested')) as any).toHaveTextContent('updated');
+      (expect(getByTestId("test-nested")) as any).toHaveTextContent("updated");
     });
 
-    it('does not cause unnecessary re-renders', () => {
+    it("does not cause unnecessary re-renders", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
-        options: { other: 'test', value: 1 },
+        key: "plugin1",
+        options: { other: "test", value: 1 },
       });
       const editor = createPlateEditor({ plugins: [p1] });
 
       let renderCount = 0;
       const TestHook = () => {
-        const value = useEditorPluginOption(editor, p1, 'value');
+        const value = useEditorPluginOption(editor, p1, "value");
         renderCount++;
 
         return <div data-testid="test-hook">{value}</div>;
@@ -331,30 +322,30 @@ describe('PlatePlugin usePluginOption', () => {
       expect(renderCount).toBe(1);
 
       act(() => {
-        editor.setOption(p1, 'other', 'updated');
+        editor.setOption(p1, "other", "updated");
       });
 
       expect(renderCount).toBe(1);
-      (expect(getByTestId('test-hook')) as any).toHaveTextContent('1');
+      (expect(getByTestId("test-hook")) as any).toHaveTextContent("1");
     });
 
-    it('throw when setting an option that was undefined', () => {
+    it("throw when setting an option that was undefined", () => {
       // Create a plugin with no initial options, but with a defined type
       type PluginOptions = {
         existingOption: string;
       };
-      const p1 = createSlatePlugin<any, PluginOptions>({ key: 'plugin1' });
+      const p1 = createSlatePlugin<any, PluginOptions>({ key: "plugin1" });
       const editor = createStoreEditor([p1]);
 
       // Setting an existing option should work
       expect(() => {
-        editor.setOption(p1, 'existingOption', 'value');
-      }).not.toThrow(new PlateError('', ''));
+        editor.setOption(p1, "existingOption", "value");
+      }).not.toThrow(new PlateError("", ""));
     });
 
-    it('work with extended options', () => {
+    it("work with extended options", () => {
       const p1 = createPlatePlugin({
-        key: 'plugin1',
+        key: "plugin1",
         options: { value: 1 },
       }).extendSelectors(({ getOptions }) => ({
         doubleValue: (mul: number) => getOptions().value * mul,
@@ -364,42 +355,38 @@ describe('PlatePlugin usePluginOption', () => {
 
       const TestHook = () => {
         // @ts-expect-error
-        let _never = useEditorPluginOption(editor, p1, 'doubleValue');
+        let _never = useEditorPluginOption(editor, p1, "doubleValue");
         _never = 1;
-        const doubleValue = useEditorPluginOption(editor, p1, 'doubleValue', 2);
+        const doubleValue = useEditorPluginOption(editor, p1, "doubleValue", 2);
 
         return <div data-testid="test-hook">{doubleValue}</div>;
       };
 
       const { getByTestId } = render(<TestHook />);
 
-      (expect(getByTestId('test-hook')) as any).toHaveTextContent('2');
+      (expect(getByTestId("test-hook")) as any).toHaveTextContent("2");
 
       act(() => {
-        editor.setOption(p1, 'value', 2);
+        editor.setOption(p1, "value", 2);
       });
 
-      (expect(getByTestId('test-hook')) as any).toHaveTextContent('4');
+      (expect(getByTestId("test-hook")) as any).toHaveTextContent("4");
     });
   });
 
-  describe('usePluginOptions', () => {
-    it('allow access to the entire store', () => {
+  describe("usePluginOptions", () => {
+    it("allow access to the entire store", () => {
       const p1 = createSlatePlugin({
-        key: 'plugin1',
-        options: { other: 'test', value: 1 },
+        key: "plugin1",
+        options: { other: "test", value: 1 },
       });
       const editor = createPlateEditor({ plugins: [p1] });
 
       const TestHook = () => {
-        const { other, value } = useEditorPluginOptions(
-          editor,
-          p1,
-          (state) => ({
-            other: state.other,
-            value: state.value,
-          })
-        );
+        const { other, value } = useEditorPluginOptions(editor, p1, (state) => ({
+          other: state.other,
+          value: state.value,
+        }));
 
         return (
           <div>
@@ -411,8 +398,8 @@ describe('PlatePlugin usePluginOption', () => {
 
       const { getByTestId } = render(<TestHook />);
 
-      (expect(getByTestId('test-value')) as any).toHaveTextContent('1');
-      (expect(getByTestId('test-other')) as any).toHaveTextContent('test');
+      (expect(getByTestId("test-value")) as any).toHaveTextContent("1");
+      (expect(getByTestId("test-other")) as any).toHaveTextContent("test");
     });
   });
 });

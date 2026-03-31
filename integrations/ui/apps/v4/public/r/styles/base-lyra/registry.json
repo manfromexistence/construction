@@ -4,11 +4,7 @@
   "items": [
     {
       "name": "index",
-      "dependencies": [
-        "class-variance-authority",
-        "lucide-react",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
       "devDependencies": ["tw-animate-css", "shadcn"],
       "registryDependencies": ["utils"],
       "files": [],
@@ -29,11 +25,7 @@
     },
     {
       "name": "style",
-      "dependencies": [
-        "class-variance-authority",
-        "lucide-react",
-        "@base-ui/react"
-      ],
+      "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
       "devDependencies": ["tw-animate-css", "shadcn"],
       "registryDependencies": ["utils"],
       "files": [],
@@ -1148,14 +1140,7 @@
     {
       "name": "card-example",
       "title": "Card",
-      "registryDependencies": [
-        "avatar",
-        "button",
-        "card",
-        "field",
-        "input",
-        "example"
-      ],
+      "registryDependencies": ["avatar", "button", "card", "field", "input", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/card-example.tsx",
@@ -1309,13 +1294,7 @@
     {
       "name": "dropdown-menu-example",
       "title": "Dropdown Menu",
-      "registryDependencies": [
-        "avatar",
-        "button",
-        "dialog",
-        "dropdown-menu",
-        "example"
-      ],
+      "registryDependencies": ["avatar", "button", "dialog", "dropdown-menu", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/dropdown-menu-example.tsx",
@@ -1327,13 +1306,7 @@
     {
       "name": "empty-example",
       "title": "Empty",
-      "registryDependencies": [
-        "button",
-        "empty",
-        "input-group",
-        "kbd",
-        "example"
-      ],
+      "registryDependencies": ["button", "empty", "input-group", "kbd", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/empty-example.tsx",
@@ -1382,14 +1355,7 @@
     {
       "name": "input-example",
       "title": "Input",
-      "registryDependencies": [
-        "button",
-        "field",
-        "input",
-        "native-select",
-        "select",
-        "example"
-      ],
+      "registryDependencies": ["button", "field", "input", "native-select", "select", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/input-example.tsx",
@@ -1427,13 +1393,7 @@
     {
       "name": "input-otp-example",
       "title": "Input OTP",
-      "registryDependencies": [
-        "button",
-        "card",
-        "field",
-        "input-otp",
-        "example"
-      ],
+      "registryDependencies": ["button", "card", "field", "input-otp", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/input-otp-example.tsx",
@@ -1457,13 +1417,7 @@
     {
       "name": "kbd-example",
       "title": "Kbd",
-      "registryDependencies": [
-        "button",
-        "input-group",
-        "kbd",
-        "tooltip",
-        "example"
-      ],
+      "registryDependencies": ["button", "input-group", "kbd", "tooltip", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/kbd-example.tsx",
@@ -1475,14 +1429,7 @@
     {
       "name": "label-example",
       "title": "Label",
-      "registryDependencies": [
-        "checkbox",
-        "field",
-        "input",
-        "label",
-        "textarea",
-        "example"
-      ],
+      "registryDependencies": ["checkbox", "field", "input", "label", "textarea", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/label-example.tsx",
@@ -1518,12 +1465,7 @@
     {
       "name": "navigation-menu-example",
       "title": "Navigation Menu",
-      "registryDependencies": [
-        "button",
-        "dialog",
-        "navigation-menu",
-        "example"
-      ],
+      "registryDependencies": ["button", "dialog", "navigation-menu", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/navigation-menu-example.tsx",
@@ -1547,14 +1489,7 @@
     {
       "name": "popover-example",
       "title": "Popover",
-      "registryDependencies": [
-        "button",
-        "dialog",
-        "field",
-        "input",
-        "popover",
-        "example"
-      ],
+      "registryDependencies": ["button", "dialog", "field", "input", "popover", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/popover-example.tsx",
@@ -1566,13 +1501,7 @@
     {
       "name": "progress-example",
       "title": "Progress",
-      "registryDependencies": [
-        "field",
-        "item",
-        "progress",
-        "slider",
-        "example"
-      ],
+      "registryDependencies": ["field", "item", "progress", "slider", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/progress-example.tsx",
@@ -1665,14 +1594,7 @@
     {
       "name": "sidebar-example",
       "title": "Sidebar",
-      "registryDependencies": [
-        "button",
-        "dropdown-menu",
-        "item",
-        "label",
-        "sidebar",
-        "example"
-      ],
+      "registryDependencies": ["button", "dropdown-menu", "item", "label", "sidebar", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/sidebar-example.tsx",
@@ -1804,14 +1726,7 @@
     {
       "name": "table-example",
       "title": "Table",
-      "registryDependencies": [
-        "button",
-        "dropdown-menu",
-        "input",
-        "select",
-        "table",
-        "example"
-      ],
+      "registryDependencies": ["button", "dropdown-menu", "input", "select", "table", "example"],
       "files": [
         {
           "path": "registry/base-lyra/examples/table-example.tsx",
@@ -2318,13 +2233,7 @@
       "name": "sidebar-01",
       "title": "Sidebar 01",
       "description": "A simple sidebar with navigation grouped by section.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "dropdown-menu"],
       "files": [
         {
           "path": "registry/base-lyra/blocks/sidebar-01/page.tsx",
@@ -2351,13 +2260,7 @@
       "name": "sidebar-02",
       "title": "Sidebar 02",
       "description": "A sidebar with collapsible sections.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "dropdown-menu"],
       "files": [
         {
           "path": "registry/base-lyra/blocks/sidebar-02/page.tsx",
@@ -2422,13 +2325,7 @@
       "name": "sidebar-05",
       "title": "Sidebar 05",
       "description": "A sidebar with collapsible submenus.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "collapsible"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "collapsible"],
       "files": [
         {
           "path": "registry/base-lyra/blocks/sidebar-05/page.tsx",
@@ -2451,13 +2348,7 @@
       "name": "sidebar-06",
       "title": "Sidebar 06",
       "description": "A sidebar with submenus as dropdowns.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "card",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "card", "dropdown-menu"],
       "files": [
         {
           "path": "registry/base-lyra/blocks/sidebar-06/page.tsx",
@@ -2650,12 +2541,7 @@
       "name": "sidebar-11",
       "title": "Sidebar 11",
       "description": "A sidebar with a collapsible file tree.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "collapsible"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "collapsible"],
       "files": [
         {
           "path": "registry/base-lyra/blocks/sidebar-11/page.tsx",

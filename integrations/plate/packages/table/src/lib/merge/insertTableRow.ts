@@ -1,22 +1,22 @@
-import cloneDeep from 'lodash/cloneDeep.js';
+import cloneDeep from "lodash/cloneDeep.js";
 import {
+  getEditorPlugin,
+  KEYS,
+  NodeApi,
   type Path,
+  PathApi,
   type SlateEditor,
   type TTableCellElement,
   type TTableElement,
   type TTableRowElement,
-  getEditorPlugin,
-  KEYS,
-  NodeApi,
-  PathApi,
-} from 'platejs';
+} from "platejs";
 
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { getTableColumnCount } from '../queries';
-import { getCellTypes } from '../utils';
-import { getCellIndices } from '../utils/getCellIndices';
-import { findCellByIndexes } from './findCellByIndexes';
-import { getCellPath } from './getCellPath';
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { getTableColumnCount } from "../queries";
+import { getCellTypes } from "../utils";
+import { getCellIndices } from "../utils/getCellIndices";
+import { findCellByIndexes } from "./findCellByIndexes";
+import { getCellPath } from "./getCellPath";
 
 export const insertTableMergeRow = (
   editor: SlateEditor,
@@ -91,9 +91,7 @@ export const insertTableMergeRow = (
     nextRowPath = at;
   } else {
     nextRowIndex = before ? cellRowIndex : cellRowIndex + cellRowSpan;
-    checkingRowIndex = before
-      ? cellRowIndex - 1
-      : cellRowIndex + cellRowSpan - 1;
+    checkingRowIndex = before ? cellRowIndex - 1 : cellRowIndex + cellRowSpan - 1;
     nextRowPath = [...tablePath, before ? rowPath : rowPath + cellRowSpan];
   }
 
@@ -119,19 +117,11 @@ export const insertTableMergeRow = (
     if (!cur) return;
 
     const curCell = cur as TTableCellElement;
-    const { col: curColIndex, row: curRowIndex } = getCellIndices(
-      editor,
-      curCell
-    );
+    const { col: curColIndex, row: curRowIndex } = getCellIndices(editor, curCell);
 
     const curRowSpan = api.table.getRowSpan(curCell);
     const curColSpan = api.table.getColSpan(curCell);
-    const currentCellPath = getCellPath(
-      editor,
-      tableEntry,
-      curRowIndex,
-      curColIndex
-    );
+    const currentCellPath = getCellPath(editor, tableEntry, curRowIndex, curColIndex);
 
     const endCurI = curRowIndex + curRowSpan - 1;
 

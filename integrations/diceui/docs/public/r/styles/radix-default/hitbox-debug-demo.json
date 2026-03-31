@@ -1,9 +1,6 @@
 {
   "name": "hitbox-debug-demo",
-  "registryDependencies": [
-    "button",
-    "hitbox"
-  ],
+  "registryDependencies": ["button", "hitbox"],
   "files": [
     {
       "path": "examples/hitbox-debug-demo.tsx",

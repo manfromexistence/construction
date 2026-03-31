@@ -1,13 +1,13 @@
-import path from "path"
-import { migrateIcons } from "@/src/migrations/migrate-icons"
-import { migrateRadix } from "@/src/migrations/migrate-radix"
-import { migrateRtl } from "@/src/migrations/migrate-rtl"
-import { preFlightMigrate } from "@/src/preflights/preflight-migrate"
-import * as ERRORS from "@/src/utils/errors"
-import { handleError } from "@/src/utils/handle-error"
-import { logger } from "@/src/utils/logger"
-import { Command } from "commander"
-import { z } from "zod"
+import { Command } from "commander";
+import path from "path";
+import { z } from "zod";
+import { migrateIcons } from "@/src/migrations/migrate-icons";
+import { migrateRadix } from "@/src/migrations/migrate-radix";
+import { migrateRtl } from "@/src/migrations/migrate-rtl";
+import { preFlightMigrate } from "@/src/preflights/preflight-migrate";
+import * as ERRORS from "@/src/utils/errors";
+import { handleError } from "@/src/utils/handle-error";
+import { logger } from "@/src/utils/logger";
 
 export const migrations = [
   {
@@ -22,7 +22,7 @@ export const migrations = [
     name: "rtl",
     description: "migrate your components to support RTL (right-to-left).",
   },
-] as const
+] as const;
 
 export const migrateOptionsSchema = z.object({
   cwd: z.string(),
@@ -30,17 +30,13 @@ export const migrateOptionsSchema = z.object({
   yes: z.boolean(),
   migration: z
     .string()
-    .refine(
-      (value) =>
-        value && migrations.some((migration) => migration.name === value),
-      {
-        message:
-          "You must specify a valid migration. Run `shadcn migrate --list` to see available migrations.",
-      }
-    )
+    .refine((value) => value && migrations.some((migration) => migration.name === value), {
+      message:
+        "You must specify a valid migration. Run `shadcn migrate --list` to see available migrations.",
+    })
     .optional(),
   path: z.string().optional(),
-})
+});
 
 export const migrate = new Command()
   .name("migrate")
@@ -62,52 +58,49 @@ export const migrate = new Command()
         path: migratePath,
         list: opts.list,
         yes: opts.yes,
-      })
+      });
 
       if (options.list || !options.migration) {
-        logger.info("Available migrations:")
+        logger.info("Available migrations:");
         for (const migration of migrations) {
-          logger.info(`- ${migration.name}: ${migration.description}`)
+          logger.info(`- ${migration.name}: ${migration.description}`);
         }
-        return
+        return;
       }
 
       if (!options.migration) {
         throw new Error(
           "You must specify a migration. Run `shadcn migrate --list` to see available migrations."
-        )
+        );
       }
 
-      let { errors, config } = await preFlightMigrate(options)
+      const { errors, config } = await preFlightMigrate(options);
 
-      if (
-        errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT] ||
-        errors[ERRORS.MISSING_CONFIG]
-      ) {
+      if (errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT] || errors[ERRORS.MISSING_CONFIG]) {
         throw new Error(
           "No `components.json` file found. Ensure you are at the root of your project."
-        )
+        );
       }
 
       if (!config) {
         throw new Error(
           "Something went wrong reading your `components.json` file. Please ensure you have a valid `components.json` file."
-        )
+        );
       }
 
       if (options.migration === "icons") {
-        await migrateIcons(config)
+        await migrateIcons(config);
       }
 
       if (options.migration === "radix") {
-        await migrateRadix(config, { yes: options.yes, path: options.path })
+        await migrateRadix(config, { yes: options.yes, path: options.path });
       }
 
       if (options.migration === "rtl") {
-        await migrateRtl(config, { yes: options.yes, path: options.path })
+        await migrateRtl(config, { yes: options.yes, path: options.path });
       }
     } catch (error) {
-      logger.break()
-      handleError(error)
+      logger.break();
+      handleError(error);
     }
-  })
+  });

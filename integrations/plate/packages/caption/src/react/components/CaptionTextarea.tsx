@@ -1,24 +1,16 @@
-import React, { useCallback, useState } from 'react';
-
-import type { TextareaAutosizeProps } from 'react-textarea-autosize';
-
-import {
-  type TCaptionElement,
-  type TElement,
-  isHotkey,
-  NodeApi,
-  PathApi,
-} from 'platejs';
+import { isHotkey, NodeApi, PathApi, type TCaptionElement, type TElement } from "platejs";
 import {
   createPrimitiveComponent,
   useEditorRef,
   useElement,
   usePluginOption,
   useReadOnly,
-} from 'platejs/react';
+} from "platejs/react";
+import React, { useCallback, useState } from "react";
+import type { TextareaAutosizeProps } from "react-textarea-autosize";
 
-import { CaptionPlugin } from '../CaptionPlugin';
-import { TextareaAutosize } from './TextareaAutosize';
+import { CaptionPlugin } from "../CaptionPlugin";
+import { TextareaAutosize } from "./TextareaAutosize";
 
 /** Focus textareaRef when focusCaptionPath is set to the image path. */
 export const useCaptionTextareaFocus = (
@@ -27,7 +19,7 @@ export const useCaptionTextareaFocus = (
   const editor = useEditorRef();
   const element = useElement<TCaptionElement>();
 
-  const focusCaptionPath = usePluginOption(CaptionPlugin, 'focusEndPath');
+  const focusCaptionPath = usePluginOption(CaptionPlugin, "focusEndPath");
 
   React.useEffect(() => {
     if (focusCaptionPath && textareaRef.current) {
@@ -35,7 +27,7 @@ export const useCaptionTextareaFocus = (
 
       if (path && PathApi.equals(path, focusCaptionPath)) {
         textareaRef.current.focus();
-        editor.setOption(CaptionPlugin, 'focusEndPath', null);
+        editor.setOption(CaptionPlugin, "focusEndPath", null);
       }
     }
   }, [editor, element, focusCaptionPath, textareaRef]);
@@ -47,21 +39,15 @@ export const useCaptionTextareaState = () => {
 
   const [isComposing, setIsComposing] = useState(false);
 
-  const [captionValue, setCaptionValue] = useState<
-    TextareaAutosizeProps['value']
-  >(() => {
-    const nodeCaption =
-      element.caption ?? ([{ children: [{ text: '' }] }] as [TElement]);
+  const [captionValue, setCaptionValue] = useState<TextareaAutosizeProps["value"]>(() => {
+    const nodeCaption = element.caption ?? ([{ children: [{ text: "" }] }] as [TElement]);
 
     return NodeApi.string(nodeCaption[0]);
   });
 
   const updateEditorCaptionValue = useCallback(
     (newValue: string) => {
-      editor.tf.setNodes<TCaptionElement>(
-        { caption: [{ text: newValue }] },
-        { at: element }
-      );
+      editor.tf.setNodes<TCaptionElement>({ caption: [{ text: newValue }] }, { at: element });
     },
     [editor, element]
   );
@@ -120,9 +106,9 @@ export const useCaptionTextarea = ({
 }: ReturnType<typeof useCaptionTextareaState>) => {
   const editor = useEditorRef();
 
-  const onKeyDown: TextareaAutosizeProps['onKeyDown'] = (e) => {
+  const onKeyDown: TextareaAutosizeProps["onKeyDown"] = (e) => {
     // select image
-    if (isHotkey('up', e)) {
+    if (isHotkey("up", e)) {
       const path = editor.api.findPath(element);
 
       if (!path) return;
@@ -132,7 +118,7 @@ export const useCaptionTextarea = ({
       editor.tf.focus({ at: path });
     }
     // select next block
-    if (isHotkey('down', e)) {
+    if (isHotkey("down", e)) {
       const path = editor.api.findPath(element);
 
       if (!path) return;
@@ -147,11 +133,11 @@ export const useCaptionTextarea = ({
     }
   };
 
-  const onBlur: TextareaAutosizeProps['onBlur'] = (e) => {
+  const onBlur: TextareaAutosizeProps["onBlur"] = (e) => {
     const currentValue = e.target.value;
 
     if (currentValue.length === 0) {
-      editor.setOption(CaptionPlugin, 'visibleId', null);
+      editor.setOption(CaptionPlugin, "visibleId", null);
     }
   };
 

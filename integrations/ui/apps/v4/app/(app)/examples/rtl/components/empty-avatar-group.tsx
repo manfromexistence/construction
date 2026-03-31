@@ -1,15 +1,10 @@
-"use client"
+"use client";
 
-import { PlusIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react";
 
-import { useLanguageContext } from "@/components/language-selector"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarImage,
-} from "@/styles/base-nova/ui-rtl/avatar"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
+import { useLanguageContext } from "@/components/language-selector";
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/styles/base-nova/ui-rtl/avatar";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
 import {
   Empty,
   EmptyContent,
@@ -17,7 +12,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/styles/base-nova/ui-rtl/empty"
+} from "@/styles/base-nova/ui-rtl/empty";
 
 const translations = {
   ar: {
@@ -32,12 +27,12 @@ const translations = {
     description: "הזמן את הצוות שלך לשתף פעולה בפרויקט זה.",
     invite: "הזמן חברים",
   },
-}
+};
 
 export function EmptyAvatarGroup() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
 
   return (
     <Empty className="flex-none border py-10" dir={t.dir}>
@@ -49,17 +44,11 @@ export function EmptyAvatarGroup() {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <Avatar>
-              <AvatarImage
-                src="https://github.com/maxleiter.png"
-                alt="@maxleiter"
-              />
+              <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
               <AvatarFallback>LR</AvatarFallback>
             </Avatar>
             <Avatar>
-              <AvatarImage
-                src="https://github.com/evilrabbit.png"
-                alt="@evilrabbit"
-              />
+              <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
               <AvatarFallback>ER</AvatarFallback>
             </Avatar>
           </AvatarGroup>
@@ -74,5 +63,5 @@ export function EmptyAvatarGroup() {
         </Button>
       </EmptyContent>
     </Empty>
-  )
+  );
 }

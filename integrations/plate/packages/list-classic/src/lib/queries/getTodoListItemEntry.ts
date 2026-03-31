@@ -1,13 +1,13 @@
 import {
   type ElementEntry,
+  KEYS,
+  NodeApi,
   type Path,
+  RangeApi,
   type SlateEditor,
   type TElement,
   type TLocation,
-  KEYS,
-  NodeApi,
-  RangeApi,
-} from 'platejs';
+} from "platejs";
 
 /**
  * Returns the nearest li and ul / ol wrapping node entries for a given path

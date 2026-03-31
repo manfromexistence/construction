@@ -1,9 +1,9 @@
-import type { DOMNode } from 'slate-dom';
+import type { DOMNode } from "slate-dom";
 
-import { DOMEditor } from 'slate-dom';
+import { DOMEditor } from "slate-dom";
 
-import type { Editor } from '../../interfaces/editor';
-import type { TNode } from '../../interfaces/node';
+import type { Editor } from "../../interfaces/editor";
+import type { TNode } from "../../interfaces/node";
 
 export const toSlateNode = (editor: Editor, domNode: DOMNode) => {
   try {

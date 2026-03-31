@@ -1,24 +1,17 @@
-import { ArrowRightIcon } from "lucide-react"
-import Link from "next/link"
+import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 
-import { Button } from "@/components/base/ui/button"
-import { SponsorItem } from "@/features/sponsor/components/sponsor-item"
-import { SponsorItemPlus } from "@/features/sponsor/components/sponsor-item-plus"
-import { SPONSORS } from "@/features/sponsor/data"
-import type { SponsorTier } from "@/features/sponsor/types"
+import { Button } from "@/components/base/ui/button";
+import { SponsorItem } from "@/features/sponsor/components/sponsor-item";
+import { SponsorItemPlus } from "@/features/sponsor/components/sponsor-item-plus";
+import { SPONSORS } from "@/features/sponsor/data";
+import type { SponsorTier } from "@/features/sponsor/types";
 
-import { Panel, PanelDescription, PanelHeader, PanelTitle } from "./panel"
+import { Panel, PanelDescription, PanelHeader, PanelTitle } from "./panel";
 
-const FEATURED_TIERS = new Set<SponsorTier>([
-  "osp",
-  "platinum",
-  "gold",
-  "silver",
-])
+const FEATURED_TIERS = new Set<SponsorTier>(["osp", "platinum", "gold", "silver"]);
 
-const FEATURED_SPONSORS = SPONSORS.filter((sponsor) =>
-  FEATURED_TIERS.has(sponsor.tier)
-)
+const FEATURED_SPONSORS = SPONSORS.filter((sponsor) => FEATURED_TIERS.has(sponsor.tier));
 
 export function Sponsors() {
   return (
@@ -26,8 +19,7 @@ export function Sponsors() {
       <PanelHeader className="after:content-none">
         <PanelTitle>Sponsors</PanelTitle>
         <PanelDescription>
-          Grateful for the support that helps me grow and maintain high-quality
-          projects.
+          Grateful for the support that helps me grow and maintain high-quality projects.
         </PanelDescription>
       </PanelHeader>
 
@@ -58,5 +50,5 @@ export function Sponsors() {
         </Button>
       </div>
     </Panel>
-  )
+  );
 }

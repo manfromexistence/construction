@@ -1,24 +1,22 @@
-import { KEYS, createSlateEditor } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BaseCodeBlockPlugin, BaseCodeLinePlugin } from './BaseCodeBlockPlugin';
-import * as decorationsModule from './setCodeBlockToDecorations';
+import { BaseCodeBlockPlugin, BaseCodeLinePlugin } from "./BaseCodeBlockPlugin";
+import * as decorationsModule from "./setCodeBlockToDecorations";
 
-describe('BaseCodeBlockPlugin', () => {
+describe("BaseCodeBlockPlugin", () => {
   afterEach(() => {
     mock.restore();
   });
 
-  it('injects the html query guard and binds the toggle transform', () => {
+  it("injects the html query guard and binds the toggle transform", () => {
     const editor = createSlateEditor({
       plugins: [BaseCodeBlockPlugin],
     } as any);
     const plugin = editor.getPlugin(BaseCodeBlockPlugin);
     const query = plugin.inject.plugins?.[KEYS.html]?.parser?.query!;
-    const toggleBlockSpy = spyOn(editor.tf, 'toggleBlock');
+    const toggleBlockSpy = spyOn(editor.tf, "toggleBlock");
 
-    spyOn(editor.api, 'some')
-      .mockReturnValueOnce(true)
-      .mockReturnValueOnce(false);
+    spyOn(editor.api, "some").mockReturnValueOnce(true).mockReturnValueOnce(false);
 
     expect(query({ editor } as any)).toBe(false);
     expect(query({ editor } as any)).toBe(true);
@@ -28,10 +26,10 @@ describe('BaseCodeBlockPlugin', () => {
     expect(toggleBlockSpy).toHaveBeenCalledWith(editor.getType(KEYS.codeBlock));
   });
 
-  it('initializes code-block decorations and returns cached code-line ranges', () => {
+  it("initializes code-block decorations and returns cached code-line ranges", () => {
     const setDecorationsSpy = spyOn(
       decorationsModule,
-      'setCodeBlockToDecorations'
+      "setCodeBlockToDecorations"
     ).mockImplementation(() => {});
     const editor = createSlateEditor({
       plugins: [
@@ -43,7 +41,7 @@ describe('BaseCodeBlockPlugin', () => {
     } as any);
     const plugin = editor.getPlugin(BaseCodeBlockPlugin) as any;
     const codeLine = {
-      children: [{ text: 'x' }],
+      children: [{ text: "x" }],
       type: editor.getType(KEYS.codeLine),
     } as any;
     const codeBlock = {
@@ -80,7 +78,7 @@ describe('BaseCodeBlockPlugin', () => {
     expect(
       plugin.decorate({
         editor,
-        entry: [{ children: [], type: 'p' }, [1]],
+        entry: [{ children: [], type: "p" }, [1]],
         getOptions: () => ({ lowlight: null }),
         type: editor.getType(KEYS.codeBlock),
       })

@@ -1,6 +1,6 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { someList } from './someList';
+import { someList } from "./someList";
 
 const createListEditor = ({
   children,
@@ -17,30 +17,30 @@ const createListEditor = ({
     value: children as any,
   });
 
-describe('someList', () => {
-  it('returns false when the editor has no selection', () => {
+describe("someList", () => {
+  it("returns false when the editor has no selection", () => {
     const editor = createListEditor({
       children: [
         {
           [KEYS.indent]: 1,
-          [KEYS.listType]: 'disc',
-          children: [{ text: 'Item' }],
-          type: 'p',
+          [KEYS.listType]: "disc",
+          children: [{ text: "Item" }],
+          type: "p",
         },
       ],
     });
 
-    expect(someList(editor, 'disc')).toBe(false);
+    expect(someList(editor, "disc")).toBe(false);
   });
 
-  it('returns true when the selection is inside a matching list item', () => {
+  it("returns true when the selection is inside a matching list item", () => {
     const editor = createListEditor({
       children: [
         {
           [KEYS.indent]: 1,
-          [KEYS.listType]: 'disc',
-          children: [{ text: 'Item' }],
-          type: 'p',
+          [KEYS.listType]: "disc",
+          children: [{ text: "Item" }],
+          type: "p",
         },
       ],
       selection: {
@@ -49,18 +49,18 @@ describe('someList', () => {
       },
     });
 
-    expect(someList(editor, 'disc')).toBe(true);
+    expect(someList(editor, "disc")).toBe(true);
   });
 
-  it('ignores todo list nodes with their own checked property', () => {
+  it("ignores todo list nodes with their own checked property", () => {
     const editor = createListEditor({
       children: [
         {
           [KEYS.indent]: 1,
           [KEYS.listChecked]: false,
           [KEYS.listType]: KEYS.listTodo,
-          children: [{ text: 'Todo' }],
-          type: 'p',
+          children: [{ text: "Todo" }],
+          type: "p",
         },
       ],
       selection: {
@@ -72,14 +72,14 @@ describe('someList', () => {
     expect(someList(editor, KEYS.listTodo)).toBe(false);
   });
 
-  it('supports matching against multiple list types', () => {
+  it("supports matching against multiple list types", () => {
     const editor = createListEditor({
       children: [
         {
           [KEYS.indent]: 1,
-          [KEYS.listType]: 'circle',
-          children: [{ text: 'Item' }],
-          type: 'p',
+          [KEYS.listType]: "circle",
+          children: [{ text: "Item" }],
+          type: "p",
         },
       ],
       selection: {
@@ -88,6 +88,6 @@ describe('someList', () => {
       },
     });
 
-    expect(someList(editor, ['decimal', 'circle'])).toBe(true);
+    expect(someList(editor, ["decimal", "circle"])).toBe(true);
   });
 });

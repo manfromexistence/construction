@@ -1,9 +1,6 @@
 {
   "name": "timeline",
-  "dependencies": [
-    "@base-ui/react",
-    "class-variance-authority"
-  ],
+  "dependencies": ["@base-ui/react", "class-variance-authority"],
   "registryDependencies": [
     "direction",
     "@diceui/use-isomorphic-layout-effect",

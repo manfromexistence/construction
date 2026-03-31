@@ -1,19 +1,16 @@
-import { Slot } from "radix-ui"
-import React from "react"
+import { Slot } from "radix-ui";
+import React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 function Panel({ className, ...props }: React.ComponentProps<"section">) {
   return (
     <section
       data-slot="panel"
-      className={cn(
-        "screen-line-top screen-line-bottom border-x border-line",
-        className
-      )}
+      className={cn("screen-line-top screen-line-bottom border-x border-line", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PanelHeader({ className, ...props }: React.ComponentProps<"header">) {
@@ -26,7 +23,7 @@ function PanelHeader({ className, ...props }: React.ComponentProps<"header">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function PanelTitle({
@@ -34,7 +31,7 @@ function PanelTitle({
   asChild = false,
   ...props
 }: React.ComponentProps<"h2"> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot.Root : "h2"
+  const Comp = asChild ? Slot.Root : "h2";
 
   return (
     <Comp
@@ -42,7 +39,7 @@ function PanelTitle({
       className={cn("text-3xl font-semibold tracking-tight", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PanelTitleSup({ className, ...props }: React.ComponentProps<"sup">) {
@@ -54,36 +51,21 @@ function PanelTitleSup({ className, ...props }: React.ComponentProps<"sup">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
-function PanelDescription({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
+function PanelDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="panel-description"
-      className={cn(
-        "py-4 font-mono text-sm text-balance text-muted-foreground",
-        className
-      )}
+      className={cn("py-4 font-mono text-sm text-balance text-muted-foreground", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PanelContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div data-slot="panel-body" className={cn("p-4", className)} {...props} />
-  )
+  return <div data-slot="panel-body" className={cn("p-4", className)} {...props} />;
 }
 
-export {
-  Panel,
-  PanelContent,
-  PanelDescription,
-  PanelHeader,
-  PanelTitle,
-  PanelTitleSup,
-}
+export { Panel, PanelContent, PanelDescription, PanelHeader, PanelTitle, PanelTitleSup };

@@ -2,14 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "table-example",
   "title": "Table",
-  "registryDependencies": [
-    "button",
-    "dropdown-menu",
-    "input",
-    "select",
-    "table",
-    "example"
-  ],
+  "registryDependencies": ["button", "dropdown-menu", "input", "select", "table", "example"],
   "files": [
     {
       "path": "registry/radix-nova/examples/table-example.tsx",

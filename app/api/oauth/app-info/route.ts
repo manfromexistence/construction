@@ -1,8 +1,8 @@
+import { and, eq } from "drizzle-orm";
+import { NextRequest } from "next/server";
 import { db } from "@/db";
 import { oauthApp } from "@/db/schema";
 import { oauthError } from "@/lib/oauth";
-import { eq, and } from "drizzle-orm";
-import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const clientId = req.nextUrl.searchParams.get("client_id");

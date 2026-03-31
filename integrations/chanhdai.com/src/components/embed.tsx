@@ -1,14 +1,8 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-import { ImageZoom } from "./kibo-ui/image-zoom"
+import { ImageZoom } from "./kibo-ui/image-zoom";
 
-export function YouTubeEmbed({
-  videoId,
-  title,
-}: {
-  videoId: string
-  title: string
-}) {
+export function YouTubeEmbed({ videoId, title }: { videoId: string; title: string }) {
   return (
     <div className="relative my-[1.25em]">
       <iframe
@@ -22,33 +16,27 @@ export function YouTubeEmbed({
 
       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset dark:ring-white/10" />
     </div>
-  )
+  );
 }
 
-export function IframeEmbed({
-  className,
-  ...props
-}: React.ComponentProps<"iframe">) {
+export function IframeEmbed({ className, ...props }: React.ComponentProps<"iframe">) {
   return (
     <div className="relative my-[1.25em]">
-      <iframe
-        className={cn("aspect-video w-full rounded-xl", className)}
-        {...props}
-      />
+      <iframe className={cn("aspect-video w-full rounded-xl", className)} {...props} />
 
       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset dark:ring-white/10" />
     </div>
-  )
+  );
 }
 
 export function FramedImage({
   canZoom = true,
   ...props
 }: React.ComponentProps<"img"> & {
-  canZoom?: boolean
+  canZoom?: boolean;
 }) {
   // eslint-disable-next-line jsx-a11y/alt-text
-  const image = <img {...props} />
+  const image = <img {...props} />;
 
   return (
     <figure className="relative [&_img]:rounded-xl">
@@ -56,5 +44,5 @@ export function FramedImage({
 
       <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset dark:ring-white/10" />
     </figure>
-  )
+  );
 }

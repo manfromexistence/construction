@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Safari Demo 2",
   "description": "Second example showing a Safari browser mockup.",
-  "registryDependencies": [
-    "@magicui/safari"
-  ],
+  "registryDependencies": ["@magicui/safari"],
   "files": [
     {
       "path": "registry/example/safari-demo-2.tsx",

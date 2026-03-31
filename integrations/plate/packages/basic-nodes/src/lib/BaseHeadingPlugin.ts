@@ -1,12 +1,12 @@
 import {
   type AnyEditorPlugin,
+  createTSlatePlugin,
   type PluginConfig,
   type SlatePlugin,
-  createTSlatePlugin,
-} from 'platejs';
+} from "platejs";
 
 export type HeadingConfig = PluginConfig<
-  'heading',
+  "heading",
   {
     /** Heading levels supported from 1 to `levels` */
     levels?: HeadingLevel | HeadingLevel[];
@@ -17,7 +17,7 @@ export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 const node = {
   isElement: true,
-} satisfies Partial<AnyEditorPlugin['node']>;
+} satisfies Partial<AnyEditorPlugin["node"]>;
 
 const rules = {
   break: { splitReset: true },
@@ -25,10 +25,10 @@ const rules = {
 };
 
 export const BaseH1Plugin = createTSlatePlugin({
-  key: 'h1',
+  key: "h1",
   node,
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'H1' }] } } },
-  render: { as: 'h1' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "H1" }] } } },
+  render: { as: "h1" },
   rules,
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
@@ -37,10 +37,10 @@ export const BaseH1Plugin = createTSlatePlugin({
 }));
 
 export const BaseH2Plugin = createTSlatePlugin({
-  key: 'h2',
+  key: "h2",
   node,
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'H2' }] } } },
-  render: { as: 'h2' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "H2" }] } } },
+  render: { as: "h2" },
   rules,
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
@@ -49,10 +49,10 @@ export const BaseH2Plugin = createTSlatePlugin({
 }));
 
 export const BaseH3Plugin = createTSlatePlugin({
-  key: 'h3',
+  key: "h3",
   node,
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'H3' }] } } },
-  render: { as: 'h3' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "H3" }] } } },
+  render: { as: "h3" },
   rules,
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
@@ -61,10 +61,10 @@ export const BaseH3Plugin = createTSlatePlugin({
 }));
 
 export const BaseH4Plugin = createTSlatePlugin({
-  key: 'h4',
+  key: "h4",
   node,
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'H4' }] } } },
-  render: { as: 'h4' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "H4" }] } } },
+  render: { as: "h4" },
   rules,
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
@@ -73,10 +73,10 @@ export const BaseH4Plugin = createTSlatePlugin({
 }));
 
 export const BaseH5Plugin = createTSlatePlugin({
-  key: 'h5',
+  key: "h5",
   node,
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'H5' }] } } },
-  render: { as: 'h5' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "H5" }] } } },
+  render: { as: "h5" },
   rules,
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
@@ -85,10 +85,10 @@ export const BaseH5Plugin = createTSlatePlugin({
 }));
 
 export const BaseH6Plugin = createTSlatePlugin({
-  key: 'h6',
+  key: "h6",
   node,
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'H6' }] } } },
-  render: { as: 'h6' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "H6" }] } } },
+  render: { as: "h6" },
   rules,
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
@@ -98,7 +98,7 @@ export const BaseH6Plugin = createTSlatePlugin({
 
 /** Enables support for headings with configurable levels (from 1 to 6). */
 export const BaseHeadingPlugin = createTSlatePlugin<HeadingConfig>({
-  key: 'heading',
+  key: "heading",
   options: {
     levels: [1, 2, 3, 4, 5, 6],
   },
@@ -121,9 +121,7 @@ export const BaseHeadingPlugin = createTSlatePlugin<HeadingConfig>({
     ? levels
     : Array.from({ length: levels || 6 }, (_, i) => (i + 1) as HeadingLevel);
 
-  const plugins: SlatePlugin[] = headingLevels.map(
-    (level) => headingPlugins[level] as any
-  );
+  const plugins: SlatePlugin[] = headingLevels.map((level) => headingPlugins[level] as any);
 
   return { plugins };
 });

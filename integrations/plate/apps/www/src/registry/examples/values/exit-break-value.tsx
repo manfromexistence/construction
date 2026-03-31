@@ -1,8 +1,8 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { createTable } from './table-value';
+import { createTable } from "./table-value";
 
 jsx;
 
@@ -17,8 +17,8 @@ export const exitBreakValue: any = (
   <fragment>
     <hh2>Exit Break</hh2>
     <hp>
-      Exit from nested block structures using keyboard shortcuts. The plugin
-      automatically determines the appropriate exit point:
+      Exit from nested block structures using keyboard shortcuts. The plugin automatically
+      determines the appropriate exit point:
     </hp>
 
     <hp indent={1} listStyleType="disc">

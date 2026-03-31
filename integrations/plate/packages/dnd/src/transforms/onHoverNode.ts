@@ -1,13 +1,10 @@
-import type { PlateEditor } from 'platejs/react';
-import type { DropTargetMonitor } from 'react-dnd';
-
-import { NodeApi, PathApi } from 'platejs';
-
-import type { UseDropNodeOptions } from '../hooks/useDropNode';
-import type { DragItemNode } from '../types';
-
-import { DndPlugin } from '../DndPlugin';
-import { getDropPath } from './onDropNode';
+import { NodeApi, PathApi } from "platejs";
+import type { PlateEditor } from "platejs/react";
+import type { DropTargetMonitor } from "react-dnd";
+import { DndPlugin } from "../DndPlugin";
+import type { UseDropNodeOptions } from "../hooks/useDropNode";
+import type { DragItemNode } from "../types";
+import { getDropPath } from "./onDropNode";
 
 /** Callback called when dragging a node and hovering nodes. */
 export const onHoverNode = (
@@ -18,18 +15,15 @@ export const onHoverNode = (
     element,
     monitor,
     nodeRef,
-    orientation = 'vertical',
+    orientation = "vertical",
   }: {
     dragItem: DragItemNode;
     monitor: DropTargetMonitor;
-  } & Pick<
-    UseDropNodeOptions,
-    'canDropNode' | 'element' | 'nodeRef' | 'orientation'
-  >
+  } & Pick<UseDropNodeOptions, "canDropNode" | "element" | "nodeRef" | "orientation">
 ) => {
   const { _isOver, dropTarget } = editor.getOptions(DndPlugin);
   const currentId = dropTarget?.id ?? null;
-  const currentLine = dropTarget?.line ?? '';
+  const currentLine = dropTarget?.line ?? "";
 
   // Check if the drop would actually move the node.
   const result = getDropPath(editor, {
@@ -45,7 +39,7 @@ export const onHoverNode = (
   // In that case, don't show a drop target.
   if (!result) {
     if (currentId || currentLine) {
-      editor.setOption(DndPlugin, 'dropTarget', { id: null, line: '' });
+      editor.setOption(DndPlugin, "dropTarget", { id: null, line: "" });
     }
 
     return;
@@ -61,24 +55,24 @@ export const onHoverNode = (
       return;
     }
 
-    if (newDropTarget.line === 'top') {
+    if (newDropTarget.line === "top") {
       const previousPath = PathApi.previous(editor.api.findPath(element)!);
 
       if (!previousPath) {
-        return editor.setOption(DndPlugin, 'dropTarget', newDropTarget);
+        return editor.setOption(DndPlugin, "dropTarget", newDropTarget);
       }
 
       const nextNode = NodeApi.get(editor, previousPath!);
 
-      editor.setOption(DndPlugin, 'dropTarget', {
+      editor.setOption(DndPlugin, "dropTarget", {
         id: nextNode?.id as string,
-        line: 'bottom',
+        line: "bottom",
       });
 
       return;
     }
 
-    editor.setOption(DndPlugin, 'dropTarget', newDropTarget);
+    editor.setOption(DndPlugin, "dropTarget", newDropTarget);
   }
   if (direction && editor.api.isExpanded()) {
     editor.tf.focus();

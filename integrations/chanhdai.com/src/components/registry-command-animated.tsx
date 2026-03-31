@@ -1,30 +1,24 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
-import { useRef } from "react"
+import { motion } from "motion/react";
+import { useRef } from "react";
 
-import { registryConfig } from "@/config/registry"
-import type { PackageManager } from "@/hooks/use-package-manager"
-import { usePackageManager } from "@/hooks/use-package-manager"
-import { components } from "@/registry/components/_registry"
-import { TextFlip } from "@/registry/components/text-flip"
+import { registryConfig } from "@/config/registry";
+import type { PackageManager } from "@/hooks/use-package-manager";
+import { usePackageManager } from "@/hooks/use-package-manager";
+import { components } from "@/registry/components/_registry";
+import { TextFlip } from "@/registry/components/text-flip";
 
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from "./base/ui/tabs"
-import { CopyButton } from "./copy-button"
-import { getIconForPackageManager } from "./icons"
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from "./base/ui/tabs";
+import { CopyButton } from "./copy-button";
+import { getIconForPackageManager } from "./icons";
 
 const pmCommands = {
   pnpm: "pnpm dlx",
   yarn: "yarn",
   npm: "npx",
   bun: "bunx --bun",
-}
+};
 
 const registryItemNames = components
   .map((component) => component.name)
@@ -32,12 +26,12 @@ const registryItemNames = components
     a.localeCompare(b, "en", {
       sensitivity: "base",
     })
-  )
+  );
 
 export function RegistryCommandAnimated() {
-  const [packageManager, setPackageManager] = usePackageManager()
+  const [packageManager, setPackageManager] = usePackageManager();
 
-  const currentItemRef = useRef(registryItemNames[0])
+  const currentItemRef = useRef(registryItemNames[0]);
 
   return (
     <div className="relative overflow-hidden">
@@ -45,7 +39,7 @@ export function RegistryCommandAnimated() {
         className="gap-0"
         value={packageManager}
         onValueChange={(value) => {
-          setPackageManager(value as PackageManager)
+          setPackageManager(value as PackageManager);
         }}
       >
         <div className="px-4 shadow-[inset_0_-1px_0_0] shadow-line">
@@ -54,14 +48,10 @@ export function RegistryCommandAnimated() {
 
             {Object.entries(pmCommands).map(([key]) => {
               return (
-                <TabsTrigger
-                  key={key}
-                  className="h-7 rounded-lg p-0 px-2 font-mono"
-                  value={key}
-                >
+                <TabsTrigger key={key} className="h-7 rounded-lg p-0 px-2 font-mono" value={key}>
                   {key}
                 </TabsTrigger>
-              )
+              );
             })}
 
             <TabsIndicator className="h-0.5 translate-y-0 rounded-none bg-foreground shadow-none dark:bg-foreground" />
@@ -86,7 +76,7 @@ export function RegistryCommandAnimated() {
                     \
                   </span>
                 </TabsContent>
-              )
+              );
             })}
 
             <span>{registryConfig.namespace}/</span>
@@ -101,7 +91,7 @@ export function RegistryCommandAnimated() {
               }}
               interval={1.5}
               onIndexChange={(index: number) => {
-                currentItemRef.current = registryItemNames[index]
+                currentItemRef.current = registryItemNames[index];
               }}
             >
               {registryItemNames}
@@ -114,11 +104,11 @@ export function RegistryCommandAnimated() {
         className="absolute top-1.5 right-1.5 z-10 size-7 border-none [&_svg:not([class*='size-'])]:size-3.5"
         size="icon-sm"
         text={() => {
-          const baseCommand = pmCommands[packageManager] || pmCommands["pnpm"]
-          return `${baseCommand} shadcn@latest add ${registryConfig.namespace}/${currentItemRef.current}`
+          const baseCommand = pmCommands[packageManager] || pmCommands["pnpm"];
+          return `${baseCommand} shadcn@latest add ${registryConfig.namespace}/${currentItemRef.current}`;
         }}
         event="copy_npm_command"
       />
     </div>
-  )
+  );
 }

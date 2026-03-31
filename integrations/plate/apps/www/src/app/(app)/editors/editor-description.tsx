@@ -1,23 +1,19 @@
-'use client';
+"use client";
 
-import {
-  PageActions,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from '@/components/page-header';
-import { Button } from '@/components/ui/button';
-import { useLocale } from '@/hooks/useLocale';
+import { PageActions, PageHeaderDescription, PageHeaderHeading } from "@/components/page-header";
+import { Button } from "@/components/ui/button";
+import { useLocale } from "@/hooks/useLocale";
 
 const i18n = {
   cn: {
-    browseEditors: '浏览编辑器',
-    description: '精美设计。复制到你的应用中。',
-    title: '为Web构建编辑器',
+    browseEditors: "浏览编辑器",
+    description: "精美设计。复制到你的应用中。",
+    title: "为Web构建编辑器",
   },
   en: {
-    browseEditors: 'Browse Editors',
-    description: 'Beautifully designed. Copy and paste into your apps.',
-    title: 'Building Editors for the Web',
+    browseEditors: "Browse Editors",
+    description: "Beautifully designed. Copy and paste into your apps.",
+    title: "Building Editors for the Web",
   },
 };
 

@@ -1,17 +1,17 @@
 #!/usr/bin/env node
 
-import { spawnSync } from 'node:child_process';
-import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { spawnSync } from "node:child_process";
+import { access, mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(scriptDir, '..', '..');
+const repoRoot = path.resolve(scriptDir, "..", "..");
 const localPackageOutputDir = path.join(
   repoRoot,
-  'node_modules',
-  '.cache',
-  'template-local-packages'
+  "node_modules",
+  ".cache",
+  "template-local-packages"
 );
 
 if (isMainModule()) {
@@ -22,32 +22,27 @@ async function main() {
   const baseRef = process.env.TEMPLATE_LOCAL_PACKAGE_BASE_REF?.trim();
   const templateDirArgs = process.argv.slice(2);
 
-  if (templateDirArgs.includes('-h') || templateDirArgs.includes('--help')) {
+  if (templateDirArgs.includes("-h") || templateDirArgs.includes("--help")) {
     console.log(
-      'Usage: node tooling/scripts/prepare-local-template-packages.mjs <template-dir> [template-dir...]'
+      "Usage: node tooling/scripts/prepare-local-template-packages.mjs <template-dir> [template-dir...]"
     );
     process.exit(0);
   }
 
   if (templateDirArgs.length === 0) {
     console.error(
-      'Usage: node tooling/scripts/prepare-local-template-packages.mjs <template-dir> [template-dir...]'
+      "Usage: node tooling/scripts/prepare-local-template-packages.mjs <template-dir> [template-dir...]"
     );
     process.exit(1);
   }
 
-  const templateDirs = templateDirArgs.map((templateDir) =>
-    path.resolve(repoRoot, templateDir)
-  );
+  const templateDirs = templateDirArgs.map((templateDir) => path.resolve(repoRoot, templateDir));
   const workspacePackages = await getWorkspacePackages();
   const templateConfigs = await Promise.all(
     templateDirs.map(async (templateDir) => {
-      const packageJsonPath = path.join(templateDir, 'package.json');
-      const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8'));
-      const localDependencies = getLocalDependencies(
-        packageJson,
-        workspacePackages
-      );
+      const packageJsonPath = path.join(templateDir, "package.json");
+      const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
+      const localDependencies = getLocalDependencies(packageJson, workspacePackages);
 
       return {
         localDependencies,
@@ -77,7 +72,7 @@ async function main() {
         `No affected local workspace packages referenced by templates for ${baseRef}...HEAD.`
       );
     } else {
-      console.log('No local workspace packages referenced by templates.');
+      console.log("No local workspace packages referenced by templates.");
     }
     process.exit(0);
   }
@@ -104,25 +99,20 @@ async function main() {
 function isMainModule() {
   const entrypoint = process.argv[1];
 
-  return (
-    !!entrypoint && path.resolve(entrypoint) === fileURLToPath(import.meta.url)
-  );
+  return !!entrypoint && path.resolve(entrypoint) === fileURLToPath(import.meta.url);
 }
 
 function buildWorkspacePackages(workspacePackagesToBuild) {
   const filters = workspacePackagesToBuild
     .map((workspacePackage) => {
-      const relativeDirectory = path.relative(
-        repoRoot,
-        workspacePackage.directory
-      );
+      const relativeDirectory = path.relative(repoRoot, workspacePackage.directory);
 
       return `--filter=./${toPosixPath(relativeDirectory)}`;
     })
     .sort();
-  const result = spawnSync('pnpm', ['turbo', 'build', ...filters], {
+  const result = spawnSync("pnpm", ["turbo", "build", ...filters], {
     cwd: repoRoot,
-    stdio: 'inherit',
+    stdio: "inherit",
   });
 
   if (result.status !== 0) {
@@ -133,9 +123,7 @@ function buildWorkspacePackages(workspacePackagesToBuild) {
 function getPackagesToPrepare({ baseRef, templateConfigs, workspacePackages }) {
   const packagesToPrepare = new Map();
   const dependencyNames = new Set(
-    templateConfigs.flatMap(
-      (templateConfig) => templateConfig.localDependencies
-    )
+    templateConfigs.flatMap((templateConfig) => templateConfig.localDependencies)
   );
 
   if (!baseRef) {
@@ -150,19 +138,14 @@ function getPackagesToPrepare({ baseRef, templateConfigs, workspacePackages }) {
     return packagesToPrepare;
   }
 
-  const changedPackageNames = getChangedWorkspacePackageNames(
-    baseRef,
-    workspacePackages
-  );
+  const changedPackageNames = getChangedWorkspacePackageNames(baseRef, workspacePackages);
 
   if (changedPackageNames.size === 0) {
     return packagesToPrepare;
   }
 
   const relevantPackageNames = new Set(
-    templateConfigs.flatMap((templateConfig) => [
-      ...templateConfig.relevantPackageNames,
-    ])
+    templateConfigs.flatMap((templateConfig) => [...templateConfig.relevantPackageNames])
   );
   const selectedPackageNames = [
     ...getAffectedRelevantPackageNames(
@@ -177,16 +160,12 @@ function getPackagesToPrepare({ baseRef, templateConfigs, workspacePackages }) {
   }
 
   console.log(
-    `Changed workspace packages for ${baseRef}...HEAD: ${[
-      ...changedPackageNames,
-    ]
+    `Changed workspace packages for ${baseRef}...HEAD: ${[...changedPackageNames]
       .sort()
-      .join(', ')}`
+      .join(", ")}`
   );
   console.log(
-    `Selected workspace packages for templates: ${selectedPackageNames
-      .toSorted()
-      .join(', ')}`
+    `Selected workspace packages for templates: ${selectedPackageNames.toSorted().join(", ")}`
   );
 
   for (const packageName of selectedPackageNames) {
@@ -208,17 +187,15 @@ function getLocalDependencies(packageJson, workspacePackages) {
 
 async function getWorkspacePackages() {
   const workspacePackageDirectories = [
-    path.join(repoRoot, 'packages'),
-    path.join(repoRoot, 'packages', 'udecode'),
+    path.join(repoRoot, "packages"),
+    path.join(repoRoot, "packages", "udecode"),
   ];
   const workspacePackagesByName = new Map();
 
   for (const workspacePackageDirectory of workspacePackageDirectories) {
-    for (const directoryEntry of await listDirectories(
-      workspacePackageDirectory
-    )) {
-      const packageJsonPath = path.join(directoryEntry, 'package.json');
-      const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8'));
+    for (const directoryEntry of await listDirectories(workspacePackageDirectory)) {
+      const packageJsonPath = path.join(directoryEntry, "package.json");
+      const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
 
       workspacePackagesByName.set(packageJson.name, {
         directory: directoryEntry,
@@ -229,17 +206,15 @@ async function getWorkspacePackages() {
   }
 
   for (const workspacePackage of workspacePackagesByName.values()) {
-    workspacePackage.localDependencyNames = getDependencyNames(
-      workspacePackage.packageJson
-    ).filter((dependencyName) => workspacePackagesByName.has(dependencyName));
+    workspacePackage.localDependencyNames = getDependencyNames(workspacePackage.packageJson).filter(
+      (dependencyName) => workspacePackagesByName.has(dependencyName)
+    );
     workspacePackage.localDependentNames = [];
   }
 
   for (const [packageName, workspacePackage] of workspacePackagesByName) {
     for (const dependencyName of workspacePackage.localDependencyNames) {
-      workspacePackagesByName
-        .get(dependencyName)
-        ?.localDependentNames.push(packageName);
+      workspacePackagesByName.get(dependencyName)?.localDependentNames.push(packageName);
     }
   }
 
@@ -258,7 +233,7 @@ async function listDirectories(parentDirectory) {
     const directoryPath = path.join(parentDirectory, directoryEntry.name);
 
     try {
-      await access(path.join(directoryPath, 'package.json'));
+      await access(path.join(directoryPath, "package.json"));
       directories.push(directoryPath);
     } catch {}
   }
@@ -267,24 +242,18 @@ async function listDirectories(parentDirectory) {
 }
 
 function getChangedWorkspacePackageNames(baseRef, workspacePackages) {
-  const result = spawnSync(
-    'git',
-    ['diff', '--name-only', `${baseRef}...HEAD`],
-    {
-      cwd: repoRoot,
-      encoding: 'utf8',
-    }
-  );
+  const result = spawnSync("git", ["diff", "--name-only", `${baseRef}...HEAD`], {
+    cwd: repoRoot,
+    encoding: "utf8",
+  });
 
   if (result.status !== 0) {
-    console.error(
-      `Failed to determine changed workspace packages for ${baseRef}...HEAD`
-    );
+    console.error(`Failed to determine changed workspace packages for ${baseRef}...HEAD`);
     process.exit(result.status ?? 1);
   }
 
   const changedFiles = result.stdout
-    .split('\n')
+    .split("\n")
     .map((filePath) => filePath.trim())
     .filter(Boolean);
   const changedPackageNames = new Set();
@@ -302,10 +271,7 @@ function getChangedWorkspacePackageNames(baseRef, workspacePackages) {
   return changedPackageNames;
 }
 
-function getReachableWorkspacePackageNames(
-  initialPackageNames,
-  workspacePackages
-) {
+function getReachableWorkspacePackageNames(initialPackageNames, workspacePackages) {
   const relevantPackageNames = new Set();
   const pendingPackageNames = [...initialPackageNames];
 
@@ -343,8 +309,7 @@ function getAffectedRelevantPackageNames(
 
     affectedPackageNames.add(packageName);
 
-    for (const dependentName of workspacePackages.get(packageName)
-      ?.localDependentNames ?? []) {
+    for (const dependentName of workspacePackages.get(packageName)?.localDependentNames ?? []) {
       if (!relevantPackageNames.has(dependentName)) continue;
 
       pendingPackageNames.push(dependentName);
@@ -355,21 +320,17 @@ function getAffectedRelevantPackageNames(
 }
 
 function packWorkspacePackage(packageDirectory) {
-  const result = spawnSync(
-    'pnpm',
-    ['pack', '--pack-destination', localPackageOutputDir],
-    {
-      cwd: packageDirectory,
-      encoding: 'utf8',
-      stdio: ['ignore', 'pipe', 'inherit'],
-    }
-  );
+  const result = spawnSync("pnpm", ["pack", "--pack-destination", localPackageOutputDir], {
+    cwd: packageDirectory,
+    encoding: "utf8",
+    stdio: ["ignore", "pipe", "inherit"],
+  });
 
   if (result.status !== 0) {
     process.exit(result.status ?? 1);
   }
 
-  const tarballPath = result.stdout.trim().split('\n').at(-1)?.trim();
+  const tarballPath = result.stdout.trim().split("\n").at(-1)?.trim();
 
   if (!tarballPath) {
     console.error(`Failed to determine tarball path for ${packageDirectory}`);
@@ -391,9 +352,8 @@ function getDependencyNames(packageJson) {
 }
 
 function rewriteTemplatePackageJson(templateConfig, tarballsByPackageName) {
-  const { packageJson, packageJsonPath, relevantPackageNames, templateDir } =
-    templateConfig;
-  const dependencySections = ['dependencies', 'devDependencies'];
+  const { packageJson, packageJsonPath, relevantPackageNames, templateDir } = templateConfig;
+  const dependencySections = ["dependencies", "devDependencies"];
   const rewrittenPackageNames = new Set();
 
   for (const section of dependencySections) {
@@ -408,7 +368,7 @@ function rewriteTemplatePackageJson(templateConfig, tarballsByPackageName) {
 
       let relativeTarballPath = path.relative(templateDir, tarballPath);
 
-      if (!relativeTarballPath.startsWith('.')) {
+      if (!relativeTarballPath.startsWith(".")) {
         relativeTarballPath = `./${relativeTarballPath}`;
       }
 
@@ -419,8 +379,7 @@ function rewriteTemplatePackageJson(templateConfig, tarballsByPackageName) {
 
   const missingDependencyNames = [...tarballsByPackageName.keys()].filter(
     (dependencyName) =>
-      relevantPackageNames.has(dependencyName) &&
-      !rewrittenPackageNames.has(dependencyName)
+      relevantPackageNames.has(dependencyName) && !rewrittenPackageNames.has(dependencyName)
   );
 
   if (missingDependencyNames.length > 0) {
@@ -433,12 +392,11 @@ function rewriteTemplatePackageJson(templateConfig, tarballsByPackageName) {
 
       let relativeTarballPath = path.relative(templateDir, tarballPath);
 
-      if (!relativeTarballPath.startsWith('.')) {
+      if (!relativeTarballPath.startsWith(".")) {
         relativeTarballPath = `./${relativeTarballPath}`;
       }
 
-      packageJson.devDependencies[dependencyName] =
-        `file:${toPosixPath(relativeTarballPath)}`;
+      packageJson.devDependencies[dependencyName] = `file:${toPosixPath(relativeTarballPath)}`;
     }
   }
 
@@ -448,23 +406,19 @@ function rewriteTemplatePackageJson(templateConfig, tarballsByPackageName) {
     for (const [dependencyName, tarballPath] of tarballsByPackageName) {
       let relativeTarballPath = path.relative(templateDir, tarballPath);
 
-      if (!relativeTarballPath.startsWith('.')) {
+      if (!relativeTarballPath.startsWith(".")) {
         relativeTarballPath = `./${relativeTarballPath}`;
       }
 
-      packageJson.overrides[dependencyName] =
-        `file:${toPosixPath(relativeTarballPath)}`;
+      packageJson.overrides[dependencyName] = `file:${toPosixPath(relativeTarballPath)}`;
     }
   }
 
-  return writeFile(
-    packageJsonPath,
-    `${JSON.stringify(packageJson, null, 2)}\n`
-  );
+  return writeFile(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`);
 }
 
 function toPosixPath(filePath) {
-  return filePath.split(path.sep).join('/');
+  return filePath.split(path.sep).join("/");
 }
 
 export {

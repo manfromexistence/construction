@@ -1,9 +1,9 @@
-import { BaseParagraphPlugin, KEYS, createSlateEditor } from 'platejs';
+import { BaseParagraphPlugin, createSlateEditor, KEYS } from "platejs";
 
-import { BaseTextIndentPlugin } from './BaseTextIndentPlugin';
+import { BaseTextIndentPlugin } from "./BaseTextIndentPlugin";
 
-describe('BaseTextIndentPlugin', () => {
-  it('exposes the default injected block contract', () => {
+describe("BaseTextIndentPlugin", () => {
+  it("exposes the default injected block contract", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseTextIndentPlugin],
     } as any);
@@ -14,22 +14,22 @@ describe('BaseTextIndentPlugin', () => {
     expect(plugin.inject.isBlock).toBe(true);
     expect(plugin.inject.targetPlugins).toEqual([KEYS.p]);
     expect(nodeProps).toMatchObject({
-      nodeKey: 'textIndent',
-      styleKey: 'textIndent',
+      nodeKey: "textIndent",
+      styleKey: "textIndent",
     });
     expect(
       transformNodeValue({
         getOptions: () => editor.getOptions(BaseTextIndentPlugin),
         nodeValue: 2,
       } as any)
-    ).toBe('48px');
+    ).toBe("48px");
   });
 
-  it('uses configured offset and unit when formatting node values', () => {
+  it("uses configured offset and unit when formatting node values", () => {
     const TextIndentPlugin = BaseTextIndentPlugin.configure({
       options: {
         offset: 10,
-        unit: 'em',
+        unit: "em",
       },
     });
     const editor = createSlateEditor({
@@ -43,6 +43,6 @@ describe('BaseTextIndentPlugin', () => {
         getOptions: () => editor.getOptions(TextIndentPlugin),
         nodeValue: 3,
       } as any)
-    ).toBe('30em');
+    ).toBe("30em");
   });
 });

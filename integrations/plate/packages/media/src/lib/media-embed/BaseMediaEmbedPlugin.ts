@@ -1,10 +1,10 @@
-import { type PluginConfig, createTSlatePlugin, KEYS } from 'platejs';
+import { createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
-import type { MediaPluginOptions } from '../media/index';
+import type { MediaPluginOptions } from "../media/index";
 
-import { parseIframeUrl } from './parseIframeUrl';
+import { parseIframeUrl } from "./parseIframeUrl";
 
-export type MediaEmbedConfig = PluginConfig<'media_embed', MediaPluginOptions>;
+export type MediaEmbedConfig = PluginConfig<"media_embed", MediaPluginOptions>;
 
 /**
  * Enables support for embeddable media such as YouTube or Vimeo videos,
@@ -21,11 +21,11 @@ export const BaseMediaEmbedPlugin = createTSlatePlugin<MediaEmbedConfig>({
       deserializer: {
         rules: [
           {
-            validNodeName: 'IFRAME',
+            validNodeName: "IFRAME",
           },
         ],
         parse: ({ element, type }) => {
-          const url = element.getAttribute('src');
+          const url = element.getAttribute("src");
 
           if (url) {
             return {

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
   Card,
@@ -8,13 +8,13 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
+} from "@/registry/new-york-v4/ui/card";
 import {
+  type ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
-} from "@/registry/new-york-v4/ui/chart"
+} from "@/registry/new-york-v4/ui/chart";
 
 const data = [
   {
@@ -52,7 +52,7 @@ const data = [
     today: 430,
     day: "Sunday",
   },
-]
+];
 
 const chartConfig = {
   today: {
@@ -63,7 +63,7 @@ const chartConfig = {
     label: "Average",
     color: "var(--primary)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function CardsExerciseMinutes() {
   return (
@@ -125,5 +125,5 @@ export function CardsExerciseMinutes() {
         </ChartContainer>
       </CardContent>
     </Card>
-  )
+  );
 }

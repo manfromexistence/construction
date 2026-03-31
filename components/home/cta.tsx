@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { motion } from "motion/react";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function CTA() {
   return (
@@ -36,8 +36,8 @@ export function CTA() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl"
           >
-            Start customizing your shadcn/ui components today and create a unique
-            look for your application.
+            Start customizing your shadcn/ui components today and create a unique look for your
+            application.
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}

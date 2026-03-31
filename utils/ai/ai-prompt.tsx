@@ -1,7 +1,7 @@
+import { JSONContent } from "@tiptap/react";
 import { useEditorStore } from "@/store/editor-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 import { AIPromptData, MentionReference, PromptImage } from "@/types/ai";
-import { JSONContent } from "@tiptap/react";
 
 export const getTextContent = (promptData: AIPromptData | null) => {
   if (!promptData) return "";

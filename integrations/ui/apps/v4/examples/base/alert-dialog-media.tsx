@@ -1,4 +1,4 @@
-import { CircleFadingPlusIcon } from "lucide-react"
+import { CircleFadingPlusIcon } from "lucide-react";
 
 import {
   AlertDialog,
@@ -11,15 +11,13 @@ import {
   AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/styles/base-nova/ui/alert-dialog"
-import { Button } from "@/styles/base-nova/ui/button"
+} from "@/styles/base-nova/ui/alert-dialog";
+import { Button } from "@/styles/base-nova/ui/button";
 
 export function AlertDialogWithMedia() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger
-        render={<Button variant="outline">Share Project</Button>}
-      />
+      <AlertDialogTrigger render={<Button variant="outline">Share Project</Button>} />
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogMedia>
@@ -36,5 +34,5 @@ export function AlertDialogWithMedia() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

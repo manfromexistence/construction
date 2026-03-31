@@ -4,4 +4,4 @@ export type RtfImage = {
   spid: string;
 };
 
-export type RtfImagesMap = Record<RtfImage['spid'], RtfImage>;
+export type RtfImagesMap = Record<RtfImage["spid"], RtfImage>;

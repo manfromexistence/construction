@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { RotateCcw } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { OpenInV0Button } from "@/components/open-in-v0-button"
+import { RotateCcw } from "lucide-react";
+import * as React from "react";
+import { OpenInV0Button } from "@/components/open-in-v0-button";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
 export function ComponentPreviewTabs({
   className,
@@ -17,25 +16,18 @@ export function ComponentPreviewTabs({
   source,
   ...props
 }: React.ComponentProps<"div"> & {
-  name: string
-  align?: "center" | "start" | "end"
-  hideCode?: boolean
-  component: React.ReactNode
-  source: React.ReactNode
+  name: string;
+  align?: "center" | "start" | "end";
+  hideCode?: boolean;
+  component: React.ReactNode;
+  source: React.ReactNode;
 }) {
-  const [key, setKey] = React.useState(0)
-  const [tab, setTab] = React.useState("preview")
+  const [key, setKey] = React.useState(0);
+  const [tab, setTab] = React.useState("preview");
 
   return (
-    <div
-      className={cn("relative mt-4 mb-12 flex flex-col gap-2", className)}
-      {...props}
-    >
-      <Tabs
-        className="relative mr-auto w-full"
-        value={tab}
-        onValueChange={setTab}
-      >
+    <div className={cn("relative mt-4 mb-12 flex flex-col gap-2", className)} {...props}>
+      <Tabs className="relative mr-auto w-full" value={tab} onValueChange={setTab}>
         <div className="flex items-center justify-between">
           {!hideCode && (
             <TabsList className="justify-start gap-4 rounded-none bg-transparent px-2 md:px-0">
@@ -93,5 +85,5 @@ export function ComponentPreviewTabs({
         </div>
       </div>
     </div>
-  )
+  );
 }

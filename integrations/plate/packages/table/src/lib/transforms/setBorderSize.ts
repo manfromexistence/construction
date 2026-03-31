@@ -4,25 +4,23 @@ import type {
   SlateEditor,
   TTableCellBorder,
   TTableCellElement,
-} from 'platejs';
+} from "platejs";
 
-import { ElementApi } from 'platejs';
-
-import type { BorderDirection } from '../types';
-
-import { getLeftTableCell } from '../queries/getLeftTableCell';
-import { getTopTableCell } from '../queries/getTopTableCell';
-import { getCellTypes } from '../utils/index';
+import { ElementApi } from "platejs";
+import { getLeftTableCell } from "../queries/getLeftTableCell";
+import { getTopTableCell } from "../queries/getTopTableCell";
+import type { BorderDirection } from "../types";
+import { getCellTypes } from "../utils/index";
 
 export const setBorderSize = (
   editor: SlateEditor,
   size: number,
   {
     at,
-    border = 'all',
+    border = "all",
   }: {
     at?: Path;
-    border?: BorderDirection | 'all';
+    border?: BorderDirection | "all";
   } = {}
 ) => {
   const cellEntry = editor.api.node<TTableCellElement>({
@@ -43,15 +41,14 @@ export const setBorderSize = (
   };
 
   const setNodesOptions: SetNodesOptions = {
-    match: (n) =>
-      ElementApi.isElement(n) && getCellTypes(editor).includes(n.type),
+    match: (n) => ElementApi.isElement(n) && getCellTypes(editor).includes(n.type),
   };
 
-  if (border === 'top') {
+  if (border === "top") {
     const isFirstRow = rowIndex === 0;
 
     if (isFirstRow) {
-      const newBorders: TTableCellElement['borders'] = {
+      const newBorders: TTableCellElement["borders"] = {
         ...cellNode.borders,
         top: borderStyle,
       };
@@ -73,7 +70,7 @@ export const setBorderSize = (
 
     const [cellAboveNode, cellAbovePath] = cellAboveEntry;
 
-    const newBorders: TTableCellElement['borders'] = {
+    const newBorders: TTableCellElement["borders"] = {
       ...cellAboveNode.borders,
       bottom: borderStyle,
     };
@@ -86,8 +83,8 @@ export const setBorderSize = (
         ...setNodesOptions,
       }
     );
-  } else if (border === 'bottom') {
-    const newBorders: TTableCellElement['borders'] = {
+  } else if (border === "bottom") {
+    const newBorders: TTableCellElement["borders"] = {
       ...cellNode.borders,
       bottom: borderStyle,
     };
@@ -101,11 +98,11 @@ export const setBorderSize = (
       }
     );
   }
-  if (border === 'left') {
+  if (border === "left") {
     const isFirstCell = cellIndex === 0;
 
     if (isFirstCell) {
-      const newBorders: TTableCellElement['borders'] = {
+      const newBorders: TTableCellElement["borders"] = {
         ...cellNode.borders,
         left: borderStyle,
       };
@@ -127,7 +124,7 @@ export const setBorderSize = (
 
     const [prevCellNode, prevCellPath] = prevCellEntry;
 
-    const newBorders: TTableCellElement['borders'] = {
+    const newBorders: TTableCellElement["borders"] = {
       ...prevCellNode.borders,
       right: borderStyle,
     };
@@ -140,8 +137,8 @@ export const setBorderSize = (
         ...setNodesOptions,
       }
     );
-  } else if (border === 'right') {
-    const newBorders: TTableCellElement['borders'] = {
+  } else if (border === "right") {
+    const newBorders: TTableCellElement["borders"] = {
       ...cellNode.borders,
       right: borderStyle,
     };
@@ -155,12 +152,12 @@ export const setBorderSize = (
       }
     );
   }
-  if (border === 'all') {
+  if (border === "all") {
     editor.tf.withoutNormalizing(() => {
-      setBorderSize(editor, size, { at, border: 'top' });
-      setBorderSize(editor, size, { at, border: 'bottom' });
-      setBorderSize(editor, size, { at, border: 'left' });
-      setBorderSize(editor, size, { at, border: 'right' });
+      setBorderSize(editor, size, { at, border: "top" });
+      setBorderSize(editor, size, { at, border: "bottom" });
+      setBorderSize(editor, size, { at, border: "left" });
+      setBorderSize(editor, size, { at, border: "right" });
     });
   }
 };

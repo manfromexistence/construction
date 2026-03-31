@@ -10,8 +10,7 @@ interface ActiveLinkProps extends React.ComponentProps<typeof Link> {}
 export function ActiveLink({ href, className, ...props }: ActiveLinkProps) {
   const segment = useSelectedLayoutSegment();
 
-  const hrefSegment =
-    typeof href === "string" ? href.split("/").filter(Boolean)[0] : null;
+  const hrefSegment = typeof href === "string" ? href.split("/").filter(Boolean)[0] : null;
 
   const isActive = hrefSegment ? segment === hrefSegment : segment === null;
 
@@ -22,7 +21,7 @@ export function ActiveLink({ href, className, ...props }: ActiveLinkProps) {
         href={href}
         className={cn(
           "font-normal text-foreground/60 data-[state=active]:text-accent-foreground",
-          className,
+          className
         )}
         {...props}
       />

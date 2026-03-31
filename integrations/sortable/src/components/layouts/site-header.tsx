@@ -12,9 +12,7 @@ export function SiteHeader() {
       <div className="container flex h-14 items-center gap-6">
         <Link href="/" className="flex items-center gap-2">
           <File className="size-4" />
-          <span className="hidden font-bold md:inline-block">
-            {siteConfig.name}
-          </span>
+          <span className="hidden font-bold md:inline-block">{siteConfig.name}</span>
         </Link>
         <nav className="flex flex-1 items-center gap-4 text-sm">
           <Link

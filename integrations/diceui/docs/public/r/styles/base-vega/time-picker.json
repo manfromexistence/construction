@@ -1,9 +1,6 @@
 {
   "name": "time-picker",
-  "dependencies": [
-    "@base-ui/react",
-    "lucide-react"
-  ],
+  "dependencies": ["@base-ui/react", "lucide-react"],
   "registryDependencies": [
     "popover",
     "visually-hidden-input",

@@ -14,24 +14,16 @@ import {
   RangeApi,
   SpanApi,
   type ValueOf,
-} from '../../interfaces';
-import { match } from '../../utils';
+} from "../../interfaces";
+import { match } from "../../utils";
 
-export const descendant = <
-  N extends DescendantOf<E>,
-  E extends Editor = Editor,
->(
+export const descendant = <N extends DescendantOf<E>, E extends Editor = Editor>(
   editor: E,
   options: EditorNodesOptions<ValueOf<E>>
 ): NodeEntry<N> | undefined => {
   // Slate throws when things aren't found so we wrap in a try catch and return undefined on throw.
   try {
-    const {
-      at = editor.selection,
-      match: _match,
-      reverse = false,
-      voids = false,
-    } = options;
+    const { at = editor.selection, match: _match, reverse = false, voids = false } = options;
 
     if (!at) return;
 
@@ -41,8 +33,8 @@ export const descendant = <
     if (SpanApi.isSpan(at)) {
       [from, to] = at;
     } else if (RangeApi.isRange(at)) {
-      const first = editor.api.path(at, { edge: 'start' });
-      const last = editor.api.path(at, { edge: 'end' });
+      const first = editor.api.path(at, { edge: "start" });
+      const last = editor.api.path(at, { edge: "end" });
       from = reverse ? last : first;
       to = reverse ? first : last;
     }

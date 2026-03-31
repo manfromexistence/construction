@@ -1,7 +1,7 @@
-import { ArrowRightIcon } from "@radix-ui/react-icons"
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 
-import { cn } from "@/lib/utils"
-import { AnimatedShinyText } from "@/registry/magicui/animated-shiny-text"
+import { cn } from "@/lib/utils";
+import { AnimatedShinyText } from "@/registry/magicui/animated-shiny-text";
 
 export default function AnimatedShinyTextDemo() {
   return (
@@ -17,5 +17,5 @@ export default function AnimatedShinyTextDemo() {
         </AnimatedShinyText>
       </div>
     </div>
-  )
+  );
 }

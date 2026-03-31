@@ -1,5 +1,7 @@
 "use client";
 
+import { Check, ChevronsUpDown, X } from "lucide-react";
+import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import {
   Command,
@@ -9,15 +11,9 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { COMMUNITY_THEME_TAGS, MAX_TAGS_PER_THEME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { Check, ChevronsUpDown, X } from "lucide-react";
-import { useState } from "react";
 
 interface TagSelectorProps {
   selectedTags: string[];
@@ -25,11 +21,7 @@ interface TagSelectorProps {
   disabled?: boolean;
 }
 
-export function TagSelector({
-  selectedTags,
-  onTagsChange,
-  disabled,
-}: TagSelectorProps) {
+export function TagSelector({ selectedTags, onTagsChange, disabled }: TagSelectorProps) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
@@ -88,9 +80,7 @@ export function TagSelector({
             )}
           >
             <span className="text-muted-foreground">
-              {selectedTags.length >= MAX_TAGS_PER_THEME
-                ? "Max tags selected"
-                : "Search tags..."}
+              {selectedTags.length >= MAX_TAGS_PER_THEME ? "Max tags selected" : "Search tags..."}
             </span>
             <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
           </button>
@@ -101,22 +91,13 @@ export function TagSelector({
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <Command shouldFilter={true}>
-            <CommandInput
-              placeholder="Search tags..."
-              value={search}
-              onValueChange={setSearch}
-            />
-            <CommandList
-              className="max-h-[200px]"
-              onWheelCapture={(e) => e.stopPropagation()}
-            >
+            <CommandInput placeholder="Search tags..." value={search} onValueChange={setSearch} />
+            <CommandList className="max-h-[200px]" onWheelCapture={(e) => e.stopPropagation()}>
               <CommandEmpty>No tags found.</CommandEmpty>
               <CommandGroup>
                 {COMMUNITY_THEME_TAGS.map((tag) => {
                   const isSelected = selectedTags.includes(tag);
-                  const isAtLimit =
-                    !isSelected &&
-                    selectedTags.length >= MAX_TAGS_PER_THEME;
+                  const isAtLimit = !isSelected && selectedTags.length >= MAX_TAGS_PER_THEME;
                   return (
                     <CommandItem
                       key={tag}
@@ -126,10 +107,7 @@ export function TagSelector({
                       className={cn(isAtLimit && "opacity-50")}
                     >
                       <Check
-                        className={cn(
-                          "mr-2 size-4",
-                          isSelected ? "opacity-100" : "opacity-0"
-                        )}
+                        className={cn("mr-2 size-4", isSelected ? "opacity-100" : "opacity-0")}
                       />
                       {tag}
                     </CommandItem>

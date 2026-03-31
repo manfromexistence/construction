@@ -1,57 +1,45 @@
-import * as React from "react"
-import Link from "next/link"
-
-import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Icons } from "@/components/icons"
-import { PingDot } from "@/components/ping-dot"
+import Link from "next/link";
+import * as React from "react";
+import { Icons } from "@/components/icons";
+import { PingDot } from "@/components/ping-dot";
+import { buttonVariants } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 const formatCompactCount = (value: number) => {
   if (value >= 1000) {
-    return `${(value / 1000).toFixed(1)}k`
+    return `${(value / 1000).toFixed(1)}k`;
   }
 
-  return value.toLocaleString()
-}
+  return value.toLocaleString();
+};
 
 const getActiveMembersCount = async () => {
   try {
-    const data = await fetch(
-      "https://discord.com/api/guilds/1151315619246002176/widget.json",
-      {
-        next: { revalidate: 3600 }, // Cache for 1 hour (3600 seconds)
-      }
-    )
+    const data = await fetch("https://discord.com/api/guilds/1151315619246002176/widget.json", {
+      next: { revalidate: 3600 }, // Cache for 1 hour (3600 seconds)
+    });
     if (!data.ok) {
-      return 0
+      return 0;
     }
 
-    const json: unknown = await data.json()
-    if (
-      typeof json !== "object" ||
-      json === null ||
-      !("presence_count" in json)
-    ) {
-      return 0
+    const json: unknown = await data.json();
+    if (typeof json !== "object" || json === null || !("presence_count" in json)) {
+      return 0;
     }
 
-    const membersCount = json.presence_count
+    const membersCount = json.presence_count;
     if (typeof membersCount !== "number" || !Number.isFinite(membersCount)) {
-      return 0
+      return 0;
     }
 
-    return membersCount
+    return membersCount;
   } catch {
-    return 0
+    return 0;
   }
-}
+};
 
 export function DiscordLink({ className }: { className?: string }) {
   return (
@@ -76,21 +64,17 @@ export function DiscordLink({ className }: { className?: string }) {
       <TooltipContent>
         <React.Suspense fallback={<Skeleton className="h-4 w-8" />}>
           <span>
-            <ActiveMembersCount className="text-background" /> members online in
-            our Discord community
+            <ActiveMembersCount className="text-background" /> members online in our Discord
+            community
           </span>
         </React.Suspense>
       </TooltipContent>
     </Tooltip>
-  )
+  );
 }
 
-export async function ActiveMembersCount({
-  className,
-}: {
-  className?: string
-}) {
-  const activeMembersCount = await getActiveMembersCount()
+export async function ActiveMembersCount({ className }: { className?: string }) {
+  const activeMembersCount = await getActiveMembersCount();
 
   return (
     <div className={cn("ml-2 inline-flex items-center gap-1", className)}>
@@ -99,5 +83,5 @@ export async function ActiveMembersCount({
         {formatCompactCount(activeMembersCount)}
       </span>
     </div>
-  )
+  );
 }

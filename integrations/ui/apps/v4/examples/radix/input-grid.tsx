@@ -1,5 +1,5 @@
-import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 
 export function InputGrid() {
   return (
@@ -13,5 +13,5 @@ export function InputGrid() {
         <Input id="last-name" placeholder="Lee" />
       </Field>
     </FieldGroup>
-  )
+  );
 }

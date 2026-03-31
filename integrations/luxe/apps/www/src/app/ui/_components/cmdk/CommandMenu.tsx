@@ -1,20 +1,21 @@
+import Lottie from "lottie-react";
+import { ArrowDownIcon, ArrowUpIcon, CommandIcon, SearchIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
-import { useEffect, useState, useRef, useLayoutEffect } from "react";
-
-import Lottie from "lottie-react";
-
 import { useTheme } from "next-themes";
-
-import {
-  CommandIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  SearchIcon,
-} from "lucide-react";
-
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { Icons } from "@/app/_components/Icons";
+import codeDarkModeIcon from "@/assets/icons/code/dark-mode.json";
+import codeLightModeIcon from "@/assets/icons/code/light-mode.json";
+import fileDarkModeIcon from "@/assets/icons/file/dark-mode.json";
+import fileLightModeIcon from "@/assets/icons/file/light-mode.json";
+import homeDarkModeIcon from "@/assets/icons/home/dark-mode.json";
+import homeLightModeIcon from "@/assets/icons/home/light-mode.json";
+import thunderDarkModeIcon from "@/assets/icons/thunder/dark-mode.json";
+import thunderLightModeIcon from "@/assets/icons/thunder/light-mode.json";
+import updatesDarkModeIcon from "@/assets/icons/updates/dark-mode.json";
+import updatesLightModeIcon from "@/assets/icons/updates/light-mode.json";
 import { cn } from "@/utils/cn";
-
 import {
   CommandDialog,
   CommandEmpty,
@@ -23,18 +24,6 @@ import {
   CommandItem,
   CommandList,
 } from "./CommandMenuPrimitives";
-import { Icons } from "@/app/_components/Icons";
-
-import homeDarkModeIcon from "@/assets/icons/home/dark-mode.json";
-import homeLightModeIcon from "@/assets/icons/home/light-mode.json";
-import updatesDarkModeIcon from "@/assets/icons/updates/dark-mode.json";
-import updatesLightModeIcon from "@/assets/icons/updates/light-mode.json";
-import codeDarkModeIcon from "@/assets/icons/code/dark-mode.json";
-import codeLightModeIcon from "@/assets/icons/code/light-mode.json";
-import thunderDarkModeIcon from "@/assets/icons/thunder/dark-mode.json";
-import thunderLightModeIcon from "@/assets/icons/thunder/light-mode.json";
-import fileDarkModeIcon from "@/assets/icons/file/dark-mode.json";
-import fileLightModeIcon from "@/assets/icons/file/light-mode.json";
 
 type ItemProps = {
   heading: string;
@@ -85,12 +74,8 @@ function CommandMenuItem({
 
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (
-          mutation.type === "attributes" &&
-          mutation.attributeName === "aria-selected"
-        ) {
-          const isSelected =
-            itemRef.current?.getAttribute("aria-selected") === "true";
+        if (mutation.type === "attributes" && mutation.attributeName === "aria-selected") {
+          const isSelected = itemRef.current?.getAttribute("aria-selected") === "true";
           if (isSelected) {
             ref.current?.goToAndPlay(0, true);
           }
@@ -184,9 +169,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={homeRef}
-              animationData={
-                theme === "dark" ? homeDarkModeIcon : homeLightModeIcon
-              }
+              animationData={theme === "dark" ? homeDarkModeIcon : homeLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -201,9 +184,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={updatesRef}
-              animationData={
-                theme === "dark" ? updatesDarkModeIcon : updatesLightModeIcon
-              }
+              animationData={theme === "dark" ? updatesDarkModeIcon : updatesLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -223,9 +204,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={codeRef}
-              animationData={
-                theme === "dark" ? codeDarkModeIcon : codeLightModeIcon
-              }
+              animationData={theme === "dark" ? codeDarkModeIcon : codeLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -240,9 +219,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={thunderRef}
-              animationData={
-                theme === "dark" ? thunderDarkModeIcon : thunderLightModeIcon
-              }
+              animationData={theme === "dark" ? thunderDarkModeIcon : thunderLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -264,9 +241,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Accordion")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -280,9 +255,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Animated Tabs")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -296,9 +269,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Avatar")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -312,9 +283,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Badge")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -328,9 +297,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Button")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -344,9 +311,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Card")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -360,9 +325,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Checkbox")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -376,9 +339,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Dialog")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -392,9 +353,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Dropdown Menu")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -408,9 +367,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Input")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -424,9 +381,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("InputOTP")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -440,9 +395,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Multi Step Modal")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -456,9 +409,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Navigation Menu")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -472,9 +423,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Spinner")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -488,9 +437,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Switch")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -504,9 +451,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Text")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -520,9 +465,7 @@ export function CommandMenu() {
           icon: (
             <Lottie
               lottieRef={getComponentRef("Tooltip")}
-              animationData={
-                theme === "dark" ? fileDarkModeIcon : fileLightModeIcon
-              }
+              animationData={theme === "dark" ? fileDarkModeIcon : fileLightModeIcon}
               style={{ width: 22, height: 22 }}
               autoplay={false}
               loop={false}
@@ -548,8 +491,7 @@ export function CommandMenu() {
     if (pathParts.length >= 2) {
       const isComponentPage = ITEMS.some(
         (item) =>
-          item.heading === "Components" &&
-          item.group.some((group) => group.slug === pathname),
+          item.heading === "Components" && item.group.some((group) => group.slug === pathname)
       );
 
       if (isComponentPage) {
@@ -595,7 +537,7 @@ export function CommandMenu() {
         onClick={() => setIsOpen((prev) => !prev)}
         className={cn(
           "group relative flex items-center justify-between gap-4 pl-2.5 pr-2 py-1.5 border rounded-full text-[13px] leading-none border-border/60 dark:border-border/50",
-          "bg-background ease-linear duration-150 hover:bg-main-foreground/40 outline-none dark:hover:bg-main-foreground/20 dark:hover:border-white/10 focus-visible:ring-1 focus-visible:ring-neutral-300/80 dark:focus-visible:ring-neutral-800",
+          "bg-background ease-linear duration-150 hover:bg-main-foreground/40 outline-none dark:hover:bg-main-foreground/20 dark:hover:border-white/10 focus-visible:ring-1 focus-visible:ring-neutral-300/80 dark:focus-visible:ring-neutral-800"
         )}
       >
         <div
@@ -611,9 +553,7 @@ export function CommandMenu() {
       <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
         <div className="flex items-center gap-1.5 pt-3 pl-4">
           <div className="bg-neutral-200 dark:bg-neutral-900 px-2 h-6 w-fit flex items-center justify-center rounded-md">
-            <span className="text-[13px] font-[460] text-foreground capitalize">
-              {category}
-            </span>
+            <span className="text-[13px] font-[460] text-foreground capitalize">{category}</span>
           </div>
           {subCategory && (
             <div className="bg-neutral-200 dark:bg-neutral-900 px-2 h-6 w-fit flex items-center justify-center rounded-md">
@@ -627,7 +567,7 @@ export function CommandMenu() {
               <span
                 className={cn(
                   "text-[13px] font-[460] text-foreground",
-                  currentPage === "cli" ? "uppercase" : "capitalize",
+                  currentPage === "cli" ? "uppercase" : "capitalize"
                 )}
               >
                 {currentPage}
@@ -698,7 +638,7 @@ function CommandMenuIcon() {
     <span
       className={cn(
         "text-neutral-500 border border-border/60 ease-linear duration-150 group-hover:border-transparent",
-        "px-1.5 py-1 rounded-lg text-[10px] flex items-center gap-0.5",
+        "px-1.5 py-1 rounded-lg text-[10px] flex items-center gap-0.5"
       )}
     >
       <CommandIcon size={10} /> K

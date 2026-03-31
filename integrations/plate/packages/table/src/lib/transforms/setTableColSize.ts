@@ -1,8 +1,8 @@
-import type { EditorAboveOptions, SlateEditor, TTableElement } from 'platejs';
+import type { EditorAboveOptions, SlateEditor, TTableElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { getTableColumnCount } from '../queries/getTableColumnCount';
+import { getTableColumnCount } from "../queries/getTableColumnCount";
 
 export const setTableColSize = (
   editor: SlateEditor,

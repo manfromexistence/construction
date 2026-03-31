@@ -1,7 +1,7 @@
 import { ButtonGlitch } from "@/app/_components/ButtonGlitch";
+import { GetStartedButton } from "@/app/_components/GetStartedButton";
 import { AnimateEnter } from "../AnimateEnter";
 import { GridBackground } from "../GridBackground";
-import { GetStartedButton } from "@/app/_components/GetStartedButton";
 
 export function SloganSection() {
   return (
@@ -12,10 +12,7 @@ export function SloganSection() {
             Build fast <br /> Ship with style
           </h1>
         </AnimateEnter>
-        <AnimateEnter
-          className="flex flex-wrap items-center justify-center gap-4"
-          delay={0.2}
-        >
+        <AnimateEnter className="flex flex-wrap items-center justify-center gap-4" delay={0.2}>
           <GetStartedButton href="/ui/installation" />
           <ButtonGlitch href="/ui/accordion">Explore gallery</ButtonGlitch>
         </AnimateEnter>

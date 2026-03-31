@@ -1,11 +1,7 @@
 {
   "name": "avatar-group-icons-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "avatar-group"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["avatar-group"],
   "files": [
     {
       "path": "examples/avatar-group-icons-demo.tsx",

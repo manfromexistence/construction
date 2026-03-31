@@ -1,4 +1,4 @@
-import { type SlateEditor, KEYS } from 'platejs';
+import { KEYS, type SlateEditor } from "platejs";
 
 export const deleteTable = (editor: SlateEditor) => {
   if (

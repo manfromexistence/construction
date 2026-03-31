@@ -3,13 +3,7 @@
   "name": "signup-03",
   "title": "Signup 03",
   "description": "A signup page with a muted background color.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input",
-    "label",
-    "field"
-  ],
+  "registryDependencies": ["button", "card", "input", "label", "field"],
   "files": [
     {
       "path": "registry/radix-nova/blocks/signup-03/page.tsx",
@@ -23,9 +17,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "signup"
-  ],
+  "categories": ["authentication", "signup"],
   "type": "registry:block"
 }

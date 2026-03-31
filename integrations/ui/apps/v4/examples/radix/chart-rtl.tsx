@@ -1,19 +1,16 @@
-"use client"
+"use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
+  type ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-  type ChartConfig,
-} from "@/styles/radix-nova/ui-rtl/chart"
+} from "@/styles/radix-nova/ui-rtl/chart";
 
 const translations: Translations = {
   en: {
@@ -55,7 +52,7 @@ const translations: Translations = {
       mobile: "נייד",
     },
   },
-}
+};
 
 const chartData = [
   { month: "january", desktop: 186, mobile: 80 },
@@ -64,10 +61,10 @@ const chartData = [
   { month: "april", desktop: 73, mobile: 190 },
   { month: "may", desktop: 209, mobile: 130 },
   { month: "june", desktop: 214, mobile: 140 },
-]
+];
 
 export function ChartRtl() {
-  const { t, dir } = useTranslation(translations, "ar")
+  const { t, dir } = useTranslation(translations, "ar");
 
   const chartConfig = {
     desktop: {
@@ -78,30 +75,23 @@ export function ChartRtl() {
       label: t.mobile,
       color: "var(--chart-1)",
     },
-  } satisfies ChartConfig
+  } satisfies ChartConfig;
 
   return (
     <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
       <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid
-          vertical={false}
-          orientation={dir === "rtl" ? "right" : "left"}
-        />
+        <CartesianGrid vertical={false} orientation={dir === "rtl" ? "right" : "left"} />
         <XAxis
           dataKey="month"
           tickLine={false}
           tickMargin={10}
           axisLine={false}
-          tickFormatter={(value) =>
-            (t[value as keyof typeof t] as string).slice(0, 3)
-          }
+          tickFormatter={(value) => (t[value as keyof typeof t] as string).slice(0, 3)}
           reversed={dir === "rtl"}
         />
         <ChartTooltip
           content={
-            <ChartTooltipContent
-              labelFormatter={(value) => t[value as keyof typeof t] as string}
-            />
+            <ChartTooltipContent labelFormatter={(value) => t[value as keyof typeof t] as string} />
           }
           labelClassName="w-32"
         />
@@ -110,5 +100,5 @@ export function ChartRtl() {
         <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
       </BarChart>
     </ChartContainer>
-  )
+  );
 }

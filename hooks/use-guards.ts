@@ -22,7 +22,7 @@ export function useSessionGuard() {
   const checkValidSession = (
     mode: "signin" | "signup" = "signin",
     postLoginActionType?: PostLoginActionType,
-    postLoginActionData?: any
+    postLoginActionData?: unknown
   ) => {
     if (!session) {
       openAuthDialog(mode, postLoginActionType, postLoginActionData);

@@ -1,10 +1,7 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
 import {
   Dialog,
   DialogClose,
@@ -14,10 +11,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/styles/radix-nova/ui-rtl/dialog"
-import { Field, FieldGroup } from "@/styles/radix-nova/ui-rtl/field"
-import { Input } from "@/styles/radix-nova/ui-rtl/input"
-import { Label } from "@/styles/radix-nova/ui-rtl/label"
+} from "@/styles/radix-nova/ui-rtl/dialog";
+import { Field, FieldGroup } from "@/styles/radix-nova/ui-rtl/field";
+import { Input } from "@/styles/radix-nova/ui-rtl/input";
+import { Label } from "@/styles/radix-nova/ui-rtl/label";
 
 const translations: Translations = {
   en: {
@@ -25,8 +22,7 @@ const translations: Translations = {
     values: {
       openDialog: "Open Dialog",
       editProfile: "Edit profile",
-      description:
-        "Make changes to your profile here. Click save when you're done.",
+      description: "Make changes to your profile here. Click save when you're done.",
       name: "Name",
       username: "Username",
       cancel: "Cancel",
@@ -38,8 +34,7 @@ const translations: Translations = {
     values: {
       openDialog: "فتح الحوار",
       editProfile: "تعديل الملف الشخصي",
-      description:
-        "قم بإجراء تغييرات على ملفك الشخصي هنا. انقر فوق حفظ عند الانتهاء.",
+      description: "قم بإجراء تغييرات على ملفك الشخصي هنا. انقر فوق حفظ عند الانتهاء.",
       name: "الاسم",
       username: "اسم المستخدم",
       cancel: "إلغاء",
@@ -58,10 +53,10 @@ const translations: Translations = {
       saveChanges: "שמור שינויים",
     },
   },
-}
+};
 
 export function DialogRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
+  const { dir, t, language } = useTranslation(translations, "ar");
 
   return (
     <Dialog>
@@ -97,5 +92,5 @@ export function DialogRtl() {
         </DialogContent>
       </form>
     </Dialog>
-  )
+  );
 }

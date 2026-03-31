@@ -1,18 +1,16 @@
-import type { Path, TElement, TText } from '@platejs/slate';
-import type { AnyObject } from '@udecode/utils';
+import type { Path, TElement, TText } from "@platejs/slate";
+import type { AnyObject } from "@udecode/utils";
 
-import clsx from 'clsx';
-
-import type { SlateRenderNodeProps } from '../types';
-
-import { pipeInjectNodeProps } from '../../internal/plugin/pipeInjectNodeProps';
+import clsx from "clsx";
+import { pipeInjectNodeProps } from "../../internal/plugin/pipeInjectNodeProps";
 import {
   type AnyEditorPlugin,
-  type SlateEditor,
   getEditorPlugin,
   getPluginNodeProps,
   getSlateClass,
-} from '../../lib';
+  type SlateEditor,
+} from "../../lib";
+import type { SlateRenderNodeProps } from "../types";
 
 export const getRenderNodeStaticProps = ({
   attributes: nodeAttributes,

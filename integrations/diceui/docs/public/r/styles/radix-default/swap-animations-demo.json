@@ -1,11 +1,7 @@
 {
   "name": "swap-animations-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "swap"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["swap"],
   "files": [
     {
       "path": "examples/swap-animations-demo.tsx",

@@ -1,9 +1,9 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BaseTocPlugin } from './BaseTocPlugin';
+import { BaseTocPlugin } from "./BaseTocPlugin";
 
-describe('BaseTocPlugin', () => {
-  it('configures toc as a void element with the shipped defaults', () => {
+describe("BaseTocPlugin", () => {
+  it("configures toc as a void element with the shipped defaults", () => {
     const editor = createSlateEditor({
       plugins: [BaseTocPlugin],
     } as any);

@@ -1,7 +1,7 @@
 const LEVEL_PATTERN = /level(\d+)/i;
 
 export const getDocxListIndent = (element: Element): number => {
-  const styleAttribute = element.getAttribute('style') || '';
+  const styleAttribute = element.getAttribute("style") || "";
   const matches = LEVEL_PATTERN.exec(styleAttribute);
 
   if (matches && matches.length > 0) {

@@ -1,20 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import {
-  type Descendant,
-  type SlateEditor,
-  type TElement,
-  createEditor,
-} from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, type Descendant, type SlateEditor, type TElement } from "platejs";
 
-import { getListSiblings } from './getListSiblings';
+import { getListSiblings } from "./getListSiblings";
 
 jsxt;
 
-describe('getListSiblings', () => {
-  describe('listStyleType is not defined', () => {
-    it('returns an empty array', async () => {
+describe("getListSiblings", () => {
+  describe("listStyleType is not defined", () => {
+    it("returns an empty array", async () => {
       const input = (
         <fragment>
           <hp indent={1} listStyleType="disc">
@@ -29,9 +24,7 @@ describe('getListSiblings', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
 
@@ -41,8 +34,8 @@ describe('getListSiblings', () => {
     });
   });
 
-  describe('listStyleType is defined', () => {
-    it('get nodes', async () => {
+  describe("listStyleType is defined", () => {
+    it("get nodes", async () => {
       const input = (
         <fragment>
           <hp indent={2} listStyleType="disc">
@@ -91,9 +84,7 @@ describe('getListSiblings', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
 

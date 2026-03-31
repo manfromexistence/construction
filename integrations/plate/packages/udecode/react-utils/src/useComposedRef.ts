@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type PossibleRef<T> = React.Ref<T> | undefined;
 
@@ -7,7 +7,7 @@ type PossibleRef<T> = React.Ref<T> | undefined;
  * of refs: callback refs and React.RefObject(s)
  */
 const setRef = <T>(ref: PossibleRef<T>, value: T) => {
-  if (typeof ref === 'function') {
+  if (typeof ref === "function") {
     return ref(value);
   }
   if (ref !== null && ref !== undefined) {
@@ -26,7 +26,7 @@ export const composeRefs =
 
     refs.forEach((ref) => {
       const cleanup = setRef(ref, node);
-      if (typeof cleanup === 'function') {
+      if (typeof cleanup === "function") {
         cleanups.push(cleanup);
       }
     });

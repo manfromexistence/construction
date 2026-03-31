@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createAutoformatEditor } from './__tests__/withAutoformat/createAutoformatEditor';
+import { createAutoformatEditor } from "./__tests__/withAutoformat/createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin', () => {
-  it('falls back to plain insertion when a rule query vetoes autoformat', () => {
+describe("AutoformatPlugin", () => {
+  it("falls back to plain insertion when a rule query vetoes autoformat", () => {
     const input = (
       <fragment>
         <hp>
@@ -25,21 +25,21 @@ describe('AutoformatPlugin', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          format: '—',
-          match: '--',
-          mode: 'text',
+          format: "—",
+          match: "--",
+          mode: "text",
           query: () => false,
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('-');
+    editor.tf.insertText("-");
 
     expect(input.children).toEqual(output.children);
   });
 
-  it('inserts the trigger after a successful autoformat when insertTrigger is enabled', () => {
+  it("inserts the trigger after a successful autoformat when insertTrigger is enabled", () => {
     const input = (
       <fragment>
         <hp>
@@ -59,23 +59,23 @@ describe('AutoformatPlugin', () => {
       rules: [
         {
           format: (currentEditor) => {
-            currentEditor.tf.insertText('done');
+            currentEditor.tf.insertText("done");
           },
           insertTrigger: true,
-          match: '##',
-          mode: 'block',
-          trigger: '!',
+          match: "##",
+          mode: "block",
+          trigger: "!",
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('!');
+    editor.tf.insertText("!");
 
     expect(input.children).toEqual(output.children);
   });
 
-  it('restores the first array match when undo-on-delete is enabled', () => {
+  it("restores the first array match when undo-on-delete is enabled", () => {
     const input = (
       <fragment>
         <hp>
@@ -97,21 +97,21 @@ describe('AutoformatPlugin', () => {
       enableUndoOnDelete: true,
       rules: [
         {
-          format: '→',
-          match: ['->', '=>'],
-          mode: 'text',
+          format: "→",
+          match: ["->", "=>"],
+          mode: "text",
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('>');
+    editor.tf.insertText(">");
     editor.tf.deleteBackward();
 
     expect(input.children).toEqual(output.children);
   });
 
-  it('skips non-text rules while restoring the first array match', () => {
+  it("skips non-text rules while restoring the first array match", () => {
     const input = (
       <fragment>
         <hp>
@@ -124,20 +124,20 @@ describe('AutoformatPlugin', () => {
       enableUndoOnDelete: true,
       rules: [
         {
-          format: '>',
-          match: '**',
-          mode: 'mark',
+          format: ">",
+          match: "**",
+          mode: "mark",
         } as any,
         {
-          format: '>',
-          match: ['->', '=>'],
-          mode: 'text',
+          format: ">",
+          match: ["->", "=>"],
+          mode: "text",
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('>');
+    editor.tf.insertText(">");
     editor.tf.deleteBackward();
 
     expect(input.children).toEqual(
@@ -152,7 +152,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('restores the string match when undo-on-delete is enabled', () => {
+  it("restores the string match when undo-on-delete is enabled", () => {
     const input = (
       <fragment>
         <hp>
@@ -165,9 +165,9 @@ describe('AutoformatPlugin', () => {
       enableUndoOnDelete: true,
       rules: [
         {
-          format: '-',
-          match: '--',
-          mode: 'text',
+          format: "-",
+          match: "--",
+          mode: "text",
         },
       ],
       value: input,
@@ -188,7 +188,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('falls back to plain deletion when deleting a non-character unit', () => {
+  it("falls back to plain deletion when deleting a non-character unit", () => {
     const input = (
       <fragment>
         <hp>
@@ -201,15 +201,15 @@ describe('AutoformatPlugin', () => {
       enableUndoOnDelete: true,
       rules: [
         {
-          format: '→',
-          match: '->',
-          mode: 'text',
+          format: "→",
+          match: "->",
+          mode: "text",
         },
       ],
       value: input,
     });
 
-    editor.tf.deleteBackward('word');
+    editor.tf.deleteBackward("word");
 
     expect(input.children).toEqual(
       (
@@ -222,7 +222,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('falls back to plain deletion when undo-on-delete is disabled', () => {
+  it("falls back to plain deletion when undo-on-delete is disabled", () => {
     const input = (
       <fragment>
         <hp>
@@ -235,9 +235,9 @@ describe('AutoformatPlugin', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          format: '→',
-          match: '->',
-          mode: 'text',
+          format: "→",
+          match: "->",
+          mode: "text",
         },
       ],
       value: input,
@@ -254,7 +254,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('falls back to plain deletion when there is no character before the cursor', () => {
+  it("falls back to plain deletion when there is no character before the cursor", () => {
     const input = (
       <fragment>
         <hp>
@@ -268,9 +268,9 @@ describe('AutoformatPlugin', () => {
       enableUndoOnDelete: true,
       rules: [
         {
-          format: '→',
-          match: '->',
-          mode: 'text',
+          format: "→",
+          match: "->",
+          mode: "text",
         },
       ],
       value: input,
@@ -287,7 +287,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('falls back to plain deletion when the deleted character does not match any rule', () => {
+  it("falls back to plain deletion when the deleted character does not match any rule", () => {
     const input = (
       <fragment>
         <hp>
@@ -301,9 +301,9 @@ describe('AutoformatPlugin', () => {
       enableUndoOnDelete: true,
       rules: [
         {
-          format: '→',
-          match: '->',
-          mode: 'text',
+          format: "→",
+          match: "->",
+          mode: "text",
         },
       ],
       value: input,
@@ -320,7 +320,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('falls back to plain insertion when the selection is expanded', () => {
+  it("falls back to plain insertion when the selection is expanded", () => {
     const input = (
       <fragment>
         <hp>
@@ -334,15 +334,15 @@ describe('AutoformatPlugin', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          format: '—',
-          match: '--',
-          mode: 'text',
+          format: "—",
+          match: "--",
+          mode: "text",
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('x');
+    editor.tf.insertText("x");
 
     expect(input.children).toEqual(
       (
@@ -353,7 +353,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('applies a text rule without re-inserting the trigger by default', () => {
+  it("applies a text rule without re-inserting the trigger by default", () => {
     const input = (
       <fragment>
         <hp>
@@ -365,15 +365,15 @@ describe('AutoformatPlugin', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          format: '→',
-          match: '->',
-          mode: 'text',
+          format: "→",
+          match: "->",
+          mode: "text",
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('>');
+    editor.tf.insertText(">");
 
     expect(input.children).toEqual(
       (
@@ -384,7 +384,7 @@ describe('AutoformatPlugin', () => {
     );
   });
 
-  it('skips vetoed rules and continues to the next matching rule', () => {
+  it("skips vetoed rules and continues to the next matching rule", () => {
     const input = (
       <fragment>
         <hp>
@@ -397,24 +397,24 @@ describe('AutoformatPlugin', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          format: 'ignored',
-          match: '**',
-          mode: 'mark',
+          format: "ignored",
+          match: "**",
+          mode: "mark",
           query: () => false,
-          trigger: '*',
+          trigger: "*",
         } as any,
         {
           format: () => {},
           insertTrigger: true,
-          match: '##',
-          mode: 'block',
-          trigger: '!',
+          match: "##",
+          mode: "block",
+          trigger: "!",
         } as any,
       ],
       value: input,
     });
 
-    editor.tf.insertText('!');
+    editor.tf.insertText("!");
 
     expect(input.children).toEqual(
       (

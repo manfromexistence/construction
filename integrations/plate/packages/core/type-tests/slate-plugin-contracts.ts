@@ -1,38 +1,32 @@
-import { createEditor } from '@platejs/slate';
-
-import {
-  type PluginConfig,
-  createSlatePlugin,
-  createTSlatePlugin,
-  withSlate,
-} from '@platejs/core';
+import { createSlatePlugin, createTSlatePlugin, type PluginConfig, withSlate } from "@platejs/core";
+import { createEditor } from "@platejs/slate";
 
 const BoldPlugin = createSlatePlugin({
-  key: 'bold',
+  key: "bold",
   options: {
     enabled: true as const,
-    hotkey: 'mod+b',
+    hotkey: "mod+b",
   },
 }).extendEditorApi(({ getOptions }) => ({
   toggleBold: () => getOptions().hotkey,
 }));
 
 type CalloutConfig = PluginConfig<
-  'callout',
+  "callout",
   {
     dismissible?: boolean;
-    variant: 'info' | 'warning';
+    variant: "info" | "warning";
   },
   {
-    setVariant: (variant: 'info' | 'warning') => void;
+    setVariant: (variant: "info" | "warning") => void;
   }
 >;
 
 const CalloutPlugin = createTSlatePlugin<CalloutConfig>({
-  key: 'callout',
+  key: "callout",
   options: {
     dismissible: false,
-    variant: 'info',
+    variant: "info",
   },
 }).extendEditorApi(({ plugin }) => ({
   setVariant: (variant) => {
@@ -42,7 +36,7 @@ const CalloutPlugin = createTSlatePlugin<CalloutConfig>({
 
 const ConfiguredCalloutPlugin = CalloutPlugin.configure({
   options: {
-    variant: 'warning',
+    variant: "warning",
   },
 }).extend({
   options: {
@@ -56,15 +50,12 @@ const slateEditor = withSlate(createEditor(), {
 
 const boldHotkey: string = slateEditor.api.toggleBold();
 const boldEnabled: true = slateEditor.getOptions(BoldPlugin).enabled;
-const calloutVariant: 'info' | 'warning' = slateEditor.getOptions(
-  ConfiguredCalloutPlugin
-).variant;
-const calloutDismissible: boolean | undefined = slateEditor.getOptions(
-  ConfiguredCalloutPlugin
-).dismissible;
+const calloutVariant: "info" | "warning" = slateEditor.getOptions(ConfiguredCalloutPlugin).variant;
+const calloutDismissible: boolean | undefined =
+  slateEditor.getOptions(ConfiguredCalloutPlugin).dismissible;
 
-slateEditor.api.setVariant('info');
-slateEditor.api.setVariant('warning');
+slateEditor.api.setVariant("info");
+slateEditor.api.setVariant("warning");
 
 void boldEnabled;
 void boldHotkey;
@@ -72,13 +63,13 @@ void calloutDismissible;
 void calloutVariant;
 
 // @ts-expect-error invalid configured option value
-CalloutPlugin.configure({ options: { variant: 'danger' } });
+CalloutPlugin.configure({ options: { variant: "danger" } });
 
 // @ts-expect-error invalid merged editor api
 slateEditor.api.notReal();
 
 // @ts-expect-error wrong argument type for merged api
-slateEditor.api.setVariant('danger');
+slateEditor.api.setVariant("danger");
 
 // @ts-expect-error boolean option must stay boolean
-slateEditor.getOptions(BoldPlugin).enabled = 'yes';
+slateEditor.getOptions(BoldPlugin).enabled = "yes";

@@ -1,5 +1,5 @@
-import { Tree } from "@/registry/magicui/file-tree"
-import type { TreeViewElement } from "@/registry/magicui/file-tree"
+import type { TreeViewElement } from "@/registry/magicui/file-tree";
+import { Tree } from "@/registry/magicui/file-tree";
 
 export default function FileTreeDemo() {
   return (
@@ -11,7 +11,7 @@ export default function FileTreeDemo() {
         elements={ELEMENTS}
       />
     </div>
-  )
+  );
 }
 
 const ELEMENTS: TreeViewElement[] = [
@@ -85,4 +85,4 @@ const ELEMENTS: TreeViewElement[] = [
       },
     ],
   },
-]
+];

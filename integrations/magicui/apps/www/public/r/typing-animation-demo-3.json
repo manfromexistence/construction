@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Typing Animation Custom Speed",
   "description": "Example showing custom typing and deleting speeds.",
-  "registryDependencies": [
-    "@magicui/typing-animation"
-  ],
+  "registryDependencies": ["@magicui/typing-animation"],
   "files": [
     {
       "path": "registry/example/typing-animation-demo-3.tsx",

@@ -1,11 +1,11 @@
 /** @jsx jsxt */
 
-import { BaseImagePlugin } from '@platejs/media';
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, KEYS, createSlateEditor } from 'platejs';
+import { BaseImagePlugin } from "@platejs/media";
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, KEYS, type SlateEditor } from "platejs";
 
-import { BaseListPlugin } from '../BaseListPlugin';
-import { toggleList, toggleTaskList } from './toggleList';
+import { BaseListPlugin } from "../BaseListPlugin";
+import { toggleList, toggleTaskList } from "./toggleList";
 
 jsxt;
 
@@ -27,11 +27,11 @@ const runToggleList = (
   return editor;
 };
 
-describe('toggleList', () => {
-  it('does nothing when the editor has no selection', () => {
+describe("toggleList", () => {
+  it("does nothing when the editor has no selection", () => {
     const editor = createSlateEditor({
       plugins: [BaseListPlugin],
-      value: [{ children: [{ text: 'plain' }], type: KEYS.p }],
+      value: [{ children: [{ text: "plain" }], type: KEYS.p }],
     });
 
     const before = JSON.stringify(editor.children);
@@ -41,8 +41,8 @@ describe('toggleList', () => {
     expect(JSON.stringify(editor.children)).toBe(before);
   });
 
-  describe('turning paragraphs into lists', () => {
-    it('wraps a collapsed paragraph in a bulleted list', () => {
+  describe("turning paragraphs into lists", () => {
+    it("wraps a collapsed paragraph in a bulleted list", () => {
       const input = (
         <editor>
           <hp>
@@ -66,7 +66,7 @@ describe('toggleList', () => {
       );
     });
 
-    it('preserves block order across a multi-block range selection', () => {
+    it("preserves block order across a multi-block range selection", () => {
       const input = (
         <editor>
           <hp>
@@ -106,7 +106,7 @@ describe('toggleList', () => {
       );
     });
 
-    it('keeps validLiChildrenTypes at the list item root', () => {
+    it("keeps validLiChildrenTypes at the list item root", () => {
       const input = (
         <editor>
           <himg>
@@ -140,7 +140,7 @@ describe('toggleList', () => {
       );
     });
 
-    it('creates checked task-list items through the task-list wrapper', () => {
+    it("creates checked task-list items through the task-list wrapper", () => {
       const input = (
         <editor>
           <hp>
@@ -162,18 +162,18 @@ describe('toggleList', () => {
           children: [
             {
               checked: true,
-              children: [{ children: [{ text: 'task' }], type: 'lic' }],
-              type: 'li',
+              children: [{ children: [{ text: "task" }], type: "lic" }],
+              type: "li",
             },
           ],
-          type: 'taskList',
+          type: "taskList",
         },
       ]);
     });
   });
 
-  describe('turning lists off', () => {
-    it('unwraps a selected list range into paragraphs', () => {
+  describe("turning lists off", () => {
+    it("unwraps a selected list range into paragraphs", () => {
       const input = (
         <editor>
           <hul>
@@ -207,7 +207,7 @@ describe('toggleList', () => {
       );
     });
 
-    it('splits a list around the current item when toggled from inside the list', () => {
+    it("splits a list around the current item when toggled from inside the list", () => {
       const input = (
         <editor>
           <hul>
@@ -249,8 +249,8 @@ describe('toggleList', () => {
     });
   });
 
-  describe('switching list types', () => {
-    it('switches only the targeted nested list when the selection is inside it', () => {
+  describe("switching list types", () => {
+    it("switches only the targeted nested list when the selection is inside it", () => {
       const input = (
         <editor>
           <hul>
@@ -289,7 +289,7 @@ describe('toggleList', () => {
       );
     });
 
-    it('retypes a selected list range that stays inside the list', () => {
+    it("retypes a selected list range that stays inside the list", () => {
       const input = (
         <editor>
           <hul>
@@ -325,7 +325,7 @@ describe('toggleList', () => {
       );
     });
 
-    it('retypes the full selected range when the selection spans list content and paragraphs', () => {
+    it("retypes the full selected range when the selection spans list content and paragraphs", () => {
       const input = (
         <editor>
           <hul>

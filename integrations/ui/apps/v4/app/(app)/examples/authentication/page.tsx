@@ -1,16 +1,15 @@
-import { type Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/registry/new-york-v4/ui/button"
-import { FieldDescription } from "@/registry/new-york-v4/ui/field"
-import { UserAuthForm } from "@/app/(app)/examples/authentication/components/user-auth-form"
+import { type Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
+import { UserAuthForm } from "@/app/(app)/examples/authentication/components/user-auth-form";
+import { cn } from "@/lib/utils";
+import { buttonVariants } from "@/registry/new-york-v4/ui/button";
+import { FieldDescription } from "@/registry/new-york-v4/ui/field";
 
 export const metadata: Metadata = {
   title: "Authentication",
   description: "Authentication forms built using the components.",
-}
+};
 
 export default function AuthenticationPage() {
   return (
@@ -62,31 +61,27 @@ export default function AuthenticationPage() {
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="leading-normal text-balance">
-              &ldquo;This library has saved me countless hours of work and
-              helped me deliver stunning designs to my clients faster than ever
-              before.&rdquo; - Sofia Davis
+              &ldquo;This library has saved me countless hours of work and helped me deliver
+              stunning designs to my clients faster than ever before.&rdquo; - Sofia Davis
             </blockquote>
           </div>
         </div>
         <div className="flex items-center justify-center lg:h-[1000px] lg:p-8">
           <div className="mx-auto flex w-full flex-col justify-center gap-6 sm:w-[350px]">
             <div className="flex flex-col gap-2 text-center">
-              <h1 className="text-2xl font-semibold tracking-tight">
-                Create an account
-              </h1>
+              <h1 className="text-2xl font-semibold tracking-tight">Create an account</h1>
               <p className="text-sm text-muted-foreground">
                 Enter your email below to create your account
               </p>
             </div>
             <UserAuthForm />
             <FieldDescription className="px-6 text-center">
-              By clicking continue, you agree to our{" "}
-              <Link href="/terms">Terms of Service</Link> and{" "}
+              By clicking continue, you agree to our <Link href="/terms">Terms of Service</Link> and{" "}
               <Link href="/privacy">Privacy Policy</Link>.
             </FieldDescription>
           </div>
         </div>
       </div>
     </>
-  )
+  );
 }

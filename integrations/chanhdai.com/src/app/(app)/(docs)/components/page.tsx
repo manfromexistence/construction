@@ -1,8 +1,8 @@
-import { PlusIcon } from "lucide-react"
-import type { Metadata } from "next"
-import Link from "next/link"
+import { PlusIcon } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
 
-import { Button } from "@/components/base/ui/button"
+import { Button } from "@/components/base/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -12,21 +12,20 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/base/ui/dialog"
-import { ComponentIcon } from "@/components/icons"
-import { MDX } from "@/components/mdx"
-import { RegistryCommandAnimated } from "@/components/registry-command-animated"
-import { registryConfig } from "@/config/registry"
-import { UTM_PARAMS, X_USERNAME } from "@/config/site"
-import { getDocsByCategory } from "@/features/doc/data/documents"
-import { cn } from "@/lib/utils"
-import { addQueryParams } from "@/utils/url"
+} from "@/components/base/ui/dialog";
+import { ComponentIcon } from "@/components/icons";
+import { MDX } from "@/components/mdx";
+import { RegistryCommandAnimated } from "@/components/registry-command-animated";
+import { registryConfig } from "@/config/registry";
+import { UTM_PARAMS, X_USERNAME } from "@/config/site";
+import { getDocsByCategory } from "@/features/doc/data/documents";
+import { cn } from "@/lib/utils";
+import { addQueryParams } from "@/utils/url";
 
-const title = "Components"
-const description =
-  "A collection of reusable components. Trusted registry for shadcn/ui."
+const title = "Components";
+const description = "A collection of reusable components. Trusted registry for shadcn/ui.";
 
-const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
 export const metadata: Metadata = {
   title,
@@ -50,21 +49,19 @@ export const metadata: Metadata = {
     creator: X_USERNAME,
     images: [ogImage],
   },
-}
+};
 
 const addRegistryCode = `\`\`\`bash
 npx shadcn@latest registry add ${registryConfig.namespace}
-\`\`\``
+\`\`\``;
 
 export default function Page() {
-  const posts = getDocsByCategory("components")
+  const posts = getDocsByCategory("components");
 
   return (
     <div className="min-h-svh">
       <div className="screen-line-bottom px-4">
-        <h1 className="text-3xl leading-none font-semibold tracking-tight">
-          {title}
-        </h1>
+        <h1 className="text-3xl leading-none font-semibold tracking-tight">{title}</h1>
       </div>
 
       <div className="p-4">
@@ -184,7 +181,7 @@ export default function Page() {
 
       <div className="h-2" />
     </div>
-  )
+  );
 }
 
 function Separator({ className }: { className?: string }) {
@@ -197,5 +194,5 @@ function Separator({ className }: { className?: string }) {
         className
       )}
     />
-  )
+  );
 }

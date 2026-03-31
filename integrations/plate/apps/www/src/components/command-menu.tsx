@@ -1,38 +1,30 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-
-import type { NavItemWithChildren, SidebarNavItem } from '@/types/nav';
-import type { DialogProps } from '@radix-ui/react-dialog';
-
-import { Command } from 'cmdk';
-import { castArray } from 'lodash';
-import { Circle, File, Laptop, Moon, SunMedium } from 'lucide-react';
-import { useTheme } from 'next-themes';
-import { useRouter } from 'next/navigation';
-
-import { Button } from '@/components/ui/button';
+import type { DialogProps } from "@radix-ui/react-dialog";
+import { Command } from "cmdk";
+import { castArray } from "lodash";
+import { Circle, File, Laptop, Moon, SunMedium } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTheme } from "next-themes";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
-import { docsConfig } from '@/config/docs';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/command";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { docsConfig } from "@/config/docs";
+import { cn } from "@/lib/utils";
+import type { NavItemWithChildren, SidebarNavItem } from "@/types/nav";
 
 export function CommandItems({
   idx = 0,
   item,
-  parentKey = '',
-  parentTitle = '',
+  parentKey = "",
+  parentTitle = "",
   runCommand,
 }: {
   item: NavItemWithChildren;
@@ -46,13 +38,13 @@ export function CommandItems({
 
   // Invisible characters to make items unique across groups
   const invisibleSuffixes: Record<string, string> = {
-    'group-API': '\uFEFF', // Zero Width No-Break Space
-    'group-Examples': '\u2060', // Word Joiner
-    'group-Getting Started': '\u200B', // Zero Width Space
-    'group-Guides': '\u061C', // Arabic Letter Mark
-    'group-Installation': '\u200C', // Zero Width Non-Joiner
-    'group-Migration': '\u180E', // Mongolian Vowel Separator
-    'group-Plugins': '\u200D', // Zero Width Joiner
+    "group-API": "\uFEFF", // Zero Width No-Break Space
+    "group-Examples": "\u2060", // Word Joiner
+    "group-Getting Started": "\u200B", // Zero Width Space
+    "group-Guides": "\u061C", // Arabic Letter Mark
+    "group-Installation": "\u200C", // Zero Width Non-Joiner
+    "group-Migration": "\u180E", // Mongolian Vowel Separator
+    "group-Plugins": "\u200D", // Zero Width Joiner
   };
 
   // Dirty hack to make items unique across groups, fallback to combining different characters
@@ -60,18 +52,10 @@ export function CommandItems({
     if (invisibleSuffixes[key]) return invisibleSuffixes[key];
     // Generate a unique invisible character combination for unknown groups
     const hash = key
-      .split('')
+      .split("")
       .reduce((a, b) => Math.trunc((a << 5) - a + (b.codePointAt(0) ?? 0)), 0);
     const suffixIndex = Math.abs(hash) % 7;
-    const fallbackSuffixes = [
-      '\u200B',
-      '\u200C',
-      '\u200D',
-      '\u2060',
-      '\uFEFF',
-      '\u061C',
-      '\u180E',
-    ];
+    const fallbackSuffixes = ["\u200B", "\u200C", "\u200D", "\u2060", "\uFEFF", "\u061C", "\u180E"];
     return fallbackSuffixes[suffixIndex];
   };
 
@@ -106,11 +90,7 @@ export function CommandItems({
           key={`${itemKey}-heading-${headingIdx}`}
           onSelect={() => {
             runCommand(() =>
-              router.push(
-                (item.href +
-                  '#' +
-                  heading.replaceAll(' ', '').toLowerCase()) as string
-              )
+              router.push((item.href + "#" + heading.replaceAll(" ", "").toLowerCase()) as string)
             );
           }}
           keywords={allKeywords}
@@ -165,7 +145,7 @@ export function CommandMenu({ ...props }: DialogProps) {
 
   React.useEffect(() => {
     const down = (e: KeyboardEvent) => {
-      if ((e.key === 'k' && (e.metaKey || e.ctrlKey)) || e.key === '/') {
+      if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
         if (
           (e.target instanceof HTMLElement && e.target.isContentEditable) ||
           e.target instanceof HTMLInputElement ||
@@ -180,9 +160,9 @@ export function CommandMenu({ ...props }: DialogProps) {
       }
     };
 
-    document.addEventListener('keydown', down);
+    document.addEventListener("keydown", down);
 
-    return () => document.removeEventListener('keydown', down);
+    return () => document.removeEventListener("keydown", down);
   }, []);
 
   const runCommand = React.useCallback((command: () => unknown) => {
@@ -195,7 +175,7 @@ export function CommandMenu({ ...props }: DialogProps) {
       <Button
         variant="outline"
         className={cn(
-          'relative flex h-8 w-full items-center justify-start rounded-[0.5rem] bg-muted/50 font-normal text-muted-foreground text-sm shadow-none sm:pr-12 md:w-40 lg:w-56 xl:w-64'
+          "relative flex h-8 w-full items-center justify-start rounded-[0.5rem] bg-muted/50 font-normal text-muted-foreground text-sm shadow-none sm:pr-12 md:w-40 lg:w-56 xl:w-64"
         )}
         onClick={() => setOpen(true)}
         {...props}
@@ -219,9 +199,7 @@ export function CommandMenu({ ...props }: DialogProps) {
               const searchValue = search.toLowerCase();
               if (
                 value.toLowerCase().includes(searchValue) ||
-                keywords?.some((keyword) =>
-                  keyword.toLowerCase().includes(searchValue)
-                )
+                keywords?.some((keyword) => keyword.toLowerCase().includes(searchValue))
               ) {
                 return 1;
               }
@@ -247,7 +225,7 @@ export function CommandMenu({ ...props }: DialogProps) {
                   ))}
               </CommandGroup>
               {docsConfig.sidebarNav.map((group) => {
-                if (group.title === 'API') return null;
+                if (group.title === "API") return null;
 
                 return (
                   <CommandMenuGroup
@@ -259,21 +237,15 @@ export function CommandMenu({ ...props }: DialogProps) {
               })}
 
               <CommandGroup heading="Theme">
-                <CommandItem
-                  onSelect={() => runCommand(() => setTheme('light'))}
-                >
+                <CommandItem onSelect={() => runCommand(() => setTheme("light"))}>
                   <SunMedium />
                   Light
                 </CommandItem>
-                <CommandItem
-                  onSelect={() => runCommand(() => setTheme('dark'))}
-                >
+                <CommandItem onSelect={() => runCommand(() => setTheme("dark"))}>
                   <Moon />
                   Dark
                 </CommandItem>
-                <CommandItem
-                  onSelect={() => runCommand(() => setTheme('system'))}
-                >
+                <CommandItem onSelect={() => runCommand(() => setTheme("system"))}>
                   <Laptop />
                   System
                 </CommandItem>
@@ -281,15 +253,9 @@ export function CommandMenu({ ...props }: DialogProps) {
 
               {docsConfig.sidebarNav.map((group) => {
                 // API is last
-                if (group.title !== 'API') return null;
+                if (group.title !== "API") return null;
 
-                return (
-                  <CommandMenuGroup
-                    key={group.title}
-                    runCommand={runCommand}
-                    {...group}
-                  />
-                );
+                return <CommandMenuGroup key={group.title} runCommand={runCommand} {...group} />;
               })}
             </CommandList>
           </Command>

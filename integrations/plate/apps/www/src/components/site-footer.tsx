@@ -1,11 +1,11 @@
-import { siteConfig } from '@/config/site';
+import { siteConfig } from "@/config/site";
 
 export function SiteFooter() {
   return (
     <footer className="border-border/40 border-t py-6 md:px-8 md:py-0 dark:border-border">
       <div className="container flex flex-col items-center justify-between gap-4 md:h-24 md:flex-row">
         <p className="text-balance text-center text-muted-foreground text-sm leading-loose md:text-left">
-          From{' '}
+          From{" "}
           <a
             className="font-medium underline underline-offset-4"
             href={siteConfig.links.twitter}
@@ -14,7 +14,7 @@ export function SiteFooter() {
           >
             {siteConfig.author}
           </a>
-          . The source code is available on{' '}
+          . The source code is available on{" "}
           <a
             className="font-medium underline underline-offset-4"
             href={siteConfig.links.github}

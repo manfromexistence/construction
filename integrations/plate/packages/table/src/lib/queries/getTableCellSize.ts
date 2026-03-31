@@ -1,18 +1,8 @@
-import type {
-  SlateEditor,
-  TTableCellElement,
-  TTableElement,
-  TTableRowElement,
-} from 'platejs';
+import type { SlateEditor, TTableCellElement, TTableElement, TTableRowElement } from "platejs";
 
-import { getEditorPlugin, KEYS } from 'platejs';
+import { getEditorPlugin, KEYS } from "platejs";
 
-import {
-  type CellIndices,
-  type TableConfig,
-  getCellIndices,
-  getTableOverriddenColSizes,
-} from '..';
+import { type CellIndices, getCellIndices, getTableOverriddenColSizes, type TableConfig } from "..";
 
 /** Get the width of a cell with colSpan support. */
 export const getTableCellSize = (

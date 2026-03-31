@@ -44,7 +44,7 @@ export function AnimatedTabs({ tabs }: AnimatedTabsProps) {
               type="button"
               onClick={() => setActiveTab(tab)}
               className={cn(
-                "flex h-8 items-center rounded-full p-3 font-medium text-primary-invert text-sm/5.5 max-sm:last:hidden",
+                "flex h-8 items-center rounded-full p-3 font-medium text-primary-invert text-sm/5.5 max-sm:last:hidden"
               )}
               tabIndex={-1}
             >

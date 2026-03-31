@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { THEMES } from "@/lib/themes"
-import { cn } from "@/lib/utils"
-import { useThemeConfig } from "@/components/active-theme"
-import { Label } from "@/styles/base-nova/ui/label"
+import { useThemeConfig } from "@/components/active-theme";
+import { THEMES } from "@/lib/themes";
+import { cn } from "@/lib/utils";
+import { Label } from "@/styles/base-nova/ui/label";
 import {
   Select,
   SelectContent,
@@ -12,30 +12,26 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/styles/base-nova/ui/select"
+} from "@/styles/base-nova/ui/select";
 
-import { CopyCodeButton } from "./theme-customizer"
+import { CopyCodeButton } from "./theme-customizer";
 
 export function ThemeSelector({ className }: React.ComponentProps<"div">) {
-  const { activeTheme, setActiveTheme } = useThemeConfig()
+  const { activeTheme, setActiveTheme } = useThemeConfig();
 
-  const value = activeTheme === "default" ? "neutral" : activeTheme
+  const value = activeTheme === "default" ? "neutral" : activeTheme;
 
   const items = THEMES.map((theme) => ({
     label: theme.label,
     value: theme.name,
-  }))
+  }));
 
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <Label htmlFor="theme-selector" className="sr-only">
         Theme
       </Label>
-      <Select
-        items={items}
-        value={value}
-        onValueChange={(value) => value && setActiveTheme(value)}
-      >
+      <Select items={items} value={value} onValueChange={(value) => value && setActiveTheme(value)}>
         <SelectTrigger id="theme-selector" className="w-36">
           <SelectValue placeholder="Select a theme" />
         </SelectTrigger>
@@ -60,5 +56,5 @@ export function ThemeSelector({ className }: React.ComponentProps<"div">) {
         className="rounded-lg border bg-transparent"
       />
     </div>
-  )
+  );
 }

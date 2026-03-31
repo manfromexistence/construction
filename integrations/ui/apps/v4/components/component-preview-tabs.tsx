@@ -1,26 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { IconAlertCircle } from "@tabler/icons-react"
-
-import { cn } from "@/lib/utils"
+import { IconAlertCircle } from "@tabler/icons-react";
+import Link from "next/link";
+import * as React from "react";
 import {
   LanguageProvider,
   LanguageSelector,
+  type Translations,
   useLanguageContext,
   useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { DirectionProvider as BaseDirectionProvider } from "@/registry/bases/base/ui/direction"
-import { DirectionProvider as RadixDirectionProvider } from "@/registry/bases/radix/ui/direction"
-import { Button } from "@/registry/new-york-v4/ui/button"
-import { Separator } from "@/registry/new-york-v4/ui/separator"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/base-nova/ui/popover"
+} from "@/components/language-selector";
+import { cn } from "@/lib/utils";
+import { DirectionProvider as BaseDirectionProvider } from "@/registry/bases/base/ui/direction";
+import { DirectionProvider as RadixDirectionProvider } from "@/registry/bases/radix/ui/direction";
+import { Button } from "@/registry/new-york-v4/ui/button";
+import { Separator } from "@/registry/new-york-v4/ui/separator";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/base-nova/ui/popover";
 
 export function ComponentPreviewTabs({
   className,
@@ -35,18 +30,18 @@ export function ComponentPreviewTabs({
   styleName,
   ...props
 }: React.ComponentProps<"div"> & {
-  previewClassName?: string
-  align?: "center" | "start" | "end"
-  hideCode?: boolean
-  chromeLessOnMobile?: boolean
-  component: React.ReactNode
-  source: React.ReactNode
-  sourcePreview?: React.ReactNode
-  direction?: "ltr" | "rtl"
-  styleName?: string
+  previewClassName?: string;
+  align?: "center" | "start" | "end";
+  hideCode?: boolean;
+  chromeLessOnMobile?: boolean;
+  component: React.ReactNode;
+  source: React.ReactNode;
+  sourcePreview?: React.ReactNode;
+  direction?: "ltr" | "rtl";
+  styleName?: string;
 }) {
-  const [isMobileCodeVisible, setIsMobileCodeVisible] = React.useState(false)
-  const base = styleName?.split("-")[0]
+  const [isMobileCodeVisible, setIsMobileCodeVisible] = React.useState(false);
+  const base = styleName?.split("-")[0];
 
   return (
     <div
@@ -64,34 +59,26 @@ export function ComponentPreviewTabs({
             <Popover>
               <PopoverTrigger
                 render={
-                  <Button
-                    variant="ghost"
-                    size="icon-sm"
-                    className="ml-auto size-7"
-                  >
+                  <Button variant="ghost" size="icon-sm" className="ml-auto size-7">
                     <IconAlertCircle />
                     <span className="sr-only">Toggle</span>
                   </Button>
                 }
               ></PopoverTrigger>
-              <PopoverContent
-                side="bottom"
-                align="end"
-                className="w-56 text-xs"
-              >
+              <PopoverContent side="bottom" align="end" className="w-56 text-xs">
                 <div>
-                  I used AI to translate the text for demonstration purposes.
-                  It&apos;s not perfect and may contain errors.
+                  I used AI to translate the text for demonstration purposes. It&apos;s not perfect
+                  and may contain errors.
                 </div>
                 <Separator className="-mx-2.5 w-auto!" />
                 <div data-lang="ar">
-                  لقد استخدمت الذكاء الاصطناعي لترجمة النص للأغراض التجريبية
-                  فقط. قد لا تكون الترجمة دقيقة وقد تحتوي على أخطاء.
+                  لقد استخدمت الذكاء الاصطناعي لترجمة النص للأغراض التجريبية فقط. قد لا تكون الترجمة
+                  دقيقة وقد تحتوي على أخطاء.
                 </div>
                 <Separator className="-mx-2.5 w-auto!" />
                 <div data-lang="he">
-                  השתמשתי בבינה מלאכותית כדי לתרגם את הטקסט למטרות הדגמה. זה לא
-                  מושלם ויכול להכיל שגיאות.
+                  השתמשתי בבינה מלאכותית כדי לתרגם את הטקסט למטרות הדגמה. זה לא מושלם ויכול להכיל
+                  שגיאות.
                 </div>
               </PopoverContent>
             </Popover>
@@ -101,9 +88,7 @@ export function ComponentPreviewTabs({
             chromeLessOnMobile={chromeLessOnMobile}
             previewClassName={previewClassName}
           >
-            <DirectionProviderWrapper base={base}>
-              {component}
-            </DirectionProviderWrapper>
+            <DirectionProviderWrapper base={base}>{component}</DirectionProviderWrapper>
           </PreviewWrapper>
         </LanguageProvider>
       ) : (
@@ -133,10 +118,7 @@ export function ComponentPreviewTabs({
 // In your application, you won't need these.`}</pre>
                   <span>
                     {"// See the "}
-                    <Link
-                      href="/docs/rtl"
-                      className="underline underline-offset-4"
-                    >
+                    <Link href="/docs/rtl" className="underline underline-offset-4">
                       RTL guide
                     </Link>
                     {" for more information."}
@@ -162,7 +144,7 @@ export function ComponentPreviewTabs({
                   variant="outline"
                   className="relative z-10 rounded-lg bg-background text-foreground shadow-none hover:bg-muted dark:bg-background dark:text-foreground dark:hover:bg-muted"
                   onClick={() => {
-                    setIsMobileCodeVisible(true)
+                    setIsMobileCodeVisible(true);
                   }}
                 >
                   View Code
@@ -173,7 +155,7 @@ export function ComponentPreviewTabs({
         </div>
       )}
     </div>
-  )
+  );
 }
 
 const directionTranslations: Translations<Record<string, never>> = {
@@ -189,12 +171,12 @@ const directionTranslations: Translations<Record<string, never>> = {
     dir: "rtl",
     values: {},
   },
-}
+};
 
 function RtlLanguageSelector({ className }: { className?: string }) {
-  const context = useLanguageContext()
+  const context = useLanguageContext();
   if (!context) {
-    return null
+    return null;
   }
   return (
     <LanguageSelector
@@ -202,7 +184,7 @@ function RtlLanguageSelector({ className }: { className?: string }) {
       onValueChange={context.setLanguage}
       className={className}
     />
-  )
+  );
 }
 
 function PreviewWrapper({
@@ -212,23 +194,19 @@ function PreviewWrapper({
   dir: explicitDir,
   children,
 }: {
-  align: "center" | "start" | "end"
-  chromeLessOnMobile: boolean
-  previewClassName?: string
-  dir?: "ltr" | "rtl"
-  children: React.ReactNode
+  align: "center" | "start" | "end";
+  chromeLessOnMobile: boolean;
+  previewClassName?: string;
+  dir?: "ltr" | "rtl";
+  children: React.ReactNode;
 }) {
   // useTranslation handles the case when there's no LanguageProvider context.
   // It will fall back to local state with defaultLanguage.
-  const translation = useTranslation(directionTranslations, "ar")
-  const dir = explicitDir ?? translation.dir
+  const translation = useTranslation(directionTranslations, "ar");
+  const dir = explicitDir ?? translation.dir;
 
   return (
-    <div
-      data-slot="preview"
-      dir={dir}
-      data-lang={dir === "rtl" ? translation.language : undefined}
-    >
+    <div data-slot="preview" dir={dir} data-lang={dir === "rtl" ? translation.language : undefined}>
       <div
         data-align={align}
         data-chromeless={chromeLessOnMobile}
@@ -240,7 +218,7 @@ function PreviewWrapper({
         {children}
       </div>
     </div>
-  )
+  );
 }
 
 function DirectionProviderWrapper({
@@ -248,20 +226,18 @@ function DirectionProviderWrapper({
   dir: explicitDir,
   children,
 }: {
-  base?: string
-  dir?: "ltr" | "rtl"
-  children: React.ReactNode
+  base?: string;
+  dir?: "ltr" | "rtl";
+  children: React.ReactNode;
 }) {
   // useTranslation handles the case when there's no LanguageProvider context.
   // It will fall back to local state with defaultLanguage.
-  const translation = useTranslation(directionTranslations, "ar")
-  const dir = explicitDir ?? translation.dir
+  const translation = useTranslation(directionTranslations, "ar");
+  const dir = explicitDir ?? translation.dir;
 
   if (base === "base") {
-    return (
-      <BaseDirectionProvider direction={dir}>{children}</BaseDirectionProvider>
-    )
+    return <BaseDirectionProvider direction={dir}>{children}</BaseDirectionProvider>;
   }
 
-  return <RadixDirectionProvider dir={dir}>{children}</RadixDirectionProvider>
+  return <RadixDirectionProvider dir={dir}>{children}</RadixDirectionProvider>;
 }

@@ -1,6 +1,3 @@
-import { createSlateEditor, type Value } from 'platejs';
-import { BaseParagraphPlugin } from 'platejs';
-
 import {
   BaseBlockquotePlugin,
   BaseBoldPlugin,
@@ -16,21 +13,18 @@ import {
   BaseSubscriptPlugin,
   BaseSuperscriptPlugin,
   BaseUnderlinePlugin,
-} from '@platejs/basic-nodes';
-import { BaseMentionPlugin } from '@platejs/mention';
+} from "@platejs/basic-nodes";
+import { BaseCodeBlockPlugin, BaseCodeLinePlugin, BaseCodeSyntaxPlugin } from "@platejs/code-block";
+import { BaseListPlugin } from "@platejs/list";
+import { BaseMentionPlugin } from "@platejs/mention";
 import {
-  BaseCodeBlockPlugin,
-  BaseCodeLinePlugin,
-  BaseCodeSyntaxPlugin,
-} from '@platejs/code-block';
-import { BaseListPlugin } from '@platejs/list';
-import {
+  BaseTableCellHeaderPlugin,
+  BaseTableCellPlugin,
   BaseTablePlugin,
   BaseTableRowPlugin,
-  BaseTableCellPlugin,
-  BaseTableCellHeaderPlugin,
-} from '@platejs/table';
-import { MarkdownKit } from '@/registry/components/editor/plugins/markdown-kit';
+} from "@platejs/table";
+import { BaseParagraphPlugin, createSlateEditor, type Value } from "platejs";
+import { MarkdownKit } from "@/registry/components/editor/plugins/markdown-kit";
 
 const BasePlugins = [
   BaseParagraphPlugin,

@@ -1,10 +1,10 @@
-import { Point as SlatePoint } from 'slate';
+import { Point as SlatePoint } from "slate";
 
-import type { At, TextDirection } from '../types';
-import type { Operation } from './operation';
+import type { At, TextDirection } from "../types";
+import type { Operation } from "./operation";
 
-import { type Path, PathApi } from './path';
-import { RangeApi } from './range';
+import { type Path, PathApi } from "./path";
+import { RangeApi } from "./range";
 
 export type Point = {
   /** The index of the character in the text node. */
@@ -42,11 +42,7 @@ export const PointApi: {
   /** Check if a value implements the `Point` interface. */
   isPoint: (value: any) => value is Point;
   /** Transform a point by an operation. */
-  transform: (
-    point: Point,
-    op: Operation,
-    options?: PointTransformOptions
-  ) => Point | null;
+  transform: (point: Point, op: Operation, options?: PointTransformOptions) => Point | null;
 } = {
   ...(SlatePoint as any),
   get: (at, { focus } = {}) => {
@@ -60,7 +56,7 @@ export const PointApi: {
   },
 };
 
-export type PointEntry = [Point, 'anchor' | 'focus'];
+export type PointEntry = [Point, "anchor" | "focus"];
 
 /**
  * `PointEntry` objects are returned when iterating over `Point` objects that

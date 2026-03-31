@@ -1,29 +1,27 @@
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import React from "react";
+import ReactDOMServer from "react-dom/server";
 
-import { createSlatePlugin } from '../lib';
-import { createStaticEditor } from './editor/withStatic';
-import { pluginRenderElementStatic } from './pluginRenderElementStatic';
+import { createSlatePlugin } from "../lib";
+import { createStaticEditor } from "./editor/withStatic";
+import { pluginRenderElementStatic } from "./pluginRenderElementStatic";
 
-describe('pluginRenderElementStatic', () => {
-  it('applies above/below wrappers and below-root renderers around the element output', () => {
+describe("pluginRenderElementStatic", () => {
+  it("applies above/below wrappers and below-root renderers around the element output", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
-      render: { as: 'article' },
+      key: "p",
+      node: { isElement: true, type: "p" },
+      render: { as: "article" },
     });
     const AbovePlugin = createSlatePlugin({
-      key: 'above',
+      key: "above",
       render: {
         aboveNodes:
           () =>
-          ({ children }: any) => (
-            <section data-role="above">{children}</section>
-          ),
+          ({ children }: any) => <section data-role="above">{children}</section>,
       },
     });
     const BelowPlugin = createSlatePlugin({
-      key: 'below',
+      key: "below",
       render: {
         belowNodes:
           () =>
@@ -31,11 +29,9 @@ describe('pluginRenderElementStatic', () => {
       },
     });
     const RootPlugin = createSlatePlugin({
-      key: 'root-extra',
+      key: "root-extra",
       render: {
-        belowRootNodes: ({ element }: any) => (
-          <aside data-id={element.id} data-role="root" />
-        ),
+        belowRootNodes: ({ element }: any) => <aside data-id={element.id} data-role="root" />,
       },
     });
     const editor = createStaticEditor({
@@ -47,11 +43,11 @@ describe('pluginRenderElementStatic', () => {
         editor.getPlugin(ParagraphPlugin)
       )({
         attributes: {},
-        children: 'Body',
+        children: "Body",
         element: {
-          children: [{ text: 'Body' }],
-          id: 'block-1',
-          type: 'p',
+          children: [{ text: "Body" }],
+          id: "block-1",
+          type: "p",
         },
       } as any)!
     );

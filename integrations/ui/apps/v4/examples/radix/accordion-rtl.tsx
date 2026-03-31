@@ -1,15 +1,12 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/styles/radix-nova/ui-rtl/accordion"
+} from "@/styles/radix-nova/ui-rtl/accordion";
 
 const translations: Translations = {
   en: {
@@ -53,7 +50,7 @@ const translations: Translations = {
       answer3: "אנו מקבלים כרטיסי אשראי, PayPal והעברות בנקאיות.",
     },
   },
-}
+};
 
 const items = [
   {
@@ -71,18 +68,13 @@ const items = [
     questionKey: "question3" as const,
     answerKey: "answer3" as const,
   },
-] as const
+] as const;
 
 export function AccordionRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
-    <Accordion
-      type="single"
-      collapsible
-      defaultValue="item-1"
-      className="max-w-md"
-    >
+    <Accordion type="single" collapsible defaultValue="item-1" className="max-w-md">
       {items.map((item) => (
         <AccordionItem key={item.value} value={item.value}>
           <AccordionTrigger>{t[item.questionKey]}</AccordionTrigger>
@@ -90,5 +82,5 @@ export function AccordionRtl() {
         </AccordionItem>
       ))}
     </Accordion>
-  )
+  );
 }

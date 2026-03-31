@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Hero Video Dialog",
   "description": "A hero video dialog component.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/hero-video-dialog.tsx",

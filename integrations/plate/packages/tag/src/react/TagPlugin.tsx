@@ -1,6 +1,6 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseTagPlugin } from '../lib';
+import { BaseTagPlugin } from "../lib";
 
 type TextLike = {
   text: string;
@@ -9,19 +9,13 @@ type TextLike = {
 const isPathEqual = (a: number[], b: number[]) =>
   a.length === b.length && a.every((value, index) => value === b[index]);
 
-const isTextNode = (value: any): value is TextLike =>
-  typeof value?.text === 'string';
+const isTextNode = (value: any): value is TextLike => typeof value?.text === "string";
 
 export const TagPlugin = toPlatePlugin(BaseTagPlugin);
 
 export const MultiSelectPlugin = toPlatePlugin(
   BaseTagPlugin.overrideEditor(
-    ({
-      api: { onChange },
-      editor,
-      tf: { deleteBackward, normalizeNode },
-      type,
-    }) => ({
+    ({ api: { onChange }, editor, tf: { deleteBackward, normalizeNode }, type }) => ({
       api: {
         onChange(op: any) {
           onChange(op);
@@ -76,9 +70,7 @@ export const MultiSelectPlugin = toPlatePlugin(
             editor.api.some({
               at: [],
               match: (n: any, p: number[]) =>
-                n.type === type &&
-                n.value === node.value &&
-                !isPathEqual(p, path),
+                n.type === type && n.value === node.value && !isPathEqual(p, path),
             })
           ) {
             editor.tf.removeNodes({

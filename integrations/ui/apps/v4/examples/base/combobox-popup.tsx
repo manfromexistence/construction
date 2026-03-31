@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/styles/base-nova/ui/button"
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   Combobox,
   ComboboxContent,
@@ -10,7 +10,7 @@ import {
   ComboboxList,
   ComboboxTrigger,
   ComboboxValue,
-} from "@/styles/base-nova/ui/combobox"
+} from "@/styles/base-nova/ui/combobox";
 
 const countries = [
   { code: "", value: "", continent: "", label: "Select country" },
@@ -63,19 +63,14 @@ const countries = [
     label: "United States",
     continent: "North America",
   },
-]
+];
 
 export function ComboboxPopup() {
   return (
     <>
       <Combobox items={countries} defaultValue={countries[0]}>
         <ComboboxTrigger
-          render={
-            <Button
-              variant="outline"
-              className="w-64 justify-between font-normal"
-            />
-          }
+          render={<Button variant="outline" className="w-64 justify-between font-normal" />}
         >
           <ComboboxValue />
         </ComboboxTrigger>
@@ -92,5 +87,5 @@ export function ComboboxPopup() {
         </ComboboxContent>
       </Combobox>
     </>
-  )
+  );
 }

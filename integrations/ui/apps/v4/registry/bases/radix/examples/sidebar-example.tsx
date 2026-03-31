@@ -1,15 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { Button } from "@/registry/bases/radix/ui/button"
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { Button } from "@/registry/bases/radix/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/registry/bases/radix/ui/dropdown-menu"
+} from "@/registry/bases/radix/ui/dropdown-menu";
 import {
   Item,
   ItemActions,
@@ -17,8 +17,8 @@ import {
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from "@/registry/bases/radix/ui/item"
-import { Label } from "@/registry/bases/radix/ui/label"
+} from "@/registry/bases/radix/ui/item";
+import { Label } from "@/registry/bases/radix/ui/label";
 import {
   Sidebar,
   SidebarContent,
@@ -34,8 +34,7 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@/registry/bases/radix/ui/sidebar"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/radix/ui/sidebar";
 
 export default function SidebarExample() {
   const data = {
@@ -167,9 +166,9 @@ export default function SidebarExample() {
         ],
       },
     ],
-  }
+  };
 
-  const [selectedVersion, setSelectedVersion] = React.useState(data.versions[0])
+  const [selectedVersion, setSelectedVersion] = React.useState(data.versions[0]);
 
   return (
     <SidebarProvider>
@@ -203,10 +202,7 @@ export default function SidebarExample() {
                 <DropdownMenuContent>
                   <DropdownMenuGroup>
                     {data.versions.map((version) => (
-                      <DropdownMenuItem
-                        key={version}
-                        onSelect={() => setSelectedVersion(version)}
-                      >
+                      <DropdownMenuItem key={version} onSelect={() => setSelectedVersion(version)}>
                         v{version}{" "}
                         {version === selectedVersion && (
                           <IconPlaceholder
@@ -231,11 +227,7 @@ export default function SidebarExample() {
                 <Label htmlFor="search" className="sr-only">
                   Search
                 </Label>
-                <SidebarInput
-                  id="search"
-                  placeholder="Search the docs..."
-                  className="pl-8"
-                />
+                <SidebarInput id="search" placeholder="Search the docs..." className="pl-8" />
                 <IconPlaceholder
                   lucide="SearchIcon"
                   tabler="IconSearch"
@@ -282,5 +274,5 @@ export default function SidebarExample() {
         </div>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

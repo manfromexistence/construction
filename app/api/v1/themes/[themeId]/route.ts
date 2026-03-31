@@ -1,13 +1,10 @@
+import { and, eq } from "drizzle-orm";
+import { NextRequest } from "next/server";
 import { db } from "@/db";
 import { theme as themeTable } from "@/db/schema";
 import { oauthError, requireAuth } from "@/lib/oauth";
-import { eq, and } from "drizzle-orm";
-import { NextRequest } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ themeId: string }> }
-) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ themeId: string }> }) {
   const auth = await requireAuth(req, "themes:read");
   if (auth.error) return auth.error;
 
@@ -22,9 +19,7 @@ export async function GET(
       updatedAt: themeTable.updatedAt,
     })
     .from(themeTable)
-    .where(
-      and(eq(themeTable.id, themeId), eq(themeTable.userId, auth.tokenData.userId))
-    )
+    .where(and(eq(themeTable.id, themeId), eq(themeTable.userId, auth.tokenData.userId)))
     .limit(1);
 
   if (!theme) {

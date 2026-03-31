@@ -1,22 +1,16 @@
-import {
-  type Editor,
-  type TSelection,
-  type Value,
-  createEditor,
-} from '@platejs/slate';
-import { nanoid } from 'nanoid';
+import { createEditor, type Editor, type TSelection, type Value } from "@platejs/slate";
+import { nanoid } from "nanoid";
 
-import type { PluginStoreFactory } from '../../internal/plugin/resolvePlugins';
-import type { AnyPluginConfig, NodeComponents } from '../plugin/BasePlugin';
-import type { AnySlatePlugin } from '../plugin/SlatePlugin';
-import type { ChunkingConfig } from '../plugins/chunking';
-import type { NodeIdConfig } from '../plugins/node-id/NodeIdPlugin';
-import type { InferPlugins, SlateEditor, TSlateEditor } from './SlateEditor';
-
-import { resolvePlugins } from '../../internal/plugin/resolvePlugins';
-import { createSlatePlugin } from '../plugin/createSlatePlugin';
-import { getPluginType, getSlatePlugin } from '../plugin/getSlatePlugin';
-import { type CorePlugin, getCorePlugins } from '../plugins/getCorePlugins';
+import type { PluginStoreFactory } from "../../internal/plugin/resolvePlugins";
+import { resolvePlugins } from "../../internal/plugin/resolvePlugins";
+import type { AnyPluginConfig, NodeComponents } from "../plugin/BasePlugin";
+import { createSlatePlugin } from "../plugin/createSlatePlugin";
+import { getPluginType, getSlatePlugin } from "../plugin/getSlatePlugin";
+import type { AnySlatePlugin } from "../plugin/SlatePlugin";
+import type { ChunkingConfig } from "../plugins/chunking";
+import { type CorePlugin, getCorePlugins } from "../plugins/getCorePlugins";
+import type { NodeIdConfig } from "../plugins/node-id/NodeIdPlugin";
+import type { InferPlugins, SlateEditor, TSlateEditor } from "./SlateEditor";
 
 export type BaseWithSlateOptions<P extends AnyPluginConfig = CorePlugin> = {
   /**
@@ -57,7 +51,7 @@ export type BaseWithSlateOptions<P extends AnyPluginConfig = CorePlugin> = {
    * - `false`: Do not select anything
    * - `'start'`: Select the start of the editor
    */
-  autoSelect?: boolean | 'end' | 'start';
+  autoSelect?: boolean | "end" | "start";
   /**
    * Configure Slate's chunking optimization, which reduces latency while
    * typing. Set to `false` to disable.
@@ -65,7 +59,7 @@ export type BaseWithSlateOptions<P extends AnyPluginConfig = CorePlugin> = {
    * @default true
    * @see https://docs.slatejs.org/walkthroughs/09-performance
    */
-  chunking?: ChunkingConfig['options'] | boolean;
+  chunking?: ChunkingConfig["options"] | boolean;
   /** Specifies the component for each plugin key. */
   components?: NodeComponents;
   /** Specifies the component for each plugin key. */
@@ -90,7 +84,7 @@ export type BaseWithSlateOptions<P extends AnyPluginConfig = CorePlugin> = {
    *
    * @default { idKey: 'id', filterInline: true, filterText: true, idCreator: () => nanoid(10) }
    */
-  nodeId?: NodeIdConfig['options'] | boolean;
+  nodeId?: NodeIdConfig["options"] | boolean;
   /**
    * Factory used to create the per-plugin options store
    *
@@ -146,14 +140,14 @@ export type WithSlateOptions<
 > = BaseWithSlateOptions<P> &
   Pick<
     Partial<AnySlatePlugin>,
-    | 'api'
-    | 'decorate'
-    | 'extendEditor'
-    | 'inject'
-    | 'normalizeInitialValue'
-    | 'options'
-    | 'override'
-    | 'transforms'
+    | "api"
+    | "decorate"
+    | "extendEditor"
+    | "inject"
+    | "normalizeInitialValue"
+    | "options"
+    | "override"
+    | "transforms"
   > & {
     // override?: {
     //   /** Enable or disable plugins */
@@ -184,11 +178,7 @@ export type WithSlateOptions<
      * Callback called when the editor is ready (after initialization
      * completes).
      */
-    onReady?: (ctx: {
-      editor: SlateEditor;
-      isAsync: boolean;
-      value: V;
-    }) => void;
+    onReady?: (ctx: { editor: SlateEditor; isAsync: boolean; value: V }) => void;
   };
 
 /**
@@ -202,10 +192,7 @@ export type WithSlateOptions<
  * @see {@link usePlateEditor} for a memoized React version.
  * @see {@link withPlate} for the React-specific enhancement function.
  */
-export const withSlate = <
-  V extends Value = Value,
-  P extends AnyPluginConfig = CorePlugin,
->(
+export const withSlate = <V extends Value = Value, P extends AnyPluginConfig = CorePlugin>(
   e: Editor,
   {
     id,
@@ -246,8 +233,7 @@ export const withSlate = <
   editor.getPlugin = (plugin) => getSlatePlugin(editor, plugin) as any;
   editor.getType = (pluginKey) => getPluginType(editor, pluginKey);
   editor.getInjectProps = (plugin) => {
-    const nodeProps =
-      editor.getPlugin<AnySlatePlugin>(plugin).inject?.nodeProps ?? ({} as any);
+    const nodeProps = editor.getPlugin<AnySlatePlugin>(plugin).inject?.nodeProps ?? ({} as any);
 
     nodeProps.nodeKey = nodeProps.nodeKey ?? editor.getType(plugin.key);
     nodeProps.styleKey = nodeProps.styleKey ?? nodeProps.nodeKey;
@@ -260,17 +246,17 @@ export const withSlate = <
 
     if (!store) return editor.getPlugin(plugin).options;
 
-    return editor.getOptionsStore(plugin).get('state');
+    return editor.getOptionsStore(plugin).get("state");
   };
   editor.getOption = (plugin, key, ...args) => {
     const store = editor.getOptionsStore(plugin);
 
     if (!store) return editor.getPlugin(plugin).options[key];
 
-    if (!(key in store.get('state')) && !(key in store.selectors)) {
+    if (!(key in store.get("state")) && !(key in store.selectors)) {
       editor.api.debug.error(
         `editor.getOption: ${key as string} option is not defined in plugin ${plugin.key}.`,
-        'OPTION_UNDEFINED'
+        "OPTION_UNDEFINED"
       );
       return;
     }
@@ -282,10 +268,10 @@ export const withSlate = <
 
     if (!store) return;
 
-    if (!(key in store.get('state'))) {
+    if (!(key in store.get("state"))) {
       editor.api.debug.error(
         `editor.setOption: ${key} option is not defined in plugin ${plugin.key}.`,
-        'OPTION_UNDEFINED'
+        "OPTION_UNDEFINED"
       );
       return;
     }
@@ -296,12 +282,12 @@ export const withSlate = <
     const store = editor.getOptionsStore(plugin);
 
     if (!store) return;
-    if (typeof options === 'object') {
-      store.set('state', (draft: any) => {
+    if (typeof options === "object") {
+      store.set("state", (draft: any) => {
         Object.assign(draft, options);
       });
-    } else if (typeof options === 'function') {
-      store.set('state', options);
+    } else if (typeof options === "function") {
+      store.set("state", options);
     }
   };
 
@@ -315,7 +301,7 @@ export const withSlate = <
   });
 
   let rootPluginInstance = createSlatePlugin({
-    key: 'root',
+    key: "root",
     priority: 10_000,
     ...pluginConfig,
     override: {
@@ -406,10 +392,7 @@ export type CreateSlateEditorOptions<
  * @see {@link usePlateEditor} for a memoized React version.
  * @see {@link withSlate} for the underlying function that applies Slate enhancements to an editor.
  */
-export const createSlateEditor = <
-  V extends Value = Value,
-  P extends AnyPluginConfig = CorePlugin,
->({
+export const createSlateEditor = <V extends Value = Value, P extends AnyPluginConfig = CorePlugin>({
   editor = createEditor(),
   ...options
 }: CreateSlateEditorOptions<V, P> = {}) => withSlate<V, P>(editor, options);

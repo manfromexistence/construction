@@ -4,13 +4,13 @@ import type {
   TTableCellElement,
   TTableElement,
   TTableRowElement,
-} from 'platejs';
+} from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { BorderDirection } from '../types';
+import type { BorderDirection } from "../types";
 
-import { type CellIndices, getCellIndices } from '../utils/getCellIndices';
+import { type CellIndices, getCellIndices } from "../utils/getCellIndices";
 
 export type BorderStylesDefault = {
   bottom: TTableCellBorder;
@@ -34,8 +34,7 @@ export const getTableCellBorders = (
   }
 ): BorderStylesDefault => {
   const cellPath = editor.api.findPath(element)!;
-  const [rowNode, rowPath] =
-    editor.api.parent<TTableRowElement>(cellPath) ?? [];
+  const [rowNode, rowPath] = editor.api.parent<TTableRowElement>(cellPath) ?? [];
   if (!rowNode || !rowPath) {
     return {
       bottom: defaultBorder,
@@ -67,9 +66,9 @@ export const getTableCellBorders = (
   };
 
   return {
-    bottom: getBorder('bottom'),
-    left: isFirstCell ? getBorder('left') : undefined,
-    right: getBorder('right'),
-    top: isFirstRow ? getBorder('top') : undefined,
+    bottom: getBorder("bottom"),
+    left: isFirstCell ? getBorder("left") : undefined,
+    right: getBorder("right"),
+    top: isFirstRow ? getBorder("top") : undefined,
   };
 };

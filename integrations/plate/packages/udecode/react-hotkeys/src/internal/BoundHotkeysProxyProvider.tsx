@@ -1,15 +1,15 @@
-import React, { type ReactNode, createContext, useContext } from 'react';
+import React, { createContext, type ReactNode, useContext } from "react";
 
-import type { Hotkey } from './types';
+import type { Hotkey } from "./types";
 
 type BoundHotkeysProxyProviderType = {
   addHotkey: (hotkey: Hotkey) => void;
   removeHotkey: (hotkey: Hotkey) => void;
 };
 
-const BoundHotkeysProxyProvider = createContext<
-  BoundHotkeysProxyProviderType | undefined
->(undefined);
+const BoundHotkeysProxyProvider = createContext<BoundHotkeysProxyProviderType | undefined>(
+  undefined
+);
 
 export const useBoundHotkeysProxy = () => useContext(BoundHotkeysProxyProvider);
 

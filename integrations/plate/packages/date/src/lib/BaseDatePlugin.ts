@@ -1,6 +1,6 @@
-import { bindFirst, createSlatePlugin, KEYS } from 'platejs';
+import { bindFirst, createSlatePlugin, KEYS } from "platejs";
 
-import { insertDate } from './transforms';
+import { insertDate } from "./transforms";
 
 export const BaseDatePlugin = createSlatePlugin({
   key: KEYS.date,

@@ -1,17 +1,16 @@
-import { createSlateEditor } from '../../lib/editor';
-import { createSlatePlugin } from '../../lib/plugin';
-import { pipeTransformData } from './pipeTransformData';
+import { createSlateEditor } from "../../lib/editor";
+import { createSlatePlugin } from "../../lib/plugin";
+import { pipeTransformData } from "./pipeTransformData";
 
-const createParserEditor = (
-  plugins: Parameters<typeof createSlateEditor>[0]['plugins']
-) => createSlateEditor({ plugins });
+const createParserEditor = (plugins: Parameters<typeof createSlateEditor>[0]["plugins"]) =>
+  createSlateEditor({ plugins });
 
-describe('pipeTransformData', () => {
-  it('pipes transformed data through parser plugins in order', () => {
+describe("pipeTransformData", () => {
+  it("pipes transformed data through parser plugins in order", () => {
     const calls: string[] = [];
 
     const firstPlugin = createSlatePlugin({
-      key: 'first',
+      key: "first",
       parser: {
         transformData: ({ data }) => {
           calls.push(`first:${data}`);
@@ -21,7 +20,7 @@ describe('pipeTransformData', () => {
     });
 
     const secondPlugin = createSlatePlugin({
-      key: 'second',
+      key: "second",
       parser: {
         transformData: ({ data }) => {
           calls.push(`second:${data}`);
@@ -33,32 +32,32 @@ describe('pipeTransformData', () => {
     const editor = createParserEditor([firstPlugin, secondPlugin]);
 
     const result = pipeTransformData(editor, [firstPlugin, secondPlugin], {
-      data: 'start',
+      data: "start",
       dataTransfer: {} as DataTransfer,
-      mimeType: 'text/plain',
+      mimeType: "text/plain",
     });
 
-    expect(result).toBe('start-alpha-beta');
-    expect(calls).toEqual(['first:start', 'second:start-alpha']);
+    expect(result).toBe("start-alpha-beta");
+    expect(calls).toEqual(["first:start", "second:start-alpha"]);
   });
 
-  it('skips plugins without transformData', () => {
+  it("skips plugins without transformData", () => {
     const activePlugin = createSlatePlugin({
-      key: 'active',
+      key: "active",
       parser: {
         transformData: ({ data }) => `${data}-done`,
       },
     });
-    const passivePlugin = createSlatePlugin({ key: 'passive' });
+    const passivePlugin = createSlatePlugin({ key: "passive" });
 
     const editor = createParserEditor([passivePlugin, activePlugin]);
 
     const result = pipeTransformData(editor, [passivePlugin, activePlugin], {
-      data: 'start',
+      data: "start",
       dataTransfer: {} as DataTransfer,
-      mimeType: 'text/plain',
+      mimeType: "text/plain",
     });
 
-    expect(result).toBe('start-done');
+    expect(result).toBe("start-done");
   });
 });

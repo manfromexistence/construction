@@ -1,17 +1,13 @@
-import { InfoIcon } from "lucide-react"
+import { InfoIcon } from "lucide-react";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/base-nova/ui/input-group"
-import { Label } from "@/styles/base-nova/ui/label"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/base-nova/ui/tooltip"
+} from "@/styles/base-nova/ui/input-group";
+import { Label } from "@/styles/base-nova/ui/label";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/base-nova/ui/tooltip";
 
 export default function InputGroupLabel() {
   return (
@@ -48,5 +44,5 @@ export default function InputGroupLabel() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

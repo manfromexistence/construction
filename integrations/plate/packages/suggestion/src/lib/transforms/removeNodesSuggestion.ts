@@ -1,18 +1,15 @@
-import type { NodeEntry, SlateEditor, TElement, Text } from 'platejs';
+import type { NodeEntry, SlateEditor, TElement, Text } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { findSuggestionProps } from '../queries';
+import { findSuggestionProps } from "../queries";
 
-export const removeNodesSuggestion = (
-  editor: SlateEditor,
-  nodes: NodeEntry<TElement | Text>[]
-) => {
+export const removeNodesSuggestion = (editor: SlateEditor, nodes: NodeEntry<TElement | Text>[]) => {
   if (nodes.length === 0) return;
 
   const { id, createdAt } = findSuggestionProps(editor, {
     at: editor.selection!,
-    type: 'remove',
+    type: "remove",
   });
 
   nodes.forEach(([, blockPath]) => {
@@ -21,7 +18,7 @@ export const removeNodesSuggestion = (
         [KEYS.suggestion]: {
           id,
           createdAt,
-          type: 'remove',
+          type: "remove",
         },
       },
       { at: blockPath }

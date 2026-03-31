@@ -1,4 +1,8 @@
+import { Calendar, Check, Circle, Mail } from "lucide-react";
+import { Metadata } from "next";
+import Link from "next/link";
 import { NoiseEffect } from "@/components/effects/noise-effect";
+import { Testimonials } from "@/components/home/testimonials";
 import {
   Accordion,
   AccordionContent,
@@ -10,11 +14,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { AI_REQUEST_FREE_TIER_LIMIT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { FREE_SUB_FEATURES, PRO_SUB_FEATURES } from "@/utils/subscription";
-import { Calendar, Check, Circle, Mail } from "lucide-react";
-import Link from "next/link";
 import { CheckoutButton } from "./components/checkout-button";
-import { Metadata } from "next";
-import { Testimonials } from "@/components/home/testimonials";
 
 export const metadata: Metadata = {
   title: "Pricing — tweakcn",

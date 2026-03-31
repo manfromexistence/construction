@@ -1,8 +1,8 @@
-import { createEditor } from './create-editor';
-import { withHistory } from './slate-history';
+import { createEditor } from "./create-editor";
+import { withHistory } from "./slate-history";
 
-describe('createEditor', () => {
-  it('syncs representative legacy methods to editor.api and editor.tf', () => {
+describe("createEditor", () => {
+  it("syncs representative legacy methods to editor.api and editor.tf", () => {
     const editor = createEditor();
 
     expect(editor.getMarks).toBe(editor.api.marks);
@@ -11,7 +11,7 @@ describe('createEditor', () => {
     expect(editor.point).toBe(editor.api.point);
   });
 
-  it('exposes history helpers after withHistory wraps the editor', () => {
+  it("exposes history helpers after withHistory wraps the editor", () => {
     const editor = withHistory(createEditor());
 
     expect(editor.history).toEqual({ redos: [], undos: [] });

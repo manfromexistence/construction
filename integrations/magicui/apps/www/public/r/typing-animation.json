@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Typing Animation",
   "description": "Characters appearing in typed animation",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/typing-animation.tsx",

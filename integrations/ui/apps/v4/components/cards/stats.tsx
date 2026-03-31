@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { Area, AreaChart, Line, LineChart } from "recharts"
+import { Area, AreaChart, Line, LineChart } from "recharts";
 
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardAction,
@@ -10,11 +10,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
-import {
-  ChartContainer,
-  type ChartConfig,
-} from "@/registry/new-york-v4/ui/chart"
+} from "@/registry/new-york-v4/ui/card";
+import { type ChartConfig, ChartContainer } from "@/registry/new-york-v4/ui/chart";
 
 const data = [
   {
@@ -49,7 +46,7 @@ const data = [
     revenue: 26475,
     subscription: 89,
   },
-]
+];
 
 const chartConfig = {
   revenue: {
@@ -60,7 +57,7 @@ const chartConfig = {
     label: "Subscriptions",
     color: "var(--primary)",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 
 export function CardsStats() {
   return (
@@ -128,5 +125,5 @@ export function CardsStats() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

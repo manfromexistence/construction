@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { GridPattern } from "@/registry/magicui/grid-pattern"
+import { cn } from "@/lib/utils";
+import { GridPattern } from "@/registry/magicui/grid-pattern";
 
 export default function GridPatternDemo() {
   return (
@@ -27,5 +27,5 @@ export default function GridPatternDemo() {
         )}
       />
     </div>
-  )
+  );
 }

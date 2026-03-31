@@ -1,15 +1,12 @@
 "use client";
 
-import * as React from "react";
-
-import { Dialog as DialogPrimitive } from "radix-ui";
 import { cva } from "class-variance-authority";
 import { X } from "lucide-react";
+import { Dialog as DialogPrimitive } from "radix-ui";
+import * as React from "react";
 import { Drawer as DrawerPrimitive, Content as VaulDrawerContent } from "vaul";
-
-import { cn } from "@/lib/utils";
-
 import useMediaQuery from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
 
 export type ResponsiveDialogProps = React.ComponentProps<typeof DrawerPrimitive.Root>;
 
@@ -87,7 +84,7 @@ const ResponsiveDialog = ({
   const effectiveModal = alert ? true : modal;
   const effectiveDismissible = alert ? true : dismissible;
 
- const isIOS = typeof window !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent)
+  const isIOS = typeof window !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
   return (
     <ResponsiveDialogProvider
       modal={effectiveModal}

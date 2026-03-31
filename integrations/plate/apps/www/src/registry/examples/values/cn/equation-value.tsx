@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -51,9 +51,7 @@ export const equationValue: any = (
       <htext>尝试以下操作：</htext>
     </hp>
     <hp indent={2} listStyleType="disc">
-      <htext>
-        点击任意公式进行编辑。按 Escape 键可以不保存编辑并关闭菜单。
-      </htext>
+      <htext>点击任意公式进行编辑。按 Escape 键可以不保存编辑并关闭菜单。</htext>
     </hp>
     <hp indent={2} listStyleType="disc">
       <htext>您可以使用方向键在公式中导航</htext>
@@ -65,9 +63,7 @@ export const equationValue: any = (
       <htext>使用斜杠命令（/inline equation）插入内联公式</htext>
     </hp>
     <hp>
-      <htext>
-        高级用法：将公式与表格或代码块等其他元素结合，以创建全面的科学文档。例如：
-      </htext>
+      <htext>高级用法：将公式与表格或代码块等其他元素结合，以创建全面的科学文档。例如：</htext>
     </hp>
     <hp>
       <htext>薛定谔方程，</htext>
@@ -77,9 +73,7 @@ export const equationValue: any = (
       <htext>，是量子力学中的基本方程。</htext>
     </hp>
     <hp>
-      <htext>
-        尝试使用不同类型的公式和格式来在您的文档中创建丰富的数学内容。
-      </htext>
+      <htext>尝试使用不同类型的公式和格式来在您的文档中创建丰富的数学内容。</htext>
     </hp>
   </fragment>
 );

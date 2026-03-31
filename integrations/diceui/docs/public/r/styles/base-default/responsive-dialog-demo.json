@@ -1,11 +1,6 @@
 {
   "name": "responsive-dialog-demo",
-  "registryDependencies": [
-    "button",
-    "input",
-    "label",
-    "responsive-dialog"
-  ],
+  "registryDependencies": ["button", "input", "label", "responsive-dialog"],
   "files": [
     {
       "path": "examples/responsive-dialog-demo.tsx",

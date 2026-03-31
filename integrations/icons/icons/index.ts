@@ -472,27 +472,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "send",
     icon: SendIcon,
-    keywords: [
-      "email",
-      "message",
-      "mail",
-      "paper airplane",
-      "paper aeroplane",
-      "submit",
-    ],
+    keywords: ["email", "message", "mail", "paper airplane", "paper aeroplane", "submit"],
   },
   {
     name: "heart-pulse",
     icon: HeartPulseIcon,
-    keywords: [
-      "heartbeat",
-      "pulse",
-      "health",
-      "medical",
-      "cardiac",
-      "ecg",
-      "vital",
-    ],
+    keywords: ["heartbeat", "pulse", "health", "medical", "cardiac", "ecg", "vital"],
   },
   {
     name: "graduation-cap",
@@ -536,14 +521,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "truck",
     icon: TruckIcon,
-    keywords: [
-      "delivery",
-      "van",
-      "shipping",
-      "haulage",
-      "lorry",
-      "transportation",
-    ],
+    keywords: ["delivery", "van", "shipping", "haulage", "lorry", "transportation"],
   },
   {
     name: "mic",
@@ -733,24 +711,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "git-pull-request-create",
     icon: GitPullRequestCreateIcon,
-    keywords: [
-      "git",
-      "pull request",
-      "create",
-      "version control",
-      "repository",
-    ],
+    keywords: ["git", "pull request", "create", "version control", "repository"],
   },
   {
     name: "git-pull-request-closed",
     icon: GitPullRequestClosedIcon,
-    keywords: [
-      "git",
-      "pull request",
-      "closed",
-      "version control",
-      "repository",
-    ],
+    keywords: ["git", "pull request", "closed", "version control", "repository"],
   },
   {
     name: "gitlab",
@@ -895,17 +861,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "droplet",
     icon: DropletIcon,
-    keywords: [
-      "water",
-      "weather",
-      "liquid",
-      "fluid",
-      "wet",
-      "moisture",
-      "damp",
-      "bead",
-      "globule",
-    ],
+    keywords: ["water", "weather", "liquid", "fluid", "wet", "moisture", "damp", "bead", "globule"],
   },
   {
     name: "plus",
@@ -1152,26 +1108,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "arrow-down-left",
     icon: ArrowDownLeftIcon,
-    keywords: [
-      "arrow",
-      "down",
-      "left",
-      "direction",
-      "southwest",
-      "bottom left",
-    ],
+    keywords: ["arrow", "down", "left", "direction", "southwest", "bottom left"],
   },
   {
     name: "arrow-down-right",
     icon: ArrowDownRightIcon,
-    keywords: [
-      "arrow",
-      "down",
-      "right",
-      "direction",
-      "southeast",
-      "bottom right",
-    ],
+    keywords: ["arrow", "down", "right", "direction", "southeast", "bottom right"],
   },
   {
     name: "arrow-up-left",
@@ -1186,13 +1128,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "vibrate",
     icon: VibrateIcon,
-    keywords: [
-      "smartphone",
-      "notification",
-      "rumble",
-      "haptic feedback",
-      "screen",
-    ],
+    keywords: ["smartphone", "notification", "rumble", "haptic feedback", "screen"],
   },
   {
     name: "waves-ladder",
@@ -1391,15 +1327,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "wrench",
     icon: WrenchIcon,
-    keywords: [
-      "account",
-      "settings",
-      "spanner",
-      "diy",
-      "toolbox",
-      "build",
-      "construction",
-    ],
+    keywords: ["account", "settings", "spanner", "diy", "toolbox", "build", "construction"],
   },
   {
     name: "logout",
@@ -1453,17 +1381,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "eye-off",
     icon: EyeOffIcon,
-    keywords: [
-      "view",
-      "watch",
-      "see",
-      "hide",
-      "conceal",
-      "mask",
-      "hidden",
-      "visibility",
-      "vision",
-    ],
+    keywords: ["view", "watch", "see", "hide", "conceal", "mask", "hidden", "visibility", "vision"],
   },
   {
     name: "eye",
@@ -1561,26 +1479,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "badge-alert",
     icon: BadgeAlertIcon,
-    keywords: [
-      "check",
-      "verified",
-      "unverified",
-      "security",
-      "safety",
-      "issue",
-    ],
+    keywords: ["check", "verified", "unverified", "security", "safety", "issue"],
   },
   {
     name: "message-circle",
     icon: MessageCircleIcon,
-    keywords: [
-      "comment",
-      "chat",
-      "conversation",
-      "dialog",
-      "feedback",
-      "speech bubble",
-    ],
+    keywords: ["comment", "chat", "conversation", "dialog", "feedback", "speech bubble"],
   },
   {
     name: "message-circle-check",
@@ -1619,15 +1523,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "message-circle-plus",
     icon: MessageCirclePlusIcon,
-    keywords: [
-      "comment",
-      "chat",
-      "conversation",
-      "dialog",
-      "feedback",
-      "speech bubble",
-      "add",
-    ],
+    keywords: ["comment", "chat", "conversation", "dialog", "feedback", "speech bubble", "add"],
   },
   {
     name: "message-circle-x",
@@ -1652,15 +1548,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "message-square",
     icon: MessageSquareIcon,
-    keywords: [
-      "comment",
-      "chat",
-      "conversation",
-      "dialog",
-      "feedback",
-      "speech bubble",
-      "message",
-    ],
+    keywords: ["comment", "chat", "conversation", "dialog", "feedback", "speech bubble", "message"],
   },
   {
     name: "message-square-check",
@@ -1700,15 +1588,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "message-square-plus",
     icon: MessageSquarePlusIcon,
-    keywords: [
-      "comment",
-      "chat",
-      "conversation",
-      "dialog",
-      "feedback",
-      "speech bubble",
-      "add",
-    ],
+    keywords: ["comment", "chat", "conversation", "dialog", "feedback", "speech bubble", "add"],
   },
   {
     name: "message-square-x",
@@ -1799,15 +1679,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "airplane",
     icon: AirplaneIcon,
-    keywords: [
-      "flight",
-      "path",
-      "journey",
-      "planner",
-      "points",
-      "stops",
-      "stations",
-    ],
+    keywords: ["flight", "path", "journey", "planner", "points", "stops", "stations"],
   },
   {
     name: "airplay",
@@ -1872,16 +1744,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "calendar-cog",
     icon: CalendarCogIcon,
-    keywords: [
-      "date",
-      "day",
-      "month",
-      "year",
-      "events",
-      "settings",
-      "gear",
-      "cog",
-    ],
+    keywords: ["date", "day", "month", "year", "events", "settings", "gear", "cog"],
   },
   {
     name: "cursor-click",
@@ -2090,15 +1953,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "gauge",
     icon: GaugeIcon,
-    keywords: [
-      "dashboard",
-      "dial",
-      "meter",
-      "speed",
-      "pressure",
-      "measure",
-      "level",
-    ],
+    keywords: ["dashboard", "dial", "meter", "speed", "pressure", "measure", "level"],
   },
   {
     name: "pen-tool",
@@ -2118,15 +1973,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "layers",
     icon: LayersIcon,
-    keywords: [
-      "stack",
-      "pile",
-      "pages",
-      "sheets",
-      "paperwork",
-      "copies",
-      "copy",
-    ],
+    keywords: ["stack", "pile", "pages", "sheets", "paperwork", "copies", "copy"],
   },
   {
     name: "grip",
@@ -2146,14 +1993,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "connect",
     icon: ConnectIcon,
-    keywords: [
-      "electricity",
-      "energy",
-      "electronics",
-      "socket",
-      "outlet",
-      "disconnect",
-    ],
+    keywords: ["electricity", "energy", "electronics", "socket", "outlet", "disconnect"],
   },
   {
     name: "volume",
@@ -2210,15 +2050,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "compass",
     icon: CompassIcon,
-    keywords: [
-      "direction",
-      "navigation",
-      "north",
-      "south",
-      "east",
-      "west",
-      "compass",
-    ],
+    keywords: ["direction", "navigation", "north", "south", "east", "west", "compass"],
   },
   {
     name: "shield-check",
@@ -2280,27 +2112,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "flask",
     icon: FlaskIcon,
-    keywords: [
-      "beaker",
-      "erlenmeyer",
-      "lab",
-      "chemistry",
-      "experiment",
-      "test",
-    ],
+    keywords: ["beaker", "erlenmeyer", "lab", "chemistry", "experiment", "test"],
   },
   {
     name: "syringe",
     icon: SyringeIcon,
-    keywords: [
-      "medicine",
-      "medical",
-      "needle",
-      "pump",
-      "plunger",
-      "nozzle",
-      "blood",
-    ],
+    keywords: ["medicine", "medical", "needle", "pump", "plunger", "nozzle", "blood"],
   },
   {
     name: "play",
@@ -2380,28 +2197,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "circle-chevron-left",
     icon: CircleChevronLeftIcon,
-    keywords: [
-      "back",
-      "previous",
-      "less than",
-      "fewer",
-      "menu",
-      "<",
-      "chevron",
-    ],
+    keywords: ["back", "previous", "less than", "fewer", "menu", "<", "chevron"],
   },
   {
     name: "circle-chevron-right",
     icon: CircleChevronRightIcon,
-    keywords: [
-      "next",
-      "forward",
-      "more than",
-      "greater",
-      "menu",
-      ">",
-      "chevron",
-    ],
+    keywords: ["next", "forward", "more than", "greater", "menu", ">", "chevron"],
   },
   {
     name: "square-chevron-down",
@@ -2447,15 +2248,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "check-check",
     icon: CheckCheckIcon,
-    keywords: [
-      "done",
-      "received",
-      "double",
-      "todo",
-      "tick",
-      "complete",
-      "task",
-    ],
+    keywords: ["done", "received", "double", "todo", "tick", "complete", "task"],
   },
   {
     name: "id-card",
@@ -2534,26 +2327,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "git-commit-vertical",
     icon: GitCommitVerticalIcon,
-    keywords: [
-      "code",
-      "open",
-      "version control ",
-      "waypoint",
-      "stop",
-      "station",
-    ],
+    keywords: ["code", "open", "version control ", "waypoint", "stop", "station"],
   },
   {
     name: "git-commit-horizontal",
     icon: GitCommitHorizontalIcon,
-    keywords: [
-      "code",
-      "open",
-      "version control ",
-      "waypoint",
-      "stop",
-      "station",
-    ],
+    keywords: ["code", "open", "version control ", "waypoint", "stop", "station"],
   },
   {
     name: "waypoints",
@@ -2629,16 +2408,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "webhook",
     icon: WebhookIcon,
-    keywords: [
-      "api",
-      "integration",
-      "web",
-      "hook",
-      "connect",
-      "link",
-      "push api",
-      "callback",
-    ],
+    keywords: ["api", "integration", "web", "hook", "connect", "link", "push api", "callback"],
   },
   {
     name: "rabbit",
@@ -2782,17 +2552,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "map-pin-plus-inside",
     icon: MapPinPlusInsideIcon,
-    keywords: [
-      "map",
-      "pin",
-      "marker",
-      "location",
-      "address",
-      "waypoint",
-      "add",
-      "create",
-      "new",
-    ],
+    keywords: ["map", "pin", "marker", "location", "address", "waypoint", "add", "create", "new"],
   },
   {
     name: "map-pin-off",
@@ -2861,17 +2621,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "map-pin-plus",
     icon: MapPinPlusIcon,
-    keywords: [
-      "map",
-      "pin",
-      "marker",
-      "location",
-      "address",
-      "waypoint",
-      "add",
-      "create",
-      "new",
-    ],
+    keywords: ["map", "pin", "marker", "location", "address", "waypoint", "add", "create", "new"],
   },
   {
     name: "map-pin-x-inside",
@@ -2934,15 +2684,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "layout-panel-top",
     icon: LayoutPanelTopIcon,
-    keywords: [
-      "window",
-      "webpage",
-      "block",
-      "section",
-      "grid",
-      "template",
-      "structure",
-    ],
+    keywords: ["window", "webpage", "block", "section", "grid", "template", "structure"],
   },
   {
     name: "contrast",
@@ -2980,15 +2722,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "book-text",
     icon: BookTextIcon,
-    keywords: [
-      "reading",
-      "booklet",
-      "magazine",
-      "leaflet",
-      "pamphlet",
-      "tome",
-      "library",
-    ],
+    keywords: ["reading", "booklet", "magazine", "leaflet", "pamphlet", "tome", "library"],
   },
   {
     name: "ev-charger",
@@ -3067,16 +2801,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "coffee",
     icon: CoffeeIcon,
-    keywords: [
-      "coffee",
-      "drink",
-      "cup",
-      "mug",
-      "tea",
-      "cafe",
-      "hot",
-      "beverage",
-    ],
+    keywords: ["coffee", "drink", "cup", "mug", "tea", "cafe", "hot", "beverage"],
   },
   {
     name: "cup-soda",
@@ -3176,14 +2901,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "file-chart-line",
     icon: FileChartLineIcon,
-    keywords: [
-      "file",
-      "chart",
-      "line",
-      "increasing",
-      "filechartline",
-      "filechartline",
-    ],
+    keywords: ["file", "chart", "line", "increasing", "filechartline", "filechartline"],
   },
   {
     name: "chart-no-axes-column-increasing",
@@ -3198,15 +2916,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "radio",
     icon: RadioIcon,
-    keywords: [
-      "radio",
-      "signal",
-      "broadcast",
-      "wireless",
-      "frequency",
-      "connectivity",
-      "live",
-    ],
+    keywords: ["radio", "signal", "broadcast", "wireless", "frequency", "connectivity", "live"],
   },
   {
     name: "radio-tower",
@@ -3245,56 +2955,22 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "calendar-check",
     icon: CalendarCheckIcon,
-    keywords: [
-      "calendar",
-      "check",
-      "checkmark",
-      "tick",
-      "done",
-      "confirm",
-      "complete",
-    ],
+    keywords: ["calendar", "check", "checkmark", "tick", "done", "confirm", "complete"],
   },
   {
     name: "calendar-check-2",
     icon: CalendarCheck2Icon,
-    keywords: [
-      "calendar",
-      "check",
-      "checkmark",
-      "tick",
-      "done",
-      "confirm",
-      "complete",
-    ],
+    keywords: ["calendar", "check", "checkmark", "tick", "done", "confirm", "complete"],
   },
   {
     name: "file-check",
     icon: FileCheckIcon,
-    keywords: [
-      "file",
-      "check",
-      "checkmark",
-      "tick",
-      "done",
-      "document",
-      "confirm",
-      "complete",
-    ],
+    keywords: ["file", "check", "checkmark", "tick", "done", "document", "confirm", "complete"],
   },
   {
     name: "file-check-2",
     icon: FileCheck2Icon,
-    keywords: [
-      "file",
-      "check",
-      "checkmark",
-      "tick",
-      "done",
-      "document",
-      "confirm",
-      "complete",
-    ],
+    keywords: ["file", "check", "checkmark", "tick", "done", "document", "confirm", "complete"],
   },
   {
     name: "mail-check",
@@ -3394,15 +3070,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "hand-heart",
     icon: HandHeartIcon,
-    keywords: [
-      "hand",
-      "heart",
-      "love",
-      "affection",
-      "hug",
-      "cuddle",
-      "emotion",
-    ],
+    keywords: ["hand", "heart", "love", "affection", "hug", "cuddle", "emotion"],
   },
   {
     name: "gallery-thumbnails",
@@ -3421,41 +3089,17 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "user-check",
     icon: UserCheckIcon,
-    keywords: [
-      "user",
-      "check",
-      "checkmark",
-      "tick",
-      "done",
-      "confirm",
-      "complete",
-    ],
+    keywords: ["user", "check", "checkmark", "tick", "done", "confirm", "complete"],
   },
   {
     name: "user-round-check",
     icon: UserRoundCheckIcon,
-    keywords: [
-      "user",
-      "check",
-      "checkmark",
-      "tick",
-      "done",
-      "confirm",
-      "complete",
-    ],
+    keywords: ["user", "check", "checkmark", "tick", "done", "confirm", "complete"],
   },
   {
     name: "box",
     icon: BoxIcon,
-    keywords: [
-      "cube",
-      "package",
-      "container",
-      "storage",
-      "geometry",
-      "3d",
-      "isometric",
-    ],
+    keywords: ["cube", "package", "container", "storage", "geometry", "3d", "isometric"],
   },
   {
     name: "boxes",
@@ -3490,13 +3134,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "construction",
     icon: ConstructionIcon,
-    keywords: [
-      "roadwork",
-      "maintenance",
-      "blockade",
-      "barricade",
-      "development",
-    ],
+    keywords: ["roadwork", "maintenance", "blockade", "barricade", "development"],
   },
   {
     name: "git-merge",
@@ -3531,15 +3169,7 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "battery-warning",
     icon: BatteryWarningIcon,
-    keywords: [
-      "battery",
-      "warning",
-      "power",
-      "electricity",
-      "energy",
-      "alert",
-      "exclamation",
-    ],
+    keywords: ["battery", "warning", "power", "electricity", "energy", "alert", "exclamation"],
   },
   {
     name: "hand",
@@ -3575,27 +3205,12 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "hand-helping",
     icon: HandHelpingIcon,
-    keywords: [
-      "agreement",
-      "assistance",
-      "help",
-      "partnership",
-      "support",
-      "volunteer",
-    ],
+    keywords: ["agreement", "assistance", "help", "partnership", "support", "volunteer"],
   },
   {
     name: "hand-metal",
     icon: HandMetalIcon,
-    keywords: [
-      "rock",
-      "metal",
-      "heavy metal",
-      "music",
-      "gesture",
-      "concert",
-      "horns",
-    ],
+    keywords: ["rock", "metal", "heavy metal", "music", "gesture", "concert", "horns"],
   },
   {
     name: "wifi-low",
@@ -3605,60 +3220,22 @@ const ICON_LIST: IconListItem[] = [
   {
     name: "database-backup",
     icon: DatabaseBackupIcon,
-    keywords: [
-      "database",
-      "backup",
-      "restore",
-      "storage",
-      "reload",
-      "sync",
-      "recovery",
-      "data",
-    ],
+    keywords: ["database", "backup", "restore", "storage", "reload", "sync", "recovery", "data"],
   },
   {
     name: "disc-3",
     icon: Disc3Icon,
-    keywords: [
-      "disc",
-      "vinyl",
-      "record",
-      "music",
-      "audio",
-      "spin",
-      "rotate",
-      "cd",
-      "dvd",
-      "media",
-    ],
+    keywords: ["disc", "vinyl", "record", "music", "audio", "spin", "rotate", "cd", "dvd", "media"],
   },
   {
     name: "loader-circle",
     icon: LoaderCircleIcon,
-    keywords: [
-      "loader",
-      "loading",
-      "spinner",
-      "spin",
-      "circle",
-      "progress",
-      "wait",
-      "processing",
-    ],
+    keywords: ["loader", "loading", "spinner", "spin", "circle", "progress", "wait", "processing"],
   },
   {
     name: "loader",
     icon: LoaderIcon,
-    keywords: [
-      "loader",
-      "loading",
-      "spinner",
-      "spin",
-      "rotate",
-      "progress",
-      "wait",
-      "processing",
-    ],
+    keywords: ["loader", "loading", "spinner", "spin", "rotate", "progress", "wait", "processing"],
   },
 ].sort((a, b) => a.name.localeCompare(b.name));
 

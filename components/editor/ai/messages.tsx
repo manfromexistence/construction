@@ -1,3 +1,5 @@
+import { X } from "lucide-react";
+import { useEffect, useMemo, useRef } from "react";
 import Logo from "@/assets/logo.svg";
 import {
   Conversation,
@@ -9,6 +11,7 @@ import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { useChatContext } from "@/hooks/use-chat-context";
 import { useScrollStartEnd } from "@/hooks/use-scroll-start-end";
+import { parseAiSdkTransportError } from "@/lib/ai/parse-ai-sdk-transport-error";
 import { cn } from "@/lib/utils";
 import { AIPromptData, type ChatMessage } from "@/types/ai";
 import {
@@ -16,9 +19,6 @@ import {
   getLastAssistantMessage,
   getUserMessages,
 } from "@/utils/ai/messages";
-import { parseAiSdkTransportError } from "@/lib/ai/parse-ai-sdk-transport-error";
-import { X } from "lucide-react";
-import { useEffect, useMemo, useRef } from "react";
 import { LoadingLogo } from "./loading-logo";
 import Message from "./message";
 
@@ -63,7 +63,7 @@ export function Messages({
       console.log("scrolling to end");
       scrollEndElement.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-  }, [messages, status]);
+  }, [messages, status, scrollEndRef.current]);
 
   const visibleMessages = useMemo(() => filterMessagesToDisplay(messages), [messages]);
 

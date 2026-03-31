@@ -1,7 +1,7 @@
-import { DOMEditor } from 'slate-dom';
+import { DOMEditor } from "slate-dom";
 
-import type { Editor } from '../../interfaces/editor';
-import type { Point } from '../../interfaces/point';
+import type { Editor } from "../../interfaces/editor";
+import type { Point } from "../../interfaces/point";
 
 export const toDOMPoint = (editor: Editor, point: Point) => {
   try {

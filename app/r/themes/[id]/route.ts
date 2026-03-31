@@ -1,10 +1,9 @@
 import { NextResponse } from "next/server";
-
-import { getTheme } from "@/actions/themes";
-import { generateThemeRegistryItemFromStyles } from "@/utils/registry/themes";
 import { registryItemSchema } from "shadcn/schema";
-import { getBuiltInThemeStyles } from "@/utils/theme-preset-helper";
+import { getTheme } from "@/actions/themes";
 import { ThemeStyles } from "@/types/theme";
+import { generateThemeRegistryItemFromStyles } from "@/utils/registry/themes";
+import { getBuiltInThemeStyles } from "@/utils/theme-preset-helper";
 
 export const dynamic = "force-static";
 

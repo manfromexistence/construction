@@ -1,24 +1,24 @@
-import { createTestEditor } from '../__tests__/createTestEditor';
-import { listToMdastTree } from './listToMdastTree';
+import { createTestEditor } from "../__tests__/createTestEditor";
+import { listToMdastTree } from "./listToMdastTree";
 
 const editor = createTestEditor();
 
-describe('listToMdastTree', () => {
-  it('convert a flat list correctly', () => {
+describe("listToMdastTree", () => {
+  it("convert a flat list correctly", () => {
     const nodes = [
       {
-        children: [{ text: 'list1' }],
+        children: [{ text: "list1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'list2' }],
+        children: [{ text: "list2" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -32,54 +32,54 @@ describe('listToMdastTree', () => {
           checked: null,
           children: [
             {
-              children: [{ type: 'text', value: 'list1' }],
-              type: 'paragraph',
+              children: [{ type: "text", value: "list1" }],
+              type: "paragraph",
             },
           ],
           spread: false,
-          type: 'listItem',
+          type: "listItem",
         },
         {
           checked: null,
           children: [
             {
-              children: [{ type: 'text', value: 'list2' }],
-              type: 'paragraph',
+              children: [{ type: "text", value: "list2" }],
+              type: "paragraph",
             },
           ],
           spread: false,
-          type: 'listItem',
+          type: "listItem",
         },
       ],
       ordered: false,
       spread: false,
       start: 1,
-      type: 'list',
+      type: "list",
     });
   });
 
-  it('convert a nested list correctly', () => {
+  it("convert a nested list correctly", () => {
     const nodes = [
       {
-        children: [{ text: 'list1' }],
+        children: [{ text: "list1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'list2' }],
+        children: [{ text: "list2" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'list3' }],
+        children: [{ text: "list3" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -93,19 +93,19 @@ describe('listToMdastTree', () => {
           checked: null,
           children: [
             {
-              children: [{ type: 'text', value: 'list1' }],
-              type: 'paragraph',
+              children: [{ type: "text", value: "list1" }],
+              type: "paragraph",
             },
           ],
           spread: false,
-          type: 'listItem',
+          type: "listItem",
         },
         {
           checked: null,
           children: [
             {
-              children: [{ type: 'text', value: 'list2' }],
-              type: 'paragraph',
+              children: [{ type: "text", value: "list2" }],
+              type: "paragraph",
             },
             {
               children: [
@@ -113,46 +113,46 @@ describe('listToMdastTree', () => {
                   checked: null,
                   children: [
                     {
-                      children: [{ type: 'text', value: 'list3' }],
-                      type: 'paragraph',
+                      children: [{ type: "text", value: "list3" }],
+                      type: "paragraph",
                     },
                   ],
                   spread: false,
-                  type: 'listItem',
+                  type: "listItem",
                 },
               ],
               ordered: false,
               spread: false,
               start: 1,
-              type: 'list',
+              type: "list",
             },
           ],
           spread: false,
-          type: 'listItem',
+          type: "listItem",
         },
       ],
       ordered: false,
       spread: false,
       start: 1,
-      type: 'list',
+      type: "list",
     });
   });
 
-  it('handle ordered lists correctly', () => {
+  it("handle ordered lists correctly", () => {
     const nodes = [
       {
-        children: [{ text: 'list1' }],
+        children: [{ text: "list1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'list2' }],
+        children: [{ text: "list2" }],
         indent: 1,
         listStart: 2,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
     ];
 
@@ -166,68 +166,68 @@ describe('listToMdastTree', () => {
           checked: null,
           children: [
             {
-              children: [{ type: 'text', value: 'list1' }],
-              type: 'paragraph',
+              children: [{ type: "text", value: "list1" }],
+              type: "paragraph",
             },
           ],
           spread: false,
-          type: 'listItem',
+          type: "listItem",
         },
         {
           checked: null,
           children: [
             {
-              children: [{ type: 'text', value: 'list2' }],
-              type: 'paragraph',
+              children: [{ type: "text", value: "list2" }],
+              type: "paragraph",
             },
           ],
           spread: false,
-          type: 'listItem',
+          type: "listItem",
         },
       ],
       ordered: true,
       spread: false,
       start: 1,
-      type: 'list',
+      type: "list",
     });
   });
 
-  it('handle complex nested lists with different indentation levels', () => {
+  it("handle complex nested lists with different indentation levels", () => {
     const nodes = [
       {
-        children: [{ text: 'level1-1' }],
+        children: [{ text: "level1-1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'level2-1' }],
+        children: [{ text: "level2-1" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'level3-1' }],
+        children: [{ text: "level3-1" }],
         indent: 3,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'level2-2' }],
+        children: [{ text: "level2-2" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'level1-2' }],
+        children: [{ text: "level1-2" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -241,41 +241,39 @@ describe('listToMdastTree', () => {
     expect(result.children[0].children[1].children).toHaveLength(2); // Nested list has two items
   });
 
-  it('throw error for empty nodes', () => {
-    expect(() => listToMdastTree([], { editor })).toThrow(
-      'Cannot create a list from empty nodes'
-    );
+  it("throw error for empty nodes", () => {
+    expect(() => listToMdastTree([], { editor })).toThrow("Cannot create a list from empty nodes");
   });
 
-  it('handle mixed ordered and unordered nested lists', () => {
+  it("handle mixed ordered and unordered nested lists", () => {
     const nodes = [
       {
-        children: [{ text: 'unordered 1' }],
+        children: [{ text: "unordered 1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'ordered 1' }],
+        children: [{ text: "ordered 1" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'ordered 2' }],
+        children: [{ text: "ordered 2" }],
         indent: 2,
         listStart: 2,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'unordered sub' }],
+        children: [{ text: "unordered sub" }],
         indent: 3,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -285,33 +283,31 @@ describe('listToMdastTree', () => {
 
     expect(result.ordered).toBe(false);
     expect(result.children[0].children[1].ordered).toBe(true);
-    expect(result.children[0].children[1].children[1].children[1].ordered).toBe(
-      false
-    );
+    expect(result.children[0].children[1].children[1].children[1].ordered).toBe(false);
   });
 
-  it('split sibling nested lists when style changes at same indent', () => {
+  it("split sibling nested lists when style changes at same indent", () => {
     const nodes = [
       {
-        children: [{ text: 'parent bullet' }],
+        children: [{ text: "parent bullet" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'child ordered' }],
+        children: [{ text: "child ordered" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'child bullet' }],
+        children: [{ text: "child bullet" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -324,21 +320,21 @@ describe('listToMdastTree', () => {
     expect(result.children[0].children[2].ordered).toBe(false);
   });
 
-  it('handle ordered lists with different start numbers', () => {
+  it("handle ordered lists with different start numbers", () => {
     const nodes = [
       {
-        children: [{ text: 'start from 3' }],
+        children: [{ text: "start from 3" }],
         indent: 1,
         listStart: 3,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'nested start from 5' }],
+        children: [{ text: "nested start from 5" }],
         indent: 2,
         listStart: 5,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
     ];
 
@@ -351,42 +347,42 @@ describe('listToMdastTree', () => {
     expect(result.children[0].children[1].start).toBe(5);
   });
 
-  it('handle deep nesting followed by shallow items', () => {
+  it("handle deep nesting followed by shallow items", () => {
     const nodes = [
       {
-        children: [{ text: 'level 1' }],
+        children: [{ text: "level 1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'level 2' }],
+        children: [{ text: "level 2" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'level 3' }],
+        children: [{ text: "level 3" }],
         indent: 3,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'level 4' }],
+        children: [{ text: "level 4" }],
         indent: 4,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'back to level 1' }],
+        children: [{ text: "back to level 1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -396,41 +392,39 @@ describe('listToMdastTree', () => {
 
     expect(result.children).toHaveLength(2);
     expect(
-      result.children[0].children[1].children[0].children[1].children[0]
-        .children[0].children[0].value
-    ).toBe('level 3');
-    expect(result.children[1].children[0].children[0].value).toBe(
-      'back to level 1'
-    );
+      result.children[0].children[1].children[0].children[1].children[0].children[0].children[0]
+        .value
+    ).toBe("level 3");
+    expect(result.children[1].children[0].children[0].value).toBe("back to level 1");
   });
 
-  it('handle list items with rich text content', () => {
+  it("handle list items with rich text content", () => {
     const nodes = [
       {
         children: [
-          { text: 'normal ', type: 'text' },
-          { bold: true, text: 'bold', type: 'text' },
-          { text: ' and ', type: 'text' },
-          { italic: true, text: 'italic', type: 'text' },
+          { text: "normal ", type: "text" },
+          { bold: true, text: "bold", type: "text" },
+          { text: " and ", type: "text" },
+          { italic: true, text: "italic", type: "text" },
         ],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
         children: [
-          { text: 'with ', type: 'text' },
+          { text: "with ", type: "text" },
           {
-            children: [{ text: 'link', type: 'text' }],
-            type: 'a',
-            url: 'https://example.com',
+            children: [{ text: "link", type: "text" }],
+            type: "a",
+            url: "https://example.com",
           },
         ],
         indent: 2,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -441,32 +435,32 @@ describe('listToMdastTree', () => {
     const firstItem = result.children[0].children[0].children;
 
     expect(firstItem).toHaveLength(4);
-    expect(JSON.stringify(firstItem[1])).toContain('strong');
-    expect(JSON.stringify(firstItem[3])).toContain('emphasis');
+    expect(JSON.stringify(firstItem[1])).toContain("strong");
+    expect(JSON.stringify(firstItem[3])).toContain("emphasis");
 
     const nestedItem = result.children[0].children[1].children;
 
-    expect(JSON.stringify(nestedItem[0])).toContain('link');
-    expect(JSON.stringify(nestedItem[0])).toContain('https://example.com');
+    expect(JSON.stringify(nestedItem[0])).toContain("link");
+    expect(JSON.stringify(nestedItem[0])).toContain("https://example.com");
   });
 
-  it('handle todo lists correctly', () => {
+  it("handle todo lists correctly", () => {
     const nodes = [
       {
         checked: true,
-        children: [{ text: 'todo 1' }],
+        children: [{ text: "todo 1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'todo',
-        type: 'p',
+        listStyleType: "todo",
+        type: "p",
       },
       {
         checked: false,
-        children: [{ text: 'todo 2' }],
+        children: [{ text: "todo 2" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'todo',
-        type: 'p',
+        listStyleType: "todo",
+        type: "p",
       },
     ];
 
@@ -477,21 +471,21 @@ describe('listToMdastTree', () => {
     expect(result).toMatchSnapshot();
   });
 
-  it('handle spread option correctly', () => {
+  it("handle spread option correctly", () => {
     const nodes = [
       {
-        children: [{ text: 'list1' }],
+        children: [{ text: "list1" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'list2' }],
+        children: [{ text: "list2" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
@@ -511,28 +505,28 @@ describe('listToMdastTree', () => {
     expect(resultWithSpread.spread).toBe(true);
   });
 
-  it('creates sibling nested lists when the style changes at the same indent', () => {
+  it("creates sibling nested lists when the style changes at the same indent", () => {
     const nodes = [
       {
-        children: [{ text: 'parent' }],
+        children: [{ text: "parent" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'unordered child' }],
+        children: [{ text: "unordered child" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'ordered child' }],
+        children: [{ text: "ordered child" }],
         indent: 2,
         listStart: 3,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
     ];
 
@@ -546,18 +540,18 @@ describe('listToMdastTree', () => {
             checked: null,
             children: [
               {
-                children: [{ type: 'text', value: 'unordered child' }],
-                type: 'paragraph',
+                children: [{ type: "text", value: "unordered child" }],
+                type: "paragraph",
               },
             ],
             spread: false,
-            type: 'listItem',
+            type: "listItem",
           },
         ],
         ordered: false,
         spread: false,
         start: 1,
-        type: 'list',
+        type: "list",
       },
       {
         children: [
@@ -565,47 +559,47 @@ describe('listToMdastTree', () => {
             checked: null,
             children: [
               {
-                children: [{ type: 'text', value: 'ordered child' }],
-                type: 'paragraph',
+                children: [{ type: "text", value: "ordered child" }],
+                type: "paragraph",
               },
             ],
             spread: false,
-            type: 'listItem',
+            type: "listItem",
           },
         ],
         ordered: true,
         spread: false,
         start: 3,
-        type: 'list',
+        type: "list",
       },
     ]);
   });
 
-  it('wraps block-id list items individually when block ids are enabled', () => {
+  it("wraps block-id list items individually when block ids are enabled", () => {
     const nodes = [
       {
-        children: [{ text: 'first' }],
-        id: 'block-a',
+        children: [{ text: "first" }],
+        id: "block-a",
         indent: 1,
         listStart: 7,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'second' }],
+        children: [{ text: "second" }],
         indent: 1,
         listStart: 8,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
         checked: true,
-        children: [{ text: 'todo' }],
-        id: 'block-c',
+        children: [{ text: "todo" }],
+        id: "block-c",
         indent: 1,
         listStart: 1,
-        listStyleType: 'todo',
-        type: 'p',
+        listStyleType: "todo",
+        type: "p",
       },
     ];
 
@@ -620,9 +614,9 @@ describe('listToMdastTree', () => {
         {
           attributes: [
             {
-              name: 'id',
-              type: 'mdxJsxAttribute',
-              value: 'block-a',
+              name: "id",
+              type: "mdxJsxAttribute",
+              value: "block-a",
             },
           ],
           children: [
@@ -632,23 +626,23 @@ describe('listToMdastTree', () => {
                   checked: null,
                   children: [
                     {
-                      children: [{ type: 'text', value: 'first' }],
-                      type: 'paragraph',
+                      children: [{ type: "text", value: "first" }],
+                      type: "paragraph",
                     },
                   ],
                   spread: true,
-                  type: 'listItem',
+                  type: "listItem",
                 },
               ],
               ordered: true,
               spread: true,
               start: 1,
-              type: 'list',
+              type: "list",
             },
           ],
           data: { _mdxExplicitJsx: true },
-          name: 'block',
-          type: 'mdxJsxFlowElement',
+          name: "block",
+          type: "mdxJsxFlowElement",
         },
         {
           children: [
@@ -656,25 +650,25 @@ describe('listToMdastTree', () => {
               checked: null,
               children: [
                 {
-                  children: [{ type: 'text', value: 'second' }],
-                  type: 'paragraph',
+                  children: [{ type: "text", value: "second" }],
+                  type: "paragraph",
                 },
               ],
               spread: true,
-              type: 'listItem',
+              type: "listItem",
             },
           ],
           ordered: true,
           spread: true,
           start: 2,
-          type: 'list',
+          type: "list",
         },
         {
           attributes: [
             {
-              name: 'id',
-              type: 'mdxJsxAttribute',
-              value: 'block-c',
+              name: "id",
+              type: "mdxJsxAttribute",
+              value: "block-c",
             },
           ],
           children: [
@@ -684,26 +678,26 @@ describe('listToMdastTree', () => {
                   checked: true,
                   children: [
                     {
-                      children: [{ type: 'text', value: 'todo' }],
-                      type: 'paragraph',
+                      children: [{ type: "text", value: "todo" }],
+                      type: "paragraph",
                     },
                   ],
                   spread: true,
-                  type: 'listItem',
+                  type: "listItem",
                 },
               ],
               ordered: false,
               spread: true,
               start: undefined,
-              type: 'list',
+              type: "list",
             },
           ],
           data: { _mdxExplicitJsx: true },
-          name: 'block',
-          type: 'mdxJsxFlowElement',
+          name: "block",
+          type: "mdxJsxFlowElement",
         },
       ],
-      type: 'fragment',
+      type: "fragment",
     });
   });
 });

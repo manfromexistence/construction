@@ -1,9 +1,5 @@
-import { cn } from "@/lib/utils"
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/registry/new-york-v4/ui/alert"
+import { cn } from "@/lib/utils";
+import { Alert, AlertDescription, AlertTitle } from "@/registry/new-york-v4/ui/alert";
 
 export function Callout({
   title,
@@ -13,8 +9,8 @@ export function Callout({
   variant = "default",
   ...props
 }: React.ComponentProps<typeof Alert> & {
-  icon?: React.ReactNode
-  variant?: "default" | "info" | "warning"
+  icon?: React.ReactNode;
+  variant?: "default" | "info" | "warning";
 }) {
   return (
     <Alert
@@ -27,9 +23,7 @@ export function Callout({
     >
       {icon}
       {title && <AlertTitle>{title}</AlertTitle>}
-      <AlertDescription className="text-card-foreground/80">
-        {children}
-      </AlertDescription>
+      <AlertDescription className="text-card-foreground/80">{children}</AlertDescription>
     </Alert>
-  )
+  );
 }

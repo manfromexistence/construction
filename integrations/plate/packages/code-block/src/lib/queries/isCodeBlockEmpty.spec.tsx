@@ -1,15 +1,14 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
 
-import { isCodeBlockEmpty } from './isCodeBlockEmpty';
+import { isCodeBlockEmpty } from "./isCodeBlockEmpty";
 
 jsxt;
 
-describe('isCodeBlockEmpty', () => {
-  const run = (input: any) =>
-    isCodeBlockEmpty(createSlateEditor({ editor: createEditor(input) }));
+describe("isCodeBlockEmpty", () => {
+  const run = (input: any) => isCodeBlockEmpty(createSlateEditor({ editor: createEditor(input) }));
 
   it.each([
     {
@@ -27,7 +26,7 @@ describe('isCodeBlockEmpty', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns false outside a code block',
+      title: "returns false outside a code block",
     },
     {
       expected: false,
@@ -44,7 +43,7 @@ describe('isCodeBlockEmpty', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns false for a multi-line code block',
+      title: "returns false for a multi-line code block",
     },
     {
       expected: false,
@@ -58,7 +57,7 @@ describe('isCodeBlockEmpty', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns false for a non-empty code line',
+      title: "returns false for a non-empty code line",
     },
     {
       expected: true,
@@ -72,9 +71,9 @@ describe('isCodeBlockEmpty', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns true for a single empty code line',
+      title: "returns true for a single empty code line",
     },
-  ])('$title', ({ input, expected }) => {
+  ])("$title", ({ input, expected }) => {
     expect(run(input)).toBe(expected);
   });
 });

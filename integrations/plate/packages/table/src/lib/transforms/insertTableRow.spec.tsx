@@ -1,22 +1,19 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { insertTableRow } from './insertTableRow';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { insertTableRow } from "./insertTableRow";
 
 jsxt;
 
-describe('insertTableRow', () => {
-  describe('when inserting a table row', () => {
+describe("insertTableRow", () => {
+  describe("when inserting a table row", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a tr with empty cells (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("inserts a tr with empty cells (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -92,13 +89,11 @@ describe('insertTableRow', () => {
     });
   });
 
-  describe('when inserting a table row at specific path', () => {
+  describe("when inserting a table row at specific path", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a tr with empty cells (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("inserts a tr with empty cells (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -174,11 +169,11 @@ describe('insertTableRow', () => {
     });
   });
 
-  describe('when inserting a table row before', () => {
+  describe("when inserting a table row before", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a tr with empty cells before the current row (disableMerge: $disableMerge)', ({
+    ])("inserts a tr with empty cells before the current row (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (

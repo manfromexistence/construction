@@ -1,19 +1,19 @@
 import {
   type NodeEntry,
+  nanoid,
   type Point,
   type SlateEditor,
   type TLocation,
   type TSuggestionElement,
   type TSuggestionText,
-  nanoid,
-} from 'platejs';
+} from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getInlineSuggestionData, isCurrentUserSuggestion } from '../utils';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { getInlineSuggestionData, isCurrentUserSuggestion } from "../utils";
 
 export const findSuggestionProps = (
   editor: SlateEditor,
-  { at, type }: { at: TLocation; type: 'insert' | 'remove' | 'update' }
+  { at, type }: { at: TLocation; type: "insert" | "remove" | "update" }
 ): { id: string; createdAt: number } => {
   const defaultProps = {
     id: nanoid(),

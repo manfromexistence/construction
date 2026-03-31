@@ -1,24 +1,22 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import type { Slider as SliderPrimitive } from "radix-ui"
+import type { Slider as SliderPrimitive } from "radix-ui";
+import * as React from "react";
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/registry/new-york-v4/ui/hover-card"
-import { Label } from "@/registry/new-york-v4/ui/label"
-import { Slider } from "@/registry/new-york-v4/ui/slider"
+} from "@/registry/new-york-v4/ui/hover-card";
+import { Label } from "@/registry/new-york-v4/ui/label";
+import { Slider } from "@/registry/new-york-v4/ui/slider";
 
 interface MaxLengthSelectorProps {
-  defaultValue: React.ComponentProps<
-    typeof SliderPrimitive.Root
-  >["defaultValue"]
+  defaultValue: React.ComponentProps<typeof SliderPrimitive.Root>["defaultValue"];
 }
 
 export function MaxLengthSelector({ defaultValue }: MaxLengthSelectorProps) {
-  const [value, setValue] = React.useState(defaultValue)
+  const [value, setValue] = React.useState(defaultValue);
 
   return (
     <div className="grid gap-2 pt-2">
@@ -41,16 +39,11 @@ export function MaxLengthSelector({ defaultValue }: MaxLengthSelectorProps) {
             />
           </div>
         </HoverCardTrigger>
-        <HoverCardContent
-          align="start"
-          className="w-[260px] text-sm"
-          side="left"
-        >
-          The maximum number of tokens to generate. Requests can use up to 2,048
-          or 4,000 tokens, shared between prompt and completion. The exact limit
-          varies by model.
+        <HoverCardContent align="start" className="w-[260px] text-sm" side="left">
+          The maximum number of tokens to generate. Requests can use up to 2,048 or 4,000 tokens,
+          shared between prompt and completion. The exact limit varies by model.
         </HoverCardContent>
       </HoverCard>
     </div>
-  )
+  );
 }

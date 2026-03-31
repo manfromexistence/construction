@@ -2,11 +2,7 @@
   "name": "@platejs/link",
   "version": "52.3.17",
   "description": "Link plugin for Plate",
-  "keywords": [
-    "plate",
-    "plugin",
-    "slate"
-  ],
+  "keywords": ["plate", "plugin", "slate"],
   "homepage": "https://platejs.org",
   "bugs": {
     "url": "https://github.com/udecode/plate/issues"
@@ -25,9 +21,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist/**/*"],
   "scripts": {
     "brl": "plate-pkg p:brl",
     "build": "plate-pkg p:build",

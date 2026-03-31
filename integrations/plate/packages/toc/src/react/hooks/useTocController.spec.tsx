@@ -1,12 +1,12 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from "@testing-library/react";
 
 const useTocObserverMock = mock();
 
-mock.module('./useTocObserver', () => ({
+mock.module("./useTocObserver", () => ({
   useTocObserver: useTocObserverMock,
 }));
 
-describe('useTocController', () => {
+describe("useTocController", () => {
   beforeEach(() => {
     useTocObserverMock.mockReset();
   });
@@ -15,7 +15,7 @@ describe('useTocController', () => {
     mock.restore();
   });
 
-  it('scrolls the toc wrapper toward the active item when it falls out of view', async () => {
+  it("scrolls the toc wrapper toward the active item when it falls out of view", async () => {
     const { useTocController } = await import(
       `./useTocController?test=${Math.random().toString(36).slice(2)}`
     );
@@ -29,12 +29,12 @@ describe('useTocController', () => {
 
     renderHook(() =>
       useTocController({
-        activeId: 'h1',
+        activeId: "h1",
         isObserve: true,
         tocRef: { current: root },
       })
     );
 
-    expect(scrollTo).toHaveBeenCalledWith({ behavior: 'instant', top: 35 });
+    expect(scrollTo).toHaveBeenCalledWith({ behavior: "instant", top: 35 });
   });
 });

@@ -1,22 +1,20 @@
-import { createZustandStore } from 'platejs/react';
+import { createZustandStore } from "platejs/react";
 
 export const FloatingMediaStore = createZustandStore(
   {
     isEditing: false,
-    url: '',
+    url: "",
   },
   {
     mutative: true,
-    name: 'floatingMedia',
+    name: "floatingMedia",
   }
 ).extendActions(({ set }) => ({
   reset: () => {
-    set('url', '');
-    set('isEditing', false);
+    set("url", "");
+    set("isEditing", false);
   },
 }));
 
-export const {
-  useState: useFloatingMediaState,
-  useValue: useFloatingMediaValue,
-} = FloatingMediaStore as any;
+export const { useState: useFloatingMediaState, useValue: useFloatingMediaValue } =
+  FloatingMediaStore as any;

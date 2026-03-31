@@ -1,6 +1,6 @@
-import { createSlatePlugin } from '@platejs/core';
+import { createSlatePlugin } from "@platejs/core";
 
-import { KEYS } from '../../plate-keys';
+import { KEYS } from "../../plate-keys";
 
 /** Forces editor to only have one block. */
 export const SingleBlockPlugin = createSlatePlugin({
@@ -23,7 +23,7 @@ export const SingleBlockPlugin = createSlatePlugin({
         editor.tf.withoutNormalizing(() => {
           // Merge all subsequent blocks into the first block
           while (editor.children.length > 1) {
-            editor.tf.insertText('\n', { at: editor.api.start([1]) });
+            editor.tf.insertText("\n", { at: editor.api.start([1]) });
             editor.tf.mergeNodes({
               at: [1],
               match: (_, path) => path.length === 1,

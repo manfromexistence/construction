@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { Button } from "@/styles/base-nova/ui/button"
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,14 +13,12 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui/dropdown-menu"
+} from "@/styles/base-nova/ui/dropdown-menu";
 
 export function DropdownMenuSubmenu() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" />}>
-        Open
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger render={<Button variant="outline" />}>Open</DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
           <DropdownMenuItem>Team</DropdownMenuItem>
@@ -53,5 +51,5 @@ export function DropdownMenuSubmenu() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

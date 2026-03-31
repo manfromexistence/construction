@@ -1,10 +1,10 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { BaseEmojiPlugin } from '../BaseEmojiPlugin';
-import { insertEmoji } from './insertEmoji';
+import { BaseEmojiPlugin } from "../BaseEmojiPlugin";
+import { insertEmoji } from "./insertEmoji";
 
-describe('insertEmoji', () => {
-  it('inserts the first native skin text by default', () => {
+describe("insertEmoji", () => {
+  it("inserts the first native skin text by default", () => {
     const editor = createSlateEditor({
       plugins: [BaseEmojiPlugin],
       selection: {
@@ -13,32 +13,32 @@ describe('insertEmoji', () => {
       },
       value: [
         {
-          children: [{ text: 'hi ' }],
-          type: 'p',
+          children: [{ text: "hi " }],
+          type: "p",
         },
       ],
     });
 
     insertEmoji(editor, {
-      skins: [{ native: '🔥' }],
+      skins: [{ native: "🔥" }],
     } as any);
 
     expect(editor.children).toMatchObject([
       {
-        children: [{ text: 'hi 🔥' }],
-        type: 'p',
+        children: [{ text: "hi 🔥" }],
+        type: "p",
       },
     ]);
   });
 
-  it('uses the configured createEmojiNode override', () => {
+  it("uses the configured createEmojiNode override", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseEmojiPlugin.configure({
           options: {
             createEmojiNode: (emoji: any) => ({
               children: [{ text: emoji.id }],
-              type: 'emoji-chip',
+              type: "emoji-chip",
             }),
           },
         }),
@@ -49,25 +49,25 @@ describe('insertEmoji', () => {
       },
       value: [
         {
-          children: [{ text: 'x' }],
-          type: 'p',
+          children: [{ text: "x" }],
+          type: "p",
         },
       ],
     });
 
     insertEmoji(editor, {
-      id: 'fire',
-      skins: [{ native: '🔥' }],
+      id: "fire",
+      skins: [{ native: "🔥" }],
     } as any);
 
     expect(editor.children).toMatchObject([
       {
-        children: [{ text: 'x' }],
-        type: 'p',
+        children: [{ text: "x" }],
+        type: "p",
       },
       {
-        children: [{ text: 'fire' }],
-        type: 'emoji-chip',
+        children: [{ text: "fire" }],
+        type: "emoji-chip",
       },
     ]);
   });

@@ -1,11 +1,8 @@
-import type { EditorAboveOptions, SlateEditor } from 'platejs';
+import type { EditorAboveOptions, SlateEditor } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-export const getTableAbove = (
-  editor: SlateEditor,
-  options?: EditorAboveOptions
-) =>
+export const getTableAbove = (editor: SlateEditor, options?: EditorAboveOptions) =>
   editor.api.block({
     above: true,
     match: {

@@ -1,19 +1,13 @@
-import { KEYS } from 'platejs';
-import { type PlateEditor, getEditorPlugin } from 'platejs/react';
+import { KEYS } from "platejs";
+import { getEditorPlugin, type PlateEditor } from "platejs/react";
 
-import { BaseAIPlugin } from '../../../lib/BaseAIPlugin';
-import type { AIChatPluginConfig } from '../AIChatPlugin';
+import { BaseAIPlugin } from "../../../lib/BaseAIPlugin";
+import type { AIChatPluginConfig } from "../AIChatPlugin";
 
-export const resetAIChat = (
-  editor: PlateEditor,
-  { undo = true }: { undo?: boolean } = {}
-) => {
-  const { api, getOptions, setOptions } = getEditorPlugin<AIChatPluginConfig>(
-    editor,
-    {
-      key: KEYS.aiChat,
-    }
-  );
+export const resetAIChat = (editor: PlateEditor, { undo = true }: { undo?: boolean } = {}) => {
+  const { api, getOptions, setOptions } = getEditorPlugin<AIChatPluginConfig>(editor, {
+    key: KEYS.aiChat,
+  });
 
   api.aiChat.stop();
 
@@ -26,7 +20,7 @@ export const resetAIChat = (
   setOptions({
     _replaceIds: [],
     chatNodes: [],
-    mode: 'insert',
+    mode: "insert",
     toolName: null,
   });
 

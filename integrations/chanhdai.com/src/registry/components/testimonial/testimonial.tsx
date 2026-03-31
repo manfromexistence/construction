@@ -1,37 +1,24 @@
-import type { ComponentProps } from "react"
+import type { ComponentProps } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export function Testimonial({ className, ...props }: ComponentProps<"figure">) {
   return (
-    <figure
-      data-slot="testimonial"
-      className={cn("flex h-full flex-col", className)}
-      {...props}
-    />
-  )
+    <figure data-slot="testimonial" className={cn("flex h-full flex-col", className)} {...props} />
+  );
 }
 
-export function TestimonialQuote({
-  className,
-  ...props
-}: ComponentProps<"blockquote">) {
+export function TestimonialQuote({ className, ...props }: ComponentProps<"blockquote">) {
   return (
     <blockquote
       data-slot="testimonial-quote"
-      className={cn(
-        "grow px-4 py-3 text-base text-pretty text-foreground",
-        className
-      )}
+      className={cn("grow px-4 py-3 text-base text-pretty text-foreground", className)}
       {...props}
     />
-  )
+  );
 }
 
-export function TestimonialAuthor({
-  className,
-  ...props
-}: ComponentProps<"figcaption">) {
+export function TestimonialAuthor({ className, ...props }: ComponentProps<"figcaption">) {
   return (
     <figcaption
       data-slot="testimonial-author"
@@ -41,28 +28,20 @@ export function TestimonialAuthor({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export function TestimonialAvatar({
-  className,
-  ...props
-}: ComponentProps<"div">) {
+export function TestimonialAvatar({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="testimonial-avatar"
       className={cn("relative row-span-2 size-8 shrink-0", className)}
       {...props}
     />
-  )
+  );
 }
 
-export function TestimonialAvatarImg({
-  className,
-  src,
-  alt,
-  ...props
-}: ComponentProps<"img">) {
+export function TestimonialAvatarImg({ className, src, alt, ...props }: ComponentProps<"img">) {
   return (
     <img
       data-slot="testimonial-avatar-img"
@@ -71,13 +50,10 @@ export function TestimonialAvatarImg({
       alt={alt}
       {...props}
     />
-  )
+  );
 }
 
-export function TestimonialAvatarRing({
-  className,
-  ...props
-}: ComponentProps<"div">) {
+export function TestimonialAvatarRing({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="testimonial-avatar-ring"
@@ -87,13 +63,10 @@ export function TestimonialAvatarRing({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export function TestimonialAuthorName({
-  className,
-  ...props
-}: ComponentProps<"div">) {
+export function TestimonialAuthorName({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="testimonial-author-name"
@@ -103,29 +76,20 @@ export function TestimonialAuthorName({
       )}
       {...props}
     />
-  )
+  );
 }
 
-export function TestimonialAuthorTagline({
-  className,
-  ...props
-}: ComponentProps<"div">) {
+export function TestimonialAuthorTagline({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="testimonial-author-tagline"
-      className={cn(
-        "text-xs leading-4 text-balance text-muted-foreground",
-        className
-      )}
+      className={cn("text-xs leading-4 text-balance text-muted-foreground", className)}
       {...props}
     />
-  )
+  );
 }
 
-export function TestimonialVerifiedBadge({
-  className,
-  ...props
-}: ComponentProps<"span">) {
+export function TestimonialVerifiedBadge({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="testimonial-verified-badge"
@@ -136,5 +100,5 @@ export function TestimonialVerifiedBadge({
       aria-hidden
       {...props}
     />
-  )
+  );
 }

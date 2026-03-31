@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { getTableMergeGridByRange } from './getTableGridByRange';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { getTableMergeGridByRange } from "./getTableGridByRange";
 
 jsxt;
 
@@ -17,8 +16,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('getTableMergeGridByRange', () => {
-  it('returns both cell entries and a table entry for format=all', () => {
+describe("getTableMergeGridByRange", () => {
+  it("returns both cell entries and a table entry for format=all", () => {
     const input = (
       <editor>
         <htable>
@@ -51,19 +50,17 @@ describe('getTableMergeGridByRange', () => {
     const editor = createTableEditor(input);
     const result = getTableMergeGridByRange(editor, {
       at: editor.selection!,
-      format: 'all',
+      format: "all",
     });
 
     expect(result.cellEntries).toHaveLength(4);
     expect(result.tableEntries).toHaveLength(1);
     expect(result.tableEntries[0]?.[1]).toEqual([0]);
     expect((result.tableEntries[0]?.[0] as any).children).toHaveLength(2);
-    expect(
-      (result.tableEntries[0]?.[0] as any).children[0].children
-    ).toHaveLength(2);
+    expect((result.tableEntries[0]?.[0] as any).children[0].children).toHaveLength(2);
   });
 
-  it('returns only the cell entries for format=cell', () => {
+  it("returns only the cell entries for format=cell", () => {
     const input = (
       <editor>
         <htable>
@@ -99,11 +96,13 @@ describe('getTableMergeGridByRange', () => {
     const editor = createTableEditor(input);
     const result = getTableMergeGridByRange(editor, {
       at: editor.selection!,
-      format: 'cell',
+      format: "cell",
     });
 
-    expect(
-      result.map(([cell]) => (cell as any).children[0].children[0].text)
-    ).toEqual(['11', '21', '22']);
+    expect(result.map(([cell]) => (cell as any).children[0].children[0].text)).toEqual([
+      "11",
+      "21",
+      "22",
+    ]);
   });
 });

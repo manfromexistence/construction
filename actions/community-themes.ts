@@ -1,5 +1,11 @@
 "use server";
 
+import { Ratelimit } from "@upstash/ratelimit";
+import { kv } from "@vercel/kv";
+import cuid from "cuid";
+import { and, asc, count, desc, eq, inArray, sql } from "drizzle-orm";
+import { revalidateTag, unstable_cache } from "next/cache";
+import { headers } from "next/headers";
 import { z } from "zod";
 import { db } from "@/db";
 import {
@@ -9,34 +15,28 @@ import {
   theme as themeTable,
   user as userTable,
 } from "@/db/schema";
-import { eq, and, desc, asc, sql, count, inArray } from "drizzle-orm";
-import cuid from "cuid";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import {
-  UnauthorizedError,
-  ValidationError,
-  ThemeNotFoundError,
-  ErrorCode,
-  actionError,
-  actionSuccess,
-  type ActionResult,
-} from "@/types/errors";
-import {
-  COMMUNITY_THEMES_PAGE_SIZE,
   COMMUNITY_THEME_TAGS,
+  COMMUNITY_THEMES_PAGE_SIZE,
   MAX_TAGS_PER_THEME,
 } from "@/lib/constants";
 import type {
-  CommunityTheme,
-  CommunitySortOption,
   CommunityFilterOption,
-  CommunityTimeRange,
+  CommunitySortOption,
+  CommunityTheme,
   CommunityThemesResponse,
+  CommunityTimeRange,
 } from "@/types/community";
-import { unstable_cache, revalidateTag } from "next/cache";
-import { Ratelimit } from "@upstash/ratelimit";
-import { kv } from "@vercel/kv";
+import {
+  type ActionResult,
+  actionError,
+  actionSuccess,
+  ErrorCode,
+  ThemeNotFoundError,
+  UnauthorizedError,
+  ValidationError,
+} from "@/types/errors";
 
 const ratelimit = new Ratelimit({
   redis: kv,
@@ -123,13 +123,8 @@ async function fetchCommunityThemesCore(
 
   // For weekly/monthly popular sort, filter to themes published within the time range
   if (sort === "popular" && timeRange !== "all") {
-    const intervalSql =
-      timeRange === "weekly"
-        ? sql`interval '7 days'`
-        : sql`interval '30 days'`;
-    conditions.push(
-      sql`${communityTheme.publishedAt} > now() - ${intervalSql}`
-    );
+    const intervalSql = timeRange === "weekly" ? sql`interval '7 days'` : sql`interval '30 days'`;
+    conditions.push(sql`${communityTheme.publishedAt} > now() - ${intervalSql}`);
   }
 
   const selectFields = {
@@ -208,9 +203,7 @@ async function fetchCommunityThemesCore(
             tag: communityThemeTag.tag,
           })
           .from(communityThemeTag)
-          .where(
-            inArray(communityThemeTag.communityThemeId, communityThemeIds)
-          )
+          .where(inArray(communityThemeTag.communityThemeId, communityThemeIds))
       : [];
 
   const tagsMap = new Map<string, string[]>();
@@ -239,11 +232,10 @@ async function fetchCommunityThemesCore(
   return { themes: mappedThemes, nextCursor };
 }
 
-const getCachedCommunityThemes = unstable_cache(
-  fetchCommunityThemesCore,
-  ["community-themes"],
-  { revalidate: 60, tags: ["community-themes"] }
-);
+const getCachedCommunityThemes = unstable_cache(fetchCommunityThemesCore, ["community-themes"], {
+  revalidate: 60,
+  tags: ["community-themes"],
+});
 
 export async function getCommunityThemes(
   sort: CommunitySortOption = "popular",
@@ -267,15 +259,7 @@ export async function getCommunityThemes(
     }
 
     const userId = await getOptionalUserId();
-    return getCachedCommunityThemes(
-      sort,
-      cursor ?? null,
-      limit,
-      filter,
-      tags,
-      userId,
-      timeRange
-    );
+    return getCachedCommunityThemes(sort, cursor ?? null, limit, filter, tags, userId, timeRange);
   } catch (error) {
     logError(error as Error, { action: "getCommunityThemes", sort, cursor });
     throw error;
@@ -295,9 +279,7 @@ export async function publishTheme(
 
     // Validate tags
     if (tags.length > MAX_TAGS_PER_THEME) {
-      throw new ValidationError(
-        `You can select at most ${MAX_TAGS_PER_THEME} tags`
-      );
+      throw new ValidationError(`You can select at most ${MAX_TAGS_PER_THEME} tags`);
     }
     const validTags = tags.filter((t): t is string =>
       (COMMUNITY_THEME_TAGS as readonly string[]).includes(t)
@@ -362,8 +344,8 @@ export async function publishTheme(
       }
     }
 
-    revalidateTag("community-themes");
-    revalidateTag("community-tag-counts");
+    revalidateTag("community-themes", "max");
+    revalidateTag("community-tag-counts", "max");
 
     return actionSuccess({ id });
   } catch (error) {
@@ -372,9 +354,7 @@ export async function publishTheme(
   }
 }
 
-export async function unpublishTheme(
-  themeId: string
-): Promise<ActionResult<{ success: boolean }>> {
+export async function unpublishTheme(themeId: string): Promise<ActionResult<{ success: boolean }>> {
   try {
     const userId = await getCurrentUserId();
 
@@ -384,22 +364,15 @@ export async function unpublishTheme(
 
     const [deleted] = await db
       .delete(communityTheme)
-      .where(
-        and(
-          eq(communityTheme.themeId, themeId),
-          eq(communityTheme.userId, userId)
-        )
-      )
+      .where(and(eq(communityTheme.themeId, themeId), eq(communityTheme.userId, userId)))
       .returning({ id: communityTheme.id });
 
     if (!deleted) {
-      throw new ThemeNotFoundError(
-        "Published theme not found or not owned by user"
-      );
+      throw new ThemeNotFoundError("Published theme not found or not owned by user");
     }
 
-    revalidateTag("community-themes");
-    revalidateTag("community-tag-counts");
+    revalidateTag("community-themes", "max");
+    revalidateTag("community-tag-counts", "max");
 
     return actionSuccess({ success: true });
   } catch (error) {
@@ -422,24 +395,14 @@ export async function toggleLikeTheme(
     const [existingLike] = await db
       .select()
       .from(themeLike)
-      .where(
-        and(
-          eq(themeLike.userId, userId),
-          eq(themeLike.themeId, communityThemeId)
-        )
-      )
+      .where(and(eq(themeLike.userId, userId), eq(themeLike.themeId, communityThemeId)))
       .limit(1);
 
     if (existingLike) {
       // Unlike: delete + decrement
       await db
         .delete(themeLike)
-        .where(
-          and(
-            eq(themeLike.userId, userId),
-            eq(themeLike.themeId, communityThemeId)
-          )
-        );
+        .where(and(eq(themeLike.userId, userId), eq(themeLike.themeId, communityThemeId)));
       const [updated] = await db
         .update(communityTheme)
         .set({
@@ -448,7 +411,7 @@ export async function toggleLikeTheme(
         .where(eq(communityTheme.id, communityThemeId))
         .returning({ likeCount: communityTheme.likeCount });
 
-      revalidateTag("community-themes");
+      revalidateTag("community-themes", "max");
 
       return actionSuccess({
         liked: false,
@@ -467,7 +430,7 @@ export async function toggleLikeTheme(
         .where(eq(communityTheme.id, communityThemeId))
         .returning({ likeCount: communityTheme.likeCount });
 
-      revalidateTag("community-themes");
+      revalidateTag("community-themes", "max");
 
       return actionSuccess({
         liked: true,
@@ -532,8 +495,7 @@ async function fetchCommunityDataForThemeCore(
       image: result.authorImage,
     },
     likeCount: Number(result.likeCount),
-    isLikedByMe:
-      "isLikedByMe" in result ? Boolean(result.isLikedByMe) : false,
+    isLikedByMe: "isLikedByMe" in result ? Boolean(result.isLikedByMe) : false,
     publishedAt: result.publishedAt.toISOString(),
     tags: tagRows.map((r) => r.tag),
   };
@@ -545,9 +507,7 @@ const getCachedCommunityDataForTheme = unstable_cache(
   { revalidate: 60, tags: ["community-themes"] }
 );
 
-export async function getCommunityDataForTheme(
-  themeId: string
-): Promise<{
+export async function getCommunityDataForTheme(themeId: string): Promise<{
   communityThemeId: string;
   author: { id: string; name: string; image: string | null };
   likeCount: number;
@@ -595,9 +555,7 @@ export async function updateCommunityThemeTags(
     }
 
     if (tags.length > MAX_TAGS_PER_THEME) {
-      throw new ValidationError(
-        `You can select at most ${MAX_TAGS_PER_THEME} tags`
-      );
+      throw new ValidationError(`You can select at most ${MAX_TAGS_PER_THEME} tags`);
     }
 
     const validTags = tags.filter((t): t is string =>
@@ -608,24 +566,15 @@ export async function updateCommunityThemeTags(
     const [ct] = await db
       .select({ id: communityTheme.id })
       .from(communityTheme)
-      .where(
-        and(
-          eq(communityTheme.themeId, themeId),
-          eq(communityTheme.userId, userId)
-        )
-      )
+      .where(and(eq(communityTheme.themeId, themeId), eq(communityTheme.userId, userId)))
       .limit(1);
 
     if (!ct) {
-      throw new ThemeNotFoundError(
-        "Published theme not found or not owned by user"
-      );
+      throw new ThemeNotFoundError("Published theme not found or not owned by user");
     }
 
     // Delete existing tags and insert new ones
-    await db
-      .delete(communityThemeTag)
-      .where(eq(communityThemeTag.communityThemeId, ct.id));
+    await db.delete(communityThemeTag).where(eq(communityThemeTag.communityThemeId, ct.id));
 
     if (validTags.length > 0) {
       await db.insert(communityThemeTag).values(
@@ -636,8 +585,8 @@ export async function updateCommunityThemeTags(
       );
     }
 
-    revalidateTag("community-themes");
-    revalidateTag("community-tag-counts");
+    revalidateTag("community-themes", "max");
+    revalidateTag("community-tag-counts", "max");
 
     return actionSuccess({ tags: validTags });
   } catch (error) {
@@ -666,9 +615,7 @@ const getCachedTagCounts = unstable_cache(
   { revalidate: 300, tags: ["community-tag-counts"] }
 );
 
-export async function getCommunityTagCounts(): Promise<
-  { tag: string; count: number }[]
-> {
+export async function getCommunityTagCounts(): Promise<{ tag: string; count: number }[]> {
   try {
     return getCachedTagCounts();
   } catch (error) {

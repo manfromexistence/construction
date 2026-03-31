@@ -1,21 +1,16 @@
-import { describe, expect, it, mock } from 'bun:test';
-import {
-  BaseParagraphPlugin,
-  KEYS,
-  createSlateEditor,
-  getPluginType,
-} from 'platejs';
+import { describe, expect, it, mock } from "bun:test";
+import { BaseParagraphPlugin, createSlateEditor, getPluginType, KEYS } from "platejs";
 
-import { BaseAIPlugin } from '../BaseAIPlugin';
+import { BaseAIPlugin } from "../BaseAIPlugin";
 import {
   acceptAIPreview,
   beginAIPreview,
   cancelAIPreview,
   discardAIPreview,
   hasAIPreview,
-} from './aiStreamSnapshot';
+} from "./aiStreamSnapshot";
 
-const AI_PREVIEW_KEY = 'aiPreview';
+const AI_PREVIEW_KEY = "aiPreview";
 
 const createParagraph = (
   text: string,
@@ -26,12 +21,12 @@ const createParagraph = (
 ) => ({
   ...element,
   children: [{ text, ...textProps }],
-  type: 'p',
+  type: "p",
 });
 
 const createAnchor = () => ({
-  children: [{ text: '' }],
-  type: 'aiChat',
+  children: [{ text: "" }],
+  type: "aiChat",
 });
 
 const createEditor = () => {
@@ -47,11 +42,7 @@ const createEditor = () => {
     children.splice(path[0], 0, ...structuredClone(nodes));
   };
 
-  const unsetNodeProps = (
-    node: any,
-    keys: string[],
-    match?: (node: any) => boolean
-  ) => {
+  const unsetNodeProps = (node: any, keys: string[], match?: (node: any) => boolean) => {
     if (!match || match(node)) {
       for (const key of keys) {
         delete node[key];
@@ -66,7 +57,7 @@ const createEditor = () => {
   };
 
   const editor = {
-    children: [createParagraph('start'), createParagraph('untouched')],
+    children: [createParagraph("start"), createParagraph("untouched")],
     getPlugin: ({ key }: { key: string }) => ({
       key,
       node: { type: key },
@@ -92,9 +83,7 @@ const createEditor = () => {
       }),
       removeNodes: mock((options: any = {}) => {
         if (options.match) {
-          editor.children = editor.children.filter(
-            (node: any) => !options.match(node)
-          );
+          editor.children = editor.children.filter((node: any) => !options.match(node));
 
           return;
         }
@@ -134,8 +123,8 @@ const createEditor = () => {
   return editor;
 };
 
-describe('ai preview transforms', () => {
-  it('captures once and keeps the original rollback point', () => {
+describe("ai preview transforms", () => {
+  it("captures once and keeps the original rollback point", () => {
     const editor = createEditor();
     const initialValue = structuredClone(editor.children);
     const initialSelection = structuredClone(editor.selection);
@@ -144,7 +133,7 @@ describe('ai preview transforms', () => {
     expect(beginAIPreview(editor, { originalBlocks })).toBe(true);
 
     editor.children = [
-      createParagraph('preview', {
+      createParagraph("preview", {
         element: { [AI_PREVIEW_KEY]: true },
         text: { ai: true },
       }),
@@ -163,35 +152,31 @@ describe('ai preview transforms', () => {
     expect(editor.tf.setValue).not.toHaveBeenCalled();
   });
 
-  it('cancels safely when no preview exists', () => {
+  it("cancels safely when no preview exists", () => {
     const editor = createEditor();
 
     expect(hasAIPreview(editor)).toBe(false);
     expect(cancelAIPreview(editor)).toBe(false);
     expect(discardAIPreview(editor)).toBe(false);
-    expect(
-      acceptAIPreview(editor, [{ children: [{ text: 'done' }], type: 'p' }])
-    ).toBe(false);
+    expect(acceptAIPreview(editor, [{ children: [{ text: "done" }], type: "p" }])).toBe(false);
   });
 
-  it('discards preview bookkeeping without restoring content', () => {
+  it("discards preview bookkeeping without restoring content", () => {
     const editor = createEditor();
 
     beginAIPreview(editor, { originalBlocks: [] });
-    editor.children = [
-      createParagraph('preview', { element: { [AI_PREVIEW_KEY]: true } }),
-    ];
+    editor.children = [createParagraph("preview", { element: { [AI_PREVIEW_KEY]: true } })];
     editor.selection = null;
 
     expect(discardAIPreview(editor)).toBe(true);
     expect(hasAIPreview(editor)).toBe(false);
     expect(editor.children).toEqual([
-      createParagraph('preview', { element: { [AI_PREVIEW_KEY]: true } }),
+      createParagraph("preview", { element: { [AI_PREVIEW_KEY]: true } }),
     ]);
     expect(editor.selection).toBeNull();
   });
 
-  it('restores a null snapshot selection by deselecting', () => {
+  it("restores a null snapshot selection by deselecting", () => {
     const editor = createEditor();
 
     editor.selection = null;
@@ -203,12 +188,12 @@ describe('ai preview transforms', () => {
       focus: { offset: 7, path: [0, 0] },
     };
     editor.children = [
-      createParagraph('preview', {
+      createParagraph("preview", {
         element: { [AI_PREVIEW_KEY]: true },
         text: { ai: true },
       }),
       createAnchor(),
-      createParagraph('untouched'),
+      createParagraph("untouched"),
     ];
 
     expect(cancelAIPreview(editor)).toBe(true);
@@ -216,7 +201,7 @@ describe('ai preview transforms', () => {
     expect(editor.selection).toBeNull();
   });
 
-  it('accepts preview as one localized batch and clears preview state', () => {
+  it("accepts preview as one localized batch and clears preview state", () => {
     const editor = createEditor();
     const initialSelection = structuredClone(editor.selection);
 
@@ -224,35 +209,30 @@ describe('ai preview transforms', () => {
       originalBlocks: [structuredClone(editor.children[0])],
     });
     editor.children = [
-      createParagraph('accepted', {
+      createParagraph("accepted", {
         element: { [AI_PREVIEW_KEY]: true },
         text: { ai: true },
       }),
       createAnchor(),
-      createParagraph('untouched'),
+      createParagraph("untouched"),
     ];
 
     expect(acceptAIPreview(editor)).toBe(true);
     expect(editor.tf.withNewBatch).toHaveBeenCalledTimes(1);
     expect(editor.tf.setValue).not.toHaveBeenCalled();
-    expect(editor.children).toEqual([
-      createParagraph('accepted'),
-      createParagraph('untouched'),
-    ]);
+    expect(editor.children).toEqual([createParagraph("accepted"), createParagraph("untouched")]);
     expect(hasAIPreview(editor)).toBe(false);
-    expect(editor.history.undos.at(-1)?.selectionBefore).toEqual(
-      initialSelection
-    );
+    expect(editor.history.undos.at(-1)?.selectionBefore).toEqual(initialSelection);
   });
 
-  it('registers the preview lifecycle on BaseAIPlugin transforms', () => {
+  it("registers the preview lifecycle on BaseAIPlugin transforms", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseAIPlugin],
       selection: {
         anchor: { offset: 5, path: [0, 0] },
         focus: { offset: 5, path: [0, 0] },
       },
-      value: [{ children: [{ text: 'start' }], type: 'p' }],
+      value: [{ children: [{ text: "start" }], type: "p" }],
     });
     const initialValue = structuredClone(editor.children);
     const ai = editor.getTransforms(BaseAIPlugin).ai;
@@ -266,12 +246,12 @@ describe('ai preview transforms', () => {
       editor.tf.insertNodes(
         [
           {
-            children: [{ text: 'accepted', [aiType]: true }],
+            children: [{ text: "accepted", [aiType]: true }],
             [AI_PREVIEW_KEY]: true,
-            type: 'p',
+            type: "p",
           },
           {
-            children: [{ text: '' }],
+            children: [{ text: "" }],
             type: aiChatType,
           },
         ],
@@ -282,8 +262,8 @@ describe('ai preview transforms', () => {
     expect(editor.history.undos).toHaveLength(0);
     expect(ai.acceptPreview()).toBe(true);
     expect(editor.children).toEqual([
-      { children: [{ text: 'start' }], type: 'p' },
-      { children: [{ text: 'accepted' }], type: 'p' },
+      { children: [{ text: "start" }], type: "p" },
+      { children: [{ text: "accepted" }], type: "p" },
     ]);
     expect(editor.history.undos).toHaveLength(1);
     expect(editor.history.undos[0]?.selectionBefore).toEqual({

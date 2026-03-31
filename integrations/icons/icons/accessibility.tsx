@@ -75,97 +75,88 @@ const PATH_VARIANTS: Variants = {
   },
 };
 
-const AccessibilityIcon = forwardRef<
-  AccessibilityIconHandle,
-  AccessibilityIconProps
->(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
-  const controls = useAnimation();
-  const isControlledRef = useRef(false);
+const AccessibilityIcon = forwardRef<AccessibilityIconHandle, AccessibilityIconProps>(
+  ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+    const controls = useAnimation();
+    const isControlledRef = useRef(false);
 
-  useImperativeHandle(ref, () => {
-    isControlledRef.current = true;
+    useImperativeHandle(ref, () => {
+      isControlledRef.current = true;
 
-    return {
-      startAnimation: () => controls.start("animate"),
-      stopAnimation: () => controls.start("initial"),
-    };
-  });
+      return {
+        startAnimation: () => controls.start("animate"),
+        stopAnimation: () => controls.start("initial"),
+      };
+    });
 
-  const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) {
-        onMouseEnter?.(e);
-      } else {
-        controls.start("animate");
-      }
-    },
-    [controls, onMouseEnter]
-  );
+    const handleMouseEnter = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) {
+          onMouseEnter?.(e);
+        } else {
+          controls.start("animate");
+        }
+      },
+      [controls, onMouseEnter]
+    );
 
-  const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) {
-        onMouseLeave?.(e);
-      } else {
-        controls.start("normal");
-      }
-    },
-    [controls, onMouseLeave]
-  );
+    const handleMouseLeave = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) {
+          onMouseLeave?.(e);
+        } else {
+          controls.start("normal");
+        }
+      },
+      [controls, onMouseLeave]
+    );
 
-  return (
-    <div
-      className={cn(className)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      <svg
-        fill="none"
-        height={size}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        width={size}
-        xmlns="http://www.w3.org/2000/svg"
+    return (
+      <div
+        className={cn(className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...props}
       >
-        <motion.circle
-          animate={controls}
-          cx="16"
-          cy="4"
-          initial="initial"
-          r="1"
-          variants={CIRCLE_VARIANTS}
-        />
-        <motion.g
-          animate={controls}
-          initial="initial"
-          variants={PRIMARY_GROUP_VARIANTS}
+        <svg
+          fill="none"
+          height={size}
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          width={size}
+          xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="m18 19 1-7-6 1" />
-          <path d="M8,5l5.5,3-2.4,3.5" />
-          <motion.path
+          <motion.circle
             animate={controls}
-            d="M8 5 L5 8"
+            cx="16"
+            cy="4"
             initial="initial"
-            variants={PATH_VARIANTS}
+            r="1"
+            variants={CIRCLE_VARIANTS}
           />
-        </motion.g>
-        <motion.g
-          animate={controls}
-          initial="initial"
-          variants={SECONDARY_GROUP_VARIANTS}
-        >
-          <path d="M4.2,14.5c-.8,2.6.7,5.4,3.3,6.2,1.2.4,2.4.3,3.6-.2" />
-          <path d="M13.8,17.5c.8-2.6-.7-5.4-3.3-6.2-1.2-.4-2.4-.3-3.6.2" />
-          <path d="M13,13.1c-.5-.7-1.1-1.2-1.9-1.6" />
-        </motion.g>
-      </svg>
-    </div>
-  );
-});
+          <motion.g animate={controls} initial="initial" variants={PRIMARY_GROUP_VARIANTS}>
+            <path d="m18 19 1-7-6 1" />
+            <path d="M8,5l5.5,3-2.4,3.5" />
+            <motion.path
+              animate={controls}
+              d="M8 5 L5 8"
+              initial="initial"
+              variants={PATH_VARIANTS}
+            />
+          </motion.g>
+          <motion.g animate={controls} initial="initial" variants={SECONDARY_GROUP_VARIANTS}>
+            <path d="M4.2,14.5c-.8,2.6.7,5.4,3.3,6.2,1.2.4,2.4.3,3.6-.2" />
+            <path d="M13.8,17.5c.8-2.6-.7-5.4-3.3-6.2-1.2-.4-2.4-.3-3.6.2" />
+            <path d="M13,13.1c-.5-.7-1.1-1.2-1.9-1.6" />
+          </motion.g>
+        </svg>
+      </div>
+    );
+  }
+);
 
 AccessibilityIcon.displayName = "AccessibilityIcon";
 

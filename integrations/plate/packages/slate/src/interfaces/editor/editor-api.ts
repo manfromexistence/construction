@@ -1,54 +1,54 @@
-import type { OmitFirst } from '@udecode/utils';
+import type { OmitFirst } from "@udecode/utils";
 
-import type { findDocumentOrShadowRoot } from '../../internal/dom-editor/findDocumentOrShadowRoot';
-import type { findEventRange } from '../../internal/dom-editor/findEventRange';
-import type { findKey } from '../../internal/dom-editor/findKey';
-import type { getWindow } from '../../internal/dom-editor/getWindow';
-import type { hasDOMNode } from '../../internal/dom-editor/hasDOMNode';
-import type { hasRange } from '../../internal/dom-editor/hasRange';
-import type { isComposing } from '../../internal/dom-editor/isComposing';
-import type { isFocused } from '../../internal/dom-editor/isFocused';
-import type { isReadOnly } from '../../internal/dom-editor/isReadOnly';
-import type { isTargetInsideNonReadonlyVoid } from '../../internal/dom-editor/isTargetInsideNonReadonlyVoid';
-import type { toDOMNode } from '../../internal/dom-editor/toDOMNode';
-import type { toDOMPoint } from '../../internal/dom-editor/toDOMPoint';
-import type { toDOMRange } from '../../internal/dom-editor/toDOMRange';
-import type { toSlateNode } from '../../internal/dom-editor/toSlateNode';
-import type { toSlatePoint } from '../../internal/dom-editor/toSlatePoint';
-import type { toSlateRange } from '../../internal/dom-editor/toSlateRange';
-import type { createPathRef } from '../../internal/editor/createPathRef';
-import type { createPointRef } from '../../internal/editor/createPointRef';
-import type { createRangeRef } from '../../internal/editor/createRangeRef';
-import type { path } from '../../internal/editor/editor-path';
-import type { getEdgePoints } from '../../internal/editor/getEdgePoints';
-import type { getEditorString } from '../../internal/editor/getEditorString';
-import type { getEndPoint } from '../../internal/editor/getEndPoint';
-import type { getPathRefs } from '../../internal/editor/getPathRefs';
-import type { getPoint } from '../../internal/editor/getPoint';
-import type { getPointAfter } from '../../internal/editor/getPointAfter';
-import type { getPointBefore } from '../../internal/editor/getPointBefore';
-import type { getPointRefs } from '../../internal/editor/getPointRefs';
-import type { getPositions } from '../../internal/editor/getPositions';
-import type { getRangeRefs } from '../../internal/editor/getRangeRefs';
-import type { getStartPoint } from '../../internal/editor/getStartPoint';
-import type { hasBlocks } from '../../internal/editor/hasBlocks';
-import type { hasInlines } from '../../internal/editor/hasInlines';
-import type { hasTexts } from '../../internal/editor/hasTexts';
-import type { isBlock } from '../../internal/editor/isBlock';
-import type { isEdgePoint } from '../../internal/editor/isEdgePoint';
-import type { isEditorNormalizing } from '../../internal/editor/isEditorNormalizing';
-import type { isElementReadOnly } from '../../internal/editor/isElementReadOnly';
-import type { isEmpty } from '../../internal/editor/isEmpty';
-import type { isEndPoint } from '../../internal/editor/isEndPoint';
-import type { isStartPoint } from '../../internal/editor/isStartPoint';
-import type { range } from '../../internal/editor/range';
-import type { unhangRange } from '../../internal/editor/unhangRange';
-import type { hasMark } from '../../internal/editor-extension/hasMark';
-import type { isAt } from '../../internal/editor-extension/isAt';
-import type { isText } from '../../internal/editor-extension/isText';
-import type { scrollIntoView } from '../../internal/editor-extension/scrollIntoView';
-import type { some } from '../../internal/editor-extension/some';
-import type { HistoryApi } from '../../slate-history';
+import type { findDocumentOrShadowRoot } from "../../internal/dom-editor/findDocumentOrShadowRoot";
+import type { findEventRange } from "../../internal/dom-editor/findEventRange";
+import type { findKey } from "../../internal/dom-editor/findKey";
+import type { getWindow } from "../../internal/dom-editor/getWindow";
+import type { hasDOMNode } from "../../internal/dom-editor/hasDOMNode";
+import type { hasRange } from "../../internal/dom-editor/hasRange";
+import type { isComposing } from "../../internal/dom-editor/isComposing";
+import type { isFocused } from "../../internal/dom-editor/isFocused";
+import type { isReadOnly } from "../../internal/dom-editor/isReadOnly";
+import type { isTargetInsideNonReadonlyVoid } from "../../internal/dom-editor/isTargetInsideNonReadonlyVoid";
+import type { toDOMNode } from "../../internal/dom-editor/toDOMNode";
+import type { toDOMPoint } from "../../internal/dom-editor/toDOMPoint";
+import type { toDOMRange } from "../../internal/dom-editor/toDOMRange";
+import type { toSlateNode } from "../../internal/dom-editor/toSlateNode";
+import type { toSlatePoint } from "../../internal/dom-editor/toSlatePoint";
+import type { toSlateRange } from "../../internal/dom-editor/toSlateRange";
+import type { createPathRef } from "../../internal/editor/createPathRef";
+import type { createPointRef } from "../../internal/editor/createPointRef";
+import type { createRangeRef } from "../../internal/editor/createRangeRef";
+import type { path } from "../../internal/editor/editor-path";
+import type { getEdgePoints } from "../../internal/editor/getEdgePoints";
+import type { getEditorString } from "../../internal/editor/getEditorString";
+import type { getEndPoint } from "../../internal/editor/getEndPoint";
+import type { getPathRefs } from "../../internal/editor/getPathRefs";
+import type { getPoint } from "../../internal/editor/getPoint";
+import type { getPointAfter } from "../../internal/editor/getPointAfter";
+import type { getPointBefore } from "../../internal/editor/getPointBefore";
+import type { getPointRefs } from "../../internal/editor/getPointRefs";
+import type { getPositions } from "../../internal/editor/getPositions";
+import type { getRangeRefs } from "../../internal/editor/getRangeRefs";
+import type { getStartPoint } from "../../internal/editor/getStartPoint";
+import type { hasBlocks } from "../../internal/editor/hasBlocks";
+import type { hasInlines } from "../../internal/editor/hasInlines";
+import type { hasTexts } from "../../internal/editor/hasTexts";
+import type { isBlock } from "../../internal/editor/isBlock";
+import type { isEdgePoint } from "../../internal/editor/isEdgePoint";
+import type { isEditorNormalizing } from "../../internal/editor/isEditorNormalizing";
+import type { isElementReadOnly } from "../../internal/editor/isElementReadOnly";
+import type { isEmpty } from "../../internal/editor/isEmpty";
+import type { isEndPoint } from "../../internal/editor/isEndPoint";
+import type { isStartPoint } from "../../internal/editor/isStartPoint";
+import type { range } from "../../internal/editor/range";
+import type { unhangRange } from "../../internal/editor/unhangRange";
+import type { hasMark } from "../../internal/editor-extension/hasMark";
+import type { isAt } from "../../internal/editor-extension/isAt";
+import type { isText } from "../../internal/editor-extension/isText";
+import type { scrollIntoView } from "../../internal/editor-extension/scrollIntoView";
+import type { some } from "../../internal/editor-extension/some";
+import type { HistoryApi } from "../../slate-history";
 import type {
   At,
   AtOrDescendant,
@@ -56,22 +56,20 @@ import type {
   RangeDirection,
   TextDirection,
   TextUnitAdjustment,
-} from '../../types';
-import type { Predicate } from '../../utils';
-import type { ElementIn, ElementOrTextIn, TElement } from '../element';
-import type { Span, TLocation } from '../location';
-import type { AncestorIn, DescendantIn, NodeIn, TNode } from '../node';
-import type { NodeEntry } from '../node-entry';
-import type { Operation } from '../operation';
-import type { Path } from '../path';
-import type { Point } from '../point';
-import type { TRange } from '../range';
-import type { MarksIn, TextIn } from '../text';
-import type { Value } from './editor-type';
+} from "../../types";
+import type { Predicate } from "../../utils";
+import type { ElementIn, ElementOrTextIn, TElement } from "../element";
+import type { Span, TLocation } from "../location";
+import type { AncestorIn, DescendantIn, NodeIn, TNode } from "../node";
+import type { NodeEntry } from "../node-entry";
+import type { Operation } from "../operation";
+import type { Path } from "../path";
+import type { Point } from "../point";
+import type { TRange } from "../range";
+import type { MarksIn, TextIn } from "../text";
+import type { Value } from "./editor-type";
 
-export type EditorAboveOptions<V extends Value = Value> = QueryOptions<V> &
-  QueryMode &
-  QueryVoids;
+export type EditorAboveOptions<V extends Value = Value> = QueryOptions<V> & QueryMode & QueryVoids;
 
 export type EditorAfterOptions = {
   distance?: number;
@@ -80,10 +78,7 @@ export type EditorAfterOptions = {
 
 export type EditorApi<V extends Value = Value> = {
   /** Get the fragment at a location or selection. */
-  fragment: <N extends ElementOrTextIn<V>>(
-    at?: At | null,
-    options?: EditorFragmentOptions
-  ) => N[];
+  fragment: <N extends ElementOrTextIn<V>>(at?: At | null, options?: EditorFragmentOptions) => N[];
   /** Get the dirty paths of the editor. */
   getDirtyPaths: <N extends DescendantIn<V>>(operation: Operation<N>) => Path[];
   /**
@@ -94,10 +89,7 @@ export type EditorApi<V extends Value = Value> = {
   /** Check if a value is a read-only `Element` object. */
   isElementReadOnly: <N extends ElementIn<V>>(element: N) => boolean;
   /** Check if a path is selected by the current selection. */
-  isSelected: (
-    target: Path | TRange,
-    options?: EditorIsSelectedOptions
-  ) => boolean;
+  isSelected: (target: Path | TRange, options?: EditorIsSelectedOptions) => boolean;
   /** Check if a value is a void `Element` object. */
   isVoid: <N extends ElementIn<V>>(element: N) => boolean;
   /** Check if a value is a markable `Element` object. */
@@ -264,9 +256,7 @@ export type EditorApi<V extends Value = Value> = {
    */
   unhangRange: OmitFirst<typeof unhangRange>;
   /** Get the matching ancestor above a location in the document. */
-  above: <N extends AncestorIn<V>>(
-    options?: EditorAboveOptions<V>
-  ) => NodeEntry<N> | undefined;
+  above: <N extends AncestorIn<V>>(options?: EditorAboveOptions<V>) => NodeEntry<N> | undefined;
   /** Get the first node at a location. */
   first: <N extends DescendantIn<V>>(at: At) => NodeEntry<N> | undefined;
   /** Get the fragment at a location. */
@@ -279,10 +269,7 @@ export type EditorApi<V extends Value = Value> = {
     options?: EditorLastOptions
   ) => NodeEntry<N> | undefined;
   /** Get the leaf text node at a location. */
-  leaf: <N extends TextIn<V>>(
-    at: At,
-    options?: EditorLeafOptions
-  ) => NodeEntry<N> | undefined;
+  leaf: <N extends TextIn<V>>(at: At, options?: EditorLeafOptions) => NodeEntry<N> | undefined;
   /** Iterate through all of the levels at a location. */
   levels: <N extends NodeIn<V>>(
     options?: EditorLevelsOptions<V>
@@ -295,9 +282,7 @@ export type EditorApi<V extends Value = Value> = {
    * Note: To find the next Point, and not the next Node, use the `Editor.after`
    * method
    */
-  next: <N extends DescendantIn<V>>(
-    options?: EditorNextOptions<V>
-  ) => NodeEntry<N> | undefined;
+  next: <N extends DescendantIn<V>>(options?: EditorNextOptions<V>) => NodeEntry<N> | undefined;
   /**
    * Get the node at a location or find the first node that matches options.
    *
@@ -336,9 +321,7 @@ export type EditorApi<V extends Value = Value> = {
     options?: EditorPreviousOptions<V>
   ) => NodeEntry<N> | undefined;
   /** Match a void node in the current branch of the editor. */
-  void: <N extends ElementIn<V>>(
-    options?: EditorVoidOptions
-  ) => NodeEntry<N> | undefined;
+  void: <N extends ElementIn<V>>(options?: EditorVoidOptions) => NodeEntry<N> | undefined;
 } & {
   findDocumentOrShadowRoot: OmitFirst<typeof findDocumentOrShadowRoot>;
   /** Get the target range from a DOM `event` */
@@ -359,9 +342,7 @@ export type EditorApi<V extends Value = Value> = {
   /** Check if the editor is in read-only mode */
   isReadOnly: OmitFirst<typeof isReadOnly>;
   /** Check if the target is inside a non-readonly void element. */
-  isTargetInsideNonReadonlyVoid: OmitFirst<
-    typeof isTargetInsideNonReadonlyVoid
-  >;
+  isTargetInsideNonReadonlyVoid: OmitFirst<typeof isTargetInsideNonReadonlyVoid>;
   /** Find the native DOM element from a Slate node */
   toDOMNode: OmitFirst<typeof toDOMNode>;
   /** Find a native DOM selection point from a Slate point */
@@ -381,9 +362,7 @@ export type EditorApi<V extends Value = Value> = {
   hasSelectableTarget: (target: EventTarget | null) => target is Node;
   hasTarget: (target: EventTarget | null) => target is Node;
   /** Find a Slate node from a native DOM `element` */
-  toSlateNode: <N extends NodeIn<V>>(
-    domNode: Parameters<typeof toSlateNode>[1]
-  ) => N | undefined;
+  toSlateNode: <N extends NodeIn<V>>(domNode: Parameters<typeof toSlateNode>[1]) => N | undefined;
 } & {
   /** Get the merge flag's current value. */
   isMerging: OmitFirst<typeof HistoryApi.isMerging>;
@@ -445,13 +424,9 @@ export type EditorApi<V extends Value = Value> = {
    *   editor.api.block({ highest: true }) // Get highest block at selection
    *   ```;
    */
-  block: <N extends ElementIn<V>>(
-    options?: EditorBlockOptions<V>
-  ) => NodeEntry<N> | undefined;
+  block: <N extends ElementIn<V>>(options?: EditorBlockOptions<V>) => NodeEntry<N> | undefined;
   /** Returns all matching blocks. */
-  blocks: <N extends ElementIn<V>>(
-    options?: EditorNodesOptions<V>
-  ) => NodeEntry<N>[];
+  blocks: <N extends ElementIn<V>>(options?: EditorNodesOptions<V>) => NodeEntry<N>[];
   /** Returns the first matching descendant. */
   descendant: <N extends DescendantIn<V>>(
     options: EditorNodesOptions<V>
@@ -471,9 +446,7 @@ export type EditorApi<V extends Value = Value> = {
   /** Check if a value is a selectable `Element` object. */
   isSelectable: <N extends ElementIn<V>>(element: N) => boolean;
   /** Returns the selection mark value by key. */
-  mark: <K extends keyof MarksIn<V>>(
-    key: K
-  ) => MarksIn<V>[K] | null | undefined;
+  mark: <K extends keyof MarksIn<V>>(key: K) => MarksIn<V>[K] | null | undefined;
   /** Returns the range spanning the given node entries. */
   nodesRange: (nodes: NodeEntry[]) => TRange | undefined;
   /**
@@ -509,16 +482,12 @@ export type EditorBeforeOptions = {
      */
     skipInvalid?: boolean;
     /** Lookup before the location until this predicate is true */
-    match?: (value: {
-      at: At;
-      beforePoint: Point;
-      beforeString: string;
-    }) => boolean;
+    match?: (value: { at: At; beforePoint: Point; beforeString: string }) => boolean;
   };
 
 export type EditorBlockOptions<V extends Value = Value> = Omit<
   EditorNodesOptions<V>,
-  'block' | 'mode'
+  "block" | "mode"
 > & {
   /**
    * If true, get the block above the location. This has no effect when `at` is
@@ -542,17 +511,14 @@ export type EditorEmptyOptions = {
   after?: boolean;
   /** Check if block above location is empty */
   block?: boolean;
-} & Omit<EditorNodesOptions, 'at' | 'block'>;
+} & Omit<EditorNodesOptions, "at" | "block">;
 
 export type EditorEndOptions = {
   /** Get the end point of the previous node */
   previous?: boolean;
 };
 
-export type EditorFindPathOptions = Omit<
-  EditorNodesOptions<Value>,
-  'at' | 'block' | 'match'
->;
+export type EditorFindPathOptions = Omit<EditorNodesOptions<Value>, "at" | "block" | "match">;
 
 export type EditorFragmentDeletionOptions = {
   direction?: TextDirection;
@@ -592,7 +558,7 @@ export type EditorNextOptions<V extends Value = Value> = QueryOptions<V> &
      * - `'child'`: Start from the first child of the current path. `at` must be a
      *   path.
      */
-    from?: 'after' | 'child';
+    from?: "after" | "child";
     /**
      * - `'all'` (default if `from` is `child`): Return all matching nodes.
      * - `'highest'`: in a hierarchy of nodes, only return the highest level
@@ -600,7 +566,7 @@ export type EditorNextOptions<V extends Value = Value> = QueryOptions<V> &
      * - `'lowest'` (default if `from` is `after`): in a hierarchy of nodes, only
      *   return the lowest level matching nodes
      */
-    mode?: 'all' | 'highest' | 'lowest';
+    mode?: "all" | "highest" | "lowest";
   };
 
 export type EditorNodeOptions = {
@@ -614,7 +580,7 @@ export type EditorNodesOptions<V extends Value = Value> = {
   ignoreNonSelectable?: boolean;
   reverse?: boolean;
   universal?: boolean;
-} & Omit<QueryOptions<V>, 'at'> &
+} & Omit<QueryOptions<V>, "at"> &
   QueryMode &
   QueryVoids;
 
@@ -665,7 +631,7 @@ export type EditorPreviousOptions<V extends Value = Value> = QueryOptions<V> &
      * - `'before'` (default): Start from the point before the current location
      * - `'parent'`: Start from the parent of the current location
      */
-    from?: 'before' | 'parent';
+    from?: "before" | "parent";
     /**
      * - `'all'`: Return all matching nodes
      * - `'highest'`: in a hierarchy of nodes, only return the highest level
@@ -673,7 +639,7 @@ export type EditorPreviousOptions<V extends Value = Value> = QueryOptions<V> &
      * - `'lowest'` (default): in a hierarchy of nodes, only return the lowest
      *   level matching nodes
      */
-    mode?: 'all' | 'highest' | 'lowest';
+    mode?: "all" | "highest" | "lowest";
     /** Get the previous sibling node */
     sibling?: boolean;
   };
@@ -690,7 +656,7 @@ export type EditorPropOptions<V extends Value = Value> = {
    * - `'block'`: Get the property value from the first block node.
    * - `'text'`: Get the property value from the first text node.
    */
-  mode?: 'all' | 'block' | 'text';
+  mode?: "all" | "block" | "text";
   /** Function to get the property value from a node. */
   getProp?: (node: DescendantIn<V>) => any;
 };
@@ -744,7 +710,7 @@ export type QueryMode = {
    * - `'lowest'`: in a hierarchy of nodes, only return the lowest level matching
    *   nodes
    */
-  mode?: 'all' | 'highest' | 'lowest';
+  mode?: "all" | "highest" | "lowest";
 };
 
 export type QueryOptions<V extends Value = Value> = {

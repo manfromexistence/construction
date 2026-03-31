@@ -4,12 +4,8 @@
   "type": "registry:example",
   "title": "Highlighter Demo",
   "description": "Example showing the demo of a Highlighter",
-  "dependencies": [
-    "rough-notation"
-  ],
-  "registryDependencies": [
-    "@magicui/highlighter"
-  ],
+  "dependencies": ["rough-notation"],
+  "registryDependencies": ["@magicui/highlighter"],
   "files": [
     {
       "path": "registry/example/highlighter-demo.tsx",

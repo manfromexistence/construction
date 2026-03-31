@@ -1,4 +1,4 @@
-import { createZustandStore } from 'zustand-x';
+import { createZustandStore } from "zustand-x";
 
 export type EventEditorState = {
   /** Last editor id that has been blurred. */
@@ -18,7 +18,7 @@ export const EventEditorStore = createZustandStore(
   } as EventEditorState,
   {
     mutative: true,
-    name: 'event-editor',
+    name: "event-editor",
   }
 );
 

@@ -1,18 +1,16 @@
-import { type Editor, type Value, createEditor } from '@platejs/slate';
-
-import type { AnyPlatePlugin } from '../plugin';
-import type { EventEditorPlugin, SlateReactExtensionPlugin } from '../plugins';
-import type { PlateEditor, TPlateEditor } from './PlateEditor';
-
+import { createEditor, type Editor, type Value } from "@platejs/slate";
 import {
   type AnyPluginConfig,
   type BaseWithSlateOptions,
   type CorePlugin,
   type InferPlugins,
   withSlate,
-} from '../../lib';
-import { createZustandStore } from '../libs/zustand';
-import { getPlateCorePlugins } from './getPlateCorePlugins';
+} from "../../lib";
+import { createZustandStore } from "../libs/zustand";
+import type { AnyPlatePlugin } from "../plugin";
+import type { EventEditorPlugin, SlateReactExtensionPlugin } from "../plugins";
+import { getPlateCorePlugins } from "./getPlateCorePlugins";
+import type { PlateEditor, TPlateEditor } from "./PlateEditor";
 
 export type PlateCorePlugin =
   | CorePlugin
@@ -25,19 +23,19 @@ export type WithPlateOptions<
 > = BaseWithSlateOptions<P> &
   Pick<
     Partial<AnyPlatePlugin>,
-    | 'api'
-    | 'decorate'
-    | 'extendEditor'
-    | 'handlers'
-    | 'inject'
-    | 'normalizeInitialValue'
-    | 'options'
-    | 'override'
-    | 'priority'
-    | 'render'
-    | 'shortcuts'
-    | 'transforms'
-    | 'useHooks'
+    | "api"
+    | "decorate"
+    | "extendEditor"
+    | "handlers"
+    | "inject"
+    | "normalizeInitialValue"
+    | "options"
+    | "override"
+    | "priority"
+    | "render"
+    | "shortcuts"
+    | "transforms"
+    | "useHooks"
   > & {
     // override?: {
     //   /** Enable or disable plugins */
@@ -51,11 +49,7 @@ export type WithPlateOptions<
     // };
     value?: ((editor: PlateEditor) => Promise<V> | V) | V | string;
     rootPlugin?: (plugin: AnyPlatePlugin) => AnyPlatePlugin;
-    onReady?: (ctx: {
-      editor: PlateEditor;
-      isAsync: boolean;
-      value: V;
-    }) => void;
+    onReady?: (ctx: { editor: PlateEditor; isAsync: boolean; value: V }) => void;
   };
 
 /**
@@ -68,10 +62,7 @@ export type WithPlateOptions<
  * @see {@link usePlateEditor} for a memoized version in React components.
  * @see {@link withSlate} for the non-React version of editor enhancement.
  */
-export const withPlate = <
-  V extends Value = Value,
-  P extends AnyPluginConfig = PlateCorePlugin,
->(
+export const withPlate = <V extends Value = Value, P extends AnyPluginConfig = PlateCorePlugin>(
   e: Editor,
   options: WithPlateOptions<V, P> = {}
 ): TPlateEditor<V, InferPlugins<P[]>> => {

@@ -1,8 +1,7 @@
-import type { AnyPluginConfig } from '../../lib/plugin/BasePlugin';
-
-import { createSlateEditor } from '../../lib/editor';
-import { createSlatePlugin } from '../../lib/plugin/createSlatePlugin';
-import { resolvePlugin } from './resolvePlugin';
+import { createSlateEditor } from "../../lib/editor";
+import type { AnyPluginConfig } from "../../lib/plugin/BasePlugin";
+import { createSlatePlugin } from "../../lib/plugin/createSlatePlugin";
+import { resolvePlugin } from "./resolvePlugin";
 
 export const resolvePluginTest = <P extends AnyPluginConfig>(p: P) => {
   const editor = createSlateEditor({

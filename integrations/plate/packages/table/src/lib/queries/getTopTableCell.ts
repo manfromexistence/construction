@@ -1,6 +1,6 @@
-import type { Path, SlateEditor } from 'platejs';
+import type { Path, SlateEditor } from "platejs";
 
-import { getAdjacentTableCell } from './getAdjacentTableCell';
+import { getAdjacentTableCell } from "./getAdjacentTableCell";
 
 // Get cell to the top of the current cell
 export const getTopTableCell = (

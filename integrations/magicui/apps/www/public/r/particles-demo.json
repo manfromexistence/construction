@@ -4,12 +4,8 @@
   "type": "registry:example",
   "title": "Particles Demo",
   "description": "Example showing interactive particle effects.",
-  "dependencies": [
-    "next-themes"
-  ],
-  "registryDependencies": [
-    "@magicui/particles"
-  ],
+  "dependencies": ["next-themes"],
+  "registryDependencies": ["@magicui/particles"],
   "files": [
     {
       "path": "registry/example/particles-demo.tsx",

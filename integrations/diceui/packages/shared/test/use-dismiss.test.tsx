@@ -59,12 +59,7 @@ describe("useDismiss", () => {
     const onDismiss = vi.fn();
     const onEscapeKeyDown = vi.fn();
 
-    render(
-      <DismissableComponent
-        onDismiss={onDismiss}
-        onEscapeKeyDown={onEscapeKeyDown}
-      />,
-    );
+    render(<DismissableComponent onDismiss={onDismiss} onEscapeKeyDown={onEscapeKeyDown} />);
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(onEscapeKeyDown).toHaveBeenCalled();
@@ -77,12 +72,7 @@ describe("useDismiss", () => {
       event.preventDefault();
     });
 
-    render(
-      <DismissableComponent
-        onDismiss={onDismiss}
-        onEscapeKeyDown={onEscapeKeyDown}
-      />,
-    );
+    render(<DismissableComponent onDismiss={onDismiss} onEscapeKeyDown={onEscapeKeyDown} />);
 
     fireEvent.keyDown(document, { key: "Escape" });
     expect(onEscapeKeyDown).toHaveBeenCalled();
@@ -99,7 +89,7 @@ describe("useDismiss", () => {
         onDismiss={onDismiss}
         onPointerDownOutside={onPointerDownOutside}
         onInteractOutside={onInteractOutside}
-      />,
+      />
     );
 
     // Wait for event listeners to be set up
@@ -131,10 +121,7 @@ describe("useDismiss", () => {
     const onPointerDownOutside = vi.fn();
 
     const { getByTestId } = render(
-      <DismissableComponent
-        onDismiss={onDismiss}
-        onPointerDownOutside={onPointerDownOutside}
-      />,
+      <DismissableComponent onDismiss={onDismiss} onPointerDownOutside={onPointerDownOutside} />
     );
 
     // Wait for event listeners to be set up
@@ -161,7 +148,7 @@ describe("useDismiss", () => {
         onDismiss={onDismiss}
         onFocusOutside={onFocusOutside}
         onInteractOutside={onInteractOutside}
-      />,
+      />
     );
 
     // Wait for event listeners to be set up
@@ -194,7 +181,7 @@ describe("useDismiss", () => {
         onDismiss={onDismiss}
         onPointerDownOutside={onPointerDownOutside}
         preventScrollDismiss={true}
-      />,
+      />
     );
 
     // Wait for event listeners to be set up
@@ -255,7 +242,7 @@ describe("useDismiss", () => {
         onDismiss={onDismiss}
         onPointerDownOutside={onPointerDownOutside}
         delayMs={delayMs}
-      />,
+      />
     );
 
     // Event before delay should not trigger
@@ -279,9 +266,7 @@ describe("useDismiss", () => {
   });
 
   it("should disable outside pointer events when specified", async () => {
-    const { getByTestId } = render(
-      <DismissableComponent disableOutsidePointerEvents={true} />,
-    );
+    const { getByTestId } = render(<DismissableComponent disableOutsidePointerEvents={true} />);
 
     // Wait for attributes to be set
     await act(async () => {
@@ -304,9 +289,7 @@ describe("useDismiss", () => {
       "[data-dismissable-layer] ~ *:not([data-dismissable-layer]) { pointer-events: none !important; }";
     document.head.appendChild(style);
 
-    expect(
-      document.querySelector("style[data-dismissable-layer-style]"),
-    ).toBeTruthy();
+    expect(document.querySelector("style[data-dismissable-layer-style]")).toBeTruthy();
     expect(style.textContent).toContain("pointer-events: none !important");
   });
 
@@ -319,7 +302,7 @@ describe("useDismiss", () => {
         enabled={false}
         onDismiss={onDismiss}
         onPointerDownOutside={onPointerDownOutside}
-      />,
+      />
     );
 
     // Wait for potential event listeners
@@ -338,7 +321,7 @@ describe("useDismiss", () => {
 
   it("should cleanup listeners and attributes on unmount", async () => {
     const { getByTestId, unmount } = render(
-      <DismissableComponent disableOutsidePointerEvents={true} />,
+      <DismissableComponent disableOutsidePointerEvents={true} />
     );
 
     // Wait for attributes to be set
@@ -362,14 +345,10 @@ describe("useDismiss", () => {
       "[data-dismissable-layer] ~ *:not([data-dismissable-layer]) { pointer-events: none !important; }";
     document.head.appendChild(style);
 
-    expect(
-      document.querySelector("style[data-dismissable-layer-style]"),
-    ).toBeTruthy();
+    expect(document.querySelector("style[data-dismissable-layer-style]")).toBeTruthy();
 
     // Clean up any existing styles before unmount
-    for (const el of document.querySelectorAll(
-      "style[data-dismissable-layer-style]",
-    )) {
+    for (const el of document.querySelectorAll("style[data-dismissable-layer-style]")) {
       el.remove();
     }
 
@@ -383,8 +362,6 @@ describe("useDismiss", () => {
     });
 
     // After unmount, style should be removed
-    expect(
-      document.querySelector("style[data-dismissable-layer-style]"),
-    ).toBeNull();
+    expect(document.querySelector("style[data-dismissable-layer-style]")).toBeNull();
   });
 });

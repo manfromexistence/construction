@@ -1,7 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Bar, BarChart, XAxis, YAxis } from "recharts";
+import { getMyUsageChartData, getMyUsageStats } from "@/actions/ai-usage";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import {
   Select,
   SelectContent,
@@ -9,10 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
-import { getMyUsageStats, getMyUsageChartData } from "@/actions/ai-usage";
 
 type Timeframe = "1d" | "7d" | "30d";
 

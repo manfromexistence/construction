@@ -1,12 +1,13 @@
 /** @jsx jsxt */
-import { HorizontalRulePlugin } from '@platejs/basic-nodes/react';
-import { BaseListPlugin } from '@platejs/list-classic';
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import { HorizontalRulePlugin } from "@platejs/basic-nodes/react";
+import { BaseListPlugin } from "@platejs/list-classic";
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { createTestEditor } from '../../../../../../packages/markdown/src/lib/__tests__/createTestEditor';
-import { MarkdownPlugin } from '../../../../../../packages/markdown/src/lib/MarkdownPlugin';
-import { deserializeMd } from '../../../../../../packages/markdown/src/lib/deserializer/deserializeMd';
+import { createTestEditor } from "../../../../../../packages/markdown/src/lib/__tests__/createTestEditor";
+import { deserializeMd } from "../../../../../../packages/markdown/src/lib/deserializer/deserializeMd";
+import { MarkdownPlugin } from "../../../../../../packages/markdown/src/lib/MarkdownPlugin";
+
 jsxt;
 
 const editor = createTestEditor();
@@ -20,23 +21,23 @@ const parseMarkdown = (
   options?: Parameters<typeof deserializeMd>[2]
 ) => deserializeMd(currentEditor, input, options);
 
-describe('deserializeMd', () => {
-  describe('inline content', () => {
+describe("deserializeMd", () => {
+  describe("inline content", () => {
     it.each([
       {
-        input: '<!DOCTYPE',
-        name: 'keeps literal doctype text',
+        input: "<!DOCTYPE",
+        name: "keeps literal doctype text",
         output: (
           <fragment>
             <hp>
-              <htext>{'<!DOCTYPE'}</htext>
+              <htext>{"<!DOCTYPE"}</htext>
             </hp>
           </fragment>
         ),
       },
       {
-        input: 'This is ~~strikethrough~~.',
-        name: 'deserializes strikethrough marks',
+        input: "This is ~~strikethrough~~.",
+        name: "deserializes strikethrough marks",
         output: (
           <fragment>
             <hp>
@@ -46,8 +47,8 @@ describe('deserializeMd', () => {
         ),
       },
       {
-        input: 'This is **bold**.',
-        name: 'deserializes bold marks',
+        input: "This is **bold**.",
+        name: "deserializes bold marks",
         output: (
           <fragment>
             <hp>
@@ -57,8 +58,8 @@ describe('deserializeMd', () => {
         ),
       },
       {
-        input: 'This is *italic*.',
-        name: 'deserializes italic marks',
+        input: "This is *italic*.",
+        name: "deserializes italic marks",
         output: (
           <fragment>
             <hp>
@@ -68,8 +69,8 @@ describe('deserializeMd', () => {
         ),
       },
       {
-        input: 'This is **bold *italic***.',
-        name: 'deserializes nested marks',
+        input: "This is **bold *italic***.",
+        name: "deserializes nested marks",
         output: (
           <fragment>
             <hp>
@@ -83,8 +84,8 @@ describe('deserializeMd', () => {
         ),
       },
       {
-        input: 'This is `not **bold**`.',
-        name: 'does not parse marks inside inline code',
+        input: "This is `not **bold**`.",
+        name: "does not parse marks inside inline code",
         output: (
           <fragment>
             <hp>
@@ -94,8 +95,8 @@ describe('deserializeMd', () => {
         ),
       },
       {
-        input: '<kbd>Ctrl</kbd> + <kbd>K</kbd>',
-        name: 'deserializes kbd html tags',
+        input: "<kbd>Ctrl</kbd> + <kbd>K</kbd>",
+        name: "deserializes kbd html tags",
         output: (
           <fragment>
             <hp>
@@ -106,16 +107,16 @@ describe('deserializeMd', () => {
           </fragment>
         ),
       },
-    ])('$name', ({ input, output }) => {
+    ])("$name", ({ input, output }) => {
       expect(parseMarkdown(input)).toEqual(output);
     });
   });
 
-  describe('blockquotes', () => {
+  describe("blockquotes", () => {
     it.each([
       {
-        input: '>',
-        name: 'deserializes an empty blockquote',
+        input: ">",
+        name: "deserializes an empty blockquote",
         output: (
           <fragment>
             <hblockquote>
@@ -125,8 +126,8 @@ describe('deserializeMd', () => {
         ),
       },
       {
-        input: '> Blockquote content',
-        name: 'deserializes a single blockquote line',
+        input: "> Blockquote content",
+        name: "deserializes a single blockquote line",
         output: (
           <fragment>
             <hblockquote>Blockquote content</hblockquote>
@@ -137,13 +138,13 @@ describe('deserializeMd', () => {
         input: `> Blockquote paragraph1
 >
 > Blockquote paragraph2`,
-        name: 'preserves paragraph breaks inside blockquotes',
+        name: "preserves paragraph breaks inside blockquotes",
         output: (
           <fragment>
             <hblockquote>
               <htext>Blockquote paragraph1</htext>
-              <htext>{'\n'}</htext>
-              <htext>{'\n'}</htext>
+              <htext>{"\n"}</htext>
+              <htext>{"\n"}</htext>
               <htext>Blockquote paragraph2</htext>
             </hblockquote>
           </fragment>
@@ -153,20 +154,20 @@ describe('deserializeMd', () => {
         input: `
 > Blockquote line1<br>
 > Blockquote line2`,
-        name: 'collapses html breaks inside blockquotes to a single line break',
+        name: "collapses html breaks inside blockquotes to a single line break",
         output: (
           <fragment>
             <hblockquote>
               <htext>Blockquote line1</htext>
-              <htext>{'\n'}</htext>
+              <htext>{"\n"}</htext>
               <htext>Blockquote line2</htext>
             </hblockquote>
           </fragment>
         ),
       },
       {
-        input: '> [Example link](https://example.com)',
-        name: 'deserializes links inside blockquotes',
+        input: "> [Example link](https://example.com)",
+        name: "deserializes links inside blockquotes",
         output: (
           <fragment>
             <hblockquote>
@@ -175,12 +176,12 @@ describe('deserializeMd', () => {
           </fragment>
         ),
       },
-    ])('$name', ({ input, output }) => {
+    ])("$name", ({ input, output }) => {
       expect(parseMarkdown(input)).toEqual(output);
     });
   });
 
-  describe('blocks and rich nodes', () => {
+  describe("blocks and rich nodes", () => {
     it.each([
       {
         input: `
@@ -188,11 +189,11 @@ Paragraph 1 line 1
 Paragraph 1 line 2
 
 Paragraph 2 line 1`,
-        name: 'deserializes paragraph breaks',
+        name: "deserializes paragraph breaks",
         output: (
           <fragment>
             <hp>
-              Paragraph 1 line 1{'\n'}
+              Paragraph 1 line 1{"\n"}
               Paragraph 1 line 2
             </hp>
             <hp>Paragraph 2 line 1</hp>
@@ -200,8 +201,8 @@ Paragraph 2 line 1`,
         ),
       },
       {
-        input: 'No ![inline](https://example.com/example.png) images',
-        name: 'deserializes inline images into block image nodes',
+        input: "No ![inline](https://example.com/example.png) images",
+        name: "deserializes inline images into block image nodes",
         output: (
           <fragment>
             <hp>No </hp>
@@ -221,8 +222,8 @@ Paragraph 2 line 1`,
       },
       {
         input:
-          '```\nCode block 1 line 1\nCode block 1 line 2\n```\n\n```\nCode block 2 line 1\n```',
-        name: 'deserializes fenced code blocks',
+          "```\nCode block 1 line 1\nCode block 1 line 2\n```\n\n```\nCode block 2 line 1\n```",
+        name: "deserializes fenced code blocks",
         output: (
           <fragment>
             <hcodeblock>
@@ -236,8 +237,8 @@ Paragraph 2 line 1`,
         ),
       },
       {
-        input: 'Line 1\n\n---\n\nLine 2',
-        name: 'deserializes horizontal rules',
+        input: "Line 1\n\n---\n\nLine 2",
+        name: "deserializes horizontal rules",
         output: (
           <fragment>
             <hp>Line 1</hp>
@@ -251,9 +252,9 @@ Paragraph 2 line 1`,
       {
         input: Array.from(
           { length: 6 },
-          (_, index) => `${'#'.repeat(index + 1)} Heading ${index + 1}`
-        ).join('\n\n'),
-        name: 'deserializes heading levels',
+          (_, index) => `${"#".repeat(index + 1)} Heading ${index + 1}`
+        ).join("\n\n"),
+        name: "deserializes heading levels",
         output: (
           <fragment>
             <hh1>Heading 1</hh1>
@@ -266,28 +267,28 @@ Paragraph 2 line 1`,
         ),
       },
       {
-        input: 'Line 1<br />Line 2',
-        name: 'deserializes line break tags',
+        input: "Line 1<br />Line 2",
+        name: "deserializes line break tags",
         output: (
           <fragment>
             <hp>
               <htext>Line 1</htext>
-              <htext>{'\n'}</htext>
+              <htext>{"\n"}</htext>
               <htext>Line 2</htext>
             </hp>
           </fragment>
         ),
       },
-    ])('$name', ({ input, output }) => {
+    ])("$name", ({ input, output }) => {
       expect(parseMarkdown(input)).toEqual(output);
     });
   });
 
-  describe('lists and tables', () => {
+  describe("lists and tables", () => {
     it.each([
       {
-        input: '- List item 1\n- List item 2',
-        name: 'deserializes unordered lists',
+        input: "- List item 1\n- List item 2",
+        name: "deserializes unordered lists",
         output: (
           <fragment>
             <hul>
@@ -302,8 +303,8 @@ Paragraph 2 line 1`,
         ),
       },
       {
-        input: '1. List item 1\n2. List item 2',
-        name: 'deserializes ordered lists',
+        input: "1. List item 1\n2. List item 2",
+        name: "deserializes ordered lists",
         output: (
           <fragment>
             <hol>
@@ -318,8 +319,8 @@ Paragraph 2 line 1`,
         ),
       },
       {
-        input: '- List item 1\n  1. List item 1.1',
-        name: 'deserializes nested mixed lists',
+        input: "- List item 1\n  1. List item 1.1",
+        name: "deserializes nested mixed lists",
         output: (
           <fragment>
             <hul>
@@ -335,11 +336,11 @@ Paragraph 2 line 1`,
           </fragment>
         ),
       },
-    ])('$name', ({ input, output }) => {
+    ])("$name", ({ input, output }) => {
       expect(parseMarkdown(input, listEditor as any)).toEqual(output);
     });
 
-    it('deserializes markdown tables', () => {
+    it("deserializes markdown tables", () => {
       const input = `
 | Left columns  | Right columns |
 | ------------- |:-------------:|
@@ -389,11 +390,11 @@ Paragraph 2 line 1`,
     });
   });
 
-  describe('mentions and options', () => {
+  describe("mentions and options", () => {
     it.each([
       {
-        input: '1 @User',
-        name: 'deserializes mentions inside a paragraph',
+        input: "1 @User",
+        name: "deserializes mentions inside a paragraph",
         output: (
           <fragment>
             <hp>
@@ -406,8 +407,8 @@ Paragraph 2 line 1`,
         ),
       },
       {
-        input: '@User',
-        name: 'deserializes standalone mentions',
+        input: "@User",
+        name: "deserializes standalone mentions",
         output: (
           <fragment>
             <hp>
@@ -418,64 +419,62 @@ Paragraph 2 line 1`,
           </fragment>
         ),
       },
-    ])('$name', ({ input, output }) => {
+    ])("$name", ({ input, output }) => {
       expect(parseMarkdown(input)).toEqual(output);
     });
 
-    it('adds memoized source strings when memoize is enabled', () => {
+    it("adds memoized source strings when memoize is enabled", () => {
       expect(
-        parseMarkdown('# Heading\n> Quote\n```\nCode\n```', editor, {
+        parseMarkdown("# Heading\n> Quote\n```\nCode\n```", editor, {
           memoize: true,
         })
       ).toEqual([
         {
-          _memo: '# Heading',
-          children: [{ text: 'Heading' }],
-          type: 'h1',
+          _memo: "# Heading",
+          children: [{ text: "Heading" }],
+          type: "h1",
         },
         {
-          _memo: '> Quote',
-          children: [{ text: 'Quote' }],
-          type: 'blockquote',
+          _memo: "> Quote",
+          children: [{ text: "Quote" }],
+          type: "blockquote",
         },
         {
-          _memo: '```\nCode\n```',
+          _memo: "```\nCode\n```",
           children: [
             {
-              children: [{ text: 'Code' }],
-              type: 'code_line',
+              children: [{ text: "Code" }],
+              type: "code_line",
             },
           ],
-          type: 'code_block',
+          type: "code_block",
         },
       ]);
     });
   });
 
-  describe('fixtures', () => {
-    it('returns an empty array for an empty markdown string', () => {
-      expect(parseMarkdown('')).toEqual([]);
+  describe("fixtures", () => {
+    it("returns an empty array for an empty markdown string", () => {
+      expect(parseMarkdown("")).toEqual([]);
     });
 
-    it('deserializes an image nested inside a list item', () => {
-      expect(
-        parseMarkdown('- ![alt text](https://example.com/image.png)')
-      ).toEqual([
+    it("deserializes an image nested inside a list item", () => {
+      expect(parseMarkdown("- ![alt text](https://example.com/image.png)")).toEqual([
         {
           caption: [
             {
-              text: 'alt text',
+              text: "alt text",
             },
           ],
           children: [
             {
-              text: '',
+              text: "",
             },
           ],
           indent: 1,
-          listStyleType: 'disc',
-          type: 'img',
-          url: 'https://example.com/image.png',
+          listStyleType: "disc",
+          type: "img",
+          url: "https://example.com/image.png",
         },
       ]);
     });

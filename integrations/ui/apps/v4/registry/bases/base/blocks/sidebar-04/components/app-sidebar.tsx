@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
 import {
   Sidebar,
   SidebarContent,
@@ -13,8 +13,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/registry/bases/base/ui/sidebar"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/base/ui/sidebar";
 
 // This is sample data.
 const data = {
@@ -155,7 +154,7 @@ const data = {
       ],
     },
   ],
-}
+};
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar variant="floating" {...props}>
@@ -186,9 +185,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenu className="gap-2">
             {data.navMain.map((item) => (
               <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton
-                  render={<a href={item.url} className="font-medium" />}
-                >
+                <SidebarMenuButton render={<a href={item.url} className="font-medium" />}>
                   {item.title}
                 </SidebarMenuButton>
                 {item.items?.length ? (
@@ -211,5 +208,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

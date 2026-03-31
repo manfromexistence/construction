@@ -1,14 +1,7 @@
 {
   "name": "action-bar-position-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "action-bar",
-    "label",
-    "select",
-    "switch"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["action-bar", "label", "select", "switch"],
   "files": [
     {
       "path": "examples/action-bar-position-demo.tsx",

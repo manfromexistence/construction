@@ -1,30 +1,19 @@
-import { useEffect } from 'react';
-
-import type { PluginConfig } from 'platejs';
-
-import { KEYS } from 'platejs';
-import {
-  type DOMHandler,
-  createTPlatePlugin,
-  usePluginOption,
-} from 'platejs/react';
-
-import type { CursorData, CursorState } from './types';
-
-import { BlockSelectionPlugin } from './BlockSelectionPlugin';
+import type { PluginConfig } from "platejs";
+import { KEYS } from "platejs";
+import { createTPlatePlugin, type DOMHandler, usePluginOption } from "platejs/react";
+import { useEffect } from "react";
+import { BlockSelectionPlugin } from "./BlockSelectionPlugin";
+import type { CursorData, CursorState } from "./types";
 
 export type CursorOverlayConfig = PluginConfig<
-  'cursorOverlay',
+  "cursorOverlay",
   {
     cursors: Record<string, CursorState<CursorData>>;
   },
   {
     cursorOverlay: {
-      addCursor: (
-        id: string,
-        cursor: Omit<CursorState<CursorData>, 'id'>
-      ) => void;
-      removeCursor: (id: (string & {}) | 'drag' | 'selection') => void;
+      addCursor: (id: string, cursor: Omit<CursorState<CursorData>, "id">) => void;
+      removeCursor: (id: (string & {}) | "drag" | "selection") => void;
     };
   }
 >;
@@ -42,32 +31,30 @@ export const CursorOverlayPlugin = createTPlatePlugin<CursorOverlayConfig>({
   },
   options: { cursors: {} },
 })
-  .extendApi<CursorOverlayConfig['api']['cursorOverlay']>(
-    ({ editor, plugin }) => ({
-      addCursor: (id, cursor) => {
-        const newCursors = { ...editor.getOptions(plugin).cursors };
-        newCursors[id] = {
-          id,
-          ...cursor,
-        };
-        editor.setOption(plugin, 'cursors', newCursors);
-      },
-      removeCursor: (id) => {
-        const newCursors = { ...editor.getOptions(plugin).cursors };
+  .extendApi<CursorOverlayConfig["api"]["cursorOverlay"]>(({ editor, plugin }) => ({
+    addCursor: (id, cursor) => {
+      const newCursors = { ...editor.getOptions(plugin).cursors };
+      newCursors[id] = {
+        id,
+        ...cursor,
+      };
+      editor.setOption(plugin, "cursors", newCursors);
+    },
+    removeCursor: (id) => {
+      const newCursors = { ...editor.getOptions(plugin).cursors };
 
-        if (!newCursors[id]) return;
+      if (!newCursors[id]) return;
 
-        delete newCursors[id];
-        editor.setOption(plugin, 'cursors', newCursors);
-      },
-    })
-  )
+      delete newCursors[id];
+      editor.setOption(plugin, "cursors", newCursors);
+    },
+  }))
   .overrideEditor(({ api, editor, getOptions, tf: { setSelection } }) => ({
     transforms: {
       setSelection(props) {
         if (getOptions().cursors?.selection) {
           setTimeout(() => {
-            api.cursorOverlay.addCursor('selection', {
+            api.cursorOverlay.addCursor("selection", {
               selection: editor.selection,
             });
           }, 0);
@@ -83,46 +70,43 @@ export const CursorOverlayPlugin = createTPlatePlugin<CursorOverlayConfig>({
         if (!editor.selection) return;
 
         const relatedTarget = event.relatedTarget as HTMLElement;
-        const enabled = relatedTarget?.dataset?.plateFocus === 'true';
+        const enabled = relatedTarget?.dataset?.plateFocus === "true";
 
         if (!enabled) return;
 
-        api.cursorOverlay.addCursor('selection', {
+        api.cursorOverlay.addCursor("selection", {
           selection: editor.selection,
         });
       },
-      onDragEnd: getRemoveCursorHandler('drag') as any,
-      onDragLeave: getRemoveCursorHandler('drag') as any,
+      onDragEnd: getRemoveCursorHandler("drag") as any,
+      onDragLeave: getRemoveCursorHandler("drag") as any,
       onDragOver: ({ api, editor, event }) => {
-        if (
-          !editor.plugins.dnd ||
-          editor.getOptions({ key: KEYS.dnd }).isDragging
-        ) {
+        if (!editor.plugins.dnd || editor.getOptions({ key: KEYS.dnd }).isDragging) {
           return;
         }
 
         const types = event.dataTransfer?.types || [];
 
-        if (types.some((type) => type.startsWith('Files'))) return;
+        if (types.some((type) => type.startsWith("Files"))) return;
 
         const range = editor.api.findEventRange(event);
 
         if (!range) return;
 
-        api.cursorOverlay.addCursor('drag', {
+        api.cursorOverlay.addCursor("drag", {
           selection: range,
         });
       },
-      onDrop: getRemoveCursorHandler('drag') as any,
-      onFocus: getRemoveCursorHandler('selection') as any,
+      onDrop: getRemoveCursorHandler("drag") as any,
+      onFocus: getRemoveCursorHandler("selection") as any,
     },
     useHooks: ({ api, setOption }) => {
-      const isSelecting = usePluginOption(BlockSelectionPlugin, 'isSelecting');
+      const isSelecting = usePluginOption(BlockSelectionPlugin, "isSelecting");
 
       useEffect(() => {
         if (isSelecting) {
           setTimeout(() => {
-            api.cursorOverlay.removeCursor('selection');
+            api.cursorOverlay.removeCursor("selection");
           }, 0);
         }
       }, [isSelecting, setOption, api.cursorOverlay]);

@@ -1,12 +1,11 @@
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
-import { useMediaQuery } from "@/hooks/use-media-query"
-import { ChartCopyButton } from "@/components/chart-copy-button"
-import { type Chart } from "@/components/chart-display"
-import { getIconForLanguageExtension } from "@/components/icons"
-import { OpenInV0Button } from "@/components/open-in-v0-button"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import * as React from "react";
+import { ChartCopyButton } from "@/components/chart-copy-button";
+import { type Chart } from "@/components/chart-display";
+import { getIconForLanguageExtension } from "@/components/icons";
+import { OpenInV0Button } from "@/components/open-in-v0-button";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Drawer,
   DrawerContent,
@@ -14,7 +13,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/registry/new-york-v4/ui/drawer"
+} from "@/registry/new-york-v4/ui/drawer";
 import {
   Sheet,
   SheetContent,
@@ -22,16 +21,16 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/registry/new-york-v4/ui/sheet"
+} from "@/registry/new-york-v4/ui/sheet";
 
 export function ChartCodeViewer({
   chart,
   className,
   children,
 }: {
-  chart: Chart
+  chart: Chart;
 } & React.ComponentProps<"div">) {
-  const isDesktop = useMediaQuery("(min-width: 768px)")
+  const isDesktop = useMediaQuery("(min-width: 768px)");
 
   const button = (
     <Button
@@ -41,7 +40,7 @@ export function ChartCodeViewer({
     >
       View Code
     </Button>
-  )
+  );
 
   const content = (
     <div className="flex min-h-0 flex-1 flex-col gap-0">
@@ -77,7 +76,7 @@ export function ChartCodeViewer({
         </figure>
       </div>
     </div>
-  )
+  );
 
   if (!isDesktop) {
     return (
@@ -96,7 +95,7 @@ export function ChartCodeViewer({
           <div className="flex h-full flex-col overflow-auto">{content}</div>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
@@ -116,5 +115,5 @@ export function ChartCodeViewer({
         {content}
       </SheetContent>
     </Sheet>
-  )
+  );
 }

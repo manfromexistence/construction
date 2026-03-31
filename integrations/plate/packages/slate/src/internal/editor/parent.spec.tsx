@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('getParentNode', () => {
-  describe('when not root path', () => {
-    it('returns parent with empty path', () => {
+describe("getParentNode", () => {
+  describe("when not root path", () => {
+    it("returns parent with empty path", () => {
       const editor = createEditor(
         (
           <editor>
@@ -24,8 +24,8 @@ describe('getParentNode', () => {
     });
   });
 
-  describe('when root path', () => {
-    it('returns undefined', () => {
+  describe("when root path", () => {
+    it("returns undefined", () => {
       const editor = createEditor(
         (
           <editor>

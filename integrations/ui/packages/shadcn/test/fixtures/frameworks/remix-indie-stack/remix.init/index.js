@@ -11,7 +11,7 @@ const cleanupCypressFiles = ({ fileEntries, packageManager }) =>
   fileEntries.flatMap(([filePath, content]) => {
     const newContent = content.replace(
       new RegExp("npx ts-node", "g"),
-      packageManager.name === "bun" ? "bun" : `${packageManager.exec} ts-node`,
+      packageManager.name === "bun" ? "bun" : `${packageManager.exec} ts-node`
     );
 
     return [fs.writeFile(filePath, newContent)];
@@ -67,9 +67,7 @@ const getRandomString = (length) => crypto.randomBytes(length).toString("hex");
 
 const removeUnusedDependencies = (dependencies, unusedDependencies) =>
   Object.fromEntries(
-    Object.entries(dependencies).filter(
-      ([key]) => !unusedDependencies.includes(key),
-    ),
+    Object.entries(dependencies).filter(([key]) => !unusedDependencies.includes(key))
   );
 
 const updatePackageJson = ({ APP_NAME, packageJson, packageManager }) => {
@@ -91,10 +89,7 @@ const updatePackageJson = ({ APP_NAME, packageJson, packageManager }) => {
         : devDependencies,
     prisma: {
       ...prisma,
-      seed:
-        packageManager.name === "bun"
-          ? prismaSeed.replace("ts-node", "bun")
-          : prismaSeed,
+      seed: packageManager.name === "bun" ? prismaSeed.replace("ts-node", "bun") : prismaSeed,
     },
     scripts,
   });
@@ -110,14 +105,8 @@ const main = async ({ packageManager, rootDirectory }) => {
   const DOCKERFILE_PATH = path.join(rootDirectory, "Dockerfile");
   const CYPRESS_SUPPORT_PATH = path.join(rootDirectory, "cypress", "support");
   const CYPRESS_COMMANDS_PATH = path.join(CYPRESS_SUPPORT_PATH, "commands.ts");
-  const CREATE_USER_COMMAND_PATH = path.join(
-    CYPRESS_SUPPORT_PATH,
-    "create-user.ts",
-  );
-  const DELETE_USER_COMMAND_PATH = path.join(
-    CYPRESS_SUPPORT_PATH,
-    "delete-user.ts",
-  );
+  const CREATE_USER_COMMAND_PATH = path.join(CYPRESS_SUPPORT_PATH, "create-user.ts");
+  const DELETE_USER_COMMAND_PATH = path.join(CYPRESS_SUPPORT_PATH, "delete-user.ts");
 
   const REPLACER = "indie-stack-template";
 
@@ -148,10 +137,7 @@ const main = async ({ packageManager, rootDirectory }) => {
     PackageJson.load(rootDirectory),
   ]);
 
-  const newEnv = env.replace(
-    /^SESSION_SECRET=.*$/m,
-    `SESSION_SECRET="${getRandomString(16)}"`,
-  );
+  const newEnv = env.replace(/^SESSION_SECRET=.*$/m, `SESSION_SECRET="${getRandomString(16)}"`);
 
   const prodToml = toml.parse(prodContent);
   prodToml.app = prodToml.app.replace(REPLACER, APP_NAME);
@@ -174,7 +160,7 @@ const main = async ({ packageManager, rootDirectory }) => {
   const newDockerfile = pm.lockfile
     ? dockerfile.replace(
         new RegExp(escapeRegExp("ADD package.json"), "g"),
-        `ADD package.json ${pm.lockfile}`,
+        `ADD package.json ${pm.lockfile}`
       )
     : dockerfile;
 
@@ -196,7 +182,7 @@ const main = async ({ packageManager, rootDirectory }) => {
     packageJson.save(),
     fs.copyFile(
       path.join(rootDirectory, "remix.init", "gitignore"),
-      path.join(rootDirectory, ".gitignore"),
+      path.join(rootDirectory, ".gitignore")
     ),
     fs.rm(path.join(rootDirectory, ".github", "ISSUE_TEMPLATE"), {
       recursive: true,
@@ -220,7 +206,7 @@ const main = async ({ packageManager, rootDirectory }) => {
     `Setup is complete. You're now ready to rock and roll 🤘
 
 Start development with \`${pm.run("dev")}\`
-    `.trim(),
+    `.trim()
   );
 };
 

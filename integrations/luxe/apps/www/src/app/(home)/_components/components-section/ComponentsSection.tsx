@@ -1,11 +1,8 @@
-import Link from "next/link";
-
 import { ChevronRightIcon } from "lucide-react";
-
+import Link from "next/link";
+import { cn } from "@/utils/cn";
 import { AnimateEnter } from "../AnimateEnter";
 import { ComponentsExample } from "./ComponentsExample";
-
-import { cn } from "@/utils/cn";
 
 export function ComponentsSection() {
   return (
@@ -24,8 +21,8 @@ export function ComponentsSection() {
           </h1>
         </div>
         <p className="mx-auto max-sm:px-8 text-base md:text-lg max-w-lg text-foreground">
-          Choose a component, copy the code, and instantly elevate your
-          interface. With just a few clicks, watch your app shine.
+          Choose a component, copy the code, and instantly elevate your interface. With just a few
+          clicks, watch your app shine.
         </p>
       </AnimateEnter>
       <ComponentsExample />

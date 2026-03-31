@@ -1,7 +1,7 @@
-import { withAIBatch } from './withAIBatch';
+import { withAIBatch } from "./withAIBatch";
 
-describe('withAIBatch', () => {
-  it('uses withMerging by default and tags the last undo batch', () => {
+describe("withAIBatch", () => {
+  it("uses withMerging by default and tags the last undo batch", () => {
     const batch = {};
     let called = false;
     const fn = () => {
@@ -22,7 +22,7 @@ describe('withAIBatch', () => {
     expect(batch).toMatchObject({ ai: true });
   });
 
-  it('uses withNewBatch when split is true', () => {
+  it("uses withNewBatch when split is true", () => {
     const batch = {};
     let called = false;
     const fn = () => {
@@ -43,7 +43,7 @@ describe('withAIBatch', () => {
     expect(batch).toMatchObject({ ai: true });
   });
 
-  it('is a safe no-op when no undo batch exists yet', () => {
+  it("is a safe no-op when no undo batch exists yet", () => {
     let called = false;
     const fn = () => {
       called = true;

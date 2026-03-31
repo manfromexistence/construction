@@ -1,4 +1,4 @@
-import { traverseHtmlElements } from './traverseHtmlElements';
+import { traverseHtmlElements } from "./traverseHtmlElements";
 
 /**
  * Find the first HTML element that matches the given selector.
@@ -6,10 +6,7 @@ import { traverseHtmlElements } from './traverseHtmlElements';
  * @param rootNode
  * @param predicate
  */
-export const findHtmlElement = (
-  rootNode: Node,
-  predicate: (node: HTMLElement) => boolean
-) => {
+export const findHtmlElement = (rootNode: Node, predicate: (node: HTMLElement) => boolean) => {
   let res: Node | null = null;
 
   traverseHtmlElements(rootNode, (node) => {
@@ -25,7 +22,5 @@ export const findHtmlElement = (
   return res;
 };
 
-export const someHtmlElement = (
-  rootNode: Node,
-  predicate: (node: HTMLElement) => boolean
-) => !!findHtmlElement(rootNode, predicate);
+export const someHtmlElement = (rootNode: Node, predicate: (node: HTMLElement) => boolean) =>
+  !!findHtmlElement(rootNode, predicate);

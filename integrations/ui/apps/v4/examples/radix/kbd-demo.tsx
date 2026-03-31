@@ -1,4 +1,4 @@
-import { Kbd, KbdGroup } from "@/styles/radix-nova/ui/kbd"
+import { Kbd, KbdGroup } from "@/styles/radix-nova/ui/kbd";
 
 export default function KbdDemo() {
   return (
@@ -15,5 +15,5 @@ export default function KbdDemo() {
         <Kbd>B</Kbd>
       </KbdGroup>
     </div>
-  )
+  );
 }

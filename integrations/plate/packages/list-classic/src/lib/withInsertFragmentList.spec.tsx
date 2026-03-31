@@ -1,11 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type Descendant, type SlateEditor, createSlateEditor } from 'platejs';
-
-import { BaseListPlugin } from './BaseListPlugin';
-import { withInsertFragmentList } from './withInsertFragmentList';
-import { KEYS } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type Descendant, KEYS, type SlateEditor } from "platejs";
+import { BaseListPlugin } from "./BaseListPlugin";
+import { withInsertFragmentList } from "./withInsertFragmentList";
 
 jsxt;
 
@@ -22,9 +20,9 @@ const editorTest = (input: any, fragment: any, expected: any) => {
   expect(editor.children).toEqual(expected.children);
 };
 
-describe('when pasting ul > 2 li fragment', () => {
-  describe('when selection in li', () => {
-    it('insert lis next to the lowest li', () => {
+describe("when pasting ul > 2 li fragment", () => {
+  describe("when selection in li", () => {
+    it("insert lis next to the lowest li", () => {
       const input = (
         <editor>
           <hul>
@@ -86,7 +84,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert nested lis next to the lowest li, without the leading empty lis', () => {
+    it("insert nested lis next to the lowest li, without the leading empty lis", () => {
       const input = (
         <editor>
           <hul>
@@ -152,7 +150,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert nested lis with selected lic being an empty node and with nested lis', () => {
+    it("insert nested lis with selected lic being an empty node and with nested lis", () => {
       const input = (
         <editor>
           <hul>
@@ -222,7 +220,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert nested lis with selected lic being an empty node', () => {
+    it("insert nested lis with selected lic being an empty node", () => {
       const input = (
         <editor>
           <hul>
@@ -284,7 +282,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert lis with missing lics due to copying lis at different levels', () => {
+    it("insert lis with missing lics due to copying lis at different levels", () => {
       const input = (
         <editor>
           <hul>
@@ -350,7 +348,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert a single li as text', () => {
+    it("insert a single li as text", () => {
       const input = (
         <editor>
           <hul>
@@ -402,7 +400,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert a paragraph and a list', () => {
+    it("insert a paragraph and a list", () => {
       const input = (
         <editor>
           <hul>
@@ -458,7 +456,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert multiple paragraphs', () => {
+    it("insert multiple paragraphs", () => {
       const input = (
         <editor>
           <hul>
@@ -511,7 +509,7 @@ describe('when pasting ul > 2 li fragment', () => {
     });
 
     // Auto-correct generates a Paragraph node (in Chromium)
-    it('insert autocorrect-inserted paragraph inside a list', () => {
+    it("insert autocorrect-inserted paragraph inside a list", () => {
       const input = (
         <editor>
           <hul>
@@ -560,7 +558,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert simple text inside a list with selection across multiple list items', () => {
+    it("insert simple text inside a list with selection across multiple list items", () => {
       const input = (
         <editor>
           <hul>
@@ -606,7 +604,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert nested lis with selected lic being an empty node after selection removed', () => {
+    it("insert nested lis with selected lic being an empty node after selection removed", () => {
       const input = (
         <editor>
           <hul>
@@ -663,7 +661,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('insert nested lis with selection across multiple lics', () => {
+    it("insert nested lis with selection across multiple lics", () => {
       const input = (
         <editor>
           <hul>
@@ -730,8 +728,8 @@ describe('when pasting ul > 2 li fragment', () => {
     });
   });
 
-  describe('when selection not in li', () => {
-    it('paste the list', () => {
+  describe("when selection not in li", () => {
+    it("paste the list", () => {
       const input = (
         <editor>
           <hp>
@@ -768,7 +766,7 @@ describe('when pasting ul > 2 li fragment', () => {
       editorTest(input, fragment, expected);
     });
 
-    it('paste the list with multiple lis', () => {
+    it("paste the list with multiple lis", () => {
       const input = (
         <editor>
           <hp>
@@ -812,8 +810,8 @@ describe('when pasting ul > 2 li fragment', () => {
     });
   });
 
-  describe('when pasted lis not contain lic', () => {
-    it('normalize li children', () => {
+  describe("when pasted lis not contain lic", () => {
+    it("normalize li children", () => {
       const input = (
         <editor>
           <hp>
@@ -868,8 +866,8 @@ describe('when pasting ul > 2 li fragment', () => {
   });
 });
 
-describe('withInsertFragmentList fallbacks', () => {
-  it('delegates directly when insertion does not start inside a list item', () => {
+describe("withInsertFragmentList fallbacks", () => {
+  it("delegates directly when insertion does not start inside a list item", () => {
     const insertFragment = mock();
     const fragment = [{ children: [], type: KEYS.ulClassic }] as any;
     const plugin = withInsertFragmentList({
@@ -884,10 +882,10 @@ describe('withInsertFragmentList fallbacks', () => {
 
     plugin.transforms.insertFragment(fragment);
 
-    expect(insertFragment).toHaveBeenCalledWith([{ text: '' }, ...fragment]);
+    expect(insertFragment).toHaveBeenCalledWith([{ text: "" }, ...fragment]);
   });
 
-  it('delegates after deletion when the active list item disappears', () => {
+  it("delegates after deletion when the active list item disappears", () => {
     const insertFragment = mock();
     const fragment = [{ children: [], type: KEYS.ulClassic }] as any;
     const apiNode = mock()
@@ -905,14 +903,11 @@ describe('withInsertFragmentList fallbacks', () => {
 
     plugin.transforms.insertFragment(fragment);
 
-    expect(insertFragment).toHaveBeenNthCalledWith(1, [{ text: '' }]);
-    expect(insertFragment).toHaveBeenNthCalledWith(2, [
-      { text: '' },
-      ...fragment,
-    ]);
+    expect(insertFragment).toHaveBeenNthCalledWith(1, [{ text: "" }]);
+    expect(insertFragment).toHaveBeenNthCalledWith(2, [{ text: "" }, ...fragment]);
   });
 
-  it('delegates when the list item content entry cannot be found', () => {
+  it("delegates when the list item content entry cannot be found", () => {
     const insertFragment = mock();
     const fragment = [{ children: [], type: KEYS.ulClassic }] as any;
     const apiNode = mock()
@@ -931,10 +926,7 @@ describe('withInsertFragmentList fallbacks', () => {
 
     plugin.transforms.insertFragment(fragment);
 
-    expect(insertFragment).toHaveBeenNthCalledWith(1, [{ text: '' }]);
-    expect(insertFragment).toHaveBeenNthCalledWith(2, [
-      { text: '' },
-      ...fragment,
-    ]);
+    expect(insertFragment).toHaveBeenNthCalledWith(1, [{ text: "" }]);
+    expect(insertFragment).toHaveBeenNthCalledWith(2, [{ text: "" }, ...fragment]);
   });
 });

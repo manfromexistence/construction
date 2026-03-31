@@ -1,12 +1,8 @@
-"use client"
+"use client";
 
-import TextareaAutosize from "react-textarea-autosize"
+import TextareaAutosize from "react-textarea-autosize";
 
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-} from "@/styles/radix-nova/ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupButton } from "@/styles/radix-nova/ui/input-group";
 
 export default function InputGroupCustom() {
   return (
@@ -24,5 +20,5 @@ export default function InputGroupCustom() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

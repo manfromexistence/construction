@@ -1,12 +1,7 @@
 {
   "name": "segmented-input",
-  "dependencies": [
-    "@base-ui/react"
-  ],
-  "registryDependencies": [
-    "input",
-    "direction"
-  ],
+  "dependencies": ["@base-ui/react"],
+  "registryDependencies": ["input", "direction"],
   "files": [
     {
       "path": "ui/segmented-input.tsx",

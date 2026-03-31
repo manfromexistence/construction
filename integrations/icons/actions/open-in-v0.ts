@@ -42,10 +42,7 @@ export async function openInV0Action(name: string) {
         throw new Error("Unauthorized");
       }
 
-      console.error(
-        "Eror fetching /api/templates/open:",
-        await response.text()
-      );
+      console.error("Eror fetching /api/templates/open:", await response.text());
 
       throw new Error("Something went wrong. Please try again later.");
     }

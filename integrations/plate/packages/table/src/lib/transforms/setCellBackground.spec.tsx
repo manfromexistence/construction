@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { setCellBackground } from './setCellBackground';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { setCellBackground } from "./setCellBackground";
 
 jsxt;
 
@@ -13,7 +12,7 @@ jsxt;
 // Each test creates an input editor with a cursor in a specific cell,
 // sets the background color for the given cell or selection of cells,
 // and then checks if the output matches the expected output.
-describe('setCellBackground', () => {
+describe("setCellBackground", () => {
   const createEditorInstance = (input: any) =>
     createSlateEditor({
       nodeId: true,
@@ -22,8 +21,8 @@ describe('setCellBackground', () => {
       value: input.children,
     });
 
-  describe('when background color is not set', () => {
-    it('set background color for current cell', () => {
+  describe("when background color is not set", () => {
+    it("set background color for current cell", () => {
       const input = (
         <editor>
           <htable>
@@ -55,12 +54,12 @@ describe('setCellBackground', () => {
       ) as any as SlateEditor;
 
       const editorInstance = createEditorInstance(input);
-      setCellBackground(editorInstance, { color: 'red' });
+      setCellBackground(editorInstance, { color: "red" });
 
       expect(editorInstance.children).toMatchObject(output.children);
     });
 
-    it('set background color for selected cells', () => {
+    it("set background color for selected cells", () => {
       const input = (
         <editor>
           <htable>
@@ -96,7 +95,7 @@ describe('setCellBackground', () => {
 
       const editorInstance = createEditorInstance(input);
       setCellBackground(editorInstance, {
-        color: 'red',
+        color: "red",
         selectedCells: [
           editorInstance.children[0].children[0].children[0],
           editorInstance.children[0].children[0].children[1],
@@ -107,8 +106,8 @@ describe('setCellBackground', () => {
     });
   });
 
-  describe('when background color is set', () => {
-    it('remove the background color for current cell', () => {
+  describe("when background color is set", () => {
+    it("remove the background color for current cell", () => {
       const input = (
         <editor>
           <htable>
@@ -148,7 +147,7 @@ describe('setCellBackground', () => {
       expect(editorInstance.children).toMatchObject(output.children);
     });
 
-    it('reset the background color to transparent for selected cells', () => {
+    it("reset the background color to transparent for selected cells", () => {
       const input = (
         <editor>
           <htable>

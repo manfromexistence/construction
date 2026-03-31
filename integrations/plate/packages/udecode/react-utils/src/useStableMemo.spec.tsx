@@ -1,15 +1,15 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from "@testing-library/react";
 
-import { useStableMemo } from './useStableMemo';
+import { useStableMemo } from "./useStableMemo";
 
-describe('useStableMemo', () => {
-  it('uses the initial producer result', () => {
-    const { result } = renderHook(() => useStableMemo(() => 'initial', []));
+describe("useStableMemo", () => {
+  it("uses the initial producer result", () => {
+    const { result } = renderHook(() => useStableMemo(() => "initial", []));
 
-    expect(result.current).toBe('initial');
+    expect(result.current).toBe("initial");
   });
 
-  it('does not recompute on rerender when deps stay stable', () => {
+  it("does not recompute on rerender when deps stay stable", () => {
     const calls: number[] = [];
     const producer = (value: number) => {
       calls.push(value);
@@ -19,19 +19,19 @@ describe('useStableMemo', () => {
     const { result, rerender } = renderHook(
       ({ dep, value }) => useStableMemo(() => producer(value), [dep]),
       {
-        initialProps: { dep: 'stable', value: 2 },
+        initialProps: { dep: "stable", value: 2 },
       }
     );
 
     const callsAfterMount = calls.length;
 
-    rerender({ dep: 'stable', value: 4 });
+    rerender({ dep: "stable", value: 4 });
 
     expect(result.current).toBe(4);
     expect(calls.length).toBe(callsAfterMount);
   });
 
-  it('recomputes when deps change', async () => {
+  it("recomputes when deps change", async () => {
     const calls: number[] = [];
     const producer = (value: number) => {
       calls.push(value);

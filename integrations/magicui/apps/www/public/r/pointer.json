@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Pointer",
   "description": "A component that displays a pointer when hovering over an element",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/pointer.tsx",

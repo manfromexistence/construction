@@ -1,4 +1,4 @@
-import { z } from "zod"
+import { z } from "zod";
 
 // Note: if you edit the schema here, you must also edit the schema in the
 // apps/v4/public/schema/registry-item.json file.
@@ -16,14 +16,14 @@ export const registryConfigItemSchema = z.union([
     params: z.record(z.string(), z.string()).optional(),
     headers: z.record(z.string(), z.string()).optional(),
   }),
-])
+]);
 
 export const registryConfigSchema = z.record(
   z.string().refine((key) => key.startsWith("@"), {
     message: "Registry names must start with @ (e.g., @v0, @acme)",
   }),
   registryConfigItemSchema
-)
+);
 
 export const rawConfigSchema = z
   .object({
@@ -41,12 +41,7 @@ export const rawConfigSchema = z
     iconLibrary: z.string().optional(),
     rtl: z.coerce.boolean().default(false).optional(),
     menuColor: z
-      .enum([
-        "default",
-        "inverted",
-        "default-translucent",
-        "inverted-translucent",
-      ])
+      .enum(["default", "inverted", "default-translucent", "inverted-translucent"])
       .default("default")
       .optional(),
     menuAccent: z.enum(["subtle", "bold"]).default("subtle").optional(),
@@ -59,7 +54,7 @@ export const rawConfigSchema = z
     }),
     registries: registryConfigSchema.optional(),
   })
-  .strict()
+  .strict();
 
 export const configSchema = rawConfigSchema.extend({
   resolvedPaths: z.object({
@@ -72,11 +67,11 @@ export const configSchema = rawConfigSchema.extend({
     hooks: z.string(),
     ui: z.string(),
   }),
-})
+});
 
 // TODO: type the key.
 // Okay for now since I don't want a breaking change.
-export const workspaceConfigSchema = z.record(configSchema)
+export const workspaceConfigSchema = z.record(configSchema);
 
 export const registryItemTypeSchema = z.enum([
   "registry:lib",
@@ -95,7 +90,7 @@ export const registryItemTypeSchema = z.enum([
   // Internal use only.
   "registry:example",
   "registry:internal",
-])
+]);
 
 export const registryItemFileSchema = z.discriminatedUnion("type", [
   // Target is required for registry:file and registry:page
@@ -111,7 +106,7 @@ export const registryItemFileSchema = z.discriminatedUnion("type", [
     type: registryItemTypeSchema.exclude(["registry:file", "registry:page"]),
     target: z.string().optional(),
   }),
-])
+]);
 
 export const registryItemTailwindSchema = z.object({
   config: z
@@ -121,13 +116,13 @@ export const registryItemTailwindSchema = z.object({
       plugins: z.array(z.string()).optional(),
     })
     .optional(),
-})
+});
 
 export const registryItemCssVarsSchema = z.object({
   theme: z.record(z.string(), z.string()).optional(),
   light: z.record(z.string(), z.string()).optional(),
   dark: z.record(z.string(), z.string()).optional(),
-})
+});
 
 // Recursive type for CSS properties that supports empty objects at any level.
 const cssValueSchema: z.ZodType<any> = z.lazy(() =>
@@ -136,11 +131,11 @@ const cssValueSchema: z.ZodType<any> = z.lazy(() =>
     z.array(z.union([z.string(), z.record(z.string(), z.string())])),
     z.record(z.string(), cssValueSchema),
   ])
-)
+);
 
-export const registryItemCssSchema = z.record(z.string(), cssValueSchema)
+export const registryItemCssSchema = z.record(z.string(), cssValueSchema);
 
-export const registryItemEnvVarsSchema = z.record(z.string(), z.string())
+export const registryItemEnvVarsSchema = z.record(z.string(), z.string());
 
 // Font metadata schema for registry:font items.
 export const registryItemFontSchema = z.object({
@@ -152,7 +147,7 @@ export const registryItemFontSchema = z.object({
   subsets: z.array(z.string()).optional(),
   selector: z.string().optional(),
   dependency: z.string().optional(),
-})
+});
 
 // Common fields shared by all registry items.
 export const registryItemCommonSchema = z.object({
@@ -173,7 +168,7 @@ export const registryItemCommonSchema = z.object({
   meta: z.record(z.string(), z.any()).optional(),
   docs: z.string().optional(),
   categories: z.array(z.string()).optional(),
-})
+});
 
 // registry:base has a config field, registry:font has a font field.
 export const registryItemSchema = z.discriminatedUnion("type", [
@@ -188,37 +183,34 @@ export const registryItemSchema = z.discriminatedUnion("type", [
   registryItemCommonSchema.extend({
     type: registryItemTypeSchema.exclude(["registry:base", "registry:font"]),
   }),
-])
+]);
 
-export type RegistryItem = z.infer<typeof registryItemSchema>
+export type RegistryItem = z.infer<typeof registryItemSchema>;
 
 // Helper type for registry:base items specifically.
-export type RegistryBaseItem = Extract<RegistryItem, { type: "registry:base" }>
+export type RegistryBaseItem = Extract<RegistryItem, { type: "registry:base" }>;
 
 // Helper type for registry:font items specifically.
-export type RegistryFontItem = Extract<RegistryItem, { type: "registry:font" }>
+export type RegistryFontItem = Extract<RegistryItem, { type: "registry:font" }>;
 
 export const registrySchema = z.object({
   name: z.string(),
   homepage: z.string(),
   items: z.array(registryItemSchema),
-})
+});
 
-export type Registry = z.infer<typeof registrySchema>
+export type Registry = z.infer<typeof registrySchema>;
 
-export const registryIndexSchema = z.array(registryItemSchema)
+export const registryIndexSchema = z.array(registryItemSchema);
 
 export const stylesSchema = z.array(
   z.object({
     name: z.string(),
     label: z.string(),
   })
-)
+);
 
-export const iconsSchema = z.record(
-  z.string(),
-  z.record(z.string(), z.string())
-)
+export const iconsSchema = z.record(z.string(), z.record(z.string(), z.string()));
 
 export const registryBaseColorSchema = z.object({
   inlineColors: z.object({
@@ -229,7 +221,7 @@ export const registryBaseColorSchema = z.object({
   cssVarsV4: registryItemCssVarsSchema.optional(),
   inlineColorsTemplate: z.string(),
   cssVarsTemplate: z.string(),
-})
+});
 
 export const registryResolvedItemsTreeSchema = registryItemCommonSchema
   .pick({
@@ -251,7 +243,7 @@ export const registryResolvedItemsTreeSchema = registryItemCommonSchema
         })
       )
       .optional(),
-  })
+  });
 
 export const searchResultItemSchema = z.object({
   name: z.string(),
@@ -259,7 +251,7 @@ export const searchResultItemSchema = z.object({
   description: z.string().optional(),
   registry: z.string(),
   addCommandArgument: z.string(),
-})
+});
 
 export const searchResultsSchema = z.object({
   pagination: z.object({
@@ -269,13 +261,13 @@ export const searchResultsSchema = z.object({
     hasMore: z.boolean(),
   }),
   items: z.array(searchResultItemSchema),
-})
+});
 
 // Legacy schema for getRegistriesIndex() backward compatibility.
 export const registriesIndexSchema = z.record(
   z.string().regex(/^@[a-zA-Z0-9][a-zA-Z0-9-_]*$/),
   z.string()
-)
+);
 
 // New schema for getRegistries().
 export const registriesSchema = z.array(
@@ -285,7 +277,7 @@ export const registriesSchema = z.array(
     url: z.string(),
     description: z.string().optional(),
   })
-)
+);
 
 export const presetSchema = z.object({
   name: z.string(),
@@ -299,19 +291,14 @@ export const presetSchema = z.object({
   font: z.string(),
   rtl: z.coerce.boolean().default(false),
   menuAccent: z.enum(["subtle", "bold"]),
-  menuColor: z.enum([
-    "default",
-    "inverted",
-    "default-translucent",
-    "inverted-translucent",
-  ]),
+  menuColor: z.enum(["default", "inverted", "default-translucent", "inverted-translucent"]),
   radius: z.string(),
-})
+});
 
-export type Preset = z.infer<typeof presetSchema>
+export type Preset = z.infer<typeof presetSchema>;
 
 export const configJsonSchema = z.object({
   presets: z.array(presetSchema),
-})
+});
 
-export type ConfigJson = z.infer<typeof configJsonSchema>
+export type ConfigJson = z.infer<typeof configJsonSchema>;

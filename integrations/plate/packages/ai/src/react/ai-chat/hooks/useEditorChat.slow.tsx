@@ -1,16 +1,16 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from "@testing-library/react";
 
 const useEditorPluginMock = mock();
 const usePluginOptionMock = mock();
 const getEditorPluginMock = mock();
 
-mock.module('../AIChatPlugin', () => ({
-  AIChatPlugin: { key: 'aiChat' },
+mock.module("../AIChatPlugin", () => ({
+  AIChatPlugin: { key: "aiChat" },
 }));
 
-mock.module('platejs/react', async () => {
+mock.module("platejs/react", async () => {
   const actual = await import(
-    new URL('../../../../../plate/dist/react/index.js', import.meta.url).href
+    new URL("../../../../../plate/dist/react/index.js", import.meta.url).href
   );
   const getEditorPlugin = actual.getEditorPlugin as any;
   const useEditorPlugin = actual.useEditorPlugin as any;
@@ -27,14 +27,14 @@ mock.module('platejs/react', async () => {
   };
 });
 
-mock.module('@platejs/selection/react', () => ({
-  BlockSelectionPlugin: { key: 'blockSelection' },
+mock.module("@platejs/selection/react", () => ({
+  BlockSelectionPlugin: { key: "blockSelection" },
 }));
 
 const loadModule = async () =>
   import(`./useEditorChat?test=${Math.random().toString(36).slice(2)}`);
 
-describe('useEditorChat', () => {
+describe("useEditorChat", () => {
   beforeEach(() => {
     getEditorPluginMock.mockReset();
     useEditorPluginMock.mockReset();
@@ -45,7 +45,7 @@ describe('useEditorChat', () => {
     mock.restore();
   });
 
-  it('routes open state to block selection callbacks before cursor or text selection', async () => {
+  it("routes open state to block selection callbacks before cursor or text selection", async () => {
     const onOpenBlockSelection = mock();
     const onOpenCursor = mock();
     const onOpenSelection = mock();
@@ -59,7 +59,7 @@ describe('useEditorChat', () => {
         },
         getApi: () => ({
           blockSelection: {
-            getNodes: () => [[{ id: 'b1' }, [0]]],
+            getNodes: () => [[{ id: "b1" }, [0]]],
           },
         }),
         getOption: () => true,
@@ -75,7 +75,7 @@ describe('useEditorChat', () => {
       })
     );
 
-    expect(onOpenBlockSelection).toHaveBeenCalledWith([[{ id: 'b1' }, [0]]]);
+    expect(onOpenBlockSelection).toHaveBeenCalledWith([[{ id: "b1" }, [0]]]);
     expect(onOpenCursor).not.toHaveBeenCalled();
     expect(onOpenSelection).not.toHaveBeenCalled();
   });

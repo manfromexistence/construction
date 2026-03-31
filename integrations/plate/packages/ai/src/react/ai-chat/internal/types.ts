@@ -1,6 +1,6 @@
-import type { UIMessage } from 'ai';
+import type { UIMessage } from "ai";
 
-export type ToolName = 'comment' | 'edit' | 'generate';
+export type ToolName = "comment" | "edit" | "generate";
 
 export type TComment = {
   blockId: string;

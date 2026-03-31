@@ -1,20 +1,20 @@
-import { type Value, createEditor } from '@platejs/slate';
+import { createEditor, type Value } from "@platejs/slate";
 
-import type { InferPlugins } from '../../lib/editor/SlateEditor';
+import type { InferPlugins } from "../../lib/editor/SlateEditor";
 
-import { createSlatePlugin } from '../../lib/plugin/createSlatePlugin';
-import { DebugPlugin } from '../../lib/plugins/debug/DebugPlugin';
-import { someHtmlElement } from '../../lib/plugins/html/utils/findHtmlElement';
-import { createPlateEditor, withPlate } from './withPlate';
+import { createSlatePlugin } from "../../lib/plugin/createSlatePlugin";
+import { DebugPlugin } from "../../lib/plugins/debug/DebugPlugin";
+import { someHtmlElement } from "../../lib/plugins/html/utils/findHtmlElement";
+import { createPlateEditor, withPlate } from "./withPlate";
 
-describe('TPlateEditor', () => {
+describe("TPlateEditor", () => {
   const MyCustomPlugin = createSlatePlugin({
-    key: 'myCustom',
+    key: "myCustom",
     api: { myCustomMethod: () => {} },
   });
 
   const TextFormattingPlugin = createSlatePlugin({
-    key: 'textFormatting',
+    key: "textFormatting",
     api: {
       bold: () => {},
       italic: () => {},
@@ -23,14 +23,14 @@ describe('TPlateEditor', () => {
   });
 
   const ListPlugin = createSlatePlugin({
-    key: 'list',
+    key: "list",
     api: {
       createBulletedList: () => {},
     },
   });
 
   const TablePlugin = createSlatePlugin({
-    key: 'table',
+    key: "table",
     api: {
       addRow: () => {},
       insertTable: () => {},
@@ -38,15 +38,15 @@ describe('TPlateEditor', () => {
   });
 
   const ImagePlugin = createSlatePlugin({
-    key: 'image',
+    key: "image",
     api: {
       insertImage: () => {},
       resizeImage: () => {},
     },
   });
 
-  describe('Core Plugins', () => {
-    it('exposes DebugPlugin methods on withPlate', () => {
+  describe("Core Plugins", () => {
+    it("exposes DebugPlugin methods on withPlate", () => {
       const editor = withPlate(createEditor());
 
       expect(editor.api.debug).toBeDefined();
@@ -59,7 +59,7 @@ describe('TPlateEditor', () => {
       editor.api.debug.nonExistentMethod;
     });
 
-    it('combines core and custom plugin APIs with withPlate', () => {
+    it("combines core and custom plugin APIs with withPlate", () => {
       const editor = withPlate(createEditor(), {
         plugins: [DebugPlugin, TextFormattingPlugin, ImagePlugin],
       });
@@ -73,8 +73,8 @@ describe('TPlateEditor', () => {
     });
   });
 
-  describe('Custom Plugins', () => {
-    it('infers plugin APIs across custom plugin sets', () => {
+  describe("Custom Plugins", () => {
+    it("infers plugin APIs across custom plugin sets", () => {
       const singlePluginEditor = withPlate(createEditor(), {
         plugins: [MyCustomPlugin],
       });
@@ -91,7 +91,7 @@ describe('TPlateEditor', () => {
       multiPluginEditor.api.nonExistentMethod;
     });
 
-    it('exposes custom plugin APIs on createPlateEditor', () => {
+    it("exposes custom plugin APIs on createPlateEditor", () => {
       const editor = createPlateEditor({
         plugins: [MyCustomPlugin, ListPlugin, ImagePlugin],
       });
@@ -104,16 +104,13 @@ describe('TPlateEditor', () => {
       editor.api.insertTable;
     });
 
-    it('extends a plate editor with additional plugins', () => {
+    it("extends a plate editor with additional plugins", () => {
       const plugins = [TextFormattingPlugin, ListPlugin];
       const editor1 = withPlate(createEditor(), {
         plugins,
       });
 
-      const editor = withPlate<
-        Value,
-        InferPlugins<typeof plugins> | typeof TablePlugin
-      >(editor1, {
+      const editor = withPlate<Value, InferPlugins<typeof plugins> | typeof TablePlugin>(editor1, {
         plugins: [...editor1.meta.pluginList, TablePlugin],
       });
 
@@ -125,9 +122,9 @@ describe('TPlateEditor', () => {
       editor.api.insertImage;
     });
 
-    it('merges overlapping api names on withPlate', () => {
+    it("merges overlapping api names on withPlate", () => {
       const OverlappingPlugin = createSlatePlugin({
-        key: 'overlapping',
+        key: "overlapping",
         api: {
           bold: (_: number) => {},
           insertImage: (_: number) => {},
@@ -148,28 +145,25 @@ describe('TPlateEditor', () => {
     });
   });
 
-  describe('Plugin', () => {
-    const BoldPlugin = createSlatePlugin<'bold'>({
-      key: 'bold',
+  describe("Plugin", () => {
+    const BoldPlugin = createSlatePlugin<"bold">({
+      key: "bold",
       node: { isLeaf: true },
       parsers: {
         html: {
           deserializer: {
             rules: [
-              { validNodeName: ['STRONG', 'B'] },
-              { validStyle: { fontWeight: ['600', '700', 'bold'] } },
+              { validNodeName: ["STRONG", "B"] },
+              { validStyle: { fontWeight: ["600", "700", "bold"] } },
             ],
             query: ({ element }) =>
-              !someHtmlElement(
-                element,
-                (node) => node.style.fontWeight === 'normal'
-              ),
+              !someHtmlElement(element, (node) => node.style.fontWeight === "normal"),
           },
         },
       },
     });
 
-    it('supports specific plugin generics on createPlateEditor', () => {
+    it("supports specific plugin generics on createPlateEditor", () => {
       const editor = createPlateEditor<Value, typeof BoldPlugin>({
         plugins: [BoldPlugin],
       });

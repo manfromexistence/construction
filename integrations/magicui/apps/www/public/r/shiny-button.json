@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Shiny Button",
   "description": "A shiny button component with dynamic styles in the dark mode or light mode.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/shiny-button.tsx",

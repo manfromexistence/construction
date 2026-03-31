@@ -1,8 +1,8 @@
-import { Transforms } from 'slate';
+import { Transforms } from "slate";
 
-import type { Editor, InsertTextOptions } from '../../interfaces';
+import type { Editor, InsertTextOptions } from "../../interfaces";
 
-import { getAt } from '../../utils';
+import { getAt } from "../../utils";
 
 export const insertText = (
   editor: Editor,

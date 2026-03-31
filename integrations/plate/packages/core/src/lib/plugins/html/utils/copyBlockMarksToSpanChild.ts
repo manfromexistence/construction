@@ -1,6 +1,6 @@
-import { isHtmlBlockElement } from './isHtmlBlockElement';
-import { isHtmlTable } from './isHtmlTable';
-import { traverseHtmlElements } from './traverseHtmlElements';
+import { isHtmlBlockElement } from "./isHtmlBlockElement";
+import { isHtmlTable } from "./isHtmlTable";
+import { traverseHtmlElements } from "./traverseHtmlElements";
 
 /**
  * Set HTML blocks mark styles to a new child span element if any. This allows
@@ -10,7 +10,7 @@ export const copyBlockMarksToSpanChild = (rootNode: Node) => {
   traverseHtmlElements(rootNode, (element) => {
     const el = element as HTMLElement;
 
-    const styleAttribute = element.getAttribute('style');
+    const styleAttribute = element.getAttribute("style");
 
     if (!styleAttribute) return true;
     if (isHtmlBlockElement(el) && !isHtmlTable(el)) {
@@ -35,19 +35,19 @@ export const copyBlockMarksToSpanChild = (rootNode: Node) => {
         fontWeight ||
         textDecoration
       ) {
-        const span = document.createElement('span');
+        const span = document.createElement("span");
 
-        if (!['inherit', 'initial'].includes(color)) {
+        if (!["inherit", "initial"].includes(color)) {
           span.style.color = color;
         }
 
         span.style.fontFamily = fontFamily;
         span.style.fontSize = fontSize;
 
-        if (!['inherit', 'initial', 'normal'].includes(color)) {
+        if (!["inherit", "initial", "normal"].includes(color)) {
           span.style.fontStyle = fontStyle;
         }
-        if (![400, 'normal'].includes(fontWeight)) {
+        if (![400, "normal"].includes(fontWeight)) {
           span.style.fontWeight = fontWeight;
         }
 

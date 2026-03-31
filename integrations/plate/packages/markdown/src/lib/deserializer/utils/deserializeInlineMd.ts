@@ -1,9 +1,7 @@
-import { type Descendant, type SlateEditor, ElementApi } from 'platejs';
-
-import type { DeserializeMdOptions } from '../deserializeMd';
-
-import { MarkdownPlugin } from '../../MarkdownPlugin';
-import { stripMarkdownBlocks } from './stripMarkdown';
+import { type Descendant, ElementApi, type SlateEditor } from "platejs";
+import { MarkdownPlugin } from "../../MarkdownPlugin";
+import type { DeserializeMdOptions } from "../deserializeMd";
+import { stripMarkdownBlocks } from "./stripMarkdown";
 
 const LEADING_SPACES_REGEX = /^\s*/;
 const TRAILING_SPACES_REGEX = /\s*$/;
@@ -14,8 +12,8 @@ export const deserializeInlineMd = (
   options?: DeserializeMdOptions
 ) => {
   const trimmedText = text.trim();
-  const leadingSpaces = LEADING_SPACES_REGEX.exec(text)?.[0] || '';
-  const trailingSpaces = TRAILING_SPACES_REGEX.exec(text)?.[0] || '';
+  const leadingSpaces = LEADING_SPACES_REGEX.exec(text)?.[0] || "";
+  const trailingSpaces = TRAILING_SPACES_REGEX.exec(text)?.[0] || "";
 
   const strippedText = stripMarkdownBlocks(trimmedText);
 
@@ -29,9 +27,7 @@ export const deserializeInlineMd = (
     fragment.push({ text: leadingSpaces });
   }
 
-  const result = editor
-    .getApi(MarkdownPlugin)
-    .markdown.deserialize(strippedText, options)[0];
+  const result = editor.getApi(MarkdownPlugin).markdown.deserialize(strippedText, options)[0];
 
   if (result) {
     const nodes = ElementApi.isElement(result) ? result.children : [result];

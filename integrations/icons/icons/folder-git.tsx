@@ -93,18 +93,8 @@ const FolderGitIcon = forwardRef<FolderGitIconHandle, FolderGitIconProps>(
             r="2"
             variants={COMMIT_VARIANTS}
           />
-          <motion.path
-            animate={controls}
-            custom={2}
-            d="M14 13h3"
-            variants={COMMIT_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            custom={0}
-            d="M7 13h3"
-            variants={COMMIT_VARIANTS}
-          />
+          <motion.path animate={controls} custom={2} d="M14 13h3" variants={COMMIT_VARIANTS} />
+          <motion.path animate={controls} custom={0} d="M7 13h3" variants={COMMIT_VARIANTS} />
         </svg>
       </div>
     );

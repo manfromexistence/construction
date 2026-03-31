@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
 
-import { SingleBlockPlugin } from './SingleBlockPlugin';
+import { SingleBlockPlugin } from "./SingleBlockPlugin";
 
 jsxt;
 
@@ -19,16 +19,16 @@ const input = createEditor(
 const output = (
   <editor>
     <hp>
-      first block{'\n'}second block{'\n'}third block
+      first block{"\n"}second block{"\n"}third block
     </hp>
   </editor>
 ) as any;
 
-describe('SingleBlockPlugin', () => {
-  it('disables the trailing block plugin while enabled', () => {
+describe("SingleBlockPlugin", () => {
+  it("disables the trailing block plugin while enabled", () => {
     const editor = createSlateEditor({
       plugins: [SingleBlockPlugin],
-      value: [{ type: 'p', children: [{ text: 'test' }] }] as any,
+      value: [{ type: "p", children: [{ text: "test" }] }] as any,
     });
 
     expect(editor.getPlugin(SingleBlockPlugin).override.enabled).toEqual({
@@ -36,7 +36,7 @@ describe('SingleBlockPlugin', () => {
     });
   });
 
-  it('merge all blocks into the first block with soft breaks', () => {
+  it("merge all blocks into the first block with soft breaks", () => {
     const editor = createSlateEditor({
       plugins: [SingleBlockPlugin],
       selection: input.selection,
@@ -48,7 +48,7 @@ describe('SingleBlockPlugin', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('convert hard breaks to soft breaks', () => {
+  it("convert hard breaks to soft breaks", () => {
     const input = (
       <editor>
         <hp>
@@ -67,12 +67,10 @@ describe('SingleBlockPlugin', () => {
     editor.tf.insertBreak();
 
     // Should have inserted a soft break instead
-    expect(editor.children).toEqual([
-      { children: [{ text: 'test\n' }], type: 'p' },
-    ]);
+    expect(editor.children).toEqual([{ children: [{ text: "test\n" }], type: "p" }]);
   });
 
-  it('handle single block without changes', () => {
+  it("handle single block without changes", () => {
     const singleBlockInput = createEditor(
       (
         <editor>
@@ -92,11 +90,11 @@ describe('SingleBlockPlugin', () => {
     expect(editor.children).toEqual(singleBlockInput.children);
   });
 
-  it('preserve existing line breaks in text', () => {
+  it("preserve existing line breaks in text", () => {
     const inputWithLineBreaks = createEditor(
       (
         <editor>
-          <hp>line one{'\n'}line two</hp>
+          <hp>line one{"\n"}line two</hp>
           <hp>block two</hp>
         </editor>
       ) as any
@@ -105,7 +103,7 @@ describe('SingleBlockPlugin', () => {
     const expectedOutput = (
       <editor>
         <hp>
-          line one{'\n'}line two{'\n'}block two
+          line one{"\n"}line two{"\n"}block two
         </hp>
       </editor>
     ) as any;
@@ -120,7 +118,7 @@ describe('SingleBlockPlugin', () => {
     expect(editor.children).toEqual(expectedOutput.children);
   });
 
-  it('handle empty blocks correctly', () => {
+  it("handle empty blocks correctly", () => {
     const emptyBlocksInput = createEditor(
       (
         <editor>
@@ -134,8 +132,8 @@ describe('SingleBlockPlugin', () => {
     const expectedOutput = (
       <editor>
         <hp>
-          content{'\n'}
-          {'\n'}more content
+          content{"\n"}
+          {"\n"}more content
         </hp>
       </editor>
     ) as any;

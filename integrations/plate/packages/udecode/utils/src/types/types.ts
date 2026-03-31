@@ -1,4 +1,4 @@
-import type { AnyObject } from './AnyObject';
+import type { AnyObject } from "./AnyObject";
 
 export type DeepPartialAny<T> = {
   [P in keyof T]?: T[P] extends AnyObject ? DeepPartialAny<T[P]> : any;
@@ -31,25 +31,17 @@ export type PartialPick<T, K extends keyof T> = {
 };
 
 /** Simplify a complex type expression into a single object. */
-export type Simplify<T> = T extends any[] | Date
-  ? T
-  : { [K in keyof T]: T[K] } & {};
+export type Simplify<T> = T extends any[] | Date ? T : { [K in keyof T]: T[K] } & {};
 
 /** Turn a union type into an intersection. */
-export type UnionToIntersection<U> = (
-  U extends any
-    ? (k: U) => void
-    : never
-) extends (k: infer I) => void
+export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (
+  k: infer I
+) => void
   ? I
   : never;
 
 export type WithPartial<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 
-export type WithRequired<T, K extends keyof T> = Omit<T, K> &
-  Required<Pick<T, K>>;
+export type WithRequired<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
 
-export type StrictExtract<Type, Union extends Partial<Type>> = Extract<
-  Type,
-  Union
->;
+export type StrictExtract<Type, Union extends Partial<Type>> = Extract<Type, Union>;

@@ -1,8 +1,8 @@
-import type { Editor, Point } from 'platejs';
+import type { Editor, Point } from "platejs";
 
-import type { MatchRange } from '../types';
+import type { MatchRange } from "../types";
 
-import { isPreviousCharacterEmpty } from './isPreviousCharacterEmpty';
+import { isPreviousCharacterEmpty } from "./isPreviousCharacterEmpty";
 
 export type GetMatchPointsReturnType =
   | {
@@ -42,8 +42,7 @@ export const getMatchPoints = (editor: Editor, { end, start }: MatchRange) => {
       skipInvalid: true,
     });
 
-    if (!isPreviousCharacterEmpty(editor, beforeStartMatchPoint as Point))
-      return;
+    if (!isPreviousCharacterEmpty(editor, beforeStartMatchPoint as Point)) return;
   }
 
   return {

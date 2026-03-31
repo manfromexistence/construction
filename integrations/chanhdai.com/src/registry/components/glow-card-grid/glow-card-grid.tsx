@@ -1,29 +1,29 @@
-"use client"
+"use client";
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type GlowCardGridProps = React.ComponentPropsWithoutRef<"div"> & {
   // Card parameters
-  cardRadius?: number
+  cardRadius?: number;
 
   // Icon parameters
-  iconBlur?: number
-  iconSaturate?: number
-  iconBrightness?: number
-  iconScale?: number
-  iconOpacity?: number
+  iconBlur?: number;
+  iconSaturate?: number;
+  iconBrightness?: number;
+  iconScale?: number;
+  iconOpacity?: number;
 
   // Border parameters
-  borderWidth?: number
-  borderBlur?: number
-  borderSaturate?: number
-  borderBrightness?: number
-  borderContrast?: number
+  borderWidth?: number;
+  borderBlur?: number;
+  borderSaturate?: number;
+  borderBrightness?: number;
+  borderContrast?: number;
 
-  children: React.ReactNode
-}
+  children: React.ReactNode;
+};
 
 export function GlowCardGrid({
   cardRadius = 16,
@@ -44,42 +44,37 @@ export function GlowCardGrid({
   style,
   ...props
 }: GlowCardGridProps) {
-  const gridRef = useRef<HTMLDivElement>(null)
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handlePointerMove = (event: PointerEvent) => {
-      if (!gridRef.current) return
+      if (!gridRef.current) return;
 
-      const cards = gridRef.current.querySelectorAll<HTMLElement>(
-        "[data-slot='glow-card']"
-      )
+      const cards = gridRef.current.querySelectorAll<HTMLElement>("[data-slot='glow-card']");
 
       cards.forEach((card) => {
-        const rect = card.getBoundingClientRect()
+        const rect = card.getBoundingClientRect();
 
-        const centerX = rect.left + rect.width / 2
-        const centerY = rect.top + rect.height / 2
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
 
-        const x = (event.clientX - centerX) / (rect.width / 2)
-        const y = (event.clientY - centerY) / (rect.height / 2)
+        const x = (event.clientX - centerX) / (rect.width / 2);
+        const y = (event.clientY - centerY) / (rect.height / 2);
 
-        card.style.setProperty("--pointer-x", x.toFixed(3))
-        card.style.setProperty("--pointer-y", y.toFixed(3))
-      })
-    }
+        card.style.setProperty("--pointer-x", x.toFixed(3));
+        card.style.setProperty("--pointer-y", y.toFixed(3));
+      });
+    };
 
-    document.addEventListener("pointermove", handlePointerMove)
+    document.addEventListener("pointermove", handlePointerMove);
 
-    return () => document.removeEventListener("pointermove", handlePointerMove)
-  }, [])
+    return () => document.removeEventListener("pointermove", handlePointerMove);
+  }, []);
 
   return (
     <div
       ref={gridRef}
-      className={cn(
-        "grid w-full gap-4 sm:grid-cols-2 md:grid-cols-3",
-        className
-      )}
+      className={cn("grid w-full gap-4 sm:grid-cols-2 md:grid-cols-3", className)}
       style={
         {
           "--card-radius": `${cardRadius}px`,
@@ -98,5 +93,5 @@ export function GlowCardGrid({
       }
       {...props}
     />
-  )
+  );
 }

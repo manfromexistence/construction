@@ -1,6 +1,6 @@
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
 
-import { transformTailwindContent } from "../../../src/utils/updaters/update-tailwind-content"
+import { transformTailwindContent } from "../../../src/utils/updaters/update-tailwind-content";
 
 const SHARED_CONFIG = {
   $schema: "https://ui.shadcn.com/schema.json",
@@ -25,7 +25,7 @@ const SHARED_CONFIG = {
     utils: "./lib/utils",
     ui: "./components/ui",
   },
-}
+};
 
 describe("transformTailwindContent -> content property", () => {
   test("should add content property if not in config", async () => {
@@ -57,8 +57,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should NOT add content property if already in config", async () => {
     expect(
@@ -89,6 +89,6 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
-})
+    ).toMatchSnapshot();
+  });
+});

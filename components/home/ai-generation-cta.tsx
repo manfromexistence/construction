@@ -1,8 +1,10 @@
-import { AIChatDemo } from "@/components/examples/ai-chat-demo";
-import { Button } from "@/components/ui/button";
+"use client";
+
 import { ArrowRight, Check } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
+import { AIChatDemo } from "@/components/examples/ai-chat-demo";
+import { Button } from "@/components/ui/button";
 
 export function AIGenerationCTA() {
   return (

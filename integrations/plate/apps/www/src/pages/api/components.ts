@@ -1,11 +1,11 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from "next";
 
-import components from './components.json';
+import components from "./components.json";
 
-export const runtime = 'edge';
+export const runtime = "edge";
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'GET') {
+  if (req.method !== "GET") {
     return res.status(405).end();
   }
 

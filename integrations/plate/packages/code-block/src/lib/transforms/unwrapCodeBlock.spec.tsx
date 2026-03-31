@@ -1,17 +1,16 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { CodeBlockPlugin } from '../../react/CodeBlockPlugin';
-import { unwrapCodeBlock } from './unwrapCodeBlock';
+import { CodeBlockPlugin } from "../../react/CodeBlockPlugin";
+import { unwrapCodeBlock } from "./unwrapCodeBlock";
 
 jsxt;
 
-describe('unwrap code block', () => {
-  it('turn a code block to multiple p', () => {
+describe("unwrap code block", () => {
+  it("turn a code block to multiple p", () => {
     const input = (
       <editor>
         <hcodeblock>
@@ -46,7 +45,7 @@ describe('unwrap code block', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('turn multiple code blocks to multiple p', () => {
+  it("turn multiple code blocks to multiple p", () => {
     const input = (
       <editor>
         <hcodeblock>
@@ -94,8 +93,8 @@ describe('unwrap code block', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  describe('when not inside code block', () => {
-    it('keeps the editor unchanged outside code blocks', () => {
+  describe("when not inside code block", () => {
+    it("keeps the editor unchanged outside code blocks", () => {
       const input = (
         <editor>
           <hp>

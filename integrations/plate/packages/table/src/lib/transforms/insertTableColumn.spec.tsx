@@ -1,17 +1,11 @@
 /** @jsx jsxt */
 
-import {
-  type Editor,
-  type SlateEditor,
-  type TElement,
-  createSlateEditor,
-} from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type Editor, type SlateEditor, type TElement } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { insertTableColumn } from './insertTableColumn';
-import { insertTableRow } from './insertTableRow';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { insertTableColumn } from "./insertTableColumn";
+import { insertTableRow } from "./insertTableRow";
 
 jsxt;
 
@@ -21,11 +15,7 @@ type MakeTableWithColsOptions = {
   cursorPath?: [number, number];
 };
 
-const makeTableWithCols = ({
-  colSizes,
-  cursorPath,
-  rowCols,
-}: MakeTableWithColsOptions) =>
+const makeTableWithCols = ({ colSizes, cursorPath, rowCols }: MakeTableWithColsOptions) =>
   (
     <editor>
       <htable colSizes={colSizes}>
@@ -34,10 +24,10 @@ const makeTableWithCols = ({
             {row.map((col, colIndex) => (
               <htd>
                 <hp>
-                  {col === '' ? <htext /> : col}
-                  {cursorPath &&
-                    cursorPath[0] === rowIndex &&
-                    cursorPath[1] === colIndex && <cursor />}
+                  {col === "" ? <htext /> : col}
+                  {cursorPath && cursorPath[0] === rowIndex && cursorPath[1] === colIndex && (
+                    <cursor />
+                  )}
                 </hp>
               </htd>
             ))}
@@ -47,27 +37,25 @@ const makeTableWithCols = ({
     </editor>
   ) as unknown as Editor;
 
-describe('insertTableColumn', () => {
-  describe('without initialTableWidth', () => {
+describe("insertTableColumn", () => {
+  describe("without initialTableWidth", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts at the last column (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("inserts at the last column (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = makeTableWithCols({
         cursorPath: [1, 1],
         rowCols: [
-          ['11', '12'],
-          ['21', '22'],
+          ["11", "12"],
+          ["21", "22"],
         ],
       });
 
       const output = makeTableWithCols({
         cursorPath: [1, 2],
         rowCols: [
-          ['11', '12', ''],
-          ['21', '22', ''],
+          ["11", "12", ""],
+          ["21", "22", ""],
         ],
       });
 
@@ -87,21 +75,19 @@ describe('insertTableColumn', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts using atCell (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("inserts using atCell (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = makeTableWithCols({
         rowCols: [
-          ['11', '12'],
-          ['21', '22'],
+          ["11", "12"],
+          ["21", "22"],
         ],
       });
 
       const output = makeTableWithCols({
         cursorPath: [1, 1],
         rowCols: [
-          ['11', '', '12'],
-          ['21', '', '22'],
+          ["11", "", "12"],
+          ["21", "", "22"],
         ],
       });
 
@@ -121,20 +107,20 @@ describe('insertTableColumn', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts using at (disableMerge: $disableMerge)', ({ disableMerge }) => {
+    ])("inserts using at (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = makeTableWithCols({
         cursorPath: [1, 0],
         rowCols: [
-          ['11', '12'],
-          ['21', '22'],
+          ["11", "12"],
+          ["21", "22"],
         ],
       });
 
       const output = makeTableWithCols({
         cursorPath: [1, 0],
         rowCols: [
-          ['', '11', '12'],
-          ['', '21', '22'],
+          ["", "11", "12"],
+          ["", "21", "22"],
         ],
       });
 
@@ -154,22 +140,22 @@ describe('insertTableColumn', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a column before the current column (disableMerge: $disableMerge)', ({
+    ])("inserts a column before the current column (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = makeTableWithCols({
         cursorPath: [1, 1],
         rowCols: [
-          ['11', '12'],
-          ['21', '22'],
+          ["11", "12"],
+          ["21", "22"],
         ],
       });
 
       const output = makeTableWithCols({
         cursorPath: [1, 1],
         rowCols: [
-          ['11', '', '12'],
-          ['21', '', '22'],
+          ["11", "", "12"],
+          ["21", "", "22"],
         ],
       });
 
@@ -187,20 +173,20 @@ describe('insertTableColumn', () => {
     });
   });
 
-  describe('with initialTableWidth', () => {
-    describe('when inserting at last column with width less than initialTableWidth', () => {
+  describe("with initialTableWidth", () => {
+    describe("when inserting at last column with width less than initialTableWidth", () => {
       it.each([
         { disableMerge: true },
         { disableMerge: false },
-      ])('adds the last column width to colSizes (disableMerge: $disableMerge)', ({
+      ])("adds the last column width to colSizes (disableMerge: $disableMerge)", ({
         disableMerge,
       }) => {
         const input = makeTableWithCols({
           colSizes: [20, 30],
           cursorPath: [1, 1],
           rowCols: [
-            ['11', '12'],
-            ['21', '22'],
+            ["11", "12"],
+            ["21", "22"],
           ],
         });
 
@@ -208,8 +194,8 @@ describe('insertTableColumn', () => {
           colSizes: [20, 30, 30],
           cursorPath: [1, 2],
           rowCols: [
-            ['11', '12', ''],
-            ['21', '22', ''],
+            ["11", "12", ""],
+            ["21", "22", ""],
           ],
         });
 
@@ -230,19 +216,19 @@ describe('insertTableColumn', () => {
       });
     });
 
-    describe('when inserting at first column', () => {
+    describe("when inserting at first column", () => {
       it.each([
         { disableMerge: true },
         { disableMerge: false },
-      ])('adds the second column width to colSizes (disableMerge: $disableMerge)', ({
+      ])("adds the second column width to colSizes (disableMerge: $disableMerge)", ({
         disableMerge,
       }) => {
         const input = makeTableWithCols({
           colSizes: [20, 30],
           cursorPath: [0, 0],
           rowCols: [
-            ['11', '12'],
-            ['21', '22'],
+            ["11", "12"],
+            ["21", "22"],
           ],
         });
 
@@ -250,8 +236,8 @@ describe('insertTableColumn', () => {
           colSizes: [20, 30, 30],
           cursorPath: [1, 1],
           rowCols: [
-            ['11', '', '12'],
-            ['21', '', '22'],
+            ["11", "", "12"],
+            ["21", "", "22"],
           ],
         });
 
@@ -274,15 +260,15 @@ describe('insertTableColumn', () => {
       it.each([
         { disableMerge: true },
         { disableMerge: false },
-      ])('adds the first column width to colSizes using at (disableMerge: $disableMerge)', ({
+      ])("adds the first column width to colSizes using at (disableMerge: $disableMerge)", ({
         disableMerge,
       }) => {
         const input = makeTableWithCols({
           colSizes: [20, 30],
           cursorPath: [0, 0],
           rowCols: [
-            ['11', '12'],
-            ['21', '22'],
+            ["11", "12"],
+            ["21", "22"],
           ],
         });
 
@@ -290,8 +276,8 @@ describe('insertTableColumn', () => {
           colSizes: [20, 20, 30],
           cursorPath: [1, 0],
           rowCols: [
-            ['', '11', '12'],
-            ['', '21', '22'],
+            ["", "11", "12"],
+            ["", "21", "22"],
           ],
         });
 
@@ -312,19 +298,19 @@ describe('insertTableColumn', () => {
       });
     });
 
-    describe('when new total width is greater than initialTableWidth', () => {
+    describe("when new total width is greater than initialTableWidth", () => {
       it.each([
         { disableMerge: true },
         { disableMerge: false },
-      ])('shrinks all columns by the same factor (disableMerge: $disableMerge)', ({
+      ])("shrinks all columns by the same factor (disableMerge: $disableMerge)", ({
         disableMerge,
       }) => {
         const input = makeTableWithCols({
           colSizes: [20, 30, 40],
           cursorPath: [0, 0],
           rowCols: [
-            ['11', '12', '13'],
-            ['21', '22', '23'],
+            ["11", "12", "13"],
+            ["21", "22", "23"],
           ],
         });
 
@@ -332,8 +318,8 @@ describe('insertTableColumn', () => {
           colSizes: [20, 30, 30, 40].map((w) => Math.floor((w * 100) / 120)),
           cursorPath: [1, 1],
           rowCols: [
-            ['11', '', '12', '13'],
-            ['21', '', '22', '23'],
+            ["11", "", "12", "13"],
+            ["21", "", "22", "23"],
           ],
         });
 
@@ -356,15 +342,15 @@ describe('insertTableColumn', () => {
       it.each([
         { disableMerge: true },
         { disableMerge: false },
-      ])('does not shrink columns below minColumnsWidth (disableMerge: $disableMerge)', ({
+      ])("does not shrink columns below minColumnsWidth (disableMerge: $disableMerge)", ({
         disableMerge,
       }) => {
         const input = makeTableWithCols({
           colSizes: Array.from<number>({ length: 10 }).fill(10),
           cursorPath: [0, 0],
           rowCols: [
-            Array.from<string>({ length: 10 }).fill(''),
-            Array.from<string>({ length: 10 }).fill(''),
+            Array.from<string>({ length: 10 }).fill(""),
+            Array.from<string>({ length: 10 }).fill(""),
           ],
         });
 
@@ -372,8 +358,8 @@ describe('insertTableColumn', () => {
           colSizes: Array.from<number>({ length: 11 }).fill(10),
           cursorPath: [1, 1],
           rowCols: [
-            Array.from<string>({ length: 11 }).fill(''),
-            Array.from<string>({ length: 11 }).fill(''),
+            Array.from<string>({ length: 11 }).fill(""),
+            Array.from<string>({ length: 11 }).fill(""),
           ],
         });
 
@@ -397,15 +383,15 @@ describe('insertTableColumn', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a column before and adjusts column sizes (disableMerge: $disableMerge)', ({
+    ])("inserts a column before and adjusts column sizes (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = makeTableWithCols({
         colSizes: [20, 30],
         cursorPath: [1, 1],
         rowCols: [
-          ['11', '12'],
-          ['21', '22'],
+          ["11", "12"],
+          ["21", "22"],
         ],
       });
 
@@ -413,8 +399,8 @@ describe('insertTableColumn', () => {
         colSizes: [20, 30, 30],
         cursorPath: [1, 1],
         rowCols: [
-          ['11', '', '12'],
-          ['21', '', '22'],
+          ["11", "", "12"],
+          ["21", "", "22"],
         ],
       });
 
@@ -435,13 +421,11 @@ describe('insertTableColumn', () => {
     });
   });
 
-  describe('when inserting after adding a row', () => {
+  describe("when inserting after adding a row", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('keeps the correct number of cells (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("keeps the correct number of cells (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>

@@ -40,12 +40,10 @@ export default function FileUploadUploadThingDemo() {
               <code>
                 {JSON.stringify(
                   res.map((file) =>
-                    file.name.length > 25
-                      ? `${file.name.slice(0, 25)}...`
-                      : file.name,
+                    file.name.length > 25 ? `${file.name.slice(0, 25)}...` : file.name
                   ),
                   null,
-                  2,
+                  2
                 )}
               </code>
             </pre>
@@ -56,21 +54,17 @@ export default function FileUploadUploadThingDemo() {
 
         if (error instanceof UploadThingError) {
           const errorMessage =
-            error.data && "error" in error.data
-              ? error.data.error
-              : "Upload failed";
+            error.data && "error" in error.data ? error.data.error : "Upload failed";
           toast.error(errorMessage);
           return;
         }
 
-        toast.error(
-          error instanceof Error ? error.message : "An unknown error occurred",
-        );
+        toast.error(error instanceof Error ? error.message : "An unknown error occurred");
       } finally {
         setIsUploading(false);
       }
     },
-    [],
+    []
   );
 
   const onFileReject = React.useCallback((file: File, message: string) => {
@@ -103,12 +97,7 @@ export default function FileUploadUploadThingDemo() {
         </div>
         <FileUploadTrigger
           render={(props) => (
-            <Button
-              variant="outline"
-              size="sm"
-              className="mt-2 w-fit"
-              {...props}
-            >
+            <Button variant="outline" size="sm" className="mt-2 w-fit" {...props}>
               Browse files
             </Button>
           )}
@@ -122,12 +111,7 @@ export default function FileUploadUploadThingDemo() {
               <FileUploadItemMetadata />
               <FileUploadItemDelete
                 render={(props) => (
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="size-7"
-                    {...props}
-                  >
+                  <Button variant="ghost" size="icon" className="size-7" {...props}>
                     <X />
                   </Button>
                 )}

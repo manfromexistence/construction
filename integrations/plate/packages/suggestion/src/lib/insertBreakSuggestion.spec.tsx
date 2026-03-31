@@ -1,37 +1,37 @@
 /** @jsx jsxt */
 
-import type { SlateEditor, TSuggestionData, TSuggestionElement } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor, TSuggestionData, TSuggestionElement } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import { BaseSuggestionPlugin } from "./BaseSuggestionPlugin";
+import { getInlineSuggestionData } from "./utils";
 
-import { BaseSuggestionPlugin } from './BaseSuggestionPlugin';
-import { getInlineSuggestionData } from './utils';
 jsxt;
 
 const suggestionPlugin = BaseSuggestionPlugin.configure({
   options: {
-    currentUserId: 'testId',
+    currentUserId: "testId",
   },
 });
 
 const testLineBreakDataInsert = {
-  id: '1',
+  id: "1",
   createdAt: Date.now(),
   isLineBreak: true,
-  type: 'insert',
-  userId: 'testId',
+  type: "insert",
+  userId: "testId",
 };
 
 const testLineBreakDataRemove = {
-  id: '2',
+  id: "2",
   createdAt: Date.now(),
-  type: 'remove',
-  userId: 'testId',
+  type: "remove",
+  userId: "testId",
 };
 
-describe('insertBreakSuggestion when isSuggesting is true', () => {
-  it('add insertBreakData and split node', () => {
+describe("insertBreakSuggestion when isSuggesting is true", () => {
+  it("add insertBreakData and split node", () => {
     const input = (
       <editor>
         <hp>
@@ -48,23 +48,21 @@ describe('insertBreakSuggestion when isSuggesting is true', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
 
     editor.tf.insertBreak();
 
-    const data = editor.children[0][
-      BaseSuggestionPlugin.key
-    ] as TSuggestionData;
+    const data = editor.children[0][BaseSuggestionPlugin.key] as TSuggestionData;
 
     expect(editor.children).toHaveLength(2);
     expect(data).toBeDefined();
     expect(data.id).toBeDefined();
     expect(data.createdAt).toBeDefined();
-    expect(data.type).toBe('insert');
-    expect(data.userId).toBe('testId');
+    expect(data.type).toBe("insert");
+    expect(data.userId).toBe("testId");
   });
 
-  it('does not add new suggestion id if the previous node is a line break', () => {
+  it("does not add new suggestion id if the previous node is a line break", () => {
     const input = (
       <editor>
         <hp suggestion={testLineBreakDataInsert}>test1</hp>
@@ -81,9 +79,9 @@ describe('insertBreakSuggestion when isSuggesting is true', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
 
-    editor.tf.insertText('1');
+    editor.tf.insertText("1");
 
     const data = getInlineSuggestionData(editor.children[1].children[0] as any);
 
@@ -94,7 +92,7 @@ describe('insertBreakSuggestion when isSuggesting is true', () => {
     expect(data?.userId === testLineBreakDataInsert.userId).toBeTruthy();
   });
 
-  it('remove the lineBreak when type is insert', () => {
+  it("remove the lineBreak when type is insert", () => {
     const input = (
       <editor>
         <hp suggestion={testLineBreakDataInsert}>test1</hp>
@@ -121,14 +119,14 @@ describe('insertBreakSuggestion when isSuggesting is true', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
 
     editor.tf.deleteBackward();
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('does not remove the lineBreak when type is remove', () => {
+  it("does not remove the lineBreak when type is remove", () => {
     const input = (
       <editor>
         <hp suggestion={testLineBreakDataRemove}>test1</hp>
@@ -155,14 +153,14 @@ describe('insertBreakSuggestion when isSuggesting is true', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
 
     editor.tf.deleteBackward();
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('reuses the same suggestion id when removing across blocks', () => {
+  it("reuses the same suggestion id when removing across blocks", () => {
     const input = (
       <editor>
         <hp>test1</hp>
@@ -179,10 +177,10 @@ describe('insertBreakSuggestion when isSuggesting is true', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
 
-    editor.tf.deleteBackward('line');
-    editor.tf.deleteBackward('character');
+    editor.tf.deleteBackward("line");
+    editor.tf.deleteBackward("character");
 
     const lineBreakData = editor
       .getApi(BaseSuggestionPlugin)
@@ -190,19 +188,17 @@ describe('insertBreakSuggestion when isSuggesting is true', () => {
       ? (editor.children[0].suggestion as TSuggestionElement)
       : undefined;
 
-    const suggestionTextData = getInlineSuggestionData(
-      editor.children[1].children[0] as any
-    );
+    const suggestionTextData = getInlineSuggestionData(editor.children[1].children[0] as any);
 
     expect(lineBreakData).toBeDefined();
     expect(suggestionTextData).toBeDefined();
     expect(lineBreakData?.id === suggestionTextData?.id).toBeTruthy();
-    expect(editor.children[1].children[0].text).toBe('test2');
+    expect(editor.children[1].children[0].text).toBe("test2");
   });
 });
 
-describe('insertBreakSuggestion when isSuggesting is false', () => {
-  it('remove the lineBreak when type is insert', () => {
+describe("insertBreakSuggestion when isSuggesting is false", () => {
+  it("remove the lineBreak when type is insert", () => {
     const input = (
       <editor>
         <hp suggestion={testLineBreakDataInsert}>test1</hp>
@@ -229,14 +225,14 @@ describe('insertBreakSuggestion when isSuggesting is false', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', false);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", false);
 
     editor.tf.deleteBackward();
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('remove the lineBreak when type is remove', () => {
+  it("remove the lineBreak when type is remove", () => {
     const input = (
       <editor>
         <hp suggestion={testLineBreakDataRemove}>test1</hp>
@@ -263,7 +259,7 @@ describe('insertBreakSuggestion when isSuggesting is false', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', false);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", false);
 
     editor.tf.deleteBackward();
 

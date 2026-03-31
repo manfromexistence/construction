@@ -1,28 +1,28 @@
-import type { Registry } from 'shadcn/registry';
+import type { Registry } from "shadcn/registry";
 
-export const proExamples: Registry['items'] = [
+export const proExamples: Registry["items"] = [
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `Combobox menu with free-form prompt input
 - Additional trigger methods:
   - Block menu button
   - Slash command menu
 - Beautifully crafted UI`,
-    name: 'ai-pro',
-    type: 'registry:example',
+    name: "ai-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Sticky TOC sidebar
 - Hover-to-expand: Opens automatically when you move your mouse over it
 - Interactive navigation: Click on items to smoothly scroll to the corresponding heading
 - Visual feedback: Highlights the current section in the sidebar
 - Beautifully crafted UI`,
-    name: 'toc-pro',
-    type: 'registry:example',
+    name: "toc-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Integration with [UploadThing](https://uploadthing.com/)
 - Use slash commands for quick insertion
 - Displays clickable placeholders for various media types (image, video, audio, file)
@@ -46,74 +46,74 @@ export const proExamples: Registry['items'] = [
   - Download button
 - Beautifully crafted UI
 `,
-    name: 'media-pro',
-    type: 'registry:example',
+    name: "media-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Open the menu via the drag button or the three-dot menu on specific blocks (e.g. images)
 - Includes a combobox that filters options as you type
 - Supports nested menu options
 - Advanced actions such as "Ask AI", colors, and commenting
 - Beautifully crafted UI`,
-    name: 'block-menu-pro',
-    type: 'registry:example',
+    name: "block-menu-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
-    description: '- Beautifully crafted UI',
-    name: 'block-selection-pro',
-    type: 'registry:example',
+    categories: ["pro"],
+    description: "- Beautifully crafted UI",
+    name: "block-selection-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Full stack example for Suggestion and Comment
 - Floating comments & suggestions UI with better user experience
 - Comment rendered with Plate editor
 - Discussion list in the sidebar`,
-    name: 'discussion-pro',
-    type: 'registry:example',
+    name: "discussion-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Insert callouts using the slash command
 - Ability to change the callout emoji
 - Beautifully crafted UI`,
-    name: 'callout-pro',
-    type: 'registry:example',
+    name: "callout-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Rich text suggestions including marks and links
 - Hover card with additional information
 - Beautifully crafted UI`,
-    name: 'copilot-pro',
-    type: 'registry:example',
+    name: "copilot-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Mark text as equation from the toolbar
 - Insert equation from slash command
 - Beautifully crafted UI`,
-    name: 'equation-pro',
-    type: 'registry:example',
+    name: "equation-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Extended set of slash menu options like "Ask AI"
 - Trigger slash menu by click the + button on the left gutter
 - Item groups
 - Beautifully crafted UI`,
-    name: 'slash-command-pro',
-    type: 'registry:example',
+    name: "slash-command-pro",
+    type: "registry:example",
   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- "+" button on the left gutter to insert blocks
 - Click on the drag handle to open the block menu
 - Beautifully crafted UI`,
-    name: 'dnd-pro',
-    type: 'registry:example',
+    name: "dnd-pro",
+    type: "registry:example",
   },
   //   {
   //
@@ -129,12 +129,12 @@ export const proExamples: Registry['items'] = [
   // type: 'registry:example',
   //   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Color picker
 - Mark as equation
 - Beautifully crafted UI`,
-    name: 'floating-toolbar-pro',
-    type: 'registry:example',
+    name: "floating-toolbar-pro",
+    type: "registry:example",
   },
   //   {
   //
@@ -150,13 +150,13 @@ export const proExamples: Registry['items'] = [
   // type: 'registry:example',
   //   },
   {
-    categories: ['pro'],
+    categories: ["pro"],
     description: `- Code block:
   - A "Copy" button to easily copy the entire code snippet.
   - A "Block Menu" button to access additional options and actions.
 - Beautifully crafted UI`,
-    name: 'basic-nodes-pro',
-    type: 'registry:example',
+    name: "basic-nodes-pro",
+    type: "registry:example",
   },
   //   {
   //

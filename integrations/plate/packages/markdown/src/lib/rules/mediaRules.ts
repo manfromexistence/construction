@@ -1,10 +1,9 @@
-import type { TMediaElement } from 'platejs';
+import type { TMediaElement } from "platejs";
 
-import type { MdMdxJsxFlowElement } from '../mdast';
-import type { MdRules } from '../types';
-
-import { convertNodesSerialize } from '../serializer';
-import { parseAttributes, propsToAttributes } from './utils';
+import type { MdMdxJsxFlowElement } from "../mdast";
+import { convertNodesSerialize } from "../serializer";
+import type { MdRules } from "../types";
+import { parseAttributes, propsToAttributes } from "./utils";
 
 function createMediaRule() {
   return {
@@ -12,7 +11,7 @@ function createMediaRule() {
       const { src, ...props } = parseAttributes(node.attributes);
 
       return {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         type: node.name!,
         url: src,
         ...props,
@@ -25,7 +24,7 @@ function createMediaRule() {
         attributes: propsToAttributes({ ...rest, src: url }),
         children: convertNodesSerialize(children, options) as any,
         name: type,
-        type: 'mdxJsxFlowElement',
+        type: "mdxJsxFlowElement",
       };
     },
   };

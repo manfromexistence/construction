@@ -20,7 +20,7 @@ export const Icons = {
       xmlns="http://www.w3.org/2000/svg"
       className={cn(
         "mr-1 h-[28px] w-[28px] text-neutral-400 dark:text-neutral-400",
-        props.className,
+        props.className
       )}
       fill="currentColor"
       {...props}
@@ -60,10 +60,7 @@ export const Icons = {
         d="M1031.93 113.4C1031.93 50.7709 1082.7 0 1145.33 0C1207.96 0 1258.73 50.7709 1258.73 113.4C1258.73 176.029 1207.96 226.8 1145.33 226.8C1082.7 226.8 1031.93 176.029 1031.93 113.4Z"
         stroke="none"
       />
-      <path
-        d="M518.278 0L745.078 0L496.125 453.6L269.325 453.6L518.278 0Z"
-        stroke="none"
-      />
+      <path d="M518.278 0L745.078 0L496.125 453.6L269.325 453.6L518.278 0Z" stroke="none" />
       <path
         d="M786.147 0L1012.95 0L818.555 354.188C788.422 409.092 713.223 453.6 650.594 453.6L537.194 453.6L786.147 0Z"
         stroke="none"
@@ -129,12 +126,7 @@ export const Icons = {
     </svg>
   ),
   logo: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={100}
-      viewBox="0 0 342.84 86.08"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width={100} viewBox="0 0 342.84 86.08" {...props}>
       <g>
         <polygon
           fill="var(--primary)"
@@ -160,12 +152,7 @@ export const Icons = {
     </svg>
   ),
   slogan: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={100}
-      viewBox="0 0 234.51 86.08"
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" width={100} viewBox="0 0 234.51 86.08" {...props}>
       <g>
         <polygon
           fill="var(--primary)"
@@ -220,13 +207,7 @@ export const Icons = {
     </svg>
   ),
   lamp: (props: IconProps) => (
-    <svg
-      height="1em"
-      width="1em"
-      viewBox="0 0 18 18"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg height="1em" width="1em" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g fill="#737373">
         <path
           d="M7.973 4.358C11.045 3.714 13.75 6.041 13.75 9C13.75 10.8669 12.6695 12.4752 11.1028 13.25H6.89721C5.11106 12.3665 3.95706 10.3995 4.315 8.202C4.623 6.315 6.101 4.75 7.973 4.358Z"

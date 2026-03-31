@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
   ArchiveIcon,
   ArrowLeftIcon,
@@ -11,11 +10,12 @@ import {
   MoreHorizontalIcon,
   TagIcon,
   Trash2Icon,
-} from "lucide-react"
+} from "lucide-react";
+import * as React from "react";
 
-import { useLanguageContext } from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group"
+import { useLanguageContext } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,7 +29,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui-rtl/dropdown-menu"
+} from "@/styles/base-nova/ui-rtl/dropdown-menu";
 
 const translations = {
   ar: {
@@ -64,13 +64,13 @@ const translations = {
     other: "אחר",
     trash: "מחק",
   },
-}
+};
 
 export function ButtonGroupDemo() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
-  const [label, setLabel] = React.useState("personal")
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
+  const [label, setLabel] = React.useState("personal");
 
   return (
     <div dir={t.dir}>
@@ -94,22 +94,11 @@ export function ButtonGroupDemo() {
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger
-              render={
-                <Button
-                  variant="outline"
-                  size="icon-sm"
-                  aria-label={t.moreOptions}
-                />
-              }
+              render={<Button variant="outline" size="icon-sm" aria-label={t.moreOptions} />}
             >
               <MoreHorizontalIcon />
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="start"
-              dir={t.dir}
-              data-lang={lang}
-              className="w-44"
-            >
+            <DropdownMenuContent align="start" dir={t.dir} data-lang={lang} className="w-44">
               <DropdownMenuGroup>
                 <DropdownMenuItem>
                   <MailCheckIcon />
@@ -140,24 +129,11 @@ export function ButtonGroupDemo() {
                     {t.labelAs}
                   </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
-                    <DropdownMenuSubContent
-                      side="left"
-                      dir={t.dir}
-                      data-lang={lang}
-                    >
-                      <DropdownMenuRadioGroup
-                        value={label}
-                        onValueChange={setLabel}
-                      >
-                        <DropdownMenuRadioItem value="personal">
-                          {t.personal}
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="work">
-                          {t.work}
-                        </DropdownMenuRadioItem>
-                        <DropdownMenuRadioItem value="other">
-                          {t.other}
-                        </DropdownMenuRadioItem>
+                    <DropdownMenuSubContent side="left" dir={t.dir} data-lang={lang}>
+                      <DropdownMenuRadioGroup value={label} onValueChange={setLabel}>
+                        <DropdownMenuRadioItem value="personal">{t.personal}</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="work">{t.work}</DropdownMenuRadioItem>
+                        <DropdownMenuRadioItem value="other">{t.other}</DropdownMenuRadioItem>
                       </DropdownMenuRadioGroup>
                     </DropdownMenuSubContent>
                   </DropdownMenuPortal>
@@ -175,5 +151,5 @@ export function ButtonGroupDemo() {
         </ButtonGroup>
       </ButtonGroup>
     </div>
-  )
+  );
 }

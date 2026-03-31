@@ -7,11 +7,11 @@ import {
   PathApi,
   SpanApi,
   TextApi,
-} from '../../interfaces';
-import type { Editor, ValueOf } from '../../interfaces/editor/editor-type';
-import type { NodeEntry } from '../../interfaces/node-entry';
-import { getAt } from '../../utils';
-import { getMatch, getQueryOptions } from '../../utils/match';
+} from "../../interfaces";
+import type { Editor, ValueOf } from "../../interfaces/editor/editor-type";
+import type { NodeEntry } from "../../interfaces/node-entry";
+import { getAt } from "../../utils";
+import { getMatch, getQueryOptions } from "../../utils/match";
 
 export function* nodes<N extends DescendantOf<E>, E extends Editor = Editor>(
   editor: E,
@@ -25,7 +25,7 @@ export function* nodes<N extends DescendantOf<E>, E extends Editor = Editor>(
 
   const {
     ignoreNonSelectable = false,
-    mode = 'all',
+    mode = "all",
     reverse = false,
     universal = false,
     voids = false,
@@ -47,8 +47,8 @@ export function* nodes<N extends DescendantOf<E>, E extends Editor = Editor>(
     from = at[0];
     to = at[1];
   } else {
-    const first = editor.api.path(at, { edge: 'start' });
-    const last = editor.api.path(at, { edge: 'end' });
+    const first = editor.api.path(at, { edge: "start" });
+    const last = editor.api.path(at, { edge: "end" });
     from = reverse ? last : first;
     to = reverse ? first : last;
 
@@ -64,10 +64,7 @@ export function* nodes<N extends DescendantOf<E>, E extends Editor = Editor>(
     to,
     pass: ([node]) => {
       if (!ElementApi.isElement(node)) return false;
-      if (
-        !voids &&
-        (editor.api.isVoid(node) || editor.api.isElementReadOnly(node))
-      ) {
+      if (!voids && (editor.api.isVoid(node) || editor.api.isElementReadOnly(node))) {
         return true;
       }
       if (ignoreNonSelectable && !editor.api.isSelectable(node)) {
@@ -82,18 +79,14 @@ export function* nodes<N extends DescendantOf<E>, E extends Editor = Editor>(
   let hit: NodeEntry<N> | undefined;
 
   for (const [node, path] of nodeEntries) {
-    if (
-      ignoreNonSelectable &&
-      ElementApi.isElement(node) &&
-      !editor.api.isSelectable(node)
-    ) {
+    if (ignoreNonSelectable && ElementApi.isElement(node) && !editor.api.isSelectable(node)) {
       continue;
     }
 
     const isLower = hit && PathApi.compare(path, hit[1]) === 0;
 
     // In highest mode any node lower than the last hit is not a match.
-    if (mode === 'highest' && isLower) {
+    if (mode === "highest" && isLower) {
       continue;
     }
     if (!match(node, path)) {
@@ -106,15 +99,14 @@ export function* nodes<N extends DescendantOf<E>, E extends Editor = Editor>(
       continue;
     }
     // If there's a match and it's lower than the last, update the hit.
-    if (mode === 'lowest' && isLower) {
+    if (mode === "lowest" && isLower) {
       hit = [node, path] as NodeEntry<N>;
 
       continue;
     }
 
     // In lowest mode we emit the last hit, once it's guaranteed lowest.
-    const emit: NodeEntry<N> | undefined =
-      mode === 'lowest' ? hit : ([node, path] as NodeEntry<N>);
+    const emit: NodeEntry<N> | undefined = mode === "lowest" ? hit : ([node, path] as NodeEntry<N>);
 
     if (emit) {
       if (universal) {
@@ -128,7 +120,7 @@ export function* nodes<N extends DescendantOf<E>, E extends Editor = Editor>(
   }
 
   // Since lowest is always emitting one behind, catch up at the end.
-  if (mode === 'lowest' && hit) {
+  if (mode === "lowest" && hit) {
     if (universal) {
       matches.push(hit);
     } else {

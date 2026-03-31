@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Dotted Map",
   "description": "A component with a dotted map.",
-  "dependencies": [
-    "svg-dotted-map"
-  ],
+  "dependencies": ["svg-dotted-map"],
   "files": [
     {
       "path": "registry/magicui/dotted-map.tsx",

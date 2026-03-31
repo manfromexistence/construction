@@ -1,12 +1,7 @@
 {
   "name": "editable-todo-list-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "editable",
-    "checkbox"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["editable", "checkbox"],
   "files": [
     {
       "path": "examples/editable-todo-list-demo.tsx",

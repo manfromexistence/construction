@@ -2,13 +2,7 @@
   "name": "@platejs/docx",
   "version": "52.3.10",
   "description": "Docx serializer plugin for Plate",
-  "keywords": [
-    "docx",
-    "plate",
-    "plugin",
-    "serializer",
-    "slate"
-  ],
+  "keywords": ["docx", "plate", "plugin", "serializer", "slate"],
   "homepage": "https://platejs.org",
   "bugs": {
     "url": "https://github.com/udecode/plate/issues"
@@ -26,9 +20,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist/**/*"],
   "scripts": {
     "brl": "plate-pkg p:brl",
     "build": "plate-pkg p:build",

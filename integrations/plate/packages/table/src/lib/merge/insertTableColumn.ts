@@ -1,21 +1,21 @@
-import cloneDeep from 'lodash/cloneDeep.js';
+import cloneDeep from "lodash/cloneDeep.js";
 import {
+  getEditorPlugin,
+  KEYS,
+  NodeApi,
   type Path,
+  PathApi,
   type SlateEditor,
   type TTableCellElement,
   type TTableElement,
   type TTableRowElement,
-  getEditorPlugin,
-  KEYS,
-  NodeApi,
-  PathApi,
-} from 'platejs';
+} from "platejs";
 
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { getCellTypes } from '../utils';
-import { getCellIndices } from '../utils/getCellIndices';
-import { findCellByIndexes } from './findCellByIndexes';
-import { getCellPath } from './getCellPath';
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { getCellTypes } from "../utils";
+import { getCellIndices } from "../utils/getCellIndices";
+import { findCellByIndexes } from "./findCellByIndexes";
+import { getCellPath } from "./getCellPath";
 
 export const insertTableMergeColumn = (
   editor: SlateEditor,
@@ -107,20 +107,12 @@ export const insertTableMergeColumn = (
   const affectedCells = Array.from(affectedCellsSet) as TTableCellElement[];
 
   affectedCells.forEach((curCell) => {
-    const { col: curColIndex, row: curRowIndex } = getCellIndices(
-      editor,
-      curCell
-    );
+    const { col: curColIndex, row: curRowIndex } = getCellIndices(editor, curCell);
 
     const curRowSpan = api.table.getRowSpan(curCell);
     const curColSpan = api.table.getColSpan(curCell);
 
-    const currentCellPath = getCellPath(
-      editor,
-      tableEntry,
-      curRowIndex,
-      curColIndex
-    );
+    const currentCellPath = getCellPath(editor, tableEntry, curRowIndex, curColIndex);
 
     const endCurI = curColIndex + curColSpan - 1;
 
@@ -136,10 +128,7 @@ export const insertTableMergeColumn = (
     } else {
       const curRowPath = currentCellPath.slice(0, -1);
       const curColPath = currentCellPath.at(-1)!;
-      const placementPath = [
-        ...curRowPath,
-        before ? curColPath : curColPath + placementCorrection,
-      ];
+      const placementPath = [...curRowPath, before ? curColPath : curColPath + placementCorrection];
 
       const row = editor.api.parent(currentCellPath)!;
       const rowElement = row[0] as TTableRowElement;
@@ -159,11 +148,7 @@ export const insertTableMergeColumn = (
     const { colSizes } = tableNode;
 
     if (colSizes) {
-      let newColSizes = [
-        ...colSizes.slice(0, nextColIndex),
-        0,
-        ...colSizes.slice(nextColIndex),
-      ];
+      let newColSizes = [...colSizes.slice(0, nextColIndex), 0, ...colSizes.slice(nextColIndex)];
 
       if (initialTableWidth) {
         newColSizes[nextColIndex] =

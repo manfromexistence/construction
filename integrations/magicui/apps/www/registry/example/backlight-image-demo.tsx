@@ -1,4 +1,4 @@
-import { Backlight } from "@/registry/magicui/backlight"
+import { Backlight } from "@/registry/magicui/backlight";
 
 export default function BacklightImageDemo() {
   return (
@@ -11,5 +11,5 @@ export default function BacklightImageDemo() {
         alt="fancy gradient background"
       />
     </Backlight>
-  )
+  );
 }

@@ -1,16 +1,16 @@
-import "@ncdai/react-wheel-picker/style.css"
+import "@ncdai/react-wheel-picker/style.css";
 
-import * as WheelPickerPrimitive from "@ncdai/react-wheel-picker"
-import type { ComponentProps } from "react"
+import * as WheelPickerPrimitive from "@ncdai/react-wheel-picker";
+import type { ComponentProps } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-type WheelPickerValue = WheelPickerPrimitive.WheelPickerValue
+type WheelPickerValue = WheelPickerPrimitive.WheelPickerValue;
 
 type WheelPickerOption<T extends WheelPickerValue = string> =
-  WheelPickerPrimitive.WheelPickerOption<T>
+  WheelPickerPrimitive.WheelPickerOption<T>;
 
-type WheelPickerClassNames = WheelPickerPrimitive.WheelPickerClassNames
+type WheelPickerClassNames = WheelPickerPrimitive.WheelPickerClassNames;
 
 function WheelPickerWrapper({
   className,
@@ -26,7 +26,7 @@ function WheelPickerWrapper({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function WheelPicker<T extends WheelPickerValue = string>({
@@ -45,15 +45,12 @@ function WheelPicker<T extends WheelPickerValue = string>({
           "data-rwp-focused:ring-2 data-rwp-focused:ring-zinc-300 data-rwp-focused:ring-inset dark:data-rwp-focused:ring-zinc-600",
           classNames?.highlightWrapper
         ),
-        highlightItem: cn(
-          "data-disabled:opacity-40",
-          classNames?.highlightItem
-        ),
+        highlightItem: cn("data-disabled:opacity-40", classNames?.highlightItem),
       }}
       {...props}
     />
-  )
+  );
 }
 
-export { WheelPicker, WheelPickerWrapper }
-export type { WheelPickerClassNames, WheelPickerOption }
+export type { WheelPickerClassNames, WheelPickerOption };
+export { WheelPicker, WheelPickerWrapper };

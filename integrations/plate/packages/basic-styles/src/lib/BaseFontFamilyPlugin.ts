@@ -1,10 +1,10 @@
-import { type SlateEditor, createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS, type SlateEditor } from "platejs";
 
 export const BaseFontFamilyPlugin = createSlatePlugin({
   key: KEYS.fontFamily,
   inject: {
     nodeProps: {
-      nodeKey: 'fontFamily',
+      nodeKey: "fontFamily",
     },
   },
   parsers: {
@@ -14,7 +14,7 @@ export const BaseFontFamilyPlugin = createSlatePlugin({
         rules: [
           {
             validStyle: {
-              fontFamily: '*',
+              fontFamily: "*",
             },
           },
         ],

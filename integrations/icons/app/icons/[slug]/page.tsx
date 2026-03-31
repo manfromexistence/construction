@@ -26,9 +26,7 @@ export const generateStaticParams = () => {
   }));
 };
 
-export const generateMetadata = async ({
-  params,
-}: Props): Promise<Metadata> => {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { slug } = await params;
   const icon = getIconBySlug(slug);
 
@@ -135,23 +133,15 @@ const IconPage = async ({ params }: Props) => {
           <IconCard icon={icon} />
 
           <div className="flex h-full flex-col gap-1">
-            <h1 className="font-sans text-[28px] min-[640px]:text-[36px]">
-              {pascalName}
-            </h1>
+            <h1 className="font-sans text-[28px] min-[640px]:text-[36px]">{pascalName}</h1>
             <p className="font-mono text-secondary text-sm">
               Animated {icon.name.replace(/-/g, " ")} icon for React
             </p>
-            <CliBlock
-              className="mt-7 hidden px-0 min-[880px]:flex"
-              staticIconName={slug}
-            />
+            <CliBlock className="mt-7 hidden px-0 min-[880px]:flex" staticIconName={slug} />
           </div>
         </div>
 
-        <CliBlock
-          className="mt-8 flex px-0 min-[880px]:hidden"
-          staticIconName={slug}
-        />
+        <CliBlock className="mt-8 flex px-0 min-[880px]:hidden" staticIconName={slug} />
 
         <div className="mt-12">
           <h2 className="mb-3 font-sans text-xl">Keywords</h2>

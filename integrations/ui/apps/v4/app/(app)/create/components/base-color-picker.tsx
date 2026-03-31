@@ -1,10 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { useMounted } from "@/hooks/use-mounted"
-import { BASE_COLORS, type BaseColorName } from "@/registry/config"
-import { LockButton } from "@/app/(app)/create/components/lock-button"
+import * as React from "react";
+import { LockButton } from "@/app/(app)/create/components/lock-button";
 import {
   Picker,
   PickerContent,
@@ -12,23 +9,25 @@ import {
   PickerRadioGroup,
   PickerRadioItem,
   PickerTrigger,
-} from "@/app/(app)/create/components/picker"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
+} from "@/app/(app)/create/components/picker";
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { useMounted } from "@/hooks/use-mounted";
+import { BASE_COLORS, type BaseColorName } from "@/registry/config";
 
 export function BaseColorPicker({
   isMobile,
   anchorRef,
 }: {
-  isMobile: boolean
-  anchorRef: React.RefObject<HTMLDivElement | null>
+  isMobile: boolean;
+  anchorRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  const mounted = useMounted()
-  const [params, setParams] = useDesignSystemSearchParams()
+  const mounted = useMounted();
+  const [params, setParams] = useDesignSystemSearchParams();
 
   const currentBaseColor = React.useMemo(
     () => BASE_COLORS.find((baseColor) => baseColor.name === params.baseColor),
     [params.baseColor]
-  )
+  );
 
   return (
     <div className="group/picker relative">
@@ -36,16 +35,13 @@ export function BaseColorPicker({
         <PickerTrigger>
           <div className="flex flex-col justify-start text-left">
             <div className="text-xs text-muted-foreground">Base Color</div>
-            <div className="text-sm font-medium text-foreground">
-              {currentBaseColor?.title}
-            </div>
+            <div className="text-sm font-medium text-foreground">{currentBaseColor?.title}</div>
           </div>
           {mounted && (
             <div
               style={
                 {
-                  "--color":
-                    currentBaseColor?.cssVars?.dark?.["muted-foreground"],
+                  "--color": currentBaseColor?.cssVars?.dark?.["muted-foreground"],
                 } as React.CSSProperties
               }
               className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 rounded-full bg-(--color) select-none md:right-2.5"
@@ -60,7 +56,7 @@ export function BaseColorPicker({
           <PickerRadioGroup
             value={currentBaseColor?.name}
             onValueChange={(value) => {
-              setParams({ baseColor: value as BaseColorName })
+              setParams({ baseColor: value as BaseColorName });
             }}
           >
             <PickerGroup>
@@ -77,10 +73,7 @@ export function BaseColorPicker({
           </PickerRadioGroup>
         </PickerContent>
       </Picker>
-      <LockButton
-        param="baseColor"
-        className="absolute top-1/2 right-8 -translate-y-1/2"
-      />
+      <LockButton param="baseColor" className="absolute top-1/2 right-8 -translate-y-1/2" />
     </div>
-  )
+  );
 }

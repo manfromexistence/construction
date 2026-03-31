@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/styles/radix-nova/ui/accordion"
+} from "@/styles/radix-nova/ui/accordion";
 
 const items = [
   {
@@ -24,7 +24,7 @@ const items = [
     content:
       "We integrate with 500+ popular tools including Slack, Zapier, Salesforce, HubSpot, and more. You can also build custom integrations using our REST API and webhooks.",
   },
-]
+];
 
 export default function AccordionBorders() {
   return (
@@ -45,5 +45,5 @@ export default function AccordionBorders() {
         </AccordionItem>
       ))}
     </Accordion>
-  )
+  );
 }

@@ -23,7 +23,7 @@ const statusVariants = cva(
     defaultVariants: {
       variant: "default",
     },
-  },
+  }
 );
 
 interface StatusProps
@@ -40,7 +40,7 @@ function Status(props: StatusProps) {
       {
         className: cn(statusVariants({ variant }), className),
       },
-      rootProps,
+      rootProps
     ),
     render,
     state: {
@@ -61,7 +61,7 @@ function StatusIndicator(props: React.ComponentProps<"div">) {
         "relative flex size-2 shrink-0 rounded-full",
         "before:absolute before:inset-0 before:animate-ping before:rounded-full before:bg-inherit",
         "after:absolute after:inset-[2px] after:rounded-full after:bg-inherit",
-        className,
+        className
       )}
     />
   );
@@ -70,13 +70,7 @@ function StatusIndicator(props: React.ComponentProps<"div">) {
 function StatusLabel(props: React.ComponentProps<"div">) {
   const { className, ...labelProps } = props;
 
-  return (
-    <div
-      data-slot="status-label"
-      {...labelProps}
-      className={cn("leading-none", className)}
-    />
-  );
+  return <div data-slot="status-label" {...labelProps} className={cn("leading-none", className)} />;
 }
 
 export {

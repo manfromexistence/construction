@@ -1,7 +1,6 @@
-'use client';
+"use client";
 
-import cloneDeep from 'lodash/cloneDeep.js';
-import { BaseAIPlugin, withAIBatch } from '@platejs/ai';
+import { BaseAIPlugin, withAIBatch } from "@platejs/ai";
 import {
   AIChatPlugin,
   AIPlugin,
@@ -9,21 +8,22 @@ import {
   getInsertPreviewStart,
   streamInsertChunk,
   useChatChunk,
-} from '@platejs/ai/react';
-import { ElementApi, getPluginType, KEYS, PathApi } from 'platejs';
-import { usePluginOption } from 'platejs/react';
+} from "@platejs/ai/react";
+import cloneDeep from "lodash/cloneDeep.js";
+import { ElementApi, getPluginType, KEYS, PathApi } from "platejs";
+import { usePluginOption } from "platejs/react";
 
-import { AILoadingBar, AIMenu } from '@/registry/ui/ai-menu';
-import { AIAnchorElement, AILeaf } from '@/registry/ui/ai-node';
+import { AILoadingBar, AIMenu } from "@/registry/ui/ai-menu";
+import { AIAnchorElement, AILeaf } from "@/registry/ui/ai-node";
 
-import { useChat } from '../use-chat';
-import { CursorOverlayKit } from './cursor-overlay-kit';
-import { MarkdownKit } from './markdown-kit';
+import { useChat } from "../use-chat";
+import { CursorOverlayKit } from "./cursor-overlay-kit";
+import { MarkdownKit } from "./markdown-kit";
 
 export const aiChatPlugin = AIChatPlugin.extend({
   options: {
     chatOptions: {
-      api: '/api/ai/command',
+      api: "/api/ai/command",
       body: {},
     },
   },
@@ -32,23 +32,20 @@ export const aiChatPlugin = AIChatPlugin.extend({
     afterEditable: AIMenu,
     node: AIAnchorElement,
   },
-  shortcuts: { show: { keys: 'mod+j' } },
+  shortcuts: { show: { keys: "mod+j" } },
   useHooks: ({ editor, getOption }) => {
     useChat();
 
-    const mode = usePluginOption(AIChatPlugin, 'mode');
-    const toolName = usePluginOption(AIChatPlugin, 'toolName');
+    const mode = usePluginOption(AIChatPlugin, "mode");
+    const toolName = usePluginOption(AIChatPlugin, "toolName");
     useChatChunk({
       onChunk: ({ chunk, isFirst, nodes, text: content }) => {
-        if (isFirst && mode === 'insert') {
-          const { startBlock, startInEmptyParagraph } =
-            getInsertPreviewStart(editor);
+        if (isFirst && mode === "insert") {
+          const { startBlock, startInEmptyParagraph } = getInsertPreviewStart(editor);
 
           editor.getTransforms(BaseAIPlugin).ai.beginPreview({
             originalBlocks:
-              startInEmptyParagraph &&
-              startBlock &&
-              ElementApi.isElement(startBlock)
+              startInEmptyParagraph && startBlock && ElementApi.isElement(startBlock)
                 ? [cloneDeep(startBlock)]
                 : [],
           });
@@ -56,7 +53,7 @@ export const aiChatPlugin = AIChatPlugin.extend({
           editor.tf.withoutSaving(() => {
             editor.tf.insertNodes(
               {
-                children: [{ text: '' }],
+                children: [{ text: "" }],
                 type: getPluginType(editor, KEYS.aiChat),
               },
               {
@@ -64,12 +61,12 @@ export const aiChatPlugin = AIChatPlugin.extend({
               }
             );
           });
-          editor.setOption(AIChatPlugin, 'streaming', true);
+          editor.setOption(AIChatPlugin, "streaming", true);
         }
 
-        if (mode === 'insert' && nodes.length > 0) {
+        if (mode === "insert" && nodes.length > 0) {
           editor.tf.withoutSaving(() => {
-            if (!getOption('streaming')) return;
+            if (!getOption("streaming")) return;
 
             editor.tf.withScrolling(() => {
               streamInsertChunk(editor, chunk, {
@@ -81,7 +78,7 @@ export const aiChatPlugin = AIChatPlugin.extend({
           });
         }
 
-        if (toolName === 'edit' && mode === 'chat') {
+        if (toolName === "edit" && mode === "chat") {
           withAIBatch(
             editor,
             () => {
@@ -94,10 +91,10 @@ export const aiChatPlugin = AIChatPlugin.extend({
         }
       },
       onFinish: () => {
-        editor.setOption(AIChatPlugin, 'streaming', false);
-        editor.setOption(AIChatPlugin, '_blockChunks', '');
-        editor.setOption(AIChatPlugin, '_blockPath', null);
-        editor.setOption(AIChatPlugin, '_mdxName', null);
+        editor.setOption(AIChatPlugin, "streaming", false);
+        editor.setOption(AIChatPlugin, "_blockChunks", "");
+        editor.setOption(AIChatPlugin, "_blockPath", null);
+        editor.setOption(AIChatPlugin, "_mdxName", null);
       },
     });
   },

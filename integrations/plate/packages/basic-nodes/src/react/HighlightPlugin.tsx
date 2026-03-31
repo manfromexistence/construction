@@ -1,5 +1,5 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseHighlightPlugin } from '../lib/BaseHighlightPlugin';
+import { BaseHighlightPlugin } from "../lib/BaseHighlightPlugin";
 
 export const HighlightPlugin = toPlatePlugin(BaseHighlightPlugin);

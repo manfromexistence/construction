@@ -28,12 +28,10 @@ export function PackageManagerTabs({
     <MdxTabs
       variant="default"
       value={config.packageManager}
-      onValueChange={(value) =>
-        setConfig({ ...config, packageManager: value as PackageManager })
-      }
+      onValueChange={(value) => setConfig({ ...config, packageManager: value as PackageManager })}
       className={cn(
         "not-prose relative mt-4 in-[.fd-steps]:mb-4 w-full gap-0 overflow-hidden rounded-xl border",
-        className,
+        className
       )}
       {...props}
     >

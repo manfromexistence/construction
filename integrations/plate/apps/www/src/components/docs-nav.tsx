@@ -1,37 +1,34 @@
-'use client';
+"use client";
 
-import React, { Suspense, useState } from 'react';
-
-import type { DocsConfig } from '@/config/docs';
-import type { SidebarNavItem } from '@/types/nav';
-
-import { castArray } from 'lodash';
-import { ChevronDown, X } from 'lucide-react';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-
+import { castArray } from "lodash";
+import { ChevronDown, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import React, { Suspense, useState } from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@/components/ui/accordion';
-import { Input } from '@/components/ui/input';
-import { useLocale } from '@/hooks/useLocale';
-import { cn } from '@/lib/utils';
-import { hrefWithLocale } from '@/lib/withLocale';
+} from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
+import type { DocsConfig } from "@/config/docs";
+import { useLocale } from "@/hooks/useLocale";
+import { cn } from "@/lib/utils";
+import { hrefWithLocale } from "@/lib/withLocale";
+import type { SidebarNavItem } from "@/types/nav";
 
 const CN_PREFIX_REGEX = /^\/cn/;
 
 export function DocsNav({ config }: { config: DocsConfig }) {
   const locale = useLocale();
   const pathname = usePathname();
-  const [filter, setFilter] = useState('');
+  const [filter, setFilter] = useState("");
   const [activeSection, setActiveSection] = useState<string | undefined>();
 
   // Normalize pathname by removing /cn prefix if it exists
   const normalizedPathname = React.useMemo(
-    () => pathname?.replace(CN_PREFIX_REGEX, '') ?? '',
+    () => pathname?.replace(CN_PREFIX_REGEX, "") ?? "",
     [pathname]
   );
 
@@ -57,10 +54,7 @@ export function DocsNav({ config }: { config: DocsConfig }) {
           : undefined;
 
         // Include the item if it matches OR has matching nested items
-        if (
-          itemMatches ||
-          (filteredNestedItems && filteredNestedItems.length > 0)
-        ) {
+        if (itemMatches || (filteredNestedItems && filteredNestedItems.length > 0)) {
           acc.push({
             ...itemWithoutKeywords,
             ...(filteredNestedItems && { items: filteredNestedItems }),
@@ -78,9 +72,7 @@ export function DocsNav({ config }: { config: DocsConfig }) {
 
     return sidebarNav
       .map((section) => {
-        const sectionMatches = section.title
-          ?.toLowerCase()
-          .includes(lowercasedFilter);
+        const sectionMatches = section.title?.toLowerCase().includes(lowercasedFilter);
 
         return {
           ...section,
@@ -112,14 +104,10 @@ export function DocsNav({ config }: { config: DocsConfig }) {
     if (!normalizedPathname) return;
 
     const newActiveIndex = filteredNav.findIndex((section) =>
-      section.items
-        ? hasActiveNestedItem(section.items, normalizedPathname)
-        : false
+      section.items ? hasActiveNestedItem(section.items, normalizedPathname) : false
     );
 
-    setActiveSection(
-      newActiveIndex === -1 ? undefined : `item-${newActiveIndex}`
-    );
+    setActiveSection(newActiveIndex === -1 ? undefined : `item-${newActiveIndex}`);
   }, [normalizedPathname, filteredNav, hasActiveNestedItem]);
 
   // Auto-scroll to active item only on mount. To be improved.
@@ -174,7 +162,7 @@ export function DocsNav({ config }: { config: DocsConfig }) {
         <div className="relative mt-1 flex w-full items-center">
           <Input
             className={cn(
-              'h-8 w-full rounded-lg bg-muted/50 px-3 py-1 text-muted-foreground text-sm shadow-none focus-visible:ring-transparent'
+              "h-8 w-full rounded-lg bg-muted/50 px-3 py-1 text-muted-foreground text-sm shadow-none focus-visible:ring-transparent"
             )}
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
@@ -183,7 +171,7 @@ export function DocsNav({ config }: { config: DocsConfig }) {
           {filter && (
             <button
               className="-translate-y-1/2 absolute top-1/2 right-2 text-muted-foreground hover:text-foreground"
-              onClick={() => setFilter('')}
+              onClick={() => setFilter("")}
               type="button"
             >
               <X className="size-4" />
@@ -207,17 +195,16 @@ export function DocsNav({ config }: { config: DocsConfig }) {
           >
             <AccordionTrigger className="h-9 shrink-0 items-center px-2 py-1 text-sm outline-none">
               <div className="flex items-center">
-                {locale === 'cn' ? item.titleCn || item.title : item.title}
+                {locale === "cn" ? item.titleCn || item.title : item.title}
                 {item.label && (
                   <div className="flex gap-1">
                     {castArray(item.label).map((label, labelIndex) => (
                       <span
                         key={labelIndex}
                         className={cn(
-                          'ml-2 rounded-md bg-secondary px-1.5 py-0.5 font-medium text-foreground text-xs leading-none',
-                          label === 'Plus' &&
-                            'bg-primary text-background dark:text-background',
-                          label === 'New' && 'bg-[#adfa1d] dark:text-background'
+                          "ml-2 rounded-md bg-secondary px-1.5 py-0.5 font-medium text-foreground text-xs leading-none",
+                          label === "Plus" && "bg-primary text-background dark:text-background",
+                          label === "New" && "bg-[#adfa1d] dark:text-background"
                         )}
                       >
                         {label}
@@ -230,10 +217,7 @@ export function DocsNav({ config }: { config: DocsConfig }) {
             <Suspense fallback={null}>
               <ScrollableAccordionContent>
                 {item?.items?.length && (
-                  <DocsNavItems
-                    items={item.items}
-                    pathname={normalizedPathname}
-                  />
+                  <DocsNavItems items={item.items} pathname={normalizedPathname} />
                 )}
               </ScrollableAccordionContent>
             </Suspense>
@@ -258,25 +242,20 @@ function DocsNavItems({
   const locale = useLocale();
 
   // Normalize pathname by removing /cn prefix if it exists
-  const normalizedPathname = pathname?.replace(CN_PREFIX_REGEX, '') ?? '';
+  const normalizedPathname = pathname?.replace(CN_PREFIX_REGEX, "") ?? "";
 
   return items?.length ? (
-    <div
-      className={cn(
-        'grid grid-flow-row auto-rows-max gap-0.5 text-sm',
-        className
-      )}
-    >
+    <div className={cn("grid grid-flow-row auto-rows-max gap-0.5 text-sm", className)}>
       {items.map((item, index) =>
         item.disabled ? (
           <span
             key={index}
             className={cn(
-              'flex w-full items-center rounded-md p-2 text-muted-foreground hover:underline',
-              item.disabled && 'cursor-not-allowed opacity-60'
+              "flex w-full items-center rounded-md p-2 text-muted-foreground hover:underline",
+              item.disabled && "cursor-not-allowed opacity-60"
             )}
           >
-            {locale === 'cn' ? item.titleCn || item.title : item.title}
+            {locale === "cn" ? item.titleCn || item.title : item.title}
             {item.label && (
               <span className="ml-2 rounded-md bg-muted px-1.5 py-0.5 text-muted-foreground text-xs leading-none no-underline group-hover:no-underline">
                 {item.label}
@@ -288,28 +267,27 @@ function DocsNavItems({
             {item.href ? (
               <Link
                 className={cn(
-                  'group relative flex h-8 w-full items-center truncate whitespace-nowrap rounded-lg px-2 after:absolute after:inset-x-0 after:inset-y-[-2px] after:rounded-lg hover:bg-accent hover:text-accent-foreground',
-                  item.disabled && 'cursor-not-allowed opacity-60',
+                  "group relative flex h-8 w-full items-center truncate whitespace-nowrap rounded-lg px-2 after:absolute after:inset-x-0 after:inset-y-[-2px] after:rounded-lg hover:bg-accent hover:text-accent-foreground",
+                  item.disabled && "cursor-not-allowed opacity-60",
                   normalizedPathname === item.href
-                    ? 'bg-accent font-medium text-accent-foreground'
-                    : 'font-normal text-foreground'
+                    ? "bg-accent font-medium text-accent-foreground"
+                    : "font-normal text-foreground"
                 )}
                 data-href={item.href}
                 href={hrefWithLocale(item.href, locale)}
-                rel={item.external ? 'noreferrer' : ''}
-                target={item.external ? '_blank' : ''}
+                rel={item.external ? "noreferrer" : ""}
+                target={item.external ? "_blank" : ""}
               >
-                {locale === 'cn' ? item.titleCn || item.title : item.title}
+                {locale === "cn" ? item.titleCn || item.title : item.title}
                 {item.label && (
                   <div className="ml-2 flex gap-1">
                     {castArray(item.label).map((label, labelIndex) => (
                       <span
                         key={labelIndex}
                         className={cn(
-                          'rounded-md bg-secondary px-1.5 py-0.5 font-medium text-foreground text-xs leading-none',
-                          label === 'Plus' &&
-                            'bg-primary text-background dark:text-background',
-                          label === 'New' && 'bg-[#adfa1d] dark:text-background'
+                          "rounded-md bg-secondary px-1.5 py-0.5 font-medium text-foreground text-xs leading-none",
+                          label === "Plus" && "bg-primary text-background dark:text-background",
+                          label === "New" && "bg-[#adfa1d] dark:text-background"
                         )}
                       >
                         {label}
@@ -324,20 +302,19 @@ function DocsNavItems({
             ) : (
               <span
                 className={cn(
-                  'flex h-8 w-full select-none items-center truncate rounded-lg px-2 font-medium text-foreground'
+                  "flex h-8 w-full select-none items-center truncate rounded-lg px-2 font-medium text-foreground"
                 )}
               >
-                {locale === 'cn' ? item.titleCn || item.title : item.title}
+                {locale === "cn" ? item.titleCn || item.title : item.title}
                 {item.label && (
                   <div className="ml-2 flex gap-1">
                     {castArray(item.label).map((label, labelIndex) => (
                       <span
                         key={labelIndex}
                         className={cn(
-                          'rounded-md bg-secondary px-1.5 py-0.5 font-medium text-foreground text-xs leading-none',
-                          label === 'Plus' &&
-                            'bg-primary text-background dark:text-background',
-                          label === 'New' && 'bg-[#adfa1d] dark:text-background'
+                          "rounded-md bg-secondary px-1.5 py-0.5 font-medium text-foreground text-xs leading-none",
+                          label === "Plus" && "bg-primary text-background dark:text-background",
+                          label === "New" && "bg-[#adfa1d] dark:text-background"
                         )}
                       >
                         {label}
@@ -351,17 +328,8 @@ function DocsNavItems({
               </span>
             )}
             {!!item.items?.length && (
-              <div
-                className={cn(
-                  'mb-1 ml-2 border-border/60 border-l pl-2',
-                  depth > 0 && 'ml-2'
-                )}
-              >
-                <DocsNavItems
-                  depth={depth + 1}
-                  items={item.items}
-                  pathname={normalizedPathname}
-                />
+              <div className={cn("mb-1 ml-2 border-border/60 border-l pl-2", depth > 0 && "ml-2")}>
+                <DocsNavItems depth={depth + 1} items={item.items} pathname={normalizedPathname} />
               </div>
             )}
           </React.Fragment>
@@ -412,13 +380,13 @@ function ScrollableAccordionContent({
     });
     resizeObserver.observe(element);
 
-    element.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', checkScrollState);
+    element.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", checkScrollState);
 
     return () => {
       resizeObserver.disconnect();
-      element.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', checkScrollState);
+      element.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", checkScrollState);
     };
   }, [handleScroll, checkScrollState, children]);
 

@@ -1,21 +1,16 @@
-import { GlowCard } from "@/registry/components/glow-card-grid/glow-card"
-import { GlowCardGrid } from "@/registry/components/glow-card-grid/glow-card-grid"
+import { GlowCard } from "@/registry/components/glow-card-grid/glow-card";
+import { GlowCardGrid } from "@/registry/components/glow-card-grid/glow-card-grid";
 
 export default function GlowCardGridDemo01() {
   return (
     <div className="w-full p-4">
       <GlowCardGrid>
         {CARDS.map((card) => (
-          <GlowCard
-            key={card.name}
-            name={card.name}
-            handle={card.handle}
-            avatar={card.avatar}
-          />
+          <GlowCard key={card.name} name={card.name} handle={card.handle} avatar={card.avatar} />
         ))}
       </GlowCardGrid>
     </div>
-  )
+  );
 }
 
 const CARDS = [
@@ -49,4 +44,4 @@ const CARDS = [
     handle: "@iamncdai",
     avatar: "https://unavatar.io/x/iamncdai",
   },
-]
+];

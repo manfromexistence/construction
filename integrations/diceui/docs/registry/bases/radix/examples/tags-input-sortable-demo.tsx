@@ -26,7 +26,7 @@ export default function TagsInputSortableDemo() {
     }),
     useSensor(TouchSensor, {
       activationConstraint: { delay: 250, tolerance: 5 },
-    }),
+    })
   );
 
   return (

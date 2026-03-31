@@ -7,11 +7,7 @@ const ScrollArea = React.forwardRef<
   React.ElementRef<typeof BaseScrollArea.Root>,
   React.ComponentPropsWithoutRef<typeof BaseScrollArea.Root>
 >(({ className, children, ...props }, ref) => (
-  <BaseScrollArea.Root
-    className={cn("relative overflow-hidden", className)}
-    ref={ref}
-    {...props}
-  >
+  <BaseScrollArea.Root className={cn("relative overflow-hidden", className)} ref={ref} {...props}>
     {children}
   </BaseScrollArea.Root>
 ));
@@ -72,10 +68,4 @@ const ScrollAreaCorner = React.forwardRef<
 ));
 ScrollAreaCorner.displayName = "ScrollAreaCorner";
 
-export {
-  ScrollArea,
-  ScrollAreaViewport,
-  ScrollAreaContent,
-  ScrollAreaScrollbar,
-  ScrollAreaCorner,
-};
+export { ScrollArea, ScrollAreaContent, ScrollAreaCorner, ScrollAreaScrollbar, ScrollAreaViewport };

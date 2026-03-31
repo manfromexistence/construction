@@ -43,7 +43,7 @@ export async function GET(request: Request) {
         width: 1200,
         height: 630,
         fonts,
-      },
+      }
     );
   } catch (error) {
     console.error("Error generating OG image:", error);

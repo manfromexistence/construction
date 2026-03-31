@@ -1,7 +1,7 @@
-import { type PluginConfig, createTSlatePlugin, KEYS } from 'platejs';
+import { createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
 export type BaseToggleConfig = PluginConfig<
-  'toggle',
+  "toggle",
   {
     openIds?: Set<string>;
   },
@@ -24,7 +24,7 @@ export const BaseTogglePlugin = createTSlatePlugin<BaseToggleConfig>({
     openIds: new Set(),
   },
 })
-  .extendSelectors<BaseToggleConfig['selectors']>(({ getOptions }) => ({
+  .extendSelectors<BaseToggleConfig["selectors"]>(({ getOptions }) => ({
     isOpen: (toggleId) => getOptions().openIds!.has(toggleId),
     someClosed: (toggleIds) => {
       const { openIds } = getOptions();
@@ -32,7 +32,7 @@ export const BaseTogglePlugin = createTSlatePlugin<BaseToggleConfig>({
       return toggleIds.some((id) => !openIds!.has(id));
     },
   }))
-  .extendApi<BaseToggleConfig['api']['toggle']>(({ setOptions }) => ({
+  .extendApi<BaseToggleConfig["api"]["toggle"]>(({ setOptions }) => ({
     toggleIds: (ids, force = null) => {
       setOptions((draft) => {
         ids.forEach((id) => {

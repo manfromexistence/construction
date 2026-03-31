@@ -1,14 +1,14 @@
-import type { Awareness } from 'y-protocols/awareness';
+import type { Awareness } from "y-protocols/awareness";
 
-import { WebrtcProvider as YWebrtcProvider } from 'y-webrtc';
-import * as Y from 'yjs';
+import { WebrtcProvider as YWebrtcProvider } from "y-webrtc";
+import * as Y from "yjs";
 
 import type {
   ProviderEventHandlers,
   UnifiedProvider,
   WebRTCProviderOptions,
   YjsProviderType,
-} from './types';
+} from "./types";
 
 export class WebRTCProviderWrapper implements UnifiedProvider {
   // Track connection and sync state
@@ -25,7 +25,7 @@ export class WebRTCProviderWrapper implements UnifiedProvider {
       try {
         this.provider.connect();
       } catch (error) {
-        console.warn('[yjs] Error connecting WebRTC provider:', error);
+        console.warn("[yjs] Error connecting WebRTC provider:", error);
       }
     }
   };
@@ -35,7 +35,7 @@ export class WebRTCProviderWrapper implements UnifiedProvider {
       try {
         this.provider.destroy();
       } catch (error) {
-        console.warn('[yjs] Error destroying WebRTC provider:', error);
+        console.warn("[yjs] Error destroying WebRTC provider:", error);
       }
     }
   };
@@ -54,12 +54,12 @@ export class WebRTCProviderWrapper implements UnifiedProvider {
           this.onSyncChange?.(false);
         }
       } catch (error) {
-        console.warn('[yjs] Error disconnecting WebRTC provider:', error);
+        console.warn("[yjs] Error disconnecting WebRTC provider:", error);
       }
     }
   };
 
-  type: YjsProviderType = 'webrtc';
+  type: YjsProviderType = "webrtc";
 
   // Autoconnects when created
   constructor({
@@ -89,7 +89,7 @@ export class WebRTCProviderWrapper implements UnifiedProvider {
       });
 
       // Set connection status
-      this.provider.on('status', (status: { connected: boolean }) => {
+      this.provider.on("status", (status: { connected: boolean }) => {
         const wasConnected = this._isConnected;
         this._isConnected = status.connected;
 
@@ -116,7 +116,7 @@ export class WebRTCProviderWrapper implements UnifiedProvider {
         }
       });
     } catch (error) {
-      console.warn('[yjs] Error creating WebRTC provider:', error);
+      console.warn("[yjs] Error creating WebRTC provider:", error);
       onError?.(error instanceof Error ? error : new Error(String(error)));
       // Don't throw, just log the error - the provider will be null
     }

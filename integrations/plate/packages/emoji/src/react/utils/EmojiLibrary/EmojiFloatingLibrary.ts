@@ -1,24 +1,17 @@
-import type { EmojiFloatingGridType } from './EmojiFloatingGrid';
-import type {
-  IEmojiFloatingLibrary,
-  IFrequentEmojiStorage,
-} from './EmojiFloatingLibrary.types';
-
 import {
-  type EmojiCategoryList,
-  type EmojiLibrary,
-  type EmojiSettingsType,
   DEFAULT_EMOJI_LIBRARY,
   defaultCategories,
   EmojiCategory,
+  type EmojiCategoryList,
   EmojiInlineLibrary,
-} from '../../../lib';
-import { EmojiFloatingGridBuilder } from './EmojiFloatingGridBuilder';
+  type EmojiLibrary,
+  type EmojiSettingsType,
+} from "../../../lib";
+import type { EmojiFloatingGridType } from "./EmojiFloatingGrid";
+import { EmojiFloatingGridBuilder } from "./EmojiFloatingGridBuilder";
+import type { IEmojiFloatingLibrary, IFrequentEmojiStorage } from "./EmojiFloatingLibrary.types";
 
-export class EmojiFloatingLibrary
-  extends EmojiInlineLibrary
-  implements IEmojiFloatingLibrary
-{
+export class EmojiFloatingLibrary extends EmojiInlineLibrary implements IEmojiFloatingLibrary {
   private static instance?: EmojiFloatingLibrary;
 
   private readonly categories: EmojiCategoryList[] = defaultCategories;
@@ -57,11 +50,7 @@ export class EmojiFloatingLibrary
     library = DEFAULT_EMOJI_LIBRARY
   ) {
     if (!EmojiFloatingLibrary.instance) {
-      EmojiFloatingLibrary.instance = new EmojiFloatingLibrary(
-        settings,
-        localStorage,
-        library
-      );
+      EmojiFloatingLibrary.instance = new EmojiFloatingLibrary(settings, localStorage, library);
     }
 
     return EmojiFloatingLibrary.instance;
@@ -85,9 +74,6 @@ export class EmojiFloatingLibrary
 
   updateFrequentCategory(emojiId: string) {
     this.localStorage.update(emojiId);
-    this.grid.updateSection(
-      EmojiCategory.Frequent,
-      this.localStorage.getList()
-    );
+    this.grid.updateSection(EmojiCategory.Frequent, this.localStorage.getList());
   }
 }

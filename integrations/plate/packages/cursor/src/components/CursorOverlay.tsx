@@ -1,27 +1,13 @@
-import React from 'react';
+import type { UnknownObject } from "platejs";
+import { useEditorMounted } from "platejs/react";
+import React from "react";
+import { useCursorOverlayPositions } from "../hooks/useCursorOverlayPositions";
+import type { CursorData, CursorOverlayState, CursorState, SelectionRect } from "../types";
 
-import type { UnknownObject } from 'platejs';
-
-import { useEditorMounted } from 'platejs/react';
-
-import type {
-  CursorData,
-  CursorOverlayState,
-  CursorState,
-  SelectionRect,
-} from '../types';
-
-import { useCursorOverlayPositions } from '../hooks/useCursorOverlayPositions';
-
-export interface CursorOverlayProps<
-  TCursorData extends UnknownObject = UnknownObject,
-> extends Pick<
+export interface CursorOverlayProps<TCursorData extends UnknownObject = UnknownObject>
+  extends Pick<
     CursorProps<CursorData>,
-    | 'classNames'
-    | 'disableCaret'
-    | 'disableSelection'
-    | 'onRenderCaret'
-    | 'onRenderSelectionRect'
+    "classNames" | "disableCaret" | "disableSelection" | "onRenderCaret" | "onRenderSelectionRect"
   > {
   /**
    * Container the overlay will be rendered in. If set, all returned overlay
@@ -60,20 +46,16 @@ export type CursorProps<TCursorData extends UnknownObject = UnknownObject> =
      *
      * @default styled div
      */
-    onRenderCaret?: React.FC<
-      Pick<CursorProps<TCursorData>, 'caretPosition' | 'data'>
-    >;
+    onRenderCaret?: React.FC<Pick<CursorProps<TCursorData>, "caretPosition" | "data">>;
     /** Overrides `Caret` component */
     onRenderSelectionRect?: React.FC<
       {
         selectionRect: SelectionRect;
-      } & Pick<CursorProps<TCursorData>, 'data'>
+      } & Pick<CursorProps<TCursorData>, "data">
     >;
   };
 
-export function CursorOverlayContent<
-  TCursorData extends UnknownObject = UnknownObject,
->({
+export function CursorOverlayContent<TCursorData extends UnknownObject = UnknownObject>({
   classNames,
   onRenderCaret,
   onRenderCursor: CursorComponent,
@@ -97,20 +79,15 @@ export function CursorOverlayContent<
   return (
     <>
       {cursors.map((cursor) => (
-        <CursorComponent
-          id={cursor.key}
-          key={cursor.key}
-          {...cursorProps}
-          {...cursor}
-        />
+        <CursorComponent id={cursor.key} key={cursor.key} {...cursorProps} {...cursor} />
       ))}
     </>
   );
 }
 
-export function CursorOverlay<
-  TCursorData extends UnknownObject = UnknownObject,
->(props: CursorOverlayProps<TCursorData>) {
+export function CursorOverlay<TCursorData extends UnknownObject = UnknownObject>(
+  props: CursorOverlayProps<TCursorData>
+) {
   const isMounted = useEditorMounted();
 
   if (!isMounted) return null;

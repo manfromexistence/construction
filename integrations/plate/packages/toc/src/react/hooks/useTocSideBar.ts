@@ -1,18 +1,15 @@
-import React from 'react';
-
-import { NodeApi } from 'platejs';
-import { useEditorRef, useEditorSelector, useScrollRef } from 'platejs/react';
-
-import type { Heading } from '../../lib/types';
-import type { TocSideBarProps } from '../types';
-
-import { useContentController, useTocController } from '.';
-import { getHeadingList } from '../../internal/getHeadingList';
-import { checkIn } from '../utils';
+import { NodeApi } from "platejs";
+import { useEditorRef, useEditorSelector, useScrollRef } from "platejs/react";
+import React from "react";
+import { getHeadingList } from "../../internal/getHeadingList";
+import type { Heading } from "../../lib/types";
+import type { TocSideBarProps } from "../types";
+import { checkIn } from "../utils";
+import { useContentController, useTocController } from ".";
 
 export const useTocSideBarState = ({
   open = true,
-  rootMargin = '0px 0px 0px 0px',
+  rootMargin = "0px 0px 0px 0px",
   topOffset = 0,
 }: TocSideBarProps): any => {
   const editor = useEditorRef();
@@ -98,9 +95,7 @@ export const useTocSideBar = ({
           setMouseInToc(true);
         }
       },
-      onMouseLeave: (
-        e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>
-      ) => {
+      onMouseLeave: (e: React.MouseEvent<HTMLElement, globalThis.MouseEvent>) => {
         if (open) {
           const isIn = checkIn(e);
 

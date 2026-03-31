@@ -1,4 +1,4 @@
-import type { TTableCellElement } from 'platejs';
+import type { TTableCellElement } from "platejs";
 
 /**
  * Returns the rowspan attribute of the table cell element.

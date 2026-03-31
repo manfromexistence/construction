@@ -1,9 +1,9 @@
-import { renderHook, waitFor } from '@testing-library/react';
+import { renderHook, waitFor } from "@testing-library/react";
 
-import { useMemoizedSelector } from './useMemoizedSelector';
+import { useMemoizedSelector } from "./useMemoizedSelector";
 
-describe('useMemoizedSelector', () => {
-  it('keeps the previous value when equalityFn says nothing changed', () => {
+describe("useMemoizedSelector", () => {
+  it("keeps the previous value when equalityFn says nothing changed", () => {
     const { result, rerender } = renderHook(
       ({ count }) =>
         useMemoizedSelector(
@@ -23,7 +23,7 @@ describe('useMemoizedSelector', () => {
     expect(result.current).toBe(previousValue);
   });
 
-  it('updates when equalityFn detects a change', async () => {
+  it("updates when equalityFn detects a change", async () => {
     const { result, rerender } = renderHook(
       ({ count }) =>
         useMemoizedSelector(

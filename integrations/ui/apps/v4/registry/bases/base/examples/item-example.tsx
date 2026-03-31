@@ -1,10 +1,7 @@
-import Image from "next/image"
-
-import {
-  Example,
-  ExampleWrapper,
-} from "@/registry/bases/base/components/example"
-import { Button } from "@/registry/bases/base/ui/button"
+import Image from "next/image";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { Example, ExampleWrapper } from "@/registry/bases/base/components/example";
+import { Button } from "@/registry/bases/base/ui/button";
 import {
   Item,
   ItemActions,
@@ -16,8 +13,7 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from "@/registry/bases/base/ui/item"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/base/ui/item";
 
 export default function ItemExample() {
   return (
@@ -47,7 +43,7 @@ export default function ItemExample() {
       <OutlineVariantItemsWithImageExtraSmall />
       <MutedVariantItemsWithImage />
     </ExampleWrapper>
-  )
+  );
 }
 
 function DefaultVariantItems() {
@@ -69,9 +65,7 @@ function DefaultVariantItems() {
       <Item>
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item>
@@ -128,9 +122,7 @@ function DefaultVariantItems() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item>
@@ -146,8 +138,7 @@ function DefaultVariantItems() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -157,9 +148,7 @@ function DefaultVariantItems() {
       <Item>
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -169,7 +158,7 @@ function DefaultVariantItems() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function OutlineVariantItems() {
@@ -191,9 +180,7 @@ function OutlineVariantItems() {
       <Item variant="outline">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline">
@@ -250,9 +237,7 @@ function OutlineVariantItems() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline">
@@ -268,8 +253,7 @@ function OutlineVariantItems() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -279,9 +263,7 @@ function OutlineVariantItems() {
       <Item variant="outline">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -291,7 +273,7 @@ function OutlineVariantItems() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function MutedVariantItems() {
@@ -313,9 +295,7 @@ function MutedVariantItems() {
       <Item variant="muted">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="muted">
@@ -372,9 +352,7 @@ function MutedVariantItems() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="muted">
@@ -390,8 +368,7 @@ function MutedVariantItems() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -401,9 +378,7 @@ function MutedVariantItems() {
       <Item variant="muted">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -413,7 +388,7 @@ function MutedVariantItems() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function DefaultVariantItemsSmall() {
@@ -437,9 +412,7 @@ function DefaultVariantItemsSmall() {
       <Item size="sm">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item size="sm">
@@ -498,9 +471,7 @@ function DefaultVariantItemsSmall() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item size="sm">
@@ -516,8 +487,7 @@ function DefaultVariantItemsSmall() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -527,9 +497,7 @@ function DefaultVariantItemsSmall() {
       <Item size="sm">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -539,7 +507,7 @@ function DefaultVariantItemsSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function OutlineVariantItemsSmall() {
@@ -563,9 +531,7 @@ function OutlineVariantItemsSmall() {
       <Item variant="outline" size="sm">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline" size="sm">
@@ -624,9 +590,7 @@ function OutlineVariantItemsSmall() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline" size="sm">
@@ -642,8 +606,7 @@ function OutlineVariantItemsSmall() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -653,9 +616,7 @@ function OutlineVariantItemsSmall() {
       <Item variant="outline" size="sm">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -665,7 +626,7 @@ function OutlineVariantItemsSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function MutedVariantItemsSmall() {
@@ -689,9 +650,7 @@ function MutedVariantItemsSmall() {
       <Item variant="muted" size="sm">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="muted" size="sm">
@@ -750,9 +709,7 @@ function MutedVariantItemsSmall() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="muted" size="sm">
@@ -768,8 +725,7 @@ function MutedVariantItemsSmall() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -779,9 +735,7 @@ function MutedVariantItemsSmall() {
       <Item variant="muted" size="sm">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -791,7 +745,7 @@ function MutedVariantItemsSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function DefaultVariantItemsExtraSmall() {
@@ -815,9 +769,7 @@ function DefaultVariantItemsExtraSmall() {
       <Item size="xs">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item size="xs">
@@ -876,9 +828,7 @@ function DefaultVariantItemsExtraSmall() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item size="xs">
@@ -894,8 +844,7 @@ function DefaultVariantItemsExtraSmall() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -905,9 +854,7 @@ function DefaultVariantItemsExtraSmall() {
       <Item size="xs">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -917,7 +864,7 @@ function DefaultVariantItemsExtraSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function OutlineVariantItemsExtraSmall() {
@@ -941,9 +888,7 @@ function OutlineVariantItemsExtraSmall() {
       <Item variant="outline" size="xs">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline" size="xs">
@@ -1002,9 +947,7 @@ function OutlineVariantItemsExtraSmall() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline" size="xs">
@@ -1020,8 +963,7 @@ function OutlineVariantItemsExtraSmall() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -1031,9 +973,7 @@ function OutlineVariantItemsExtraSmall() {
       <Item variant="outline" size="xs">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -1043,7 +983,7 @@ function OutlineVariantItemsExtraSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function MutedVariantItemsExtraSmall() {
@@ -1067,9 +1007,7 @@ function MutedVariantItemsExtraSmall() {
       <Item variant="muted" size="xs">
         <ItemContent>
           <ItemTitle>Title + Description</ItemTitle>
-          <ItemDescription>
-            This is a description that provides additional context.
-          </ItemDescription>
+          <ItemDescription>This is a description that provides additional context.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="muted" size="xs">
@@ -1128,9 +1066,7 @@ function MutedVariantItemsExtraSmall() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Media + Title + Description</ItemTitle>
-          <ItemDescription>
-            This item includes media, title, and description.
-          </ItemDescription>
+          <ItemDescription>This item includes media, title, and description.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="muted" size="xs">
@@ -1146,8 +1082,7 @@ function MutedVariantItemsExtraSmall() {
         <ItemContent>
           <ItemTitle>Media + Title + Description + Button</ItemTitle>
           <ItemDescription>
-            Complete item with all components: media, title, description, and
-            button.
+            Complete item with all components: media, title, description, and button.
           </ItemDescription>
         </ItemContent>
         <ItemActions>
@@ -1157,9 +1092,7 @@ function MutedVariantItemsExtraSmall() {
       <Item variant="muted" size="xs">
         <ItemContent>
           <ItemTitle>Multiple Actions</ItemTitle>
-          <ItemDescription>
-            Item with multiple action buttons in the actions area.
-          </ItemDescription>
+          <ItemDescription>Item with multiple action buttons in the actions area.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -1169,7 +1102,7 @@ function MutedVariantItemsExtraSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function DefaultLinkItems() {
@@ -1184,9 +1117,7 @@ function DefaultLinkItems() {
         <Item render={<a href="#" />}>
           <ItemContent>
             <ItemTitle>Title + Description (Link)</ItemTitle>
-            <ItemDescription>
-              Clickable item with title and description.
-            </ItemDescription>
+            <ItemDescription>Clickable item with title and description.</ItemDescription>
           </ItemContent>
         </Item>
         <Item render={<a href="#" />}>
@@ -1223,9 +1154,7 @@ function DefaultLinkItems() {
         <Item render={<a href="#" />}>
           <ItemContent>
             <ItemTitle>With Actions (Link)</ItemTitle>
-            <ItemDescription>
-              Link item that also has action buttons.
-            </ItemDescription>
+            <ItemDescription>Link item that also has action buttons.</ItemDescription>
           </ItemContent>
           <ItemActions>
             <Button variant="outline" size="sm">
@@ -1235,7 +1164,7 @@ function DefaultLinkItems() {
         </Item>
       </ItemGroup>
     </Example>
-  )
+  );
 }
 
 function OutlineLinkItems() {
@@ -1250,9 +1179,7 @@ function OutlineLinkItems() {
         <Item variant="outline" render={<a href="#" />}>
           <ItemContent>
             <ItemTitle>Title + Description (Link)</ItemTitle>
-            <ItemDescription>
-              Clickable item with title and description.
-            </ItemDescription>
+            <ItemDescription>Clickable item with title and description.</ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="outline" render={<a href="#" />}>
@@ -1289,9 +1216,7 @@ function OutlineLinkItems() {
         <Item variant="outline" render={<a href="#" />}>
           <ItemContent>
             <ItemTitle>With Actions (Link)</ItemTitle>
-            <ItemDescription>
-              Link item that also has action buttons.
-            </ItemDescription>
+            <ItemDescription>Link item that also has action buttons.</ItemDescription>
           </ItemContent>
           <ItemActions>
             <Button variant="outline" size="sm">
@@ -1301,7 +1226,7 @@ function OutlineLinkItems() {
         </Item>
       </ItemGroup>
     </Example>
-  )
+  );
 }
 
 function MutedLinkItems() {
@@ -1316,9 +1241,7 @@ function MutedLinkItems() {
         <Item variant="muted" render={<a href="#" />}>
           <ItemContent>
             <ItemTitle>Title + Description (Link)</ItemTitle>
-            <ItemDescription>
-              Clickable item with title and description.
-            </ItemDescription>
+            <ItemDescription>Clickable item with title and description.</ItemDescription>
           </ItemContent>
         </Item>
         <Item variant="muted" render={<a href="#" />}>
@@ -1355,9 +1278,7 @@ function MutedLinkItems() {
         <Item variant="muted" render={<a href="#" />}>
           <ItemContent>
             <ItemTitle>With Actions (Link)</ItemTitle>
-            <ItemDescription>
-              Link item that also has action buttons.
-            </ItemDescription>
+            <ItemDescription>Link item that also has action buttons.</ItemDescription>
           </ItemContent>
           <ItemActions>
             <Button variant="outline" size="sm">
@@ -1367,7 +1288,7 @@ function MutedLinkItems() {
         </Item>
       </ItemGroup>
     </Example>
-  )
+  );
 }
 
 function DefaultItemGroup() {
@@ -1394,7 +1315,7 @@ function DefaultItemGroup() {
         </Item>
       </ItemGroup>
     </Example>
-  )
+  );
 }
 
 function OutlineItemGroup() {
@@ -1448,7 +1369,7 @@ function OutlineItemGroup() {
         </Item>
       </ItemGroup>
     </Example>
-  )
+  );
 }
 
 function MutedItemGroup() {
@@ -1490,7 +1411,7 @@ function MutedItemGroup() {
         </Item>
       </ItemGroup>
     </Example>
-  )
+  );
 }
 
 function ItemSeparatorExample() {
@@ -1562,7 +1483,7 @@ function ItemSeparatorExample() {
         </Item>
       </ItemGroup>
     </Example>
-  )
+  );
 }
 
 function ItemHeaderExamples() {
@@ -1575,8 +1496,7 @@ function ItemHeaderExamples() {
         <ItemContent>
           <ItemTitle>Component Library</ItemTitle>
           <ItemDescription>
-            A comprehensive collection of reusable UI components for building
-            consistent interfaces.
+            A comprehensive collection of reusable UI components for building consistent interfaces.
           </ItemDescription>
         </ItemContent>
       </Item>
@@ -1587,8 +1507,7 @@ function ItemHeaderExamples() {
         <ItemContent>
           <ItemTitle>Campaign Analytics</ItemTitle>
           <ItemDescription>
-            Track performance metrics and engagement rates across all marketing
-            channels.
+            Track performance metrics and engagement rates across all marketing channels.
           </ItemDescription>
         </ItemContent>
       </Item>
@@ -1599,13 +1518,12 @@ function ItemHeaderExamples() {
         <ItemContent>
           <ItemTitle>API Documentation</ItemTitle>
           <ItemDescription>
-            Complete reference guide for all available endpoints and
-            authentication methods.
+            Complete reference guide for all available endpoints and authentication methods.
           </ItemDescription>
         </ItemContent>
       </Item>
     </Example>
-  )
+  );
 }
 
 function ItemFooterExamples() {
@@ -1615,36 +1533,31 @@ function ItemFooterExamples() {
         <ItemContent>
           <ItemTitle>Quarterly Report Q4 2024</ItemTitle>
           <ItemDescription>
-            Financial overview including revenue, expenses, and growth metrics
-            for the fourth quarter.
+            Financial overview including revenue, expenses, and growth metrics for the fourth
+            quarter.
           </ItemDescription>
         </ItemContent>
         <ItemFooter>
-          <span className="text-sm text-muted-foreground">
-            Last updated 2 hours ago
-          </span>
+          <span className="text-sm text-muted-foreground">Last updated 2 hours ago</span>
         </ItemFooter>
       </Item>
       <Item variant="outline">
         <ItemContent>
           <ItemTitle>User Research Findings</ItemTitle>
           <ItemDescription>
-            Insights from interviews and surveys conducted with 50+ users across
-            different demographics.
+            Insights from interviews and surveys conducted with 50+ users across different
+            demographics.
           </ItemDescription>
         </ItemContent>
         <ItemFooter>
-          <span className="text-sm text-muted-foreground">
-            Created by Sarah Chen
-          </span>
+          <span className="text-sm text-muted-foreground">Created by Sarah Chen</span>
         </ItemFooter>
       </Item>
       <Item variant="muted">
         <ItemContent>
           <ItemTitle>Product Roadmap</ItemTitle>
           <ItemDescription>
-            Planned features and improvements scheduled for the next three
-            months.
+            Planned features and improvements scheduled for the next three months.
           </ItemDescription>
         </ItemContent>
         <ItemFooter>
@@ -1652,7 +1565,7 @@ function ItemFooterExamples() {
         </ItemFooter>
       </Item>
     </Example>
-  )
+  );
 }
 
 function ItemHeaderAndFooterExamples() {
@@ -1665,14 +1578,12 @@ function ItemHeaderAndFooterExamples() {
         <ItemContent>
           <ItemTitle>Website Redesign</ItemTitle>
           <ItemDescription>
-            Complete overhaul of the company website with modern design
-            principles and improved user experience.
+            Complete overhaul of the company website with modern design principles and improved user
+            experience.
           </ItemDescription>
         </ItemContent>
         <ItemFooter>
-          <span className="text-sm text-muted-foreground">
-            Updated 5 minutes ago
-          </span>
+          <span className="text-sm text-muted-foreground">Updated 5 minutes ago</span>
         </ItemFooter>
       </Item>
       <Item variant="outline">
@@ -1682,14 +1593,11 @@ function ItemHeaderAndFooterExamples() {
         <ItemContent>
           <ItemTitle>Mobile App Development</ItemTitle>
           <ItemDescription>
-            Building a cross-platform mobile application for iOS and Android
-            with React Native.
+            Building a cross-platform mobile application for iOS and Android with React Native.
           </ItemDescription>
         </ItemContent>
         <ItemFooter>
-          <span className="text-sm text-muted-foreground">
-            Status: In Progress
-          </span>
+          <span className="text-sm text-muted-foreground">Status: In Progress</span>
         </ItemFooter>
       </Item>
       <Item variant="muted">
@@ -1699,18 +1607,16 @@ function ItemHeaderAndFooterExamples() {
         <ItemContent>
           <ItemTitle>API Integration Guide</ItemTitle>
           <ItemDescription>
-            Step-by-step instructions for integrating third-party APIs with
-            authentication and error handling.
+            Step-by-step instructions for integrating third-party APIs with authentication and error
+            handling.
           </ItemDescription>
         </ItemContent>
         <ItemFooter>
-          <span className="text-sm text-muted-foreground">
-            Category: Technical • 3 attachments
-          </span>
+          <span className="text-sm text-muted-foreground">Category: Technical • 3 attachments</span>
         </ItemFooter>
       </Item>
     </Example>
-  )
+  );
 }
 
 function DefaultVariantItemsWithImage() {
@@ -1728,9 +1634,7 @@ function DefaultVariantItemsWithImage() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Project Dashboard</ItemTitle>
-          <ItemDescription>
-            Overview of project settings and configuration.
-          </ItemDescription>
+          <ItemDescription>Overview of project settings and configuration.</ItemDescription>
         </ItemContent>
       </Item>
       <Item>
@@ -1774,7 +1678,7 @@ function DefaultVariantItemsWithImage() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function OutlineVariantItemsWithImage() {
@@ -1792,9 +1696,7 @@ function OutlineVariantItemsWithImage() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Project Dashboard</ItemTitle>
-          <ItemDescription>
-            Overview of project settings and configuration.
-          </ItemDescription>
+          <ItemDescription>Overview of project settings and configuration.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline">
@@ -1838,7 +1740,7 @@ function OutlineVariantItemsWithImage() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function OutlineVariantItemsWithImageSmall() {
@@ -1856,9 +1758,7 @@ function OutlineVariantItemsWithImageSmall() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Project Dashboard</ItemTitle>
-          <ItemDescription>
-            Overview of project settings and configuration.
-          </ItemDescription>
+          <ItemDescription>Overview of project settings and configuration.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline" size="sm">
@@ -1902,7 +1802,7 @@ function OutlineVariantItemsWithImageSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function OutlineVariantItemsWithImageExtraSmall() {
@@ -1959,7 +1859,7 @@ function OutlineVariantItemsWithImageExtraSmall() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }
 
 function MutedVariantItemsWithImage() {
@@ -1977,9 +1877,7 @@ function MutedVariantItemsWithImage() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Project Dashboard</ItemTitle>
-          <ItemDescription>
-            Overview of project settings and configuration.
-          </ItemDescription>
+          <ItemDescription>Overview of project settings and configuration.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="muted">
@@ -2023,5 +1921,5 @@ function MutedVariantItemsWithImage() {
         </ItemActions>
       </Item>
     </Example>
-  )
+  );
 }

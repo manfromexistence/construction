@@ -4,20 +4,16 @@ import {
   type Path,
   PathApi,
   type Span,
-} from '../../interfaces';
-import type { Editor, ValueOf } from '../../interfaces/editor/editor-type';
-import type { NodeEntry } from '../../interfaces/node-entry';
-import { combineMatch, getAt, getMatch } from '../../utils';
+} from "../../interfaces";
+import type { Editor, ValueOf } from "../../interfaces/editor/editor-type";
+import type { NodeEntry } from "../../interfaces/node-entry";
+import { combineMatch, getAt, getMatch } from "../../utils";
 
 export const next = <N extends DescendantOf<E>, E extends Editor = Editor>(
   editor: E,
   options: EditorNextOptions<ValueOf<E>> = {}
 ): NodeEntry<N> | undefined => {
-  const {
-    from = 'after',
-    mode = from === 'child' ? 'all' : 'lowest',
-    voids = false,
-  } = options;
+  const { from = "after", mode = from === "child" ? "all" : "lowest", voids = false } = options;
   let match = getMatch(editor, options);
 
   const at = getAt(editor, options.at) ?? editor.selection;
@@ -29,16 +25,13 @@ export const next = <N extends DescendantOf<E>, E extends Editor = Editor>(
   let start: Path | undefined;
 
   // FORK: from
-  if (from === 'child' && PathApi.isPath(at)) {
+  if (from === "child" && PathApi.isPath(at)) {
     const path = PathApi.firstChild(at);
     const fromNode = editor.api.node(path);
 
     if (fromNode) {
       start = path;
-      match = combineMatch(
-        (_n, p) => !PathApi.isAncestor(p, at) && !PathApi.equals(p, at),
-        match
-      );
+      match = combineMatch((_n, p) => !PathApi.isAncestor(p, at) && !PathApi.equals(p, at), match);
     }
   }
   if (!start) {

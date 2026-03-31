@@ -1,11 +1,10 @@
+import { Button } from "@/app/_components/ui/button";
 import {
-  TooltipProvider,
   Tooltip,
   TooltipContent,
+  TooltipProvider,
   TooltipTrigger,
 } from "@/app/_components/ui/tooltip";
-
-import { Button } from "@/app/_components/ui/button";
 
 export function TooltipExample() {
   return (

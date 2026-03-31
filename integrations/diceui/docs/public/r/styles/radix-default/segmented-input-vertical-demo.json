@@ -1,8 +1,6 @@
 {
   "name": "segmented-input-vertical-demo",
-  "registryDependencies": [
-    "segmented-input"
-  ],
+  "registryDependencies": ["segmented-input"],
   "files": [
     {
       "path": "examples/segmented-input-vertical-demo.tsx",

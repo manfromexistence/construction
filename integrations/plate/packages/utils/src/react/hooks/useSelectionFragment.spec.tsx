@@ -1,13 +1,9 @@
-import React from 'react';
+import { getContainerTypes } from "@platejs/core";
+import { createPlateEditor, Plate } from "@platejs/core/react";
+import { renderHook } from "@testing-library/react";
+import React from "react";
 
-import { getContainerTypes } from '@platejs/core';
-import { createPlateEditor, Plate } from '@platejs/core/react';
-import { renderHook } from '@testing-library/react';
-
-import {
-  useSelectionFragment,
-  useSelectionFragmentProp,
-} from './useSelectionFragment';
+import { useSelectionFragment, useSelectionFragmentProp } from "./useSelectionFragment";
 
 const createWrapper = (editor: ReturnType<typeof createPlateEditor>) =>
   function Wrapper({ children }: { children: React.ReactNode }) {
@@ -18,17 +14,17 @@ const createWrapper = (editor: ReturnType<typeof createPlateEditor>) =>
     );
   };
 
-describe('useSelectionFragment', () => {
-  it('returns the selected fragment with container unwrap types', () => {
+describe("useSelectionFragment", () => {
+  it("returns the selected fragment with container unwrap types", () => {
     const editor = createPlateEditor({
       selection: {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 3, path: [0, 0] },
       },
-      value: [{ children: [{ text: 'one' }], type: 'p' }],
+      value: [{ children: [{ text: "one" }], type: "p" }],
     });
-    const fragment = [{ children: [{ text: 'one' }], type: 'p' }];
-    const fragmentSpy = spyOn(editor.api, 'fragment');
+    const fragment = [{ children: [{ text: "one" }], type: "p" }];
+    const fragmentSpy = spyOn(editor.api, "fragment");
     (fragmentSpy as any).mockReturnValue(fragment as any);
 
     const { result } = renderHook(() => useSelectionFragment(), {
@@ -41,33 +37,30 @@ describe('useSelectionFragment', () => {
     });
   });
 
-  it('derives a shared property from the selected fragment', () => {
+  it("derives a shared property from the selected fragment", () => {
     const editor = createPlateEditor({
       selection: {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 3, path: [0, 0] },
       },
-      value: [{ children: [{ text: 'one' }], type: 'p' }],
+      value: [{ children: [{ text: "one" }], type: "p" }],
     });
-    const fragment = [{ children: [{ text: 'one' }], type: 'p' }];
-    const fragmentSpy = spyOn(editor.api, 'fragment');
+    const fragment = [{ children: [{ text: "one" }], type: "p" }];
+    const fragmentSpy = spyOn(editor.api, "fragment");
     (fragmentSpy as any).mockReturnValue(fragment as any);
-    const propSpy = spyOn(editor.api, 'prop');
-    (propSpy as any).mockReturnValue('p');
+    const propSpy = spyOn(editor.api, "prop");
+    (propSpy as any).mockReturnValue("p");
 
-    const { result } = renderHook(
-      () => useSelectionFragmentProp({ key: 'type' }),
-      {
-        wrapper: createWrapper(editor),
-      }
-    );
+    const { result } = renderHook(() => useSelectionFragmentProp({ key: "type" }), {
+      wrapper: createWrapper(editor),
+    });
 
-    expect(result.current).toBe('p');
+    expect(result.current).toBe("p");
     expect(fragmentSpy).toHaveBeenCalledWith(editor.selection, {
       unwrap: getContainerTypes(editor),
     });
     expect(propSpy).toHaveBeenCalledWith({
-      key: 'type',
+      key: "type",
       nodes: fragment,
     });
   });

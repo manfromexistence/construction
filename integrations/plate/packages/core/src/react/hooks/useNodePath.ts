@@ -1,7 +1,7 @@
-import { type TNode, PathApi } from '@platejs/slate';
-import { useMemoizedSelector } from '@udecode/react-utils';
+import { PathApi, type TNode } from "@platejs/slate";
+import { useMemoizedSelector } from "@udecode/react-utils";
 
-import { useEditorRef } from '../stores';
+import { useEditorRef } from "../stores";
 
 /**
  * Returns the path of a node every time the node changes. Note, however, that

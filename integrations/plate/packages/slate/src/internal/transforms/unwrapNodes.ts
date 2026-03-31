@@ -1,8 +1,8 @@
-import { unwrapNodes as unwrapNodesBase } from 'slate';
+import { unwrapNodes as unwrapNodesBase } from "slate";
 
-import type { Editor, UnwrapNodesOptions, ValueOf } from '../../interfaces';
+import type { Editor, UnwrapNodesOptions, ValueOf } from "../../interfaces";
 
-import { getQueryOptions } from '../../utils/match';
+import { getQueryOptions } from "../../utils/match";
 
 export const unwrapNodes = <E extends Editor>(
   editor: E,

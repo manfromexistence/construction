@@ -1,4 +1,4 @@
-export type Intersection = 'center' | 'cover' | 'touch';
+export type Intersection = "center" | "cover" | "touch";
 
 export function intersectsScroll(
   a: DOMRect,

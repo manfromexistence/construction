@@ -1,6 +1,6 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import { getCodeLineEntry } from './getCodeLineEntry';
+import { getCodeLineEntry } from "./getCodeLineEntry";
 
 /** Is the selection at the start of the first code line in a code block */
 export const isSelectionAtCodeBlockStart = (editor: SlateEditor) => {

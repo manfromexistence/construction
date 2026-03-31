@@ -1,28 +1,19 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
-import { Button } from "@/components/ui/button"
-import { UTM_PARAMS } from "@/config/site"
-import { addQueryParams } from "@/utils/url"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/base/ui/tooltip";
+import { Button } from "@/components/ui/button";
+import { UTM_PARAMS } from "@/config/site";
+import { addQueryParams } from "@/utils/url";
 
 type GitHubStarsProps = {
-  repo: string
-  stargazersCount: number
-}
+  repo: string;
+  stargazersCount: number;
+};
 
 export function GitHubStars({ repo, stargazersCount }: GitHubStarsProps) {
   return (
     <Tooltip>
       <TooltipTrigger
         render={
-          <Button
-            className="gap-1.5 border-none pr-1.5 pl-2"
-            variant="ghost"
-            size="sm"
-            asChild
-          >
+          <Button className="gap-1.5 border-none pr-1.5 pl-2" variant="ghost" size="sm" asChild>
             <a
               href={addQueryParams(`https://github.com/${repo}`, UTM_PARAMS)}
               target="_blank"
@@ -50,5 +41,5 @@ export function GitHubStars({ repo, stargazersCount }: GitHubStarsProps) {
         {new Intl.NumberFormat("en-US").format(stargazersCount)} stars
       </TooltipContent>
     </Tooltip>
-  )
+  );
 }

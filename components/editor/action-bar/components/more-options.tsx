@@ -1,3 +1,5 @@
+import { MoreVertical } from "lucide-react";
+import { useState } from "react";
 import McpIcon from "@/assets/mcp.svg";
 import ContrastChecker from "@/components/editor/contrast-checker";
 import { Button } from "@/components/ui/button";
@@ -8,8 +10,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEditorStore } from "@/store/editor-store";
-import { MoreVertical } from "lucide-react";
-import { useState } from "react";
 import { MCPDialog } from "./mcp-dialog";
 
 interface MoreOptionsProps extends React.ComponentProps<typeof DropdownMenuTrigger> {}

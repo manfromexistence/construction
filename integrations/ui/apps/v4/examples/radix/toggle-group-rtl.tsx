@@ -1,13 +1,7 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/radix-nova/ui-rtl/toggle-group"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { ToggleGroup, ToggleGroupItem } from "@/styles/radix-nova/ui-rtl/toggle-group";
 
 const translations: Translations = {
   en: {
@@ -34,10 +28,10 @@ const translations: Translations = {
       cards: "כרטיסים",
     },
   },
-}
+};
 
 export function ToggleGroupRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <ToggleGroup variant="outline" type="single" defaultValue="list">
@@ -51,5 +45,5 @@ export function ToggleGroupRtl() {
         {t.cards}
       </ToggleGroupItem>
     </ToggleGroup>
-  )
+  );
 }

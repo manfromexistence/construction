@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useLanguageContext } from "@/components/language-selector"
-import { Card, CardContent } from "@/styles/base-nova/ui-rtl/card"
-import { Checkbox } from "@/styles/base-nova/ui-rtl/checkbox"
+import { useLanguageContext } from "@/components/language-selector";
+import { Card, CardContent } from "@/styles/base-nova/ui-rtl/card";
+import { Checkbox } from "@/styles/base-nova/ui-rtl/checkbox";
 import {
   Field,
   FieldDescription,
@@ -11,7 +11,7 @@ import {
   FieldLegend,
   FieldSet,
   FieldTitle,
-} from "@/styles/base-nova/ui-rtl/field"
+} from "@/styles/base-nova/ui-rtl/field";
 
 const translations = {
   ar: {
@@ -32,19 +32,19 @@ const translations = {
     referral: "הפניה",
     other: "אחר",
   },
-}
+};
 
 export function FieldHear() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
 
   const options = [
     { label: t.socialMedia, value: "social-media" },
     { label: t.searchEngine, value: "search-engine" },
     { label: t.referral, value: "referral" },
     { label: t.other, value: "other" },
-  ]
+  ];
 
   return (
     <div dir={t.dir}>
@@ -54,9 +54,7 @@ export function FieldHear() {
             <FieldGroup>
               <FieldSet className="gap-4">
                 <FieldLegend>{t.legend}</FieldLegend>
-                <FieldDescription className="line-clamp-1">
-                  {t.description}
-                </FieldDescription>
+                <FieldDescription className="line-clamp-1">{t.description}</FieldDescription>
                 <FieldGroup className="flex flex-row flex-wrap gap-2 [--radius:9999rem]">
                   {options.map((option) => (
                     <FieldLabel
@@ -85,5 +83,5 @@ export function FieldHear() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }

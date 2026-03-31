@@ -1,12 +1,12 @@
-import { LoaderIcon } from "lucide-react"
+import { LoaderIcon } from "lucide-react";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
   InputGroupText,
-} from "@/styles/radix-nova/ui/input-group"
-import { Spinner } from "@/styles/radix-nova/ui/spinner"
+} from "@/styles/radix-nova/ui/input-group";
+import { Spinner } from "@/styles/radix-nova/ui/spinner";
 
 export default function InputGroupSpinner() {
   return (
@@ -36,11 +36,9 @@ export default function InputGroupSpinner() {
           <LoaderIcon className="animate-spin" />
         </InputGroupAddon>
         <InputGroupAddon align="inline-end">
-          <InputGroupText className="text-muted-foreground">
-            Please wait...
-          </InputGroupText>
+          <InputGroupText className="text-muted-foreground">Please wait...</InputGroupText>
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

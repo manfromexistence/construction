@@ -1,4 +1,4 @@
-import { SHADCN_URL } from "@/src/registry/constants"
+import { SHADCN_URL } from "@/src/registry/constants";
 
 export const FRAMEWORKS = {
   "next-app": {
@@ -30,8 +30,7 @@ export const FRAMEWORKS = {
     label: "React Router",
     links: {
       installation: `${SHADCN_URL}/docs/installation/react-router`,
-      tailwind:
-        "https://tailwindcss.com/docs/installation/framework-guides/react-router",
+      tailwind: "https://tailwindcss.com/docs/installation/framework-guides/react-router",
     },
   },
   vite: {
@@ -90,6 +89,6 @@ export const FRAMEWORKS = {
       tailwind: "https://tailwindcss.com/docs/installation",
     },
   },
-} as const
+} as const;
 
-export type Framework = (typeof FRAMEWORKS)[keyof typeof FRAMEWORKS]
+export type Framework = (typeof FRAMEWORKS)[keyof typeof FRAMEWORKS];

@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useTheme } from "next-themes"
+import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,24 +10,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { MagicCard } from "@/registry/magicui/magic-card"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { MagicCard } from "@/registry/magicui/magic-card";
 
 export default function MagicCardDemo() {
-  const { theme } = useTheme()
+  const { theme } = useTheme();
   return (
     <Card className="w-full max-w-sm border-none p-0 shadow-none">
-      <MagicCard
-        gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"}
-        className="p-0"
-      >
+      <MagicCard gradientColor={theme === "dark" ? "#262626" : "#D9D9D955"} className="p-0">
         <CardHeader className="border-border border-b p-4 [.border-b]:pb-4">
           <CardTitle>Login</CardTitle>
-          <CardDescription>
-            Enter your credentials to access your account
-          </CardDescription>
+          <CardDescription>Enter your credentials to access your account</CardDescription>
         </CardHeader>
         <CardContent className="p-4">
           <form>
@@ -48,5 +43,5 @@ export default function MagicCardDemo() {
         </CardFooter>
       </MagicCard>
     </Card>
-  )
+  );
 }

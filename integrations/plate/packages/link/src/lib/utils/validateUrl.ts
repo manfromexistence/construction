@@ -1,22 +1,21 @@
-import { type SlateEditor, isUrl as defaultIsUrl, sanitizeUrl } from 'platejs';
+import { isUrl as defaultIsUrl, type SlateEditor, sanitizeUrl } from "platejs";
 
-import { BaseLinkPlugin } from '../BaseLinkPlugin';
+import { BaseLinkPlugin } from "../BaseLinkPlugin";
 
 // Markdown headings have a space after the # symbols
 const MARKDOWN_HEADING_PATTERN = /^#{1,6}\s+/;
 
 export const validateUrl = (editor: SlateEditor, url: string): boolean => {
-  const { allowedSchemes, dangerouslySkipSanitization, isUrl } =
-    editor.getOptions(BaseLinkPlugin);
+  const { allowedSchemes, dangerouslySkipSanitization, isUrl } = editor.getOptions(BaseLinkPlugin);
   const customIsUrl = isUrl && isUrl !== defaultIsUrl ? isUrl : undefined;
 
   // Allow internal links starting with /
-  if (url.startsWith('/') && !url.startsWith('//')) {
+  if (url.startsWith("/") && !url.startsWith("//")) {
     return customIsUrl ? customIsUrl(url) : true;
   }
 
   // For strings starting with #, check if it's a markdown heading
-  if (url.startsWith('#')) {
+  if (url.startsWith("#")) {
     if (MARKDOWN_HEADING_PATTERN.test(url)) {
       return false; // This is a markdown heading, not a valid link
     }

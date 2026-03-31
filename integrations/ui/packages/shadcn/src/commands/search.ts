@@ -1,23 +1,23 @@
-import path from "path"
-import { configWithDefaults } from "@/src/registry/config"
-import { clearRegistryContext } from "@/src/registry/context"
-import { searchRegistries } from "@/src/registry/search"
-import { validateRegistryConfigForItems } from "@/src/registry/validator"
-import { rawConfigSchema } from "@/src/schema"
-import { loadEnvFiles } from "@/src/utils/env-loader"
-import { createConfig, getConfig } from "@/src/utils/get-config"
-import { handleError } from "@/src/utils/handle-error"
-import { ensureRegistriesInConfig } from "@/src/utils/registries"
-import { Command } from "commander"
-import fsExtra from "fs-extra"
-import { z } from "zod"
+import { Command } from "commander";
+import fsExtra from "fs-extra";
+import path from "path";
+import { z } from "zod";
+import { configWithDefaults } from "@/src/registry/config";
+import { clearRegistryContext } from "@/src/registry/context";
+import { searchRegistries } from "@/src/registry/search";
+import { validateRegistryConfigForItems } from "@/src/registry/validator";
+import { rawConfigSchema } from "@/src/schema";
+import { loadEnvFiles } from "@/src/utils/env-loader";
+import { createConfig, getConfig } from "@/src/utils/get-config";
+import { handleError } from "@/src/utils/handle-error";
+import { ensureRegistriesInConfig } from "@/src/utils/registries";
 
 const searchOptionsSchema = z.object({
   cwd: z.string(),
   query: z.string().optional(),
   limit: z.number().optional(),
   offset: z.number().optional(),
-})
+});
 
 // TODO: We're duplicating logic for shadowConfig here.
 // Revisit and properly abstract this.
@@ -36,11 +36,7 @@ export const search = new Command()
     process.cwd()
   )
   .option("-q, --query <query>", "query string")
-  .option(
-    "-l, --limit <number>",
-    "maximum number of items to display per registry",
-    "100"
-  )
+  .option("-l, --limit <number>", "maximum number of items to display per registry", "100")
   .option("-o, --offset <number>", "number of items to skip", "0")
   .action(async (registries: string[], opts) => {
     try {
@@ -49,9 +45,9 @@ export const search = new Command()
         query: opts.query,
         limit: opts.limit ? parseInt(opts.limit, 10) : undefined,
         offset: opts.offset ? parseInt(opts.offset, 10) : undefined,
-      })
+      });
 
-      await loadEnvFiles(options.cwd)
+      await loadEnvFiles(options.cwd);
 
       // Start with a shadow config to support partial components.json.
       // Use createConfig to get proper default paths
@@ -60,46 +56,45 @@ export const search = new Command()
         resolvedPaths: {
           cwd: options.cwd,
         },
-      })
-      let shadowConfig = configWithDefaults(defaultConfig)
+      });
+      let shadowConfig = configWithDefaults(defaultConfig);
 
       // Check if there's a components.json file (partial or complete).
-      const componentsJsonPath = path.resolve(options.cwd, "components.json")
+      const componentsJsonPath = path.resolve(options.cwd, "components.json");
       if (fsExtra.existsSync(componentsJsonPath)) {
-        const existingConfig = await fsExtra.readJson(componentsJsonPath)
-        const partialConfig = rawConfigSchema.partial().parse(existingConfig)
+        const existingConfig = await fsExtra.readJson(componentsJsonPath);
+        const partialConfig = rawConfigSchema.partial().parse(existingConfig);
         shadowConfig = configWithDefaults({
           ...defaultConfig,
           ...partialConfig,
-        })
+        });
       }
 
       // Try to get the full config, but fall back to shadow config if it fails.
-      let config = shadowConfig
+      let config = shadowConfig;
       try {
-        const fullConfig = await getConfig(options.cwd)
+        const fullConfig = await getConfig(options.cwd);
         if (fullConfig) {
-          config = configWithDefaults(fullConfig)
+          config = configWithDefaults(fullConfig);
         }
       } catch {
         // Use shadow config if getConfig fails (partial components.json).
       }
 
-      const { config: updatedConfig, newRegistries } =
-        await ensureRegistriesInConfig(
-          registries.map((registry) => `${registry}/registry`),
-          config,
-          {
-            silent: true,
-            writeFile: false,
-          }
-        )
+      const { config: updatedConfig, newRegistries } = await ensureRegistriesInConfig(
+        registries.map((registry) => `${registry}/registry`),
+        config,
+        {
+          silent: true,
+          writeFile: false,
+        }
+      );
       if (newRegistries.length > 0) {
-        config.registries = updatedConfig.registries
+        config.registries = updatedConfig.registries;
       }
 
       // Validate registries early for better error messages.
-      validateRegistryConfigForItems(registries, config)
+      validateRegistryConfigForItems(registries, config);
 
       // Use searchRegistries for both search and non-search cases
       const results = await searchRegistries(registries as `@${string}`[], {
@@ -107,13 +102,13 @@ export const search = new Command()
         limit: options.limit,
         offset: options.offset,
         config,
-      })
+      });
 
-      console.log(JSON.stringify(results, null, 2))
-      process.exit(0)
+      console.log(JSON.stringify(results, null, 2));
+      process.exit(0);
     } catch (error) {
-      handleError(error)
+      handleError(error);
     } finally {
-      clearRegistryContext()
+      clearRegistryContext();
     }
-  })
+  });

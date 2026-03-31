@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { CreditCardIcon, SettingsIcon, UserIcon } from "lucide-react"
+import { CreditCardIcon, SettingsIcon, UserIcon } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -24,7 +21,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui-rtl/dropdown-menu"
+} from "@/styles/radix-nova/ui-rtl/dropdown-menu";
 
 const translations: Translations = {
   en: {
@@ -117,31 +114,26 @@ const translations: Translations = {
       left: "שמאל",
     },
   },
-}
+};
 
 export function DropdownMenuRtl() {
-  const { dir, language, t } = useTranslation(translations, "ar")
-  const [showStatusBar, setShowStatusBar] = React.useState(true)
-  const [showActivityBar, setShowActivityBar] = React.useState(false)
-  const [showPanel, setShowPanel] = React.useState(false)
-  const [position, setPosition] = React.useState("bottom")
+  const { dir, language, t } = useTranslation(translations, "ar");
+  const [showStatusBar, setShowStatusBar] = React.useState(true);
+  const [showActivityBar, setShowActivityBar] = React.useState(false);
+  const [showPanel, setShowPanel] = React.useState(false);
+  const [position, setPosition] = React.useState("bottom");
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">{t.open}</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-36"
-        data-lang={dir === "rtl" ? language : undefined}
-      >
+      <DropdownMenuContent className="w-36" data-lang={dir === "rtl" ? language : undefined}>
         <DropdownMenuGroup>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>{t.account}</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent
-                data-lang={dir === "rtl" ? language : undefined}
-              >
+              <DropdownMenuSubContent data-lang={dir === "rtl" ? language : undefined}>
                 <DropdownMenuGroup>
                   <DropdownMenuItem>
                     <UserIcon />
@@ -167,17 +159,13 @@ export function DropdownMenuRtl() {
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>{t.inviteUsers}</DropdownMenuSubTrigger>
             <DropdownMenuPortal>
-              <DropdownMenuSubContent
-                data-lang={dir === "rtl" ? language : undefined}
-              >
+              <DropdownMenuSubContent data-lang={dir === "rtl" ? language : undefined}>
                 <DropdownMenuItem>{t.email}</DropdownMenuItem>
                 <DropdownMenuItem>{t.message}</DropdownMenuItem>
                 <DropdownMenuSub>
                   <DropdownMenuSubTrigger>{t.more}</DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
-                    <DropdownMenuSubContent
-                      data-lang={dir === "rtl" ? language : undefined}
-                    >
+                    <DropdownMenuSubContent data-lang={dir === "rtl" ? language : undefined}>
                       <DropdownMenuItem>{t.calendar}</DropdownMenuItem>
                       <DropdownMenuItem>{t.chat}</DropdownMenuItem>
                       <DropdownMenuSeparator />
@@ -198,22 +186,13 @@ export function DropdownMenuRtl() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t.view}</DropdownMenuLabel>
-          <DropdownMenuCheckboxItem
-            checked={showStatusBar}
-            onCheckedChange={setShowStatusBar}
-          >
+          <DropdownMenuCheckboxItem checked={showStatusBar} onCheckedChange={setShowStatusBar}>
             {t.statusBar}
           </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            checked={showActivityBar}
-            onCheckedChange={setShowActivityBar}
-          >
+          <DropdownMenuCheckboxItem checked={showActivityBar} onCheckedChange={setShowActivityBar}>
             {t.activityBar}
           </DropdownMenuCheckboxItem>
-          <DropdownMenuCheckboxItem
-            checked={showPanel}
-            onCheckedChange={setShowPanel}
-          >
+          <DropdownMenuCheckboxItem checked={showPanel} onCheckedChange={setShowPanel}>
             {t.panel}
           </DropdownMenuCheckboxItem>
         </DropdownMenuGroup>
@@ -222,12 +201,8 @@ export function DropdownMenuRtl() {
           <DropdownMenuLabel>{t.position}</DropdownMenuLabel>
           <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
             <DropdownMenuRadioItem value="top">{t.top}</DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="bottom">
-              {t.bottom}
-            </DropdownMenuRadioItem>
-            <DropdownMenuRadioItem value="right">
-              {t.right}
-            </DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="bottom">{t.bottom}</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="right">{t.right}</DropdownMenuRadioItem>
             <DropdownMenuRadioItem value="left">{t.left}</DropdownMenuRadioItem>
           </DropdownMenuRadioGroup>
         </DropdownMenuGroup>
@@ -237,5 +212,5 @@ export function DropdownMenuRtl() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

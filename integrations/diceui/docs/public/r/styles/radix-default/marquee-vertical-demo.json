@@ -1,8 +1,6 @@
 {
   "name": "marquee-vertical-demo",
-  "registryDependencies": [
-    "marquee"
-  ],
+  "registryDependencies": ["marquee"],
   "files": [
     {
       "path": "examples/marquee-vertical-demo.tsx",

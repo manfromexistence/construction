@@ -1,4 +1,4 @@
-import type { Editor, NodeEntry } from '../../interfaces/index';
+import type { Editor, NodeEntry } from "../../interfaces/index";
 
 export const nodesRange = (editor: Editor, nodes: NodeEntry[]) => {
   if (nodes.length === 0) return;

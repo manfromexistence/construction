@@ -1,3 +1,5 @@
+import { AlertTriangle, Check, Contrast, Moon, Sun } from "lucide-react";
+import { useState } from "react";
 import { useTheme } from "@/components/theme-provider";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -13,8 +15,6 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
 import { ThemeStyleProps } from "@/types/theme";
-import { AlertTriangle, Check, Contrast, Moon, Sun } from "lucide-react";
-import { useState } from "react";
 import { useContrastChecker } from "../../hooks/use-contrast-checker";
 import { Button } from "../ui/button";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";

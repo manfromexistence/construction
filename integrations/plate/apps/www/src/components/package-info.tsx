@@ -1,9 +1,8 @@
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
-import Link from 'next/link';
-
-import { Separator } from '@/components/ui/separator';
-import { usePackageInfo } from '@/hooks/use-package-info';
+import { Separator } from "@/components/ui/separator";
+import { usePackageInfo } from "@/hooks/use-package-info";
 
 export function PackageInfo({ children }: { children: React.ReactNode }) {
   const [packageInfo] = usePackageInfo();
@@ -15,9 +14,7 @@ export function PackageInfo({ children }: { children: React.ReactNode }) {
       <Separator className="mb-4 md:hidden" />
 
       <nav className="flex w-fit flex-col gap-3">
-        {packageInfo?.gzip && (
-          <div className="text-muted-foreground">Size: {packageInfo.gzip}</div>
-        )}
+        {packageInfo?.gzip && <div className="text-muted-foreground">Size: {packageInfo.gzip}</div>}
 
         {packageInfo?.source && (
           <div>

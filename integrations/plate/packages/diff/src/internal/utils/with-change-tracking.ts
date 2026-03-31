@@ -1,25 +1,25 @@
-import isEqual from 'lodash/isEqual.js';
-import uniqWith from 'lodash/uniqWith.js';
+import isEqual from "lodash/isEqual.js";
+import uniqWith from "lodash/uniqWith.js";
 import {
   type Editor,
   type EditorTransforms,
   type InsertTextOperation,
   type LegacyEditorMethods,
   type MergeNodeOperation,
+  NodeApi,
   type Operation,
+  PathApi,
+  PointApi,
   type PointRef,
+  RangeApi,
   type RangeRef,
   type RemoveTextOperation,
   type SetNodeOperation,
   type SplitNodeOperation,
   type TText,
-  NodeApi,
-  PathApi,
-  PointApi,
-  RangeApi,
-} from 'platejs';
+} from "platejs";
 
-import type { ComputeDiffOptions } from '../../lib/computeDiff';
+import type { ComputeDiffOptions } from "../../lib/computeDiff";
 
 export type ChangeTrackingEditor = {
   insertedTexts: {
@@ -64,7 +64,7 @@ export const withChangeTracking = <E extends Editor>(
 
 const applyWithChangeTracking = <E extends Editor>(
   editor: ChangeTrackingEditor & E,
-  apply: EditorTransforms['apply'],
+  apply: EditorTransforms["apply"],
   op: Operation
 ) => {
   if (!editor.recordingOperations) {
@@ -73,27 +73,27 @@ const applyWithChangeTracking = <E extends Editor>(
 
   withoutRecordingOperations(editor, () => {
     switch (op.type) {
-      case 'insert_text': {
+      case "insert_text": {
         applyInsertText(editor, apply, op);
 
         break;
       }
-      case 'merge_node': {
+      case "merge_node": {
         applyMergeNode(editor, apply, op);
 
         break;
       }
-      case 'remove_text': {
+      case "remove_text": {
         applyRemoveText(editor, apply, op);
 
         break;
       }
-      case 'set_node': {
+      case "set_node": {
         applySetNode(editor, apply, op);
 
         break;
       }
-      case 'split_node': {
+      case "split_node": {
         applySplitNode(editor, apply, op);
 
         break;
@@ -108,7 +108,7 @@ const applyWithChangeTracking = <E extends Editor>(
 
 const applyInsertText = <E extends Editor>(
   editor: ChangeTrackingEditor & E,
-  apply: EditorTransforms['apply'],
+  apply: EditorTransforms["apply"],
   op: InsertTextOperation
 ) => {
   const node = NodeApi.get(editor, op.path) as TText;
@@ -131,7 +131,7 @@ const applyInsertText = <E extends Editor>(
 
 const applyRemoveText = <E extends Editor>(
   editor: ChangeTrackingEditor & E,
-  apply: EditorTransforms['apply'],
+  apply: EditorTransforms["apply"],
   op: RemoveTextOperation
 ) => {
   const node = NodeApi.get(editor, op.path) as TText;
@@ -140,7 +140,7 @@ const applyRemoveText = <E extends Editor>(
 
   const point = { offset: op.offset, path: op.path };
   const pointRef = editor.api.pointRef(point, {
-    affinity: 'backward',
+    affinity: "backward",
   });
 
   editor.removedTexts.push({
@@ -154,7 +154,7 @@ const applyRemoveText = <E extends Editor>(
 
 const applyMergeNode = <E extends Editor>(
   editor: ChangeTrackingEditor & E,
-  apply: EditorTransforms['apply'],
+  apply: EditorTransforms["apply"],
   op: MergeNodeOperation
 ) => {
   const oldNode = NodeApi.get(editor, op.path) as TText;
@@ -180,7 +180,7 @@ const applyMergeNode = <E extends Editor>(
 
 const applySplitNode = <E extends Editor>(
   editor: ChangeTrackingEditor & E,
-  apply: EditorTransforms['apply'],
+  apply: EditorTransforms["apply"],
   op: SplitNodeOperation
 ) => {
   const oldNode = NodeApi.get(editor, op.path) as TText;
@@ -202,7 +202,7 @@ const applySplitNode = <E extends Editor>(
 
 const applySetNode = <E extends Editor>(
   editor: ChangeTrackingEditor & E,
-  apply: EditorTransforms['apply'],
+  apply: EditorTransforms["apply"],
   op: SetNodeOperation
 ) => {
   apply(op);
@@ -235,7 +235,7 @@ const commitChangesToDiffs = <E extends Editor>(
     });
 
     editor.removedTexts.forEach(
-      ({ node, pointRef }: ChangeTrackingEditor['removedTexts'][number]) => {
+      ({ node, pointRef }: ChangeTrackingEditor["removedTexts"][number]) => {
         const point = pointRef.current;
 
         if (point) {
@@ -253,7 +253,7 @@ const commitChangesToDiffs = <E extends Editor>(
     );
 
     editor.insertedTexts.forEach(
-      ({ node, rangeRef }: ChangeTrackingEditor['insertedTexts'][number]) => {
+      ({ node, rangeRef }: ChangeTrackingEditor["insertedTexts"][number]) => {
         const range = rangeRef.current;
 
         if (range) {
@@ -270,33 +270,25 @@ const commitChangesToDiffs = <E extends Editor>(
 };
 
 const flattenPropsChanges = (editor: ChangeTrackingEditor) => {
-  const propChangeRangeRefs = editor.propsChanges.map(
-    ({ rangeRef }) => rangeRef
-  );
+  const propChangeRangeRefs = editor.propsChanges.map(({ rangeRef }) => rangeRef);
 
-  const insertedTextRangeRefs = editor.insertedTexts.map(
-    ({ rangeRef }) => rangeRef
-  );
+  const insertedTextRangeRefs = editor.insertedTexts.map(({ rangeRef }) => rangeRef);
 
   /**
    * The set of points at which some range starts or ends. Insertion ranges are
    * included because we don't want to return props changes for them.
    */
-  const unsortedRangePoints = [
-    ...propChangeRangeRefs,
-    ...insertedTextRangeRefs,
-  ].flatMap((rangeRef) => {
-    const range = rangeRef.current;
+  const unsortedRangePoints = [...propChangeRangeRefs, ...insertedTextRangeRefs].flatMap(
+    (rangeRef) => {
+      const range = rangeRef.current;
 
-    if (!range) return [];
+      if (!range) return [];
 
-    return [range.anchor, range.focus];
-  });
-
-  const rangePoints = uniqWith(
-    unsortedRangePoints.sort(PointApi.compare),
-    PointApi.equals
+      return [range.anchor, range.focus];
+    }
   );
+
+  const rangePoints = uniqWith(unsortedRangePoints.sort(PointApi.compare), PointApi.equals);
 
   if (rangePoints.length < 2) return [];
 
@@ -313,9 +305,7 @@ const flattenPropsChanges = (editor: ChangeTrackingEditor) => {
 
   const flatUpdates = flatRanges.map((flatRange) => {
     // The set of changes of a certain type that intersect with `flatRange`
-    const getIntersectingChanges = <T extends { rangeRef: RangeRef }>(
-      changes: T[]
-    ) =>
+    const getIntersectingChanges = <T extends { rangeRef: RangeRef }>(changes: T[]) =>
       changes.filter(({ rangeRef }) => {
         const range = rangeRef.current;
 
@@ -336,13 +326,9 @@ const flattenPropsChanges = (editor: ChangeTrackingEditor) => {
     if (intersectingUpdates.length === 0) return null;
 
     // Get the props of the range before and after the updates
-    const initialProps = objectWithoutUndefined(
-      intersectingUpdates[0].properties
-    );
+    const initialProps = objectWithoutUndefined(intersectingUpdates[0].properties);
 
-    const finalProps = objectWithoutUndefined(
-      intersectingUpdates.at(-1)!.newProperties
-    );
+    const finalProps = objectWithoutUndefined(intersectingUpdates.at(-1)!.newProperties);
 
     if (isEqual(initialProps, finalProps)) return null;
 
@@ -374,10 +360,7 @@ const flattenPropsChanges = (editor: ChangeTrackingEditor) => {
     rangeRef.unref();
   }
 
-  return flatUpdates.filter(Boolean) as Exclude<
-    (typeof flatUpdates)[number],
-    null
-  >[];
+  return flatUpdates.filter(Boolean) as Exclude<(typeof flatUpdates)[number], null>[];
 };
 
 const objectWithoutUndefined = (obj: Record<string, any>) => {
@@ -392,10 +375,7 @@ const objectWithoutUndefined = (obj: Record<string, any>) => {
   return newObj;
 };
 
-const withoutRecordingOperations = (
-  editor: ChangeTrackingEditor,
-  fn: () => void
-) => {
+const withoutRecordingOperations = (editor: ChangeTrackingEditor, fn: () => void) => {
   editor.recordingOperations = false;
   fn();
   editor.recordingOperations = true;

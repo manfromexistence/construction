@@ -1,10 +1,10 @@
-import { type SlateEditor, createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS, type SlateEditor } from "platejs";
 
 export const BaseFontSizePlugin = createSlatePlugin({
   key: KEYS.fontSize,
   inject: {
     nodeProps: {
-      nodeKey: 'fontSize',
+      nodeKey: "fontSize",
     },
   },
   parsers: {
@@ -14,7 +14,7 @@ export const BaseFontSizePlugin = createSlatePlugin({
         rules: [
           {
             validStyle: {
-              fontSize: '*',
+              fontSize: "*",
             },
           },
         ],

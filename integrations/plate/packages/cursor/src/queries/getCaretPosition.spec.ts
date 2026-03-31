@@ -1,12 +1,12 @@
-import { getCaretPosition } from './getCaretPosition';
+import { getCaretPosition } from "./getCaretPosition";
 
-describe('getCaretPosition', () => {
+describe("getCaretPosition", () => {
   const rects = [
     { height: 10, left: 5, top: 1, width: 4 },
     { height: 12, left: 20, top: 3, width: 6 },
   ];
 
-  it('returns null when there is no anchor rect', () => {
+  it("returns null when there is no anchor rect", () => {
     expect(
       getCaretPosition([], {
         anchor: { offset: 0, path: [0, 0] },
@@ -15,7 +15,7 @@ describe('getCaretPosition', () => {
     ).toBeNull();
   });
 
-  it('uses the trailing edge for forward expanded selections', () => {
+  it("uses the trailing edge for forward expanded selections", () => {
     expect(
       getCaretPosition(rects as any, {
         anchor: { offset: 0, path: [0, 0] },
@@ -28,7 +28,7 @@ describe('getCaretPosition', () => {
     });
   });
 
-  it('uses the leading edge for backward or collapsed selections', () => {
+  it("uses the leading edge for backward or collapsed selections", () => {
     expect(
       getCaretPosition(rects as any, {
         anchor: { offset: 2, path: [0, 1] },

@@ -1,18 +1,18 @@
-"use client"
+"use client";
 
-import { CodeXmlIcon, EyeIcon, RepeatIcon } from "lucide-react"
-import { useTheme } from "next-themes"
-import React, { useMemo, useState } from "react"
+import { CodeXmlIcon, EyeIcon, RepeatIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import React, { useMemo, useState } from "react";
 
-import { Index } from "@/__registry__/index"
-import { cn } from "@/lib/utils"
+import { Index } from "@/__registry__/index";
+import { cn } from "@/lib/utils";
 
-import { Tooltip, TooltipContent, TooltipTrigger } from "./base/ui/tooltip"
-import { CodeCollapsibleWrapper } from "./code-collapsible-wrapper"
-import { Button } from "./ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs"
-import { Code as CodeInline } from "./ui/typography"
-import { OpenInV0Button } from "./v0-open-button"
+import { Tooltip, TooltipContent, TooltipTrigger } from "./base/ui/tooltip";
+import { CodeCollapsibleWrapper } from "./code-collapsible-wrapper";
+import { Button } from "./ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
+import { Code as CodeInline } from "./ui/typography";
+import { OpenInV0Button } from "./v0-open-button";
 
 export function ComponentPreview({
   className,
@@ -25,39 +25,36 @@ export function ComponentPreview({
   children,
   ...props
 }: React.ComponentProps<"div"> & {
-  name: string
-  openInV0Url?: string
-  canReplay?: boolean
-  notProse?: boolean
-  codeCollapsible?: boolean
-  remountOnThemeChange?: boolean
+  name: string;
+  openInV0Url?: string;
+  canReplay?: boolean;
+  notProse?: boolean;
+  codeCollapsible?: boolean;
+  remountOnThemeChange?: boolean;
 }) {
-  const { resolvedTheme } = useTheme()
+  const { resolvedTheme } = useTheme();
 
-  const [replay, setReplay] = useState(0)
+  const [replay, setReplay] = useState(0);
 
-  const Codes = React.Children.toArray(children) as React.ReactElement[]
-  const Code = Codes[0]
+  const Codes = React.Children.toArray(children) as React.ReactElement[];
+  const Code = Codes[0];
 
   const Preview = useMemo(() => {
-    const Component = Index[name]?.component
+    const Component = Index[name]?.component;
 
     if (!Component) {
       return (
         <p className="text-sm text-muted-foreground">
           Component <CodeInline>{name}</CodeInline> not found in registry.
         </p>
-      )
+      );
     }
 
-    return <Component />
-  }, [name])
+    return <Component />;
+  }, [name]);
 
   return (
-    <div
-      className={cn("my-[1.25em]", notProse && "not-prose", className)}
-      {...props}
-    >
+    <div className={cn("my-[1.25em]", notProse && "not-prose", className)} {...props}>
       <Tabs defaultValue="preview" className="gap-4">
         <TabsList>
           <TabsTrigger className="px-2.5" value="preview">
@@ -125,14 +122,12 @@ export function ComponentPreview({
 
         <TabsContent value="code" className="[&>figure]:m-0">
           {codeCollapsible ? (
-            <CodeCollapsibleWrapper className="my-0">
-              {Code}
-            </CodeCollapsibleWrapper>
+            <CodeCollapsibleWrapper className="my-0">{Code}</CodeCollapsibleWrapper>
           ) : (
             Code
           )}
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }

@@ -1,10 +1,7 @@
-import {
-  type UseVirtualFloatingOptions,
-  useVirtualFloating,
-} from '@platejs/floating';
-import { useEditorPlugin } from 'platejs/react';
+import { type UseVirtualFloatingOptions, useVirtualFloating } from "@platejs/floating";
+import { useEditorPlugin } from "platejs/react";
 
-import { LinkPlugin } from '../../LinkPlugin';
+import { LinkPlugin } from "../../LinkPlugin";
 
 export const useVirtualFloatingLink = ({
   editorId,
@@ -13,7 +10,7 @@ export const useVirtualFloatingLink = ({
   const { setOption } = useEditorPlugin(LinkPlugin);
 
   return useVirtualFloating({
-    onOpenChange: (open) => setOption('openEditorId', open ? editorId : null),
+    onOpenChange: (open) => setOption("openEditorId", open ? editorId : null),
     ...floatingOptions,
   });
 };

@@ -7,7 +7,7 @@ import {
   MenubarSeparator,
   MenubarShortcut,
   MenubarTrigger,
-} from "@/styles/base-nova/ui/menubar"
+} from "@/styles/base-nova/ui/menubar";
 
 export function MenubarCheckbox() {
   return (
@@ -16,9 +16,7 @@ export function MenubarCheckbox() {
         <MenubarTrigger>View</MenubarTrigger>
         <MenubarContent className="w-64">
           <MenubarCheckboxItem>Always Show Bookmarks Bar</MenubarCheckboxItem>
-          <MenubarCheckboxItem checked>
-            Always Show Full URLs
-          </MenubarCheckboxItem>
+          <MenubarCheckboxItem checked>Always Show Full URLs</MenubarCheckboxItem>
           <MenubarSeparator />
           <MenubarItem inset>
             Reload <MenubarShortcut>⌘R</MenubarShortcut>
@@ -37,5 +35,5 @@ export function MenubarCheckbox() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  )
+  );
 }

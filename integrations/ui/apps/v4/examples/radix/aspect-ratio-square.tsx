@@ -1,6 +1,6 @@
-import Image from "next/image"
+import Image from "next/image";
 
-import { AspectRatio } from "@/styles/radix-nova/ui/aspect-ratio"
+import { AspectRatio } from "@/styles/radix-nova/ui/aspect-ratio";
 
 export function AspectRatioSquare() {
   return (
@@ -14,5 +14,5 @@ export function AspectRatioSquare() {
         />
       </AspectRatio>
     </div>
-  )
+  );
 }

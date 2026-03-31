@@ -19,13 +19,13 @@ export type CallCompletionApiOptions = {
 
 export type CompleteOptions = Omit<
   CallCompletionApiOptions,
-  'setAbortController' | 'setCompletion' | 'setError' | 'setLoading'
+  "setAbortController" | "setCompletion" | "setError" | "setLoading"
 >;
 
 // https://github.com/vercel/ai/blob/main/packages/ui-utils/src/call-completion-api.ts
 // https://github.com/vercel/ai/blob/642ba22ee33723f3aae9669c7e075322cffca2f3/packages/react/src/use-completion.ts
 export async function callCompletionApi({
-  api = '/api/completion',
+  api = "/api/completion",
   body,
   credentials,
   fetch = getOriginalFetch(),
@@ -47,7 +47,7 @@ export async function callCompletionApi({
     setAbortController(abortController);
 
     // Empty the completion immediately.
-    setCompletion('');
+    setCompletion("");
 
     const res = await fetch(api, {
       body: JSON.stringify({
@@ -56,10 +56,10 @@ export async function callCompletionApi({
       }),
       credentials,
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...headers,
       },
-      method: 'POST',
+      method: "POST",
       signal: abortController.signal,
     }).catch((error) => {
       throw error;
@@ -69,18 +69,16 @@ export async function callCompletionApi({
       await onResponse(res);
     }
     if (!res.ok) {
-      throw new Error(
-        (await res.text()) || 'Failed to fetch the chat response.'
-      );
+      throw new Error((await res.text()) || "Failed to fetch the chat response.");
     }
     if (!res.body) {
-      throw new Error('The response body is empty.');
+      throw new Error("The response body is empty.");
     }
 
     const { text } = await res.json();
 
     if (!text) {
-      throw new Error('The response does not contain a text field.');
+      throw new Error("The response does not contain a text field.");
     }
 
     setCompletion(text);
@@ -94,7 +92,7 @@ export async function callCompletionApi({
     return text as string;
   } catch (error) {
     // Ignore abort errors as they are expected.
-    if ((error as any).name === 'AbortError') {
+    if ((error as any).name === "AbortError") {
       setAbortController(null);
 
       return null;

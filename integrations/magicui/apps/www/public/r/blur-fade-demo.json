@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Blur Fade Demo",
   "description": "Example showing blur fade in and out animations.",
-  "registryDependencies": [
-    "@magicui/blur-fade"
-  ],
+  "registryDependencies": ["@magicui/blur-fade"],
   "files": [
     {
       "path": "registry/example/blur-fade-demo.tsx",

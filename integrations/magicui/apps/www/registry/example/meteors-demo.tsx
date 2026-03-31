@@ -1,4 +1,4 @@
-import { Meteors } from "@/registry/magicui/meteors"
+import { Meteors } from "@/registry/magicui/meteors";
 
 export default function MeteorDemo() {
   return (
@@ -8,5 +8,5 @@ export default function MeteorDemo() {
         Meteors
       </span>
     </div>
-  )
+  );
 }

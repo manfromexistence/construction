@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "pagination-example",
   "title": "Pagination",
-  "registryDependencies": [
-    "field",
-    "pagination",
-    "select",
-    "example"
-  ],
+  "registryDependencies": ["field", "pagination", "select", "example"],
   "files": [
     {
       "path": "registry/radix-luma/examples/pagination-example.tsx",

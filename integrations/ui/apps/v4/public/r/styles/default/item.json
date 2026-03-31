@@ -3,9 +3,7 @@
   "name": "item",
   "type": "registry:ui",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "separator"
-  ],
+  "registryDependencies": ["separator"],
   "files": [
     {
       "path": "ui/item.tsx",

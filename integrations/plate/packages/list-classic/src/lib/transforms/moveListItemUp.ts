@@ -1,16 +1,16 @@
 import {
   type ElementEntry,
-  type Path,
-  type SlateEditor,
-  type TElement,
   KEYS,
   NodeApi,
+  type Path,
   PathApi,
-} from 'platejs';
+  type SlateEditor,
+  type TElement,
+} from "platejs";
 
-import { hasListChild } from '../queries/hasListChild';
-import { moveListItemsToList } from './moveListItemsToList';
-import { unwrapList } from './unwrapList';
+import { hasListChild } from "../queries/hasListChild";
+import { moveListItemsToList } from "./moveListItemsToList";
+import { unwrapList } from "./unwrapList";
 
 export type MoveListItemUpOptions = {
   list: ElementEntry;
@@ -18,10 +18,7 @@ export type MoveListItemUpOptions = {
 };
 
 /** Move a list item up. */
-export const moveListItemUp = (
-  editor: SlateEditor,
-  { list, listItem }: MoveListItemUpOptions
-) => {
+export const moveListItemUp = (editor: SlateEditor, { list, listItem }: MoveListItemUpOptions) => {
   const move = () => {
     const [listNode, listPath] = list;
     const [liNode, liPath] = listItem;

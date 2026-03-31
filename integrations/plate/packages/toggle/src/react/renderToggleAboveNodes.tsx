@@ -1,11 +1,7 @@
-import React from 'react';
+import type { RenderNodeWrapper, RenderNodeWrapperFunction } from "platejs/react";
+import React from "react";
 
-import type {
-  RenderNodeWrapper,
-  RenderNodeWrapperFunction,
-} from 'platejs/react';
-
-import { useIsVisible } from './toggleIndexAtom';
+import { useIsVisible } from "./toggleIndexAtom";
 
 export const renderToggleAboveNodes: RenderNodeWrapper = () => ToggleAboveNodes;
 
@@ -20,6 +16,6 @@ const ToggleAboveNodes: RenderNodeWrapperFunction = ({ children, element }) => {
 const hiddenStyle: React.CSSProperties = {
   height: 0,
   margin: 0,
-  overflow: 'hidden',
-  visibility: 'hidden',
+  overflow: "hidden",
+  visibility: "hidden",
 };

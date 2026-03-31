@@ -1,9 +1,7 @@
-import React from 'react';
-
 import {
-  type UseVirtualFloatingOptions,
   getDOMSelectionBoundingClientRect,
-} from '@platejs/floating';
+  type UseVirtualFloatingOptions,
+} from "@platejs/floating";
 import {
   useComposedRef,
   useEditorPlugin,
@@ -12,32 +10,31 @@ import {
   useHotkeys,
   useOnClickOutside,
   usePluginOption,
-} from 'platejs/react';
+} from "platejs/react";
+import React from "react";
 
-import { LinkPlugin } from '../../LinkPlugin';
-import { triggerFloatingLinkInsert } from '../../utils/triggerFloatingLinkInsert';
-import { useFloatingLinkEscape } from './useFloatingLinkEscape';
-import { useVirtualFloatingLink } from './useVirtualFloatingLink';
+import { LinkPlugin } from "../../LinkPlugin";
+import { triggerFloatingLinkInsert } from "../../utils/triggerFloatingLinkInsert";
+import { useFloatingLinkEscape } from "./useFloatingLinkEscape";
+import { useVirtualFloatingLink } from "./useVirtualFloatingLink";
 
 export type LinkFloatingToolbarState = {
   floatingOptions?: UseVirtualFloatingOptions;
 };
 
-export const useFloatingLinkInsertState = ({
-  floatingOptions,
-}: LinkFloatingToolbarState = {}) => {
+export const useFloatingLinkInsertState = ({ floatingOptions }: LinkFloatingToolbarState = {}) => {
   const { editor, getOptions } = useEditorPlugin(LinkPlugin);
 
   const { triggerFloatingLinkHotkeys } = getOptions();
   const readOnly = useEditorReadOnly();
   const focused = useFocused();
-  const mode = usePluginOption(LinkPlugin, 'mode');
-  const isOpen = usePluginOption(LinkPlugin, 'isOpen', editor.id);
+  const mode = usePluginOption(LinkPlugin, "mode");
+  const isOpen = usePluginOption(LinkPlugin, "isOpen", editor.id);
 
   const floating = useVirtualFloatingLink({
     editorId: editor.id,
     getBoundingClientRect: getDOMSelectionBoundingClientRect,
-    open: isOpen && mode === 'insert',
+    open: isOpen && mode === "insert",
     whileElementsMounted: () => () => {},
     ...floatingOptions,
   });
@@ -60,17 +57,16 @@ export const useFloatingLinkInsert = ({
 }: ReturnType<typeof useFloatingLinkInsertState>): any => {
   const { api, editor, getOptions, setOption } = useEditorPlugin(LinkPlugin);
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> =
-    React.useCallback(
-      (e) => {
-        setOption('text', e.target.value);
-      },
-      [setOption]
-    );
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+    (e) => {
+      setOption("text", e.target.value);
+    },
+    [setOption]
+  );
 
   const ref = useOnClickOutside(
     () => {
-      if (getOptions().mode === 'insert') {
+      if (getOptions().mode === "insert") {
         api.floatingLink.hide();
         editor.tf.focus({ at: editor.selection! });
       }
@@ -84,9 +80,9 @@ export const useFloatingLinkInsert = ({
   React.useEffect(() => {
     if (isOpen) {
       floating.update();
-      setOption('updated', true);
+      setOption("updated", true);
     } else {
-      setOption('updated', false);
+      setOption("updated", false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, floating.update]);

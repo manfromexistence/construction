@@ -1,36 +1,29 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import type { UnifiedProvider } from "@platejs/yjs";
+import { YjsPlugin } from "@platejs/yjs/react";
+import { RefreshCw } from "lucide-react";
+import { nanoid } from "nanoid";
+import { Plate, useEditorRef, usePlateEditor, usePluginOption } from "platejs/react";
+import * as React from "react";
 
-import type { UnifiedProvider } from '@platejs/yjs';
-import { YjsPlugin } from '@platejs/yjs/react';
-import { RefreshCw } from 'lucide-react';
-import { nanoid } from 'nanoid';
-import {
-  Plate,
-  useEditorRef,
-  usePlateEditor,
-  usePluginOption,
-} from 'platejs/react';
-
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { EditorKit } from '@/registry/components/editor/editor-kit';
-import { useMounted } from '@/registry/hooks/use-mounted';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
-import { RemoteCursorOverlay } from '@/registry/ui/remote-cursor-overlay';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { EditorKit } from "@/registry/components/editor/editor-kit";
+import { useMounted } from "@/registry/hooks/use-mounted";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
+import { RemoteCursorOverlay } from "@/registry/ui/remote-cursor-overlay";
 
 const INITIAL_VALUE = [
   {
-    children: [{ text: 'This is the initial content loaded into the Y.Doc.' }],
-    type: 'p',
+    children: [{ text: "This is the initial content loaded into the Y.Doc." }],
+    type: "p",
   },
 ];
 
 export default function CollaborativeEditingDemo(): React.ReactNode {
   const mounted = useMounted();
-  const { generateNewRoom, roomName, handleRoomChange } =
-    useCollaborationRoom();
+  const { generateNewRoom, roomName, handleRoomChange } = useCollaborationRoom();
   const { cursorColor, username } = useCollaborationUser();
 
   const editor = usePlateEditor(
@@ -46,22 +39,22 @@ export default function CollaborativeEditingDemo(): React.ReactNode {
               {
                 options: {
                   name: roomName,
-                  url: 'ws://localhost:8888',
+                  url: "ws://localhost:8888",
                 },
-                type: 'hocuspocus',
+                type: "hocuspocus",
               },
               {
                 options: {
                   maxConns: 9, // Limit to 10 total participants
                   roomName,
                   signaling: [
-                    process.env.NODE_ENV === 'production'
+                    process.env.NODE_ENV === "production"
                       ? // Use public signaling server just for demo purposes
-                        'wss://signaling.yjs.dev'
-                      : 'ws://localhost:4444',
+                        "wss://signaling.yjs.dev"
+                      : "ws://localhost:4444",
                   ],
                 },
-                type: 'webrtc',
+                type: "webrtc",
               },
             ],
           },
@@ -80,7 +73,7 @@ export default function CollaborativeEditingDemo(): React.ReactNode {
 
     editor.getApi(YjsPlugin).yjs.init({
       id: roomName,
-      autoSelect: 'end',
+      autoSelect: "end",
       value: INITIAL_VALUE,
     });
 
@@ -118,30 +111,24 @@ export default function CollaborativeEditingDemo(): React.ReactNode {
           </div>
         </div>
         <p className="mt-2">
-          You can{' '}
+          You can{" "}
           <a
             className="underline underline-offset-4 transition-colors hover:text-primary"
-            href={typeof window === 'undefined' ? '#' : window.location.href}
+            href={typeof window === "undefined" ? "#" : window.location.href}
             rel="noopener noreferrer"
             target="_blank"
           >
             open this page in another tab
-          </a>{' '}
-          or share your Room ID with others to test real-time collaboration.
-          Each instance will have a different cursor color for easy
-          identification.
+          </a>{" "}
+          or share your Room ID with others to test real-time collaboration. Each instance will have
+          a different cursor color for easy identification.
         </p>
         <div className="mt-2">
           <strong>About this demo:</strong>
           <ul className="mt-1 list-inside list-disc">
-            <li>
-              Share your Room ID with others to collaborate in the same document
-            </li>
+            <li>Share your Room ID with others to collaborate in the same document</li>
             <li>Limited to 10 concurrent participants per room</li>
-            <li>
-              Using WebRTC with public signaling servers - for demo purposes
-              only
-            </li>
+            <li>Using WebRTC with public signaling servers - for demo purposes only</li>
           </ul>
         </div>
       </div>
@@ -163,8 +150,8 @@ function CollaborativeEditor({
   username: string;
 }): React.ReactNode {
   const editor = useEditorRef();
-  const providers = usePluginOption(YjsPlugin, '_providers');
-  const isConnected = usePluginOption(YjsPlugin, '_isConnected');
+  const providers = usePluginOption(YjsPlugin, "_providers");
+  const isConnected = usePluginOption(YjsPlugin, "_isConnected");
 
   const toggleConnection = () => {
     if (editor.getOptions(YjsPlugin)._isConnected) {
@@ -183,22 +170,15 @@ function CollaborativeEditor({
             <span
               key={provider.type}
               className={`rounded px-2 py-0.5 ${
-                provider.isConnected
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-red-100 text-red-800'
+                provider.isConnected ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
               }`}
             >
-              {provider.type.charAt(0).toUpperCase() + provider.type.slice(1)}:{' '}
-              {provider.isConnected ? 'Connected' : 'Disconnected'}
+              {provider.type.charAt(0).toUpperCase() + provider.type.slice(1)}:{" "}
+              {provider.isConnected ? "Connected" : "Disconnected"}
             </span>
           ))}
-          <Button
-            size="sm"
-            variant="outline"
-            className="ml-auto"
-            onClick={toggleConnection}
-          >
-            {isConnected ? 'Disconnect' : 'Connect'}
+          <Button size="sm" variant="outline" className="ml-auto" onClick={toggleConnection}>
+            {isConnected ? "Disconnect" : "Connect"}
           </Button>
         </div>
       </div>
@@ -213,28 +193,25 @@ function CollaborativeEditor({
 // Hook for managing room state
 function useCollaborationRoom() {
   const [roomName, setRoomName] = React.useState(() => {
-    if (typeof window === 'undefined') return '';
+    if (typeof window === "undefined") return "";
 
-    const storedRoomId = localStorage.getItem('demo-room-id');
+    const storedRoomId = localStorage.getItem("demo-room-id");
     if (storedRoomId) return storedRoomId;
 
     const newRoomId = nanoid();
-    localStorage.setItem('demo-room-id', newRoomId);
+    localStorage.setItem("demo-room-id", newRoomId);
     return newRoomId;
   });
 
-  const handleRoomChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const newRoomId = e.target.value;
-      localStorage.setItem('demo-room-id', newRoomId);
-      setRoomName(newRoomId);
-    },
-    []
-  );
+  const handleRoomChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newRoomId = e.target.value;
+    localStorage.setItem("demo-room-id", newRoomId);
+    setRoomName(newRoomId);
+  }, []);
 
   const generateNewRoom = React.useCallback(() => {
     const newRoomId = nanoid();
-    localStorage.setItem('demo-room-id', newRoomId);
+    localStorage.setItem("demo-room-id", newRoomId);
     setRoomName(newRoomId);
   }, []);
 
@@ -247,9 +224,7 @@ function useCollaborationRoom() {
 
 // Hook for managing user/cursor state
 function useCollaborationUser() {
-  const [username] = React.useState(
-    () => `user-${Math.floor(Math.random() * 1000)}`
-  );
+  const [username] = React.useState(() => `user-${Math.floor(Math.random() * 1000)}`);
   const [cursorColor] = React.useState(() => getRandomColor());
 
   return {
@@ -259,8 +234,8 @@ function useCollaborationUser() {
 }
 
 const getRandomColor = (): string => {
-  const letters = '0123456789ABCDEF';
-  let color = '#';
+  const letters = "0123456789ABCDEF";
+  let color = "#";
   for (let i = 0; i < 6; i++) {
     color += letters[Math.floor(Math.random() * 16)];
   }

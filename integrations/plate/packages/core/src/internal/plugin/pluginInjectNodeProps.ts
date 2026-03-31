@@ -1,19 +1,15 @@
-import type { Path, TElement, TText } from '@platejs/slate';
+import type { Path, TElement, TText } from "@platejs/slate";
 
-import { isDefined } from '@udecode/utils';
+import { isDefined } from "@udecode/utils";
 
-import type { SlateEditor } from '../../lib/editor';
-import type {
-  EditorPlugin,
-  TransformOptions,
-} from '../../lib/plugin/SlatePlugin';
-
+import type { SlateEditor } from "../../lib/editor";
 import {
   type GetInjectNodePropsOptions,
   type GetInjectNodePropsReturnType,
   getEditorPlugin,
-} from '../../lib/plugin';
-import { getInjectMatch } from '../../lib/utils/getInjectMatch';
+} from "../../lib/plugin";
+import type { EditorPlugin, TransformOptions } from "../../lib/plugin/SlatePlugin";
+import { getInjectMatch } from "../../lib/utils/getInjectMatch";
 
 /**
  * Return if `element`, `text`, `nodeKey` is defined. Return if `node.type` is
@@ -93,8 +89,7 @@ export const pluginInjectNodeProps = (
     newProps.className = `slate-${nodeKey}-${nodeValue}`;
   }
   if (classNames?.[nodeValue] || transformClassName) {
-    newProps.className =
-      transformClassName?.(transformOptions) ?? classNames?.[value];
+    newProps.className = transformClassName?.(transformOptions) ?? classNames?.[value];
   }
   if (styleKey) {
     newProps.style =
@@ -104,8 +99,7 @@ export const pluginInjectNodeProps = (
       } as any);
   }
   if (transformProps) {
-    newProps =
-      transformProps({ ...transformOptions, props: newProps }) ?? newProps;
+    newProps = transformProps({ ...transformOptions, props: newProps }) ?? newProps;
   }
 
   return newProps;

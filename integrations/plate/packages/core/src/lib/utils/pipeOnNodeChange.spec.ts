@@ -1,15 +1,15 @@
-import { createSlateEditor } from '../editor';
-import { createSlatePlugin } from '../plugin';
-import { pipeOnNodeChange } from './pipeOnNodeChange';
+import { createSlateEditor } from "../editor";
+import { createSlatePlugin } from "../plugin";
+import { pipeOnNodeChange } from "./pipeOnNodeChange";
 
-describe('pipeOnNodeChange', () => {
-  it('skips handlers when the editor is read-only', () => {
+describe("pipeOnNodeChange", () => {
+  it("skips handlers when the editor is read-only", () => {
     const onNodeChange = mock(() => true);
     const editor = createSlateEditor({
       plugins: [
         createSlatePlugin({
           handlers: { onNodeChange },
-          key: 'test',
+          key: "test",
         }),
       ],
     });
@@ -20,35 +20,35 @@ describe('pipeOnNodeChange', () => {
     expect(
       pipeOnNodeChange(
         editor,
-        { text: 'next' } as any,
-        { text: 'prev' } as any,
-        { type: 'insert_node' } as any
+        { text: "next" } as any,
+        { text: "prev" } as any,
+        { type: "insert_node" } as any
       )
     ).toBe(false);
     expect(onNodeChange).not.toHaveBeenCalled();
   });
 
-  it('continues until a handler returns true, then stops', () => {
+  it("continues until a handler returns true, then stops", () => {
     const first = mock(() => {});
     const second = mock(() => true);
     const third = mock(() => true);
-    const node = { text: 'next' } as any;
-    const prevNode = { text: 'prev' } as any;
-    const operation = { type: 'insert_node' } as any;
+    const node = { text: "next" } as any;
+    const prevNode = { text: "prev" } as any;
+    const operation = { type: "insert_node" } as any;
 
     const editor = createSlateEditor({
       plugins: [
         createSlatePlugin({
           handlers: { onNodeChange: first },
-          key: 'first',
+          key: "first",
         }),
         createSlatePlugin({
           handlers: { onNodeChange: second },
-          key: 'second',
+          key: "second",
         }),
         createSlatePlugin({
           handlers: { onNodeChange: third },
-          key: 'third',
+          key: "third",
         }),
       ],
     });

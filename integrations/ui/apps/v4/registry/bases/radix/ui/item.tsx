@@ -1,28 +1,22 @@
-import * as React from "react"
-import { cva, type VariantProps } from "class-variance-authority"
-import { Slot } from "radix-ui"
+import { cva, type VariantProps } from "class-variance-authority";
+import { Slot } from "radix-ui";
+import * as React from "react";
 
-import { cn } from "@/registry/bases/radix/lib/utils"
-import { Separator } from "@/registry/bases/radix/ui/separator"
+import { cn } from "@/registry/bases/radix/lib/utils";
+import { Separator } from "@/registry/bases/radix/ui/separator";
 
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       role="list"
       data-slot="item-group"
-      className={cn(
-        "cn-item-group group/item-group flex w-full flex-col",
-        className
-      )}
+      className={cn("cn-item-group group/item-group flex w-full flex-col", className)}
       {...props}
     />
-  )
+  );
 }
 
-function ItemSeparator({
-  className,
-  ...props
-}: React.ComponentProps<typeof Separator>) {
+function ItemSeparator({ className, ...props }: React.ComponentProps<typeof Separator>) {
   return (
     <Separator
       data-slot="item-separator"
@@ -30,7 +24,7 @@ function ItemSeparator({
       className={cn("cn-item-separator", className)}
       {...props}
     />
-  )
+  );
 }
 
 const itemVariants = cva(
@@ -53,7 +47,7 @@ const itemVariants = cva(
       size: "default",
     },
   }
-)
+);
 
 function Item({
   className,
@@ -61,9 +55,8 @@ function Item({
   size = "default",
   asChild = false,
   ...props
-}: React.ComponentProps<"div"> &
-  VariantProps<typeof itemVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot.Root : "div"
+}: React.ComponentProps<"div"> & VariantProps<typeof itemVariants> & { asChild?: boolean }) {
+  const Comp = asChild ? Slot.Root : "div";
   return (
     <Comp
       data-slot="item"
@@ -72,7 +65,7 @@ function Item({
       className={cn(itemVariants({ variant, size, className }))}
       {...props}
     />
-  )
+  );
 }
 
 const itemMediaVariants = cva(
@@ -89,7 +82,7 @@ const itemMediaVariants = cva(
       variant: "default",
     },
   }
-)
+);
 
 function ItemMedia({
   className,
@@ -103,7 +96,7 @@ function ItemMedia({
       className={cn(itemMediaVariants({ variant, className }))}
       {...props}
     />
-  )
+  );
 }
 
 function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
@@ -116,7 +109,7 @@ function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
@@ -129,7 +122,7 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
@@ -142,7 +135,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
@@ -152,44 +145,38 @@ function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("cn-item-actions flex items-center", className)}
       {...props}
     />
-  )
+  );
 }
 
 function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="item-header"
-      className={cn(
-        "cn-item-header flex basis-full items-center justify-between",
-        className
-      )}
+      className={cn("cn-item-header flex basis-full items-center justify-between", className)}
       {...props}
     />
-  )
+  );
 }
 
 function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="item-footer"
-      className={cn(
-        "cn-item-footer flex basis-full items-center justify-between",
-        className
-      )}
+      className={cn("cn-item-footer flex basis-full items-center justify-between", className)}
       {...props}
     />
-  )
+  );
 }
 
 export {
   Item,
-  ItemMedia,
-  ItemContent,
   ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemFooter,
   ItemGroup,
+  ItemHeader,
+  ItemMedia,
   ItemSeparator,
   ItemTitle,
-  ItemDescription,
-  ItemHeader,
-  ItemFooter,
-}
+};

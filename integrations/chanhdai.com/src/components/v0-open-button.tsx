@@ -1,9 +1,9 @@
-import type { ComponentProps } from "react"
+import type { ComponentProps } from "react";
 
-import { Button } from "@/components/ui/button"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-import { Icons } from "./icons"
+import { Icons } from "./icons";
 
 export function OpenInV0Button({
   url,
@@ -27,5 +27,5 @@ export function OpenInV0Button({
         <Icons.v0 className="size-5" />
       </a>
     </Button>
-  )
+  );
 }

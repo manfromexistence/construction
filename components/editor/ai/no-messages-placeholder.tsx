@@ -1,3 +1,5 @@
+import { Blend, PaintRoller, WandSparkles } from "lucide-react";
+import { ComponentProps, Fragment } from "react";
 import { HorizontalScrollArea } from "@/components/horizontal-scroll-area";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -7,8 +9,6 @@ import { cn } from "@/lib/utils";
 import { AIPromptData } from "@/types/ai";
 import { createCurrentThemePrompt, createPromptDataFromPreset } from "@/utils/ai/ai-prompt";
 import { CREATE_PROMPTS, REMIX_PROMPTS, VARIANT_PROMPTS } from "@/utils/ai/prompts";
-import { Blend, PaintRoller, WandSparkles } from "lucide-react";
-import { ComponentProps, Fragment } from "react";
 import TabsTriggerPill from "../theme-preview/tabs-trigger-pill";
 
 export function NoMessagesPlaceholder({

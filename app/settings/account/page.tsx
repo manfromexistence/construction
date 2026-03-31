@@ -1,6 +1,6 @@
-import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { auth } from "@/lib/auth";
 import { SettingsHeader } from "../components/settings-header";
 import { DeleteAccountSection } from "./components/delete-account-section";
 
@@ -13,10 +13,7 @@ export default async function AccountPage() {
 
   return (
     <div>
-      <SettingsHeader
-        title="Account"
-        description="Manage your account settings"
-      />
+      <SettingsHeader title="Account" description="Manage your account settings" />
       <DeleteAccountSection />
     </div>
   );

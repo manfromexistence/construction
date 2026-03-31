@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "calendar-demo",
-  "registryDependencies": [
-    "calendar"
-  ],
+  "registryDependencies": ["calendar"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/calendar-demo.tsx",

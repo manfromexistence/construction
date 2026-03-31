@@ -1,4 +1,5 @@
-import { FileCode, Palette, RefreshCw, LucideIcon, Undo2 } from "lucide-react";
+import { FileCode, LucideIcon, Palette, RefreshCw, Undo2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 import {
   DropdownMenu,
@@ -6,7 +7,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { cn } from "@/lib/utils";
 
 interface MenuItemProps {
   icon: LucideIcon;
@@ -16,22 +16,14 @@ interface MenuItemProps {
   title?: string;
 }
 
-const MenuItem = ({
-  icon: Icon,
-  label,
-  onClick,
-  disabled,
-  title,
-}: MenuItemProps) => {
+const MenuItem = ({ icon: Icon, label, onClick, disabled, title }: MenuItemProps) => {
   return (
     <DropdownMenuItem
       onClick={onClick}
       disabled={disabled}
       className={cn(
         "flex items-center gap-2 px-3 py-2 rounded-md transition-colors",
-        disabled
-          ? "opacity-50 cursor-not-allowed"
-          : "hover:bg-accent/50 cursor-pointer"
+        disabled ? "opacity-50 cursor-not-allowed" : "hover:bg-accent/50 cursor-pointer"
       )}
       title={title}
     >

@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import { createAutoformatEditor } from '../createAutoformatEditor';
+import { createAutoformatEditor } from "../createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin heading block rules', () => {
+describe("AutoformatPlugin heading block rules", () => {
   it.each([
     {
       expected: (
@@ -24,8 +24,8 @@ describe('AutoformatPlugin heading block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      match: '# ',
-      title: 'formats # into an h1 block',
+      match: "# ",
+      title: "formats # into an h1 block",
       type: KEYS.h1,
     },
     {
@@ -43,17 +43,17 @@ describe('AutoformatPlugin heading block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      match: '## ',
-      title: 'formats ## into an h2 block',
+      match: "## ",
+      title: "formats ## into an h2 block",
       type: KEYS.h2,
     },
-  ])('$title', ({ expected, input, match, type }) => {
+  ])("$title", ({ expected, input, match, type }) => {
     const editor = createAutoformatEditor({
-      rules: [{ match, mode: 'block', type }],
+      rules: [{ match, mode: "block", type }],
       value: input,
     });
 
-    editor.tf.insertText(' ');
+    editor.tf.insertText(" ");
 
     expect(input.children).toEqual(expected.children);
   });

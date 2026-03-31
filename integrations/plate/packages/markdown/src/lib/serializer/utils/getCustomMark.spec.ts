@@ -1,7 +1,7 @@
-import { getCustomMark } from './getCustomMark';
+import { getCustomMark } from "./getCustomMark";
 
-describe('getCustomMark', () => {
-  it('returns only rules explicitly marked as markdown marks', () => {
+describe("getCustomMark", () => {
+  it("returns only rules explicitly marked as markdown marks", () => {
     expect(
       getCustomMark({
         rules: {
@@ -11,10 +11,10 @@ describe('getCustomMark', () => {
           mention: { mark: false } as any,
         },
       })
-    ).toEqual(['bold', 'comment']);
+    ).toEqual(["bold", "comment"]);
   });
 
-  it('returns an empty list when rules are missing', () => {
+  it("returns an empty list when rules are missing", () => {
     expect(getCustomMark()).toEqual([]);
   });
 });

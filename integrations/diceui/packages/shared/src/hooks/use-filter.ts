@@ -145,11 +145,11 @@ function useFilter(options?: UseFilterOptions) {
       return (
         collator.compare(
           normalizedString.slice(0, normalizedSubstring.length),
-          normalizedSubstring,
+          normalizedSubstring
         ) === 0
       );
     },
-    [collator, options?.gapMatch],
+    [collator, options?.gapMatch]
   );
 
   const endsWith = React.useCallback(
@@ -169,11 +169,11 @@ function useFilter(options?: UseFilterOptions) {
       return (
         collator.compare(
           normalizedString.slice(-normalizedSubstring.length),
-          normalizedSubstring,
+          normalizedSubstring
         ) === 0
       );
     },
-    [collator, options?.gapMatch],
+    [collator, options?.gapMatch]
   );
 
   const contains = React.useCallback(
@@ -202,7 +202,7 @@ function useFilter(options?: UseFilterOptions) {
 
       return false;
     },
-    [collator, options?.gapMatch],
+    [collator, options?.gapMatch]
   );
 
   const fuzzy = React.useCallback(
@@ -217,10 +217,7 @@ function useFilter(options?: UseFilterOptions) {
         let patternIdx = 0;
         let stringIdx = 0;
 
-        while (
-          stringIdx < normalizedString.length &&
-          patternIdx < normalizedPattern.length
-        ) {
+        while (stringIdx < normalizedString.length && patternIdx < normalizedPattern.length) {
           if (normalizedString[stringIdx] === normalizedPattern[patternIdx]) {
             patternIdx++;
           }
@@ -236,14 +233,11 @@ function useFilter(options?: UseFilterOptions) {
       let patternIdx = 0;
       let stringIdx = 0;
 
-      while (
-        stringIdx < normalizedString.length &&
-        patternIdx < normalizedPattern.length
-      ) {
+      while (stringIdx < normalizedString.length && patternIdx < normalizedPattern.length) {
         if (
           collator.compare(
             normalizedString[stringIdx] ?? "",
-            normalizedPattern[patternIdx] ?? "",
+            normalizedPattern[patternIdx] ?? ""
           ) === 0
         ) {
           patternIdx++;
@@ -253,7 +247,7 @@ function useFilter(options?: UseFilterOptions) {
 
       return patternIdx === normalizedPattern.length;
     },
-    [collator, options?.gapMatch],
+    [collator, options?.gapMatch]
   );
 
   return React.useMemo(
@@ -263,7 +257,7 @@ function useFilter(options?: UseFilterOptions) {
       contains,
       fuzzy,
     }),
-    [startsWith, endsWith, contains, fuzzy],
+    [startsWith, endsWith, contains, fuzzy]
   );
 }
 

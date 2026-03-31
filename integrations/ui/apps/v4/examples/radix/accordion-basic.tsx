@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/styles/radix-nova/ui/accordion"
+} from "@/styles/radix-nova/ui/accordion";
 
 const items = [
   {
@@ -24,16 +24,11 @@ const items = [
     content:
       "We accept all major credit cards, PayPal, and bank transfers. All payments are processed securely through our payment partners.",
   },
-]
+];
 
 export function AccordionBasic() {
   return (
-    <Accordion
-      type="single"
-      collapsible
-      defaultValue="item-1"
-      className="max-w-lg"
-    >
+    <Accordion type="single" collapsible defaultValue="item-1" className="max-w-lg">
       {items.map((item) => (
         <AccordionItem key={item.value} value={item.value}>
           <AccordionTrigger>{item.trigger}</AccordionTrigger>
@@ -41,5 +36,5 @@ export function AccordionBasic() {
         </AccordionItem>
       ))}
     </Accordion>
-  )
+  );
 }

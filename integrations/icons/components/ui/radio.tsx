@@ -4,10 +4,7 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const RadioGroup = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof BaseRadioGroup>) => {
+const RadioGroup = ({ className, ...props }: React.ComponentProps<typeof BaseRadioGroup>) => {
   return <BaseRadioGroup className={cn("grid", className)} {...props} />;
 };
 
@@ -33,4 +30,4 @@ const Radio = {
 Radio.Root.displayName = "Radio.Root";
 Radio.Indicator.displayName = "Radio.Indicator";
 
-export { RadioGroup, Radio };
+export { Radio, RadioGroup };

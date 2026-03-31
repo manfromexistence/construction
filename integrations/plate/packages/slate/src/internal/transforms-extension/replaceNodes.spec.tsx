@@ -1,14 +1,14 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsx;
 
-describe('replaceNodes', () => {
-  describe('when replacing node', () => {
-    it('replace node at path', () => {
+describe("replaceNodes", () => {
+  describe("when replacing node", () => {
+    it("replace node at path", () => {
       const editor = createEditor(
         (
           <editor>
@@ -22,26 +22,23 @@ describe('replaceNodes', () => {
         ) as any
       );
 
-      editor.tf.replaceNodes(
-        { children: [{ text: 'new' }], type: 'p' },
-        { at: [1] }
-      );
+      editor.tf.replaceNodes({ children: [{ text: "new" }], type: "p" }, { at: [1] });
 
       expect(editor.children).toEqual([
         {
-          children: [{ text: 'test' }],
-          type: 'p',
+          children: [{ text: "test" }],
+          type: "p",
         },
         {
-          children: [{ text: 'new' }],
-          type: 'p',
+          children: [{ text: "new" }],
+          type: "p",
         },
       ]);
     });
   });
 
-  describe('when replacing children', () => {
-    it('replace children at path', () => {
+  describe("when replacing children", () => {
+    it("replace children at path", () => {
       const editor = createEditor(
         (
           <editor>
@@ -58,8 +55,8 @@ describe('replaceNodes', () => {
 
       editor.tf.replaceNodes(
         [
-          { children: [{ text: 'new' }], type: 'p' },
-          { children: [{ text: 'nodes' }], type: 'p' },
+          { children: [{ text: "new" }], type: "p" },
+          { children: [{ text: "nodes" }], type: "p" },
         ],
         {
           at: [1],
@@ -69,25 +66,25 @@ describe('replaceNodes', () => {
 
       expect(editor.children).toMatchObject([
         {
-          children: [{ text: 'test' }],
-          type: 'p',
+          children: [{ text: "test" }],
+          type: "p",
         },
         {
           children: [
             {
-              children: [{ text: 'new' }],
-              type: 'p',
+              children: [{ text: "new" }],
+              type: "p",
             },
             {
-              children: [{ text: 'nodes' }],
-              type: 'p',
+              children: [{ text: "nodes" }],
+              type: "p",
             },
           ],
         },
       ]);
     });
 
-    it('handle undefined at', () => {
+    it("handle undefined at", () => {
       const editor = createEditor(
         (
           <editor>
@@ -96,16 +93,13 @@ describe('replaceNodes', () => {
         ) as any
       );
 
-      editor.tf.replaceNodes(
-        { children: [{ text: 'new' }], type: 'p' },
-        { children: true }
-      );
+      editor.tf.replaceNodes({ children: [{ text: "new" }], type: "p" }, { children: true });
 
       // Should not modify the document
       expect(editor.children).toEqual([
         {
-          children: [{ text: 'test' }],
-          type: 'p',
+          children: [{ text: "test" }],
+          type: "p",
         },
       ]);
     });

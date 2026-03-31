@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
+import { cn } from "@/lib/utils";
 
 export function FrameHighlight({ children, className, ...props }: ComponentProps<"span">) {
   return (

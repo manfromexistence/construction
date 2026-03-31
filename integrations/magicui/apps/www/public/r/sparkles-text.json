@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Sparkles Text",
   "description": "A dynamic text that generates continuous sparkles with smooth transitions, perfect for highlighting text with animated stars.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/sparkles-text.tsx",

@@ -1,18 +1,15 @@
 // Components
+// Hooks
+// Plugin
 export {
-  type RenderPlaceholderProps,
   DefaultPlaceholder,
   Editable,
+  type RenderPlaceholderProps,
   Slate,
-} from 'slate-react';
-
-// Hooks
-export {
   useComposing,
   useFocused,
   useReadOnly,
   useSelected,
-} from 'slate-react';
-
-// Plugin
-export { withReact, useSlateStatic } from 'slate-react';
+  useSlateStatic,
+  withReact,
+} from "slate-react";

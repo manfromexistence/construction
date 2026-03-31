@@ -1,15 +1,7 @@
 {
   "name": "file-upload",
-  "dependencies": [
-    "@base-ui/react",
-    "react-dom",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "direction",
-    "@diceui/use-as-ref",
-    "@diceui/use-lazy-ref"
-  ],
+  "dependencies": ["@base-ui/react", "react-dom", "lucide-react"],
+  "registryDependencies": ["direction", "@diceui/use-as-ref", "@diceui/use-lazy-ref"],
   "files": [
     {
       "path": "ui/file-upload.tsx",

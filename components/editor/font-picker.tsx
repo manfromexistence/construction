@@ -1,5 +1,7 @@
 "use client";
 
+import { Check, ChevronDown, FunnelX, Loader2 } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -24,65 +26,208 @@ import { cn } from "@/lib/utils";
 import { FontInfo } from "@/types/fonts";
 import { buildFontFamily, getDefaultWeights, waitForFont } from "@/utils/fonts";
 import { loadGoogleFont } from "@/utils/fonts/google-fonts";
-import { Check, ChevronDown, FunnelX, Loader2 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { TooltipWrapper } from "../tooltip-wrapper";
 
 const POPULAR_FONTS: Record<string, FontInfo[]> = {
   "sans-serif": [
-    { family: "Inter", category: "sans-serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Roboto", category: "sans-serif", variants: ["100", "300", "400", "500", "700", "900"], variable: false },
-    { family: "Open Sans", category: "sans-serif", variants: ["300", "400", "500", "600", "700", "800"], variable: true },
-    { family: "Poppins", category: "sans-serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: false },
-    { family: "Montserrat", category: "sans-serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Lato", category: "sans-serif", variants: ["100", "300", "400", "700", "900"], variable: false },
-    { family: "Nunito", category: "sans-serif", variants: ["200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Raleway", category: "sans-serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "DM Sans", category: "sans-serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Plus Jakarta Sans", category: "sans-serif", variants: ["200", "300", "400", "500", "600", "700", "800"], variable: true },
-    { family: "Geist", category: "sans-serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
+    {
+      family: "Inter",
+      category: "sans-serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Roboto",
+      category: "sans-serif",
+      variants: ["100", "300", "400", "500", "700", "900"],
+      variable: false,
+    },
+    {
+      family: "Open Sans",
+      category: "sans-serif",
+      variants: ["300", "400", "500", "600", "700", "800"],
+      variable: true,
+    },
+    {
+      family: "Poppins",
+      category: "sans-serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: false,
+    },
+    {
+      family: "Montserrat",
+      category: "sans-serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Lato",
+      category: "sans-serif",
+      variants: ["100", "300", "400", "700", "900"],
+      variable: false,
+    },
+    {
+      family: "Nunito",
+      category: "sans-serif",
+      variants: ["200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Raleway",
+      category: "sans-serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "DM Sans",
+      category: "sans-serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Plus Jakarta Sans",
+      category: "sans-serif",
+      variants: ["200", "300", "400", "500", "600", "700", "800"],
+      variable: true,
+    },
+    {
+      family: "Geist",
+      category: "sans-serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
   ],
   serif: [
-    { family: "Playfair Display", category: "serif", variants: ["400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Merriweather", category: "serif", variants: ["300", "400", "700", "900"], variable: false },
+    {
+      family: "Playfair Display",
+      category: "serif",
+      variants: ["400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Merriweather",
+      category: "serif",
+      variants: ["300", "400", "700", "900"],
+      variable: false,
+    },
     { family: "Lora", category: "serif", variants: ["400", "500", "600", "700"], variable: true },
     { family: "PT Serif", category: "serif", variants: ["400", "700"], variable: false },
-    { family: "Noto Serif", category: "serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Source Serif 4", category: "serif", variants: ["200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
+    {
+      family: "Noto Serif",
+      category: "serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Source Serif 4",
+      category: "serif",
+      variants: ["200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
     { family: "Libre Baskerville", category: "serif", variants: ["400", "700"], variable: false },
-    { family: "EB Garamond", category: "serif", variants: ["400", "500", "600", "700", "800"], variable: true },
+    {
+      family: "EB Garamond",
+      category: "serif",
+      variants: ["400", "500", "600", "700", "800"],
+      variable: true,
+    },
     { family: "Crimson Text", category: "serif", variants: ["400", "600", "700"], variable: false },
-    { family: "Bitter", category: "serif", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
+    {
+      family: "Bitter",
+      category: "serif",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
   ],
   monospace: [
-    { family: "JetBrains Mono", category: "monospace", variants: ["100", "200", "300", "400", "500", "600", "700", "800"], variable: true },
-    { family: "Fira Code", category: "monospace", variants: ["300", "400", "500", "600", "700"], variable: true },
-    { family: "Source Code Pro", category: "monospace", variants: ["200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Roboto Mono", category: "monospace", variants: ["100", "200", "300", "400", "500", "600", "700"], variable: true },
-    { family: "IBM Plex Mono", category: "monospace", variants: ["100", "200", "300", "400", "500", "600", "700"], variable: false },
+    {
+      family: "JetBrains Mono",
+      category: "monospace",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800"],
+      variable: true,
+    },
+    {
+      family: "Fira Code",
+      category: "monospace",
+      variants: ["300", "400", "500", "600", "700"],
+      variable: true,
+    },
+    {
+      family: "Source Code Pro",
+      category: "monospace",
+      variants: ["200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Roboto Mono",
+      category: "monospace",
+      variants: ["100", "200", "300", "400", "500", "600", "700"],
+      variable: true,
+    },
+    {
+      family: "IBM Plex Mono",
+      category: "monospace",
+      variants: ["100", "200", "300", "400", "500", "600", "700"],
+      variable: false,
+    },
     { family: "Space Mono", category: "monospace", variants: ["400", "700"], variable: false },
     { family: "Ubuntu Mono", category: "monospace", variants: ["400", "700"], variable: false },
-    { family: "Inconsolata", category: "monospace", variants: ["200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
-    { family: "Geist Mono", category: "monospace", variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"], variable: true },
+    {
+      family: "Inconsolata",
+      category: "monospace",
+      variants: ["200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
+    {
+      family: "Geist Mono",
+      category: "monospace",
+      variants: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+      variable: true,
+    },
     { family: "Anonymous Pro", category: "monospace", variants: ["400", "700"], variable: false },
-    { family: "Red Hat Mono", category: "monospace", variants: ["300", "400", "500", "600", "700"], variable: true },
+    {
+      family: "Red Hat Mono",
+      category: "monospace",
+      variants: ["300", "400", "500", "600", "700"],
+      variable: true,
+    },
   ],
   display: [
     { family: "Bebas Neue", category: "display", variants: ["400"], variable: false },
     { family: "Abril Fatface", category: "display", variants: ["400"], variable: false },
     { family: "Righteous", category: "display", variants: ["400"], variable: false },
-    { family: "Fredoka", category: "display", variants: ["300", "400", "500", "600", "700"], variable: true },
+    {
+      family: "Fredoka",
+      category: "display",
+      variants: ["300", "400", "500", "600", "700"],
+      variable: true,
+    },
     { family: "Lobster", category: "display", variants: ["400"], variable: false },
-    { family: "Comfortaa", category: "display", variants: ["300", "400", "500", "600", "700"], variable: true },
+    {
+      family: "Comfortaa",
+      category: "display",
+      variants: ["300", "400", "500", "600", "700"],
+      variable: true,
+    },
     { family: "Alfa Slab One", category: "display", variants: ["400"], variable: false },
     { family: "Bungee", category: "display", variants: ["400"], variable: false },
     { family: "Lilita One", category: "display", variants: ["400"], variable: false },
     { family: "Permanent Marker", category: "display", variants: ["400"], variable: false },
   ],
   handwriting: [
-    { family: "Dancing Script", category: "handwriting", variants: ["400", "500", "600", "700"], variable: true },
+    {
+      family: "Dancing Script",
+      category: "handwriting",
+      variants: ["400", "500", "600", "700"],
+      variable: true,
+    },
     { family: "Pacifico", category: "handwriting", variants: ["400"], variable: false },
-    { family: "Caveat", category: "handwriting", variants: ["400", "500", "600", "700"], variable: true },
+    {
+      family: "Caveat",
+      category: "handwriting",
+      variants: ["400", "500", "600", "700"],
+      variable: true,
+    },
     { family: "Satisfy", category: "handwriting", variants: ["400"], variable: false },
     { family: "Great Vibes", category: "handwriting", variants: ["400"], variable: false },
     { family: "Sacramento", category: "handwriting", variants: ["400"], variable: false },
@@ -177,7 +322,7 @@ export function FontPicker({
   useEffect(() => {
     if (!open) return;
     scrollRef.current?.scrollTo({ top: 0 });
-  }, [selectedCategory, searchQuery, open]);
+  }, [open]);
 
   useEffect(() => {
     if (open && fontQuery.data && !hasScrolledToSelectedFont.current) {

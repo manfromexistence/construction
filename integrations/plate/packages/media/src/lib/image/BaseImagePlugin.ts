@@ -1,18 +1,13 @@
-import {
-  type PluginConfig,
-  bindFirst,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
+import { bindFirst, createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
-import type { MediaPluginOptions } from '../media';
+import type { MediaPluginOptions } from "../media";
 
-import { insertImageFromFiles } from './transforms';
-import { withImageEmbed } from './withImageEmbed';
-import { withImageUpload } from './withImageUpload';
+import { insertImageFromFiles } from "./transforms";
+import { withImageEmbed } from "./withImageEmbed";
+import { withImageUpload } from "./withImageUpload";
 
 export type ImageConfig = PluginConfig<
-  'img',
+  "img",
   {
     /** Disable url embed on insert data. */
     disableEmbedInsert?: boolean;
@@ -33,7 +28,7 @@ export type ImageConfig = PluginConfig<
 export const BaseImagePlugin = createTSlatePlugin<ImageConfig>({
   key: KEYS.img,
   node: {
-    dangerouslyAllowAttributes: ['alt', 'width', 'height'],
+    dangerouslyAllowAttributes: ["alt", "width", "height"],
     isElement: true,
     isVoid: true,
   },
@@ -42,12 +37,12 @@ export const BaseImagePlugin = createTSlatePlugin<ImageConfig>({
       deserializer: {
         rules: [
           {
-            validNodeName: 'IMG',
+            validNodeName: "IMG",
           },
         ],
         parse: ({ element, type }) => ({
           type,
-          url: element.getAttribute('src'),
+          url: element.getAttribute("src"),
         }),
       },
     },

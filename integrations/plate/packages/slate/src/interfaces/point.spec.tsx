@@ -1,15 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../create-editor';
-import { PointApi } from './point';
+import { createEditor } from "../create-editor";
+import { PointApi } from "./point";
 
 jsxt;
 
-describe('PointApi.get', () => {
-  describe('when path', () => {
-    it('returns point with offset 0', () => {
+describe("PointApi.get", () => {
+  describe("when path", () => {
+    it("returns point with offset 0", () => {
       createEditor(
         (
           <editor>
@@ -28,8 +28,8 @@ describe('PointApi.get', () => {
     });
   });
 
-  describe('when point', () => {
-    it('returns the same point', () => {
+  describe("when point", () => {
+    it("returns the same point", () => {
       createEditor(
         (
           <editor>
@@ -50,8 +50,8 @@ describe('PointApi.get', () => {
     });
   });
 
-  describe('when range', () => {
-    it('returns anchor point by default', () => {
+  describe("when range", () => {
+    it("returns anchor point by default", () => {
       const editor = createEditor(
         (
           <editor>
@@ -69,8 +69,8 @@ describe('PointApi.get', () => {
       });
     });
 
-    describe('when focus=true', () => {
-      it('returns focus point', () => {
+    describe("when focus=true", () => {
+      it("returns focus point", () => {
         const editor = createEditor(
           (
             <editor>

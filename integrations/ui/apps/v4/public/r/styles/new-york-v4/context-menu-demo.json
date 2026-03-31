@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "context-menu-demo",
-  "registryDependencies": [
-    "context-menu"
-  ],
+  "registryDependencies": ["context-menu"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/context-menu-demo.tsx",

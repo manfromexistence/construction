@@ -1,24 +1,19 @@
 "use client";
 
-import { lazy, useEffect, useCallback } from "react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, Heart, Moon, Share2, Sun } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/store/editor-store";
+import { lazy, useCallback, useEffect } from "react";
+import ExamplesPreviewContainer from "@/components/editor/theme-preview/examples-preview-container";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "@/components/ui/use-toast";
 import { useToggleLike } from "@/hooks/themes";
 import { useSessionGuard } from "@/hooks/use-guards";
 import { usePostLoginAction } from "@/hooks/use-post-login-action";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import ExamplesPreviewContainer from "@/components/editor/theme-preview/examples-preview-container";
-import { Heart, Moon, Sun, ArrowUpRight, ChevronLeft, ChevronRight, Share2 } from "lucide-react";
-import { toast } from "@/components/ui/use-toast";
+import { cn } from "@/lib/utils";
+import { useEditorStore } from "@/store/editor-store";
 import type { CommunityTheme } from "@/types/community";
 
 const DemoCards = lazy(() => import("@/components/examples/cards"));
@@ -122,12 +117,14 @@ export function CommunityThemePreviewDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className="flex h-[80vh] w-[95vw] max-w-6xl flex-col gap-0 overflow-visible p-0"
-        style={{
-          "--tw-enter-translate-x": "0",
-          "--tw-enter-translate-y": "0",
-          "--tw-exit-translate-x": "0",
-          "--tw-exit-translate-y": "0",
-        } as React.CSSProperties}
+        style={
+          {
+            "--tw-enter-translate-x": "0",
+            "--tw-enter-translate-y": "0",
+            "--tw-exit-translate-x": "0",
+            "--tw-exit-translate-y": "0",
+          } as React.CSSProperties
+        }
       >
         {/* Navigation arrows — positioned outside the dialog box */}
         {hasPrev && (
@@ -153,21 +150,14 @@ export function CommunityThemePreviewDialog({
           {/* Header: name + author */}
           <DialogHeader className="shrink-0 px-4 pt-4 pb-3">
             <div className="flex items-center gap-3">
-              <DialogTitle className="text-base font-semibold">
-                {theme.name}
-              </DialogTitle>
+              <DialogTitle className="text-base font-semibold">{theme.name}</DialogTitle>
               <span className="text-muted-foreground/40">|</span>
               <div className="flex items-center gap-1.5 text-muted-foreground">
                 <Avatar className="h-5 w-5">
                   {theme.author.image && (
-                    <AvatarImage
-                      src={theme.author.image}
-                      alt={theme.author.name}
-                    />
+                    <AvatarImage src={theme.author.image} alt={theme.author.name} />
                   )}
-                  <AvatarFallback className="text-[9px]">
-                    {authorInitials}
-                  </AvatarFallback>
+                  <AvatarFallback className="text-[9px]">{authorInitials}</AvatarFallback>
                 </Avatar>
                 <span className="text-xs">{theme.author.name}</span>
               </div>
@@ -190,12 +180,7 @@ export function CommunityThemePreviewDialog({
                 )}
                 title={theme.isLikedByMe ? "Unlike theme" : "Like theme"}
               >
-                <Heart
-                  className={cn(
-                    "size-4",
-                    theme.isLikedByMe && "fill-current"
-                  )}
-                />
+                <Heart className={cn("size-4", theme.isLikedByMe && "fill-current")} />
                 {theme.likeCount > 0 && <span>{theme.likeCount}</span>}
               </button>
               <button
@@ -210,14 +195,14 @@ export function CommunityThemePreviewDialog({
                 className="rounded-md p-2 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                 title="Toggle light/dark mode"
               >
-                {currentMode === "dark" ? (
-                  <Sun className="size-4" />
-                ) : (
-                  <Moon className="size-4" />
-                )}
+                {currentMode === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
               </button>
               <div className="h-4 w-px bg-border mr-2" />
-              <Button variant="link" className="p-0 text-foreground font-semibold" onClick={handleViewDetails}>
+              <Button
+                variant="link"
+                className="p-0 text-foreground font-semibold"
+                onClick={handleViewDetails}
+              >
                 View
                 <ArrowUpRight className="size-4" />
               </Button>

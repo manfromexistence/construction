@@ -3,11 +3,11 @@
  * contributors. See /packages/diff/LICENSE for more information.
  */
 
-import { type Descendant, ElementApi, TextApi } from 'platejs';
+import { type Descendant, ElementApi, TextApi } from "platejs";
 
-import type { ComputeDiffOptions } from '../../lib/computeDiff';
+import type { ComputeDiffOptions } from "../../lib/computeDiff";
 
-import { isEqual } from './is-equal';
+import { isEqual } from "./is-equal";
 
 export function diffNodes(
   originNodes: Descendant[],
@@ -22,12 +22,8 @@ export function diffNodes(
     let childrenUpdated = false;
     let nodeUpdated = false;
     relatedNode = remainingTargetNodes.find((targetNode: Descendant) => {
-      if (
-        ElementApi.isElement(originNode) &&
-        ElementApi.isElement(targetNode)
-      ) {
-        const relatedResult =
-          elementsAreRelated?.(originNode, targetNode) ?? null;
+      if (ElementApi.isElement(originNode) && ElementApi.isElement(targetNode)) {
+        const relatedResult = elementsAreRelated?.(originNode, targetNode) ?? null;
 
         if (relatedResult !== null) return relatedResult;
       }
@@ -39,10 +35,7 @@ export function diffNodes(
     });
 
     if (relatedNode) {
-      const insertNodes = remainingTargetNodes.splice(
-        0,
-        remainingTargetNodes.indexOf(relatedNode)
-      );
+      const insertNodes = remainingTargetNodes.splice(0, remainingTargetNodes.indexOf(relatedNode));
       insertNodes.forEach((insertNode) => {
         result.push({
           insert: true,
@@ -79,11 +72,7 @@ export type NodeRelatedItem = {
   relatedNode?: Descendant;
 };
 
-export function isEqualNode(
-  value: Descendant,
-  other: Descendant,
-  ignoreProps?: string[]
-) {
+export function isEqualNode(value: Descendant, other: Descendant, ignoreProps?: string[]) {
   return (
     ElementApi.isElement(value) &&
     ElementApi.isElement(other) &&
@@ -91,7 +80,7 @@ export function isEqualNode(
     other.children !== null &&
     isEqual(value, other, {
       ignoreDeep: ignoreProps,
-      ignoreShallow: ['children'],
+      ignoreShallow: ["children"],
     })
   );
 }
@@ -105,9 +94,5 @@ export function isEqualNodeChildren(value: Descendant, other: Descendant) {
     return true;
   }
 
-  return (
-    TextApi.isText(value) &&
-    TextApi.isText(other) &&
-    isEqual(value.text, other.text)
-  );
+  return TextApi.isText(value) && TextApi.isText(other) && isEqual(value.text, other.text);
 }

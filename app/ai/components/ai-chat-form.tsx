@@ -1,5 +1,6 @@
 "use client";
 
+import { ArrowUp, Loader, StopCircle } from "lucide-react";
 import { AIChatFormBody } from "@/components/editor/ai/ai-chat-form-body";
 import { AlertBanner } from "@/components/editor/ai/alert-banner";
 import { EnhancePromptButton } from "@/components/editor/ai/enhance-prompt-button";
@@ -13,7 +14,6 @@ import { useSubscription } from "@/hooks/use-subscription";
 import { MAX_IMAGE_FILES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { AIPromptData } from "@/types/ai";
-import { ArrowUp, Loader, StopCircle } from "lucide-react";
 
 export function AIChatForm({
   onThemeGeneration,

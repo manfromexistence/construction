@@ -1,21 +1,21 @@
-import { afterAll, beforeEach, describe, expect, it, mock } from 'bun:test';
+import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test";
 
 const callCompletionApiMock = mock();
 const getEditorPluginMock = mock();
 const useEditorPluginMock = mock();
 const usePluginOptionMock = mock();
 
-mock.module('./callCompletionApi', () => ({
+mock.module("./callCompletionApi", () => ({
   callCompletionApi: callCompletionApiMock,
 }));
 
-mock.module('platejs/react', () => ({
+mock.module("platejs/react", () => ({
   getEditorPlugin: getEditorPluginMock,
   useEditorPlugin: useEditorPluginMock,
   usePluginOption: usePluginOptionMock,
 }));
 
-describe('triggerCopilotSuggestion', () => {
+describe("triggerCopilotSuggestion", () => {
   beforeEach(() => {
     callCompletionApiMock.mockReset();
     getEditorPluginMock.mockReset();
@@ -25,7 +25,7 @@ describe('triggerCopilotSuggestion', () => {
     mock.restore();
   });
 
-  it('returns false while ai chat or copilot loading is active', async () => {
+  it("returns false while ai chat or copilot loading is active", async () => {
     const { triggerCopilotSuggestion } = await import(
       `./triggerCopilotSuggestion?test=${Math.random().toString(36).slice(2)}`
     );
@@ -45,7 +45,7 @@ describe('triggerCopilotSuggestion', () => {
     ).resolves.toBe(false);
   });
 
-  it('stops current suggestion work and forwards finished completions into block suggestions', async () => {
+  it("stops current suggestion work and forwards finished completions into block suggestions", async () => {
     const { triggerCopilotSuggestion } = await import(
       `./triggerCopilotSuggestion?test=${Math.random().toString(36).slice(2)}`
     );
@@ -59,7 +59,7 @@ describe('triggerCopilotSuggestion', () => {
       },
       getOptions: () => ({
         completeOptions: { onError: mock() },
-        getPrompt: () => 'Prompt',
+        getPrompt: () => "Prompt",
         isLoading: false,
         triggerQuery: () => true,
       }),
@@ -69,8 +69,8 @@ describe('triggerCopilotSuggestion', () => {
     callCompletionApiMock.mockImplementation(
       async ({ onFinish, setLoading, setCompletion }: any) => {
         setLoading(true);
-        setCompletion('');
-        onFinish?.('Prompt', 'Completed');
+        setCompletion("");
+        onFinish?.("Prompt", "Completed");
         setLoading(false);
       }
     );
@@ -84,10 +84,10 @@ describe('triggerCopilotSuggestion', () => {
     await expect(triggerCopilotSuggestion(editor)).resolves.toBeUndefined();
 
     expect(stop).toHaveBeenCalled();
-    expect(setBlockSuggestion).toHaveBeenCalledWith({ text: 'Completed' });
+    expect(setBlockSuggestion).toHaveBeenCalledWith({ text: "Completed" });
     expect(callCompletionApiMock).toHaveBeenCalled();
-    expect(setOption).toHaveBeenCalledWith('completion', '');
-    expect(setOption).toHaveBeenCalledWith('isLoading', true);
-    expect(setOption).toHaveBeenCalledWith('isLoading', false);
+    expect(setOption).toHaveBeenCalledWith("completion", "");
+    expect(setOption).toHaveBeenCalledWith("isLoading", true);
+    expect(setOption).toHaveBeenCalledWith("isLoading", false);
   });
 });

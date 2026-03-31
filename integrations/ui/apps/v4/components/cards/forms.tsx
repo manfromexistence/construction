@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
-import { Checkbox } from "@/registry/new-york-v4/ui/checkbox"
+} from "@/registry/new-york-v4/ui/card";
+import { Checkbox } from "@/registry/new-york-v4/ui/checkbox";
 import {
   Field,
   FieldContent,
@@ -18,13 +18,10 @@ import {
   FieldLegend,
   FieldSet,
   FieldTitle,
-} from "@/registry/new-york-v4/ui/field"
-import { Input } from "@/registry/new-york-v4/ui/input"
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/registry/new-york-v4/ui/radio-group"
-import { Textarea } from "@/registry/new-york-v4/ui/textarea"
+} from "@/registry/new-york-v4/ui/field";
+import { Input } from "@/registry/new-york-v4/ui/input";
+import { RadioGroup, RadioGroupItem } from "@/registry/new-york-v4/ui/radio-group";
+import { Textarea } from "@/registry/new-york-v4/ui/textarea";
 
 const plans = [
   {
@@ -39,7 +36,7 @@ const plans = [
     description: "More features and storage.",
     price: "$20",
   },
-] as const
+] as const;
 
 export function CardsForms() {
   return (
@@ -47,8 +44,7 @@ export function CardsForms() {
       <CardHeader>
         <CardTitle className="text-lg">Upgrade your Subscription</CardTitle>
         <CardDescription className="text-balance">
-          You are currently on the free plan. Upgrade to the pro plan to get
-          access to all features.
+          You are currently on the free plan. Upgrade to the pro plan to get access to all features.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -74,9 +70,7 @@ export function CardsForms() {
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="card-number-expiry">
-                  Expiry Date
-                </FieldLabel>
+                <FieldLabel htmlFor="card-number-expiry">Expiry Date</FieldLabel>
                 <Input id="card-number-expiry" placeholder="MM/YY" />
               </Field>
               <Field>
@@ -86,21 +80,14 @@ export function CardsForms() {
             </FieldGroup>
             <FieldSet>
               <FieldLegend>Plan</FieldLegend>
-              <FieldDescription>
-                Select the plan that best fits your needs.
-              </FieldDescription>
-              <RadioGroup
-                defaultValue="starter"
-                className="grid grid-cols-2 gap-2"
-              >
+              <FieldDescription>Select the plan that best fits your needs.</FieldDescription>
+              <RadioGroup defaultValue="starter" className="grid grid-cols-2 gap-2">
                 {plans.map((plan) => (
                   <FieldLabel key={plan.id}>
                     <Field orientation="horizontal">
                       <FieldContent>
                         <FieldTitle>{plan.name}</FieldTitle>
-                        <FieldDescription className="text-xs">
-                          {plan.description}
-                        </FieldDescription>
+                        <FieldDescription className="text-xs">{plan.description}</FieldDescription>
                       </FieldContent>
                       <RadioGroupItem value={plan.id} id={plan.name} />
                     </Field>
@@ -136,5 +123,5 @@ export function CardsForms() {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }

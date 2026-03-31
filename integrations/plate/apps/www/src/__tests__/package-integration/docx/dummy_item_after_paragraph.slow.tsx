@@ -1,11 +1,11 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'dummy_item_after_paragraph';
+const name = "dummy_item_after_paragraph";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({

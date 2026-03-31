@@ -1,8 +1,6 @@
 {
   "name": "key-value-paste-demo",
-  "registryDependencies": [
-    "key-value"
-  ],
+  "registryDependencies": ["key-value"],
   "files": [
     {
       "path": "examples/key-value-paste-demo.tsx",

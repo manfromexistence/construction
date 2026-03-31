@@ -35,6 +35,6 @@ export interface EditorConfig {
   name: string;
   description: string;
   defaultState: BaseEditorState;
-  controls: React.ComponentType<any>;
-  preview: React.ComponentType<any>;
+  controls: React.ComponentType<Record<string, never>>;
+  preview: React.ComponentType<Record<string, never>>;
 }

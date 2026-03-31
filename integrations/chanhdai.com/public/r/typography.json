@@ -4,9 +4,7 @@
   "title": "Typography",
   "author": "ncdai <dai@chanhdai.com>",
   "description": "Custom prose styles for headings, links, inline code, and emphasis.",
-  "devDependencies": [
-    "@tailwindcss/typography"
-  ],
+  "devDependencies": ["@tailwindcss/typography"],
   "files": [],
   "css": {
     "@plugin @tailwindcss/typography": {},

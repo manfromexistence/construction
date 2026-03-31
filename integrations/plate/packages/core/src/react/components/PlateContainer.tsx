@@ -1,16 +1,9 @@
-import React, { type HTMLAttributes } from 'react';
+import React, { type HTMLAttributes } from "react";
 
-import { isEditOnly } from '../../internal/plugin/isEditOnlyDisabled';
-import {
-  useEditorContainerRef,
-  useEditorReadOnly,
-  useEditorRef,
-} from '../stores';
+import { isEditOnly } from "../../internal/plugin/isEditOnlyDisabled";
+import { useEditorContainerRef, useEditorReadOnly, useEditorRef } from "../stores";
 
-export const PlateContainer = ({
-  children,
-  ...props
-}: HTMLAttributes<HTMLDivElement>) => {
+export const PlateContainer = ({ children, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const editor = useEditorRef();
   const readOnly = useEditorReadOnly();
 
@@ -27,7 +20,7 @@ export const PlateContainer = ({
 
   editor.meta.pluginCache.render.beforeContainer.forEach((key) => {
     const plugin = editor.getPlugin({ key });
-    if (isEditOnly(readOnly, plugin, 'render')) return;
+    if (isEditOnly(readOnly, plugin, "render")) return;
 
     const BeforeContainer = plugin.render.beforeContainer!;
 
@@ -41,7 +34,7 @@ export const PlateContainer = ({
 
   editor.meta.pluginCache.render.afterContainer.forEach((key) => {
     const plugin = editor.getPlugin({ key });
-    if (isEditOnly(readOnly, plugin, 'render')) return;
+    if (isEditOnly(readOnly, plugin, "render")) return;
 
     const AfterContainer = plugin.render.afterContainer!;
 
@@ -62,4 +55,4 @@ export const PlateContainer = ({
   );
 };
 
-PlateContainer.displayName = 'PlateContainer';
+PlateContainer.displayName = "PlateContainer";

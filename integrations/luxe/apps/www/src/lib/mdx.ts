@@ -1,9 +1,7 @@
-import type { Docs } from "@/@types/docs";
-
 import fs from "fs";
-import path from "path";
-
 import matter from "gray-matter";
+import path from "path";
+import type { Docs } from "@/@types/docs";
 
 function readFile(filePath: string): Docs | null {
   try {
@@ -34,25 +32,14 @@ function getFiles(dir: string): string[] {
 
 export function getDocs(directory?: string): Docs[] {
   const files = getFiles(
-    path.join(
-      process.cwd(),
-      "src/app",
-      "_docs",
-      ...(directory ? [directory] : []),
-    ),
+    path.join(process.cwd(), "src/app", "_docs", ...(directory ? [directory] : []))
   );
 
   return files
     .map((file) =>
       readFile(
-        path.join(
-          process.cwd(),
-          "src/app",
-          "_docs",
-          ...(directory ? [directory] : []),
-          file,
-        ),
-      ),
+        path.join(process.cwd(), "src/app", "_docs", ...(directory ? [directory] : []), file)
+      )
     )
     .filter((docs): docs is Docs => docs !== null);
 }

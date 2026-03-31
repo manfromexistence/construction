@@ -1,4 +1,4 @@
-import type { Emoji, EmojiMartData } from '@emoji-mart/data';
+import type { Emoji, EmojiMartData } from "@emoji-mart/data";
 /**
  * Emoji: type Emoji = { id: string; name: string; keywords: string[]; skins: [
  * { unified: '1f389'; native: '🎉'; shortcodes: ':tada:'; } ]; version: 1; };
@@ -14,4 +14,4 @@ export type IEmojiLibrary = {
   getEmojiId: (key: string) => string;
 };
 
-export type { Emoji } from '@emoji-mart/data';
+export type { Emoji } from "@emoji-mart/data";

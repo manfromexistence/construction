@@ -1,4 +1,4 @@
-import { ChevronDownIcon, MoreHorizontal } from "lucide-react"
+import { ChevronDownIcon, MoreHorizontal } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -6,13 +6,13 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
+} from "@/styles/radix-nova/ui/dropdown-menu";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/radix-nova/ui/input-group"
+} from "@/styles/radix-nova/ui/input-group";
 
 export default function InputGroupDropdown() {
   return (
@@ -22,11 +22,7 @@ export default function InputGroupDropdown() {
         <InputGroupAddon align="inline-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <InputGroupButton
-                variant="ghost"
-                aria-label="More"
-                size="icon-xs"
-              >
+              <InputGroupButton variant="ghost" aria-label="More" size="icon-xs">
                 <MoreHorizontal />
               </InputGroupButton>
             </DropdownMenuTrigger>
@@ -60,5 +56,5 @@ export default function InputGroupDropdown() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

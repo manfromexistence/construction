@@ -1,8 +1,4 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/base-nova/ui/avatar"
+import { Avatar, AvatarFallback, AvatarImage } from "@/styles/base-nova/ui/avatar";
 
 export function AvatarSizeExample() {
   return (
@@ -20,5 +16,5 @@ export function AvatarSizeExample() {
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
     </div>
-  )
+  );
 }

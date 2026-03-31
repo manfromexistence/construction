@@ -1,6 +1,6 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { type BaseListConfig, BaseListPlugin } from '../lib';
+import { type BaseListConfig, BaseListPlugin } from "../lib";
 
 export type ListConfig = BaseListConfig;
 

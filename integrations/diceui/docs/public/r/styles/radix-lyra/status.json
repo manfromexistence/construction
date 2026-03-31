@@ -1,8 +1,6 @@
 {
   "name": "status",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "ui/status.tsx",

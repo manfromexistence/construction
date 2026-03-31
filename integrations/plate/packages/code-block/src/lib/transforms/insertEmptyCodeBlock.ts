@@ -1,10 +1,10 @@
-import { type InsertNodesOptions, type SlateEditor, KEYS } from 'platejs';
+import { type InsertNodesOptions, KEYS, type SlateEditor } from "platejs";
 
-import { insertCodeBlock } from './insertCodeBlock';
+import { insertCodeBlock } from "./insertCodeBlock";
 
 export type CodeBlockInsertOptions = {
   defaultType?: string;
-  insertNodesOptions?: Omit<InsertNodesOptions, 'match'>;
+  insertNodesOptions?: Omit<InsertNodesOptions, "match">;
 };
 
 /**
@@ -13,18 +13,12 @@ export type CodeBlockInsertOptions = {
  */
 export const insertEmptyCodeBlock = (
   editor: SlateEditor,
-  {
-    defaultType = editor.getType(KEYS.p),
-    insertNodesOptions,
-  }: CodeBlockInsertOptions = {}
+  { defaultType = editor.getType(KEYS.p), insertNodesOptions }: CodeBlockInsertOptions = {}
 ) => {
   if (!editor.selection) return;
-  if (
-    editor.api.isExpanded() ||
-    !editor.api.isEmpty(editor.selection, { block: true })
-  ) {
+  if (editor.api.isExpanded() || !editor.api.isEmpty(editor.selection, { block: true })) {
     editor.tf.insertNodes(
-      editor.api.create.block({ children: [{ text: '' }], type: defaultType }),
+      editor.api.create.block({ children: [{ text: "" }], type: defaultType }),
       {
         nextBlock: true,
         select: true,

@@ -1,13 +1,12 @@
-import React from 'react';
+import { renderHook } from "@testing-library/react";
+import React from "react";
 
-import { renderHook } from '@testing-library/react';
+import { TestPlate as Plate } from "../__tests__/TestPlate";
+import { createPlateEditor } from "../editor";
+import { PlateContent } from "./PlateContent";
 
-import { TestPlate as Plate } from '../__tests__/TestPlate';
-import { createPlateEditor } from '../editor';
-import { PlateContent } from './PlateContent';
-
-describe('EditorMethodsEffect and redecorate', () => {
-  it('set redecorate method on editor', () => {
+describe("EditorMethodsEffect and redecorate", () => {
+  it("set redecorate method on editor", () => {
     const editor = createPlateEditor();
 
     const wrapper = () => (

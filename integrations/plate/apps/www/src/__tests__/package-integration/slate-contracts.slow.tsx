@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { BoldPlugin, ItalicPlugin } from '@platejs/basic-nodes/react';
-import { BaseLinkPlugin } from '@platejs/link';
-import { jsxt } from '@platejs/test-utils';
-import { NodeApi, createSlateEditor, createSlatePlugin } from 'platejs';
+import { BoldPlugin, ItalicPlugin } from "@platejs/basic-nodes/react";
+import { BaseLinkPlugin } from "@platejs/link";
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, createSlatePlugin, NodeApi } from "platejs";
 
 jsxt;
 
@@ -26,8 +26,7 @@ const createVoidElementPlugin = (key: string) =>
 
 const voidBoundaryCases = [
   {
-    action: (editor: ReturnType<typeof createSlateEditor>) =>
-      editor.tf.deleteBackward('character'),
+    action: (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward("character"),
     input: (
       <editor>
         <element type="img">
@@ -38,7 +37,7 @@ const voidBoundaryCases = [
         </hp>
       </editor>
     ) as any,
-    label: 'selects a previous void block and removes an empty current block',
+    label: "selects a previous void block and removes an empty current block",
     output: (
       <editor>
         <element type="img">
@@ -46,11 +45,10 @@ const voidBoundaryCases = [
         </element>
       </editor>
     ) as any,
-    plugins: [createVoidElementPlugin('img')],
+    plugins: [createVoidElementPlugin("img")],
   },
   {
-    action: (editor: ReturnType<typeof createSlateEditor>) =>
-      editor.tf.deleteBackward('character'),
+    action: (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward("character"),
     input: (
       <editor>
         <element type="img">
@@ -62,8 +60,7 @@ const voidBoundaryCases = [
         </hp>
       </editor>
     ) as any,
-    label:
-      'selects a previous void block without removing non-empty current content',
+    label: "selects a previous void block without removing non-empty current content",
     output: (
       <editor>
         <element type="img">
@@ -72,11 +69,10 @@ const voidBoundaryCases = [
         <hp>some content</hp>
       </editor>
     ) as any,
-    plugins: [createVoidElementPlugin('img')],
+    plugins: [createVoidElementPlugin("img")],
   },
   {
-    action: (editor: ReturnType<typeof createSlateEditor>) =>
-      editor.tf.deleteBackward('character'),
+    action: (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward("character"),
     input: (
       <editor>
         <hp>previous content</hp>
@@ -86,8 +82,7 @@ const voidBoundaryCases = [
         </hp>
       </editor>
     ) as any,
-    label:
-      'keeps normal backward delete behavior when the previous block is not void',
+    label: "keeps normal backward delete behavior when the previous block is not void",
     output: (
       <editor>
         <hp>
@@ -100,8 +95,7 @@ const voidBoundaryCases = [
     plugins: [],
   },
   {
-    action: (editor: ReturnType<typeof createSlateEditor>) =>
-      editor.tf.deleteBackward('character'),
+    action: (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward("character"),
     input: (
       <editor>
         <element type="img">
@@ -114,8 +108,7 @@ const voidBoundaryCases = [
         </hp>
       </editor>
     ) as any,
-    label:
-      'does not select the previous void block when the cursor is not at the block start',
+    label: "does not select the previous void block when the cursor is not at the block start",
     output: (
       <editor>
         <element type="img">
@@ -128,11 +121,10 @@ const voidBoundaryCases = [
         </hp>
       </editor>
     ) as any,
-    plugins: [createVoidElementPlugin('img')],
+    plugins: [createVoidElementPlugin("img")],
   },
   {
-    action: (editor: ReturnType<typeof createSlateEditor>) =>
-      editor.tf.deleteBackward('character'),
+    action: (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteBackward("character"),
     input: (
       <editor>
         <element type="hr">
@@ -143,7 +135,7 @@ const voidBoundaryCases = [
         </hp>
       </editor>
     ) as any,
-    label: 'selects a previous horizontal rule void block',
+    label: "selects a previous horizontal rule void block",
     output: (
       <editor>
         <element type="hr">
@@ -151,11 +143,10 @@ const voidBoundaryCases = [
         </element>
       </editor>
     ) as any,
-    plugins: [createVoidElementPlugin('hr')],
+    plugins: [createVoidElementPlugin("hr")],
   },
   {
-    action: (editor: ReturnType<typeof createSlateEditor>) =>
-      editor.tf.deleteForward('character'),
+    action: (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteForward("character"),
     input: (
       <editor>
         <hp>
@@ -167,7 +158,7 @@ const voidBoundaryCases = [
       </editor>
     ) as any,
     label:
-      'selects a next horizontal rule void block when deleting forward from an empty paragraph',
+      "selects a next horizontal rule void block when deleting forward from an empty paragraph",
     output: (
       <editor>
         <element type="hr">
@@ -175,11 +166,10 @@ const voidBoundaryCases = [
         </element>
       </editor>
     ) as any,
-    plugins: [createVoidElementPlugin('hr')],
+    plugins: [createVoidElementPlugin("hr")],
   },
   {
-    action: (editor: ReturnType<typeof createSlateEditor>) =>
-      editor.tf.deleteForward('character'),
+    action: (editor: ReturnType<typeof createSlateEditor>) => editor.tf.deleteForward("character"),
     input: (
       <editor>
         <hp>
@@ -191,8 +181,7 @@ const voidBoundaryCases = [
         </element>
       </editor>
     ) as any,
-    label:
-      'selects a next horizontal rule void block without deleting previous text',
+    label: "selects a next horizontal rule void block without deleting previous text",
     output: (
       <editor>
         <hp>text</hp>
@@ -201,13 +190,13 @@ const voidBoundaryCases = [
         </element>
       </editor>
     ) as any,
-    plugins: [createVoidElementPlugin('hr')],
+    plugins: [createVoidElementPlugin("hr")],
   },
 ];
 
-describe('slate cross-package contracts', () => {
-  describe('inline element behavior', () => {
-    it('returns sibling nodes after an inline element', () => {
+describe("slate cross-package contracts", () => {
+  describe("inline element behavior", () => {
+    it("returns sibling nodes after an inline element", () => {
       const input = (
         <editor>
           <hp>
@@ -229,9 +218,7 @@ describe('slate cross-package contracts', () => {
       });
 
       const [, blockPath] = editor.api.block()!;
-      const selectionPath = editor.api
-        .path(input.selection!)!
-        .slice(blockPath.length);
+      const selectionPath = editor.api.path(input.selection!)!.slice(blockPath.length);
       const childIndex = selectionPath[0];
 
       const siblings = Array.from(
@@ -240,10 +227,10 @@ describe('slate cross-package contracts', () => {
         })
       ).map(([node]) => node);
 
-      expect(siblings).toEqual([{ text: '' }, { text: 'last' }]);
+      expect(siblings).toEqual([{ text: "" }, { text: "last" }]);
     });
 
-    it('returns true when the cursor is at the end of the last inline node', () => {
+    it("returns true when the cursor is at the end of the last inline node", () => {
       const input = (
         <editor>
           <hp>
@@ -265,7 +252,7 @@ describe('slate cross-package contracts', () => {
       expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(true);
     });
 
-    it('returns false when text follows the last inline node', () => {
+    it("returns false when text follows the last inline node", () => {
       const input = (
         <editor>
           <hp>
@@ -289,8 +276,8 @@ describe('slate cross-package contracts', () => {
     });
   });
 
-  describe('toggleMark', () => {
-    it('removes the active mark', () => {
+  describe("toggleMark", () => {
+    it("removes the active mark", () => {
       const input = (
         <editor>
           <hp>
@@ -320,7 +307,7 @@ describe('slate cross-package contracts', () => {
       expect(editor.children).toEqual(output.children);
     });
 
-    it('replaces the removed mark with the new mark', () => {
+    it("replaces the removed mark with the new mark", () => {
       const input = (
         <editor>
           <hp>
@@ -349,7 +336,7 @@ describe('slate cross-package contracts', () => {
       expect(editor.children).toEqual(output.children);
     });
 
-    it('adds the inactive mark', () => {
+    it("adds the inactive mark", () => {
       const input = (
         <editor>
           <hp>test</hp>
@@ -378,7 +365,7 @@ describe('slate cross-package contracts', () => {
     });
   });
 
-  describe('void boundaries', () => {
+  describe("void boundaries", () => {
     for (const { action, input, label, output, plugins } of voidBoundaryCases) {
       it(label, () => {
         const editor = createSlateEditor({

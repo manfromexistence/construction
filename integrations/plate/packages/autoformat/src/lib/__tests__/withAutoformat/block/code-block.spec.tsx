@@ -1,23 +1,17 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
-import { KEYS } from 'platejs';
-import { BaseCodeBlockPlugin, insertEmptyCodeBlock } from '@platejs/code-block';
-import { jsxt } from '@platejs/test-utils';
+import { BaseCodeBlockPlugin, insertEmptyCodeBlock } from "@platejs/code-block";
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { KEYS } from "platejs";
 
-import type { AutoformatQueryOptions } from '../../../types';
+import type { AutoformatQueryOptions } from "../../../types";
 
-import { createAutoformatEditor } from '../createAutoformatEditor';
+import { createAutoformatEditor } from "../createAutoformatEditor";
 
 jsxt;
 
-const createCodeBlockAutoformatEditor = ({
-  rules,
-  value,
-}: {
-  rules?: any[];
-  value: any;
-}) =>
+const createCodeBlockAutoformatEditor = ({ rules, value }: { rules?: any[]; value: any }) =>
   createAutoformatEditor({
     plugins: [BaseCodeBlockPlugin],
     rules: rules ?? [
@@ -28,15 +22,15 @@ const createCodeBlockAutoformatEditor = ({
             insertNodesOptions: { select: true },
           });
         },
-        match: '```',
-        mode: 'block',
+        match: "```",
+        mode: "block",
         type: KEYS.codeBlock,
       },
     ],
     value,
   });
 
-describe('AutoformatPlugin code block rules', () => {
+describe("AutoformatPlugin code block rules", () => {
   it.each([
     {
       expected: (
@@ -56,7 +50,7 @@ describe('AutoformatPlugin code block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      title: 'inserts a code block from the start of a block',
+      title: "inserts a code block from the start of a block",
     },
     {
       expected: (
@@ -76,18 +70,18 @@ describe('AutoformatPlugin code block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      title: 'inserts a code block when the trigger appears mid-paragraph',
+      title: "inserts a code block when the trigger appears mid-paragraph",
     },
-  ])('$title', ({ expected, input }) => {
+  ])("$title", ({ expected, input }) => {
     const editor = createCodeBlockAutoformatEditor({ value: input });
 
-    editor.tf.insertText('`');
-    editor.tf.insertText('new');
+    editor.tf.insertText("`");
+    editor.tf.insertText("new");
 
     expect(input.children).toEqual(expected.children);
   });
 
-  it('uses the current insert text inside a custom query', () => {
+  it("uses the current insert text inside a custom query", () => {
     const input = (
       <fragment>
         <hp>
@@ -116,20 +110,14 @@ describe('AutoformatPlugin code block rules', () => {
               insertNodesOptions: { select: true },
             });
           },
-          match: '```',
-          mode: 'block',
-          query: (
-            codeEditor: SlateEditor,
-            rule: AutoformatQueryOptions
-          ): boolean => {
+          match: "```",
+          mode: "block",
+          query: (codeEditor: SlateEditor, rule: AutoformatQueryOptions): boolean => {
             if (!codeEditor.selection) return false;
 
-            const matchRange = codeEditor.api.range(
-              'start',
-              codeEditor.selection
-            );
+            const matchRange = codeEditor.api.range("start", codeEditor.selection);
             const textFromBlockStart = codeEditor.api.string(matchRange);
-            const currentNodeText = (textFromBlockStart || '') + rule.text;
+            const currentNodeText = (textFromBlockStart || "") + rule.text;
 
             return rule.match === currentNodeText;
           },
@@ -140,8 +128,8 @@ describe('AutoformatPlugin code block rules', () => {
       value: input,
     });
 
-    editor.tf.insertText('`');
-    editor.tf.insertText('inside code-block');
+    editor.tf.insertText("`");
+    editor.tf.insertText("inside code-block");
 
     expect(input.children).toEqual(output.children);
   });

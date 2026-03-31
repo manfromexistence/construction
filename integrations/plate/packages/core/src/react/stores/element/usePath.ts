@@ -1,19 +1,19 @@
-import type { Path } from '@platejs/slate';
+import type { Path } from "@platejs/slate";
 
-import { useAtomStoreValue } from 'jotai-x';
+import { useAtomStoreValue } from "jotai-x";
 
-import { useEditorRef } from '../plate';
-import { useElementStore } from './useElementStore';
+import { useEditorRef } from "../plate";
+import { useElementStore } from "./useElementStore";
 
 /** Get the memoized path of the closest element. */
 export const usePath = (pluginKey?: string): Path => {
   const editor = useEditorRef();
-  const value = useAtomStoreValue(useElementStore(pluginKey), 'path');
+  const value = useAtomStoreValue(useElementStore(pluginKey), "path");
 
   if (!value) {
     editor.api.debug.warn(
       `usePath(${pluginKey}) hook must be used inside the node component's context`,
-      'USE_ELEMENT_CONTEXT'
+      "USE_ELEMENT_CONTEXT"
     );
 
     return undefined as any;

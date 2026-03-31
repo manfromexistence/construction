@@ -1,14 +1,13 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, KEYS, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, KEYS, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { deleteColumnWhenExpanded } from './deleteColumnWhenExpanded';
-import { deleteRowWhenExpanded } from './deleteRowWhenExpanded';
-import { mergeTableCells } from './mergeTableCells';
-import { splitTableCell } from './splitTableCell';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { deleteColumnWhenExpanded } from "./deleteColumnWhenExpanded";
+import { deleteRowWhenExpanded } from "./deleteRowWhenExpanded";
+import { mergeTableCells } from "./mergeTableCells";
+import { splitTableCell } from "./splitTableCell";
 
 jsxt;
 
@@ -26,9 +25,9 @@ const createTableEditor = (
 const getTableEntry = (editor: SlateEditor) =>
   editor.api.above({ match: { type: editor.getType(KEYS.table) } })!;
 
-describe('table merge behavior', () => {
-  describe('mergeTableCells', () => {
-    it('merges a 2x2 selection into one spanning cell and keeps cell content order', () => {
+describe("table merge behavior", () => {
+  describe("mergeTableCells", () => {
+    it("merges a 2x2 selection into one spanning cell and keeps cell content order", () => {
       const input = (
         <editor>
           <htable>
@@ -69,11 +68,14 @@ describe('table merge behavior', () => {
       expect(mergedCell).toMatchObject({
         colSpan: 2,
         rowSpan: 2,
-        type: 'td',
+        type: "td",
       });
-      expect(
-        mergedCell.children.map((child: any) => child.children[0].text)
-      ).toEqual(['11', '12', '21', '22']);
+      expect(mergedCell.children.map((child: any) => child.children[0].text)).toEqual([
+        "11",
+        "12",
+        "21",
+        "22",
+      ]);
       expect(editor.selection).toEqual({
         anchor: { offset: 2, path: [0, 0, 0, 3, 0] },
         focus: { offset: 2, path: [0, 0, 0, 3, 0] },
@@ -81,8 +83,8 @@ describe('table merge behavior', () => {
     });
   });
 
-  describe('splitTableCell', () => {
-    it('splits a merged cell into 1x1 cells, creates missing rows, and keeps content in the first cell', () => {
+  describe("splitTableCell", () => {
+    it("splits a merged cell into 1x1 cells, creates missing rows, and keeps content in the first cell", () => {
       const input = (
         <editor>
           <htable>
@@ -138,7 +140,7 @@ describe('table merge behavior', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('inserts split cells into existing rows before later siblings', () => {
+    it("inserts split cells into existing rows before later siblings", () => {
       const input = (
         <editor>
           <htable>
@@ -169,18 +171,14 @@ describe('table merge behavior', () => {
       const table = editor.children[0] as any;
 
       expect(table.children[0].children).toHaveLength(3);
-      expect(table.children[0].children[2].children[0].children[0].text).toBe(
-        '13'
-      );
+      expect(table.children[0].children[2].children[0].children[0].text).toBe("13");
       expect(table.children[1].children).toHaveLength(3);
-      expect(table.children[1].children[2].children[0].children[0].text).toBe(
-        '23'
-      );
+      expect(table.children[1].children[2].children[0].children[0].text).toBe("23");
     });
   });
 
-  describe('deleteRowWhenExpanded', () => {
-    it('deletes a fully selected row and collapses the selection to the next row', () => {
+  describe("deleteRowWhenExpanded", () => {
+    it("deletes a fully selected row and collapses the selection to the next row", () => {
       const input = (
         <editor>
           <htable>
@@ -236,7 +234,7 @@ describe('table merge behavior', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('keeps the table unchanged when the selection does not span the full row width', () => {
+    it("keeps the table unchanged when the selection does not span the full row width", () => {
       const input = (
         <editor>
           <htable>
@@ -275,8 +273,8 @@ describe('table merge behavior', () => {
     });
   });
 
-  describe('deleteColumnWhenExpanded', () => {
-    it('deletes a fully selected column and keeps the remaining column selected', () => {
+  describe("deleteColumnWhenExpanded", () => {
+    it("deletes a fully selected column and keeps the remaining column selected", () => {
       const input = (
         <editor>
           <htable>
@@ -337,7 +335,7 @@ describe('table merge behavior', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('keeps the table unchanged when the selection does not span every row', () => {
+    it("keeps the table unchanged when the selection does not span every row", () => {
       const input = (
         <editor>
           <htable>

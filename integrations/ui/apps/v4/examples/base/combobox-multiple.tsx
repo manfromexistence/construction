@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
 import {
   Combobox,
@@ -13,26 +13,15 @@ import {
   ComboboxList,
   ComboboxValue,
   useComboboxAnchor,
-} from "@/styles/base-nova/ui/combobox"
+} from "@/styles/base-nova/ui/combobox";
 
-const frameworks = [
-  "Next.js",
-  "SvelteKit",
-  "Nuxt.js",
-  "Remix",
-  "Astro",
-] as const
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] as const;
 
 export function ComboboxMultiple() {
-  const anchor = useComboboxAnchor()
+  const anchor = useComboboxAnchor();
 
   return (
-    <Combobox
-      multiple
-      autoHighlight
-      items={frameworks}
-      defaultValue={[frameworks[0]]}
-    >
+    <Combobox multiple autoHighlight items={frameworks} defaultValue={[frameworks[0]]}>
       <ComboboxChips ref={anchor} className="w-full max-w-xs">
         <ComboboxValue>
           {(values) => (
@@ -56,5 +45,5 @@ export function ComboboxMultiple() {
         </ComboboxList>
       </ComboboxContent>
     </Combobox>
-  )
+  );
 }

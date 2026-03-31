@@ -1,9 +1,9 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { TableConfig } from '../BaseTablePlugin';
-import type { CreateCellOptions } from '../types';
+import type { TableConfig } from "../BaseTablePlugin";
+import type { CreateCellOptions } from "../types";
 
 export interface GetEmptyRowNodeOptions extends CreateCellOptions {
   colCount?: number;

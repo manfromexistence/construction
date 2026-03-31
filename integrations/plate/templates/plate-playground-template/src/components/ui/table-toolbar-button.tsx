@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { TablePlugin, useTableMergeState } from '@platejs/table/react';
+import { TablePlugin, useTableMergeState } from "@platejs/table/react";
 
-import type { DropdownMenuProps } from '@radix-ui/react-dropdown-menu';
+import type { DropdownMenuProps } from "@radix-ui/react-dropdown-menu";
 import {
   ArrowDown,
   ArrowLeft,
@@ -14,10 +14,10 @@ import {
   Trash2Icon,
   Ungroup,
   XIcon,
-} from 'lucide-react';
-import { KEYS } from 'platejs';
-import { useEditorPlugin, useEditorSelector } from 'platejs/react';
-import * as React from 'react';
+} from "lucide-react";
+import { KEYS } from "platejs";
+import { useEditorPlugin, useEditorSelector } from "platejs/react";
+import * as React from "react";
 
 import {
   DropdownMenu,
@@ -28,10 +28,10 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
-import { ToolbarButton } from './toolbar';
+import { ToolbarButton } from "./toolbar";
 
 export function TableToolbarButton(props: DropdownMenuProps) {
   const tableSelected = useEditorSelector(
@@ -51,10 +51,7 @@ export function TableToolbarButton(props: DropdownMenuProps) {
         </ToolbarButton>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        align="start"
-        className="flex w-[180px] min-w-0 flex-col"
-      >
+      <DropdownMenuContent align="start" className="flex w-[180px] min-w-0 flex-col">
         <DropdownMenuGroup>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger className="gap-2 data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
@@ -220,8 +217,7 @@ function TablePicker() {
 
     for (let i = 0; i < newGrid.length; i++) {
       for (let j = 0; j < newGrid[i].length; j++) {
-        newGrid[i][j] =
-          i >= 0 && i <= rowIndex && j >= 0 && j <= colIndex ? 1 : 0;
+        newGrid[i][j] = i >= 0 && i <= rowIndex && j >= 0 && j <= colIndex ? 1 : 0;
       }
     }
 
@@ -245,8 +241,8 @@ function TablePicker() {
           rows.map((value, columIndex) => (
             <div
               className={cn(
-                'col-span-1 size-3 border border-solid bg-secondary',
-                !!value && 'border-current'
+                "col-span-1 size-3 border border-solid bg-secondary",
+                !!value && "border-current"
               )}
               key={`(${rowIndex},${columIndex})`}
               onMouseMove={() => {

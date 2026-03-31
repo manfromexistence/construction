@@ -1,7 +1,6 @@
-import type { Value } from 'platejs';
-
-import { slateNodesToInsertDelta } from '@slate-yjs/core';
-import * as Y from 'yjs';
+import { slateNodesToInsertDelta } from "@slate-yjs/core";
+import type { Value } from "platejs";
+import * as Y from "yjs";
 
 /**
  * Produce the canonical "initial update" from a Slate node array using a
@@ -15,17 +14,14 @@ export async function slateToDeterministicYjsState(
   initialNodes: Value // your template
 ): Promise<Uint8Array> {
   //  Generate clientID deterministically
-  const deterministicClientId = await generateDeterministicClientId(
-    guid,
-    initialNodes
-  );
+  const deterministicClientId = await generateDeterministicClientId(guid, initialNodes);
 
   // 2Build the update in a temp doc with the deterministic clientID
   const tmp = new Y.Doc({ guid });
   tmp.clientID = deterministicClientId;
 
   const delta = slateNodesToInsertDelta(initialNodes);
-  const content = tmp.get('content', Y.XmlText) as Y.XmlText;
+  const content = tmp.get("content", Y.XmlText) as Y.XmlText;
   content.applyDelta(delta);
   const initialUpdate = Y.encodeStateAsUpdate(tmp);
   tmp.destroy();
@@ -46,10 +42,7 @@ function arrayBufferToClientId(buffer: ArrayBuffer): number {
  * Generates a deterministic Yjs clientID based on a GUID and initial Slate
  * nodes using the Web Crypto API (SHA-256).
  */
-async function generateDeterministicClientId(
-  guid: string,
-  initialNodes: Value
-): Promise<number> {
+async function generateDeterministicClientId(guid: string, initialNodes: Value): Promise<number> {
   const nodesString = JSON.stringify(initialNodes);
   const combinedString = `${guid}-${nodesString}`;
   const encoder = new TextEncoder();
@@ -57,10 +50,10 @@ async function generateDeterministicClientId(
   const subtle = globalThis.crypto?.subtle ?? globalThis.window?.crypto?.subtle;
 
   if (!subtle) {
-    throw new Error('Web Crypto API subtle.digest is unavailable');
+    throw new Error("Web Crypto API subtle.digest is unavailable");
   }
 
-  const hashBuffer = await subtle.digest('SHA-256', data);
+  const hashBuffer = await subtle.digest("SHA-256", data);
 
   return arrayBufferToClientId(hashBuffer);
 }

@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 
-import { Index } from '@/__registry__';
-import { BlockViewer } from '@/components/block-viewer';
-import { cn } from '@/lib/utils';
-import { useMounted } from '@/registry/hooks/use-mounted';
+import { Index } from "@/__registry__";
+import { BlockViewer } from "@/components/block-viewer";
+import { cn } from "@/lib/utils";
+import { useMounted } from "@/registry/hooks/use-mounted";
 
-import { Icons } from './icons';
+import { Icons } from "./icons";
 
-const BlockExamples = new Set(['markdown-streaming-demo']);
+const BlockExamples = new Set(["markdown-streaming-demo"]);
 
 interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
@@ -17,7 +17,7 @@ interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   __highlightedFiles__?: string;
   __item__?: string;
   __tree__?: string;
-  align?: 'center' | 'end' | 'start';
+  align?: "center" | "end" | "start";
   dependencies?: any;
   description?: string;
   extractClassname?: boolean;
@@ -26,13 +26,13 @@ interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   hideCode?: boolean;
   highlightedFiles?: any;
   item?: any;
-  padding?: 'md';
+  padding?: "md";
   tree?: any;
-  type?: 'block' | 'component' | 'example';
+  type?: "block" | "component" | "example";
 }
 
 export function ComponentPreview({
-  align = 'start',
+  align = "start",
   children,
   className,
   description,
@@ -50,17 +50,17 @@ export function ComponentPreview({
     if (!Component) {
       return (
         <p className="text-muted-foreground text-sm">
-          Component{' '}
+          Component{" "}
           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
             {name}
-          </code>{' '}
+          </code>{" "}
           not found in registry.
         </p>
       );
     }
 
     // DIFF
-    return <Component {...props} id={props.id ?? name.replace('-demo', '')} />;
+    return <Component {...props} id={props.id ?? name.replace("-demo", "")} />;
   }, [name, props]);
 
   const mounted = useMounted();
@@ -72,10 +72,10 @@ export function ComponentPreview({
     </div>
   );
 
-  let item = props.item ?? JSON.parse(props.__item__ ?? '[]');
+  let item = props.item ?? JSON.parse(props.__item__ ?? "[]");
 
   // Create new object instead of mutating
-  if (name === 'potion-iframe-demo') {
+  if (name === "potion-iframe-demo") {
     item = {
       ...item,
       meta: {
@@ -89,26 +89,21 @@ export function ComponentPreview({
     <div className="mt-4 mb-12">
       <BlockViewer
         block={BlockExamples.has(item.name)}
-        dependencies={
-          props.dependencies ?? JSON.parse(props.__dependencies__ ?? '[]')
-        }
+        dependencies={props.dependencies ?? JSON.parse(props.__dependencies__ ?? "[]")}
         height={height}
-        highlightedFiles={
-          props.highlightedFiles ??
-          JSON.parse(props.__highlightedFiles__ ?? '[]')
-        }
+        highlightedFiles={props.highlightedFiles ?? JSON.parse(props.__highlightedFiles__ ?? "[]")}
         item={item}
         preview={
           <React.Suspense fallback={loadingPreview}>
             {mounted ? (
               <div
                 className={cn(
-                  'preview relative flex size-full min-h-[350px] flex-col p-0',
-                  padding === 'md' && 'p-4',
+                  "preview relative flex size-full min-h-[350px] flex-col p-0",
+                  padding === "md" && "p-4",
                   {
-                    'items-center': align === 'center',
-                    'items-end': align === 'end',
-                    'items-start': align === 'start',
+                    "items-center": align === "center",
+                    "items-end": align === "end",
+                    "items-start": align === "start",
                   }
                 )}
               >
@@ -119,7 +114,7 @@ export function ComponentPreview({
             )}
           </React.Suspense>
         }
-        tree={props.tree ?? JSON.parse(props.__tree__ ?? '[]')}
+        tree={props.tree ?? JSON.parse(props.__tree__ ?? "[]")}
       />
     </div>
   );

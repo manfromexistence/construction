@@ -37,15 +37,10 @@ interface TasksTableProps {
 export function TasksTable({ promises, queryKeys }: TasksTableProps) {
   const { enableAdvancedFilter, filterFlag } = useFeatureFlags();
 
-  const [
-    { data, pageCount },
-    statusCounts,
-    priorityCounts,
-    estimatedHoursRange,
-  ] = React.use(promises);
+  const [{ data, pageCount }, statusCounts, priorityCounts, estimatedHoursRange] =
+    React.use(promises);
 
-  const [rowAction, setRowAction] =
-    React.useState<DataTableRowAction<Task> | null>(null);
+  const [rowAction, setRowAction] = React.useState<DataTableRowAction<Task> | null>(null);
 
   const columns = React.useMemo(
     () =>
@@ -55,7 +50,7 @@ export function TasksTable({ promises, queryKeys }: TasksTableProps) {
         estimatedHoursRange,
         setRowAction,
       }),
-    [statusCounts, priorityCounts, estimatedHoursRange],
+    [statusCounts, priorityCounts, estimatedHoursRange]
   );
 
   const { table, shallow, debounceMs, throttleMs } = useDataTable({
@@ -75,10 +70,7 @@ export function TasksTable({ promises, queryKeys }: TasksTableProps) {
 
   return (
     <>
-      <DataTable
-        table={table}
-        actionBar={<TasksTableActionBar table={table} />}
-      >
+      <DataTable table={table} actionBar={<TasksTableActionBar table={table} />}>
         {enableAdvancedFilter ? (
           <DataTableAdvancedToolbar table={table}>
             <DataTableSortList table={table} align="start" />

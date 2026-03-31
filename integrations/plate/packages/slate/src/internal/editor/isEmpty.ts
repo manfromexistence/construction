@@ -1,12 +1,7 @@
-import { isEmpty as isEmptyBase } from 'slate';
-import {
-  type EditorEmptyOptions,
-  NodeApi,
-  PathApi,
-  TextApi,
-} from '../../interfaces';
-import type { Editor } from '../../interfaces/editor/editor-type';
-import type { At } from '../../types';
+import { isEmpty as isEmptyBase } from "slate";
+import { type EditorEmptyOptions, NodeApi, PathApi, TextApi } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor/editor-type";
+import type { At } from "../../types";
 
 export const isEmpty = <E extends Editor>(
   editor: E,
@@ -16,14 +11,8 @@ export const isEmpty = <E extends Editor>(
   let _target = target;
 
   if (_target === null) return true;
-  if (
-    (PathApi.isPath(_target) && _target.length === 0) ||
-    NodeApi.isEditor(_target)
-  ) {
-    return (
-      editor.children.length === 1 &&
-      isEmptyBase(editor as any, editor.children[0] as any)
-    );
+  if ((PathApi.isPath(_target) && _target.length === 0) || NodeApi.isEditor(_target)) {
+    return editor.children.length === 1 && isEmptyBase(editor as any, editor.children[0] as any);
   }
   if (options?.after) {
     const blockAbove = editor.api.block({ above: true, at: _target });

@@ -1,11 +1,11 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { withTrailingBlock } from './withTrailingBlock';
+import { withTrailingBlock } from "./withTrailingBlock";
 
-describe('withTrailingBlock', () => {
-  it('appends a trailing block at the next path when the last node has the wrong type', () => {
+describe("withTrailingBlock", () => {
+  it("appends a trailing block at the next path when the last node has the wrong type", () => {
     const editor = createSlateEditor({
-      value: [{ type: 'h1', children: [{ text: 'x' }] }] as any,
+      value: [{ type: "h1", children: [{ text: "x" }] }] as any,
     });
     const normalizeNode = mock();
 
@@ -13,7 +13,7 @@ describe('withTrailingBlock', () => {
       editor,
       getOptions: () => ({
         level: 0,
-        type: 'p',
+        type: "p",
       }),
       tf: { normalizeNode },
     } as any);
@@ -23,15 +23,15 @@ describe('withTrailingBlock', () => {
 
     expect(editor.children).toHaveLength(2);
     expect(editor.children[1]).toMatchObject({
-      type: 'p',
-      children: [{ text: '' }],
+      type: "p",
+      children: [{ text: "" }],
     });
     expect(normalizeNode).not.toHaveBeenCalled();
   });
 
-  it('falls through to the base normalizeNode when the trailing block is already valid', () => {
+  it("falls through to the base normalizeNode when the trailing block is already valid", () => {
     const editor = createSlateEditor({
-      value: [{ type: 'p', children: [{ text: 'x' }] }] as any,
+      value: [{ type: "p", children: [{ text: "x" }] }] as any,
     });
     const normalizeNode = mock();
 
@@ -39,7 +39,7 @@ describe('withTrailingBlock', () => {
       editor,
       getOptions: () => ({
         level: 0,
-        type: 'p',
+        type: "p",
       }),
       tf: { normalizeNode },
     } as any);

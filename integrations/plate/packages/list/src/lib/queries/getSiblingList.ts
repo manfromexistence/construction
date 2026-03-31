@@ -3,26 +3,19 @@ import {
   type ElementEntryOf,
   type ElementOf,
   type ElementOrTextOf,
-  type NodeEntry,
-  type TNode,
   isDefined,
   KEYS,
-} from 'platejs';
+  type NodeEntry,
+  type TNode,
+} from "platejs";
 
-export type GetSiblingListOptions<
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
-> = {
+export type GetSiblingListOptions<N extends ElementOf<E>, E extends Editor = Editor> = {
   breakOnEqIndentNeqListStyleType?: boolean;
   breakOnListRestart?: boolean;
   breakOnLowerIndent?: boolean;
   breakQuery?: (siblingNode: TNode, currentNode: TNode) => boolean | undefined;
-  getNextEntry?: (
-    entry: NodeEntry<ElementOrTextOf<E>>
-  ) => NodeEntry<N> | undefined;
-  getPreviousEntry?: (
-    entry: NodeEntry<ElementOrTextOf<E>>
-  ) => NodeEntry<N> | undefined;
+  getNextEntry?: (entry: NodeEntry<ElementOrTextOf<E>>) => NodeEntry<N> | undefined;
+  getPreviousEntry?: (entry: NodeEntry<ElementOrTextOf<E>>) => NodeEntry<N> | undefined;
   /** Query to break lookup */
   eqIndent?: boolean;
   /** Query to validate lookup. If false, check the next sibling. */
@@ -33,10 +26,7 @@ export type GetSiblingListOptions<
  * Get the next sibling indent list node. Default query: the sibling node should
  * have the same listStyleType.
  */
-export const getSiblingList = <
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
->(
+export const getSiblingList = <N extends ElementOf<E>, E extends Editor = Editor>(
   _editor: E,
   [node, path]: ElementEntryOf<E>,
   {

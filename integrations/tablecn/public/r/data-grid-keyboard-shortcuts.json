@@ -3,17 +3,8 @@
   "name": "data-grid-keyboard-shortcuts",
   "title": "Data Grid Keyboard Shortcuts",
   "description": "A keyboard shortcuts dialog component for the data grid showing all available shortcuts",
-  "dependencies": [
-    "@radix-ui/react-direction",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "button",
-    "dialog",
-    "input",
-    "kbd",
-    "separator"
-  ],
+  "dependencies": ["@radix-ui/react-direction", "lucide-react"],
+  "registryDependencies": ["button", "dialog", "input", "kbd", "separator"],
   "files": [
     {
       "path": "src/components/data-grid/data-grid-keyboard-shortcuts.tsx",

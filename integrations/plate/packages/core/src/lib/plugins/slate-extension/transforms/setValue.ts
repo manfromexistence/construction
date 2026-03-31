@@ -1,14 +1,11 @@
-import type { Descendant, EditorTransforms, Value } from '@platejs/slate';
+import type { Descendant, EditorTransforms, Value } from "@platejs/slate";
 
-import type { SlateEditor } from '../../../editor';
+import type { SlateEditor } from "../../../editor";
 
-export const setValue = <V extends Value>(
-  editor: SlateEditor,
-  value?: V | string
-) => {
+export const setValue = <V extends Value>(editor: SlateEditor, value?: V | string) => {
   let children: Descendant[] = value as any;
 
-  if (typeof value === 'string') {
+  if (typeof value === "string") {
     children = editor.api.html.deserialize({
       element: value,
     });

@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, type TElement, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor, type TElement } from "platejs";
 
-import { getSiblingListStyleType } from './getSiblingListStyleType';
+import { getSiblingListStyleType } from "./getSiblingListStyleType";
 
 jsxt;
 
-describe('getSiblingListStyleType', () => {
-  it('returns the first sibling style at the requested indent', () => {
+describe("getSiblingListStyleType", () => {
+  it("returns the first sibling style at the requested indent", () => {
     const input = (
       <editor>
         <hp indent={1} listStyleType="decimal">
@@ -38,10 +38,10 @@ describe('getSiblingListStyleType', () => {
         entry: entry!,
         indent: 1,
       })
-    ).toBe('decimal');
+    ).toBe("decimal");
   });
 
-  it('falls back to the entry style when no sibling matches the requested indent', () => {
+  it("falls back to the entry style when no sibling matches the requested indent", () => {
     const input = (
       <editor>
         <hp indent={2} listStyleType="disc">
@@ -68,6 +68,6 @@ describe('getSiblingListStyleType', () => {
         entry: entry!,
         indent: 1,
       })
-    ).toBe('disc');
+    ).toBe("disc");
   });
 });

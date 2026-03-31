@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { DotPattern } from "@/registry/magicui/dot-pattern"
+import { cn } from "@/lib/utils";
+import { DotPattern } from "@/registry/magicui/dot-pattern";
 
 export default function DotPatternLinearGradient() {
   return (
@@ -17,5 +17,5 @@ export default function DotPatternLinearGradient() {
         )}
       />
     </div>
-  )
+  );
 }

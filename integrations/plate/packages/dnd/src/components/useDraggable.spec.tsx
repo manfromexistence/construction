@@ -1,37 +1,37 @@
-import { renderHook } from '@testing-library/react';
-import * as actualPlatejsReact from 'platejs/react';
+import { renderHook } from "@testing-library/react";
+import * as actualPlatejsReact from "platejs/react";
 
 const useDragMock = mock(() => {
-  throw new Error('useDrag should not run when DOM DnD is unavailable');
+  throw new Error("useDrag should not run when DOM DnD is unavailable");
 });
 const useDropMock = mock(() => {
-  throw new Error('useDrop should not run when DOM DnD is unavailable');
+  throw new Error("useDrop should not run when DOM DnD is unavailable");
 });
 const useEditorRefMock = mock();
 const canUseDomDndMock = mock(() => false);
 
-mock.module('platejs/react', () => ({
+mock.module("platejs/react", () => ({
   ...actualPlatejsReact,
   useEditorRef: useEditorRefMock,
 }));
 
-mock.module('react-dnd', () => ({
+mock.module("react-dnd", () => ({
   useDrag: useDragMock,
   useDrop: useDropMock,
 }));
 
-mock.module('../utils/dndEnvironment', () => ({
+mock.module("../utils/dndEnvironment", () => ({
   canUseDomDnd: canUseDomDndMock,
   noopConnector: (value: any) => value,
 }));
 
 const element = {
-  children: [{ text: 'Hello' }],
-  id: 'block-1',
-  type: 'p',
+  children: [{ text: "Hello" }],
+  id: "block-1",
+  type: "p",
 } as any;
 
-describe('useDraggable', () => {
+describe("useDraggable", () => {
   beforeEach(() => {
     useDragMock.mockClear();
     useDropMock.mockClear();
@@ -46,7 +46,7 @@ describe('useDraggable', () => {
     mock.restore();
   });
 
-  it('returns inert drag state when DOM DnD is unavailable', async () => {
+  it("returns inert drag state when DOM DnD is unavailable", async () => {
     const { useDraggable } = await import(
       `./useDraggable?test=${Math.random().toString(36).slice(2)}`
     );

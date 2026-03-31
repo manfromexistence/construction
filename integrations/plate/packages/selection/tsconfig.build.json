@@ -3,9 +3,7 @@
   "compilerOptions": {
     "outDir": "./dist",
     "paths": {
-      "@viselect/vanilla": [
-        "../../node_modules/@viselect/vanilla/dist/index.d.ts"
-      ]
+      "@viselect/vanilla": ["../../node_modules/@viselect/vanilla/dist/index.d.ts"]
     }
   },
   "include": ["src"]

@@ -43,11 +43,7 @@ export async function checkRateLimit(req?: Request) {
   };
 }
 
-export function rateLimitResponse(result: {
-  limit?: number;
-  reset?: number;
-  remaining?: number;
-}) {
+export function rateLimitResponse(result: { limit?: number; reset?: number; remaining?: number }) {
   return NextResponse.json(
     { error: "Too many requests. Please slow down." },
     {
@@ -57,6 +53,6 @@ export function rateLimitResponse(result: {
         "X-RateLimit-Remaining": String(result.remaining ?? 0),
         "X-RateLimit-Reset": String(result.reset ?? Date.now()),
       },
-    },
+    }
   );
 }

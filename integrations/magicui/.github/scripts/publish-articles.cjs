@@ -22,8 +22,7 @@ for (const a of articles) {
     publishedOn: a.created_at || "",
     featured: true,
   };
-  const fm =
-    "---\n" + yaml.dump(fmObj, { noRefs: true, lineWidth: 0 }) + "---\n";
+  const fm = "---\n" + yaml.dump(fmObj, { noRefs: true, lineWidth: 0 }) + "---\n";
   const body = String(a.content_markdown || "");
   const file = path.join(folder, `${a.slug}.mdx`);
   fs.writeFileSync(file, fm + body, "utf8");

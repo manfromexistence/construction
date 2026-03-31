@@ -3,16 +3,8 @@
   "name": "data-grid-view-menu",
   "title": "Data Grid View Menu",
   "description": "A view menu component for the data grid to toggle column visibility",
-  "dependencies": [
-    "@radix-ui/react-direction",
-    "@tanstack/react-table",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "button",
-    "command",
-    "popover"
-  ],
+  "dependencies": ["@radix-ui/react-direction", "@tanstack/react-table", "lucide-react"],
+  "registryDependencies": ["button", "command", "popover"],
   "files": [
     {
       "path": "src/components/data-grid/data-grid-view-menu.tsx",

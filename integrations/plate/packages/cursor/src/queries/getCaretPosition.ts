@@ -1,8 +1,8 @@
-import type { TRange } from 'platejs';
+import type { TRange } from "platejs";
 
-import { RangeApi } from 'platejs';
+import { RangeApi } from "platejs";
 
-import type { CaretPosition, SelectionRect } from '../types';
+import type { CaretPosition, SelectionRect } from "../types";
 
 /** Get the caret position of a range from selectionRects. */
 export const getCaretPosition = (

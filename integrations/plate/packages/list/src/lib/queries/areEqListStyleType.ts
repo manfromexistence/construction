@@ -1,8 +1,8 @@
-import type { Editor, NodeEntry } from 'platejs';
+import type { Editor, NodeEntry } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { ListStyleType } from '../types';
+import { ListStyleType } from "../types";
 
 export const areEqListStyleType = (
   _editor: Editor,

@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { BaseImagePlugin } from './BaseImagePlugin';
+import { BaseImagePlugin } from "./BaseImagePlugin";
 
 jsxt;
 
-describe('withImageUpload', () => {
+describe("withImageUpload", () => {
   let warnSpy: ReturnType<typeof spyOn>;
 
   afterEach(() => {
@@ -17,11 +17,11 @@ describe('withImageUpload', () => {
   const suppressInsertDataOverrideWarning = () => {
     const originalWarn = console.warn;
 
-    warnSpy = spyOn(console, 'warn').mockImplementation((message, ...args) => {
+    warnSpy = spyOn(console, "warn").mockImplementation((message, ...args) => {
       if (
-        typeof message === 'string' &&
-        message.includes('[OVERRIDE_MISSING]') &&
-        message.includes('editor.insertData()')
+        typeof message === "string" &&
+        message.includes("[OVERRIDE_MISSING]") &&
+        message.includes("editor.insertData()")
       ) {
         return;
       }
@@ -30,7 +30,7 @@ describe('withImageUpload', () => {
     });
   };
 
-  describe('when inserting a png image', () => {
+  describe("when inserting a png image", () => {
     const input = (
       <editor>
         <hp>test</hp>
@@ -43,7 +43,7 @@ describe('withImageUpload', () => {
       </editor>
     ) as any;
 
-    it('ignores image files without changing the editor', () => {
+    it("ignores image files without changing the editor", () => {
       suppressInsertDataOverrideWarning();
 
       const editor = createSlateEditor({
@@ -54,11 +54,11 @@ describe('withImageUpload', () => {
 
       const data = {
         files: [
-          new File(['test'], 'test.png', {
-            type: 'image/png',
+          new File(["test"], "test.png", {
+            type: "image/png",
           }),
         ],
-        getData: () => '',
+        getData: () => "",
       };
       editor.tf.insertData(data as any);
 
@@ -66,7 +66,7 @@ describe('withImageUpload', () => {
     });
   });
 
-  describe('when no files', () => {
+  describe("when no files", () => {
     const input = (
       <editor>
         <hp>test</hp>
@@ -79,12 +79,10 @@ describe('withImageUpload', () => {
       </editor>
     ) as any;
 
-    it('falls back to the default insertData behavior', () => {
+    it("falls back to the default insertData behavior", () => {
       suppressInsertDataOverrideWarning();
 
-      const jsonParseSpy = spyOn(JSON, 'parse').mockReturnValue(
-        <fragment>image.png</fragment>
-      );
+      const jsonParseSpy = spyOn(JSON, "parse").mockReturnValue(<fragment>image.png</fragment>);
 
       const editor = createSlateEditor({
         plugins: [BaseImagePlugin],
@@ -93,7 +91,7 @@ describe('withImageUpload', () => {
       });
 
       const data = {
-        getData: () => '',
+        getData: () => "",
       };
       editor.tf.insertData(data as any);
 
@@ -103,7 +101,7 @@ describe('withImageUpload', () => {
     });
   });
 
-  describe('when inserting a non-image file', () => {
+  describe("when inserting a non-image file", () => {
     const input = (
       <editor>
         <hp>test</hp>
@@ -116,7 +114,7 @@ describe('withImageUpload', () => {
       </editor>
     ) as any;
 
-    it('ignores non-image files without changing the editor', () => {
+    it("ignores non-image files without changing the editor", () => {
       suppressInsertDataOverrideWarning();
 
       const editor = createSlateEditor({
@@ -126,8 +124,8 @@ describe('withImageUpload', () => {
       });
 
       const data = {
-        files: [new File(['test'], 'not-an-image')],
-        getData: () => '',
+        files: [new File(["test"], "not-an-image")],
+        getData: () => "",
       };
       editor.tf.insertData(data as any);
 

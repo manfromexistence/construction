@@ -1,13 +1,9 @@
-import type React from 'react';
+import type { Editor, TLocation } from "platejs";
+import type React from "react";
 
-import type { Editor, TLocation } from 'platejs';
+import { getBoundingClientRect } from "./getBoundingClientRect";
 
-import { getBoundingClientRect } from './getBoundingClientRect';
-
-export type VirtualRef = React.RefObject<Pick<
-  HTMLElement,
-  'getBoundingClientRect'
-> | null>;
+export type VirtualRef = React.RefObject<Pick<HTMLElement, "getBoundingClientRect"> | null>;
 
 export const createVirtualRef = (
   editor: Editor,
@@ -24,7 +20,7 @@ export const createVirtualRef = (
 
       if (!rect) {
         throw new Error(
-          'Could not get the bounding client rect of the location. Please provide a fallbackRect.'
+          "Could not get the bounding client rect of the location. Please provide a fallbackRect."
         );
       }
 

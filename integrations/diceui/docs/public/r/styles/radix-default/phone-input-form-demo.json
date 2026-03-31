@@ -1,16 +1,7 @@
 {
   "name": "phone-input-form-demo",
-  "dependencies": [
-    "@hookform/resolvers",
-    "react-hook-form",
-    "zod",
-    "sonner"
-  ],
-  "registryDependencies": [
-    "phone-input",
-    "button",
-    "form"
-  ],
+  "dependencies": ["@hookform/resolvers", "react-hook-form", "zod", "sonner"],
+  "registryDependencies": ["phone-input", "button", "form"],
   "files": [
     {
       "path": "examples/phone-input-form-demo.tsx",

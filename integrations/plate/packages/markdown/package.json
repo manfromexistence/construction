@@ -2,14 +2,7 @@
   "name": "@platejs/markdown",
   "version": "52.3.19",
   "description": "Markdown serializer plugin for Plate",
-  "keywords": [
-    "markdown",
-    "md",
-    "plate",
-    "plugin",
-    "serializer",
-    "slate"
-  ],
+  "keywords": ["markdown", "md", "plate", "plugin", "serializer", "slate"],
   "homepage": "https://platejs.org",
   "bugs": {
     "url": "https://github.com/udecode/plate/issues"
@@ -27,9 +20,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist/**/*"],
   "scripts": {
     "brl": "plate-pkg p:brl",
     "build": "plate-pkg p:build",

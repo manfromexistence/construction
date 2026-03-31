@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Separator } from "@/styles/base-nova/ui-rtl/separator"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Separator } from "@/styles/base-nova/ui-rtl/separator";
 
 const translations: Translations = {
   en: {
@@ -23,8 +20,7 @@ const translations: Translations = {
     values: {
       title: "shadcn/ui",
       subtitle: "الأساس لنظام التصميم الخاص بك",
-      description:
-        "مجموعة من المكونات المصممة بشكل جميل يمكنك تخصيصها وتوسيعها والبناء عليها.",
+      description: "مجموعة من المكونات المصممة بشكل جميل يمكنك تخصيصها وتوسيعها والبناء عليها.",
     },
   },
   he: {
@@ -32,14 +28,13 @@ const translations: Translations = {
     values: {
       title: "shadcn/ui",
       subtitle: "הבסיס למערכת העיצוב שלך",
-      description:
-        "סט של רכיבים מעוצבים בצורה יפה שאתה יכול להתאים אישית, להרחיב ולבנות עליהם.",
+      description: "סט של רכיבים מעוצבים בצורה יפה שאתה יכול להתאים אישית, להרחיב ולבנות עליהם.",
     },
   },
-}
+};
 
 export function SeparatorRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="flex max-w-sm flex-col gap-4 text-sm" dir={dir}>
@@ -50,5 +45,5 @@ export function SeparatorRtl() {
       <Separator />
       <div>{t.description}</div>
     </div>
-  )
+  );
 }

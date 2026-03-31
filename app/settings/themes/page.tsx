@@ -1,12 +1,12 @@
+import { Palette, Plus } from "lucide-react";
+import { headers } from "next/headers";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getThemes } from "@/actions/themes";
 import { ThemesList } from "@/app/settings/components/themes-list";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { auth } from "@/lib/auth";
-import { Palette, Plus } from "lucide-react";
-import { headers } from "next/headers";
-import Link from "next/link";
-import { redirect } from "next/navigation";
 import { SettingsHeader } from "../components/settings-header";
 
 export default async function ThemesPage() {

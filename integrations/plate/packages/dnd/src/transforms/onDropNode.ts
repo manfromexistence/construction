@@ -1,12 +1,11 @@
-import type { PlateEditor } from 'platejs/react';
-import type { DropTargetMonitor } from 'react-dnd';
+import { type NodeEntry, type Path, PathApi, type TElement } from "platejs";
+import type { PlateEditor } from "platejs/react";
+import type { DropTargetMonitor } from "react-dnd";
 
-import { type NodeEntry, type Path, type TElement, PathApi } from 'platejs';
+import type { UseDropNodeOptions } from "../hooks";
+import type { DragItemNode, ElementDragItemNode } from "../types";
 
-import type { UseDropNodeOptions } from '../hooks';
-import type { DragItemNode, ElementDragItemNode } from '../types';
-
-import { getHoverDirection } from '../utils';
+import { getHoverDirection } from "../utils";
 
 /** Callback called on drag and drop a node with id. */
 export const getDropPath = (
@@ -17,14 +16,11 @@ export const getDropPath = (
     element,
     monitor,
     nodeRef,
-    orientation = 'vertical',
+    orientation = "vertical",
   }: {
     dragItem: DragItemNode;
     monitor: DropTargetMonitor;
-  } & Pick<
-    UseDropNodeOptions,
-    'canDropNode' | 'element' | 'nodeRef' | 'orientation'
-  >
+  } & Pick<UseDropNodeOptions, "canDropNode" | "element" | "nodeRef" | "orientation">
 ) => {
   const direction = getHoverDirection({
     dragItem,
@@ -39,7 +35,7 @@ export const getDropPath = (
   let dragEntry: NodeEntry<TElement> | undefined;
   let dropEntry: NodeEntry<TElement> | undefined;
 
-  if ('element' in dragItem) {
+  if ("element" in dragItem) {
     const dragPath = editor.api.findPath(dragItem.element);
     const hoveredPath = editor.api.findPath(element);
 
@@ -52,9 +48,7 @@ export const getDropPath = (
   }
   if (!dropEntry) return;
   if (
-    (canDropNode &&
-      dragEntry &&
-      !canDropNode({ dragEntry, dragItem, dropEntry, editor })) ||
+    (canDropNode && dragEntry && !canDropNode({ dragEntry, dragItem, dropEntry, editor })) ||
     !monitor.canDrop()
   ) {
     return;
@@ -68,14 +62,14 @@ export const getDropPath = (
 
   // Treat 'right' like 'bottom' (after hovered)
   // Treat 'left' like 'top' (before hovered)
-  if (direction === 'bottom' || direction === 'right') {
+  if (direction === "bottom" || direction === "right") {
     // Insert after hovered node
     dropPath = hoveredPath;
 
     // If the dragged node is already right after hovered node, no change
     if (dragPath && PathApi.equals(dragPath, PathApi.next(dropPath))) return;
   }
-  if (direction === 'top' || direction === 'left') {
+  if (direction === "top" || direction === "left") {
     // Insert before hovered node
     dropPath = [...hoveredPath.slice(0, -1), hoveredPath.at(-1)! - 1];
 
@@ -85,9 +79,7 @@ export const getDropPath = (
 
   const _dropPath = dropPath as Path;
   const before =
-    dragPath &&
-    PathApi.isBefore(dragPath, _dropPath) &&
-    PathApi.isSibling(dragPath, _dropPath);
+    dragPath && PathApi.isBefore(dragPath, _dropPath) && PathApi.isSibling(dragPath, _dropPath);
   const to = before ? _dropPath : PathApi.next(_dropPath);
 
   return { direction, dragPath, to };
@@ -101,14 +93,11 @@ export const onDropNode = (
     element,
     monitor,
     nodeRef,
-    orientation = 'vertical',
+    orientation = "vertical",
   }: {
     dragItem: ElementDragItemNode;
     monitor: DropTargetMonitor;
-  } & Pick<
-    UseDropNodeOptions,
-    'canDropNode' | 'element' | 'nodeRef' | 'orientation'
-  >
+  } & Pick<UseDropNodeOptions, "canDropNode" | "element" | "nodeRef" | "orientation">
 ) => {
   const result = getDropPath(editor, {
     canDropNode,

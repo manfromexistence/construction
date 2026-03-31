@@ -1,39 +1,41 @@
 /** @jsx jsxt */
 
-import { BlockquotePlugin, HeadingPlugin } from '@platejs/basic-nodes/react';
 import {
+  BlockquotePlugin,
   BoldPlugin,
   CodePlugin,
+  HeadingPlugin,
+  HighlightPlugin,
   ItalicPlugin,
+  KbdPlugin,
   StrikethroughPlugin,
   SubscriptPlugin,
   SuperscriptPlugin,
   UnderlinePlugin,
-} from '@platejs/basic-nodes/react';
-import { HighlightPlugin, KbdPlugin } from '@platejs/basic-nodes/react';
-import { TextAlignPlugin } from '@platejs/basic-styles/react';
-import { CodeBlockPlugin } from '@platejs/code-block/react';
-import { FindReplacePlugin } from '@platejs/find-replace';
-import { LinkPlugin } from '@platejs/link/react';
-import { ListPlugin } from '@platejs/list-classic/react';
-import { ImagePlugin, MediaEmbedPlugin } from '@platejs/media/react';
-import { TablePlugin } from '@platejs/table/react';
-import { getHtmlDocument, jsxt } from '@platejs/test-utils';
+} from "@platejs/basic-nodes/react";
+import { TextAlignPlugin } from "@platejs/basic-styles/react";
+import { CodeBlockPlugin } from "@platejs/code-block/react";
+import { FindReplacePlugin } from "@platejs/find-replace";
+import { LinkPlugin } from "@platejs/link/react";
+import { ListPlugin } from "@platejs/list-classic/react";
+import { ImagePlugin, MediaEmbedPlugin } from "@platejs/media/react";
+import { TablePlugin } from "@platejs/table/react";
+import { getHtmlDocument, jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor } from '../../../../../../packages/core/src/lib/editor';
-import { BaseParagraphPlugin } from '../../../../../../packages/core/src/lib/plugins/paragraph';
-import { deserializeHtml } from '../../../../../../packages/core/src/lib/plugins/html/utils/deserializeHtml';
-import { deserializeHtmlElement } from '../../../../../../packages/core/src/lib/plugins/html/utils/deserializeHtmlElement';
+import { createSlateEditor } from "../../../../../../packages/core/src/lib/editor";
+import { deserializeHtml } from "../../../../../../packages/core/src/lib/plugins/html/utils/deserializeHtml";
+import { deserializeHtmlElement } from "../../../../../../packages/core/src/lib/plugins/html/utils/deserializeHtmlElement";
+import { BaseParagraphPlugin } from "../../../../../../packages/core/src/lib/plugins/paragraph";
 
 jsxt;
 
-describe('when collapseWhitespace is false', () => {
-  const html = '<blockquote>test \n code</blockquote>';
+describe("when collapseWhitespace is false", () => {
+  const html = "<blockquote>test \n code</blockquote>";
   const element = getHtmlDocument(html).body.innerHTML;
 
-  const expectedOutput = [{ text: 'test \n code' }];
+  const expectedOutput = [{ text: "test \n code" }];
 
-  it('preserves line breaks', () => {
+  it("preserves line breaks", () => {
     const convertedDocumentFragment = deserializeHtml(createSlateEditor(), {
       collapseWhiteSpace: false,
       element,
@@ -43,8 +45,8 @@ describe('when collapseWhitespace is false', () => {
   });
 });
 
-describe('when element is a div', () => {
-  const html = '<div>test</div>';
+describe("when element is a div", () => {
+  const html = "<div>test</div>";
   const element = getHtmlDocument(html).body;
 
   const output = (
@@ -53,7 +55,7 @@ describe('when element is a div', () => {
     </fragment>
   ) as any;
 
-  it('returns a text fragment', () => {
+  it("returns a text fragment", () => {
     expect(
       deserializeHtml(createSlateEditor(), {
         element,
@@ -62,7 +64,7 @@ describe('when element is a div', () => {
   });
 });
 
-describe('when element is 2 p', () => {
+describe("when element is 2 p", () => {
   const output = (
     <fragment>
       <hp>first</hp>
@@ -70,22 +72,22 @@ describe('when element is 2 p', () => {
     </fragment>
   ) as any;
 
-  it('returns two paragraph nodes', () => {
+  it("returns two paragraph nodes", () => {
     expect(
       deserializeHtml(
         createSlateEditor({
           plugins: [BaseParagraphPlugin],
         }),
         {
-          element: '<p>first</p><p>second</p>',
+          element: "<p>first</p><p>second</p>",
         }
       )
     ).toEqual(output);
   });
 });
 
-describe('when html is a text without tags', () => {
-  const html = 'test';
+describe("when html is a text without tags", () => {
+  const html = "test";
   const element = getHtmlDocument(html).body;
 
   const output = (
@@ -94,7 +96,7 @@ describe('when html is a text without tags', () => {
     </fragment>
   ) as any;
 
-  it('returns a text fragment', () => {
+  it("returns a text fragment", () => {
     expect(
       deserializeHtml(createSlateEditor(), {
         element,
@@ -103,39 +105,39 @@ describe('when html is a text without tags', () => {
   });
 });
 
-describe('when deserializing all plugins', () => {
+describe("when deserializing all plugins", () => {
   const textTags = [
-    '<span>span</span>',
-    '<strong>strong</strong>',
+    "<span>span</span>",
+    "<strong>strong</strong>",
     '<span style="font-weight: 600">style</span>',
-    '<i>i</i>',
-    '<em>em</em>',
+    "<i>i</i>",
+    "<em>em</em>",
     '<span style="font-style: italic">style</span>',
-    '<u>u</u>',
+    "<u>u</u>",
     '<span style="text-decoration: underline">style</span>',
-    '<del>del</del>',
-    '<s>s</s>',
+    "<del>del</del>",
+    "<s>s</s>",
     '<span style="text-decoration: line-through">style</span>',
-    '<code>code</code>',
-    '<kbd>kbd</kbd>',
-    '<sub>sub</sub>',
-    '<sup>sup</sup>',
+    "<code>code</code>",
+    "<kbd>kbd</kbd>",
+    "<sub>sub</sub>",
+    "<sup>sup</sup>",
   ];
 
   const inlineTags = ['<a href="http://google.com">a</a>'];
 
   const elementTags = [
-    '<pre><code><div>code 1</div><div>code 2</div></code></pre>',
-    '<ul><li><p>ul-li-p</p></li></ul>',
-    '<ol><li><p>ol-li-p</p></li></ol>',
+    "<pre><code><div>code 1</div><div>code 2</div></code></pre>",
+    "<ul><li><p>ul-li-p</p></li></ul>",
+    "<ol><li><p>ol-li-p</p></li></ol>",
     '<img alt="" src="https://i.imgur.com/removed.png" />',
-    '<table><tr><td>table</td></tr></table>',
+    "<table><tr><td>table</td></tr></table>",
     `<iframe src="https://player.vimeo.com/video/26689853" />`,
   ];
 
-  const html = `<html><body><p>${textTags.join('')}</p><p>${inlineTags.join(
-    ''
-  )}</p>${elementTags.join('')}</body></html>`;
+  const html = `<html><body><p>${textTags.join("")}</p><p>${inlineTags.join(
+    ""
+  )}</p>${elementTags.join("")}</body></html>`;
 
   const element = getHtmlDocument(html).body;
 
@@ -190,7 +192,7 @@ describe('when deserializing all plugins', () => {
     </editor>
   ) as any;
 
-  it('deserializes all configured plugin outputs', () => {
+  it("deserializes all configured plugin outputs", () => {
     expect(
       deserializeHtmlElement(
         createSlateEditor({

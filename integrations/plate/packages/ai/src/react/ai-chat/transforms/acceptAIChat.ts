@@ -1,11 +1,11 @@
-import { ElementApi, KEYS, type Point } from 'platejs';
-import type { PlateEditor } from 'platejs/react';
+import { ElementApi, KEYS, type Point } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import { BaseAIPlugin } from '../../../lib/BaseAIPlugin';
-import { AI_PREVIEW_KEY } from '../../../lib/transforms/aiStreamSnapshot';
-import { withAIBatch } from '../../../lib/transforms/withAIBatch';
-import { type AIChatPluginConfig, AIChatPlugin } from '../AIChatPlugin';
-import { acceptAISuggestions } from '../utils/acceptAISuggestions';
+import { BaseAIPlugin } from "../../../lib/BaseAIPlugin";
+import { AI_PREVIEW_KEY } from "../../../lib/transforms/aiStreamSnapshot";
+import { withAIBatch } from "../../../lib/transforms/withAIBatch";
+import { AIChatPlugin, type AIChatPluginConfig } from "../AIChatPlugin";
+import { acceptAISuggestions } from "../utils/acceptAISuggestions";
 
 const getAcceptedInsertFocusPoint = (editor: PlateEditor): Point | null => {
   let endIndex: number | null = null;
@@ -22,9 +22,9 @@ const getAcceptedInsertFocusPoint = (editor: PlateEditor): Point | null => {
 };
 
 export const acceptAIChat = (editor: PlateEditor) => {
-  const mode = editor.getOption(AIChatPlugin, 'mode');
+  const mode = editor.getOption(AIChatPlugin, "mode");
 
-  if (mode === 'insert') {
+  if (mode === "insert") {
     const ai = editor.getTransforms(BaseAIPlugin).ai;
     const api = editor.getApi<AIChatPluginConfig>({ key: KEYS.ai });
     const focusPoint = getAcceptedInsertFocusPoint(editor);
@@ -33,8 +33,7 @@ export const acceptAIChat = (editor: PlateEditor) => {
       withAIBatch(editor, () => {
         editor.tf.unsetNodes(AI_PREVIEW_KEY, {
           at: [],
-          match: (node) =>
-            ElementApi.isElement(node) && !!(node as any)[AI_PREVIEW_KEY],
+          match: (node) => ElementApi.isElement(node) && !!(node as any)[AI_PREVIEW_KEY],
         });
         ai.removeMarks();
         editor.getTransforms(AIChatPlugin).aiChat.removeAnchor();
@@ -51,7 +50,7 @@ export const acceptAIChat = (editor: PlateEditor) => {
     }
   }
 
-  if (mode === 'chat') {
+  if (mode === "chat") {
     withAIBatch(editor, () => {
       acceptAISuggestions(editor);
     });

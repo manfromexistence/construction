@@ -1,20 +1,15 @@
-"use client"
+"use client";
 
-import {
-  IconCheck,
-  IconChevronDown,
-  IconInfoCircle,
-  IconPlus,
-} from "@tabler/icons-react"
-import { ArrowUpIcon, Search } from "lucide-react"
+import { IconCheck, IconChevronDown, IconInfoCircle, IconPlus } from "@tabler/icons-react";
+import { ArrowUpIcon, Search } from "lucide-react";
 
-import { useLanguageContext } from "@/components/language-selector"
+import { useLanguageContext } from "@/components/language-selector";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui-rtl/dropdown-menu"
+} from "@/styles/base-nova/ui-rtl/dropdown-menu";
 import {
   InputGroup,
   InputGroupAddon,
@@ -22,13 +17,9 @@ import {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea,
-} from "@/styles/base-nova/ui-rtl/input-group"
-import { Separator } from "@/styles/base-nova/ui-rtl/separator"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/base-nova/ui-rtl/tooltip"
+} from "@/styles/base-nova/ui-rtl/input-group";
+import { Separator } from "@/styles/base-nova/ui-rtl/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/base-nova/ui-rtl/tooltip";
 
 const translations = {
   ar: {
@@ -59,12 +50,12 @@ const translations = {
     used: "52% בשימוש",
     send: "שלח",
   },
-}
+};
 
 export function InputGroupDemo() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
 
   return (
     <div dir={t.dir} className="grid w-full max-w-sm gap-6">
@@ -81,11 +72,7 @@ export function InputGroupDemo() {
           <Tooltip>
             <TooltipTrigger
               render={
-                <InputGroupButton
-                  className="rounded-full"
-                  size="icon-xs"
-                  aria-label={t.add}
-                />
+                <InputGroupButton className="rounded-full" size="icon-xs" aria-label={t.add} />
               }
             >
               <IconInfoCircle />
@@ -117,11 +104,7 @@ export function InputGroupDemo() {
           </DropdownMenu>
           <InputGroupText className="ms-auto">{t.used}</InputGroupText>
           <Separator orientation="vertical" className="h-4!" />
-          <InputGroupButton
-            variant="default"
-            className="rounded-full"
-            size="icon-xs"
-          >
+          <InputGroupButton variant="default" className="rounded-full" size="icon-xs">
             <ArrowUpIcon />
             <span className="sr-only">{t.send}</span>
           </InputGroupButton>
@@ -136,5 +119,5 @@ export function InputGroupDemo() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

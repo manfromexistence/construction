@@ -1,16 +1,15 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseListPlugin } from './BaseListPlugin';
+import { BaseListPlugin } from "./BaseListPlugin";
 
 jsxt;
 
-describe('p (empty) + list when selection not in list', () => {
-  it('remove the p', () => {
+describe("p (empty) + list when selection not in list", () => {
+  it("remove the p", () => {
     const input = (
       <editor>
         <hp>
@@ -46,8 +45,8 @@ describe('p (empty) + list when selection not in list', () => {
   });
 });
 
-describe('p /w text + list when selection not in list', () => {
-  it('merge the texts', () => {
+describe("p /w text + list when selection not in list", () => {
+  it("merge the texts", () => {
     const input = (
       <editor>
         <hp>
@@ -79,7 +78,7 @@ describe('p /w text + list when selection not in list', () => {
     expect(editor.children).toEqual(expected.children);
   });
 
-  it('merge the texts but keep the rest of the list', () => {
+  it("merge the texts but keep the rest of the list", () => {
     const input = (
       <editor>
         <hp>
@@ -119,7 +118,7 @@ describe('p /w text + list when selection not in list', () => {
     expect(editor.children).toEqual(expected.children);
   });
 
-  it('merge the texts and move up its first child', () => {
+  it("merge the texts and move up its first child", () => {
     const input = (
       <editor>
         <hp>
@@ -176,8 +175,8 @@ describe('p /w text + list when selection not in list', () => {
   });
 });
 
-describe('list + list when selection is at the end of the first list', () => {
-  it('merge the two list together', () => {
+describe("list + list when selection is at the end of the first list", () => {
+  it("merge the two list together", () => {
     const input = (
       <editor>
         <hul>
@@ -233,8 +232,8 @@ describe('list + list when selection is at the end of the first list', () => {
   });
 });
 
-describe('list where second item has multiple children', () => {
-  it('merge all text into first list item', () => {
+describe("list where second item has multiple children", () => {
+  it("merge all text into first list item", () => {
     const input = (
       <editor>
         <hul>
@@ -282,8 +281,8 @@ describe('list where second item has multiple children', () => {
   });
 });
 
-describe('list + sublist where second item has multiple children', () => {
-  it('merge all text into first sublist item', () => {
+describe("list + sublist where second item has multiple children", () => {
+  it("merge all text into first sublist item", () => {
     const input = (
       <editor>
         <hul>

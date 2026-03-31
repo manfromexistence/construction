@@ -1,12 +1,7 @@
-import type {
-  HoverCardContentProps,
-  HoverCardProps,
-} from "@radix-ui/react-hover-card";
+import type { HoverCardContentProps, HoverCardProps } from "@radix-ui/react-hover-card";
 import type { CompositionProps, EmptyProps } from "@/types";
 
-export interface RelativeTimeCardProps
-  extends EmptyProps<"button">,
-    CompositionProps {
+export interface RelativeTimeCardProps extends EmptyProps<"button">, CompositionProps {
   /**
    * The date to display. Can be a Date object, string, or number.
    *

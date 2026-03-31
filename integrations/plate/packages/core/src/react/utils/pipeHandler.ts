@@ -1,11 +1,9 @@
-import type React from 'react';
-
-import type { EditableProps } from '../../lib';
-import type { PlateEditor } from '../editor/PlateEditor';
-import type { DOMHandlers } from '../plugin/DOMHandlers';
-
-import { isEditOnly } from '../../internal/plugin/isEditOnlyDisabled';
-import { getEditorPlugin } from '../plugin/getEditorPlugin';
+import type React from "react";
+import { isEditOnly } from "../../internal/plugin/isEditOnlyDisabled";
+import type { EditableProps } from "../../lib";
+import type { PlateEditor } from "../editor/PlateEditor";
+import type { DOMHandlers } from "../plugin/DOMHandlers";
+import { getEditorPlugin } from "../plugin/getEditorPlugin";
 
 export const convertDomEventToSyntheticEvent = (
   domEvent: Event
@@ -28,7 +26,7 @@ export const convertDomEventToSyntheticEvent = (
     isPropagationStopped: () => propagationStopped,
     persist: () => {
       throw new Error(
-        'persist is not implemented for synthetic events created using convertDomEventToSyntheticEvent'
+        "persist is not implemented for synthetic events created using convertDomEventToSyntheticEvent"
       );
     },
     preventDefault: () => domEvent.preventDefault(),
@@ -40,9 +38,7 @@ export const convertDomEventToSyntheticEvent = (
 };
 
 /** Check if an event is overrided by a handler. */
-export const isEventHandled = <
-  EventType extends React.SyntheticEvent<unknown, unknown>,
->(
+export const isEventHandled = <EventType extends React.SyntheticEvent<unknown, unknown>>(
   event: EventType,
   handler?: (event: EventType) => boolean | void
 ) => {
@@ -76,26 +72,20 @@ export const pipeHandler = <K extends keyof DOMHandlers>(
   {
     editableProps,
     handlerKey,
-  }: { handlerKey: K; editableProps?: Omit<EditableProps, 'decorate'> | null }
+  }: { handlerKey: K; editableProps?: Omit<EditableProps, "decorate"> | null }
 ): ((event: any) => void) | undefined => {
-  const propsHandler = editableProps?.[handlerKey] as (
-    event: any
-  ) => boolean | void;
+  const propsHandler = editableProps?.[handlerKey] as (event: any) => boolean | void;
 
-  const relevantPlugins = editor.meta.pluginList.filter(
-    (plugin) => plugin.handlers?.[handlerKey]
-  );
+  const relevantPlugins = editor.meta.pluginList.filter((plugin) => plugin.handlers?.[handlerKey]);
 
   if (relevantPlugins.length === 0 && !propsHandler) return;
 
   return (event: any) => {
     const isDomEvent = event instanceof Event;
-    const handledEvent = isDomEvent
-      ? convertDomEventToSyntheticEvent(event)
-      : event;
+    const handledEvent = isDomEvent ? convertDomEventToSyntheticEvent(event) : event;
 
     const eventIsHandled = relevantPlugins.some((plugin) => {
-      if (isEditOnly(editor.dom.readOnly, plugin, 'handlers')) {
+      if (isEditOnly(editor.dom.readOnly, plugin, "handlers")) {
         return false;
       }
 

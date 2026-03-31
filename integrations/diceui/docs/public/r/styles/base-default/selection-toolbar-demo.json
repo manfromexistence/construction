@@ -1,11 +1,7 @@
 {
   "name": "selection-toolbar-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "selection-toolbar"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["selection-toolbar"],
   "files": [
     {
       "path": "examples/selection-toolbar-demo.tsx",

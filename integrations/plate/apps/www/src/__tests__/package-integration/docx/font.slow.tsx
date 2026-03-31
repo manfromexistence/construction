@@ -6,45 +6,32 @@ import {
   FontFamilyPlugin,
   FontSizePlugin,
   FontWeightPlugin,
-} from '@platejs/basic-styles/react';
-import { jsxt } from '@platejs/test-utils';
+} from "@platejs/basic-styles/react";
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'font';
+const name = "font";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
     expected: (
       <editor>
         <hh1>
-          <htext
-            color="#345A8A"
-            fontFamily="Calibri, sans-serif"
-            fontSize="18pt"
-          >
+          <htext color="#345A8A" fontFamily="Calibri, sans-serif" fontSize="18pt">
             H1 + 18 pt
           </htext>
         </hh1>
         <hp>
           <htext fontFamily="Cambria, serif" fontSize="12pt">
-            Normal with{' '}
+            Normal with{" "}
           </htext>
-          <htext
-            backgroundColor="yellow"
-            fontFamily="Cambria, serif"
-            fontSize="12pt"
-          >
-            background{' '}
+          <htext backgroundColor="yellow" fontFamily="Cambria, serif" fontSize="12pt">
+            background{" "}
           </htext>
-          <htext
-            color="red"
-            backgroundColor="yellow"
-            fontFamily="Cambria, serif"
-            fontSize="12pt"
-          >
+          <htext color="red" backgroundColor="yellow" fontFamily="Cambria, serif" fontSize="12pt">
             color
           </htext>
           <htext fontFamily="Cambria, serif" fontSize="12pt">
@@ -53,7 +40,7 @@ describe(getDocxTestName(name), () => {
         </hp>
         <hp>
           <htext fontFamily="Cambria, serif" fontSize="18pt">
-            Normal + 18 pt and{' '}
+            Normal + 18 pt and{" "}
           </htext>
           <htext fontFamily='"Times New Roman", serif' fontSize="10pt">
             10 pt
@@ -68,12 +55,7 @@ describe(getDocxTestName(name), () => {
           </htext>
         </hp>
         <hp>
-          <htext
-            fontFamily="Cambria, serif"
-            fontSize="12pt"
-            fontWeight="bold"
-            bold
-          >
+          <htext fontFamily="Cambria, serif" fontSize="12pt" fontWeight="bold" bold>
             Definition Term
           </htext>
         </hp>

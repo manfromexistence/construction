@@ -3,9 +3,7 @@
   "name": "use-data-grid-undo-redo",
   "title": "Use Data Grid Undo Redo",
   "description": "An undo/redo hook for the data grid with keyboard shortcuts and history management",
-  "dependencies": [
-    "sonner"
-  ],
+  "dependencies": ["sonner"],
   "registryDependencies": [],
   "files": [
     {

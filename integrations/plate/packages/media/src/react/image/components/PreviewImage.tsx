@@ -1,14 +1,13 @@
-import React, { useEffect, useMemo } from 'react';
+import { createPrimitiveComponent } from "platejs/react";
+import React, { useEffect, useMemo } from "react";
 
-import { createPrimitiveComponent } from 'platejs/react';
-
-import { ImagePreviewStore, useImagePreviewValue } from '../ImagePreviewStore';
-import { useZoom } from '../useZoom';
+import { ImagePreviewStore, useImagePreviewValue } from "../ImagePreviewStore";
+import { useZoom } from "../useZoom";
 
 export const usePreviewImage = () => {
-  const currentPreview = useImagePreviewValue('currentPreview');
-  const translate = useImagePreviewValue('translate');
-  const scale = useImagePreviewValue('scale');
+  const currentPreview = useImagePreviewValue("currentPreview");
+  const translate = useImagePreviewValue("translate");
+  const scale = useImagePreviewValue("scale");
   const imageRef = React.useRef<HTMLImageElement>(null);
 
   const isZoomIn = useMemo(() => scale <= 1, [scale]);
@@ -22,7 +21,7 @@ export const usePreviewImage = () => {
 
     if (!boundingClientRect) return;
 
-    ImagePreviewStore.set('boundingClientRect', boundingClientRect);
+    ImagePreviewStore.set("boundingClientRect", boundingClientRect);
   }, [translate.x, translate.y, scale]);
 
   return {
@@ -31,7 +30,7 @@ export const usePreviewImage = () => {
       ref: imageRef,
       src: currentPreview?.url,
       style: {
-        cursor: isZoomIn ? 'zoom-in' : 'zoom-out',
+        cursor: isZoomIn ? "zoom-in" : "zoom-out",
         transform: `scale(${scale}) translate(${`${translate.x}px`}, ${`${translate.y}px`})`,
       },
       onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -46,6 +45,6 @@ export const usePreviewImage = () => {
   };
 };
 
-export const PreviewImage = createPrimitiveComponent('img')({
+export const PreviewImage = createPrimitiveComponent("img")({
   propsHook: usePreviewImage,
 });

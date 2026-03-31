@@ -2,14 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "card-example",
   "title": "Card",
-  "registryDependencies": [
-    "avatar",
-    "button",
-    "card",
-    "field",
-    "input",
-    "example"
-  ],
+  "registryDependencies": ["avatar", "button", "card", "field", "input", "example"],
   "files": [
     {
       "path": "registry/radix-vega/examples/card-example.tsx",

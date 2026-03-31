@@ -1,6 +1,6 @@
-import type { Descendant, NodeOperation } from '@platejs/slate';
+import type { Descendant, NodeOperation } from "@platejs/slate";
 
-import type { SlateEditor } from '../editor/SlateEditor';
+import type { SlateEditor } from "../editor/SlateEditor";
 
 export const pipeOnNodeChange = (
   editor: SlateEditor,

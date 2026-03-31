@@ -1,68 +1,68 @@
-import path from "path"
-import { iconLibraries, type IconLibraryName } from "@/src/icons/libraries"
-import { configWithDefaults } from "@/src/registry/config"
-import { resolveRegistryTree } from "@/src/registry/resolver"
-import { rawConfigSchema } from "@/src/schema"
-import { addComponents } from "@/src/utils/add-components"
-import { resolveConfigPaths } from "@/src/utils/get-config"
-import { ensureRegistriesInConfig } from "@/src/utils/registries"
-import { updateCss } from "@/src/utils/updaters/update-css"
-import { updateCssVars } from "@/src/utils/updaters/update-css-vars"
-import { updateDependencies } from "@/src/utils/updaters/update-dependencies"
-import deepmerge from "deepmerge"
-import fs from "fs-extra"
+import deepmerge from "deepmerge";
+import fs from "fs-extra";
+import path from "path";
+import { type IconLibraryName, iconLibraries } from "@/src/icons/libraries";
+import { configWithDefaults } from "@/src/registry/config";
+import { resolveRegistryTree } from "@/src/registry/resolver";
+import { rawConfigSchema } from "@/src/schema";
+import { addComponents } from "@/src/utils/add-components";
+import { resolveConfigPaths } from "@/src/utils/get-config";
+import { ensureRegistriesInConfig } from "@/src/utils/registries";
+import { updateCss } from "@/src/utils/updaters/update-css";
+import { updateCssVars } from "@/src/utils/updaters/update-css-vars";
+import { updateDependencies } from "@/src/utils/updaters/update-dependencies";
 
-import type { TemplateInitOptions } from "./create-template"
+import type { TemplateInitOptions } from "./create-template";
 
 // Shared monorepo init for non-Next.js templates (vite, react-router, start).
 // Uses fontsource for fonts instead of next/font.
 export async function fontsourceMonorepoInit(options: TemplateInitOptions) {
-  const packagesUiPath = path.resolve(options.projectPath, "packages/ui")
-  const appsWebPath = path.resolve(options.projectPath, "apps/web")
+  const packagesUiPath = path.resolve(options.projectPath, "packages/ui");
+  const appsWebPath = path.resolve(options.projectPath, "apps/web");
 
   // Update packages/ui/components.json.
-  const packagesUiConfigPath = path.resolve(packagesUiPath, "components.json")
-  let packagesUiConfig = await fs.readJson(packagesUiConfigPath)
+  const packagesUiConfigPath = path.resolve(packagesUiPath, "components.json");
+  let packagesUiConfig = await fs.readJson(packagesUiConfigPath);
   if (options.registryBaseConfig) {
-    packagesUiConfig = deepmerge(packagesUiConfig, options.registryBaseConfig)
+    packagesUiConfig = deepmerge(packagesUiConfig, options.registryBaseConfig);
   }
-  packagesUiConfig.tailwind.baseColor = "neutral"
+  packagesUiConfig.tailwind.baseColor = "neutral";
   if (options.rtl) {
-    packagesUiConfig.rtl = true
+    packagesUiConfig.rtl = true;
   }
   if (options.menuColor) {
-    packagesUiConfig.menuColor = options.menuColor
+    packagesUiConfig.menuColor = options.menuColor;
   }
   if (options.menuAccent) {
-    packagesUiConfig.menuAccent = options.menuAccent
+    packagesUiConfig.menuAccent = options.menuAccent;
   }
   if (options.iconLibrary) {
-    packagesUiConfig.iconLibrary = options.iconLibrary
+    packagesUiConfig.iconLibrary = options.iconLibrary;
   }
   await fs.writeJson(packagesUiConfigPath, packagesUiConfig, {
     spaces: 2,
-  })
+  });
 
   // Update apps/web/components.json.
-  const appsWebConfigPath = path.resolve(appsWebPath, "components.json")
-  let appsWebConfig = await fs.readJson(appsWebConfigPath)
+  const appsWebConfigPath = path.resolve(appsWebPath, "components.json");
+  let appsWebConfig = await fs.readJson(appsWebConfigPath);
   if (options.registryBaseConfig) {
-    appsWebConfig = deepmerge(appsWebConfig, options.registryBaseConfig)
+    appsWebConfig = deepmerge(appsWebConfig, options.registryBaseConfig);
   }
-  appsWebConfig.tailwind.baseColor = "neutral"
+  appsWebConfig.tailwind.baseColor = "neutral";
   if (options.rtl) {
-    appsWebConfig.rtl = true
+    appsWebConfig.rtl = true;
   }
   if (options.menuColor) {
-    appsWebConfig.menuColor = options.menuColor
+    appsWebConfig.menuColor = options.menuColor;
   }
   if (options.menuAccent) {
-    appsWebConfig.menuAccent = options.menuAccent
+    appsWebConfig.menuAccent = options.menuAccent;
   }
   if (options.iconLibrary) {
-    appsWebConfig.iconLibrary = options.iconLibrary
+    appsWebConfig.iconLibrary = options.iconLibrary;
   }
-  await fs.writeJson(appsWebConfigPath, appsWebConfig, { spaces: 2 })
+  await fs.writeJson(appsWebConfigPath, appsWebConfig, { spaces: 2 });
 
   // Apply preset CSS/style to packages/ui directly.
   // We use the packages/ui config so addProjectComponents runs
@@ -70,24 +70,24 @@ export async function fontsourceMonorepoInit(options: TemplateInitOptions) {
   const resolvedPackagesUiConfig = await resolveConfigPaths(
     packagesUiPath,
     rawConfigSchema.parse(packagesUiConfig)
-  )
+  );
   const { config: packagesUiWithRegistries } = await ensureRegistriesInConfig(
     options.components,
     resolvedPackagesUiConfig,
     { silent: true }
-  )
+  );
   // Skip fonts here — we handle them explicitly below.
   await addComponents(options.components, packagesUiWithRegistries, {
     overwrite: true,
     silent: options.silent,
     isNewProject: true,
     skipFonts: true,
-  })
+  });
 
   const resolvedAppsWebConfig = await resolveConfigPaths(
     appsWebPath,
     rawConfigSchema.parse(appsWebConfig)
-  )
+  );
 
   // Handle fonts at the packages/ui level using fontsource.
   // packages/ui has no framework config, so massageTreeForFonts can't detect the framework.
@@ -95,28 +95,22 @@ export async function fontsourceMonorepoInit(options: TemplateInitOptions) {
   const tree = await resolveRegistryTree(
     options.components,
     configWithDefaults(packagesUiWithRegistries)
-  )
+  );
   if (tree?.fonts?.length) {
-    const themeCssVars: Record<string, string> = {}
-    const fontSourceDependencies = new Set<string>()
+    const themeCssVars: Record<string, string> = {};
+    const fontSourceDependencies = new Set<string>();
 
     for (const font of tree.fonts) {
-      const fontName = font.name
-        .replace(/^font-heading-/, "")
-        .replace("font-", "")
-      const fontSourceDependency =
-        font.font.dependency ?? `@fontsource-variable/${fontName}`
+      const fontName = font.name.replace(/^font-heading-/, "").replace("font-", "");
+      const fontSourceDependency = font.font.dependency ?? `@fontsource-variable/${fontName}`;
 
-      themeCssVars[font.font.variable] = font.font.family
-      fontSourceDependencies.add(fontSourceDependency)
+      themeCssVars[font.font.variable] = font.font.family;
+      fontSourceDependencies.add(fontSourceDependency);
     }
 
-    await updateDependencies(
-      Array.from(fontSourceDependencies),
-      [],
-      resolvedPackagesUiConfig,
-      { silent: true }
-    )
+    await updateDependencies(Array.from(fontSourceDependencies), [], resolvedPackagesUiConfig, {
+      silent: true,
+    });
 
     await updateCssVars(
       {
@@ -128,33 +122,30 @@ export async function fontsourceMonorepoInit(options: TemplateInitOptions) {
         overwriteCssVars: false,
         tailwindVersion: "v4",
       }
-    )
+    );
 
     await updateCss(
       Object.fromEntries(
-        Array.from(fontSourceDependencies).map((dependency) => [
-          `@import "${dependency}"`,
-          {},
-        ])
+        Array.from(fontSourceDependencies).map((dependency) => [`@import "${dependency}"`, {}])
       ),
       resolvedPackagesUiConfig,
       {
         silent: options.silent,
       }
-    )
+    );
   }
 
   // Install icon library packages in both workspaces.
-  const iconLibrary = resolvedPackagesUiConfig.iconLibrary as IconLibraryName
+  const iconLibrary = resolvedPackagesUiConfig.iconLibrary as IconLibraryName;
   if (iconLibrary && iconLibrary in iconLibraries) {
-    const iconPackages = [...iconLibraries[iconLibrary].packages]
+    const iconPackages = [...iconLibraries[iconLibrary].packages];
     await updateDependencies(iconPackages, [], resolvedPackagesUiConfig, {
       silent: true,
-    })
+    });
     await updateDependencies(iconPackages, [], resolvedAppsWebConfig, {
       silent: true,
-    })
+    });
   }
 
-  return resolvedAppsWebConfig
+  return resolvedAppsWebConfig;
 }

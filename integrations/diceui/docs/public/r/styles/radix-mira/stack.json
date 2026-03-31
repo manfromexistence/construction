@@ -1,8 +1,6 @@
 {
   "name": "stack",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "ui/stack.tsx",

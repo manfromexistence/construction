@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { setBorderSize } from './setBorderSize';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { setBorderSize } from "./setBorderSize";
 
 jsxt;
 
@@ -13,7 +12,7 @@ jsxt;
 // Each test creates an input editor with a cursor in a specific cell,
 // sets the border size for the given border,
 // and then checks if the output matches the expected output.
-describe('setBorderSize', () => {
+describe("setBorderSize", () => {
   const createEditorInstance = (input: any) =>
     createSlateEditor({
       nodeId: true,
@@ -22,8 +21,8 @@ describe('setBorderSize', () => {
       value: input.children,
     });
 
-  describe('when in cell 11', () => {
-    it('set border top', () => {
+  describe("when in cell 11", () => {
+    it("set border top", () => {
       const input = (
         <editor>
           <htable>
@@ -77,12 +76,12 @@ describe('setBorderSize', () => {
       ) as any as SlateEditor;
 
       const editor = createEditorInstance(input);
-      setBorderSize(editor, 2, { border: 'top' });
+      setBorderSize(editor, 2, { border: "top" });
 
       expect(editor.children).toMatchObject(output.children);
     });
 
-    it('sets all borders by delegating to each side', () => {
+    it("sets all borders by delegating to each side", () => {
       const input = (
         <editor>
           <htable>
@@ -99,7 +98,7 @@ describe('setBorderSize', () => {
       ) as any as SlateEditor;
 
       const editor = createEditorInstance(input);
-      setBorderSize(editor, 2, { border: 'all' });
+      setBorderSize(editor, 2, { border: "all" });
 
       expect(editor.children).toMatchObject(
         (
@@ -126,7 +125,7 @@ describe('setBorderSize', () => {
       );
     });
 
-    it('set border left', () => {
+    it("set border left", () => {
       const input = (
         <editor>
           <htable>
@@ -180,13 +179,13 @@ describe('setBorderSize', () => {
       ) as any as SlateEditor;
 
       const editor = createEditorInstance(input);
-      setBorderSize(editor, 2, { border: 'left' });
+      setBorderSize(editor, 2, { border: "left" });
 
       expect(editor.children).toMatchObject(output.children);
     });
 
-    describe('when in cell 21', () => {
-      it('set border left', () => {
+    describe("when in cell 21", () => {
+      it("set border left", () => {
         const input = (
           <editor>
             <htable>
@@ -240,15 +239,15 @@ describe('setBorderSize', () => {
         ) as any as SlateEditor;
 
         const editor = createEditorInstance(input);
-        setBorderSize(editor, 3, { border: 'left' });
+        setBorderSize(editor, 3, { border: "left" });
 
         expect(editor.children).toMatchObject(output.children);
       });
 
-      describe('set border top', () => {
+      describe("set border top", () => {
         // ... other tests in this describe block
 
-        it('set border bottom on cell 11', () => {
+        it("set border bottom on cell 11", () => {
           const input = (
             <editor>
               <htable>
@@ -302,14 +301,14 @@ describe('setBorderSize', () => {
           ) as any as SlateEditor;
 
           const editor = createEditorInstance(input);
-          setBorderSize(editor, 2, { border: 'top' });
+          setBorderSize(editor, 2, { border: "top" });
 
           expect(editor.children).toMatchObject(output.children);
         });
       });
 
-      describe('when in cell 12', () => {
-        it('set border right', () => {
+      describe("when in cell 12", () => {
+        it("set border right", () => {
           const input = (
             <editor>
               <htable>
@@ -363,13 +362,13 @@ describe('setBorderSize', () => {
           ) as any as SlateEditor;
 
           const editor = createEditorInstance(input);
-          setBorderSize(editor, 1, { border: 'right' });
+          setBorderSize(editor, 1, { border: "right" });
 
           expect(editor.children).toMatchObject(output.children);
         });
 
-        describe('set border left', () => {
-          it('set border right on cell 11', () => {
+        describe("set border left", () => {
+          it("set border right on cell 11", () => {
             const input = (
               <editor>
                 <htable>
@@ -423,15 +422,15 @@ describe('setBorderSize', () => {
             ) as any as SlateEditor;
 
             const editor = createEditorInstance(input);
-            setBorderSize(editor, 2, { border: 'left' });
+            setBorderSize(editor, 2, { border: "left" });
 
             expect(editor.children).toMatchObject(output.children);
           });
         });
       });
 
-      describe('when in cell 22', () => {
-        it('set border bottom', () => {
+      describe("when in cell 22", () => {
+        it("set border bottom", () => {
           const input = (
             <editor>
               <htable>
@@ -485,7 +484,7 @@ describe('setBorderSize', () => {
           ) as any as SlateEditor;
 
           const editor = createEditorInstance(input);
-          setBorderSize(editor, 4, { border: 'bottom' });
+          setBorderSize(editor, 4, { border: "bottom" });
 
           expect(editor.children).toMatchObject(output.children);
         });

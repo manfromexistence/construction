@@ -1,10 +1,10 @@
-import { existsSync } from 'node:fs';
-import path from 'node:path';
-import puppeteer from 'puppeteer';
+import { existsSync } from "node:fs";
+import path from "node:path";
+import puppeteer from "puppeteer";
 
-import { getAllBlocks } from '../src/lib/blocks';
+import { getAllBlocks } from "../src/lib/blocks";
 
-const REGISTRY_PATH = path.join(process.cwd(), 'public/r');
+const REGISTRY_PATH = path.join(process.cwd(), "public/r");
 // ----------------------------------------------------------------------------
 // Capture screenshots.
 // ----------------------------------------------------------------------------
@@ -17,7 +17,7 @@ async function captureScreenshots() {
     return !existsSync(lightPath) || !existsSync(darkPath);
   });
   if (blocks.length === 0) {
-    console.info('✨ All screenshots exist, nothing to capture');
+    console.info("✨ All screenshots exist, nothing to capture");
     return;
   }
   const browser = await puppeteer.launch({
@@ -31,29 +31,29 @@ async function captureScreenshots() {
     const pageUrl = `http://localhost:3333/view/${block}`;
     const page = await browser.newPage();
     await page.goto(pageUrl, {
-      waitUntil: 'networkidle2',
+      waitUntil: "networkidle2",
     });
     console.info(`- Capturing ${block}...`);
-    for (const theme of ['light', 'dark']) {
+    for (const theme of ["light", "dark"]) {
       const screenshotPath = path.join(
         REGISTRY_PATH,
-        `${block}${theme === 'dark' ? '-dark' : '-light'}.png`
+        `${block}${theme === "dark" ? "-dark" : "-light"}.png`
       );
       if (existsSync(screenshotPath)) {
         continue;
       }
       // Set theme and reload page
       await page.evaluate((currentTheme) => {
-        localStorage.setItem('theme', currentTheme);
+        localStorage.setItem("theme", currentTheme);
       }, theme);
-      await page.reload({ waitUntil: 'networkidle2' });
+      await page.reload({ waitUntil: "networkidle2" });
       // Wait for animations to complete
-      if (block.startsWith('chart')) {
+      if (block.startsWith("chart")) {
         await new Promise((resolve) => setTimeout(resolve, 500));
       }
       // Hide Tailwind indicator
       await page.evaluate(() => {
-        const indicator = document.querySelector('[data-tailwind-indicator]');
+        const indicator = document.querySelector("[data-tailwind-indicator]");
         if (indicator) {
           indicator.remove();
         }
@@ -67,9 +67,9 @@ async function captureScreenshots() {
   await browser.close();
 }
 try {
-  console.info('🔍 Capturing screenshots...');
+  console.info("🔍 Capturing screenshots...");
   await captureScreenshots();
-  console.info('✅ Done!');
+  console.info("✅ Done!");
 } catch (error) {
   console.error(error);
   process.exit(1);

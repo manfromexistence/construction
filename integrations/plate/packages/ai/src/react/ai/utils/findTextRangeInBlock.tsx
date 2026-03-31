@@ -1,5 +1,5 @@
-import { distance } from 'fastest-levenshtein';
-import { type NodeEntry, type Path, type Range, NodeApi } from 'platejs';
+import { distance } from "fastest-levenshtein";
+import { NodeApi, type NodeEntry, type Path, type Range } from "platejs";
 
 function maxAllowedDistance(len: number): number {
   if (len <= 2) return 0;
@@ -22,7 +22,7 @@ export function findTextRangeInBlock({
 
   // Collect all text content and map positions
   const textSegments: { offset: number; path: Path; text: string }[] = [];
-  let fullText = '';
+  let fullText = "";
 
   // Iterate through all text nodes in the block
   for (const [textNode, textPath] of NodeApi.texts(blockNode)) {
@@ -87,10 +87,7 @@ export function findTextRangeInBlock({
   if (matchStart === -1) return null;
 
   // Convert character offsets to Slate paths and offsets
-  const findPoint = (
-    charOffset: number,
-    isEnd = false
-  ): { offset: number; path: Path } => {
+  const findPoint = (charOffset: number, isEnd = false): { offset: number; path: Path } => {
     // For start positions, if offset lands exactly at the beginning of a segment, use that segment
     if (!isEnd) {
       for (const segment of textSegments) {

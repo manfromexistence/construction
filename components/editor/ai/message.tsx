@@ -1,3 +1,5 @@
+"use client";
+
 import Logo from "@/assets/logo.svg";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
@@ -187,7 +189,11 @@ function UserMessage({
     if (images.length === 1) {
       return (
         <div className="self-end mb-2">
-          <ChatImagePreview src={images[0].url} alt="Image preview" className="rounded-xl border border-border/20 shadow-sm" />
+          <ChatImagePreview
+            src={images[0].url}
+            alt="Image preview"
+            className="rounded-xl border border-border/20 shadow-sm"
+          />
         </div>
       );
     } else if (images.length > 1) {

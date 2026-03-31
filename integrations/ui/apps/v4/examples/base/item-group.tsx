@@ -1,12 +1,8 @@
-import * as React from "react"
-import { PlusIcon } from "lucide-react"
+import { PlusIcon } from "lucide-react";
+import * as React from "react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/base-nova/ui/avatar"
-import { Button } from "@/styles/base-nova/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/styles/base-nova/ui/avatar";
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   Item,
   ItemActions,
@@ -16,7 +12,7 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from "@/styles/base-nova/ui/item"
+} from "@/styles/base-nova/ui/item";
 
 const people = [
   {
@@ -34,7 +30,7 @@ const people = [
     avatar: "https://github.com/evilrabbit.png",
     email: "evilrabbit@vercel.com",
   },
-]
+];
 
 export function ItemGroupExample() {
   return (
@@ -59,5 +55,5 @@ export function ItemGroupExample() {
         </Item>
       ))}
     </ItemGroup>
-  )
+  );
 }

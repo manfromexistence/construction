@@ -1,12 +1,12 @@
-import { existsSync, mkdirSync } from "fs"
-import path from "path"
-import puppeteer from "puppeteer"
-import { decodePreset } from "shadcn/preset"
+import { existsSync, mkdirSync } from "fs";
+import path from "path";
+import puppeteer from "puppeteer";
+import { decodePreset } from "shadcn/preset";
 
-import { EXPLORE_PRESETS } from "../lib/explore"
+import { EXPLORE_PRESETS } from "../lib/explore";
 
-const PRESETS_PATH = path.join(process.cwd(), "public/presets")
-const force = process.argv.includes("--force")
+const PRESETS_PATH = path.join(process.cwd(), "public/presets");
+const force = process.argv.includes("--force");
 
 // ----------------------------------------------------------------------------
 // Capture explore preset screenshots.
@@ -14,20 +14,20 @@ const force = process.argv.includes("--force")
 async function captureScreenshots() {
   // Ensure output directory exists.
   if (!existsSync(PRESETS_PATH)) {
-    mkdirSync(PRESETS_PATH, { recursive: true })
+    mkdirSync(PRESETS_PATH, { recursive: true });
   }
 
   const presets = force
     ? EXPLORE_PRESETS
     : EXPLORE_PRESETS.filter((code) => {
-        const lightPath = path.join(PRESETS_PATH, `${code}-light.png`)
-        const darkPath = path.join(PRESETS_PATH, `${code}-dark.png`)
-        return !existsSync(lightPath) || !existsSync(darkPath)
-      })
+        const lightPath = path.join(PRESETS_PATH, `${code}-light.png`);
+        const darkPath = path.join(PRESETS_PATH, `${code}-dark.png`);
+        return !existsSync(lightPath) || !existsSync(darkPath);
+      });
 
   if (presets.length === 0) {
-    console.log("✨ All screenshots exist, nothing to capture")
-    return
+    console.log("✨ All screenshots exist, nothing to capture");
+    return;
   }
 
   const browser = await puppeteer.launch({
@@ -36,79 +36,78 @@ async function captureScreenshots() {
       height: 720,
       deviceScaleFactor: 2,
     },
-  })
+  });
 
   for (const code of presets) {
-    const decoded = decodePreset(code)
+    const decoded = decodePreset(code);
     if (!decoded) {
-      console.warn(`⚠ Skipping invalid preset code: ${code}`)
-      continue
+      console.warn(`⚠ Skipping invalid preset code: ${code}`);
+      continue;
     }
 
-    const pageUrl = `http://localhost:4000/preview/radix/preview?preset=${code}`
+    const pageUrl = `http://localhost:4000/preview/radix/preview?preset=${code}`;
 
-    const page = await browser.newPage()
+    const page = await browser.newPage();
     await page.goto(pageUrl, {
       waitUntil: "networkidle2",
-    })
+    });
 
-    console.log(`- Capturing ${code}...`)
+    console.log(`- Capturing ${code}...`);
 
     for (const theme of ["light", "dark"] as const) {
-      const screenshotPath = path.join(
-        PRESETS_PATH,
-        `${code}-${theme}.png`
-      )
+      const screenshotPath = path.join(PRESETS_PATH, `${code}-${theme}.png`);
 
       if (!force && existsSync(screenshotPath)) {
-        continue
+        continue;
       }
 
       // Set theme and reload page.
       await page.evaluate((currentTheme) => {
-        localStorage.setItem("theme", currentTheme)
-      }, theme)
+        localStorage.setItem("theme", currentTheme);
+      }, theme);
 
-      await page.reload({ waitUntil: "networkidle2" })
+      await page.reload({ waitUntil: "networkidle2" });
 
       // Wait for animations to complete.
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Hide Tailwind indicator.
       await page.evaluate(() => {
-        const indicator = document.querySelector("[data-tailwind-indicator]")
+        const indicator = document.querySelector("[data-tailwind-indicator]");
         if (indicator) {
-          indicator.remove()
+          indicator.remove();
         }
-      })
+      });
 
       // Capture the target element.
-      const element = await page.$('[data-slot="capture-target"]')
+      const element = await page.$('[data-slot="capture-target"]');
       if (element) {
         await element.screenshot({
           path: screenshotPath,
-        })
+        });
       } else {
-        console.warn(`⚠ No [data-slot="capture-target"] found for ${code} (${theme}), capturing full page`)
+        console.warn(
+          `⚠ No [data-slot="capture-target"] found for ${code} (${theme}), capturing full page`
+        );
         await page.screenshot({
           path: screenshotPath,
-        })
+        });
       }
     }
 
-    await page.close()
+    await page.close();
   }
 
-  await browser.close()
+  await browser.close();
 }
 
 try {
-  console.log("🔍 Capturing explore preset screenshots...")
+  console.log("🔍 Capturing explore preset screenshots...");
 
-  await captureScreenshots()
+  await captureScreenshots();
 
-  console.log("✅ Done!")
+  console.log("✅ Done!");
 } catch (error) {
-  console.error(error)
-  process.exit(1)
+  console.error(error);
+  process.exit(1);
 }

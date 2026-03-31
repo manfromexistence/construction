@@ -2,10 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "resizable-example",
   "title": "Resizable",
-  "registryDependencies": [
-    "resizable",
-    "example"
-  ],
+  "registryDependencies": ["resizable", "example"],
   "files": [
     {
       "path": "registry/radix-luma/examples/resizable-example.tsx",

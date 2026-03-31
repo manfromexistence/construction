@@ -1,7 +1,7 @@
-import { getCommentKeys } from './getCommentKeys';
+import { getCommentKeys } from "./getCommentKeys";
 
-describe('getCommentKeys', () => {
-  it('returns only comment-prefixed keys and keeps their insertion order', () => {
+describe("getCommentKeys", () => {
+  it("returns only comment-prefixed keys and keeps their insertion order", () => {
     expect(
       getCommentKeys({
         comment: true,
@@ -9,8 +9,8 @@ describe('getCommentKeys', () => {
         comment_alpha: true,
         comment_draft: true,
         comment_beta: true,
-        text: 'hello',
+        text: "hello",
       } as any)
-    ).toEqual(['comment_alpha', 'comment_draft', 'comment_beta']);
+    ).toEqual(["comment_alpha", "comment_draft", "comment_beta"]);
   });
 });

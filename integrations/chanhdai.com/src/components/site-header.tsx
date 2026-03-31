@@ -1,38 +1,36 @@
-import dynamic from "next/dynamic"
-import Link from "next/link"
+import dynamic from "next/dynamic";
+import Link from "next/link";
 
-import blocks from "@/__registry__/__blocks__.json"
-import { DesktopNav } from "@/components/desktop-nav"
-import { NavItemGitHub } from "@/components/nav-item-github"
-import { SiteHeaderMark } from "@/components/site-header-mark"
-import { ThemeToggle } from "@/components/theme-toggle"
-import { Separator } from "@/components/ui/separator"
-import { MAIN_NAV, MOBILE_NAV } from "@/config/site"
-import { getAllDocs } from "@/features/doc/data/documents"
-import type { DocPreview } from "@/features/doc/types/document"
-import { cn } from "@/lib/utils"
+import blocks from "@/__registry__/__blocks__.json";
+import { DesktopNav } from "@/components/desktop-nav";
+import { NavItemGitHub } from "@/components/nav-item-github";
+import { SiteHeaderMark } from "@/components/site-header-mark";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { Separator } from "@/components/ui/separator";
+import { MAIN_NAV, MOBILE_NAV } from "@/config/site";
+import { getAllDocs } from "@/features/doc/data/documents";
+import type { DocPreview } from "@/features/doc/types/document";
+import { cn } from "@/lib/utils";
 
 const BrandContextMenu = dynamic(() =>
   import("@/components/brand-context-menu").then((mod) => mod.BrandContextMenu)
-)
+);
 
 const CommandMenu = dynamic(() =>
   import("@/components/command-menu").then((mod) => mod.CommandMenu)
-)
+);
 
-const MobileNav = dynamic(() =>
-  import("@/components/mobile-nav").then((mod) => mod.MobileNav)
-)
+const MobileNav = dynamic(() => import("@/components/mobile-nav").then((mod) => mod.MobileNav));
 
 export function SiteHeader() {
-  const docs = getAllDocs()
+  const docs = getAllDocs();
 
   // Minimize data serialized to client component - only send necessary fields
   const docPreviews: DocPreview[] = docs.map((doc) => ({
     slug: doc.slug,
     title: doc.metadata.title,
     category: doc.metadata.category,
-  }))
+  }));
 
   return (
     <>
@@ -80,5 +78,5 @@ export function SiteHeader() {
         <MobileNav items={MOBILE_NAV} />
       </div>
     </>
-  )
+  );
 }

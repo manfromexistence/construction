@@ -1,28 +1,28 @@
-import { renderHook } from '@testing-library/react';
-import * as actualPlatejs from 'platejs';
-import * as actualPlatejsReact from 'platejs/react';
+import { renderHook } from "@testing-library/react";
+import * as actualPlatejs from "platejs";
+import * as actualPlatejsReact from "platejs/react";
 
 const useEditorRefMock = mock();
 const useEditorSelectorMock = mock();
 const useReadOnlyMock = mock();
 
-mock.module('platejs', () => ({
+mock.module("platejs", () => ({
   ...actualPlatejs,
-  KEYS: { ...actualPlatejs.KEYS, ulClassic: 'ulClassic' },
+  KEYS: { ...actualPlatejs.KEYS, ulClassic: "ulClassic" },
 }));
 
-mock.module('platejs/react', () => ({
+mock.module("platejs/react", () => ({
   ...actualPlatejsReact,
   useEditorRef: useEditorRefMock,
   useEditorSelector: useEditorSelectorMock,
   useReadOnly: useReadOnlyMock,
 }));
 
-mock.module('../ListPlugin', () => ({
-  ListPlugin: { key: 'listClassic' },
+mock.module("../ListPlugin", () => ({
+  ListPlugin: { key: "listClassic" },
 }));
 
-describe('list-classic hooks', () => {
+describe("list-classic hooks", () => {
   beforeEach(() => {
     useEditorRefMock.mockReset();
     useEditorSelectorMock.mockReset();
@@ -33,7 +33,7 @@ describe('list-classic hooks', () => {
     mock.restore();
   });
 
-  it('builds classic list toolbar button props from the current selection', async () => {
+  it("builds classic list toolbar button props from the current selection", async () => {
     const { useListToolbarButton, useListToolbarButtonState } = await import(
       `./useListToolbarButton?test=${Math.random().toString(36).slice(2)}`
     );
@@ -63,15 +63,15 @@ describe('list-classic hooks', () => {
     result.current.props.onClick();
 
     expect(result.current.props.pressed).toBe(true);
-    expect(listToggle).toHaveBeenCalledWith({ type: 'ulClassic' });
+    expect(listToggle).toHaveBeenCalledWith({ type: "ulClassic" });
   });
 
-  it('toggles classic todo items by element reference when editable', async () => {
+  it("toggles classic todo items by element reference when editable", async () => {
     const { useTodoListElement, useTodoListElementState } = await import(
       `./useTodoListElement?test=${Math.random().toString(36).slice(2)}`
     );
     const setNodes = mock();
-    const element = { checked: false, id: 'todo-1' };
+    const element = { checked: false, id: "todo-1" };
 
     useEditorRefMock.mockReturnValue({
       tf: { setNodes },

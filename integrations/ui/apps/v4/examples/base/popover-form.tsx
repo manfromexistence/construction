@@ -1,6 +1,6 @@
-import { Button } from "@/styles/base-nova/ui/button"
-import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field"
-import { Input } from "@/styles/base-nova/ui/input"
+import { Button } from "@/styles/base-nova/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field";
+import { Input } from "@/styles/base-nova/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -8,21 +8,17 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@/styles/base-nova/ui/popover"
+} from "@/styles/base-nova/ui/popover";
 
 export function PopoverForm() {
   return (
     <>
       <Popover>
-        <PopoverTrigger render={<Button variant="outline" />}>
-          Open Popover
-        </PopoverTrigger>
+        <PopoverTrigger render={<Button variant="outline" />}>Open Popover</PopoverTrigger>
         <PopoverContent className="w-64" align="start">
           <PopoverHeader>
             <PopoverTitle>Dimensions</PopoverTitle>
-            <PopoverDescription>
-              Set the dimensions for the layer.
-            </PopoverDescription>
+            <PopoverDescription>Set the dimensions for the layer.</PopoverDescription>
           </PopoverHeader>
           <FieldGroup className="gap-4">
             <Field orientation="horizontal">
@@ -41,5 +37,5 @@ export function PopoverForm() {
         </PopoverContent>
       </Popover>
     </>
-  )
+  );
 }

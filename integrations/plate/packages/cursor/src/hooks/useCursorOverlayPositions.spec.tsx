@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from "@testing-library/react";
 
 const useEditorRefMock = mock();
 const useIsomorphicLayoutEffectMock = mock((effect: Function) => effect());
@@ -6,24 +6,24 @@ const getCursorOverlayStateMock = mock();
 const getSelectionRectsMock = mock();
 const useRefreshOnResizeMock = mock();
 
-mock.module('platejs/react', () => ({
+mock.module("platejs/react", () => ({
   useEditorRef: useEditorRefMock,
   useIsomorphicLayoutEffect: useIsomorphicLayoutEffectMock,
 }));
 
-mock.module('../queries/getCursorOverlayState', () => ({
+mock.module("../queries/getCursorOverlayState", () => ({
   getCursorOverlayState: getCursorOverlayStateMock,
 }));
 
-mock.module('../queries/getSelectionRects', () => ({
+mock.module("../queries/getSelectionRects", () => ({
   getSelectionRects: getSelectionRectsMock,
 }));
 
-mock.module('./useRefreshOnResize', () => ({
+mock.module("./useRefreshOnResize", () => ({
   useRefreshOnResize: useRefreshOnResizeMock,
 }));
 
-describe('useCursorOverlayPositions', () => {
+describe("useCursorOverlayPositions", () => {
   beforeEach(() => {
     useEditorRefMock.mockReset();
     getCursorOverlayStateMock.mockReset();
@@ -35,19 +35,19 @@ describe('useCursorOverlayPositions', () => {
     mock.restore();
   });
 
-  it('computes cached selection rects and returns cursor overlay state with refresh controls', async () => {
+  it("computes cached selection rects and returns cursor overlay state with refresh controls", async () => {
     const { useCursorOverlayPositions } = await import(
       `./useCursorOverlayPositions?test=${Math.random().toString(36).slice(2)}`
     );
     const range = { anchor: { path: [0, 0], offset: 0 } };
 
-    useEditorRefMock.mockReturnValue({ id: 'editor' });
+    useEditorRefMock.mockReturnValue({ id: "editor" });
     getSelectionRectsMock.mockReturnValue([{ width: 10, x: 1, y: 2 }]);
     getCursorOverlayStateMock.mockReturnValue([{ caretPosition: { top: 2 } }]);
     useRefreshOnResizeMock.mockReturnValue({ refresh: mock() });
 
-    const container = document.createElement('div');
-    Object.defineProperty(container, 'scrollTop', { value: 5 });
+    const container = document.createElement("div");
+    Object.defineProperty(container, "scrollTop", { value: 5 });
     container.getBoundingClientRect = () => ({ x: 10, y: 20 }) as DOMRect;
 
     const { result } = renderHook(() =>
@@ -60,7 +60,7 @@ describe('useCursorOverlayPositions', () => {
     );
 
     expect(getSelectionRectsMock).toHaveBeenCalledWith(
-      { id: 'editor' },
+      { id: "editor" },
       { range, xOffset: 10, yOffset: 15 }
     );
     expect(getCursorOverlayStateMock).toHaveBeenCalled();

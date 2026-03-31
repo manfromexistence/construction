@@ -1,8 +1,8 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getSuggestionKey } from './getSuggestionKeys';
-import { getSuggestionNodeEntries } from './getSuggestionNodeEntries';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { getSuggestionKey } from "./getSuggestionKeys";
+import { getSuggestionNodeEntries } from "./getSuggestionNodeEntries";
 
 export type TSuggestionCommonDescription = {
   suggestionId: string;
@@ -11,7 +11,7 @@ export type TSuggestionCommonDescription = {
 
 export type TSuggestionDeletionDescription = {
   deletedText: string;
-  type: 'deletion';
+  type: "deletion";
 } & TSuggestionCommonDescription;
 
 export type TSuggestionDescription =
@@ -22,13 +22,13 @@ export type TSuggestionDescription =
 // TODO: Move to ../types
 export type TSuggestionInsertionDescription = {
   insertedText: string;
-  type: 'insertion';
+  type: "insertion";
 } & TSuggestionCommonDescription;
 
 export type TSuggestionReplacementDescription = {
   deletedText: string;
   insertedText: string;
-  type: 'replacement';
+  type: "replacement";
 } & TSuggestionCommonDescription;
 
 /**
@@ -36,9 +36,7 @@ export type TSuggestionReplacementDescription = {
  * multiple suggestions (multiple users). Each description maps to a user
  * suggestion.
  */
-export const getActiveSuggestionDescriptions = (
-  editor: SlateEditor
-): TSuggestionDescription[] => {
+export const getActiveSuggestionDescriptions = (editor: SlateEditor): TSuggestionDescription[] => {
   const aboveEntry = editor.getApi(BaseSuggestionPlugin).suggestion.node({
     isText: true,
   });
@@ -46,9 +44,7 @@ export const getActiveSuggestionDescriptions = (
   if (!aboveEntry) return [];
 
   const aboveNode = aboveEntry[0];
-  const suggestionId = editor
-    .getApi(BaseSuggestionPlugin)
-    .suggestion.nodeId(aboveNode);
+  const suggestionId = editor.getApi(BaseSuggestionPlugin).suggestion.nodeId(aboveNode);
 
   if (!suggestionId) return [];
 
@@ -58,24 +54,20 @@ export const getActiveSuggestionDescriptions = (
 
   return suggestionDataList.map(({ id: activeSuggestionId, userId }) => {
     const suggestionKey = getSuggestionKey(activeSuggestionId);
-    const nodes = Array.from(
-      getSuggestionNodeEntries(editor, activeSuggestionId)
-    ).map(([node]) => node);
-    const insertions = nodes.filter(
-      (node: any) => node[suggestionKey]?.type === 'insert'
+    const nodes = Array.from(getSuggestionNodeEntries(editor, activeSuggestionId)).map(
+      ([node]) => node
     );
-    const deletions = nodes.filter(
-      (node: any) => node[suggestionKey]?.type === 'remove'
-    );
-    const insertedText = insertions.map((node) => node.text).join('');
-    const deletedText = deletions.map((node) => node.text).join('');
+    const insertions = nodes.filter((node: any) => node[suggestionKey]?.type === "insert");
+    const deletions = nodes.filter((node: any) => node[suggestionKey]?.type === "remove");
+    const insertedText = insertions.map((node) => node.text).join("");
+    const deletedText = deletions.map((node) => node.text).join("");
 
     if (insertions.length > 0 && deletions.length > 0) {
       return {
         deletedText,
         insertedText,
         suggestionId: activeSuggestionId,
-        type: 'replacement',
+        type: "replacement",
         userId,
       };
     }
@@ -83,7 +75,7 @@ export const getActiveSuggestionDescriptions = (
       return {
         deletedText,
         suggestionId: activeSuggestionId,
-        type: 'deletion',
+        type: "deletion",
         userId,
       };
     }
@@ -91,7 +83,7 @@ export const getActiveSuggestionDescriptions = (
     return {
       insertedText,
       suggestionId: activeSuggestionId,
-      type: 'insertion',
+      type: "insertion",
       userId,
     };
   });

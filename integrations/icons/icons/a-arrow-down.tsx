@@ -88,26 +88,10 @@ const AArrowDownIcon = forwardRef<AArrowDownIconHandle, AArrowDownIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.path
-            animate={controls}
-            d="M3.5 13h6"
-            variants={LETTER_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            d="m2 16 4.5-9 4.5 9"
-            variants={LETTER_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            d="M18 7v9"
-            variants={ARROW_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            d="m14 12 4 4 4-4"
-            variants={ARROW_VARIANTS}
-          />
+          <motion.path animate={controls} d="M3.5 13h6" variants={LETTER_VARIANTS} />
+          <motion.path animate={controls} d="m2 16 4.5-9 4.5 9" variants={LETTER_VARIANTS} />
+          <motion.path animate={controls} d="M18 7v9" variants={ARROW_VARIANTS} />
+          <motion.path animate={controls} d="m14 12 4 4 4-4" variants={ARROW_VARIANTS} />
         </svg>
       </div>
     );

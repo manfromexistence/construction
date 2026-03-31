@@ -1,8 +1,6 @@
 {
   "name": "tags-input",
-  "dependencies": [
-    "@diceui/tags-input"
-  ],
+  "dependencies": ["@diceui/tags-input"],
   "files": [
     {
       "path": "ui/tags-input.tsx",

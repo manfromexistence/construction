@@ -1,8 +1,8 @@
-import { makeClientRect } from './makeClientRect';
-import { createVirtualRef } from './createVirtualRef';
+import { createVirtualRef } from "./createVirtualRef";
+import { makeClientRect } from "./makeClientRect";
 
-describe('createVirtualRef', () => {
-  it('returns the computed bounding rect for the given editor location', () => {
+describe("createVirtualRef", () => {
+  it("returns the computed bounding rect for the given editor location", () => {
     const selection = {
       anchor: { offset: 0, path: [0, 0] },
       focus: { offset: 1, path: [0, 0] },
@@ -22,12 +22,10 @@ describe('createVirtualRef', () => {
       },
     };
 
-    expect(
-      createVirtualRef(editor).current!.getBoundingClientRect()
-    ).toMatchObject(rect);
+    expect(createVirtualRef(editor).current!.getBoundingClientRect()).toMatchObject(rect);
   });
 
-  it('uses the fallback rect when no DOM rect can be computed', () => {
+  it("uses the fallback rect when no DOM rect can be computed", () => {
     const fallbackRect = makeClientRect({
       bottom: 12,
       left: 1,
@@ -48,7 +46,7 @@ describe('createVirtualRef', () => {
     ).toMatchObject(fallbackRect);
   });
 
-  it('throws when neither a computed rect nor a fallback rect exists', () => {
+  it("throws when neither a computed rect nor a fallback rect exists", () => {
     const editor: any = {
       selection: null,
       api: {
@@ -56,10 +54,8 @@ describe('createVirtualRef', () => {
       },
     };
 
-    expect(() =>
-      createVirtualRef(editor).current!.getBoundingClientRect()
-    ).toThrow(
-      'Could not get the bounding client rect of the location. Please provide a fallbackRect.'
+    expect(() => createVirtualRef(editor).current!.getBoundingClientRect()).toThrow(
+      "Could not get the bounding client rect of the location. Please provide a fallbackRect."
     );
   });
 });

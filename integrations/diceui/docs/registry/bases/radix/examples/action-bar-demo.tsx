@@ -26,9 +26,7 @@ export default function ActionBarDemo() {
     { id: crypto.randomUUID(), name: "Product Roadmap" },
     { id: crypto.randomUUID(), name: "Team Standup Notes" },
   ]);
-  const [selectedTaskIds, setSelectedTaskIds] = React.useState<Set<string>>(
-    new Set(),
-  );
+  const [selectedTaskIds, setSelectedTaskIds] = React.useState<Set<string>>(new Set());
 
   const open = selectedTaskIds.size > 0;
 
@@ -48,7 +46,7 @@ export default function ActionBarDemo() {
       }
       setSelectedTaskIds(newSelected);
     },
-    [selectedTaskIds],
+    [selectedTaskIds]
   );
 
   const onDuplicate = React.useCallback(() => {
@@ -76,14 +74,12 @@ export default function ActionBarDemo() {
             key={task.id}
             className={cn(
               "flex cursor-pointer items-center gap-2.5 rounded-md border bg-card/70 px-3 py-2.5 transition-colors hover:bg-accent/70",
-              selectedTaskIds.has(task.id) && "bg-accent/70",
+              selectedTaskIds.has(task.id) && "bg-accent/70"
             )}
           >
             <Checkbox
               checked={selectedTaskIds.has(task.id)}
-              onCheckedChange={(checked) =>
-                onItemSelect(task.id, checked === true)
-              }
+              onCheckedChange={(checked) => onItemSelect(task.id, checked === true)}
             />
             <span className="truncate font-medium text-sm">{task.name}</span>
           </Label>

@@ -8,7 +8,7 @@ describe("Slot", () => {
     render(
       <Slot>
         <div data-testid="test-child">Test Content</div>
-      </Slot>,
+      </Slot>
     );
 
     expect(screen.getByTestId("test-child")).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("Slot", () => {
         <div className="child-class" data-testid="child">
           Test Content
         </div>
-      </Slot>,
+      </Slot>
     );
 
     const element = screen.getByTestId("child");
@@ -35,7 +35,7 @@ describe("Slot", () => {
     render(
       <Slot onClick={slotClick}>
         <button onClick={childClick}>Click Me</button>
-      </Slot>,
+      </Slot>
     );
 
     const button = screen.getByText("Click Me");
@@ -53,7 +53,7 @@ describe("Slot", () => {
           <button>Slotted Content</button>
         </Slottable>
         <div>After</div>
-      </Slot>,
+      </Slot>
     );
 
     expect(screen.getByText("Before")).toBeInTheDocument();
@@ -65,10 +65,8 @@ describe("Slot", () => {
     render(
       <Slot style={{ color: "red", fontSize: "16px" }}>
         {/* Browser computed style convert color value to rgb, so keeping rgb value. */}
-        <div style={{ color: "rgb(0, 0, 255)", fontWeight: "bold" }}>
-          Styled Content
-        </div>
-      </Slot>,
+        <div style={{ color: "rgb(0, 0, 255)", fontWeight: "bold" }}>Styled Content</div>
+      </Slot>
     );
 
     const element = screen.getByText("Styled Content");
@@ -85,7 +83,7 @@ describe("Slot", () => {
         <Slot className="inner">
           <div data-testid="nested">Nested Content</div>
         </Slot>
-      </Slot>,
+      </Slot>
     );
 
     const element = screen.getByTestId("nested");
@@ -100,7 +98,7 @@ describe("Slot", () => {
           <div>Valid Content</div>
         </Slot>
         <Slot>{undefined}</Slot>
-      </>,
+      </>
     );
 
     expect(screen.getByText("Valid Content")).toBeInTheDocument();

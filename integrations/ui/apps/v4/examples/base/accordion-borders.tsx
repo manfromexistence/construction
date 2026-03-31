@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/styles/base-nova/ui/accordion"
+} from "@/styles/base-nova/ui/accordion";
 
 const items = [
   {
@@ -24,14 +24,11 @@ const items = [
     content:
       "We integrate with 500+ popular tools including Slack, Zapier, Salesforce, HubSpot, and more. You can also build custom integrations using our REST API and webhooks.",
   },
-]
+];
 
 export default function AccordionBorders() {
   return (
-    <Accordion
-      className="max-w-lg rounded-lg border"
-      defaultValue={["billing"]}
-    >
+    <Accordion className="max-w-lg rounded-lg border" defaultValue={["billing"]}>
       {items.map((item) => (
         <AccordionItem
           key={item.value}
@@ -43,5 +40,5 @@ export default function AccordionBorders() {
         </AccordionItem>
       ))}
     </Accordion>
-  )
+  );
 }

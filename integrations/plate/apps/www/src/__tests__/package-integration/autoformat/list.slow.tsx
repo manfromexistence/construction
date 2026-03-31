@@ -1,11 +1,11 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { BaseIndentPlugin } from '@platejs/indent';
-import { BaseListPlugin, toggleList } from '@platejs/list';
-import { jsxt } from '@platejs/test-utils';
+import { BaseIndentPlugin } from "@platejs/indent";
+import { BaseListPlugin, toggleList } from "@platejs/list";
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import { createAutoformatEditor } from './createAutoformatEditor';
+import { createAutoformatEditor } from "./createAutoformatEditor";
 
 jsxt;
 
@@ -14,9 +14,9 @@ const createListAutoformatEditor = (value: any) =>
     plugins: [BaseListPlugin, BaseIndentPlugin],
     rules: [
       {
-        match: ['* ', '- '],
-        mode: 'block',
-        type: 'list',
+        match: ["* ", "- "],
+        mode: "block",
+        type: "list",
         format: (editor) => {
           toggleList(editor, { listStyleType: KEYS.ul });
         },
@@ -24,8 +24,8 @@ const createListAutoformatEditor = (value: any) =>
       {
         match: [String.raw`^\d+\.$ `, String.raw`^\d+\)$ `],
         matchByRegex: true,
-        mode: 'block',
-        type: 'list',
+        mode: "block",
+        type: "list",
         format: (editor, { matchString }) => {
           toggleList(editor, {
             listRestartPolite: Number(matchString) || 1,
@@ -34,9 +34,9 @@ const createListAutoformatEditor = (value: any) =>
         },
       },
       {
-        match: ['[] '],
-        mode: 'block',
-        type: 'list',
+        match: ["[] "],
+        mode: "block",
+        type: "list",
         format: (editor) => {
           toggleList(editor, { listStyleType: KEYS.listTodo });
           editor.tf.setNodes({
@@ -46,9 +46,9 @@ const createListAutoformatEditor = (value: any) =>
         },
       },
       {
-        match: ['[x] '],
-        mode: 'block',
-        type: 'list',
+        match: ["[x] "],
+        mode: "block",
+        type: "list",
         format: (editor) => {
           toggleList(editor, { listStyleType: KEYS.listTodo });
           editor.tf.setNodes({
@@ -61,7 +61,7 @@ const createListAutoformatEditor = (value: any) =>
     value,
   });
 
-describe('AutoformatPlugin list block rules', () => {
+describe("AutoformatPlugin list block rules", () => {
   it.each([
     {
       expected: (
@@ -82,7 +82,7 @@ describe('AutoformatPlugin list block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      title: 'formats - into an unordered list item',
+      title: "formats - into an unordered list item",
     },
     {
       expected: (
@@ -103,7 +103,7 @@ describe('AutoformatPlugin list block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      title: 'formats 1. into an ordered list item',
+      title: "formats 1. into an ordered list item",
     },
     {
       expected: (
@@ -120,7 +120,7 @@ describe('AutoformatPlugin list block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      title: 'formats [] into an unchecked todo item',
+      title: "formats [] into an unchecked todo item",
     },
     {
       expected: (
@@ -137,12 +137,12 @@ describe('AutoformatPlugin list block rules', () => {
           </hp>
         </fragment>
       ) as any,
-      title: 'formats [x] into a checked todo item',
+      title: "formats [x] into a checked todo item",
     },
-  ])('$title', ({ expected, input }) => {
+  ])("$title", ({ expected, input }) => {
     const editor = createListAutoformatEditor(input);
 
-    editor.tf.insertText(' ');
+    editor.tf.insertText(" ");
 
     expect(input.children).toEqual(expected.children);
   });

@@ -1,4 +1,4 @@
-import { InboxIcon } from "lucide-react"
+import { InboxIcon } from "lucide-react";
 
 import {
   Item,
@@ -6,7 +6,7 @@ import {
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from "@/styles/radix-nova/ui/item"
+} from "@/styles/radix-nova/ui/item";
 
 export function ItemSizeDemo() {
   return (
@@ -17,9 +17,7 @@ export function ItemSizeDemo() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Default Size</ItemTitle>
-          <ItemDescription>
-            The standard size for most use cases.
-          </ItemDescription>
+          <ItemDescription>The standard size for most use cases.</ItemDescription>
         </ItemContent>
       </Item>
       <Item variant="outline" size="sm">
@@ -41,5 +39,5 @@ export function ItemSizeDemo() {
         </ItemContent>
       </Item>
     </div>
-  )
+  );
 }

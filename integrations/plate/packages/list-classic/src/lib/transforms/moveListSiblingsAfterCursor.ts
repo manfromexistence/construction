@@ -1,14 +1,14 @@
 import {
   type ElementEntry,
-  type Path,
-  type SlateEditor,
-  type TElement,
   match,
   NodeApi,
+  type Path,
   PathApi,
-} from 'platejs';
+  type SlateEditor,
+  type TElement,
+} from "platejs";
 
-import { getListTypes } from '../queries/getListTypes';
+import { getListTypes } from "../queries/getListTypes";
 
 export const moveListSiblingsAfterCursor = (
   editor: SlateEditor,

@@ -2,13 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "dropdown-menu-example",
   "title": "Dropdown Menu",
-  "registryDependencies": [
-    "avatar",
-    "button",
-    "dialog",
-    "dropdown-menu",
-    "example"
-  ],
+  "registryDependencies": ["avatar", "button", "dialog", "dropdown-menu", "example"],
   "files": [
     {
       "path": "registry/radix-maia/examples/dropdown-menu-example.tsx",

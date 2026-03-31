@@ -15,16 +15,8 @@
     "url": "https://github.com/shadcn-ui/ui.git",
     "directory": "packages/shadcn"
   },
-  "files": [
-    "dist"
-  ],
-  "keywords": [
-    "components",
-    "ui",
-    "tailwind",
-    "radix-ui",
-    "shadcn"
-  ],
+  "files": ["dist"],
+  "keywords": ["components", "ui", "tailwind", "radix-ui", "shadcn"],
   "type": "module",
   "exports": {
     ".": {

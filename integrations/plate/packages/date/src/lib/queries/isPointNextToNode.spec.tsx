@@ -1,22 +1,21 @@
 /** @jsx jsxt */
 
-import type { JSX } from 'react';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
+import type { JSX } from "react";
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor, createSlateEditor } from 'platejs';
-
-import { isPointNextToNode } from './isPointNextToNode';
+import { isPointNextToNode } from "./isPointNextToNode";
 
 jsxt;
 
-describe('isPointNextToNode', () => {
+describe("isPointNextToNode", () => {
   const createTestEditor = (input: JSX.Element) =>
     createSlateEditor({
       editor: createEditor(input as any),
     } as any);
 
-  describe('when point is next to a node of specified type', () => {
-    it('returns true', () => {
+  describe("when point is next to a node of specified type", () => {
+    it("returns true", () => {
       const editor = createTestEditor(
         <editor>
           <hp>
@@ -29,12 +28,12 @@ describe('isPointNextToNode', () => {
         </editor>
       );
 
-      expect(isPointNextToNode(editor, { nodeType: 'date' })).toBe(true);
+      expect(isPointNextToNode(editor, { nodeType: "date" })).toBe(true);
     });
   });
 
-  describe('when point is not next to a node of specified type', () => {
-    it('returns false', () => {
+  describe("when point is not next to a node of specified type", () => {
+    it("returns false", () => {
       const editor = createTestEditor(
         <editor>
           <hp>
@@ -48,12 +47,12 @@ describe('isPointNextToNode', () => {
         </editor>
       );
 
-      expect(isPointNextToNode(editor, { nodeType: 'date' })).toBe(false);
+      expect(isPointNextToNode(editor, { nodeType: "date" })).toBe(false);
     });
   });
 
-  describe('when reverse option is true', () => {
-    it('check the previous node', () => {
+  describe("when reverse option is true", () => {
+    it("check the previous node", () => {
       const editor = createTestEditor(
         <editor>
           <hp>
@@ -66,14 +65,12 @@ describe('isPointNextToNode', () => {
         </editor>
       );
 
-      expect(
-        isPointNextToNode(editor, { nodeType: 'date', reverse: true })
-      ).toBe(true);
+      expect(isPointNextToNode(editor, { nodeType: "date", reverse: true })).toBe(true);
     });
   });
 
-  describe('when at option is provided', () => {
-    it('check from the specified point', () => {
+  describe("when at option is provided", () => {
+    it("check from the specified point", () => {
       const editor = createTestEditor(
         <editor>
           <hp>
@@ -87,14 +84,12 @@ describe('isPointNextToNode', () => {
       );
 
       const at = { offset: 4, path: [0, 0] };
-      expect(
-        isPointNextToNode(editor, { at, nodeType: 'date', reverse: false })
-      ).toBe(true);
+      expect(isPointNextToNode(editor, { at, nodeType: "date", reverse: false })).toBe(true);
     });
   });
 
-  describe('when the point is at both start and end of an empty text node', () => {
-    it('checks the next node as a single boundary', () => {
+  describe("when the point is at both start and end of an empty text node", () => {
+    it("checks the next node as a single boundary", () => {
       const editor = createTestEditor(
         <editor>
           <hp>
@@ -108,12 +103,12 @@ describe('isPointNextToNode', () => {
         </editor>
       );
 
-      expect(isPointNextToNode(editor, { nodeType: 'date' })).toBe(true);
+      expect(isPointNextToNode(editor, { nodeType: "date" })).toBe(true);
     });
   });
 
-  describe('when the point is in the middle of text', () => {
-    it('returns false', () => {
+  describe("when the point is in the middle of text", () => {
+    it("returns false", () => {
       const editor = createTestEditor(
         <editor>
           <hp>
@@ -127,23 +122,23 @@ describe('isPointNextToNode', () => {
         </editor>
       );
 
-      expect(isPointNextToNode(editor, { nodeType: 'date' })).toBe(false);
+      expect(isPointNextToNode(editor, { nodeType: "date" })).toBe(false);
     });
   });
 
-  describe('when neither selection nor at is available', () => {
-    it('throws a clear error', () => {
+  describe("when neither selection nor at is available", () => {
+    it("throws a clear error", () => {
       const editor = createSlateEditor({
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'p',
+            children: [{ text: "test" }],
+            type: "p",
           },
         ],
       } as any);
 
-      expect(() => isPointNextToNode(editor, { nodeType: 'date' })).toThrow(
-        'No valid selection point found'
+      expect(() => isPointNextToNode(editor, { nodeType: "date" })).toThrow(
+        "No valid selection point found"
       );
     });
   });

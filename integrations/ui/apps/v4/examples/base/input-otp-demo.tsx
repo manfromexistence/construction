@@ -1,8 +1,4 @@
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/styles/base-nova/ui/input-otp"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/styles/base-nova/ui/input-otp";
 
 export function InputOTPDemo() {
   return (
@@ -16,5 +12,5 @@ export function InputOTPDemo() {
         <InputOTPSlot index={5} />
       </InputOTPGroup>
     </InputOTP>
-  )
+  );
 }

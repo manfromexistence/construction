@@ -1,11 +1,7 @@
 {
   "name": "media-player-settings-demo",
-  "dependencies": [
-    "hls.js"
-  ],
-  "registryDependencies": [
-    "media-player"
-  ],
+  "dependencies": ["hls.js"],
+  "registryDependencies": ["media-player"],
   "files": [
     {
       "path": "examples/media-player-settings-demo.tsx",

@@ -1,8 +1,8 @@
-import type { InsertNodesOptions, NodeProps, SlateEditor } from 'platejs';
+import type { InsertNodesOptions, NodeProps, SlateEditor } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { TExcalidrawElement } from '../BaseExcalidrawPlugin';
+import type { TExcalidrawElement } from "../BaseExcalidrawPlugin";
 
 export const insertExcalidraw = (
   editor: SlateEditor,
@@ -19,7 +19,7 @@ export const insertExcalidraw = (
 
   editor.tf.insertNodes<TExcalidrawElement>(
     {
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       type: editor.getType(KEYS.excalidraw),
       ...props,
     },

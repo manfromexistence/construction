@@ -29,17 +29,10 @@ interface TaskFormProps<T extends FieldValues>
   onSubmit: (data: T) => void;
 }
 
-export function TaskForm<T extends FieldValues>({
-  form,
-  onSubmit,
-  children,
-}: TaskFormProps<T>) {
+export function TaskForm<T extends FieldValues>({ form, onSubmit, children }: TaskFormProps<T>) {
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4 px-4"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4 px-4">
         <FormField
           control={form.control}
           name={"title" as FieldPath<T>}
@@ -47,11 +40,7 @@ export function TaskForm<T extends FieldValues>({
             <FormItem>
               <FormLabel>Title</FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Do a kickflip"
-                  className="resize-none"
-                  {...field}
-                />
+                <Textarea placeholder="Do a kickflip" className="resize-none" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -72,11 +61,7 @@ export function TaskForm<T extends FieldValues>({
                 <SelectContent>
                   <SelectGroup>
                     {tasks.label.enumValues.map((item) => (
-                      <SelectItem
-                        key={item}
-                        value={item}
-                        className="capitalize"
-                      >
+                      <SelectItem key={item} value={item} className="capitalize">
                         {item}
                       </SelectItem>
                     ))}
@@ -102,11 +87,7 @@ export function TaskForm<T extends FieldValues>({
                 <SelectContent>
                   <SelectGroup>
                     {tasks.status.enumValues.map((item) => (
-                      <SelectItem
-                        key={item}
-                        value={item}
-                        className="capitalize"
-                      >
+                      <SelectItem key={item} value={item} className="capitalize">
                         {item}
                       </SelectItem>
                     ))}
@@ -132,11 +113,7 @@ export function TaskForm<T extends FieldValues>({
                 <SelectContent>
                   <SelectGroup>
                     {tasks.priority.enumValues.map((item) => (
-                      <SelectItem
-                        key={item}
-                        value={item}
-                        className="capitalize"
-                      >
+                      <SelectItem key={item} value={item} className="capitalize">
                         {item}
                       </SelectItem>
                     ))}
@@ -160,9 +137,7 @@ export function TaskForm<T extends FieldValues>({
                   step="0.5"
                   min="0"
                   {...field}
-                  onChange={(event) =>
-                    field.onChange(event.target.valueAsNumber)
-                  }
+                  onChange={(event) => field.onChange(event.target.valueAsNumber)}
                 />
               </FormControl>
               <FormMessage />

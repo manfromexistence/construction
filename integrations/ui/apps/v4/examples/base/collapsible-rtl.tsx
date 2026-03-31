@@ -1,18 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronsUpDown } from "lucide-react"
+import { ChevronsUpDown } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/base-nova/ui-rtl/collapsible"
+} from "@/styles/base-nova/ui-rtl/collapsible";
 
 const translations: Translations = {
   en: {
@@ -51,11 +48,11 @@ const translations: Translations = {
       itemsDescription: "2x אוזניות סטודיו",
     },
   },
-}
+};
 
 export function CollapsibleRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
-  const [isOpen, setIsOpen] = React.useState(false)
+  const { dir, t } = useTranslation(translations, "ar");
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <Collapsible
@@ -66,9 +63,7 @@ export function CollapsibleRtl() {
     >
       <div className="flex items-center justify-between gap-4 px-4">
         <h4 className="text-sm font-semibold">{t.orderNumber}</h4>
-        <CollapsibleTrigger
-          render={<Button variant="ghost" size="icon" className="size-8" />}
-        >
+        <CollapsibleTrigger render={<Button variant="ghost" size="icon" className="size-8" />}>
           <ChevronsUpDown />
           <span className="sr-only">Toggle details</span>
         </CollapsibleTrigger>
@@ -88,5 +83,5 @@ export function CollapsibleRtl() {
         </div>
       </CollapsibleContent>
     </Collapsible>
-  )
+  );
 }

@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/styles/radix-nova/ui/accordion"
+} from "@/styles/radix-nova/ui/accordion";
 
 const items = [
   {
@@ -24,15 +24,11 @@ const items = [
     content:
       "View your current plan, payment history, and upcoming invoices. Update your payment method, change your subscription tier, or cancel your subscription.",
   },
-]
+];
 
 export function AccordionMultiple() {
   return (
-    <Accordion
-      type="multiple"
-      className="max-w-lg"
-      defaultValue={["notifications"]}
-    >
+    <Accordion type="multiple" className="max-w-lg" defaultValue={["notifications"]}>
       {items.map((item) => (
         <AccordionItem key={item.value} value={item.value}>
           <AccordionTrigger>{item.trigger}</AccordionTrigger>
@@ -40,5 +36,5 @@ export function AccordionMultiple() {
         </AccordionItem>
       ))}
     </Accordion>
-  )
+  );
 }

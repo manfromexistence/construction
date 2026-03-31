@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { ChevronUpIcon } from "lucide-react"
+import { ChevronUpIcon } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui/dropdown-menu"
+} from "@/styles/base-nova/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -19,7 +19,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from "@/styles/base-nova/ui/sidebar"
+} from "@/styles/base-nova/ui/sidebar";
 
 export default function AppSidebar() {
   return (
@@ -39,10 +39,7 @@ export default function AppSidebar() {
                   Username
                   <ChevronUpIcon className="ml-auto" />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  side="top"
-                  className="w-(--radix-popper-anchor-width)"
-                >
+                <DropdownMenuContent side="top" className="w-(--radix-popper-anchor-width)">
                   <DropdownMenuItem>
                     <span>Account</span>
                   </DropdownMenuItem>
@@ -64,5 +61,5 @@ export default function AppSidebar() {
         </header>
       </SidebarInset>
     </SidebarProvider>
-  )
+  );
 }

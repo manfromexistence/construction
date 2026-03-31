@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { toast } from "sonner"
+import { toast } from "sonner";
 
-import { Button } from "@/styles/base-nova/ui/button"
+import { Button } from "@/styles/base-nova/ui/button";
 
 export function SonnerDescription() {
   return (
@@ -17,5 +17,5 @@ export function SonnerDescription() {
     >
       Show Toast
     </Button>
-  )
+  );
 }

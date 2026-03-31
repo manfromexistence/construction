@@ -1,37 +1,21 @@
-import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react"
-import Image from "next/image"
+import { BoxIcon, InfinityIcon, LinkIcon } from "lucide-react";
+import Image from "next/image";
 
-import {
-  Collapsible,
-  CollapsibleChevronsIcon,
-} from "@/components/base/collapsible-animated"
-import {
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/base/ui/collapsible"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
-import { Markdown } from "@/components/markdown"
-import { Tag } from "@/components/ui/tag"
-import { ProseMono } from "@/components/ui/typography"
-import { UTM_PARAMS } from "@/config/site"
-import { addQueryParams } from "@/utils/url"
+import { Collapsible, CollapsibleChevronsIcon } from "@/components/base/collapsible-animated";
+import { CollapsibleContent, CollapsibleTrigger } from "@/components/base/ui/collapsible";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/base/ui/tooltip";
+import { Markdown } from "@/components/markdown";
+import { Tag } from "@/components/ui/tag";
+import { ProseMono } from "@/components/ui/typography";
+import { UTM_PARAMS } from "@/config/site";
+import { addQueryParams } from "@/utils/url";
 
-import type { Project } from "../../types/projects"
+import type { Project } from "../../types/projects";
 
-export function ProjectItem({
-  className,
-  project,
-}: {
-  className?: string
-  project: Project
-}) {
-  const { start, end } = project.period
-  const isOngoing = !end
-  const isSinglePeriod = end === start
+export function ProjectItem({ className, project }: { className?: string; project: Project }) {
+  const { start, end } = project.period;
+  const isOngoing = !end;
+  const isSinglePeriod = end === start;
 
   return (
     <Collapsible className={className} defaultOpen={project.isExpanded}>
@@ -56,9 +40,7 @@ export function ProjectItem({
         <div className="flex-1 border-l border-dashed border-line">
           <CollapsibleTrigger className="flex w-full items-center gap-2 p-4 pr-2 text-left">
             <div className="flex-1">
-              <h3 className="mb-1 leading-snug font-medium text-balance">
-                {project.title}
-              </h3>
+              <h3 className="mb-1 leading-snug font-medium text-balance">{project.title}</h3>
 
               <dl className="text-sm text-muted-foreground">
                 <dt className="sr-only">Period</dt>
@@ -127,5 +109,5 @@ export function ProjectItem({
         </div>
       </CollapsibleContent>
     </Collapsible>
-  )
+  );
 }

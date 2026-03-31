@@ -1,26 +1,22 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import type { Slider as SliderPrimitive } from "radix-ui"
+import type { Slider as SliderPrimitive } from "radix-ui";
+import * as React from "react";
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/registry/new-york-v4/ui/hover-card"
-import { Label } from "@/registry/new-york-v4/ui/label"
-import { Slider } from "@/registry/new-york-v4/ui/slider"
+} from "@/registry/new-york-v4/ui/hover-card";
+import { Label } from "@/registry/new-york-v4/ui/label";
+import { Slider } from "@/registry/new-york-v4/ui/slider";
 
 interface TemperatureSelectorProps {
-  defaultValue: React.ComponentProps<
-    typeof SliderPrimitive.Root
-  >["defaultValue"]
+  defaultValue: React.ComponentProps<typeof SliderPrimitive.Root>["defaultValue"];
 }
 
-export function TemperatureSelector({
-  defaultValue,
-}: TemperatureSelectorProps) {
-  const [value, setValue] = React.useState(defaultValue)
+export function TemperatureSelector({ defaultValue }: TemperatureSelectorProps) {
+  const [value, setValue] = React.useState(defaultValue);
 
   return (
     <div className="grid gap-2 pt-2">
@@ -43,16 +39,11 @@ export function TemperatureSelector({
             />
           </div>
         </HoverCardTrigger>
-        <HoverCardContent
-          align="start"
-          className="w-[260px] text-sm"
-          side="left"
-        >
-          Controls randomness: lowering results in less random completions. As
-          the temperature approaches zero, the model will become deterministic
-          and repetitive.
+        <HoverCardContent align="start" className="w-[260px] text-sm" side="left">
+          Controls randomness: lowering results in less random completions. As the temperature
+          approaches zero, the model will become deterministic and repetitive.
         </HoverCardContent>
       </HoverCard>
     </div>
-  )
+  );
 }

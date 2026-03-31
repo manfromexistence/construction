@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -8,9 +8,7 @@ export const blockSelectionValue: any = (
   <fragment>
     <hh2>块选择</hh2>
     <hp>
-      <htext>
-        块选择允许你一次选择多个块。你可以通过从编辑器边距处点击并拖动来启动选择。
-      </htext>
+      <htext>块选择允许你一次选择多个块。你可以通过从编辑器边距处点击并拖动来启动选择。</htext>
     </hp>
     <hp>块选择的主要功能：</hp>
     <hp indent={1} listStyleType="disc">

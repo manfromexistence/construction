@@ -1,18 +1,13 @@
-import { Button } from "@/styles/radix-nova/ui/button"
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/radix-nova/ui/select"
+} from "@/styles/radix-nova/ui/select";
 
 export function InputForm() {
   return (
@@ -20,19 +15,12 @@ export function InputForm() {
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="form-name">Name</FieldLabel>
-          <Input
-            id="form-name"
-            type="text"
-            placeholder="Evil Rabbit"
-            required
-          />
+          <Input id="form-name" type="text" placeholder="Evil Rabbit" required />
         </Field>
         <Field>
           <FieldLabel htmlFor="form-email">Email</FieldLabel>
           <Input id="form-email" type="email" placeholder="john@example.com" />
-          <FieldDescription>
-            We&apos;ll never share your email with anyone.
-          </FieldDescription>
+          <FieldDescription>We&apos;ll never share your email with anyone.</FieldDescription>
         </Field>
         <div className="grid grid-cols-2 gap-4">
           <Field>
@@ -65,5 +53,5 @@ export function InputForm() {
         </Field>
       </FieldGroup>
     </form>
-  )
+  );
 }

@@ -3,14 +3,14 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/styles/base-nova/ui/accordion"
+} from "@/styles/base-nova/ui/accordion";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/styles/base-nova/ui/card"
+} from "@/styles/base-nova/ui/card";
 
 const items = [
   {
@@ -31,7 +31,7 @@ const items = [
     content:
       "You can cancel your subscription anytime from your account settings. There are no cancellation fees or penalties. Your access will continue until the end of your current billing period.",
   },
-]
+];
 
 export default function AccordionCard() {
   return (
@@ -39,8 +39,7 @@ export default function AccordionCard() {
       <CardHeader>
         <CardTitle>Subscription & Billing</CardTitle>
         <CardDescription>
-          Common questions about your account, plans, payments and
-          cancellations.
+          Common questions about your account, plans, payments and cancellations.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -54,5 +53,5 @@ export default function AccordionCard() {
         </Accordion>
       </CardContent>
     </Card>
-  )
+  );
 }

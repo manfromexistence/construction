@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input-group-button-group",
-  "registryDependencies": [
-    "input-group",
-    "button-group"
-  ],
+  "registryDependencies": ["input-group", "button-group"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/input-group-button-group.tsx",

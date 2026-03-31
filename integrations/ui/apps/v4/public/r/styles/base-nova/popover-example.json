@@ -2,14 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "popover-example",
   "title": "Popover",
-  "registryDependencies": [
-    "button",
-    "dialog",
-    "field",
-    "input",
-    "popover",
-    "example"
-  ],
+  "registryDependencies": ["button", "dialog", "field", "input", "popover", "example"],
   "files": [
     {
       "path": "registry/base-nova/examples/popover-example.tsx",

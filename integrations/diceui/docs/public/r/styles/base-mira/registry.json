@@ -17,9 +17,7 @@
         "@diceui/use-as-ref",
         "@diceui/use-isomorphic-layout-effect"
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "angle-slider",
@@ -38,10 +36,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "react-dom"
-      ]
+      "dependencies": ["@base-ui/react", "react-dom"]
     },
     {
       "name": "compare-slider",
@@ -58,11 +53,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "react-dom",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "react-dom", "lucide-react"]
     },
     {
       "name": "cropper",
@@ -79,12 +70,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "react-dom",
-        "lucide-react",
-        "class-variance-authority"
-      ]
+      "dependencies": ["@base-ui/react", "react-dom", "lucide-react", "class-variance-authority"]
     },
     {
       "name": "file-upload",
@@ -95,16 +81,8 @@
           "type": "registry:ui"
         }
       ],
-      "registryDependencies": [
-        "direction",
-        "@diceui/use-as-ref",
-        "@diceui/use-lazy-ref"
-      ],
-      "dependencies": [
-        "@base-ui/react",
-        "react-dom",
-        "lucide-react"
-      ]
+      "registryDependencies": ["direction", "@diceui/use-as-ref", "@diceui/use-lazy-ref"],
+      "dependencies": ["@base-ui/react", "react-dom", "lucide-react"]
     },
     {
       "name": "fps",
@@ -125,9 +103,7 @@
           "type": "registry:ui"
         }
       ],
-      "registryDependencies": [
-        "separator"
-      ]
+      "registryDependencies": ["separator"]
     },
     {
       "name": "avatar-group",
@@ -138,9 +114,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "color-swatch",
@@ -151,9 +125,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "color-picker",
@@ -176,9 +148,7 @@
         "@diceui/use-lazy-ref",
         "@diceui/compose-refs"
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "editable",
@@ -196,9 +166,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "status",
@@ -209,9 +177,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "scroller",
@@ -226,10 +192,7 @@
           "type": "registry:lib"
         }
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "lucide-react"]
     },
     {
       "name": "scroll-spy",
@@ -251,9 +214,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "badge-overflow",
@@ -268,9 +229,7 @@
           "type": "registry:lib"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "segmented-input",
@@ -281,13 +240,8 @@
           "type": "registry:ui"
         }
       ],
-      "registryDependencies": [
-        "input",
-        "direction"
-      ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "registryDependencies": ["input", "direction"],
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "circular-progress",
@@ -298,9 +252,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "dependencies": ["@base-ui/react"],
       "cssVars": {
         "theme": {
           "--animate-spin-around": "spin-around 0.8s linear infinite"
@@ -326,9 +278,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "stepper",
@@ -350,10 +300,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "lucide-react"]
     },
     {
       "name": "gauge",
@@ -368,9 +315,7 @@
           "type": "registry:lib"
         }
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "key-value",
@@ -399,10 +344,7 @@
         "use-isomorphic-layout-effect",
         "use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "lucide-react"]
     },
     {
       "name": "hover-card",
@@ -413,9 +355,7 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "radix-ui"
-      ]
+      "dependencies": ["radix-ui"]
     },
     {
       "name": "swap",
@@ -431,9 +371,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "qr-code",
@@ -448,16 +386,9 @@
           "type": "registry:lib"
         }
       ],
-      "registryDependencies": [
-        "@diceui/use-lazy-ref"
-      ],
-      "dependencies": [
-        "@base-ui/react",
-        "qrcode"
-      ],
-      "devDependencies": [
-        "@types/qrcode"
-      ]
+      "registryDependencies": ["@diceui/use-lazy-ref"],
+      "dependencies": ["@base-ui/react", "qrcode"],
+      "devDependencies": ["@types/qrcode"]
     },
     {
       "name": "relative-time-card",
@@ -468,12 +399,8 @@
           "type": "registry:ui"
         }
       ],
-      "registryDependencies": [
-        "hover-card"
-      ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "registryDependencies": ["hover-card"],
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "rating",
@@ -495,10 +422,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "lucide-react"]
     },
     {
       "name": "responsive-dialog",
@@ -517,9 +441,7 @@
         "use-lazy-ref",
         "use-mobile"
       ],
-      "dependencies": [
-        "vaul"
-      ]
+      "dependencies": ["vaul"]
     },
     {
       "name": "mask-input",
@@ -534,12 +456,8 @@
           "type": "registry:lib"
         }
       ],
-      "registryDependencies": [
-        "compose-refs"
-      ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "registryDependencies": ["compose-refs"],
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "masonry",
@@ -554,13 +472,8 @@
           "type": "registry:lib"
         }
       ],
-      "registryDependencies": [
-        "compose-refs",
-        "use-isomorphic-layout-effect"
-      ],
-      "dependencies": [
-        "@base-ui/react"
-      ]
+      "registryDependencies": ["compose-refs", "use-isomorphic-layout-effect"],
+      "dependencies": ["@base-ui/react"]
     },
     {
       "name": "media-player",
@@ -580,12 +493,7 @@
         "@diceui/compose-refs",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "media-chrome",
-        "react-dom",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "media-chrome", "react-dom", "lucide-react"]
     },
     {
       "name": "phone-input",
@@ -612,11 +520,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "react-dom",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "react-dom", "lucide-react"]
     },
     {
       "name": "marquee",
@@ -631,12 +535,8 @@
           "type": "registry:lib"
         }
       ],
-      "registryDependencies": [
-        "direction"
-      ],
-      "dependencies": [
-        "@base-ui/react"
-      ],
+      "registryDependencies": ["direction"],
+      "dependencies": ["@base-ui/react"],
       "cssVars": {
         "theme": {
           "--animate-marquee-left": "marquee-left var(--marquee-duration) linear var(--marquee-loop-count)",
@@ -716,10 +616,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "class-variance-authority"
-      ]
+      "dependencies": ["@base-ui/react", "class-variance-authority"]
     },
     {
       "name": "time-picker",
@@ -746,10 +643,7 @@
         "@diceui/use-lazy-ref",
         "@diceui/use-as-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "lucide-react"
-      ]
+      "dependencies": ["@base-ui/react", "lucide-react"]
     },
     {
       "name": "selection-toolbar",
@@ -770,10 +664,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "@floating-ui/react-dom"
-      ]
+      "dependencies": ["@base-ui/react", "@floating-ui/react-dom"]
     },
     {
       "name": "speed-dial",
@@ -794,10 +685,7 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "react-dom"
-      ]
+      "dependencies": ["@base-ui/react", "react-dom"]
     },
     {
       "name": "tour",
@@ -819,20 +707,12 @@
         "@diceui/use-isomorphic-layout-effect",
         "@diceui/use-lazy-ref"
       ],
-      "dependencies": [
-        "@base-ui/react",
-        "@floating-ui/react-dom",
-        "lucide-react",
-        "react-dom"
-      ]
+      "dependencies": ["@base-ui/react", "@floating-ui/react-dom", "lucide-react", "react-dom"]
     },
     {
       "name": "utils",
       "type": "registry:lib",
-      "dependencies": [
-        "clsx",
-        "tailwind-merge"
-      ],
+      "dependencies": ["clsx", "tailwind-merge"],
       "files": [
         {
           "path": "lib/utils.ts",
@@ -863,9 +743,7 @@
     {
       "name": "use-as-ref",
       "type": "registry:hook",
-      "registryDependencies": [
-        "@diceui/use-isomorphic-layout-effect"
-      ],
+      "registryDependencies": ["@diceui/use-isomorphic-layout-effect"],
       "files": [
         {
           "path": "hooks/use-as-ref.ts",

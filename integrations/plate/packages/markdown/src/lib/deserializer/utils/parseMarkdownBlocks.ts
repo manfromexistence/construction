@@ -1,4 +1,4 @@
-import { type Token, marked } from 'marked';
+import { marked, type Token } from "marked";
 
 export type ParseMarkdownBlocksOptions = {
   /**
@@ -17,7 +17,7 @@ export type ParseMarkdownBlocksOptions = {
 
 export const parseMarkdownBlocks = (
   content: string,
-  { exclude = ['space'], trim = true }: ParseMarkdownBlocksOptions = {}
+  { exclude = ["space"], trim = true }: ParseMarkdownBlocksOptions = {}
 ): Token[] => {
   let tokens = [...marked.lexer(content)];
 

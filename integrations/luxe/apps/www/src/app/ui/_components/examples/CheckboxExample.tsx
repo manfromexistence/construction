@@ -1,4 +1,4 @@
-import { Checkbox } from '@/app/_components/ui/checkbox'
+import { Checkbox } from "@/app/_components/ui/checkbox";
 
 export function CheckboxExample() {
   return (
@@ -16,5 +16,5 @@ export function CheckboxExample() {
         </span>
       </div>
     </form>
-  )
+  );
 }

@@ -1,22 +1,17 @@
 import {
-  type SlateEditor,
-  type TSuggestionElement,
-  type TSuggestionText,
   ElementApi,
   KEYS,
   PathApi,
+  type SlateEditor,
   TextApi,
-} from 'platejs';
+  type TSuggestionElement,
+  type TSuggestionText,
+} from "platejs";
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import type { TResolvedSuggestion } from "../types";
+import { getInlineSuggestionData, getTransientSuggestionKey } from "../utils";
 
-import type { TResolvedSuggestion } from '../types';
-
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getInlineSuggestionData, getTransientSuggestionKey } from '../utils';
-
-export const acceptSuggestion = (
-  editor: SlateEditor,
-  description: TResolvedSuggestion
-) => {
+export const acceptSuggestion = (editor: SlateEditor, description: TResolvedSuggestion) => {
   editor.tf.withoutNormalizing(() => {
     const mergeNodes = [
       ...editor.api.nodes({
@@ -24,12 +19,10 @@ export const acceptSuggestion = (
         match: (n) => {
           if (!ElementApi.isElement(n)) return false;
 
-          if (
-            editor.getApi(BaseSuggestionPlugin).suggestion.isBlockSuggestion(n)
-          ) {
+          if (editor.getApi(BaseSuggestionPlugin).suggestion.isBlockSuggestion(n)) {
             const suggestionElement = n as TSuggestionElement;
             return (
-              suggestionElement.suggestion.type === 'remove' &&
+              suggestionElement.suggestion.type === "remove" &&
               suggestionElement.suggestion.isLineBreak &&
               suggestionElement.suggestion.id === description.suggestionId
             );
@@ -44,66 +37,53 @@ export const acceptSuggestion = (
       editor.tf.mergeNodes({ at: PathApi.next(path) });
     });
 
-    editor.tf.unsetNodes(
-      [description.keyId, KEYS.suggestion, getTransientSuggestionKey()],
-      {
-        at: [],
-        mode: 'all',
-        match: (n) => {
-          if (
-            TextApi.isText(n) ||
-            (ElementApi.isElement(n) && editor.api.isInline(n))
-          ) {
-            const suggestionDataList = editor
-              .getApi(BaseSuggestionPlugin)
-              .suggestion.dataList(n as TSuggestionText);
-            const includeUpdate = suggestionDataList.some(
-              (data) => data.type === 'update'
+    editor.tf.unsetNodes([description.keyId, KEYS.suggestion, getTransientSuggestionKey()], {
+      at: [],
+      mode: "all",
+      match: (n) => {
+        if (TextApi.isText(n) || (ElementApi.isElement(n) && editor.api.isInline(n))) {
+          const suggestionDataList = editor
+            .getApi(BaseSuggestionPlugin)
+            .suggestion.dataList(n as TSuggestionText);
+          const includeUpdate = suggestionDataList.some((data) => data.type === "update");
+
+          if (includeUpdate) {
+            return suggestionDataList.some((d) => d.id === description.suggestionId);
+          }
+          const suggestionData = getInlineSuggestionData(n);
+
+          if (suggestionData)
+            return (
+              suggestionData.type === "insert" && suggestionData.id === description.suggestionId
             );
 
-            if (includeUpdate) {
-              return suggestionDataList.some(
-                (d) => d.id === description.suggestionId
-              );
-            }
-            const suggestionData = getInlineSuggestionData(n);
-
-            if (suggestionData)
-              return (
-                suggestionData.type === 'insert' &&
-                suggestionData.id === description.suggestionId
-              );
-
-            return false;
-          }
-          if (
-            ElementApi.isElement(n) &&
-            editor.getApi(BaseSuggestionPlugin).suggestion.isBlockSuggestion(n)
-          ) {
-            const suggestionElement = n as TSuggestionElement;
-            const suggestionData = suggestionElement.suggestion;
-
-            if (suggestionData) {
-              const isLineBreak = suggestionData.isLineBreak;
-
-              if (isLineBreak)
-                return suggestionData.id === description.suggestionId;
-
-              return (
-                suggestionData.type === 'insert' &&
-                suggestionData.id === description.suggestionId
-              );
-            }
-          }
-
           return false;
-        },
-      }
-    );
+        }
+        if (
+          ElementApi.isElement(n) &&
+          editor.getApi(BaseSuggestionPlugin).suggestion.isBlockSuggestion(n)
+        ) {
+          const suggestionElement = n as TSuggestionElement;
+          const suggestionData = suggestionElement.suggestion;
+
+          if (suggestionData) {
+            const isLineBreak = suggestionData.isLineBreak;
+
+            if (isLineBreak) return suggestionData.id === description.suggestionId;
+
+            return (
+              suggestionData.type === "insert" && suggestionData.id === description.suggestionId
+            );
+          }
+        }
+
+        return false;
+      },
+    });
 
     editor.tf.removeNodes({
       at: [],
-      mode: 'all',
+      mode: "all",
       match: (n) => {
         if (
           TextApi.isText(n) ||
@@ -114,8 +94,7 @@ export const acceptSuggestion = (
 
           if (suggestionData) {
             return (
-              suggestionData.type === 'remove' &&
-              suggestionData.id === description.suggestionId
+              suggestionData.type === "remove" && suggestionData.id === description.suggestionId
             );
           }
 
@@ -133,7 +112,7 @@ export const acceptSuggestion = (
             const isLineBreak = suggestionData.isLineBreak;
 
             return (
-              suggestionData.type === 'remove' &&
+              suggestionData.type === "remove" &&
               suggestionData.id === description.suggestionId &&
               !isLineBreak
             );

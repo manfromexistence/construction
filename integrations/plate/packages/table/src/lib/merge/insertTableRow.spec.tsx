@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { insertTableMergeRow } from './insertTableRow';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { insertTableMergeRow } from "./insertTableRow";
 
 jsxt;
 
@@ -17,8 +16,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('insertTableMergeRow', () => {
-  it('treats a table path as insert-at-end using the last row', () => {
+describe("insertTableMergeRow", () => {
+  it("treats a table path as insert-at-end using the last row", () => {
     const input = (
       <editor>
         <htable>
@@ -52,12 +51,12 @@ describe('insertTableMergeRow', () => {
     expect((editor.children[0] as any).children).toHaveLength(3);
   });
 
-  it('extends row-spanning cells and updates rowspan attributes when inserting inside a merged span', () => {
+  it("extends row-spanning cells and updates rowspan attributes when inserting inside a merged span", () => {
     const input = (
       <editor>
         <htable>
           <htr>
-            <htd attributes={{ rowspan: '2' }} rowSpan={2}>
+            <htd attributes={{ rowspan: "2" }} rowSpan={2}>
               <hp>11</hp>
             </htd>
             <htd>
@@ -86,24 +85,24 @@ describe('insertTableMergeRow', () => {
           {
             children: [
               {
-                attributes: { rowspan: '3' },
+                attributes: { rowspan: "3" },
                 rowSpan: 3,
-                type: 'td',
+                type: "td",
               },
-              { type: 'td' },
+              { type: "td" },
             ],
-            type: 'tr',
+            type: "tr",
           },
           {
-            children: [{ colSpan: 1, rowSpan: 1, type: 'td' }],
-            type: 'tr',
+            children: [{ colSpan: 1, rowSpan: 1, type: "td" }],
+            type: "tr",
           },
           {
-            children: [{ type: 'td' }],
-            type: 'tr',
+            children: [{ type: "td" }],
+            type: "tr",
           },
         ],
-        type: 'table',
+        type: "table",
       },
     ]);
   });

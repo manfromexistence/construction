@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/refs */
-import { useRef } from 'react';
+import { useRef } from "react";
 
-import deepEqual from './deepEqual';
+import deepEqual from "./deepEqual";
 
 // This hook uses refs during render for deep equality memoization.
 // This pattern violates react-hooks/refs but is necessary for performance.

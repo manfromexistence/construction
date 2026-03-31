@@ -1,27 +1,22 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import {
-  type ElementEntry,
-  type SlateEditor,
-  createEditor,
-  createSlateEditor,
-} from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor, type ElementEntry, type SlateEditor } from "platejs";
 
-import { CodeBlockPlugin } from '../../react/CodeBlockPlugin';
-import { indentCodeLine } from './indentCodeLine';
+import { CodeBlockPlugin } from "../../react/CodeBlockPlugin";
+import { indentCodeLine } from "./indentCodeLine";
 
 jsxt;
 
-describe('indent code line', () => {
-  describe('when the selection is expanded', () => {
-    it('indent', () => {
+describe("indent code line", () => {
+  describe("when the selection is expanded", () => {
+    it("indent", () => {
       const input = createEditor(
         (
           <editor>
             <hcodeblock>
               <hcodeline>
-                {'  '}before <anchor />
+                {"  "}before <anchor />
                 selection
                 <focus /> after
               </hcodeline>
@@ -34,7 +29,7 @@ describe('indent code line', () => {
         <editor>
           <hcodeblock>
             <hcodeline>
-              {'    '}before <anchor />
+              {"    "}before <anchor />
               selection
               <focus /> after
             </hcodeline>
@@ -57,14 +52,14 @@ describe('indent code line', () => {
     });
   });
 
-  describe('when the selection is collapsed', () => {
-    describe('when there are only whitespace characters left of the cursor', () => {
-      it('indent', () => {
+  describe("when the selection is collapsed", () => {
+    describe("when there are only whitespace characters left of the cursor", () => {
+      it("indent", () => {
         const input = (
           <editor>
             <hcodeblock>
               <hcodeline>
-                {'  '}
+                {"  "}
                 <cursor />
                 after
               </hcodeline>
@@ -76,7 +71,7 @@ describe('indent code line', () => {
           <editor>
             <hcodeblock>
               <hcodeline>
-                {'    '}
+                {"    "}
                 <cursor />
                 after
               </hcodeline>
@@ -99,13 +94,13 @@ describe('indent code line', () => {
       });
     });
 
-    describe('when there are non-whitespace characters left of the cursor', () => {
-      it('insert 2 spaces at the cursor', () => {
+    describe("when there are non-whitespace characters left of the cursor", () => {
+      it("insert 2 spaces at the cursor", () => {
         const input = (
           <editor>
             <hcodeblock>
               <hcodeline>
-                {'  '}before
+                {"  "}before
                 <cursor />
                 after
               </hcodeline>
@@ -117,7 +112,7 @@ describe('indent code line', () => {
           <editor>
             <hcodeblock>
               <hcodeline>
-                {'  '}before{'  '}
+                {"  "}before{"  "}
                 <cursor />
                 after
               </hcodeline>

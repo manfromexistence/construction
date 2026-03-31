@@ -1,7 +1,7 @@
-import { createSlateEditor, NodeApi } from 'platejs';
+import { createSlateEditor, NodeApi } from "platejs";
 
-import { BaseColumnItemPlugin, BaseColumnPlugin } from './BaseColumnPlugin';
-import { withColumn } from './withColumn';
+import { BaseColumnItemPlugin, BaseColumnPlugin } from "./BaseColumnPlugin";
+import { withColumn } from "./withColumn";
 
 const createEditor = (value: any[]) =>
   createSlateEditor({
@@ -9,18 +9,18 @@ const createEditor = (value: any[]) =>
     value,
   });
 
-describe('withColumn', () => {
-  it('unwrap a single-column group back to plain blocks', () => {
+describe("withColumn", () => {
+  it("unwrap a single-column group back to plain blocks", () => {
     const editor = createEditor([
       {
         children: [
           {
-            children: [{ children: [{ text: 'Only' }], type: 'p' }],
-            type: 'column',
-            width: '100%',
+            children: [{ children: [{ text: "Only" }], type: "p" }],
+            type: "column",
+            width: "100%",
           },
         ],
-        type: 'column_group',
+        type: "column_group",
       },
     ]);
 
@@ -29,15 +29,15 @@ describe('withColumn', () => {
 
     editor.tf.normalizeNode([node!, path]);
 
-    expect((editor.children[0] as any).type).toBe('p');
-    expect((editor.children[0] as any).children[0].text).toBe('Only');
+    expect((editor.children[0] as any).type).toBe("p");
+    expect((editor.children[0] as any).children[0].text).toBe("Only");
   });
 
-  it('unwrap non-column content instead of dropping it', () => {
+  it("unwrap non-column content instead of dropping it", () => {
     const editor = createEditor([
       {
-        children: [{ children: [{ text: 'Loose paragraph' }], type: 'p' }],
-        type: 'column_group',
+        children: [{ children: [{ text: "Loose paragraph" }], type: "p" }],
+        type: "column_group",
       },
     ]);
 
@@ -46,28 +46,26 @@ describe('withColumn', () => {
 
     editor.tf.normalizeNode([node!, path]);
 
-    expect((editor.children[0] as any).type).toBe('p');
-    expect((editor.children[0] as any).children[0].text).toBe(
-      'Loose paragraph'
-    );
+    expect((editor.children[0] as any).type).toBe("p");
+    expect((editor.children[0] as any).children[0].text).toBe("Loose paragraph");
   });
 
-  it('normalize column widths so the group sums to one hundred percent', () => {
+  it("normalize column widths so the group sums to one hundred percent", () => {
     const editor = createEditor([
       {
         children: [
           {
-            children: [{ children: [{ text: 'A' }], type: 'p' }],
-            type: 'column',
-            width: '20%',
+            children: [{ children: [{ text: "A" }], type: "p" }],
+            type: "column",
+            width: "20%",
           },
           {
-            children: [{ children: [{ text: 'B' }], type: 'p' }],
-            type: 'column',
-            width: '20%',
+            children: [{ children: [{ text: "B" }], type: "p" }],
+            type: "column",
+            width: "20%",
           },
         ],
-        type: 'column_group',
+        type: "column_group",
       },
     ]);
 
@@ -76,26 +74,26 @@ describe('withColumn', () => {
 
     editor.tf.normalizeNode([node!, path]);
 
-    expect((editor.children[0] as any).children[0].width).toBe('50%');
-    expect((editor.children[0] as any).children[1].width).toBe('50%');
+    expect((editor.children[0] as any).children[0].width).toBe("50%");
+    expect((editor.children[0] as any).children[1].width).toBe("50%");
   });
 
-  it('remove empty columns during normalization', () => {
+  it("remove empty columns during normalization", () => {
     const editor = createEditor([
       {
         children: [
           {
-            children: [{ children: [{ text: 'A' }], type: 'p' }],
-            type: 'column',
-            width: '50%',
+            children: [{ children: [{ text: "A" }], type: "p" }],
+            type: "column",
+            width: "50%",
           },
           {
             children: [],
-            type: 'column',
-            width: '50%',
+            type: "column",
+            width: "50%",
           },
         ],
-        type: 'column_group',
+        type: "column_group",
       },
     ]);
 
@@ -104,18 +102,18 @@ describe('withColumn', () => {
 
     editor.tf.normalizeNode([node!, path]);
 
-    expect((editor.children[0] as any).type).toBe('p');
-    expect((editor.children[0] as any).children[0].text).toBe('A');
+    expect((editor.children[0] as any).type).toBe("p");
+    expect((editor.children[0] as any).children[0].text).toBe("A");
   });
 
-  it('unwraps column groups that contain only non-column children', () => {
+  it("unwraps column groups that contain only non-column children", () => {
     const editor = createEditor([
       {
         children: [
-          { children: [{ text: 'A' }], type: 'p' },
-          { children: [{ text: 'B' }], type: 'blockquote' },
+          { children: [{ text: "A" }], type: "p" },
+          { children: [{ text: "B" }], type: "blockquote" },
         ],
-        type: 'column_group',
+        type: "column_group",
       },
     ]);
 
@@ -125,18 +123,18 @@ describe('withColumn', () => {
     editor.tf.normalizeNode([node!, path]);
 
     expect(editor.children).toEqual([
-      { children: [{ text: 'A' }], type: 'p' },
-      { children: [{ text: 'B' }], type: 'blockquote' },
+      { children: [{ text: "A" }], type: "p" },
+      { children: [{ text: "B" }], type: "blockquote" },
     ]);
   });
 
-  it('selects the containing column when the current selection is inside it', () => {
+  it("selects the containing column when the current selection is inside it", () => {
     const select = mock();
-    const fallbackSelectAll = mock(() => 'fallback');
+    const fallbackSelectAll = mock(() => "fallback");
     const transforms = withColumn({
       editor: {
         api: {
-          above: mock(() => [{ type: 'column' }, [1, 0]]),
+          above: mock(() => [{ type: "column" }, [1, 0]]),
           end: mock(() => ({ offset: 2, path: [1, 0] })),
           isEnd: mock(() => false),
           isStart: mock(() => false),
@@ -152,7 +150,7 @@ describe('withColumn', () => {
         normalizeNode: mock(),
         selectAll: fallbackSelectAll,
       } as any,
-      type: 'column',
+      type: "column",
     } as any).transforms as any;
 
     expect(transforms.selectAll()).toBe(true);
@@ -160,12 +158,12 @@ describe('withColumn', () => {
     expect(fallbackSelectAll).not.toHaveBeenCalled();
   });
 
-  it('selects the parent column group when the entire column is already selected', () => {
+  it("selects the parent column group when the entire column is already selected", () => {
     const select = mock();
     const transforms = withColumn({
       editor: {
         api: {
-          above: mock(() => [{ type: 'column' }, [2, 1]]),
+          above: mock(() => [{ type: "column" }, [2, 1]]),
           end: mock(() => ({ offset: 4, path: [2, 1] })),
           isEnd: mock(() => true),
           isStart: mock(() => true),
@@ -181,7 +179,7 @@ describe('withColumn', () => {
         normalizeNode: mock(),
         selectAll: mock(),
       } as any,
-      type: 'column',
+      type: "column",
     } as any).transforms as any;
 
     expect(transforms.selectAll()).toBe(true);

@@ -1,60 +1,60 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { toggleListByPath, toggleListByPathUnSet } from './toggleListByPath';
+import { toggleListByPath, toggleListByPathUnSet } from "./toggleListByPath";
 
 const createTransformEditor = (children: any[]) =>
   createSlateEditor({
     value: children,
   });
 
-describe('toggleListByPath', () => {
-  it('sets paragraph list metadata and defaults indent to 1', () => {
+describe("toggleListByPath", () => {
+  it("sets paragraph list metadata and defaults indent to 1", () => {
     const editor = createTransformEditor([
       {
-        children: [{ text: 'Item' }],
-        type: 'h1',
+        children: [{ text: "Item" }],
+        type: "h1",
       },
     ]);
 
-    toggleListByPath(editor, [editor.children[0], [0]], 'decimal');
+    toggleListByPath(editor, [editor.children[0], [0]], "decimal");
 
     expect(editor.children).toEqual([
       {
         [KEYS.indent]: 1,
         [KEYS.listChecked]: false,
-        [KEYS.listType]: 'decimal',
-        children: [{ text: 'Item' }],
+        [KEYS.listType]: "decimal",
+        children: [{ text: "Item" }],
         type: KEYS.p,
       },
     ]);
   });
 
-  it('preserves an existing indent when toggling a list item', () => {
+  it("preserves an existing indent when toggling a list item", () => {
     const editor = createTransformEditor([
       {
         [KEYS.indent]: 3,
-        children: [{ text: 'Item' }],
+        children: [{ text: "Item" }],
         type: KEYS.p,
       },
     ]);
 
-    toggleListByPath(editor, [editor.children[0], [0]], 'circle');
+    toggleListByPath(editor, [editor.children[0], [0]], "circle");
 
     expect(editor.children[0]).toMatchObject({
       [KEYS.indent]: 3,
       [KEYS.listChecked]: false,
-      [KEYS.listType]: 'circle',
+      [KEYS.listType]: "circle",
       type: KEYS.p,
     });
   });
 
-  it('unsets list metadata without touching the text content', () => {
+  it("unsets list metadata without touching the text content", () => {
     const editor = createTransformEditor([
       {
         [KEYS.indent]: 2,
         [KEYS.listChecked]: true,
-        [KEYS.listType]: 'disc',
-        children: [{ text: 'Item' }],
+        [KEYS.listType]: "disc",
+        children: [{ text: "Item" }],
         type: KEYS.p,
       },
     ]);
@@ -63,7 +63,7 @@ describe('toggleListByPath', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'Item' }],
+        children: [{ text: "Item" }],
         type: KEYS.p,
       },
     ]);

@@ -1,14 +1,14 @@
 /** @jsx jsxt */
-import { BaseLinkPlugin } from '@platejs/link';
-import { jsxt } from '@platejs/test-utils';
+import { BaseLinkPlugin } from "@platejs/link";
+import { jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor, createSlatePlugin } from '../../lib';
-import { normalizeDescendantsToDocumentFragment } from './index';
+import { createSlateEditor, createSlatePlugin } from "../../lib";
+import { normalizeDescendantsToDocumentFragment } from "./index";
 
 jsxt;
 
-describe('normalizeDescendantsToDocumentFragment()', () => {
-  it('returns a blank text node when descendants are empty', () => {
+describe("normalizeDescendantsToDocumentFragment()", () => {
+  it("returns a blank text node when descendants are empty", () => {
     const editor = createSlateEditor();
 
     expect(
@@ -41,10 +41,7 @@ describe('normalizeDescendantsToDocumentFragment()', () => {
         </hp>,
       ],
     },
-  ])('adds a blank leaf to blocks without children', ({
-    input,
-    output,
-  }: any) => {
+  ])("adds a blank leaf to blocks without children", ({ input, output }: any) => {
     const editor = createSlateEditor();
 
     const result = normalizeDescendantsToDocumentFragment(editor, {
@@ -109,7 +106,7 @@ describe('normalizeDescendantsToDocumentFragment()', () => {
         </hp>,
       ],
     },
-  ])('wraps inline blocks and text nodes when they have a sibling block', ({
+  ])("wraps inline blocks and text nodes when they have a sibling block", ({
     input,
     output,
   }: any) => {
@@ -134,11 +131,7 @@ describe('normalizeDescendantsToDocumentFragment()', () => {
     },
     {
       input: [<hp>block</hp>, <hp>another block</hp>, <htext>text node</htext>],
-      output: [
-        <hp>block</hp>,
-        <hp>another block</hp>,
-        <hblockquote>text node</hblockquote>,
-      ],
+      output: [<hp>block</hp>, <hp>another block</hp>, <hblockquote>text node</hblockquote>],
     },
     {
       input: [<ha>inline element</ha>, <hp>block</hp>],
@@ -183,12 +176,12 @@ describe('normalizeDescendantsToDocumentFragment()', () => {
         </hp>,
       ],
     },
-  ])('wraps inline blocks and text nodes with the default element when they have a sibling block', ({
+  ])("wraps inline blocks and text nodes with the default element when they have a sibling block", ({
     input,
     output,
   }: any) => {
     const BaseBlockquotePlugin = createSlatePlugin({
-      key: 'blockquote',
+      key: "blockquote",
       node: { isElement: true },
     });
 

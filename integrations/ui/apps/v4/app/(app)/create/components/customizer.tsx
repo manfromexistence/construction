@@ -1,49 +1,43 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { type RegistryItem } from "shadcn/schema"
-
-import { useIsMobile } from "@/hooks/use-mobile"
-import { getThemesForBaseColor, STYLES } from "@/registry/config"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/styles/base-nova/ui/card"
-import { FieldGroup, FieldSeparator } from "@/styles/base-nova/ui/field"
-import { MenuAccentPicker } from "@/app/(app)/create/components/accent-picker"
-import { ActionMenu } from "@/app/(app)/create/components/action-menu"
-import { BaseColorPicker } from "@/app/(app)/create/components/base-color-picker"
-import { BasePicker } from "@/app/(app)/create/components/base-picker"
-import { ChartColorPicker } from "@/app/(app)/create/components/chart-color-picker"
-import { CopyPreset } from "@/app/(app)/create/components/copy-preset"
-import { FontPicker } from "@/app/(app)/create/components/font-picker"
-import { IconLibraryPicker } from "@/app/(app)/create/components/icon-library-picker"
-import { MainMenu } from "@/app/(app)/create/components/main-menu"
-import { MenuColorPicker } from "@/app/(app)/create/components/menu-picker"
-import { RadiusPicker } from "@/app/(app)/create/components/radius-picker"
-import { RandomButton } from "@/app/(app)/create/components/random-button"
-import { ResetDialog } from "@/app/(app)/create/components/reset-button"
-import { StylePicker } from "@/app/(app)/create/components/style-picker"
-import { ThemePicker } from "@/app/(app)/create/components/theme-picker"
-import { V0Button } from "@/app/(app)/create/components/v0-button"
-import { FONT_HEADING_OPTIONS, FONTS } from "@/app/(app)/create/lib/fonts"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
+import * as React from "react";
+import { type RegistryItem } from "shadcn/schema";
+import { MenuAccentPicker } from "@/app/(app)/create/components/accent-picker";
+import { ActionMenu } from "@/app/(app)/create/components/action-menu";
+import { BaseColorPicker } from "@/app/(app)/create/components/base-color-picker";
+import { BasePicker } from "@/app/(app)/create/components/base-picker";
+import { ChartColorPicker } from "@/app/(app)/create/components/chart-color-picker";
+import { CopyPreset } from "@/app/(app)/create/components/copy-preset";
+import { FontPicker } from "@/app/(app)/create/components/font-picker";
+import { IconLibraryPicker } from "@/app/(app)/create/components/icon-library-picker";
+import { MainMenu } from "@/app/(app)/create/components/main-menu";
+import { MenuColorPicker } from "@/app/(app)/create/components/menu-picker";
+import { RadiusPicker } from "@/app/(app)/create/components/radius-picker";
+import { RandomButton } from "@/app/(app)/create/components/random-button";
+import { ResetDialog } from "@/app/(app)/create/components/reset-button";
+import { StylePicker } from "@/app/(app)/create/components/style-picker";
+import { ThemePicker } from "@/app/(app)/create/components/theme-picker";
+import { V0Button } from "@/app/(app)/create/components/v0-button";
+import { FONT_HEADING_OPTIONS, FONTS } from "@/app/(app)/create/lib/fonts";
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { getThemesForBaseColor, STYLES } from "@/registry/config";
+import { Card, CardContent, CardFooter, CardHeader } from "@/styles/base-nova/ui/card";
+import { FieldGroup, FieldSeparator } from "@/styles/base-nova/ui/field";
 
 export function Customizer({
   itemsByBase,
 }: {
-  itemsByBase: Record<string, Pick<RegistryItem, "name" | "title" | "type">[]>
+  itemsByBase: Record<string, Pick<RegistryItem, "name" | "title" | "type">[]>;
 }) {
-  const [params] = useDesignSystemSearchParams()
-  const isMobile = useIsMobile()
-  const anchorRef = React.useRef<HTMLDivElement | null>(null)
+  const [params] = useDesignSystemSearchParams();
+  const isMobile = useIsMobile();
+  const anchorRef = React.useRef<HTMLDivElement | null>(null);
 
   const availableThemes = React.useMemo(
     () => getThemesForBaseColor(params.baseColor),
     [params.baseColor]
-  )
+  );
 
   return (
     <Card
@@ -56,18 +50,10 @@ export function Customizer({
       </CardHeader>
       <CardContent className="no-scrollbar min-h-0 flex-1 overflow-x-auto overflow-y-hidden md:overflow-y-auto">
         <FieldGroup className="flex-row gap-2.5 py-px **:data-[slot=field-separator]:-mx-4 **:data-[slot=field-separator]:w-auto md:flex-col md:gap-3.25">
-          <StylePicker
-            styles={STYLES}
-            isMobile={isMobile}
-            anchorRef={anchorRef}
-          />
+          <StylePicker styles={STYLES} isMobile={isMobile} anchorRef={anchorRef} />
           <FieldSeparator className="hidden md:block" />
           <BaseColorPicker isMobile={isMobile} anchorRef={anchorRef} />
-          <ThemePicker
-            themes={availableThemes}
-            isMobile={isMobile}
-            anchorRef={anchorRef}
-          />
+          <ThemePicker themes={availableThemes} isMobile={isMobile} anchorRef={anchorRef} />
           <ChartColorPicker isMobile={isMobile} anchorRef={anchorRef} />
           <FieldSeparator className="hidden md:block" />
           <FontPicker
@@ -100,5 +86,5 @@ export function Customizer({
         <ResetDialog />
       </CardFooter>
     </Card>
-  )
+  );
 }

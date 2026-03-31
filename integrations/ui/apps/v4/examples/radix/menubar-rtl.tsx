@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -21,7 +18,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "@/styles/radix-nova/ui-rtl/menubar"
+} from "@/styles/radix-nova/ui-rtl/menubar";
 
 const translations: Translations = {
   en: {
@@ -138,11 +135,11 @@ const translations: Translations = {
       addProfile: "הוסף פרופיל...",
     },
   },
-}
+};
 
 export function MenubarRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
-  const [profile, setProfile] = React.useState("benoit")
+  const { dir, t, language } = useTranslation(translations, "ar");
+  const [profile, setProfile] = React.useState("benoit");
 
   return (
     <Menubar className="w-72" dir={dir}>
@@ -162,9 +159,7 @@ export function MenubarRtl() {
           <MenubarGroup>
             <MenubarSub>
               <MenubarSubTrigger>{t.share}</MenubarSubTrigger>
-              <MenubarSubContent
-                data-lang={dir === "rtl" ? language : undefined}
-              >
+              <MenubarSubContent data-lang={dir === "rtl" ? language : undefined}>
                 <MenubarGroup>
                   <MenubarItem>{t.emailLink}</MenubarItem>
                   <MenubarItem>{t.messages}</MenubarItem>
@@ -196,9 +191,7 @@ export function MenubarRtl() {
           <MenubarGroup>
             <MenubarSub>
               <MenubarSubTrigger>{t.find}</MenubarSubTrigger>
-              <MenubarSubContent
-                data-lang={dir === "rtl" ? language : undefined}
-              >
+              <MenubarSubContent data-lang={dir === "rtl" ? language : undefined}>
                 <MenubarGroup>
                   <MenubarItem>{t.searchTheWeb}</MenubarItem>
                 </MenubarGroup>
@@ -221,10 +214,7 @@ export function MenubarRtl() {
       </MenubarMenu>
       <MenubarMenu>
         <MenubarTrigger>{t.view}</MenubarTrigger>
-        <MenubarContent
-          className="w-44"
-          data-lang={dir === "rtl" ? language : undefined}
-        >
+        <MenubarContent className="w-44" data-lang={dir === "rtl" ? language : undefined}>
           <MenubarGroup>
             <MenubarCheckboxItem>{t.bookmarksBar}</MenubarCheckboxItem>
             <MenubarCheckboxItem checked>{t.fullUrls}</MenubarCheckboxItem>
@@ -267,5 +257,5 @@ export function MenubarRtl() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  )
+  );
 }

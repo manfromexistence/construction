@@ -4,7 +4,7 @@ import {
   type Path,
   RangeApi,
   type TRange,
-} from '../../interfaces';
+} from "../../interfaces";
 
 export const isSelected = (
   editor: Editor,

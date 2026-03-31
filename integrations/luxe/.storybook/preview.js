@@ -1,20 +1,20 @@
-import '@luxe/react/styles.css'
+import "@luxe/react/styles.css";
 
-import { withThemeByClassName } from '@storybook/addon-themes'
+import { withThemeByClassName } from "@storybook/addon-themes";
 
 export const decorators = [
   withThemeByClassName({
     themes: {
-      light: 'light',
-      dark: 'dark',
+      light: "light",
+      dark: "dark",
     },
-    defaultTheme: 'light',
+    defaultTheme: "light",
   }),
-]
+];
 
 /** @type {import('@storybook/react-vite').Preview} */
 const preview = {
   decorators,
-}
+};
 
-export default preview
+export default preview;

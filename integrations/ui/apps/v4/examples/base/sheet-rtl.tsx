@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui-rtl/field"
-import { Input } from "@/styles/base-nova/ui-rtl/input"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui-rtl/field";
+import { Input } from "@/styles/base-nova/ui-rtl/input";
 import {
   Sheet,
   SheetClose,
@@ -16,7 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from "@/styles/base-nova/ui-rtl/sheet"
+} from "@/styles/base-nova/ui-rtl/sheet";
 
 const translations: Translations = {
   en: {
@@ -24,8 +21,7 @@ const translations: Translations = {
     values: {
       open: "Open",
       editProfile: "Edit profile",
-      description:
-        "Make changes to your profile here. Click save when you're done.",
+      description: "Make changes to your profile here. Click save when you're done.",
       name: "Name",
       username: "Username",
       save: "Save changes",
@@ -37,8 +33,7 @@ const translations: Translations = {
     values: {
       open: "فتح",
       editProfile: "تعديل الملف الشخصي",
-      description:
-        "قم بإجراء تغييرات على ملفك الشخصي هنا. انقر حفظ عند الانتهاء.",
+      description: "قم بإجراء تغييرات على ملفك الشخصي هنا. انقر حفظ عند الانتهاء.",
       name: "الاسم",
       username: "اسم المستخدم",
       save: "حفظ التغييرات",
@@ -57,16 +52,14 @@ const translations: Translations = {
       close: "סגור",
     },
   },
-}
+};
 
 export function SheetRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
+  const { dir, t, language } = useTranslation(translations, "ar");
 
   return (
     <Sheet>
-      <SheetTrigger render={<Button variant="outline" />}>
-        {t.open}
-      </SheetTrigger>
+      <SheetTrigger render={<Button variant="outline" />}>{t.open}</SheetTrigger>
       <SheetContent
         dir={dir}
         side={dir === "rtl" ? "left" : "right"}
@@ -88,11 +81,9 @@ export function SheetRtl() {
         </FieldGroup>
         <SheetFooter>
           <Button type="submit">{t.save}</Button>
-          <SheetClose render={<Button variant="outline" />}>
-            {t.close}
-          </SheetClose>
+          <SheetClose render={<Button variant="outline" />}>{t.close}</SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

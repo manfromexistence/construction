@@ -1,17 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
 
-import { isSelectionAtCodeBlockStart } from './isSelectionAtCodeBlockStart';
+import { isSelectionAtCodeBlockStart } from "./isSelectionAtCodeBlockStart";
 
 jsxt;
 
-describe('isSelectionAtCodeBlockStart', () => {
+describe("isSelectionAtCodeBlockStart", () => {
   const run = (input: any) =>
-    isSelectionAtCodeBlockStart(
-      createSlateEditor({ editor: createEditor(input) })
-    );
+    isSelectionAtCodeBlockStart(createSlateEditor({ editor: createEditor(input) }));
 
   it.each([
     {
@@ -29,7 +27,7 @@ describe('isSelectionAtCodeBlockStart', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns false outside a code block',
+      title: "returns false outside a code block",
     },
     {
       expected: false,
@@ -46,7 +44,7 @@ describe('isSelectionAtCodeBlockStart', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns false on a later code line',
+      title: "returns false on a later code line",
     },
     {
       expected: false,
@@ -60,7 +58,7 @@ describe('isSelectionAtCodeBlockStart', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns false when the cursor is not at the line start',
+      title: "returns false when the cursor is not at the line start",
     },
     {
       expected: true,
@@ -75,9 +73,9 @@ describe('isSelectionAtCodeBlockStart', () => {
           </hcodeblock>
         </editor>
       ),
-      title: 'returns true at the start of the first code line',
+      title: "returns true at the start of the first code line",
     },
-  ])('$title', ({ input, expected }) => {
+  ])("$title", ({ input, expected }) => {
     expect(run(input)).toBe(expected);
   });
 });

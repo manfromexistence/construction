@@ -3,9 +3,7 @@
   "name": "smooth-cursor-demo",
   "type": "registry:example",
   "description": "Basic smooth cursor example",
-  "registryDependencies": [
-    "@magicui/smooth-cursor"
-  ],
+  "registryDependencies": ["@magicui/smooth-cursor"],
   "files": [
     {
       "path": "registry/example/smooth-cursor-demo.tsx",

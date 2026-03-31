@@ -1,26 +1,13 @@
-"use client"
+"use client";
 
-import {
-  SquareLock01Icon,
-  SquareUnlock01Icon,
-} from "@hugeicons/core-free-icons"
-import { HugeiconsIcon } from "@hugeicons/react"
+import { SquareLock01Icon, SquareUnlock01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { type LockableParam, useLocks } from "@/app/(app)/create/hooks/use-locks";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-import {
-  useLocks,
-  type LockableParam,
-} from "@/app/(app)/create/hooks/use-locks"
-
-export function LockButton({
-  param,
-  className,
-}: {
-  param: LockableParam
-  className?: string
-}) {
-  const { isLocked, toggleLock } = useLocks()
-  const locked = isLocked(param)
+export function LockButton({ param, className }: { param: LockableParam; className?: string }) {
+  const { isLocked, toggleLock } = useLocks();
+  const locked = isLocked(param);
 
   return (
     <button
@@ -40,5 +27,5 @@ export function LockButton({
         className="size-5 text-foreground"
       />
     </button>
-  )
+  );
 }

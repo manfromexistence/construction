@@ -1,5 +1,5 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseDatePlugin } from '../lib';
+import { BaseDatePlugin } from "../lib";
 
 export const DatePlugin = toPlatePlugin(BaseDatePlugin);

@@ -1,13 +1,14 @@
-"use client"
+"use client";
 
-import { Button } from "@/registry/bases/base/ui/button"
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { Button } from "@/registry/bases/base/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/bases/base/ui/card"
+} from "@/registry/bases/base/ui/card";
 import {
   Empty,
   EmptyContent,
@@ -15,8 +16,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/registry/bases/base/ui/empty"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/base/ui/empty";
 
 export function FileUpload() {
   return (
@@ -46,5 +46,5 @@ export function FileUpload() {
         </Empty>
       </CardContent>
     </Card>
-  )
+  );
 }

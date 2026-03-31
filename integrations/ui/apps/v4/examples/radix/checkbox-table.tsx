@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { Checkbox } from "@/styles/radix-nova/ui/checkbox"
+import { Checkbox } from "@/styles/radix-nova/ui/checkbox";
 import {
   Table,
   TableBody,
@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/styles/radix-nova/ui/table"
+} from "@/styles/radix-nova/ui/table";
 
 const tableData = [
   {
@@ -37,32 +37,30 @@ const tableData = [
     email: "david.kim@example.com",
     role: "Editor",
   },
-]
+];
 
 export function CheckboxInTable() {
-  const [selectedRows, setSelectedRows] = React.useState<Set<string>>(
-    new Set(["1"])
-  )
+  const [selectedRows, setSelectedRows] = React.useState<Set<string>>(new Set(["1"]));
 
-  const selectAll = selectedRows.size === tableData.length
+  const selectAll = selectedRows.size === tableData.length;
 
   const handleSelectAll = (checked: boolean) => {
     if (checked) {
-      setSelectedRows(new Set(tableData.map((row) => row.id)))
+      setSelectedRows(new Set(tableData.map((row) => row.id)));
     } else {
-      setSelectedRows(new Set())
+      setSelectedRows(new Set());
     }
-  }
+  };
 
   const handleSelectRow = (id: string, checked: boolean) => {
-    const newSelected = new Set(selectedRows)
+    const newSelected = new Set(selectedRows);
     if (checked) {
-      newSelected.add(id)
+      newSelected.add(id);
     } else {
-      newSelected.delete(id)
+      newSelected.delete(id);
     }
-    setSelectedRows(newSelected)
-  }
+    setSelectedRows(newSelected);
+  };
 
   return (
     <Table>
@@ -83,18 +81,13 @@ export function CheckboxInTable() {
       </TableHeader>
       <TableBody>
         {tableData.map((row) => (
-          <TableRow
-            key={row.id}
-            data-state={selectedRows.has(row.id) ? "selected" : undefined}
-          >
+          <TableRow key={row.id} data-state={selectedRows.has(row.id) ? "selected" : undefined}>
             <TableCell>
               <Checkbox
                 id={`row-${row.id}-checkbox`}
                 name={`row-${row.id}-checkbox`}
                 checked={selectedRows.has(row.id)}
-                onCheckedChange={(checked) =>
-                  handleSelectRow(row.id, checked === true)
-                }
+                onCheckedChange={(checked) => handleSelectRow(row.id, checked === true)}
               />
             </TableCell>
             <TableCell className="font-medium">{row.name}</TableCell>
@@ -104,5 +97,5 @@ export function CheckboxInTable() {
         ))}
       </TableBody>
     </Table>
-  )
+  );
 }

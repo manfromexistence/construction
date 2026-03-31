@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Combobox,
@@ -7,15 +7,9 @@ import {
   ComboboxInput,
   ComboboxItem,
   ComboboxList,
-} from "@/styles/base-nova/ui/combobox"
+} from "@/styles/base-nova/ui/combobox";
 
-const frameworks = [
-  "Next.js",
-  "SvelteKit",
-  "Nuxt.js",
-  "Remix",
-  "Astro",
-] as const
+const frameworks = ["Next.js", "SvelteKit", "Nuxt.js", "Remix", "Astro"] as const;
 
 export default function ComboboxBasic() {
   return (
@@ -32,5 +26,5 @@ export default function ComboboxBasic() {
         </ComboboxList>
       </ComboboxContent>
     </Combobox>
-  )
+  );
 }

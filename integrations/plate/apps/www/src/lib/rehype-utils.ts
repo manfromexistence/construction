@@ -1,53 +1,45 @@
-import React from 'react';
-
-import type { UnistNode } from '@/types/unist';
-import type { z } from 'zod';
-
-import { promises as fs } from 'node:fs';
-import { tmpdir } from 'node:os';
-import path from 'node:path';
+import { promises as fs } from "node:fs";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import React from "react";
 import {
   type Registry,
   type RegistryItem,
   type registryItemFileSchema,
   registryItemSchema,
-} from 'shadcn/registry';
-import { Project, ScriptKind } from 'ts-morph';
+} from "shadcn/registry";
+import { Project, ScriptKind } from "ts-morph";
+import type { z } from "zod";
+import type { UnistNode } from "@/types/unist";
 
-import registryShadcnData from '../../registry-shadcn.json';
-import { Index } from '../__registry__';
-import { registry } from '../registry/registry';
+import registryShadcnData from "../../registry-shadcn.json";
+import { Index } from "../__registry__";
+import { registry } from "../registry/registry";
 
 const registryShadcn = registryShadcnData as unknown as Registry;
 
 function isShadcnRegistryDependency(name: string) {
-  return name.startsWith('@shadcn/');
+  return name.startsWith("@shadcn/");
 }
 
 function getShadcnRegistryItemName(name: string) {
-  return name.slice('@shadcn/'.length);
+  return name.slice("@shadcn/".length);
 }
 
 export function fixImport(content: string) {
-  const regex =
-    /@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib|example))\/([\w-]+)/g;
+  const regex = /@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib|example))\/([\w-]+)/g;
 
-  const replacement = (
-    match: string,
-    _path: string,
-    type: string,
-    component: string
-  ) => {
-    if (type.endsWith('components') || type.endsWith('example')) {
+  const replacement = (match: string, _path: string, type: string, component: string) => {
+    if (type.endsWith("components") || type.endsWith("example")) {
       return `@/components/${component}`;
     }
-    if (type.endsWith('ui')) {
+    if (type.endsWith("ui")) {
       return `@/components/ui/${component}`;
     }
-    if (type.endsWith('hooks')) {
+    if (type.endsWith("hooks")) {
       return `@/hooks/${component}`;
     }
-    if (type.endsWith('lib')) {
+    if (type.endsWith("lib")) {
       return `@/lib/${component}`;
     }
 
@@ -77,11 +69,7 @@ export function getNodeAttributeByName(node: UnistNode, name: string) {
 //   return source;
 // }
 
-export function getAllFiles(
-  name: string,
-  seen = new Set<string>(),
-  isShadcn?: boolean
-) {
+export function getAllFiles(name: string, seen = new Set<string>(), isShadcn?: boolean) {
   const registryTarget = isShadcn ? registryShadcn : registry;
 
   if (seen.has(name)) return [];
@@ -119,10 +107,7 @@ function processFiles(files: ({ path: string; file?: string } | string)[]): {
   type: string;
 }[] {
   return files.map((fileOrObj) => {
-    const file =
-      typeof fileOrObj === 'string'
-        ? fileOrObj
-        : (fileOrObj.path ?? fileOrObj.file);
+    const file = typeof fileOrObj === "string" ? fileOrObj : (fileOrObj.path ?? fileOrObj.file);
 
     return {
       file,
@@ -134,23 +119,23 @@ function processFiles(files: ({ path: string; file?: string } | string)[]): {
 }
 
 function getFileType(file: string): string {
-  if (file.includes('components/')) {
-    return 'components';
+  if (file.includes("components/")) {
+    return "components";
   }
-  if (file.includes('ui/')) {
-    return 'ui';
+  if (file.includes("ui/")) {
+    return "ui";
   }
-  if (file.includes('hooks/')) {
-    return 'hooks';
+  if (file.includes("hooks/")) {
+    return "hooks";
   }
-  if (file.includes('lib/')) {
-    return 'lib';
+  if (file.includes("lib/")) {
+    return "lib";
   }
-  if (file.includes('example/')) {
-    return 'example';
+  if (file.includes("example/")) {
+    return "example";
   }
 
-  return 'unknown';
+  return "unknown";
 }
 
 export function getAllDependencies(
@@ -233,8 +218,8 @@ const memoizedIndex: typeof Index = Object.fromEntries(
 );
 
 export function getRegistryComponent(name: string) {
-  if (name === 'slate-to-html') {
-    return React.lazy(() => import('@/registry/blocks/slate-to-html/page'));
+  if (name === "slate-to-html") {
+    return React.lazy(() => import("@/registry/blocks/slate-to-html/page"));
   }
 
   return memoizedIndex[name]?.component;
@@ -253,7 +238,7 @@ export async function getRegistryItem(
   // Convert all file paths to object.
   // TODO: remove when we migrate to new registry.
   item.files = item.files.map((file: unknown) =>
-    typeof file === 'string' ? { path: file } : file
+    typeof file === "string" ? { path: file } : file
   );
 
   // Fail early before doing expensive file operations.
@@ -273,9 +258,7 @@ export async function getRegistryItem(
     const relativePath = path.relative(process.cwd(), file.path);
 
     const content =
-      !prefetch || file.path === item.files[0].path
-        ? await getFileContent(file as any)
-        : undefined;
+      !prefetch || file.path === item.files[0].path ? await getFileContent(file as any) : undefined;
 
     files.push({
       ...file,
@@ -327,15 +310,13 @@ async function getAllItemFiles(
   if (!item) return [];
 
   let allFiles = [...(item.files ?? [])].map((file) => {
-    const filePath = typeof file === 'string' ? file : file.path;
+    const filePath = typeof file === "string" ? file : file.path;
     // Ensure path starts with src/registry/
-    const normalizedPath = filePath.startsWith('src/registry/')
+    const normalizedPath = filePath.startsWith("src/registry/")
       ? filePath
       : `src/registry/${filePath}`;
 
-    return typeof file === 'string'
-      ? { path: normalizedPath }
-      : { ...file, path: normalizedPath };
+    return typeof file === "string" ? { path: normalizedPath } : { ...file, path: normalizedPath };
   });
 
   // Recursively get files from dependencies
@@ -356,9 +337,7 @@ async function getAllItemFiles(
   }
 
   // Remove duplicates based on path
-  const uniqueFiles = Array.from(
-    new Map(allFiles.map((file) => [file.path, file])).values()
-  );
+  const uniqueFiles = Array.from(new Map(allFiles.map((file) => [file.path, file])).values());
 
   return uniqueFiles;
 }
@@ -367,7 +346,7 @@ async function getFileContent(file: z.infer<typeof registryItemFileSchema>) {
   // Try different path resolutions
   const possiblePaths = [
     file.path,
-    file.path.replace('src/registry/', ''),
+    file.path.replace("src/registry/", ""),
     `src/registry/${file.path}`,
   ].map((p) => path.join(process.cwd(), p));
 
@@ -376,7 +355,7 @@ async function getFileContent(file: z.infer<typeof registryItemFileSchema>) {
   // Try each path until we find one that exists
   for (const filePath of possiblePaths) {
     try {
-      raw = await fs.readFile(filePath, 'utf8');
+      raw = await fs.readFile(filePath, "utf8");
       break;
     } catch (_error) {}
   }
@@ -405,36 +384,36 @@ async function getFileContent(file: z.infer<typeof registryItemFileSchema>) {
 function getFileTarget(file: z.infer<typeof registryItemFileSchema>) {
   let target = file.target;
 
-  if (!target || target === '') {
-    const fileName = file.path.split('/').pop();
+  if (!target || target === "") {
+    const fileName = file.path.split("/").pop();
 
-    if (file.type === 'registry:component') {
-      target = file.path.replace('src/registry/', '');
+    if (file.type === "registry:component") {
+      target = file.path.replace("src/registry/", "");
     }
-    if (file.type === 'registry:block' || file.type === 'registry:example') {
+    if (file.type === "registry:block" || file.type === "registry:example") {
       target = `components/${fileName}`;
     }
-    if (file.type === 'registry:ui') {
+    if (file.type === "registry:ui") {
       target = `components/ui/${fileName}`;
     }
-    if (file.type === 'registry:hook') {
+    if (file.type === "registry:hook") {
       target = `hooks/${fileName}`;
     }
-    if (file.type === 'registry:lib') {
+    if (file.type === "registry:lib") {
       target = `lib/${fileName}`;
     }
   }
 
-  return target ?? '';
+  return target ?? "";
 }
 
 async function createTempSourceFile(filename: string) {
-  const dir = await fs.mkdtemp(path.join(tmpdir(), 'shadcn-'));
+  const dir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-"));
 
   return path.join(dir, filename);
 }
 
-function fixFilePaths(files: z.infer<typeof registryItemSchema>['files']) {
+function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
   if (!files?.length) {
     return [];
   }
@@ -456,9 +435,7 @@ export type FileTree = {
   path?: string;
 };
 
-export function createFileTreeForRegistryItemFiles(
-  files?: { path: string; target?: string }[]
-) {
+export function createFileTreeForRegistryItemFiles(files?: { path: string; target?: string }[]) {
   if (!files) {
     return null;
   }
@@ -467,7 +444,7 @@ export function createFileTreeForRegistryItemFiles(
 
   for (const file of files) {
     const path = file.target ?? file.path;
-    const parts = path.split('/');
+    const parts = path.split("/");
     let currentLevel = root;
 
     for (let i = 0; i < parts.length; i++) {
@@ -484,9 +461,7 @@ export function createFileTreeForRegistryItemFiles(
           currentLevel = existingNode.children!;
         }
       } else {
-        const newNode: FileTree = isFile
-          ? { name: part, path }
-          : { children: [], name: part };
+        const newNode: FileTree = isFile ? { name: part, path } : { children: [], name: part };
 
         currentLevel.push(newNode);
 

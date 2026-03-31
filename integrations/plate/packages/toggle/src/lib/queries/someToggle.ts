@@ -1,4 +1,4 @@
-import { type SlateEditor, KEYS } from 'platejs';
+import { KEYS, type SlateEditor } from "platejs";
 
 export const someToggle = (editor: SlateEditor) =>
   !!editor.selection &&

@@ -1,8 +1,8 @@
-import path from "path"
-import { loadConfig, type ConfigLoaderSuccessResult } from "tsconfig-paths"
-import { expect, test } from "vitest"
+import path from "path";
+import { type ConfigLoaderSuccessResult, loadConfig } from "tsconfig-paths";
+import { expect, test } from "vitest";
 
-import { resolveImport } from "../../src/utils/resolve-import"
+import { resolveImport } from "../../src/utils/resolve-import";
 
 test("resolve import", async () => {
   expect(
@@ -14,7 +14,7 @@ test("resolve import", async () => {
         "~/lib": ["./src/lib"],
       },
     })
-  ).toEqual("/Users/shadcn/Projects/foobar/src/foo/bar")
+  ).toEqual("/Users/shadcn/Projects/foobar/src/foo/bar");
 
   expect(
     await resolveImport("~/components/foo/bar/baz", {
@@ -25,7 +25,7 @@ test("resolve import", async () => {
         "~/lib": ["./src/lib"],
       },
     })
-  ).toEqual("/Users/shadcn/Projects/foobar/src/components/foo/bar/baz")
+  ).toEqual("/Users/shadcn/Projects/foobar/src/components/foo/bar/baz");
 
   expect(
     await resolveImport("components/foo/bar", {
@@ -36,7 +36,7 @@ test("resolve import", async () => {
         lib: ["./lib"],
       },
     })
-  ).toEqual("/Users/shadcn/Projects/foobar/src/app/components/foo/bar")
+  ).toEqual("/Users/shadcn/Projects/foobar/src/app/components/foo/bar");
 
   expect(
     await resolveImport("lib/utils", {
@@ -47,35 +47,27 @@ test("resolve import", async () => {
         lib: ["./lib"],
       },
     })
-  ).toEqual("/Users/shadcn/Projects/foobar/lib/utils")
-})
+  ).toEqual("/Users/shadcn/Projects/foobar/lib/utils");
+});
 
 test("resolve import with base url", async () => {
-  const cwd = path.resolve(__dirname, "../fixtures/with-base-url")
-  const config = (await loadConfig(cwd)) as ConfigLoaderSuccessResult
+  const cwd = path.resolve(__dirname, "../fixtures/with-base-url");
+  const config = (await loadConfig(cwd)) as ConfigLoaderSuccessResult;
 
   expect(await resolveImport("@/components/ui", config)).toEqual(
     path.resolve(cwd, "components/ui")
-  )
-  expect(await resolveImport("@/lib/utils", config)).toEqual(
-    path.resolve(cwd, "lib/utils")
-  )
-  expect(await resolveImport("foo/bar", config)).toEqual(
-    path.resolve(cwd, "foo/bar")
-  )
-})
+  );
+  expect(await resolveImport("@/lib/utils", config)).toEqual(path.resolve(cwd, "lib/utils"));
+  expect(await resolveImport("foo/bar", config)).toEqual(path.resolve(cwd, "foo/bar"));
+});
 
 test("resolve import without base url", async () => {
-  const cwd = path.resolve(__dirname, "../fixtures/without-base-url")
-  const config = (await loadConfig(cwd)) as ConfigLoaderSuccessResult
+  const cwd = path.resolve(__dirname, "../fixtures/without-base-url");
+  const config = (await loadConfig(cwd)) as ConfigLoaderSuccessResult;
 
   expect(await resolveImport("~/components/ui", config)).toEqual(
     path.resolve(cwd, "components/ui")
-  )
-  expect(await resolveImport("~/lib/utils", config)).toEqual(
-    path.resolve(cwd, "lib/utils")
-  )
-  expect(await resolveImport("foo/bar", config)).toEqual(
-    path.resolve(cwd, "foo/bar")
-  )
-})
+  );
+  expect(await resolveImport("~/lib/utils", config)).toEqual(path.resolve(cwd, "lib/utils"));
+  expect(await resolveImport("foo/bar", config)).toEqual(path.resolve(cwd, "foo/bar"));
+});

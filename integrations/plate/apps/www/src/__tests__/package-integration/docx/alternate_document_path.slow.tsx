@@ -1,11 +1,11 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'alternate_document_path';
+const name = "alternate_document_path";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
@@ -16,16 +16,16 @@ describe(getDocxTestName(name), () => {
           <htext />
         </hp>
         <hp lineHeight="107%">
-          This is <htext italic>italic</htext>, <htext bold>bold</htext>,{' '}
-          <htext underline>underlined</htext>,{' '}
+          This is <htext italic>italic</htext>, <htext bold>bold</htext>,{" "}
+          <htext underline>underlined</htext>,{" "}
           <htext italic underline>
             italic underlined
           </htext>
-          ,{' '}
+          ,{" "}
           <htext bold underline>
             bold underlined
           </htext>
-          ,{' '}
+          ,{" "}
           <htext bold italic underline>
             bold italic underlined
           </htext>

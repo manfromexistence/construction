@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS, someHtmlElement } from 'platejs';
+import { createSlatePlugin, KEYS, someHtmlElement } from "platejs";
 
 /** Enables support for bold formatting */
 export const BaseBoldPlugin = createSlatePlugin({
@@ -8,22 +8,19 @@ export const BaseBoldPlugin = createSlatePlugin({
     html: {
       deserializer: {
         rules: [
-          { validNodeName: ['STRONG', 'B'] },
+          { validNodeName: ["STRONG", "B"] },
           {
             validStyle: {
-              fontWeight: ['600', '700', 'bold'],
+              fontWeight: ["600", "700", "bold"],
             },
           },
         ],
         query: ({ element }) =>
-          !someHtmlElement(
-            element,
-            (node) => node.style.fontWeight === 'normal'
-          ),
+          !someHtmlElement(element, (node) => node.style.fontWeight === "normal"),
       },
     },
   },
-  render: { as: 'strong' },
+  render: { as: "strong" },
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
     editor.tf.toggleMark(type);

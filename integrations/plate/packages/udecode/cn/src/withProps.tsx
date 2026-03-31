@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { cn } from './cn';
+import { cn } from "./cn";
 
 /**
  * Set default props with `React.forwardRef`.
@@ -13,20 +13,16 @@ export function withProps<T extends React.ElementType>(
 ) {
   const ComponentWithClassName = Component as React.FC<{ className?: string }>;
 
-  return React.forwardRef<
-    React.ComponentRef<T>,
-    React.ComponentPropsWithoutRef<T>
-  >(function ExtendComponent(props, ref) {
-    const newProps: any = { ...defaultProps, ...props };
-    const className = cn(
-      (defaultProps as any).className,
-      (props as any).className
-    );
+  return React.forwardRef<React.ComponentRef<T>, React.ComponentPropsWithoutRef<T>>(
+    function ExtendComponent(props, ref) {
+      const newProps: any = { ...defaultProps, ...props };
+      const className = cn((defaultProps as any).className, (props as any).className);
 
-    if (className) {
-      newProps.className = className;
+      if (className) {
+        newProps.className = className;
+      }
+
+      return <ComponentWithClassName ref={ref} {...newProps} />;
     }
-
-    return <ComponentWithClassName ref={ref} {...newProps} />;
-  });
+  );
 }

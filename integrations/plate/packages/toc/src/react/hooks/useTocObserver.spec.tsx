@@ -1,4 +1,4 @@
-import { act, renderHook } from '@testing-library/react';
+import { act, renderHook } from "@testing-library/react";
 
 const OriginalIntersectionObserver = globalThis.IntersectionObserver;
 
@@ -15,7 +15,7 @@ class IntersectionObserverMock {
   observe = observeMock;
 }
 
-describe('useTocObserver', () => {
+describe("useTocObserver", () => {
   beforeEach(() => {
     intersectionCallback = null;
     observeMock.mockReset();
@@ -27,18 +27,18 @@ describe('useTocObserver', () => {
     (globalThis as any).IntersectionObserver = OriginalIntersectionObserver;
   });
 
-  it('tracks visibility and offset for the active toc item', async () => {
+  it("tracks visibility and offset for the active toc item", async () => {
     const { useTocObserver } = await import(
       `./useTocObserver?test=${Math.random().toString(36).slice(2)}`
     );
-    const activeItem = document.createElement('div');
-    const root = document.createElement('nav');
+    const activeItem = document.createElement("div");
+    const root = document.createElement("nav");
     root.querySelectorAll = () => [activeItem] as any;
     root.getBoundingClientRect = () => ({ height: 100 }) as DOMRect;
 
     const { result } = renderHook(() =>
       useTocObserver({
-        activeId: 'a',
+        activeId: "a",
         isObserve: true,
         tocRef: { current: root },
       })

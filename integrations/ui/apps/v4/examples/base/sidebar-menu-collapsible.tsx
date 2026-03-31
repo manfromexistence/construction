@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { ChevronRightIcon } from "lucide-react"
+import { ChevronRightIcon } from "lucide-react";
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/base-nova/ui/collapsible"
+} from "@/styles/base-nova/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -19,7 +19,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarProvider,
-} from "@/styles/base-nova/ui/sidebar"
+} from "@/styles/base-nova/ui/sidebar";
 
 const items = [
   {
@@ -147,7 +147,7 @@ const items = [
       },
     ],
   },
-]
+];
 
 export default function AppSidebar() {
   return (
@@ -158,11 +158,7 @@ export default function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item, index) => (
-                  <Collapsible
-                    key={index}
-                    className="group/collapsible"
-                    defaultOpen={index === 0}
-                  >
+                  <Collapsible key={index} className="group/collapsible" defaultOpen={index === 0}>
                     <SidebarMenuItem>
                       <CollapsibleTrigger render={<SidebarMenuButton />}>
                         <span>{item.title}</span>
@@ -172,9 +168,7 @@ export default function AppSidebar() {
                         <SidebarMenuSub>
                           {item.items.map((subItem, subIndex) => (
                             <SidebarMenuSubItem key={subIndex}>
-                              <SidebarMenuSubButton
-                                render={<a href={subItem.url} />}
-                              >
+                              <SidebarMenuSubButton render={<a href={subItem.url} />}>
                                 <span>{subItem.title}</span>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
@@ -190,5 +184,5 @@ export default function AppSidebar() {
         </SidebarContent>
       </Sidebar>
     </SidebarProvider>
-  )
+  );
 }

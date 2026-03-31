@@ -1,14 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor } from 'platejs';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
 
-import { isListNested } from './isListNested';
+import { isListNested } from "./isListNested";
 
 jsxt;
 
-describe('when the list is nested', () => {
+describe("when the list is nested", () => {
   const input = createEditor(
     (
       <editor>
@@ -32,16 +31,16 @@ describe('when the list is nested', () => {
     ) as any
   );
 
-  it('returns true', () => {
+  it("returns true", () => {
     const editor = createSlateEditor({ editor: input });
 
-    const list = editor.api.node({ id: '21' });
+    const list = editor.api.node({ id: "21" });
 
     expect(isListNested(editor, list?.[1] as any)).toBeTruthy();
   });
 });
 
-describe('when the list is not nested', () => {
+describe("when the list is not nested", () => {
   const input = createEditor(
     (
       <editor>
@@ -54,10 +53,10 @@ describe('when the list is not nested', () => {
     ) as any
   );
 
-  it('returns false', () => {
+  it("returns false", () => {
     const editor = createSlateEditor({ editor: input });
 
-    const list = editor.api.node({ id: '1' });
+    const list = editor.api.node({ id: "1" });
 
     expect(isListNested(editor, list?.[1] as any)).toBeFalsy();
   });

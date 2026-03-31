@@ -1,8 +1,8 @@
+import { eq, or } from "drizzle-orm";
+import { NextRequest } from "next/server";
 import { db } from "@/db";
 import { oauthToken } from "@/db/schema";
 import { hashToken, oauthError } from "@/lib/oauth";
-import { eq, or } from "drizzle-orm";
-import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.formData().catch(() => null);
@@ -22,10 +22,7 @@ export async function POST(req: NextRequest) {
     .select({ id: oauthToken.id })
     .from(oauthToken)
     .where(
-      or(
-        eq(oauthToken.accessTokenHash, tokenHash),
-        eq(oauthToken.refreshTokenHash, tokenHash)
-      )
+      or(eq(oauthToken.accessTokenHash, tokenHash), eq(oauthToken.refreshTokenHash, tokenHash))
     )
     .limit(1);
 

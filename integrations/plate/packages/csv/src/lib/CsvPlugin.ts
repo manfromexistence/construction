@@ -1,12 +1,12 @@
-import type { ParseConfig } from 'papaparse';
-import type { OmitFirst, PluginConfig } from 'platejs';
+import type { ParseConfig } from "papaparse";
+import type { OmitFirst, PluginConfig } from "platejs";
 
-import { bindFirst, createTSlatePlugin, KEYS } from 'platejs';
+import { bindFirst, createTSlatePlugin, KEYS } from "platejs";
 
-import { deserializeCsv } from './deserializer/utils';
+import { deserializeCsv } from "./deserializer/utils";
 
 export type CsvConfig = PluginConfig<
-  'csv',
+  "csv",
   {
     /**
      * Percentage in decimal form, from 0 to a very large number, 0 for no
@@ -48,7 +48,7 @@ export const CsvPlugin = createTSlatePlugin<CsvConfig>({
   }))
   .extend(({ api }) => ({
     parser: {
-      format: 'text/plain',
+      format: "text/plain",
       deserialize: ({ data }) => api.csv.deserialize({ data }),
     },
   }));

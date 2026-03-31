@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
-import * as React from "react";
 import type { SVGProps } from "react";
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
 export function TailwindCSS({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (

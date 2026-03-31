@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import { ArrowRightIcon, PlusIcon } from "lucide-react"
+import { ArrowRightIcon, PlusIcon } from "lucide-react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { Spinner } from "@/styles/base-nova/ui-rtl/spinner"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { Spinner } from "@/styles/base-nova/ui-rtl/spinner";
 
 const translations: Translations = {
   en: {
@@ -37,18 +34,17 @@ const translations: Translations = {
       loading: "טוען",
     },
   },
-}
+};
 
 export function ButtonRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="flex flex-wrap items-center gap-2 md:flex-row" dir={dir}>
       <Button variant="outline">{t.button}</Button>
       <Button variant="destructive">{t.delete}</Button>
       <Button variant="outline">
-        {t.submit}{" "}
-        <ArrowRightIcon className="rtl:rotate-180" data-icon="inline-end" />
+        {t.submit} <ArrowRightIcon className="rtl:rotate-180" data-icon="inline-end" />
       </Button>
       <Button variant="outline" size="icon" aria-label="Add">
         <PlusIcon />
@@ -57,5 +53,5 @@ export function ButtonRtl() {
         <Spinner data-icon="inline-start" /> {t.loading}
       </Button>
     </div>
-  )
+  );
 }

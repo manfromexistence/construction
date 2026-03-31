@@ -1,9 +1,9 @@
-import { createSlateEditor, createSlatePlugin } from 'platejs';
+import { createSlateEditor, createSlatePlugin } from "platejs";
 
-import { BaseCaptionPlugin } from './BaseCaptionPlugin';
+import { BaseCaptionPlugin } from "./BaseCaptionPlugin";
 
 const MediaPlugin = createSlatePlugin({
-  key: 'media',
+  key: "media",
   node: { isElement: true },
 });
 
@@ -13,7 +13,7 @@ const createCaptionEditor = (value: any, selection: any = null) =>
       MediaPlugin,
       BaseCaptionPlugin.configure({
         options: {
-          query: { allow: ['media'] },
+          query: { allow: ["media"] },
         },
       }),
     ],
@@ -21,7 +21,7 @@ const createCaptionEditor = (value: any, selection: any = null) =>
     value,
   });
 
-describe('withCaption', () => {
+describe("withCaption", () => {
   const originalSetTimeout = globalThis.setTimeout;
 
   beforeEach(() => {
@@ -36,57 +36,57 @@ describe('withCaption', () => {
     globalThis.setTimeout = originalSetTimeout;
   });
 
-  it('stores focusEndPath when arrow-up moves into an allowed node with caption text', () => {
+  it("stores focusEndPath when arrow-up moves into an allowed node with caption text", () => {
     const editor = createCaptionEditor([
       {
-        caption: [{ text: 'caption' }],
-        children: [{ text: '' }],
-        type: 'media',
+        caption: [{ text: "caption" }],
+        children: [{ text: "" }],
+        type: "media",
       },
     ]);
 
-    editor.dom.currentKeyboardEvent = { key: 'ArrowUp', which: 38 } as any;
+    editor.dom.currentKeyboardEvent = { key: "ArrowUp", which: 38 } as any;
     (editor as any).apply({
       newProperties: {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 0, path: [0, 0] },
       },
       properties: null,
-      type: 'set_selection',
+      type: "set_selection",
     } as any);
 
-    expect(editor.getOption(BaseCaptionPlugin, 'focusEndPath')).toEqual([0]);
+    expect(editor.getOption(BaseCaptionPlugin, "focusEndPath")).toEqual([0]);
   });
 
-  it('skips the delayed focus when the caption is empty', () => {
+  it("skips the delayed focus when the caption is empty", () => {
     const editor = createCaptionEditor([
       {
-        caption: [{ text: '' }],
-        children: [{ text: '' }],
-        type: 'media',
+        caption: [{ text: "" }],
+        children: [{ text: "" }],
+        type: "media",
       },
     ]);
 
-    editor.dom.currentKeyboardEvent = { key: 'ArrowUp', which: 38 } as any;
+    editor.dom.currentKeyboardEvent = { key: "ArrowUp", which: 38 } as any;
     (editor as any).apply({
       newProperties: {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 0, path: [0, 0] },
       },
       properties: null,
-      type: 'set_selection',
+      type: "set_selection",
     } as any);
 
-    expect(editor.getOption(BaseCaptionPlugin, 'focusEndPath')).toBeNull();
+    expect(editor.getOption(BaseCaptionPlugin, "focusEndPath")).toBeNull();
   });
 
-  it('moves focus into the caption when moving down from an allowed block', () => {
+  it("moves focus into the caption when moving down from an allowed block", () => {
     const editor = createCaptionEditor(
       [
         {
-          caption: [{ text: 'caption' }],
-          children: [{ text: '' }],
-          type: 'media',
+          caption: [{ text: "caption" }],
+          children: [{ text: "" }],
+          type: "media",
         },
       ],
       {
@@ -96,6 +96,6 @@ describe('withCaption', () => {
     );
 
     expect(editor.tf.moveLine({ reverse: false })).toBe(true);
-    expect(editor.getOption(BaseCaptionPlugin, 'focusEndPath')).toEqual([0]);
+    expect(editor.getOption(BaseCaptionPlugin, "focusEndPath")).toEqual([0]);
   });
 });

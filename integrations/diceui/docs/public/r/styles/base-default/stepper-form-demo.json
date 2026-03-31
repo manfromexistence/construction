@@ -1,17 +1,7 @@
 {
   "name": "stepper-form-demo",
-  "dependencies": [
-    "zod",
-    "react-hook-form",
-    "@hookform/resolvers"
-  ],
-  "registryDependencies": [
-    "stepper",
-    "button",
-    "form",
-    "input",
-    "textarea"
-  ],
+  "dependencies": ["zod", "react-hook-form", "@hookform/resolvers"],
+  "registryDependencies": ["stepper", "button", "form", "input", "textarea"],
   "files": [
     {
       "path": "examples/stepper-form-demo.tsx",

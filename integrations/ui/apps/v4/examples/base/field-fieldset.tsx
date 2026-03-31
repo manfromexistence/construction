@@ -5,16 +5,14 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from "@/styles/base-nova/ui/field"
-import { Input } from "@/styles/base-nova/ui/input"
+} from "@/styles/base-nova/ui/field";
+import { Input } from "@/styles/base-nova/ui/input";
 
 export function FieldFieldset() {
   return (
     <FieldSet className="w-full max-w-sm">
       <FieldLegend>Address Information</FieldLegend>
-      <FieldDescription>
-        We need your address to deliver your order.
-      </FieldDescription>
+      <FieldDescription>We need your address to deliver your order.</FieldDescription>
       <FieldGroup>
         <Field>
           <FieldLabel htmlFor="street">Street Address</FieldLabel>
@@ -32,5 +30,5 @@ export function FieldFieldset() {
         </div>
       </FieldGroup>
     </FieldSet>
-  )
+  );
 }

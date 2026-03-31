@@ -1,33 +1,33 @@
-import { type TElement, KEYS } from 'platejs';
+import { KEYS, type TElement } from "platejs";
 
-import { getSiblingList } from './getSiblingList';
+import { getSiblingList } from "./getSiblingList";
 
 type Entry = [TElement, number[]];
 
 const createEntries = (): Entry[] => [
   [
     {
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       [KEYS.indent]: 1,
-      [KEYS.listType]: 'disc',
+      [KEYS.listType]: "disc",
       type: KEYS.p,
     } as TElement,
     [0],
   ],
   [
     {
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       [KEYS.indent]: 1,
-      [KEYS.listType]: 'disc',
+      [KEYS.listType]: "disc",
       type: KEYS.p,
     } as TElement,
     [1],
   ],
   [
     {
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       [KEYS.indent]: 1,
-      [KEYS.listType]: 'disc',
+      [KEYS.listType]: "disc",
       type: KEYS.p,
     } as TElement,
     [2],
@@ -44,8 +44,8 @@ const getPreviousEntry =
   (entry: Entry): Entry | undefined =>
     entries[entry[1][0] - 1];
 
-describe('getSiblingList', () => {
-  it('breaks on the current node restart flag when scanning backwards', () => {
+describe("getSiblingList", () => {
+  it("breaks on the current node restart flag when scanning backwards", () => {
     const entries = createEntries();
 
     entries[1][0][KEYS.listRestart] = 4;
@@ -58,7 +58,7 @@ describe('getSiblingList', () => {
     ).toBeUndefined();
   });
 
-  it('breaks on the next node restart flag when scanning forwards', () => {
+  it("breaks on the next node restart flag when scanning forwards", () => {
     const entries = createEntries();
 
     entries[1][0][KEYS.listRestart] = 4;
@@ -71,7 +71,7 @@ describe('getSiblingList', () => {
     ).toBeUndefined();
   });
 
-  it('skips rejected siblings until a valid one matches', () => {
+  it("skips rejected siblings until a valid one matches", () => {
     const entries = createEntries();
 
     entries[1][0][KEYS.indent] = 2;

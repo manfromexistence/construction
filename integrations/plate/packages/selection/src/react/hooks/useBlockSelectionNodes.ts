@@ -1,14 +1,12 @@
-import { useMemo } from 'react';
+import type { EditorPropOptions, TElement } from "platejs";
+import { useEditorRef, usePluginOption } from "platejs/react";
+import { useMemo } from "react";
 
-import type { EditorPropOptions, TElement } from 'platejs';
-
-import { useEditorRef, usePluginOption } from 'platejs/react';
-
-import { BlockSelectionPlugin } from '../BlockSelectionPlugin';
+import { BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 export function useBlockSelectionNodes() {
   const editor = useEditorRef();
-  const selectedIds = usePluginOption(BlockSelectionPlugin, 'selectedIds');
+  const selectedIds = usePluginOption(BlockSelectionPlugin, "selectedIds");
 
   return useMemo(
     () =>
@@ -26,9 +24,7 @@ export function useBlockSelectionFragment() {
   return useMemo(() => nodes.map(([node]) => node), [nodes]);
 }
 
-export function useBlockSelectionFragmentProp(
-  options?: Omit<EditorPropOptions, 'nodes'>
-) {
+export function useBlockSelectionFragmentProp(options?: Omit<EditorPropOptions, "nodes">) {
   const editor = useEditorRef();
   const fragment = useBlockSelectionFragment();
 

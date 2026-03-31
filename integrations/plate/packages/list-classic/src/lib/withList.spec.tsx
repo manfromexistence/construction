@@ -1,14 +1,12 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
-
-import { BaseLinkPlugin } from '@platejs/link';
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseListPlugin } from './BaseListPlugin';
-import * as listModule from '.';
-import * as transformsModule from './transforms/index';
+import { BaseLinkPlugin } from "@platejs/link";
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
+import * as listModule from ".";
+import { BaseListPlugin } from "./BaseListPlugin";
+import * as transformsModule from "./transforms/index";
 
 jsxt;
 
@@ -27,7 +25,7 @@ const testInsertText = (
     value: input.children,
   });
 
-  editor.tf.insertText('o');
+  editor.tf.insertText("o");
 
   // biome-ignore lint/suspicious/noMisplacedAssertion: helper function called inside tests
   expect(editor.children).toEqual(expected.children);
@@ -59,15 +57,13 @@ const testDeleteForward = (input: any, expected: any) => {
   expect(editor.children).toEqual(expected.children);
 };
 
-describe('withList', () => {
-  it('unwraps list items on resetBlock instead of delegating', () => {
-    const unwrapSpy = spyOn(listModule, 'unwrapList').mockImplementation(
-      () => {}
-    );
+describe("withList", () => {
+  it("unwraps list items on resetBlock instead of delegating", () => {
+    const unwrapSpy = spyOn(listModule, "unwrapList").mockImplementation(() => {});
     const resetBlock = mock();
     const editor = {
       api: {
-        block: mock(() => [{ type: 'li' }, [0]]),
+        block: mock(() => [{ type: "li" }, [0]]),
       },
       getType: (key: string) => key,
       selection: null,
@@ -86,7 +82,7 @@ describe('withList', () => {
     expect(resetBlock).not.toHaveBeenCalled();
   });
 
-  it('delegates tab when the selection is not in a list context', () => {
+  it("delegates tab when the selection is not in a list context", () => {
     const tab = mock(() => true);
     const editor = {
       api: {
@@ -114,11 +110,10 @@ describe('withList', () => {
     expect(tab).toHaveBeenCalledWith({ reverse: false });
   });
 
-  it('unhangs expanded selections and moves list items on tab', () => {
-    const moveListItemsSpy = spyOn(
-      transformsModule,
-      'moveListItems'
-    ).mockImplementation(() => true);
+  it("unhangs expanded selections and moves list items on tab", () => {
+    const moveListItemsSpy = spyOn(transformsModule, "moveListItems").mockImplementation(
+      () => true
+    );
     const unhangRange = {
       anchor: { offset: 0, path: [0, 0] },
       focus: { offset: 1, path: [0, 0] },
@@ -155,9 +150,9 @@ describe('withList', () => {
     });
   });
 
-  describe('normalizeList', () => {
-    describe('when there is no lic in li', () => {
-      it('insert lic', () => {
+  describe("normalizeList", () => {
+    describe("when there is no lic in li", () => {
+      it("insert lic", () => {
         const input = (
           <editor>
             <hul>
@@ -187,8 +182,8 @@ describe('withList', () => {
       });
     });
 
-    describe('when li > p > children', () => {
-      it('normalizes li > p children to li > lic > children', () => {
+    describe("when li > p > children", () => {
+      it("normalizes li > p children to li > lic > children", () => {
         const input = (
           <editor>
             <hul>
@@ -216,8 +211,8 @@ describe('withList', () => {
       });
     });
 
-    describe('when li > lic > p > children', () => {
-      it('normalizes li > lic > p children to li > lic > children', () => {
+    describe("when li > lic > p > children", () => {
+      it("normalizes li > lic > p children to li > lic > children", () => {
         const input = (
           <editor>
             <hul>
@@ -247,8 +242,8 @@ describe('withList', () => {
       });
     });
 
-    describe('when li > lic > block > block > children', () => {
-      it('unwraps nested blocks into li > lic > children', () => {
+    describe("when li > lic > block > block > children", () => {
+      it("unwraps nested blocks into li > lic > children", () => {
         const input = (
           <editor>
             <hul>
@@ -280,8 +275,8 @@ describe('withList', () => {
       });
     });
 
-    describe('when li > lic > many block > block > children', () => {
-      it('merges multiple blocks into li > lic > children', () => {
+    describe("when li > lic > many block > block > children", () => {
+      it("merges multiple blocks into li > lic > children", () => {
         const input = (
           <editor>
             <hul>
@@ -316,8 +311,8 @@ describe('withList', () => {
       });
     });
 
-    describe('when li > block, with block in validLiChildrenTypes', () => {
-      it('keep the block untouched', () => {
+    describe("when li > block, with block in validLiChildrenTypes", () => {
+      it("keep the block untouched", () => {
         const input = (
           <editor>
             <hul>
@@ -353,16 +348,16 @@ describe('withList', () => {
 
         testInsertText(input, expected, {
           options: {
-            validLiChildrenTypes: ['p', 'blockquote'],
+            validLiChildrenTypes: ["p", "blockquote"],
           },
         });
       });
     });
   });
 
-  describe('when deleteBackward at block start', () => {
-    describe('when at first li', () => {
-      it('unindents li children and unwraps the list', () => {
+  describe("when deleteBackward at block start", () => {
+    describe("when at first li", () => {
+      it("unindents li children and unwraps the list", () => {
         const input = (
           <editor>
             <hp>test</hp>
@@ -398,8 +393,8 @@ describe('withList', () => {
       });
     });
 
-    describe('when at nested li without li children', () => {
-      it('delete the li and merge the text nodes to the previous li', () => {
+    describe("when at nested li without li children", () => {
+      it("delete the li and merge the text nodes to the previous li", () => {
         const input = (
           <editor>
             <hp>test</hp>
@@ -434,8 +429,8 @@ describe('withList', () => {
       });
     });
 
-    describe('when the list is not nested and li is not the first child', () => {
-      it('move li up', () => {
+    describe("when the list is not nested and li is not the first child", () => {
+      it("move li up", () => {
         const input = (
           <editor>
             <hp>test</hp>
@@ -470,9 +465,9 @@ describe('withList', () => {
     });
   });
 
-  describe('when the list is nested and its children list is not wrapped in li', () => {
-    describe('when deleteForward at block end', () => {
-      it('merge the next element when last child', () => {
+  describe("when the list is nested and its children list is not wrapped in li", () => {
+    describe("when deleteForward at block end", () => {
+      it("merge the next element when last child", () => {
         const input = (
           <editor>
             <hul>
@@ -503,7 +498,7 @@ describe('withList', () => {
         testDeleteForward(input, expected);
       });
 
-      it('merge next sibling li', () => {
+      it("merge next sibling li", () => {
         const input = (
           <editor>
             <hul>
@@ -536,7 +531,7 @@ describe('withList', () => {
         testDeleteForward(input, expected);
       });
 
-      it('merge next li and shift one level up', () => {
+      it("merge next li and shift one level up", () => {
         const input = (
           <editor>
             <hul>
@@ -583,7 +578,7 @@ describe('withList', () => {
         testDeleteForward(input, expected);
       });
 
-      it('shift all nested lists one level up', () => {
+      it("shift all nested lists one level up", () => {
         const input = (
           <editor>
             <hul>

@@ -1,7 +1,7 @@
-import { type SlateEditor, type TNode, KEYS, nanoid, TextApi } from 'platejs';
+import { KEYS, nanoid, type SlateEditor, TextApi, type TNode } from "platejs";
 
-import { getInlineSuggestionData, getSuggestionKey } from '../..';
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
+import { getInlineSuggestionData, getSuggestionKey } from "../..";
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
 
 const getRemoveMarkProps = () => {
   const defaultProps = {
@@ -23,7 +23,7 @@ export const removeMarkSuggestion = (editor: SlateEditor, key: string) => {
       if (n[KEYS.suggestion]) {
         const data = getInlineSuggestionData(n);
 
-        if (data?.type === 'update') {
+        if (data?.type === "update") {
           return true;
         }
 
@@ -45,7 +45,7 @@ export const removeMarkSuggestion = (editor: SlateEditor, key: string) => {
           properties: {
             [key]: undefined,
           },
-          type: 'update',
+          type: "update",
           userId: editor.getOptions(BaseSuggestionPlugin).currentUserId,
         },
         [KEYS.suggestion]: true,

@@ -1,6 +1,6 @@
-import type { TAudioElement } from 'platejs';
-import type { SlateElementProps } from 'platejs/static';
-import { SlateElement } from 'platejs/static';
+import type { TAudioElement } from "platejs";
+import type { SlateElementProps } from "platejs/static";
+import { SlateElement } from "platejs/static";
 
 export function AudioElementStatic(props: SlateElementProps<TAudioElement>) {
   return (

@@ -1,56 +1,43 @@
-import * as React from "react"
-import Link from "next/link"
-
-import { siteConfig } from "@/config/site"
-import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Icons } from "@/components/icons"
+import Link from "next/link";
+import * as React from "react";
+import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { siteConfig } from "@/config/site";
 
 const formatCompactCount = (value: number) => {
   if (value >= 1000) {
-    return `${(value / 1000).toFixed(1)}k`
+    return `${(value / 1000).toFixed(1)}k`;
   }
 
-  return value.toLocaleString()
-}
+  return value.toLocaleString();
+};
 
 const getStarsCount = async () => {
   try {
-    const data = await fetch(
-      "https://api.github.com/repos/magicuidesign/magicui",
-      {
-        next: { revalidate: 86400 }, // Cache for 1 day (86400 seconds)
-      }
-    )
+    const data = await fetch("https://api.github.com/repos/magicuidesign/magicui", {
+      next: { revalidate: 86400 }, // Cache for 1 day (86400 seconds)
+    });
     if (!data.ok) {
-      return 0
+      return 0;
     }
 
-    const json: unknown = await data.json()
-    if (
-      typeof json !== "object" ||
-      json === null ||
-      !("stargazers_count" in json)
-    ) {
-      return 0
+    const json: unknown = await data.json();
+    if (typeof json !== "object" || json === null || !("stargazers_count" in json)) {
+      return 0;
     }
 
-    const starsCount = json.stargazers_count
+    const starsCount = json.stargazers_count;
     if (typeof starsCount !== "number" || !Number.isFinite(starsCount)) {
-      return 0
+      return 0;
     }
 
-    return starsCount
+    return starsCount;
   } catch {
-    return 0
+    return 0;
   }
-}
+};
 
 export function GitHubLink({ className }: { className?: string }) {
   return (
@@ -76,16 +63,16 @@ export function GitHubLink({ className }: { className?: string }) {
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
-  )
+  );
 }
 
 export async function StarsCount() {
-  const starsCount = await getStarsCount()
+  const starsCount = await getStarsCount();
 
   return (
     <span className="text-muted-foreground w-8 text-xs tabular-nums">
       <span className="hidden sm:inline">{starsCount.toLocaleString()}</span>
       <span className="sm:hidden">{formatCompactCount(starsCount)}</span>
     </span>
-  )
+  );
 }

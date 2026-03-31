@@ -1,8 +1,6 @@
 {
   "name": "marquee-demo",
-  "registryDependencies": [
-    "marquee"
-  ],
+  "registryDependencies": ["marquee"],
   "files": [
     {
       "path": "examples/marquee-demo.tsx",

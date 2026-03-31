@@ -46,7 +46,7 @@ describe("Mention", () => {
             <Mention.Item value="fs-540">FS 540</Mention.Item>
           </Mention.Content>
         </Mention.Portal>
-      </Mention.Root>,
+      </Mention.Root>
     );
   }
 
@@ -181,9 +181,7 @@ describe("Mention", () => {
 
   test("handles custom filtering", async () => {
     const customFilter = (options: string[], term: string) =>
-      options.filter((option) =>
-        option.toLowerCase().includes(term.toLowerCase()),
-      );
+      options.filter((option) => option.toLowerCase().includes(term.toLowerCase()));
 
     renderMention({ onFilter: customFilter });
     const input = screen.getByPlaceholderText(placeholder);

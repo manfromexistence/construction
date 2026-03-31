@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Scroll Progress",
   "description": "Animated Scroll Progress for your pages",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/scroll-progress.tsx",

@@ -1,21 +1,21 @@
-import { FieldSeparator } from "@/styles/radix-nova/ui/field"
+import { FieldSeparator } from "@/styles/radix-nova/ui/field";
 
-import { AppearanceSettings } from "./appearance-settings"
-import { ButtonGroupDemo } from "./button-group-demo"
-import { ButtonGroupInputGroup } from "./button-group-input-group"
-import { ButtonGroupNested } from "./button-group-nested"
-import { ButtonGroupPopover } from "./button-group-popover"
-import { EmptyAvatarGroup } from "./empty-avatar-group"
-import { FieldCheckbox } from "./field-checkbox"
-import { FieldDemo } from "./field-demo"
-import { FieldHear } from "./field-hear"
-import { FieldSlider } from "./field-slider"
-import { InputGroupButtonExample } from "./input-group-button"
-import { InputGroupDemo } from "./input-group-demo"
-import { ItemDemo } from "./item-demo"
-import { NotionPromptForm } from "./notion-prompt-form"
-import { SpinnerBadge } from "./spinner-badge"
-import { SpinnerEmpty } from "./spinner-empty"
+import { AppearanceSettings } from "./appearance-settings";
+import { ButtonGroupDemo } from "./button-group-demo";
+import { ButtonGroupInputGroup } from "./button-group-input-group";
+import { ButtonGroupNested } from "./button-group-nested";
+import { ButtonGroupPopover } from "./button-group-popover";
+import { EmptyAvatarGroup } from "./empty-avatar-group";
+import { FieldCheckbox } from "./field-checkbox";
+import { FieldDemo } from "./field-demo";
+import { FieldHear } from "./field-hear";
+import { FieldSlider } from "./field-slider";
+import { InputGroupButtonExample } from "./input-group-button";
+import { InputGroupDemo } from "./input-group-demo";
+import { ItemDemo } from "./item-demo";
+import { NotionPromptForm } from "./notion-prompt-form";
+import { SpinnerBadge } from "./spinner-badge";
+import { SpinnerEmpty } from "./spinner-empty";
 
 export function RootComponents() {
   return (
@@ -48,5 +48,5 @@ export function RootComponents() {
         <SpinnerEmpty />
       </div>
     </div>
-  )
+  );
 }

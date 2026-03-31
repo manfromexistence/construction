@@ -1,8 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { STYLES, type Preset } from "@/registry/config"
+import * as React from "react";
 import {
   Picker,
   PickerContent,
@@ -10,19 +8,20 @@ import {
   PickerRadioGroup,
   PickerRadioItem,
   PickerTrigger,
-} from "@/app/(app)/create/components/picker"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
+} from "@/app/(app)/create/components/picker";
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { type Preset, STYLES } from "@/registry/config";
 
 export function PresetPicker({
   presets,
   isMobile,
   anchorRef,
 }: {
-  presets: readonly Preset[]
-  isMobile: boolean
-  anchorRef: React.RefObject<HTMLDivElement | null>
+  presets: readonly Preset[];
+  isMobile: boolean;
+  anchorRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  const [params, setParams] = useDesignSystemSearchParams()
+  const [params, setParams] = useDesignSystemSearchParams();
 
   const currentPreset = React.useMemo(() => {
     return presets.find(
@@ -38,7 +37,7 @@ export function PresetPicker({
         preset.menuAccent === params.menuAccent &&
         preset.menuColor === params.menuColor &&
         preset.radius === params.radius
-    )
+    );
   }, [
     presets,
     params.base,
@@ -52,17 +51,17 @@ export function PresetPicker({
     params.menuAccent,
     params.menuColor,
     params.radius,
-  ])
+  ]);
 
   // Filter presets for current base only
   const currentBasePresets = React.useMemo(() => {
-    return presets.filter((preset) => preset.base === params.base)
-  }, [presets, params.base])
+    return presets.filter((preset) => preset.base === params.base);
+  }, [presets, params.base]);
 
   const handlePresetChange = (value: string) => {
-    const preset = presets.find((p) => p.title === value)
+    const preset = presets.find((p) => p.title === value);
     if (!preset) {
-      return
+      return;
     }
 
     // Update all params including base.
@@ -79,8 +78,8 @@ export function PresetPicker({
       menuColor: preset.menuColor,
       radius: preset.radius,
       custom: false,
-    })
-  }
+    });
+  };
 
   return (
     <Picker>
@@ -98,28 +97,19 @@ export function PresetPicker({
         align={isMobile ? "center" : "start"}
         className="md:w-72"
       >
-        <PickerRadioGroup
-          value={currentPreset?.title ?? ""}
-          onValueChange={handlePresetChange}
-        >
+        <PickerRadioGroup value={currentPreset?.title ?? ""} onValueChange={handlePresetChange}>
           <PickerGroup>
             {currentBasePresets.map((preset) => {
-              const style = STYLES.find((s) => s.name === preset.style)
+              const style = STYLES.find((s) => s.name === preset.style);
               return (
-                <PickerRadioItem
-                  key={preset.title}
-                  value={preset.title}
-                  closeOnClick={isMobile}
-                >
-                  <div className="flex items-center gap-2">
-                    {preset.description}
-                  </div>
+                <PickerRadioItem key={preset.title} value={preset.title} closeOnClick={isMobile}>
+                  <div className="flex items-center gap-2">{preset.description}</div>
                 </PickerRadioItem>
-              )
+              );
             })}
           </PickerGroup>
         </PickerRadioGroup>
       </PickerContent>
     </Picker>
-  )
+  );
 }

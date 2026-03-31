@@ -1,17 +1,16 @@
 "use client";
 
-import React, { useCallback, useMemo, useRef, useEffect, useState } from "react";
-import { SliderWithInput } from "./slider-with-input";
-import { useEditorStore } from "../../store/editor-store";
-import { COMMON_STYLES, defaultThemeState } from "../../config/theme";
-import { ThemeEditorState } from "@/types/editor";
 import { converter, formatHex, Hsl } from "culori";
-import { debounce } from "@/utils/debounce";
-import { isDeepEqual } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { HslPresetButton } from "./hsl-preset-button";
 import { ChevronDown } from "lucide-react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { cn, isDeepEqual } from "@/lib/utils";
+import { ThemeEditorState } from "@/types/editor";
+import { debounce } from "@/utils/debounce";
+import { COMMON_STYLES, defaultThemeState } from "../../config/theme";
+import { useEditorStore } from "../../store/editor-store";
+import { HslPresetButton } from "./hsl-preset-button";
+import { SliderWithInput } from "./slider-with-input";
 
 // Adjusts a color by modifying HSL values
 function adjustColorByHsl(

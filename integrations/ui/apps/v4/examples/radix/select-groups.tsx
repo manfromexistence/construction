@@ -7,7 +7,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@/styles/radix-nova/ui/select"
+} from "@/styles/radix-nova/ui/select";
 
 export function SelectGroups() {
   return (
@@ -31,5 +31,5 @@ export function SelectGroups() {
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }

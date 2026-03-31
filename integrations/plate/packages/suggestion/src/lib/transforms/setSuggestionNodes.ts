@@ -1,16 +1,16 @@
 import {
-  type SetNodesOptions,
-  type SlateEditor,
-  type TInlineSuggestionData,
-  type TSuggestionText,
   ElementApi,
   getAt,
   KEYS,
   nanoid,
-} from 'platejs';
+  type SetNodesOptions,
+  type SlateEditor,
+  type TInlineSuggestionData,
+  type TSuggestionText,
+} from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getSuggestionKey } from '../utils';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { getSuggestionKey } from "../utils";
 
 export const setSuggestionNodes = (
   editor: SlateEditor,
@@ -37,7 +37,7 @@ export const setSuggestionNodes = (
     const data: TInlineSuggestionData = {
       id: suggestionId,
       createdAt: options?.createdAt ?? Date.now(),
-      type: 'remove',
+      type: "remove",
       userId: editor.getOptions(BaseSuggestionPlugin).currentUserId!,
     };
 

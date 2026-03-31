@@ -1,52 +1,52 @@
 /** @jsx jsxt */
 
-import { BoldPlugin, ItalicPlugin } from '@platejs/basic-nodes/react';
-import { ListPlugin } from '@platejs/list-classic/react';
-import { jsxt } from '@platejs/test-utils';
+import { BoldPlugin, ItalicPlugin } from "@platejs/basic-nodes/react";
+import { ListPlugin } from "@platejs/list-classic/react";
+import { jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor } from '../../../../../../packages/core/src/lib/editor';
-import { createSlatePlugin } from '../../../../../../packages/core/src/lib/plugin';
-import { BaseParagraphPlugin } from '../../../../../../packages/core/src/lib/plugins/paragraph';
-import { htmlElementToLeaf } from '../../../../../../packages/core/src/lib/plugins/html/utils/htmlElementToLeaf';
-import { parseHtmlElement } from '../../../../../../packages/core/src/lib/plugins/html/utils/parseHtmlElement';
+import { createSlateEditor } from "../../../../../../packages/core/src/lib/editor";
+import { createSlatePlugin } from "../../../../../../packages/core/src/lib/plugin";
+import { htmlElementToLeaf } from "../../../../../../packages/core/src/lib/plugins/html/utils/htmlElementToLeaf";
+import { parseHtmlElement } from "../../../../../../packages/core/src/lib/plugins/html/utils/parseHtmlElement";
+import { BaseParagraphPlugin } from "../../../../../../packages/core/src/lib/plugins/paragraph";
 
 jsxt;
 
-describe('when children is a text', () => {
+describe("when children is a text", () => {
   const output = (
     <fragment>
       <htext bold>test</htext>
     </fragment>
   );
 
-  it('set the mark on the text', () => {
+  it("set the mark on the text", () => {
     expect(
       htmlElementToLeaf(
         createSlateEditor({
           plugins: [BoldPlugin],
         }),
-        parseHtmlElement('<strong>test</strong>')
+        parseHtmlElement("<strong>test</strong>")
       )
     ).toEqual(output);
   });
 });
 
-describe('when there is no plugins', () => {
-  const output = [{ text: 'test' }];
+describe("when there is no plugins", () => {
+  const output = [{ text: "test" }];
 
-  it('keeps the text leaf unchanged', () => {
+  it("keeps the text leaf unchanged", () => {
     expect(
       htmlElementToLeaf(
         createSlateEditor({
-          plugins: [createSlatePlugin({ key: 'a' })],
+          plugins: [createSlatePlugin({ key: "a" })],
         }),
-        parseHtmlElement('<strong>test</strong>')
+        parseHtmlElement("<strong>test</strong>")
       )
     ).toEqual(output);
   });
 });
 
-describe('when there is a mark above multiple elements', () => {
+describe("when there is a mark above multiple elements", () => {
   const output = (
     <fragment>
       <hli>
@@ -58,13 +58,13 @@ describe('when there is a mark above multiple elements', () => {
     </fragment>
   );
 
-  it('set the mark to all children leaves', () => {
+  it("set the mark to all children leaves", () => {
     expect(
       htmlElementToLeaf(
         createSlateEditor({
           plugins: [BaseParagraphPlugin, ListPlugin, BoldPlugin, ItalicPlugin],
         }),
-        parseHtmlElement('<strong><li><p>test</p>test</li></strong>')
+        parseHtmlElement("<strong><li><p>test</p>test</li></strong>")
       )
     ).toEqual(output);
   });

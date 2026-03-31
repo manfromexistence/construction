@@ -1,4 +1,4 @@
-import { cn } from "@/registry/bases/base/lib/utils"
+import { cn } from "@/registry/bases/base/lib/utils";
 
 function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
   return (
@@ -10,7 +10,7 @@ function Kbd({ className, ...props }: React.ComponentProps<"kbd">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function KbdGroup({ className, ...props }: React.ComponentProps<"div">) {
@@ -20,7 +20,7 @@ function KbdGroup({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("cn-kbd-group inline-flex items-center", className)}
       {...props}
     />
-  )
+  );
 }
 
-export { Kbd, KbdGroup }
+export { Kbd, KbdGroup };

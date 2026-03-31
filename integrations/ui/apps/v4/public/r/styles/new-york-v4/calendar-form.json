@@ -1,11 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "calendar-form",
-  "registryDependencies": [
-    "calendar",
-    "form",
-    "popover"
-  ],
+  "registryDependencies": ["calendar", "form", "popover"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/calendar-form.tsx",

@@ -1,14 +1,10 @@
-import { BotIcon, ChevronDownIcon } from "lucide-react"
+import { BotIcon, ChevronDownIcon } from "lucide-react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
-import { ButtonGroup } from "@/styles/radix-nova/ui/button-group"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/radix-nova/ui/popover"
-import { Separator } from "@/styles/radix-nova/ui/separator"
-import { Textarea } from "@/styles/radix-nova/ui/textarea"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { ButtonGroup } from "@/styles/radix-nova/ui/button-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/radix-nova/ui/popover";
+import { Separator } from "@/styles/radix-nova/ui/separator";
+import { Textarea } from "@/styles/radix-nova/ui/textarea";
 
 export function ButtonGroupPopover() {
   return (
@@ -34,12 +30,12 @@ export function ButtonGroupPopover() {
             />
             <p className="font-medium">Start a new task with Copilot</p>
             <p className="text-muted-foreground">
-              Describe your task in natural language. Copilot will work in the
-              background and open a pull request for your review.
+              Describe your task in natural language. Copilot will work in the background and open a
+              pull request for your review.
             </p>
           </div>
         </PopoverContent>
       </Popover>
     </ButtonGroup>
-  )
+  );
 }

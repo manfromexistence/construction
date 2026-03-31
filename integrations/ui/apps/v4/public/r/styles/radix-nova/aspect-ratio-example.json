@@ -2,10 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "aspect-ratio-example",
   "title": "Aspect Ratio",
-  "registryDependencies": [
-    "aspect-ratio",
-    "example"
-  ],
+  "registryDependencies": ["aspect-ratio", "example"],
   "files": [
     {
       "path": "registry/radix-nova/examples/aspect-ratio-example.tsx",

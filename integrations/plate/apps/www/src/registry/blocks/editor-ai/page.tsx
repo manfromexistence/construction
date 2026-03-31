@@ -1,6 +1,6 @@
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
 
-import { PlateEditor } from '@/registry/blocks/editor-ai/components/editor/plate-editor';
+import { PlateEditor } from "@/registry/blocks/editor-ai/components/editor/plate-editor";
 
 export default function Page() {
   return (

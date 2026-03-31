@@ -1,22 +1,20 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, type TElement, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor, type TElement } from "platejs";
 
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { getTableGridAbove } from './getTableGridAbove';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { getTableGridAbove } from "./getTableGridAbove";
 
 jsxt;
 
 // https://github.com/udecode/editor-protocol/issues/12
-describe('getTableGridByRange', () => {
-  describe('when selection is in cell 1', () => {
+describe("getTableGridByRange", () => {
+  describe("when selection is in cell 1", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the selected single cell (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("returns the selected single cell (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -52,11 +50,11 @@ describe('getTableGridByRange', () => {
     });
   });
 
-  describe('when selection is from cell 12 to 22', () => {
+  describe("when selection is from cell 12 to 22", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the selected right column slice (disableMerge: $disableMerge)', ({
+    ])("returns the selected right column slice (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -108,11 +106,11 @@ describe('getTableGridByRange', () => {
     });
   });
 
-  describe('when selection is from cell 21 to 22', () => {
+  describe("when selection is from cell 21 to 22", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the selected bottom row slice (disableMerge: $disableMerge)', ({
+    ])("returns the selected bottom row slice (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -162,11 +160,11 @@ describe('getTableGridByRange', () => {
     });
   });
 
-  describe('when selection is from cell 21 to 11', () => {
+  describe("when selection is from cell 21 to 11", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the selected left column slice when traversing upward (disableMerge: $disableMerge)', ({
+    ])("returns the selected left column slice when traversing upward (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -219,11 +217,11 @@ describe('getTableGridByRange', () => {
     });
   });
 
-  describe('when selection is from cell 11 to cell 22', () => {
+  describe("when selection is from cell 11 to cell 22", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the full 2x2 selection from top-left to bottom-right (disableMerge: $disableMerge)', ({
+    ])("returns the full 2x2 selection from top-left to bottom-right (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -281,11 +279,11 @@ describe('getTableGridByRange', () => {
     });
   });
 
-  describe('when selection is from cell 22 to cell 11', () => {
+  describe("when selection is from cell 22 to cell 11", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the full 2x2 selection from bottom-right to top-left (disableMerge: $disableMerge)', ({
+    ])("returns the full 2x2 selection from bottom-right to top-left (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -343,11 +341,11 @@ describe('getTableGridByRange', () => {
     });
   });
 
-  describe('when selection is from cell 12 to cell 21', () => {
+  describe("when selection is from cell 12 to cell 21", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the full 2x2 selection from top-right to bottom-left (disableMerge: $disableMerge)', ({
+    ])("returns the full 2x2 selection from top-right to bottom-left (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -405,11 +403,11 @@ describe('getTableGridByRange', () => {
     });
   });
 
-  describe('when selection is from cell 12 to cell 21', () => {
+  describe("when selection is from cell 12 to cell 21", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('returns the full 2x2 selection from bottom-left to top-right (disableMerge: $disableMerge)', ({
+    ])("returns the full 2x2 selection from bottom-left to top-right (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (

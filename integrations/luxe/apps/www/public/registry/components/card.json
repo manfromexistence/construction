@@ -1,8 +1,6 @@
 {
   "name": "card",
-  "externalDependencies": [
-    "@radix-ui/react-slot"
-  ],
+  "externalDependencies": ["@radix-ui/react-slot"],
   "internalDependencies": [],
   "file": {
     "name": "card.tsx",

@@ -1,19 +1,16 @@
 import {
+  NodeApi,
   type NodeEntry,
   type NodeOf,
   type Path,
   type QueryNodeOptions,
-  type TNode,
-  NodeApi,
   queryNode,
-} from '@platejs/slate';
+  type TNode,
+} from "@platejs/slate";
 
 export type ApplyDeepToNodesOptions<N extends TNode> = {
   // Function to call on each node following the query.
-  apply: (
-    node: NodeOf<N>,
-    source: (() => Record<string, any>) | Record<string, any>
-  ) => void;
+  apply: (node: NodeOf<N>, source: (() => Record<string, any>) | Record<string, any>) => void;
   // The destination node object.
   node: N;
   // The source object. Can be a factory.
@@ -34,7 +31,7 @@ export const applyDeepToNodes = <N extends TNode>({
   const entry: NodeEntry<N> = [node, path];
 
   if (queryNode<N>(entry, query)) {
-    if (typeof source === 'function') {
+    if (typeof source === "function") {
       apply(node, source());
     } else {
       apply(node, source);

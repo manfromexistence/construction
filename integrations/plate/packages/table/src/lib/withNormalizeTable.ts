@@ -1,17 +1,17 @@
 import {
-  type OverrideEditor,
-  type TElement,
-  type TTableCellElement,
-  type TTableElement,
   ElementApi,
   KEYS,
+  type OverrideEditor,
+  type TElement,
   TextApi,
-} from 'platejs';
+  type TTableCellElement,
+  type TTableElement,
+} from "platejs";
 
-import type { TableConfig } from './BaseTablePlugin';
+import type { TableConfig } from "./BaseTablePlugin";
 
-import { getTableColumnCount } from './queries';
-import { computeCellIndices, getCellTypes } from './utils/index';
+import { getTableColumnCount } from "./queries";
+import { computeCellIndices, getCellTypes } from "./utils/index";
 
 /**
  * Normalize table:
@@ -35,9 +35,7 @@ export const withNormalizeTable: OverrideEditor<TableConfig> = ({
 
           if (
             !node.children.some(
-              (child) =>
-                ElementApi.isElement(child) &&
-                child.type === editor.getType(KEYS.tr)
+              (child) => ElementApi.isElement(child) && child.type === editor.getType(KEYS.tr)
             )
           ) {
             editor.tf.removeNodes({ at: path });
@@ -50,7 +48,7 @@ export const withNormalizeTable: OverrideEditor<TableConfig> = ({
             enableUnsetSingleColSize &&
             getTableColumnCount(node) < 2
           ) {
-            editor.tf.unsetNodes('colSizes', {
+            editor.tf.unsetNodes("colSizes", {
               at: path,
             });
 
@@ -72,9 +70,7 @@ export const withNormalizeTable: OverrideEditor<TableConfig> = ({
           }
           if (initialTableWidth) {
             const tableNode = node as TTableElement;
-            const colCount = (
-              tableNode.children[0]?.children as TElement[] | undefined
-            )?.length;
+            const colCount = (tableNode.children[0]?.children as TElement[] | undefined)?.length;
 
             if (colCount) {
               const colSizes: number[] = [];
@@ -109,7 +105,7 @@ export const withNormalizeTable: OverrideEditor<TableConfig> = ({
         }
         if (getCellTypes(editor).includes(n.type)) {
           const node = n as TTableCellElement;
-          const cellIndices = getOption('cellIndices', node.id as string);
+          const cellIndices = getOption("cellIndices", node.id as string);
 
           if (node.id && !cellIndices) {
             computeCellIndices(editor, {

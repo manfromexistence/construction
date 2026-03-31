@@ -1,4 +1,4 @@
-import { type TPlaceholderElement, KEYS } from 'platejs';
+import { KEYS, type TPlaceholderElement } from "platejs";
 import {
   useEditorRef,
   useEditorSelector,
@@ -6,9 +6,9 @@ import {
   useFocused,
   useReadOnly,
   useSelected,
-} from 'platejs/react';
+} from "platejs/react";
 
-import { usePlaceholderSet, usePlaceholderValue } from '../placeholderStore';
+import { usePlaceholderSet, usePlaceholderValue } from "../placeholderStore";
 
 export const usePlaceholderPopoverState = (): any => {
   const editor = useEditorRef();
@@ -16,19 +16,16 @@ export const usePlaceholderPopoverState = (): any => {
   const selected = useSelected();
   const focused = useFocused();
 
-  const selectionCollapsed = useEditorSelector(
-    (editor) => !editor.api.isExpanded(),
-    []
-  );
+  const selectionCollapsed = useEditorSelector((editor) => !editor.api.isExpanded(), []);
 
   const element = useElement<TPlaceholderElement>(KEYS.placeholder);
   const { id, mediaType } = element;
 
-  const setProgresses = usePlaceholderSet('progresses');
-  const setIsUploading = usePlaceholderSet('isUploading');
-  const setUpdatedFiles = usePlaceholderSet('updatedFiles');
+  const setProgresses = usePlaceholderSet("progresses");
+  const setIsUploading = usePlaceholderSet("isUploading");
+  const setUpdatedFiles = usePlaceholderSet("updatedFiles");
 
-  const size = usePlaceholderValue('size');
+  const size = usePlaceholderValue("size");
 
   return {
     id,

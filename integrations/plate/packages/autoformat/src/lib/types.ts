@@ -1,6 +1,6 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import type { GetMatchPointsReturnType } from './utils/getMatchPoints';
+import type { GetMatchPointsReturnType } from "./utils/getMatchPoints";
 
 export interface AutoformatBlockRule extends AutoformatCommonRule {
   match: readonly string[] | string;
@@ -12,7 +12,7 @@ export interface AutoformatBlockRule extends AutoformatCommonRule {
    *
    * @default 'text'
    */
-  mode: 'block';
+  mode: "block";
 
   /**
    * If true, allow to autoformat even if there is a block of the same type
@@ -89,7 +89,7 @@ export type AutoformatCommonRule = {
 };
 
 export interface AutoformatMarkRule extends AutoformatCommonRule {
-  mode: 'mark';
+  mode: "mark";
 
   /** Mark(s) to add. */
   type: readonly string[] | string;
@@ -98,16 +98,12 @@ export interface AutoformatMarkRule extends AutoformatCommonRule {
   ignoreTrim?: boolean;
 }
 
-export interface AutoformatQueryOptions
-  extends Omit<AutoformatCommonRule, 'query'> {
+export interface AutoformatQueryOptions extends Omit<AutoformatCommonRule, "query"> {
   /** `insertText` text. */
   text: string;
 }
 
-export type AutoformatRule =
-  | AutoformatBlockRule
-  | AutoformatMarkRule
-  | AutoformatTextRule;
+export type AutoformatRule = AutoformatBlockRule | AutoformatMarkRule | AutoformatTextRule;
 
 export interface AutoformatTextRule extends AutoformatCommonRule {
   /**
@@ -122,7 +118,7 @@ export interface AutoformatTextRule extends AutoformatCommonRule {
 
   match: readonly string[] | string;
 
-  mode: 'text';
+  mode: "text";
 }
 
 export type MatchRange = {

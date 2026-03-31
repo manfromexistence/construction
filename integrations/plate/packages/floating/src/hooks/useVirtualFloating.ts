@@ -1,30 +1,24 @@
-import React from 'react';
+import type { ClientRectObject } from "@floating-ui/core";
+import { useIsomorphicLayoutEffect } from "platejs/react";
+import React from "react";
 
-import type { ClientRectObject } from '@floating-ui/core';
-
-import { useIsomorphicLayoutEffect } from 'platejs/react';
-
+import { createVirtualElement, getDefaultBoundingClientRect } from "../createVirtualElement";
 import {
-  createVirtualElement,
-  getDefaultBoundingClientRect,
-} from '../createVirtualElement';
-import {
+  autoUpdate,
   type ReferenceType,
   type UseFloatingOptions,
   type UseFloatingReturn,
-  type VirtualElement,
-  autoUpdate,
   useFloating,
-} from '../libs/floating-ui';
+  type VirtualElement,
+} from "../libs/floating-ui";
 
 export interface UseVirtualFloatingOptions extends Partial<UseFloatingOptions> {
   open?: boolean;
   getBoundingClientRect?: () => ClientRectObject;
 }
 
-export interface UseVirtualFloatingReturn<
-  RT extends ReferenceType = ReferenceType,
-> extends UseFloatingReturn<RT> {
+export interface UseVirtualFloatingReturn<RT extends ReferenceType = ReferenceType>
+  extends UseFloatingReturn<RT> {
   style: React.CSSProperties;
   virtualElementRef: React.MutableRefObject<VirtualElement>;
 }
@@ -84,11 +78,11 @@ export const useVirtualFloating = <RT extends ReferenceType = ReferenceType>({
   return {
     ...floatingResult,
     style: {
-      display: floatingOptions.open === false ? 'none' : undefined,
+      display: floatingOptions.open === false ? "none" : undefined,
       left: x ?? 0,
       position: strategy,
       top: y ?? 0,
-      visibility: visible ? undefined : 'hidden',
+      visibility: visible ? undefined : "hidden",
     },
     virtualElementRef,
   };

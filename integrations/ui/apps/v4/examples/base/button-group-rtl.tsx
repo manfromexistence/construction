@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
   ArchiveIcon,
   ArrowLeftIcon,
@@ -11,14 +10,12 @@ import {
   MoreHorizontalIcon,
   TagIcon,
   Trash2Icon,
-} from "lucide-react"
+} from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,7 +28,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui-rtl/dropdown-menu"
+} from "@/styles/base-nova/ui-rtl/dropdown-menu";
 
 const translations: Translations = {
   en: {
@@ -82,11 +79,11 @@ const translations: Translations = {
       trash: "פח",
     },
   },
-}
+};
 
 export function ButtonGroupRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
-  const [label, setLabel] = React.useState("personal")
+  const { dir, t, language } = useTranslation(translations, "ar");
+  const [label, setLabel] = React.useState("personal");
 
   return (
     <div dir={dir}>
@@ -104,13 +101,7 @@ export function ButtonGroupRtl() {
           <Button variant="outline">{t.snooze}</Button>
           <DropdownMenu>
             <DropdownMenuTrigger
-              render={
-                <Button
-                  variant="outline"
-                  size="icon"
-                  aria-label="More Options"
-                />
-              }
+              render={<Button variant="outline" size="icon" aria-label="More Options" />}
             >
               <MoreHorizontalIcon />
             </DropdownMenuTrigger>
@@ -153,19 +144,10 @@ export function ButtonGroupRtl() {
                     dir={dir}
                     data-lang={dir === "rtl" ? language : undefined}
                   >
-                    <DropdownMenuRadioGroup
-                      value={label}
-                      onValueChange={setLabel}
-                    >
-                      <DropdownMenuRadioItem value="personal">
-                        {t.personal}
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="work">
-                        {t.work}
-                      </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="other">
-                        {t.other}
-                      </DropdownMenuRadioItem>
+                    <DropdownMenuRadioGroup value={label} onValueChange={setLabel}>
+                      <DropdownMenuRadioItem value="personal">{t.personal}</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="work">{t.work}</DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="other">{t.other}</DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuSubContent>
                 </DropdownMenuSub>
@@ -182,5 +164,5 @@ export function ButtonGroupRtl() {
         </ButtonGroup>
       </ButtonGroup>
     </div>
-  )
+  );
 }

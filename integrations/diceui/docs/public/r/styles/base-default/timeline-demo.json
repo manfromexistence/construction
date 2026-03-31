@@ -1,8 +1,6 @@
 {
   "name": "timeline-demo",
-  "registryDependencies": [
-    "timeline"
-  ],
+  "registryDependencies": ["timeline"],
   "files": [
     {
       "path": "examples/timeline-demo.tsx",

@@ -10,8 +10,8 @@ import {
   type TNode,
   type TText,
   type ValueOf,
-} from '../../interfaces';
-import { getQueryOptions } from '../../utils';
+} from "../../interfaces";
+import { getQueryOptions } from "../../utils";
 
 const hasSingleChildNest = (editor: Editor, node: TNode): boolean => {
   if (ElementApi.isElement(node)) {
@@ -38,7 +38,7 @@ export const mergeNodes = <E extends Editor>(
 
   editor.tf.withoutNormalizing(() => {
     let { at = editor.selection!, match } = _options;
-    const { hanging = false, mode = 'lowest', voids = false } = _options;
+    const { hanging = false, mode = "lowest", voids = false } = _options;
 
     if (!at) {
       return;
@@ -101,7 +101,7 @@ export const mergeNodes = <E extends Editor>(
     // result, in which case we'll want to remove it after merging.
     const emptyAncestor = editor.api.above({
       at: path,
-      mode: 'highest',
+      mode: "highest",
       match: (n) => levels.has(n) && hasSingleChildNest(editor, n),
     });
 
@@ -148,7 +148,7 @@ export const mergeNodes = <E extends Editor>(
       // !PATCH: event to override removeNodes
       editor.tf.removeNodes({
         at: emptyRef.current!,
-        event: { type: 'mergeNodes' },
+        event: { type: "mergeNodes" },
         voids,
       });
     }
@@ -162,7 +162,7 @@ export const mergeNodes = <E extends Editor>(
       path: newPath,
       position,
       properties,
-      type: 'merge_node',
+      type: "merge_node",
     });
   });
 };

@@ -1,39 +1,39 @@
-import { createSlateEditor } from '../../lib/editor';
-import { createSlatePlugin } from '../../lib/plugin';
-import { DebugPlugin } from '../../lib/plugins/debug/DebugPlugin';
-import { validatePlugin } from './resolvePlugin';
+import { createSlateEditor } from "../../lib/editor";
+import { createSlatePlugin } from "../../lib/plugin";
+import { DebugPlugin } from "../../lib/plugins/debug/DebugPlugin";
+import { validatePlugin } from "./resolvePlugin";
 
-describe('resolvePlugin', () => {
-  it('lets the last child-plugin extension win', () => {
+describe("resolvePlugin", () => {
+  it("lets the last child-plugin extension win", () => {
     expect(
       createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'a',
+            key: "a",
             plugins: [
               createSlatePlugin({
-                key: 'aa',
+                key: "aa",
               }),
             ],
           })
             .extendPlugin(
-              { key: 'aa' },
+              { key: "aa" },
               {
-                node: { type: 'ab' },
+                node: { type: "ab" },
               }
             )
             .extendPlugin(
-              { key: 'aa' },
+              { key: "aa" },
               {
-                node: { type: 'ac' },
+                node: { type: "ac" },
               }
             ),
         ],
       }).plugins.aa.node.type
-    ).toBe('ac');
+    ).toBe("ac");
   });
 
-  it('reports plugins that do not come from createSlatePlugin', () => {
+  it("reports plugins that do not come from createSlatePlugin", () => {
     const errorLogger = mock();
     const editor = createSlateEditor({
       plugins: [
@@ -45,7 +45,7 @@ describe('resolvePlugin', () => {
         }),
       ],
     });
-    const plugin = createSlatePlugin({ key: 'broken' });
+    const plugin = createSlatePlugin({ key: "broken" });
 
     delete (plugin as any).__extensions;
 
@@ -53,12 +53,12 @@ describe('resolvePlugin', () => {
 
     expect(errorLogger).toHaveBeenCalledWith(
       "Invalid plugin 'broken', you should use createSlatePlugin.",
-      'USE_CREATE_PLUGIN',
+      "USE_CREATE_PLUGIN",
       undefined
     );
   });
 
-  it('reports plugins that claim to be both elements and leaves', () => {
+  it("reports plugins that claim to be both elements and leaves", () => {
     const errorLogger = mock();
     const editor = createSlateEditor({
       plugins: [
@@ -74,7 +74,7 @@ describe('resolvePlugin', () => {
     validatePlugin(
       editor,
       createSlatePlugin({
-        key: 'invalid',
+        key: "invalid",
         node: {
           isElement: true,
           isLeaf: true,
@@ -83,8 +83,8 @@ describe('resolvePlugin', () => {
     );
 
     expect(errorLogger).toHaveBeenCalledWith(
-      'Plugin invalid cannot be both an element and a leaf.',
-      'PLUGIN_NODE_TYPE',
+      "Plugin invalid cannot be both an element and a leaf.",
+      "PLUGIN_NODE_TYPE",
       undefined
     );
   });

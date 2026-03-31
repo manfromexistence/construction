@@ -1,20 +1,20 @@
-import { Icons } from '@/app/_components/Icons'
+import { Icons } from "@/app/_components/Icons";
 
 export const TECHS = [
   {
     icon: <Icons.react />,
-    name: 'React',
+    name: "React",
   },
   {
     icon: <Icons.tailwind />,
-    name: 'tailwindcss',
+    name: "tailwindcss",
   },
   {
     icon: <Icons.motion />,
-    name: 'Motion',
+    name: "Motion",
   },
   {
     icon: <Icons.radix />,
-    name: 'Radix UI',
+    name: "Radix UI",
   },
-]
+];

@@ -1,11 +1,7 @@
 {
   "name": "tour-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "tour"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["tour"],
   "files": [
     {
       "path": "examples/tour-demo.tsx",

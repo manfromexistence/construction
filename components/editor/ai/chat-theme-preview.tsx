@@ -1,3 +1,5 @@
+import { AlertCircle, CheckCheck, ChevronsUpDown, Loader2, Zap } from "lucide-react";
+import { ComponentProps, useState } from "react";
 import { Loader } from "@/components/loader";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
@@ -6,8 +8,6 @@ import { useFeedbackText } from "@/hooks/use-feedback-text";
 import { cn } from "@/lib/utils";
 import { ThemeStyles } from "@/types/theme";
 import { applyGeneratedTheme } from "@/utils/ai/apply-theme";
-import { AlertCircle, CheckCheck, ChevronsUpDown, Loader2, Zap } from "lucide-react";
-import { ComponentProps, useState } from "react";
 
 type ChatThemePreviewProps = ComponentProps<"div"> & ChatThemePreviewPropsBase;
 
@@ -49,7 +49,9 @@ export function ChatThemePreview({
 
   if (loading) {
     return (
-      <Card className={cn("w-full max-w-[550px] gap-0 overflow-hidden rounded-lg py-0 shadow-none")}>
+      <Card
+        className={cn("w-full max-w-[550px] gap-0 overflow-hidden rounded-lg py-0 shadow-none")}
+      >
         <div className="flex size-full h-10 items-center gap-2 p-1.5">
           <div className="bg-muted flex size-7 items-center justify-center rounded-sm">
             <Loader2 className="text-muted-foreground size-4 animate-spin" />

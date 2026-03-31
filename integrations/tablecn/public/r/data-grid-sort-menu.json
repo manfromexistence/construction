@@ -3,18 +3,8 @@
   "name": "data-grid-sort-menu",
   "title": "Data Grid Sort Menu",
   "description": "A sort menu component for the data grid with drag-and-drop reordering",
-  "dependencies": [
-    "@radix-ui/react-direction",
-    "@tanstack/react-table",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "badge",
-    "button",
-    "command",
-    "popover",
-    "select"
-  ],
+  "dependencies": ["@radix-ui/react-direction", "@tanstack/react-table", "lucide-react"],
+  "registryDependencies": ["badge", "button", "command", "popover", "select"],
   "files": [
     {
       "path": "src/components/data-grid/data-grid-sort-menu.tsx",

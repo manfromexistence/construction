@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
-'use client';
+"use client";
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-
-import { useInView } from 'framer-motion';
+import { useInView } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 export const useCounting = ({
   duration,
@@ -22,8 +21,7 @@ export const useCounting = ({
   start: number;
 }) => {
   const [number, setNumber] = useState(start);
-  const increment =
-    Math.floor(Math.abs(start - end) / (duration / interval)) || 1;
+  const increment = Math.floor(Math.abs(start - end) / (duration / interval)) || 1;
 
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -31,9 +29,7 @@ export const useCounting = ({
     if (isInView) {
       timer = setInterval(() => {
         setNumber((prevNumber) => {
-          const newNumber = reverse
-            ? prevNumber - increment
-            : prevNumber + increment;
+          const newNumber = reverse ? prevNumber - increment : prevNumber + increment;
           const isCompleted = reverse ? newNumber <= end : newNumber >= end;
 
           if (isCompleted) {
@@ -89,10 +85,7 @@ export function CountingNumbers({
     });
   }
 
-  const formattedNumber = useMemo(
-    () => Intl.NumberFormat().format(number),
-    [number]
-  );
+  const formattedNumber = useMemo(() => Intl.NumberFormat().format(number), [number]);
 
   return (
     <p ref={ref} className={className}>

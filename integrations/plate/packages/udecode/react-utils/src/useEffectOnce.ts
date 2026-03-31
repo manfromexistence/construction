@@ -1,9 +1,6 @@
-import React from 'react';
+import React from "react";
 
-export function useEffectOnce(
-  effect: React.EffectCallback,
-  deps: React.DependencyList
-) {
+export function useEffectOnce(effect: React.EffectCallback, deps: React.DependencyList) {
   const initialized = React.useRef(false);
   const prevDepsRef = React.useRef(deps);
 

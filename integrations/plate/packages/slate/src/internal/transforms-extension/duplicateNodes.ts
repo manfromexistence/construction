@@ -1,9 +1,5 @@
-import {
-  type DuplicateNodesOptions,
-  type Editor,
-  PathApi,
-} from '../../interfaces';
-import { getAt } from '../../utils';
+import { type DuplicateNodesOptions, type Editor, PathApi } from "../../interfaces";
+import { getAt } from "../../utils";
 
 export const duplicateNodes = (
   editor: Editor,

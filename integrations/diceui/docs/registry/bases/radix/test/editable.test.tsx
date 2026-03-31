@@ -1,11 +1,5 @@
 import "@testing-library/jest-dom";
-import {
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, test, vi } from "vitest";
 
 import {
@@ -42,9 +36,7 @@ Element.prototype.hasPointerCapture = vi.fn();
 Element.prototype.scrollIntoView = vi.fn();
 
 describe("Editable", () => {
-  function renderEditable(
-    props: Partial<React.ComponentProps<typeof Editable>> = {},
-  ) {
+  function renderEditable(props: Partial<React.ComponentProps<typeof Editable>> = {}) {
     return render(
       <Editable {...props}>
         <EditableLabel>Title</EditableLabel>
@@ -56,7 +48,7 @@ describe("Editable", () => {
             <EditableSubmit data-testid="submit">Save</EditableSubmit>
           </EditableToolbar>
         </EditableArea>
-      </Editable>,
+      </Editable>
     );
   }
 
@@ -215,9 +207,7 @@ describe("Editable", () => {
     });
 
     // In read-only mode, preview should not be clickable
-    expect(
-      screen.queryByRole("button", { name: /Read Only Value/i }),
-    ).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Read Only Value/i })).not.toBeInTheDocument();
 
     // Input should be visible but read-only
     const input = screen.getByRole("textbox");
@@ -324,7 +314,7 @@ describe("Editable", () => {
           <EditableInput />
         </EditableArea>
         <EditableTrigger data-testid="external-trigger">Edit</EditableTrigger>
-      </Editable>,
+      </Editable>
     );
 
     const externalTrigger = screen.getByTestId("external-trigger");
@@ -371,7 +361,7 @@ describe("Editable", () => {
         <button type="submit" data-testid="form-submit">
           Submit Form
         </button>
-      </form>,
+      </form>
     );
 
     // Submit the form

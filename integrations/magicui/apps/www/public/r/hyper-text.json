@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Hyper Text",
   "description": "A text animation that scrambles letters before revealing the final text.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/hyper-text.tsx",

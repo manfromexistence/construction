@@ -1,35 +1,28 @@
-import * as React from 'react';
+import type { Metadata } from "next";
+import Link from "next/link";
+import * as React from "react";
 
-import type { Metadata } from 'next';
+import CustomizerDrawer from "@/components/customizer-drawer";
+import { PageHeader, PageHeaderDescription, PageHeaderHeading } from "@/components/page-header";
+import { PlaygroundPreview } from "@/components/playground-preview";
+import { SiteFooter } from "@/components/site-footer";
+import { ThemesButton } from "@/components/themes-button";
+import { Button } from "@/components/ui/button";
+import { siteConfig } from "@/config/site";
 
-import Link from 'next/link';
-
-import CustomizerDrawer from '@/components/customizer-drawer';
-import {
-  PageHeader,
-  PageHeaderDescription,
-  PageHeaderHeading,
-} from '@/components/page-header';
-import { PlaygroundPreview } from '@/components/playground-preview';
-import { SiteFooter } from '@/components/site-footer';
-import { ThemesButton } from '@/components/themes-button';
-import { Button } from '@/components/ui/button';
-import { siteConfig } from '@/config/site';
-
-import { AnnouncementButton } from '../(app)/_components/announcement-button';
-import { PotionLazyBlock } from '../(app)/_components/potion-lazy-block';
+import { AnnouncementButton } from "../(app)/_components/announcement-button";
+import { PotionLazyBlock } from "../(app)/_components/potion-lazy-block";
 
 const content = {
-  buildYourRichTextEditor: '构建你的富文本编辑器',
-  description: '框架 · 插件 · 组件 · 主题',
-  getStarted: '开始使用',
-  github: 'GitHub',
-  potionDescription: '一个类似 Notion 的 AI 模板。',
+  buildYourRichTextEditor: "构建你的富文本编辑器",
+  description: "框架 · 插件 · 组件 · 主题",
+  getStarted: "开始使用",
+  github: "GitHub",
+  potionDescription: "一个类似 Notion 的 AI 模板。",
 };
 
-const title = '构建你的富文本编辑器';
-const description =
-  '一套精心设计的、可定制的插件和组件，帮助您构建富文本编辑器。开源免费。';
+const title = "构建你的富文本编辑器";
+const description = "一套精心设计的、可定制的插件和组件，帮助您构建富文本编辑器。开源免费。";
 
 export const metadata: Metadata = {
   description,
@@ -44,7 +37,7 @@ export const metadata: Metadata = {
   },
   title,
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     images: [
       {
         url: `/og?title=${encodeURIComponent(
@@ -55,7 +48,7 @@ export const metadata: Metadata = {
   },
 };
 
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 
 export default async function CNIndexPage() {
   return (
@@ -66,9 +59,7 @@ export default async function CNIndexPage() {
             <AnnouncementButton />
 
             <div className="flex w-full items-center justify-between">
-              <PageHeaderHeading>
-                {content.buildYourRichTextEditor}
-              </PageHeaderHeading>
+              <PageHeaderHeading>{content.buildYourRichTextEditor}</PageHeaderHeading>
               <ThemesButton />
             </div>
             <PageHeaderDescription>{content.description}</PageHeaderDescription>
@@ -76,17 +67,8 @@ export default async function CNIndexPage() {
               <Button asChild size="sm" className="rounded-md text-xs">
                 <Link href="/cn/docs">{content.getStarted}</Link>
               </Button>
-              <Button
-                asChild
-                size="sm"
-                variant="ghost"
-                className="rounded-md text-xs"
-              >
-                <Link
-                  href={siteConfig.links.github}
-                  rel="noreferrer"
-                  target="_blank"
-                >
+              <Button asChild size="sm" variant="ghost" className="rounded-md text-xs">
+                <Link href={siteConfig.links.github} rel="noreferrer" target="_blank">
                   {content.github}
                 </Link>
               </Button>

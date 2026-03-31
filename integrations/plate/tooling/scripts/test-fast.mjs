@@ -1,46 +1,37 @@
 #!/usr/bin/env node
 
-import { spawnSync } from 'node:child_process';
-import {
-  existsSync,
-  mkdtempSync,
-  readFileSync,
-  statSync,
-  writeFileSync,
-} from 'node:fs';
-import { tmpdir } from 'node:os';
-import { dirname, join, resolve } from 'node:path';
+import { spawnSync } from "node:child_process";
+import { existsSync, mkdtempSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { dirname, join, resolve } from "node:path";
 
-import { globSync, isDynamicPattern } from 'tinyglobby';
+import { globSync, isDynamicPattern } from "tinyglobby";
 
-import {
-  TEST_FILE_PATTERNS,
-  TEST_IGNORE_PATTERNS,
-} from '../config/test-suites.mjs';
+import { TEST_FILE_PATTERNS, TEST_IGNORE_PATTERNS } from "../config/test-suites.mjs";
 
 const VALUE_FLAGS = new Set([
-  '--bail',
-  '--coverage-dir',
-  '--coverage-reporter',
-  '--max-concurrency',
-  '--reporter',
-  '--reporter-outfile',
-  '--rerun-each',
-  '--seed',
-  '--test-name-pattern',
-  '--timeout',
-  '-t',
+  "--bail",
+  "--coverage-dir",
+  "--coverage-reporter",
+  "--max-concurrency",
+  "--reporter",
+  "--reporter-outfile",
+  "--rerun-each",
+  "--seed",
+  "--test-name-pattern",
+  "--timeout",
+  "-t",
 ]);
 const LEADING_DOT_SLASH_RE = /^\.\//;
-const JUNIT_OUTFILE_PREFIX = 'plate-fast-junit-';
-const MOCK_MODULE_PATTERN = 'mock.module(';
+const JUNIT_OUTFILE_PREFIX = "plate-fast-junit-";
+const MOCK_MODULE_PATTERN = "mock.module(";
 const LOCAL_IMPORT_PATTERN =
   /\b(?:import|export)\b[^'"]*?from\s*['"]([^'"]+)['"]|\bimport\s*\(\s*['"]([^'"]+)['"]\s*\)|\brequire\s*\(\s*['"]([^'"]+)['"]\s*\)/g;
 const XML_DECLARATION_RE = /^<\?xml[^>]*>\s*/u;
 const TESTSUITES_OPEN_RE = /^<testsuites\b[^>]*>\s*/u;
 const TESTSUITES_CLOSE_RE = /\s*<\/testsuites>\s*$/u;
 const TRAILING_SLASH_RE = /\/$/;
-const LOCAL_SOURCE_EXTENSIONS = ['.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs'];
+const LOCAL_SOURCE_EXTENSIONS = [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs"];
 
 const rawArgs = process.argv.slice(2);
 const bunArgs = [];
@@ -49,7 +40,7 @@ const pathFilters = [];
 for (let i = 0; i < rawArgs.length; i++) {
   const arg = rawArgs[i];
 
-  if (arg === '--') continue;
+  if (arg === "--") continue;
 
   const matchedValueFlag = [...VALUE_FLAGS].find(
     (flag) => arg === flag || arg.startsWith(`${flag}=`)
@@ -70,7 +61,7 @@ for (let i = 0; i < rawArgs.length; i++) {
     continue;
   }
 
-  if (arg.startsWith('-')) {
+  if (arg.startsWith("-")) {
     bunArgs.push(arg);
     continue;
   }
@@ -85,10 +76,7 @@ const allFastFiles = globSync(TEST_FILE_PATTERNS, {
 }).sort();
 
 const normalizeFilter = (value) =>
-  value
-    .replaceAll('\\', '/')
-    .replace(LEADING_DOT_SLASH_RE, '')
-    .replace(TRAILING_SLASH_RE, '');
+  value.replaceAll("\\", "/").replace(LEADING_DOT_SLASH_RE, "").replace(TRAILING_SLASH_RE, "");
 
 const staticFilters = [];
 const dynamicMatches = new Set();
@@ -116,17 +104,12 @@ const selectedFiles =
         if (dynamicMatches.has(file)) return true;
 
         return staticFilters.some(
-          (filter) =>
-            file === filter ||
-            file.startsWith(`${filter}/`) ||
-            file.includes(filter)
+          (filter) => file === filter || file.startsWith(`${filter}/`) || file.includes(filter)
         );
       });
 
 if (selectedFiles.length === 0) {
-  console.error(
-    'No fast-suite tests matched. Use `pnpm test:slow` for `*.slow.*` lanes.'
-  );
+  console.error("No fast-suite tests matched. Use `pnpm test:slow` for `*.slow.*` lanes.");
   process.exit(1);
 }
 
@@ -139,8 +122,7 @@ const findArgValue = (args, flag) => {
   }
 };
 
-const hasArg = (args, flag) =>
-  args.some((arg) => arg === flag || arg.startsWith(`${flag}=`));
+const hasArg = (args, flag) => args.some((arg) => arg === flag || arg.startsWith(`${flag}=`));
 
 const stripArgWithValue = (args, flag) => {
   const nextArgs = [];
@@ -166,26 +148,22 @@ const stripArgWithValue = (args, flag) => {
 };
 
 const runFiles = (files, args) =>
-  spawnSync(process.execPath, ['test', ...args, ...files], {
-    stdio: 'inherit',
+  spawnSync(process.execPath, ["test", ...args, ...files], {
+    stdio: "inherit",
   });
 
 const resolveLocalImport = (fromFile, specifier) => {
-  if (!specifier.startsWith('.')) return;
+  if (!specifier.startsWith(".")) return;
 
-  const sanitizedSpecifier = specifier.split('?')[0]?.split('#')[0];
+  const sanitizedSpecifier = specifier.split("?")[0]?.split("#")[0];
 
   if (!sanitizedSpecifier) return;
 
   const absoluteBase = resolve(dirname(fromFile), sanitizedSpecifier);
   const candidates = [
     absoluteBase,
-    ...LOCAL_SOURCE_EXTENSIONS.map(
-      (extension) => `${absoluteBase}${extension}`
-    ),
-    ...LOCAL_SOURCE_EXTENSIONS.map((extension) =>
-      join(absoluteBase, `index${extension}`)
-    ),
+    ...LOCAL_SOURCE_EXTENSIONS.map((extension) => `${absoluteBase}${extension}`),
+    ...LOCAL_SOURCE_EXTENSIONS.map((extension) => join(absoluteBase, `index${extension}`)),
   ];
 
   return candidates.find((candidate) => {
@@ -204,7 +182,7 @@ const fileUsesMockModule = (file) => {
 
   mockModuleUsageCache.set(file, false);
 
-  const source = readFileSync(file, 'utf8');
+  const source = readFileSync(file, "utf8");
 
   if (source.includes(MOCK_MODULE_PATTERN)) {
     mockModuleUsageCache.set(file, true);
@@ -233,13 +211,13 @@ const mergeJunitReports = (files, outfile) => {
   const suites = files
     .map((file) => {
       try {
-        return readFileSync(file, 'utf8')
-          .replace(XML_DECLARATION_RE, '')
-          .replace(TESTSUITES_OPEN_RE, '')
-          .replace(TESTSUITES_CLOSE_RE, '')
+        return readFileSync(file, "utf8")
+          .replace(XML_DECLARATION_RE, "")
+          .replace(TESTSUITES_OPEN_RE, "")
+          .replace(TESTSUITES_CLOSE_RE, "")
           .trim();
       } catch {
-        return '';
+        return "";
       }
     })
     .filter(Boolean);
@@ -250,16 +228,16 @@ const mergeJunitReports = (files, outfile) => {
       '<?xml version="1.0" encoding="UTF-8"?>',
       '<testsuites name="bun test">',
       ...suites,
-      '</testsuites>',
-      '',
-    ].join('\n')
+      "</testsuites>",
+      "",
+    ].join("\n")
   );
 };
 
-const shouldWatch = hasArg(bunArgs, '--watch');
-const reporter = findArgValue(bunArgs, '--reporter');
-const reporterOutfile = findArgValue(bunArgs, '--reporter-outfile');
-const junitReporter = reporter === 'junit' && reporterOutfile;
+const shouldWatch = hasArg(bunArgs, "--watch");
+const reporter = findArgValue(bunArgs, "--reporter");
+const reporterOutfile = findArgValue(bunArgs, "--reporter-outfile");
+const junitReporter = reporter === "junit" && reporterOutfile;
 const shouldIsolate = !shouldWatch;
 
 const isolatedFiles = shouldIsolate
@@ -276,16 +254,11 @@ if (isolatedFiles.length === 0) {
   process.exit(run.status ?? 1);
 }
 
-const bailEnabled = hasArg(bunArgs, '--bail');
+const bailEnabled = hasArg(bunArgs, "--bail");
 const junitBaseArgs = junitReporter
-  ? stripArgWithValue(
-      stripArgWithValue(bunArgs, '--reporter'),
-      '--reporter-outfile'
-    )
+  ? stripArgWithValue(stripArgWithValue(bunArgs, "--reporter"), "--reporter-outfile")
   : bunArgs;
-const junitTempDir = junitReporter
-  ? mkdtempSync(join(tmpdir(), JUNIT_OUTFILE_PREFIX))
-  : null;
+const junitTempDir = junitReporter ? mkdtempSync(join(tmpdir(), JUNIT_OUTFILE_PREFIX)) : null;
 const junitFiles = [];
 let status = 0;
 
@@ -296,8 +269,8 @@ const runBatch = (files, batchId) => {
     junitReporter && junitTempDir
       ? [
           ...junitBaseArgs,
-          '--reporter=junit',
-          '--reporter-outfile',
+          "--reporter=junit",
+          "--reporter-outfile",
           join(junitTempDir, `${batchId}.xml`),
         ]
       : bunArgs;
@@ -313,7 +286,7 @@ const runBatch = (files, batchId) => {
   }
 };
 
-runBatch(sharedFiles, 'shared');
+runBatch(sharedFiles, "shared");
 
 if (!bailEnabled || status === 0) {
   isolatedFiles.forEach((file, index) => {

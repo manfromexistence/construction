@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Animated Beam Unidirectional",
   "description": "Example showing a unidirectional animated beam effect.",
-  "registryDependencies": [
-    "@magicui/animated-beam"
-  ],
+  "registryDependencies": ["@magicui/animated-beam"],
   "files": [
     {
       "path": "registry/example/animated-beam-unidirectional.tsx",

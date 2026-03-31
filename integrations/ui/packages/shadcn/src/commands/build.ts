@@ -1,30 +1,26 @@
-import * as fs from "fs/promises"
-import * as path from "path"
-import { preFlightBuild } from "@/src/preflights/preflight-build"
-import { SHADCN_URL } from "@/src/registry/constants"
-import { registryItemSchema, registrySchema } from "@/src/schema"
-import { handleError } from "@/src/utils/handle-error"
-import { highlighter } from "@/src/utils/highlighter"
-import { logger } from "@/src/utils/logger"
-import { spinner } from "@/src/utils/spinner"
-import { Command } from "commander"
-import { z } from "zod"
+import { Command } from "commander";
+import * as fs from "fs/promises";
+import * as path from "path";
+import { z } from "zod";
+import { preFlightBuild } from "@/src/preflights/preflight-build";
+import { SHADCN_URL } from "@/src/registry/constants";
+import { registryItemSchema, registrySchema } from "@/src/schema";
+import { handleError } from "@/src/utils/handle-error";
+import { highlighter } from "@/src/utils/highlighter";
+import { logger } from "@/src/utils/logger";
+import { spinner } from "@/src/utils/spinner";
 
 export const buildOptionsSchema = z.object({
   cwd: z.string(),
   registryFile: z.string(),
   outputDir: z.string(),
-})
+});
 
 export const build = new Command()
   .name("build")
   .description("build components for a shadcn registry")
   .argument("[registry]", "path to registry.json file", "./registry.json")
-  .option(
-    "-o, --output <path>",
-    "destination directory for json files",
-    "./public/r"
-  )
+  .option("-o, --output <path>", "destination directory for json files", "./public/r")
   .option(
     "-c, --cwd <cwd>",
     "the working directory. defaults to the current directory.",
@@ -36,65 +32,55 @@ export const build = new Command()
         cwd: path.resolve(opts.cwd),
         registryFile: registry,
         outputDir: opts.output,
-      })
+      });
 
-      const { resolvePaths } = await preFlightBuild(options)
-      const content = await fs.readFile(resolvePaths.registryFile, "utf-8")
+      const { resolvePaths } = await preFlightBuild(options);
+      const content = await fs.readFile(resolvePaths.registryFile, "utf-8");
 
-      const result = registrySchema.safeParse(JSON.parse(content))
+      const result = registrySchema.safeParse(JSON.parse(content));
 
       if (!result.success) {
         logger.error(
-          `Invalid registry file found at ${highlighter.info(
-            resolvePaths.registryFile
-          )}.`
-        )
-        process.exit(1)
+          `Invalid registry file found at ${highlighter.info(resolvePaths.registryFile)}.`
+        );
+        process.exit(1);
       }
 
-      const buildSpinner = spinner("Building registry...")
+      const buildSpinner = spinner("Building registry...");
       for (const registryItem of result.data.items) {
-        buildSpinner.start(`Building ${registryItem.name}...`)
+        buildSpinner.start(`Building ${registryItem.name}...`);
 
         // Add the schema to the registry item.
-        registryItem["$schema"] =
-          "https://ui.shadcn.com/schema/registry-item.json"
+        registryItem["$schema"] = "https://ui.shadcn.com/schema/registry-item.json";
 
         // Loop through each file in the files array.
         for (const file of registryItem.files ?? []) {
-          file["content"] = await fs.readFile(
-            path.resolve(resolvePaths.cwd, file.path),
-            "utf-8"
-          )
+          file["content"] = await fs.readFile(path.resolve(resolvePaths.cwd, file.path), "utf-8");
         }
 
         // Validate the registry item.
-        const result = registryItemSchema.safeParse(registryItem)
+        const result = registryItemSchema.safeParse(registryItem);
         if (!result.success) {
-          logger.error(
-            `Invalid registry item found for ${highlighter.info(
-              registryItem.name
-            )}.`
-          )
-          continue
+          logger.error(`Invalid registry item found for ${highlighter.info(registryItem.name)}.`);
+          continue;
         }
 
         // Write the registry item to the output directory.
         await fs.writeFile(
           path.resolve(resolvePaths.outputDir, `${result.data.name}.json`),
           JSON.stringify(result.data, null, 2)
-        )
+        );
       }
 
       // Copy registry.json to the output directory.
       await fs.copyFile(
         resolvePaths.registryFile,
         path.resolve(resolvePaths.outputDir, "registry.json")
-      )
+      );
 
-      buildSpinner.succeed("Building registry.")
+      buildSpinner.succeed("Building registry.");
     } catch (error) {
-      logger.break()
-      handleError(error)
+      logger.break();
+      handleError(error);
     }
-  })
+  });

@@ -1,10 +1,8 @@
-import type { Path, TTableCellElement } from 'platejs';
+import type { Path, TTableCellElement } from "platejs";
 
-import { getCellRowIndexByPath } from '../utils/getCellRowIndexByPath';
+import { getCellRowIndexByPath } from "../utils/getCellRowIndexByPath";
 
-export const getSelectionWidth = <T extends [TTableCellElement, Path]>(
-  cells: T[]
-) => {
+export const getSelectionWidth = <T extends [TTableCellElement, Path]>(cells: T[]) => {
   // default = firstRowIndex
 
   let max = 0;

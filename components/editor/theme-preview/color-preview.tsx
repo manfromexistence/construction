@@ -1,9 +1,11 @@
+"use client";
+
+import { SquarePen } from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { FocusColorId, useColorControlFocus } from "@/store/color-control-focus-store";
 import { ThemeEditorPreviewProps } from "@/types/theme";
-import { SquarePen } from "lucide-react";
 
 interface ColorPreviewProps {
   styles: ThemeEditorPreviewProps["styles"];

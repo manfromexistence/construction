@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { AnimatedList } from "@/registry/magicui/animated-list"
+import { cn } from "@/lib/utils";
+import { AnimatedList } from "@/registry/magicui/animated-list";
 
 interface Item {
-  name: string
-  description: string
-  icon: string
-  color: string
-  time: string
+  name: string;
+  description: string;
+  icon: string;
+  color: string;
+  time: string;
 }
 
 let notifications = [
@@ -41,9 +41,9 @@ let notifications = [
     icon: "🗞️",
     color: "#1E86FF",
   },
-]
+];
 
-notifications = Array.from({ length: 10 }, () => notifications).flat()
+notifications = Array.from({ length: 10 }, () => notifications).flat();
 
 const Notification = ({ name, description, icon, color, time }: Item) => {
   return (
@@ -73,27 +73,16 @@ const Notification = ({ name, description, icon, color, time }: Item) => {
             <span className="mx-1">·</span>
             <span className="text-xs text-gray-500">{time}</span>
           </figcaption>
-          <p className="text-sm font-normal dark:text-white/60">
-            {description}
-          </p>
+          <p className="text-sm font-normal dark:text-white/60">{description}</p>
         </div>
       </div>
     </figure>
-  )
-}
+  );
+};
 
-export default function AnimatedListDemo({
-  className,
-}: {
-  className?: string
-}) {
+export default function AnimatedListDemo({ className }: { className?: string }) {
   return (
-    <div
-      className={cn(
-        "relative flex h-[500px] w-full flex-col overflow-hidden p-2",
-        className
-      )}
-    >
+    <div className={cn("relative flex h-[500px] w-full flex-col overflow-hidden p-2", className)}>
       <AnimatedList>
         {notifications.map((item, idx) => (
           <Notification {...item} key={idx} />
@@ -102,5 +91,5 @@ export default function AnimatedListDemo({
 
       <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t"></div>
     </div>
-  )
+  );
 }

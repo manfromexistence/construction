@@ -1,9 +1,9 @@
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
 
-import { isSafeTarget } from "./is-safe-target"
+import { isSafeTarget } from "./is-safe-target";
 
 describe("isSafeTarget", () => {
-  const cwd = "/foo/bar"
+  const cwd = "/foo/bar";
 
   describe("should reject path traversal attempts", () => {
     test.each([
@@ -68,14 +68,13 @@ describe("isSafeTarget", () => {
         target: "foo/../\u2025/etc/passwd",
       },
       {
-        description:
-          "path traversal with square brackets outside [...] pattern",
+        description: "path traversal with square brackets outside [...] pattern",
         target: "foo/[bar]/../../etc/passwd",
       },
     ])("$description", ({ target }) => {
-      expect(isSafeTarget(target, cwd)).toBe(false)
-    })
-  })
+      expect(isSafeTarget(target, cwd)).toBe(false);
+    });
+  });
 
   describe("should accept safe paths", () => {
     test.each([
@@ -128,29 +127,29 @@ describe("isSafeTarget", () => {
         target: "app/[locale]/[...segments]/page.tsx",
       },
     ])("$description", ({ target }) => {
-      expect(isSafeTarget(target, cwd)).toBe(true)
-    })
-  })
+      expect(isSafeTarget(target, cwd)).toBe(true);
+    });
+  });
 
   describe("edge cases", () => {
     test("should handle empty string", () => {
-      expect(isSafeTarget("", cwd)).toBe(true)
-    })
+      expect(isSafeTarget("", cwd)).toBe(true);
+    });
 
     test("should handle single dot", () => {
-      expect(isSafeTarget(".", cwd)).toBe(true)
-    })
+      expect(isSafeTarget(".", cwd)).toBe(true);
+    });
 
     test("should reject malformed URL encoding", () => {
-      expect(isSafeTarget("%zz%ff%2e%2e%2f", cwd)).toBe(false)
-    })
+      expect(isSafeTarget("%zz%ff%2e%2e%2f", cwd)).toBe(false);
+    });
 
     test("should handle paths at project root", () => {
-      expect(isSafeTarget("/foo/bar/test.txt", cwd)).toBe(true)
-    })
+      expect(isSafeTarget("/foo/bar/test.txt", cwd)).toBe(true);
+    });
 
     test("should reject paths just outside project root", () => {
-      expect(isSafeTarget("/foo/test.txt", cwd)).toBe(false)
-    })
-  })
-})
+      expect(isSafeTarget("/foo/test.txt", cwd)).toBe(false);
+    });
+  });
+});

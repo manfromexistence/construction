@@ -1,5 +1,4 @@
-import { type SlateEditor, type UnwrapNodesOptions, ElementApi } from 'platejs';
-import { KEYS } from 'platejs';
+import { ElementApi, KEYS, type SlateEditor, type UnwrapNodesOptions } from "platejs";
 
 /** Unwrap link node. */
 export const unwrapLink = (
@@ -19,8 +18,7 @@ export const unwrapLink = (
       if (linkAboveAnchor) {
         editor.tf.splitNodes({
           at: editor.selection?.anchor,
-          match: (n) =>
-            ElementApi.isElement(n) && n.type === editor.getType(KEYS.link),
+          match: (n) => ElementApi.isElement(n) && n.type === editor.getType(KEYS.link),
         });
         unwrapLink(editor, {
           at: editor.selection?.anchor,
@@ -38,8 +36,7 @@ export const unwrapLink = (
       if (linkAboveFocus) {
         editor.tf.splitNodes({
           at: editor.selection?.focus,
-          match: (n) =>
-            ElementApi.isElement(n) && n.type === editor.getType(KEYS.link),
+          match: (n) => ElementApi.isElement(n) && n.type === editor.getType(KEYS.link),
         });
         unwrapLink(editor, {
           at: editor.selection?.focus,

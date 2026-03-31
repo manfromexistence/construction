@@ -1,17 +1,15 @@
-import { getDefaultBoundingClientRect } from '../createVirtualElement';
-import { makeClientRect } from './makeClientRect';
-import { getRangeBoundingClientRect } from './getRangeBoundingClientRect';
+import { getDefaultBoundingClientRect } from "../createVirtualElement";
+import { getRangeBoundingClientRect } from "./getRangeBoundingClientRect";
+import { makeClientRect } from "./makeClientRect";
 
-describe('getRangeBoundingClientRect', () => {
-  it('returns the default rect when the range is null', () => {
+describe("getRangeBoundingClientRect", () => {
+  it("returns the default rect when the range is null", () => {
     const editor: any = { api: { toDOMRange: () => {} } };
 
-    expect(getRangeBoundingClientRect(editor, null)).toEqual(
-      getDefaultBoundingClientRect()
-    );
+    expect(getRangeBoundingClientRect(editor, null)).toEqual(getDefaultBoundingClientRect());
   });
 
-  it('returns the default rect when toDOMRange fails', () => {
+  it("returns the default rect when toDOMRange fails", () => {
     const editor: any = { api: { toDOMRange: () => {} } };
     const range = {
       anchor: { offset: 0, path: [0, 0] },
@@ -23,7 +21,7 @@ describe('getRangeBoundingClientRect', () => {
     );
   });
 
-  it('returns the DOM range rect when available', () => {
+  it("returns the DOM range rect when available", () => {
     const rect = makeClientRect({
       bottom: 30,
       left: 12,

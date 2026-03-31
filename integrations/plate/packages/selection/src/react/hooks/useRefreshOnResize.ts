@@ -1,10 +1,9 @@
-import React from 'react';
+import type { TRange } from "platejs";
+import React from "react";
 
-import type { TRange } from 'platejs';
+import type { SelectionRect } from "../types";
 
-import type { SelectionRect } from '../types';
-
-import { useRequestReRender } from './useRequestReRender';
+import { useRequestReRender } from "./useRequestReRender";
 
 export type UseRefreshOnResizeOptions = {
   selectionRectCache: React.MutableRefObject<WeakMap<TRange, SelectionRect[]>>;

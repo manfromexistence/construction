@@ -1,23 +1,22 @@
-'use client';
-
-import * as React from 'react';
+"use client";
 
 import {
+  createSlatePlugin,
   type Decorate,
   type RenderLeafProps,
-  type TText,
-  createSlatePlugin,
   TextApi,
-} from 'platejs';
-import { Plate, usePlateEditor } from 'platejs/react';
-import Prism from 'prismjs';
+  type TText,
+} from "platejs";
+import { Plate, usePlateEditor } from "platejs/react";
+import Prism from "prismjs";
+import * as React from "react";
 
-import { cn } from '@/lib/utils';
-import { BasicNodesKit } from '@/registry/components/editor/plugins/basic-nodes-kit';
-import { previewMdValue } from '@/registry/examples/values/preview-md-value';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { cn } from "@/lib/utils";
+import { BasicNodesKit } from "@/registry/components/editor/plugins/basic-nodes-kit";
+import { previewMdValue } from "@/registry/examples/values/preview-md-value";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
-import 'prismjs/components/prism-markdown.js';
+import "prismjs/components/prism-markdown.js";
 
 /** Decorate texts with markdown preview. */
 const decoratePreview: Decorate = ({ entry: [node, path] }) => {
@@ -28,10 +27,10 @@ const decoratePreview: Decorate = ({ entry: [node, path] }) => {
   }
 
   const getLength = (token: any) => {
-    if (typeof token === 'string') {
+    if (typeof token === "string") {
       return token.length;
     }
-    if (typeof token.content === 'string') {
+    if (typeof token.content === "string") {
       return token.content.length;
     }
 
@@ -45,7 +44,7 @@ const decoratePreview: Decorate = ({ entry: [node, path] }) => {
     const length = getLength(token);
     const end = start + length;
 
-    if (typeof token !== 'string') {
+    if (typeof token !== "string") {
       ranges.push({
         anchor: { offset: start, path },
         focus: { offset: end, path },
@@ -80,14 +79,13 @@ function PreviewLeaf({
     <span
       {...attributes}
       className={cn(
-        bold && 'font-bold',
-        italic && 'italic',
-        title && 'mx-0 mt-5 mb-2.5 inline-block font-bold text-[20px]',
-        list && 'pl-2.5 text-[20px] leading-[10px]',
-        hr && 'block border-[#ddd] border-b-2 text-center',
-        blockquote &&
-          'inline-block border-[#ddd] border-l-2 pl-2.5 text-[#aaa] italic',
-        code && 'bg-[#eee] p-[3px] font-mono'
+        bold && "font-bold",
+        italic && "italic",
+        title && "mx-0 mt-5 mb-2.5 inline-block font-bold text-[20px]",
+        list && "pl-2.5 text-[20px] leading-[10px]",
+        hr && "block border-[#ddd] border-b-2 text-center",
+        blockquote && "inline-block border-[#ddd] border-l-2 pl-2.5 text-[#aaa] italic",
+        code && "bg-[#eee] p-[3px] font-mono"
       )}
     >
       {children}
@@ -101,7 +99,7 @@ export default function PreviewMdDemo() {
       plugins: [
         ...BasicNodesKit,
         createSlatePlugin({
-          key: 'preview-markdown',
+          key: "preview-markdown",
           decorate: decoratePreview,
         }),
       ],

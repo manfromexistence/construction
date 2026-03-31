@@ -1,11 +1,11 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'dummy_item_after_list_item';
+const name = "dummy_item_after_list_item";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
@@ -15,8 +15,8 @@ describe(getDocxTestName(name), () => {
           One
         </hp>
         <hp indent={1} lineHeight="115%">
-          Two{'\n'}
-          {'\n'}Three
+          Two{"\n"}
+          {"\n"}Three
         </hp>
       </editor>
     ),

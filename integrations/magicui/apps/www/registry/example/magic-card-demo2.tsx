@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { useTheme } from "next-themes"
+import Link from "next/link";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -12,21 +12,19 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { AvatarCircles } from "@/registry/magicui/avatar-circles"
-import { MagicCard } from "@/registry/magicui/magic-card"
+} from "@/components/ui/card";
+import { AvatarCircles } from "@/registry/magicui/avatar-circles";
+import { MagicCard } from "@/registry/magicui/magic-card";
 
 export default function MagicCardDemo() {
-  const { theme, systemTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
+  const { theme, systemTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
+    setMounted(true);
+  }, []);
 
-  const isDark = mounted
-    ? (theme === "system" ? systemTheme : theme) === "dark"
-    : true
+  const isDark = mounted ? (theme === "system" ? systemTheme : theme) === "dark" : true;
 
   return (
     <Card className="w-full max-w-sm border-none p-0 shadow-none">
@@ -48,9 +46,7 @@ export default function MagicCardDemo() {
             />
             <div className="flex-1">
               <CardTitle>Yeom JinHo</CardTitle>
-              <CardDescription className="mt-1">
-                Frontend Developer
-              </CardDescription>
+              <CardDescription className="mt-1">Frontend Developer</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -59,8 +55,7 @@ export default function MagicCardDemo() {
             Frontend Developer focused on Interactive UI &amp; Performance
           </p>
           <p className="text-muted-foreground text-sm leading-relaxed">
-            I&apos;m passionate about visual presentation and currently focusing
-            on interactive UI.
+            I&apos;m passionate about visual presentation and currently focusing on interactive UI.
           </p>
         </CardContent>
         <CardFooter className="border-border border-t p-4 [.border-t]:pt-4">
@@ -83,5 +78,5 @@ export default function MagicCardDemo() {
         </CardFooter>
       </MagicCard>
     </Card>
-  )
+  );
 }

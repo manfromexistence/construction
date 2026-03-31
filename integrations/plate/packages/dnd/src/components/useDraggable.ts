@@ -1,8 +1,7 @@
-import React from 'react';
+import { useEditorRef } from "platejs/react";
+import React from "react";
 
-import { useEditorRef } from 'platejs/react';
-
-import { type UseDndNodeOptions, DRAG_ITEM_BLOCK, useDndNode } from '..';
+import { DRAG_ITEM_BLOCK, type UseDndNodeOptions, useDndNode } from "..";
 
 export type DraggableState = {
   /**
@@ -17,20 +16,12 @@ export type DraggableState = {
   previewRef: React.RefObject<HTMLDivElement | null>;
   /** The ref of the draggable handle */
   handleRef: (
-    elementOrNode:
-      | Element
-      | React.ReactElement<any>
-      | React.RefObject<any>
-      | null
+    elementOrNode: Element | React.ReactElement<any> | React.RefObject<any> | null
   ) => void;
 };
 
 export const useDraggable = (props: UseDndNodeOptions): DraggableState => {
-  const {
-    orientation = 'vertical',
-    type = DRAG_ITEM_BLOCK,
-    onDropHandler,
-  } = props;
+  const { orientation = "vertical", type = DRAG_ITEM_BLOCK, onDropHandler } = props;
 
   const editor = useEditorRef();
 

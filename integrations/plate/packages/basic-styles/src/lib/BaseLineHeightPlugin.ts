@@ -1,11 +1,6 @@
-import {
-  type SetNodesOptions,
-  type SlateEditor,
-  createSlatePlugin,
-  KEYS,
-} from 'platejs';
+import { createSlatePlugin, KEYS, type SetNodesOptions, type SlateEditor } from "platejs";
 
-import { setLineHeight } from './transforms';
+import { setLineHeight } from "./transforms";
 
 /**
  * Enables support for text alignment, useful to align your content to left,
@@ -17,7 +12,7 @@ export const BaseLineHeightPlugin = createSlatePlugin({
     isBlock: true,
     nodeProps: {
       defaultNodeValue: 1.5,
-      nodeKey: 'lineHeight',
+      nodeKey: "lineHeight",
     },
     targetPlugins: [KEYS.p],
     targetPluginToInject: ({
@@ -43,6 +38,5 @@ export const BaseLineHeightPlugin = createSlatePlugin({
     }),
   },
 }).extendTransforms(({ editor }: { editor: SlateEditor }) => ({
-  setNodes: (value: number, options?: SetNodesOptions) =>
-    setLineHeight(editor, value, options),
+  setNodes: (value: number, options?: SetNodesOptions) => setLineHeight(editor, value, options),
 }));

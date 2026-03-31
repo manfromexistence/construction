@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Terminal Demo",
   "description": "Example showing a terminal with animated text and custom delays",
-  "registryDependencies": [
-    "@magicui/terminal"
-  ],
+  "registryDependencies": ["@magicui/terminal"],
   "files": [
     {
       "path": "registry/example/terminal-demo-2.tsx",

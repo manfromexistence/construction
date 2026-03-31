@@ -1,4 +1,4 @@
-import type { Editor, ElementEntry } from 'platejs';
+import type { Editor, ElementEntry } from "platejs";
 
 const nonWhitespaceRegex = /\S/;
 
@@ -21,7 +21,7 @@ export const indentCodeLine = (
 ) => {
   const [, codeLinePath] = codeLine;
   const codeLineStart = editor.api.start(codeLinePath)!;
-  const indent = ' '.repeat(indentDepth);
+  const indent = " ".repeat(indentDepth);
 
   if (!editor.api.isExpanded()) {
     const cursor = editor.selection?.anchor;

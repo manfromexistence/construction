@@ -1,10 +1,9 @@
-import * as React from 'react';
+import { ArrowUpRight } from "lucide-react";
+import LinkPrimitive from "next/link";
+import * as React from "react";
 
-import { ArrowUpRight } from 'lucide-react';
-import LinkPrimitive from 'next/link';
-
-import { Icons } from '@/components/icons';
-import { cn } from '@/lib/utils';
+import { Icons } from "@/components/icons";
+import { cn } from "@/lib/utils";
 
 export function Link({
   className,
@@ -13,23 +12,22 @@ export function Link({
 }: React.ComponentProps<typeof LinkPrimitive> & {
   showArrow?: boolean;
 }) {
-  const isExternal =
-    typeof props.href === 'string' && props.href.startsWith('http');
+  const isExternal = typeof props.href === "string" && props.href.startsWith("http");
 
-  const isSection = props['aria-label'] === 'Link to section';
+  const isSection = props["aria-label"] === "Link to section";
 
   return (
     <LinkPrimitive
       className={cn(
-        'relative inline-block h-5 font-medium text-foreground',
-        !isExternal && 'underline underline-offset-4',
+        "relative inline-block h-5 font-medium text-foreground",
+        !isExternal && "underline underline-offset-4",
         isExternal &&
-          'hover:after:-bottom-1 no-underline hover:after:absolute hover:after:left-0 hover:after:h-[1.5px] hover:after:w-[calc(100%-2px)] hover:after:bg-primary',
+          "hover:after:-bottom-1 no-underline hover:after:absolute hover:after:left-0 hover:after:h-[1.5px] hover:after:w-[calc(100%-2px)] hover:after:bg-primary",
         // 'relative font-medium text-blue-600 hover:after:absolute hover:after:bottom-0 hover:after:left-0 hover:after:h-[1.5px] hover:after:w-[calc(100%-2px)] hover:after:bg-brand',
         className
       )}
       data-slot="mdx-link"
-      target={isExternal ? '_blank' : undefined}
+      target={isExternal ? "_blank" : undefined}
       {...props}
     >
       {isSection && (

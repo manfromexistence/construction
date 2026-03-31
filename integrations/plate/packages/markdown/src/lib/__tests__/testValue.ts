@@ -1,155 +1,155 @@
 export const testValue = [
   {
-    type: 'h1',
+    type: "h1",
     children: [
       {
-        text: 'Playground',
+        text: "Playground",
       },
     ],
   },
   {
-    type: 'h2',
+    type: "h2",
     children: [
       {
-        text: 'Comments and suggestions',
+        text: "Comments and suggestions",
       },
     ],
   },
   {
     children: [
       {
-        text: 'Add ',
+        text: "Add ",
       },
       {
         comment: true,
         comment_discussion1: true,
-        text: 'comments to your content',
+        text: "comments to your content",
       },
       {
-        text: ' to provide additional conte1xt, ',
-      },
-      {
-        suggestion: true,
-        suggestion_suggestion1: {
-          id: 'suggestion1',
-          createdAt: 1_742_652_370_104,
-          type: 'remove',
-          userId: 'charlie',
-        },
-        text: 'insights',
+        text: " to provide additional conte1xt, ",
       },
       {
         suggestion: true,
         suggestion_suggestion1: {
-          id: 'suggestion1',
+          id: "suggestion1",
           createdAt: 1_742_652_370_104,
-          type: 'insert',
-          userId: 'charlie',
+          type: "remove",
+          userId: "charlie",
         },
-        text: 'suggestions',
+        text: "insights",
       },
       {
-        text: ', or ',
+        suggestion: true,
+        suggestion_suggestion1: {
+          id: "suggestion1",
+          createdAt: 1_742_652_370_104,
+          type: "insert",
+          userId: "charlie",
+        },
+        text: "suggestions",
+      },
+      {
+        text: ", or ",
       },
       {
         comment: true,
         comment_discussion2: true,
-        text: 'collaborate',
+        text: "collaborate",
       },
       {
-        text: ' with others',
+        text: " with others",
       },
     ],
-    type: 'p',
+    type: "p",
   },
   {
-    type: 'h3',
+    type: "h3",
     children: [
       {
-        text: 'Heading',
+        text: "Heading",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 1,
-    listStyleType: 'disc',
+    listStyleType: "disc",
     children: [
       {
-        text: '1',
+        text: "1",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 2,
-    listStyleType: 'disc',
+    listStyleType: "disc",
     children: [
       {
-        text: '2',
+        text: "2",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 3,
-    listStyleType: 'disc',
+    listStyleType: "disc",
     children: [
       {
-        text: '3',
+        text: "3",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 4,
-    listStyleType: 'disc',
+    listStyleType: "disc",
     children: [
       {
-        text: '4',
+        text: "4",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 1,
-    listStyleType: 'disc',
+    listStyleType: "disc",
     children: [
       {
-        text: 'parent style change',
+        text: "parent style change",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 2,
-    listStyleType: 'decimal',
+    listStyleType: "decimal",
     listStart: 1,
     children: [
       {
-        text: 'child ordered style split',
+        text: "child ordered style split",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 2,
-    listStyleType: 'disc',
+    listStyleType: "disc",
     listStart: 1,
     children: [
       {
-        text: 'child bullet style split',
+        text: "child bullet style split",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 2,
-    listStyleType: 'todo',
+    listStyleType: "todo",
     checked: true,
     children: [
       {
-        text: 'child todo style split',
+        text: "child todo style split",
       },
     ],
   },
@@ -162,29 +162,29 @@ export const testValue = [
               {
                 children: [
                   {
-                    text: '1-1',
+                    text: "1-1",
                   },
                 ],
-                type: 'p',
+                type: "p",
               },
             ],
-            type: 'td',
+            type: "td",
           },
           {
             children: [
               {
                 children: [
                   {
-                    text: '1-2',
+                    text: "1-2",
                   },
                 ],
-                type: 'p',
+                type: "p",
               },
             ],
-            type: 'td',
+            type: "td",
           },
         ],
-        type: 'tr',
+        type: "tr",
       },
       {
         children: [
@@ -193,121 +193,121 @@ export const testValue = [
               {
                 children: [
                   {
-                    text: '2-1',
+                    text: "2-1",
                   },
                 ],
-                type: 'p',
+                type: "p",
               },
             ],
-            type: 'td',
+            type: "td",
           },
           {
             children: [
               {
                 children: [
                   {
-                    text: '2-2',
+                    text: "2-2",
                   },
                 ],
-                type: 'p',
+                type: "p",
               },
             ],
-            type: 'td',
+            type: "td",
           },
         ],
-        type: 'tr',
+        type: "tr",
       },
     ],
-    type: 'table',
+    type: "table",
   },
   {
     children: [
       {
-        text: 'blockQuote',
+        text: "blockQuote",
       },
     ],
-    type: 'blockquote',
+    type: "blockquote",
   },
   {
     children: [
       {
-        text: '',
+        text: "",
       },
     ],
-    type: 'hr',
+    type: "hr",
   },
   {
     children: [
       {
-        text: 'normal ',
+        text: "normal ",
       },
       {
         bold: true,
-        text: 'bold',
+        text: "bold",
       },
       {
         italic: true,
-        text: 'italic',
+        text: "italic",
       },
       {
-        text: 'strikethrough',
+        text: "strikethrough",
         strikethrough: true,
       },
       {
-        text: 'code',
+        text: "code",
         code: true,
       },
       {
-        text: 'combine',
+        text: "combine",
         bold: true,
         italic: true,
       },
       {
-        children: [{ text: 'link' }],
-        type: 'a',
-        url: 'https://example.com',
-        target: '_blank',
+        children: [{ text: "link" }],
+        type: "a",
+        url: "https://example.com",
+        target: "_blank",
       },
       {
         children: [
           {
-            text: '',
+            text: "",
           },
         ],
-        texExpression: 'E=mc^2',
-        type: 'inline_equation',
+        texExpression: "E=mc^2",
+        type: "inline_equation",
       },
     ],
-    type: 'p',
+    type: "p",
   },
   {
-    caption: [{ text: 'test' }],
-    children: [{ text: '' }],
-    type: 'img',
-    url: 'https://images.unsplash.com/photo-1712688930249-98e1963af7bd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    caption: [{ text: "test" }],
+    children: [{ text: "" }],
+    type: "img",
+    url: "https://images.unsplash.com/photo-1712688930249-98e1963af7bd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
   },
   {
-    type: 'code_block',
-    lang: 'javascript',
+    type: "code_block",
+    lang: "javascript",
     children: [
       {
-        type: 'code_line',
+        type: "code_line",
         children: [
           {
-            text: '// Use code blocks to showcase code snippets',
+            text: "// Use code blocks to showcase code snippets",
           },
         ],
       },
       {
-        type: 'code_line',
+        type: "code_line",
         children: [
           {
-            text: 'function greet() {',
+            text: "function greet() {",
           },
         ],
       },
       {
-        type: 'code_line',
+        type: "code_line",
         children: [
           {
             text: "  console.info('Hello World!');",
@@ -315,10 +315,10 @@ export const testValue = [
         ],
       },
       {
-        type: 'code_line',
+        type: "code_line",
         children: [
           {
-            text: '}',
+            text: "}",
           },
         ],
       },
@@ -327,131 +327,131 @@ export const testValue = [
   {
     children: [
       {
-        text: '',
+        text: "",
       },
     ],
-    texExpression: 'f(x)',
-    type: 'equation',
+    texExpression: "f(x)",
+    type: "equation",
   },
   {
-    type: 'toc',
+    type: "toc",
     children: [
       {
-        text: '',
+        text: "",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     checked: true,
     indent: 1,
-    listStyleType: 'todo',
+    listStyleType: "todo",
     children: [
       {
-        text: 'Todo item',
+        text: "Todo item",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     indent: 1,
-    listStyleType: 'decimal',
+    listStyleType: "decimal",
     children: [
       {
-        text: 'Numbered list item',
+        text: "Numbered list item",
       },
     ],
   },
   {
-    type: 'toggle',
+    type: "toggle",
     children: [
       {
-        text: 'Toggle item',
+        text: "Toggle item",
       },
     ],
   },
   {
-    type: 'p',
-    align: 'center',
+    type: "p",
+    align: "center",
     children: [
       {
-        text: 'Centered text',
+        text: "Centered text",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     lineHeight: 2,
     children: [
       {
-        text: 'Text with custom line height',
+        text: "Text with custom line height",
       },
     ],
   },
   {
     children: [
       {
-        text: '',
+        text: "",
       },
     ],
-    type: 'file',
-    name: 'sample.pdf',
-    url: 'https://example.com/sample.pdf',
+    type: "file",
+    name: "sample.pdf",
+    url: "https://example.com/sample.pdf",
   },
   {
     children: [
       {
-        text: '',
+        text: "",
       },
     ],
-    type: 'audio',
-    url: 'https://example.com/audio.mp3',
+    type: "audio",
+    url: "https://example.com/audio.mp3",
   },
   {
     children: [
       {
-        text: '',
+        text: "",
       },
     ],
-    type: 'video',
-    url: 'https://example.com/video.mp4',
+    type: "video",
+    url: "https://example.com/video.mp4",
   },
   {
     children: [
       {
-        text: '',
+        text: "",
       },
     ],
-    type: 'media_embed',
-    url: 'https://www.youtube.com/watch?v=example',
+    type: "media_embed",
+    url: "https://www.youtube.com/watch?v=example",
   },
   {
-    type: 'column_group',
+    type: "column_group",
     layout: [50, 50],
     children: [
       {
-        type: 'column',
-        width: '50%',
+        type: "column",
+        width: "50%",
         children: [
           {
-            type: 'p',
+            type: "p",
             children: [
               {
-                text: 'Left column',
+                text: "Left column",
               },
             ],
           },
         ],
       },
       {
-        type: 'column',
-        width: '50%',
+        type: "column",
+        width: "50%",
         children: [
           {
-            type: 'p',
+            type: "p",
             children: [
               {
-                text: 'Right column',
+                text: "Right column",
               },
             ],
           },
@@ -460,105 +460,105 @@ export const testValue = [
     ],
   },
   {
-    type: 'p',
+    type: "p",
     children: [
       {
-        text: 'Mention: ',
+        text: "Mention: ",
       },
       {
         children: [
           {
-            text: '',
+            text: "",
           },
         ],
-        type: 'mention',
-        value: 'User',
+        type: "mention",
+        value: "User",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     children: [
       {
-        text: 'Date: ',
+        text: "Date: ",
       },
       {
         children: [
           {
-            text: '',
+            text: "",
           },
         ],
-        type: 'date',
-        date: '2024-01-01',
+        type: "date",
+        date: "2024-01-01",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     children: [
       {
-        text: 'Text with ',
+        text: "Text with ",
       },
       {
-        text: 'highlight',
+        text: "highlight",
         highlight: true,
       },
       {
-        text: ' and ',
+        text: " and ",
       },
       {
-        text: 'underline',
+        text: "underline",
         underline: true,
       },
       {
-        text: ' and ',
+        text: " and ",
       },
       {
-        text: 'keyboard',
+        text: "keyboard",
         kbd: true,
       },
       {
-        text: ' formatting',
+        text: " formatting",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     children: [
       {
-        text: 'Text with ',
+        text: "Text with ",
       },
       {
-        text: 'color',
-        color: 'rgb(252, 109, 38)',
+        text: "color",
+        color: "rgb(252, 109, 38)",
       },
       {
-        text: ' and ',
+        text: " and ",
       },
       {
-        text: 'background',
-        backgroundColor: 'rgb(252, 109, 38)',
+        text: "background",
+        backgroundColor: "rgb(252, 109, 38)",
       },
       {
-        text: ' color',
+        text: " color",
       },
     ],
   },
   {
-    type: 'p',
+    type: "p",
     children: [
       {
-        text: 'Superscript: x',
+        text: "Superscript: x",
       },
       {
-        text: '2',
+        text: "2",
         superscript: true,
       },
       {
-        text: 'Subscript: x',
+        text: "Subscript: x",
       },
       {
-        text: '2',
+        text: "2",
         subscript: true,
       },
     ],
@@ -566,10 +566,10 @@ export const testValue = [
   {
     children: [
       {
-        text: 'callout',
+        text: "callout",
       },
     ],
-    icon: '💡',
-    type: 'callout',
+    icon: "💡",
+    type: "callout",
   },
 ];

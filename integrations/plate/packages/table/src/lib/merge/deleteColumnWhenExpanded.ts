@@ -1,14 +1,14 @@
 import {
-  type NodeEntry,
-  type PathRef,
-  type SlateEditor,
-  type TTableCellElement,
   KEYS,
   NodeApi,
+  type NodeEntry,
+  type PathRef,
   RangeApi,
-} from 'platejs';
+  type SlateEditor,
+  type TTableCellElement,
+} from "platejs";
 
-import { getTableGridAbove } from '../queries';
+import { getTableGridAbove } from "../queries";
 
 export const deleteColumnWhenExpanded = (
   editor: SlateEditor,
@@ -32,16 +32,13 @@ export const deleteColumnWhenExpanded = (
   });
 
   if (!firstSelectionRow || !lastSelectionRow) return;
-  if (
-    firstRow.id === firstSelectionRow[0].id &&
-    lastSelectionRow[0].id === lastRow.id
-  )
+  if (firstRow.id === firstSelectionRow[0].id && lastSelectionRow[0].id === lastRow.id)
     deleteSelection(editor);
 };
 
 const deleteSelection = (editor: SlateEditor) => {
   const cells = getTableGridAbove(editor, {
-    format: 'cell',
+    format: "cell",
   }) as NodeEntry<TTableCellElement>[];
 
   const pathRefs: PathRef[] = [];

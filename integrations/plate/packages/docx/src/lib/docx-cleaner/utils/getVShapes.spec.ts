@@ -1,25 +1,25 @@
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from "node:fs";
+import path from "node:path";
 
-import { getVShapes } from './getVShapes';
+import { getVShapes } from "./getVShapes";
 
 const readFixture = (filepath: string) =>
-  fs.readFileSync(path.resolve(__dirname, filepath), 'utf8');
+  fs.readFileSync(path.resolve(__dirname, filepath), "utf8");
 
-describe('getVShapes', () => {
-  it('extracts VML shape ids and spids from html comments', () => {
+describe("getVShapes", () => {
+  it("extracts VML shape ids and spids from html comments", () => {
     const document = new DOMParser().parseFromString(
-      readFixture('../__tests__/input/v-shapes.html'),
-      'text/html'
+      readFixture("../__tests__/input/v-shapes.html"),
+      "text/html"
     );
 
     expect(getVShapes(document)).toEqual({
-      Picture_x0020_2: '_x0000_i1026',
-      Picture_x0020_3: '_x0000_i1025',
+      Picture_x0020_2: "_x0000_i1026",
+      Picture_x0020_3: "_x0000_i1025",
     });
   });
 
-  it('ignores comments without valid VML shapes or missing ids', () => {
+  it("ignores comments without valid VML shapes or missing ids", () => {
     const document = new DOMParser().parseFromString(
       `
         <div>
@@ -29,11 +29,11 @@ describe('getVShapes', () => {
           <!-- <v:shape id="good" o:spid="_x0000_i2"></v:shape> -->
         </div>
       `,
-      'text/html'
+      "text/html"
     );
 
     expect(getVShapes(document)).toEqual({
-      good: '_x0000_i2',
+      good: "_x0000_i2",
     });
   });
 });

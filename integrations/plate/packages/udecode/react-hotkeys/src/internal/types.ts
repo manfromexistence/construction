@@ -1,14 +1,8 @@
-import type { DependencyList } from 'react';
+import type { DependencyList } from "react";
 
-import type { Key } from './key';
+import type { Key } from "./key";
 
-export type FormTags =
-  | 'INPUT'
-  | 'input'
-  | 'SELECT'
-  | 'select'
-  | 'TEXTAREA'
-  | 'textarea';
+export type FormTags = "INPUT" | "input" | "SELECT" | "select" | "TEXTAREA" | "textarea";
 
 export type Hotkey = {
   keys?: readonly string[];
@@ -16,10 +10,7 @@ export type Hotkey = {
   scopes?: Scopes;
 } & KeyboardModifiers;
 
-export type HotkeyCallback = (
-  keyboardEvent: KeyboardEvent,
-  hotkeysEvent: HotkeysEvent
-) => void;
+export type HotkeyCallback = (keyboardEvent: KeyboardEvent, hotkeysEvent: HotkeysEvent) => void;
 
 export type HotkeysEvent = Hotkey;
 
@@ -32,10 +23,7 @@ export type KeyboardModifiers = {
   useKey?: boolean; // Custom modifier to listen to the produced key instead of the code
 };
 
-export type Keys =
-  | (({} & string) | keyof typeof Key)[][]
-  | readonly string[]
-  | string;
+export type Keys = (({} & string) | keyof typeof Key)[][] | readonly string[] | string;
 
 export type Options = {
   // Character to separate different hotkeys. (Default: ,)

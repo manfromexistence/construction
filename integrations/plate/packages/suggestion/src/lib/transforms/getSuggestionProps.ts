@@ -1,9 +1,9 @@
-import type { Descendant, SlateEditor } from 'platejs';
+import type { Descendant, SlateEditor } from "platejs";
 
-import { ElementApi, KEYS, nanoid } from 'platejs';
+import { ElementApi, KEYS, nanoid } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getSuggestionKey, getTransientSuggestionKey } from '../utils/index';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { getSuggestionKey, getTransientSuggestionKey } from "../utils/index";
 
 export const getSuggestionProps = (
   editor: SlateEditor,
@@ -22,11 +22,7 @@ export const getSuggestionProps = (
     transient?: boolean;
   } = {}
 ) => {
-  const type = suggestionDeletion
-    ? 'remove'
-    : suggestionUpdate
-      ? 'update'
-      : 'insert';
+  const type = suggestionDeletion ? "remove" : suggestionUpdate ? "update" : "insert";
 
   const isElement = ElementApi.isElement(node);
 

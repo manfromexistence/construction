@@ -1,4 +1,4 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
 export const normalizeRoot = ({
   plugins,

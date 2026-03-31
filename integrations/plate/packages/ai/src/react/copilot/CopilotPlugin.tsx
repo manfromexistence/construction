@@ -1,32 +1,29 @@
-'use client';
+"use client";
 
-import type React from 'react';
+import { serializeMd } from "@platejs/markdown";
 
-import type { DebouncedFunc } from 'lodash';
-
-import { serializeMd } from '@platejs/markdown';
-import debounce from 'lodash/debounce.js';
+import type { DebouncedFunc } from "lodash";
+import debounce from "lodash/debounce.js";
 import {
-  type OmitFirst,
-  type PluginConfig,
-  type TElement,
   bindFirst,
   KEYS,
   NodeApi,
-} from 'platejs';
-import { type PlateEditor, createTPlatePlugin } from 'platejs/react';
-
-import type { CompleteOptions } from './utils/callCompletionApi';
-
-import { renderCopilotBelowNodes } from './renderCopilotBelowNodes';
-import { acceptCopilot } from './transforms/acceptCopilot';
-import { acceptCopilotNextWord } from './transforms/acceptCopilotNextWord';
-import { type GetNextWord, getNextWord } from './utils/getNextWord';
-import { triggerCopilotSuggestion } from './utils/triggerCopilotSuggestion';
-import { withCopilot } from './withCopilot';
+  type OmitFirst,
+  type PluginConfig,
+  type TElement,
+} from "platejs";
+import { createTPlatePlugin, type PlateEditor } from "platejs/react";
+import type React from "react";
+import { renderCopilotBelowNodes } from "./renderCopilotBelowNodes";
+import { acceptCopilot } from "./transforms/acceptCopilot";
+import { acceptCopilotNextWord } from "./transforms/acceptCopilotNextWord";
+import type { CompleteOptions } from "./utils/callCompletionApi";
+import { type GetNextWord, getNextWord } from "./utils/getNextWord";
+import { triggerCopilotSuggestion } from "./utils/triggerCopilotSuggestion";
+import { withCopilot } from "./withCopilot";
 
 export type CopilotPluginConfig = PluginConfig<
-  'copilot',
+  "copilot",
   CompletionState & {
     /**
      * AI completion options. See:
@@ -116,7 +113,7 @@ export const CopilotPlugin = createTPlatePlugin<CopilotPluginConfig>({
   options: {
     abortController: null,
     completeOptions: {},
-    completion: '',
+    completion: "",
     debounceDelay: 0,
     error: null,
     getNextWord,
@@ -126,10 +123,7 @@ export const CopilotPlugin = createTPlatePlugin<CopilotPluginConfig>({
     suggestionNodeId: null,
     suggestionText: null,
     autoTriggerQuery: ({ editor }) => {
-      if (
-        editor.getOptions<CopilotPluginConfig>({ key: KEYS.copilot })
-          .suggestionText
-      ) {
+      if (editor.getOptions<CopilotPluginConfig>({ key: KEYS.copilot }).suggestionText) {
         return false;
       }
 
@@ -143,12 +137,12 @@ export const CopilotPlugin = createTPlatePlugin<CopilotPluginConfig>({
 
       const blockString = NodeApi.string(blockAbove[0]);
 
-      return blockString.at(-1) === ' ';
+      return blockString.at(-1) === " ";
     },
     getPrompt: ({ editor }) => {
       const contextEntry = editor.api.block({ highest: true });
 
-      if (!contextEntry) return '';
+      if (!contextEntry) return "";
 
       return serializeMd(editor, {
         value: [contextEntry[0] as TElement],
@@ -166,14 +160,14 @@ export const CopilotPlugin = createTPlatePlugin<CopilotPluginConfig>({
   },
 })
   .overrideEditor(withCopilot)
-  .extendSelectors<CopilotPluginConfig['selectors']>(({ getOptions }) => ({
+  .extendSelectors<CopilotPluginConfig["selectors"]>(({ getOptions }) => ({
     isSuggested: (id) => getOptions().suggestionNodeId === id,
   }))
   .extendTransforms(({ editor }) => ({
     accept: bindFirst(acceptCopilot, editor),
     acceptNextWord: bindFirst(acceptCopilotNextWord, editor),
   }))
-  .extendApi<Omit<CopilotPluginConfig['api']['copilot'], 'reject'>>(
+  .extendApi<Omit<CopilotPluginConfig["api"]["copilot"], "reject">>(
     ({ api, editor, getOptions, setOption, setOptions }) => {
       const debounceDelay = getOptions().debounceDelay;
 
@@ -205,7 +199,7 @@ export const CopilotPlugin = createTPlatePlugin<CopilotPluginConfig>({
 
           if (abortController) {
             abortController.abort();
-            setOption('abortController', null);
+            setOption("abortController", null);
           }
         },
       };
@@ -230,10 +224,10 @@ export const CopilotPlugin = createTPlatePlugin<CopilotPluginConfig>({
     },
     shortcuts: {
       accept: {
-        keys: 'tab',
+        keys: "tab",
       },
       reject: {
-        keys: 'escape',
+        keys: "escape",
       },
     },
   });

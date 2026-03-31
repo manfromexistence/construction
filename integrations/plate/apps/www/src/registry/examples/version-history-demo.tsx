@@ -1,46 +1,47 @@
-'use client';
-
-import * as React from 'react';
+"use client";
 
 import {
+  computeDiff,
   type DiffOperation,
   type DiffUpdate,
-  computeDiff,
   withGetFragmentExcludeDiff,
-} from '@platejs/diff';
-import { cloneDeep } from 'lodash';
-import { type Value, createSlatePlugin, KEYS } from 'platejs';
-import { createPlatePlugin, toPlatePlugin, useSelected } from 'platejs/react';
+} from "@platejs/diff";
+import { cloneDeep } from "lodash";
+import { createSlatePlugin, KEYS, type Value } from "platejs";
 import {
-  type PlateElementProps,
-  type PlateLeafProps,
-  type PlateProps,
   createPlateEditor,
+  createPlatePlugin,
   Plate,
   PlateContent,
   PlateElement,
+  type PlateElementProps,
   PlateLeaf,
+  type PlateLeafProps,
+  type PlateProps,
+  toPlatePlugin,
   usePlateEditor,
-} from 'platejs/react';
+  useSelected,
+} from "platejs/react";
+import * as React from "react";
 
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { BasicMarksKit } from '@/registry/components/editor/plugins/basic-marks-kit';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { BasicMarksKit } from "@/registry/components/editor/plugins/basic-marks-kit";
 
 const InlinePlugin = createPlatePlugin({
-  key: 'inline',
+  key: "inline",
   node: { isElement: true, isInline: true },
 });
 
 const InlineVoidPlugin = createPlatePlugin({
-  key: 'inline-void',
+  key: "inline-void",
   node: { isElement: true, isInline: true, isVoid: true },
 });
 
-const diffOperationColors: Record<DiffOperation['type'], string> = {
-  delete: 'bg-red-200',
-  insert: 'bg-green-200',
-  update: 'bg-blue-200',
+const diffOperationColors: Record<DiffOperation["type"], string> = {
+  delete: "bg-red-200",
+  insert: "bg-green-200",
+  update: "bg-blue-200",
 };
 
 const describeUpdate = ({ newProperties, properties }: DiffUpdate) => {
@@ -69,20 +70,18 @@ const describeUpdate = ({ newProperties, properties }: DiffUpdate) => {
   const descriptionParts: string[] = [];
 
   if (addedProps.length > 0) {
-    descriptionParts.push(`Added ${addedProps.join(', ')}`);
+    descriptionParts.push(`Added ${addedProps.join(", ")}`);
   }
   if (removedProps.length > 0) {
-    descriptionParts.push(`Removed ${removedProps.join(', ')}`);
+    descriptionParts.push(`Removed ${removedProps.join(", ")}`);
   }
   if (updatedProps.length > 0) {
     updatedProps.forEach((key) => {
-      descriptionParts.push(
-        `Updated ${key} from ${properties[key]} to ${newProperties[key]}`
-      );
+      descriptionParts.push(`Updated ${key} from ${properties[key]} to ${newProperties[key]}`);
     });
   }
 
-  return descriptionParts.join('\n');
+  return descriptionParts.join("\n");
 };
 
 const InlineElement = ({ children, ...props }: PlateElementProps) => (
@@ -97,10 +96,7 @@ const InlineVoidElement = ({ children, ...props }: PlateElementProps) => {
   return (
     <PlateElement {...props} as="span">
       <span
-        className={cn(
-          'rounded-sm bg-slate-200/50 p-1',
-          selected && 'bg-blue-500 text-white'
-        )}
+        className={cn("rounded-sm bg-slate-200/50 p-1", selected && "bg-blue-500 text-white")}
         contentEditable={false}
       >
         Inline void
@@ -112,7 +108,7 @@ const InlineVoidElement = ({ children, ...props }: PlateElementProps) => {
 
 const DiffPlugin = toPlatePlugin(
   createSlatePlugin({
-    key: 'diff',
+    key: "diff",
     node: { isLeaf: true },
   }).overrideEditor(withGetFragmentExcludeDiff),
   {
@@ -127,22 +123,18 @@ const DiffPlugin = toPlatePlugin(
 
           const label = (
             {
-              delete: 'deletion',
-              insert: 'insertion',
-              update: 'update',
+              delete: "deletion",
+              insert: "insertion",
+              update: "update",
             } as any
           )[diffOperation.type];
 
-          const Component = editor.api.isInline(element) ? 'span' : 'div';
+          const Component = editor.api.isInline(element) ? "span" : "div";
 
           return (
             <Component
               className={diffOperationColors[diffOperation.type]}
-              title={
-                diffOperation.type === 'update'
-                  ? describeUpdate(diffOperation)
-                  : undefined
-              }
+              title={diffOperation.type === "update" ? describeUpdate(diffOperation) : undefined}
               aria-label={label}
             >
               {children}
@@ -158,9 +150,9 @@ function DiffLeaf({ children, ...props }: PlateLeafProps) {
 
   const _Component = (
     {
-      delete: 'del',
-      insert: 'ins',
-      update: 'span',
+      delete: "del",
+      insert: "ins",
+      update: "span",
     } as any
   )[diffOperation.type];
 
@@ -171,10 +163,7 @@ function DiffLeaf({ children, ...props }: PlateLeafProps) {
       className={diffOperationColors[diffOperation.type]}
       attributes={{
         ...props.attributes,
-        title:
-          diffOperation.type === 'update'
-            ? describeUpdate(diffOperation)
-            : undefined,
+        title: diffOperation.type === "update" ? describeUpdate(diffOperation) : undefined,
       }}
     >
       {children}
@@ -184,30 +173,30 @@ function DiffLeaf({ children, ...props }: PlateLeafProps) {
 
 const initialValue: Value = [
   {
-    children: [{ text: 'This is a version history demo.' }],
+    children: [{ text: "This is a version history demo." }],
     type: KEYS.p,
   },
   {
     children: [
-      { text: 'Try editing the ' },
-      { bold: true, text: 'text and see what' },
-      { text: ' happens.' },
+      { text: "Try editing the " },
+      { bold: true, text: "text and see what" },
+      { text: " happens." },
     ],
     type: KEYS.p,
   },
   {
     children: [
-      { text: 'This is an ' },
-      { children: [{ text: '' }], type: InlineVoidPlugin.key },
-      { text: '. Try removing it.' },
+      { text: "This is an " },
+      { children: [{ text: "" }], type: InlineVoidPlugin.key },
+      { text: ". Try removing it." },
     ],
     type: KEYS.p,
   },
   {
     children: [
-      { text: 'This is an ' },
-      { children: [{ text: 'editable inline' }], type: InlinePlugin.key },
-      { text: '. Try editing it.' },
+      { text: "This is an " },
+      { children: [{ text: "editable inline" }], type: InlinePlugin.key },
+      { text: ". Try editing it." },
     ],
     type: KEYS.p,
   },
@@ -223,7 +212,7 @@ const basePlugins = [
 
 const diffPlugins = [...basePlugins, DiffPlugin];
 
-function VersionHistoryPlate(props: Omit<PlateProps, 'children'>) {
+function VersionHistoryPlate(props: Omit<PlateProps, "children">) {
   return (
     <Plate {...props}>
       <PlateContent className="rounded-md border p-3" />
@@ -242,14 +231,10 @@ function Diff({ current, previous }: DiffProps) {
       plugins: diffPlugins,
     });
 
-    return computeDiff(
-      createVersionSnapshot(previous),
-      createVersionSnapshot(current),
-      {
-        isInline: editor.api.isInline,
-        lineBreakChar: '¶',
-      }
-    ) as Value;
+    return computeDiff(createVersionSnapshot(previous), createVersionSnapshot(current), {
+      isInline: editor.api.isInline,
+      lineBreakChar: "¶",
+    }) as Value;
   }, [previous, current]);
 
   const editor = usePlateEditor(
@@ -262,11 +247,7 @@ function Diff({ current, previous }: DiffProps) {
 
   return (
     <>
-      <VersionHistoryPlate
-        key={JSON.stringify(diffValue)}
-        readOnly
-        editor={editor}
-      />
+      <VersionHistoryPlate key={JSON.stringify(diffValue)} readOnly editor={editor} />
 
       {/* <pre>{JSON.stringify(diffValue, null, 2)}</pre> */}
     </>
@@ -277,11 +258,8 @@ export default function VersionHistoryDemo() {
   const [revisions, setRevisions] = React.useState<Value[]>(() => [
     createVersionSnapshot(initialValue),
   ]);
-  const [selectedRevisionIndex, setSelectedRevisionIndex] =
-    React.useState<number>(0);
-  const [value, setValue] = React.useState<Value>(() =>
-    createVersionSnapshot(initialValue)
-  );
+  const [selectedRevisionIndex, setSelectedRevisionIndex] = React.useState<number>(0);
+  const [value, setValue] = React.useState<Value>(() => createVersionSnapshot(initialValue));
 
   const selectedRevisionValue = React.useMemo(
     () => revisions[selectedRevisionIndex],
@@ -331,11 +309,7 @@ export default function VersionHistoryDemo() {
       <div className="grid gap-3 md:grid-cols-2">
         <div>
           <h2>Revision {selectedRevisionIndex + 1}</h2>
-          <VersionHistoryPlate
-            key={selectedRevisionIndex}
-            readOnly
-            editor={editorRevision}
-          />
+          <VersionHistoryPlate key={selectedRevisionIndex} readOnly editor={editorRevision} />
         </div>
 
         <div>

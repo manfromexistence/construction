@@ -1,14 +1,14 @@
-import { ThemeStyles } from "@/types/theme";
 import {
-  pgTable,
-  json,
-  timestamp,
   boolean,
-  text,
-  integer,
-  primaryKey,
   index,
+  integer,
+  json,
+  pgTable,
+  primaryKey,
+  text,
+  timestamp,
 } from "drizzle-orm/pg-core";
+import { ThemeStyles } from "@/types/theme";
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),

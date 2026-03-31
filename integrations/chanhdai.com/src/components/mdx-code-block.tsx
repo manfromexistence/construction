@@ -1,35 +1,30 @@
-import { cn } from "@/lib/utils"
-import type { NpmCommands } from "@/types/unist"
+import { cn } from "@/lib/utils";
+import type { NpmCommands } from "@/types/unist";
 
-import { CodeBlockCommand } from "./code-block-command"
-import { CopyButton } from "./copy-button"
-import { getIconForLanguageExtension } from "./icons"
+import { CodeBlockCommand } from "./code-block-command";
+import { CopyButton } from "./copy-button";
+import { getIconForLanguageExtension } from "./icons";
 
 export const mdxCodeBlockComponents = {
   figure({ className, ...props }: React.ComponentProps<"figure">) {
-    const hasPrettyCode = "data-rehype-pretty-code-figure" in props
+    const hasPrettyCode = "data-rehype-pretty-code-figure" in props;
 
-    return (
-      <figure
-        className={cn(hasPrettyCode && "not-prose", className)}
-        {...props}
-      />
-    )
+    return <figure className={cn(hasPrettyCode && "not-prose", className)} {...props} />;
   },
   figcaption: ({ children, ...props }: React.ComponentProps<"figcaption">) => {
     const iconExtension =
       "data-language" in props && typeof props["data-language"] === "string"
         ? getIconForLanguageExtension(props["data-language"])
-        : null
+        : null;
 
-    const hasCodeTitle = "data-rehype-pretty-code-title" in props
+    const hasCodeTitle = "data-rehype-pretty-code-title" in props;
 
     return (
       <figcaption {...props}>
         {iconExtension}
         {hasCodeTitle ? <p className="truncate">{children}</p> : children}
       </figcaption>
-    )
+    );
   },
   pre({
     __withMeta__,
@@ -43,10 +38,10 @@ export const mdxCodeBlockComponents = {
     className,
     ...props
   }: React.ComponentProps<"pre"> & {
-    __withMeta__?: boolean
-    __rawString__?: string
+    __withMeta__?: boolean;
+    __rawString__?: string;
   } & NpmCommands) {
-    const isNpmCommand = __pnpm__ && __yarn__ && __npm__ && __bun__
+    const isNpmCommand = __pnpm__ && __yarn__ && __npm__ && __bun__;
 
     if (isNpmCommand) {
       return (
@@ -56,16 +51,13 @@ export const mdxCodeBlockComponents = {
           __npm__={__npm__}
           __bun__={__bun__}
         />
-      )
+      );
     }
 
     return (
       <>
         <pre
-          className={cn(
-            __rawString__ && !__withMeta__ && "[--code-padding-right:6rem]",
-            className
-          )}
+          className={cn(__rawString__ && !__withMeta__ && "[--code-padding-right:6rem]", className)}
           {...props}
         />
 
@@ -92,6 +84,6 @@ export const mdxCodeBlockComponents = {
           </>
         )}
       </>
-    )
+    );
   },
-}
+};

@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Dot Pattern with glow effect",
   "description": "Example showing a dot pattern with glow effect",
-  "registryDependencies": [
-    "@magicui/dot-pattern"
-  ],
+  "registryDependencies": ["@magicui/dot-pattern"],
   "files": [
     {
       "path": "registry/example/dot-pattern-with-glow-effect.tsx",

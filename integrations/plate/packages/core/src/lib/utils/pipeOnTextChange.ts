@@ -1,6 +1,6 @@
-import type { Descendant, TextOperation } from '@platejs/slate';
+import type { Descendant, TextOperation } from "@platejs/slate";
 
-import type { SlateEditor } from '../editor/SlateEditor';
+import type { SlateEditor } from "../editor/SlateEditor";
 
 // biome-ignore lint/nursery/useMaxParams: All 5 parameters are necessary for text change handling
 export const pipeOnTextChange = (

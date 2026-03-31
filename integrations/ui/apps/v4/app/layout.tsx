@@ -1,19 +1,18 @@
-import type { Metadata } from "next"
-import { NuqsAdapter } from "nuqs/adapters/next/app"
+import type { Metadata } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { ActiveThemeProvider } from "@/components/active-theme";
+import { Analytics } from "@/components/analytics";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { ThemeProvider } from "@/components/theme-provider";
+import { LayoutProvider } from "@/hooks/use-layout";
+import { META_THEME_COLORS, siteConfig } from "@/lib/config";
+import { fontVariables } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
+import { TooltipProvider as BaseTooltipProvider } from "@/registry/bases/base/ui/tooltip";
+import { Toaster } from "@/registry/bases/radix/ui/sonner";
+import { TooltipProvider as RadixTooltipProvider } from "@/registry/bases/radix/ui/tooltip";
 
-import { META_THEME_COLORS, siteConfig } from "@/lib/config"
-import { fontVariables } from "@/lib/fonts"
-import { cn } from "@/lib/utils"
-import { LayoutProvider } from "@/hooks/use-layout"
-import { ActiveThemeProvider } from "@/components/active-theme"
-import { Analytics } from "@/components/analytics"
-import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
-import { TooltipProvider as BaseTooltipProvider } from "@/registry/bases/base/ui/tooltip"
-import { Toaster } from "@/registry/bases/radix/ui/sonner"
-import { TooltipProvider as RadixTooltipProvider } from "@/registry/bases/radix/ui/tooltip"
-
-import "@/app/globals.css"
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: {
@@ -64,12 +63,12 @@ export const metadata: Metadata = {
       "application/rss+xml": `${siteConfig.url}/rss.xml`,
     },
   },
-}
+};
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode
+  children: React.ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={fontVariables}>
@@ -113,5 +112,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }

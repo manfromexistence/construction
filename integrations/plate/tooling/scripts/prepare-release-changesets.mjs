@@ -1,28 +1,17 @@
 #!/usr/bin/env node
 
-import { spawnSync } from 'node:child_process';
-import { readFileSync } from 'node:fs';
-import {
-  access,
-  mkdir,
-  readFile,
-  readdir,
-  rm,
-  writeFile,
-} from 'node:fs/promises';
-import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { spawnSync } from "node:child_process";
+import { readFileSync } from "node:fs";
+import { access, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(scriptDir, '..', '..');
-const changesetDir = path.join(repoRoot, '.changeset');
-const autoChangesetFilenamePrefix = 'auto-runtime-dependent-';
-const legacyAutoChangesetFilename = 'auto-runtime-dependents.md';
-const statusOutputPath = path.join(
-  repoRoot,
-  '.tmp',
-  'prepare-release-changesets-status.json'
-);
+const repoRoot = path.resolve(scriptDir, "..", "..");
+const changesetDir = path.join(repoRoot, ".changeset");
+const autoChangesetFilenamePrefix = "auto-runtime-dependent-";
+const legacyAutoChangesetFilename = "auto-runtime-dependents.md";
+const statusOutputPath = path.join(repoRoot, ".tmp", "prepare-release-changesets-status.json");
 const scopePrefixPattern = /^@/;
 
 if (isMainModule()) {
@@ -37,46 +26,35 @@ async function main() {
 
   if (manualChangesetPaths.length === 0) {
     await cleanupAutoChangesets();
-    console.log(
-      'No pending manual changesets. Skipping auto release changeset.'
-    );
+    console.log("No pending manual changesets. Skipping auto release changeset.");
     return;
   }
 
   const status = getChangesetStatus();
-  const autoReleasePackages = getAutoReleasePackages(
-    status.releases,
-    workspacePackages
-  );
+  const autoReleasePackages = getAutoReleasePackages(status.releases, workspacePackages);
 
   if (autoReleasePackages.length === 0) {
     await cleanupAutoChangesets();
-    console.log(
-      'No runtime dependents require an automated release changeset.'
-    );
+    console.log("No runtime dependents require an automated release changeset.");
     return;
   }
 
   await syncAutoChangesets(autoReleasePackages);
 
   console.log(
-    `Created auto release changeset for: ${autoReleasePackages.map((pkg) => pkg.name).join(', ')}`
+    `Created auto release changeset for: ${autoReleasePackages.map((pkg) => pkg.name).join(", ")}`
   );
 }
 
 function isMainModule() {
   const entrypoint = process.argv[1];
 
-  return (
-    !!entrypoint && path.resolve(entrypoint) === fileURLToPath(import.meta.url)
-  );
+  return !!entrypoint && path.resolve(entrypoint) === fileURLToPath(import.meta.url);
 }
 
 export function getAutoReleasePackages(releases, workspacePackages) {
   const releasedPackageNames = new Set(
-    releases
-      .filter((release) => release.type !== 'none')
-      .map((release) => release.name)
+    releases.filter((release) => release.type !== "none").map((release) => release.name)
   );
   const autoReleasePackageNames = new Set();
   const queue = [...releasedPackageNames];
@@ -84,12 +62,9 @@ export function getAutoReleasePackages(releases, workspacePackages) {
   while (queue.length > 0) {
     const dependencyName = queue.shift();
 
-    for (const dependentName of workspacePackages.get(dependencyName)
-      ?.runtimeDependentNames ?? []) {
-      if (
-        releasedPackageNames.has(dependentName) ||
-        autoReleasePackageNames.has(dependentName)
-      ) {
+    for (const dependentName of workspacePackages.get(dependencyName)?.runtimeDependentNames ??
+      []) {
+      if (releasedPackageNames.has(dependentName) || autoReleasePackageNames.has(dependentName)) {
         continue;
       }
 
@@ -98,44 +73,34 @@ export function getAutoReleasePackages(releases, workspacePackages) {
     }
   }
 
-  const versionedPackageNames = new Set([
-    ...releasedPackageNames,
-    ...autoReleasePackageNames,
-  ]);
+  const versionedPackageNames = new Set([...releasedPackageNames, ...autoReleasePackageNames]);
 
   return [...autoReleasePackageNames].sort().map((packageName) => ({
     name: packageName,
     updatedDependencyNames: workspacePackages
       .get(packageName)
-      ?.runtimeDependencyNames.filter((dependencyName) =>
-        versionedPackageNames.has(dependencyName)
-      )
+      ?.runtimeDependencyNames.filter((dependencyName) => versionedPackageNames.has(dependencyName))
       .sort(),
   }));
 }
 
-export function createAutoChangesetContent(
-  packageName,
-  updatedDependencyNames
-) {
+export function createAutoChangesetContent(packageName, updatedDependencyNames) {
   return `---\n"${packageName}": patch\n---\n\nUpdated ${updatedDependencyNames
     .map((dependencyName) => `\`${dependencyName}\``)
-    .join(', ')}.\n`;
+    .join(", ")}.\n`;
 }
 
 async function getWorkspacePackages() {
   const workspacePackageDirectories = [
-    path.join(repoRoot, 'packages'),
-    path.join(repoRoot, 'packages', 'udecode'),
+    path.join(repoRoot, "packages"),
+    path.join(repoRoot, "packages", "udecode"),
   ];
   const workspacePackages = new Map();
 
   for (const workspacePackageDirectory of workspacePackageDirectories) {
-    for (const packageDirectory of await listDirectories(
-      workspacePackageDirectory
-    )) {
-      const packageJsonPath = path.join(packageDirectory, 'package.json');
-      const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8'));
+    for (const packageDirectory of await listDirectories(workspacePackageDirectory)) {
+      const packageJsonPath = path.join(packageDirectory, "package.json");
+      const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
 
       workspacePackages.set(packageJson.name, {
         packageJson,
@@ -152,17 +117,15 @@ async function getWorkspacePackages() {
       .filter(
         ([dependencyName, version]) =>
           workspacePackages.has(dependencyName) &&
-          typeof version === 'string' &&
-          version.startsWith('workspace:')
+          typeof version === "string" &&
+          version.startsWith("workspace:")
       )
       .map(([dependencyName]) => dependencyName);
   }
 
   for (const [packageName, workspacePackage] of workspacePackages) {
     for (const dependencyName of workspacePackage.runtimeDependencyNames) {
-      workspacePackages
-        .get(dependencyName)
-        ?.runtimeDependentNames.push(packageName);
+      workspacePackages.get(dependencyName)?.runtimeDependentNames.push(packageName);
     }
   }
 
@@ -176,8 +139,8 @@ async function getManualChangesetPaths() {
     .filter(
       (entry) =>
         entry.isFile() &&
-        entry.name.endsWith('.md') &&
-        entry.name !== 'README.md' &&
+        entry.name.endsWith(".md") &&
+        entry.name !== "README.md" &&
         entry.name !== legacyAutoChangesetFilename &&
         !entry.name.startsWith(autoChangesetFilenamePrefix)
     )
@@ -187,14 +150,14 @@ async function getManualChangesetPaths() {
 
 function getChangesetStatus() {
   const result = spawnSync(
-    'pnpm',
-    ['exec', 'changeset', 'status', `--output=${statusOutputPath}`],
+    "pnpm",
+    ["exec", "changeset", "status", `--output=${statusOutputPath}`],
     {
       cwd: repoRoot,
-      encoding: 'utf8',
+      encoding: "utf8",
       env: {
         ...process.env,
-        CI: process.env.CI || '1',
+        CI: process.env.CI || "1",
       },
     }
   );
@@ -217,10 +180,10 @@ async function listDirectories(parentDirectory) {
     const directoryPath = path.join(parentDirectory, entry.name);
 
     try {
-      await access(path.join(directoryPath, 'package.json'));
+      await access(path.join(directoryPath, "package.json"));
       directories.push(directoryPath);
     } catch (error) {
-      if (error?.code !== 'ENOENT') throw error;
+      if (error?.code !== "ENOENT") throw error;
     }
   }
 
@@ -277,19 +240,19 @@ async function syncAutoChangesets(autoReleasePackages) {
 
 async function readOptionalFile(filePath) {
   try {
-    return await readFile(filePath, 'utf8');
+    return await readFile(filePath, "utf8");
   } catch (error) {
-    if (error?.code === 'ENOENT') return null;
+    if (error?.code === "ENOENT") return null;
     throw error;
   }
 }
 
 function sanitizePackageName(packageName) {
-  return packageName.replace(scopePrefixPattern, '').replaceAll('/', '-');
+  return packageName.replace(scopePrefixPattern, "").replaceAll("/", "-");
 }
 
 export { autoChangesetFilenamePrefix };
 
 function readFileSyncUtf8(filePath) {
-  return readFileSync(filePath, 'utf8');
+  return readFileSync(filePath, "utf8");
 }

@@ -1,12 +1,11 @@
 "use client";
 
+import { motion } from "motion/react";
+import { lazy, Suspense } from "react";
+import { ThemePresetButtons } from "@/components/home/theme-preset-buttons";
 import { Badge } from "@/components/ui/badge";
 import { useEditorStore } from "@/store/editor-store";
 import { defaultPresets } from "@/utils/theme-presets";
-import { motion } from "motion/react";
-
-import { ThemePresetButtons } from "@/components/home/theme-preset-buttons";
-import { lazy, Suspense } from "react";
 import { GithubCard } from "../examples/cards/github-card";
 import { CardsStats } from "../examples/cards/stats";
 import { Loading } from "../loading";

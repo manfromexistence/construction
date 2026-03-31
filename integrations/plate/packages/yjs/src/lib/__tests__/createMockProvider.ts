@@ -1,13 +1,10 @@
-import { Awareness } from 'y-protocols/awareness';
-import * as Y from 'yjs';
+import { Awareness } from "y-protocols/awareness";
+import * as Y from "yjs";
 
-import type { UnifiedProvider } from '../providers/types';
-import { mockFn } from './mockFn';
+import type { UnifiedProvider } from "../providers/types";
+import { mockFn } from "./mockFn";
 
-export type MockProvider = Omit<
-  UnifiedProvider,
-  'connect' | 'destroy' | 'disconnect'
-> & {
+export type MockProvider = Omit<UnifiedProvider, "connect" | "destroy" | "disconnect"> & {
   connect: ReturnType<typeof mockFn<() => void>>;
   destroy: ReturnType<typeof mockFn<() => void>>;
   disconnect: ReturnType<typeof mockFn<() => void>>;
@@ -23,7 +20,7 @@ export const createMockProvider = ({
   onDestroy,
   onDisconnect,
   synced = false,
-  type = 'webrtc',
+  type = "webrtc",
 }: {
   awareness?: Awareness;
   connected?: boolean;

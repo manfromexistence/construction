@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { useLanguageContext } from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { Checkbox } from "@/styles/base-nova/ui-rtl/checkbox"
+import { useLanguageContext } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { Checkbox } from "@/styles/base-nova/ui-rtl/checkbox";
 import {
   Field,
   FieldDescription,
@@ -11,8 +11,8 @@ import {
   FieldLegend,
   FieldSeparator,
   FieldSet,
-} from "@/styles/base-nova/ui-rtl/field"
-import { Input } from "@/styles/base-nova/ui-rtl/input"
+} from "@/styles/base-nova/ui-rtl/field";
+import { Input } from "@/styles/base-nova/ui-rtl/input";
 import {
   Select,
   SelectContent,
@@ -20,8 +20,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/base-nova/ui-rtl/select"
-import { Textarea } from "@/styles/base-nova/ui-rtl/textarea"
+} from "@/styles/base-nova/ui-rtl/select";
+import { Textarea } from "@/styles/base-nova/ui-rtl/textarea";
 
 const translations = {
   ar: {
@@ -64,44 +64,44 @@ const translations = {
     submit: "שלח",
     cancel: "ביטול",
   },
-}
+};
 
 function formatCardNumber(locale: string) {
-  const formatter = new Intl.NumberFormat(locale, { useGrouping: false })
-  return `${formatter.format(1234)} ${formatter.format(5678)} ${formatter.format(9012)} ${formatter.format(3456)}`
+  const formatter = new Intl.NumberFormat(locale, { useGrouping: false });
+  return `${formatter.format(1234)} ${formatter.format(5678)} ${formatter.format(9012)} ${formatter.format(3456)}`;
 }
 
 function formatCvv(locale: string) {
-  return new Intl.NumberFormat(locale, { useGrouping: false }).format(123)
+  return new Intl.NumberFormat(locale, { useGrouping: false }).format(123);
 }
 
 function getMonths(locale: string) {
   const formatter = new Intl.NumberFormat(locale, {
     minimumIntegerDigits: 2,
     useGrouping: false,
-  })
+  });
   return Array.from({ length: 12 }, (_, i) => {
-    const value = String(i + 1).padStart(2, "0")
-    return { label: formatter.format(i + 1), value }
-  })
+    const value = String(i + 1).padStart(2, "0");
+    return { label: formatter.format(i + 1), value };
+  });
 }
 
 function getYears(locale: string) {
-  const formatter = new Intl.NumberFormat(locale, { useGrouping: false })
+  const formatter = new Intl.NumberFormat(locale, { useGrouping: false });
   return Array.from({ length: 6 }, (_, i) => {
-    const year = 2024 + i
-    return { label: formatter.format(year), value: String(year) }
-  })
+    const year = 2024 + i;
+    return { label: formatter.format(year), value: String(year) };
+  });
 }
 
 export function FieldDemo() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
-  const months = getMonths(t.locale)
-  const years = getYears(t.locale)
-  const cardPlaceholder = formatCardNumber(t.locale)
-  const cvvPlaceholder = formatCvv(t.locale)
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
+  const months = getMonths(t.locale);
+  const years = getYears(t.locale);
+  const cardPlaceholder = formatCardNumber(t.locale);
+  const cvvPlaceholder = formatCvv(t.locale);
 
   return (
     <div dir={t.dir} className="w-full max-w-md rounded-lg border p-6">
@@ -113,22 +113,12 @@ export function FieldDemo() {
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="rtl-card-name">{t.nameOnCard}</FieldLabel>
-                <Input
-                  id="rtl-card-name"
-                  placeholder={t.namePlaceholder}
-                  required
-                />
+                <Input id="rtl-card-name" placeholder={t.namePlaceholder} required />
               </Field>
               <div className="grid grid-cols-3 gap-4">
                 <Field className="col-span-2">
-                  <FieldLabel htmlFor="rtl-card-number">
-                    {t.cardNumber}
-                  </FieldLabel>
-                  <Input
-                    id="rtl-card-number"
-                    placeholder={cardPlaceholder}
-                    required
-                  />
+                  <FieldLabel htmlFor="rtl-card-number">{t.cardNumber}</FieldLabel>
+                  <Input id="rtl-card-number" placeholder={cardPlaceholder} required />
                   <FieldDescription>{t.cardDescription}</FieldDescription>
                 </Field>
                 <Field className="col-span-1">
@@ -181,10 +171,7 @@ export function FieldDemo() {
             <FieldGroup>
               <Field orientation="horizontal">
                 <Checkbox id="rtl-same-as-shipping" defaultChecked />
-                <FieldLabel
-                  htmlFor="rtl-same-as-shipping"
-                  className="font-normal"
-                >
+                <FieldLabel htmlFor="rtl-same-as-shipping" className="font-normal">
                   {t.sameAsShipping}
                 </FieldLabel>
               </Field>
@@ -212,5 +199,5 @@ export function FieldDemo() {
         </FieldGroup>
       </form>
     </div>
-  )
+  );
 }

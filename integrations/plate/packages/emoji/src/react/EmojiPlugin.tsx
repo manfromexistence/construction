@@ -1,6 +1,6 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseEmojiInputPlugin, BaseEmojiPlugin } from '../lib';
+import { BaseEmojiInputPlugin, BaseEmojiPlugin } from "../lib";
 
 export const EmojiInputPlugin = toPlatePlugin(BaseEmojiInputPlugin);
 

@@ -1,11 +1,8 @@
-import { deserializeMd } from '@platejs/markdown';
-import { diffToSuggestions } from '@platejs/suggestion';
-import { type SlateEditor, type TElement, ElementApi } from 'platejs';
+import { deserializeMd } from "@platejs/markdown";
+import { diffToSuggestions } from "@platejs/suggestion";
+import { ElementApi, type SlateEditor, type TElement } from "platejs";
 
-import {
-  withoutSuggestionAndComments,
-  withTransient,
-} from './applyAISuggestions';
+import { withoutSuggestionAndComments, withTransient } from "./applyAISuggestions";
 
 export type TableCellUpdate = {
   content: string;
@@ -17,10 +14,7 @@ export type TableCellUpdate = {
  * cell by ID, deserializes the markdown content, computes diff, and replaces
  * the cell's children with suggestion-marked nodes.
  */
-export const applyTableCellSuggestion = (
-  editor: SlateEditor,
-  cellUpdate: TableCellUpdate
-) => {
+export const applyTableCellSuggestion = (editor: SlateEditor, cellUpdate: TableCellUpdate) => {
   const { content, id } = cellUpdate;
 
   // Find the cell by id
@@ -44,7 +38,7 @@ export const applyTableCellSuggestion = (
 
   // Compute diff
   const diffNodes = diffToSuggestions(editor, originalChildren, aiNodes, {
-    ignoreProps: ['id'],
+    ignoreProps: ["id"],
   });
 
   // Add transient suggestion key to all nodes

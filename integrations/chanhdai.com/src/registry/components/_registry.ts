@@ -1,14 +1,13 @@
-import type { Registry } from "shadcn/schema"
+import type { Registry } from "shadcn/schema";
 
-import { getRegistryItemUrl } from "@/utils/registry"
+import { getRegistryItemUrl } from "@/utils/registry";
 
 export const components: Registry["items"] = [
   {
     name: "theme-switcher",
     type: "registry:component",
     title: "Theme Switcher",
-    description:
-      "Toggle between system, light, and dark themes in Next.js apps.",
+    description: "Toggle between system, light, and dark themes in Next.js apps.",
     dependencies: ["next-themes", "lucide-react", "motion"],
     files: [
       {
@@ -22,8 +21,7 @@ export const components: Registry["items"] = [
     name: "text-flip",
     type: "registry:component",
     title: "Text Flip",
-    description:
-      "Animated text that cycles through items with a smooth flip transition.",
+    description: "Animated text that cycles through items with a smooth flip transition.",
     dependencies: ["motion"],
     files: [
       {
@@ -78,8 +76,7 @@ export const components: Registry["items"] = [
     name: "typography",
     type: "registry:component",
     title: "Typography",
-    description:
-      "Custom prose styles for headings, links, inline code, and emphasis.",
+    description: "Custom prose styles for headings, links, inline code, and emphasis.",
     devDependencies: ["@tailwindcss/typography"],
     css: {
       "@plugin @tailwindcss/typography": {},
@@ -98,8 +95,7 @@ export const components: Registry["items"] = [
     name: "work-experience",
     type: "registry:component",
     title: "Work Experience",
-    description:
-      "Display work experiences with role details, company logos, and durations.",
+    description: "Display work experiences with role details, company logos, and durations.",
     dependencies: ["react-markdown", "lucide-react"],
     registryDependencies: [
       "collapsible",
@@ -132,8 +128,7 @@ export const components: Registry["items"] = [
     name: "slide-to-unlock",
     type: "registry:component",
     title: "Slide to Unlock",
-    description:
-      "Interactive slider inspired by the classic iPhone 'slide to unlock' gesture.",
+    description: "Interactive slider inspired by the classic iPhone 'slide to unlock' gesture.",
     dependencies: ["motion"],
     registryDependencies: [getRegistryItemUrl("shimmering-text")],
     files: [
@@ -149,18 +144,14 @@ export const components: Registry["items"] = [
     type: "registry:component",
     title: "Testimonials Marquee",
     description: "Scrolling marquee to showcase user testimonials.",
-    registryDependencies: [
-      "@kibo-ui/marquee",
-      getRegistryItemUrl("testimonial"),
-    ],
+    registryDependencies: ["@kibo-ui/marquee", getRegistryItemUrl("testimonial")],
     docs: "https://chanhdai.com/components/testimonials-marquee",
   },
   {
     name: "testimonial",
     type: "registry:component",
     title: "Testimonial",
-    description:
-      "Display user feedback with author info, avatar, and verified badge.",
+    description: "Display user feedback with author info, avatar, and verified badge.",
     files: [
       {
         path: "components/testimonial/testimonial.tsx",
@@ -172,8 +163,7 @@ export const components: Registry["items"] = [
     name: "github-stars",
     type: "registry:component",
     title: "GitHub Stars",
-    description:
-      "Display GitHub repo star count with formatted numbers and full-count tooltip.",
+    description: "Display GitHub repo star count with formatted numbers and full-count tooltip.",
     registryDependencies: ["button", "tooltip"],
     files: [
       {
@@ -186,8 +176,7 @@ export const components: Registry["items"] = [
     name: "scroll-fade-effect",
     type: "registry:component",
     title: "Scroll Fade Effect",
-    description:
-      "Fade content edges as you scroll, for both vertical and horizontal layouts.",
+    description: "Fade content edges as you scroll, for both vertical and horizontal layouts.",
     files: [
       {
         path: "components/scroll-fade-effect/scroll-fade-effect.tsx",
@@ -244,16 +233,13 @@ export const components: Registry["items"] = [
         "--scroll-buffer": "2rem",
         "mask-image":
           "linear-gradient(to top, transparent, black 90%), linear-gradient(to bottom, transparent 0%, black 100%), linear-gradient(black, black)",
-        "mask-size":
-          "100% var(--top-mask-height), 100% var(--bottom-mask-height), 100% 100%",
+        "mask-size": "100% var(--top-mask-height), 100% var(--bottom-mask-height), 100% 100%",
         "mask-repeat": "no-repeat, no-repeat, no-repeat",
-        "mask-position":
-          "0 var(--mask-offset-top), 0 calc(100% - var(--mask-offset-bottom)), 0 0",
+        "mask-position": "0 var(--mask-offset-top), 0 calc(100% - var(--mask-offset-bottom)), 0 0",
         "mask-composite": "exclude",
         "animation-name": "show-top-mask, hide-bottom-mask",
         "animation-timeline": "scroll(self), scroll(self)",
-        "animation-range":
-          "0 var(--scroll-buffer), calc(100% - var(--scroll-buffer)) 100%",
+        "animation-range": "0 var(--scroll-buffer), calc(100% - var(--scroll-buffer)) 100%",
         "animation-fill-mode": "both",
       },
       "@utility scroll-fade-effect-x": {
@@ -263,16 +249,13 @@ export const components: Registry["items"] = [
         "--scroll-buffer": "2rem",
         "mask-image":
           "linear-gradient(to left, transparent, black 90%), linear-gradient(to right, transparent 0%, black 100%), linear-gradient(black, black)",
-        "mask-size":
-          "var(--left-mask-width) 100%, var(--right-mask-width) 100%, 100% 100%",
+        "mask-size": "var(--left-mask-width) 100%, var(--right-mask-width) 100%, 100% 100%",
         "mask-repeat": "no-repeat, no-repeat, no-repeat",
-        "mask-position":
-          "var(--mask-offset-left) 0, calc(100% - var(--mask-offset-right)) 0, 0 0",
+        "mask-position": "var(--mask-offset-left) 0, calc(100% - var(--mask-offset-right)) 0, 0 0",
         "mask-composite": "exclude",
         "animation-name": "show-left-mask, hide-right-mask",
         "animation-timeline": "scroll(self inline), scroll(self inline)",
-        "animation-range":
-          "0 var(--scroll-buffer), calc(100% - var(--scroll-buffer)) 100%",
+        "animation-range": "0 var(--scroll-buffer), calc(100% - var(--scroll-buffer)) 100%",
         "animation-fill-mode": "both",
       },
     },
@@ -281,8 +264,7 @@ export const components: Registry["items"] = [
     name: "consent-manager",
     type: "registry:component",
     title: "Consent Manager",
-    description:
-      "Cookie and tracking consent banner for Next.js, built on c15t.",
+    description: "Cookie and tracking consent banner for Next.js, built on c15t.",
     dependencies: ["@c15t/nextjs"],
     registryDependencies: ["button"],
     files: [
@@ -314,8 +296,7 @@ export const components: Registry["items"] = [
     name: "code-block-command",
     type: "registry:component",
     title: "Code Block Command",
-    description:
-      "Display install commands with package manager switcher and copy button.",
+    description: "Display install commands with package manager switcher and copy button.",
     dependencies: ["@base-ui/react", "lucide-react", "motion", "jotai"],
     registryDependencies: [getRegistryItemUrl("copy-button")],
     files: [
@@ -376,4 +357,4 @@ export const components: Registry["items"] = [
       },
     ],
   },
-]
+];

@@ -1,10 +1,7 @@
-import { isSelecting } from '@platejs/selection';
-import { type SlateEditor, KEYS } from 'platejs';
+import { isSelecting } from "@platejs/selection";
+import { KEYS, type SlateEditor } from "platejs";
 
-export type EditorPrompt =
-  | ((params: EditorPromptParams) => string)
-  | PromptConfig
-  | string;
+export type EditorPrompt = ((params: EditorPromptParams) => string) | PromptConfig | string;
 
 export type EditorPromptParams = {
   editor: SlateEditor;
@@ -18,10 +15,7 @@ export type PromptConfig = {
   selecting?: string;
 };
 
-const createPromptFromConfig = (
-  config: PromptConfig,
-  params: EditorPromptParams
-): string => {
+const createPromptFromConfig = (config: PromptConfig, params: EditorPromptParams): string => {
   const { isBlockSelecting, isSelecting } = params;
 
   if (isBlockSelecting && config.blockSelecting) {
@@ -36,25 +30,22 @@ const createPromptFromConfig = (
 export const getEditorPrompt = (
   editor: SlateEditor,
   {
-    prompt = '',
+    prompt = "",
   }: {
     prompt?: EditorPrompt;
   }
 ): string => {
   const params: EditorPromptParams = {
     editor,
-    isBlockSelecting: editor.getOption(
-      { key: KEYS.blockSelection },
-      'isSelectingSome'
-    ),
+    isBlockSelecting: editor.getOption({ key: KEYS.blockSelection }, "isSelectingSome"),
     isSelecting: isSelecting(editor),
   };
 
-  let promptText = '';
+  let promptText = "";
 
-  if (typeof prompt === 'function') {
+  if (typeof prompt === "function") {
     promptText = prompt(params);
-  } else if (typeof prompt === 'object') {
+  } else if (typeof prompt === "object") {
     promptText = createPromptFromConfig(prompt, params);
   } else {
     promptText = prompt;

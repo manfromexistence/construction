@@ -1,23 +1,20 @@
-"use client"
+"use client";
 
-import { useEffect, useMemo, useState } from "react"
-import {
-  transformerNotationDiff,
-  transformerNotationFocus,
-} from "@shikijs/transformers"
-import { FileIcon } from "lucide-react"
-import { useTheme } from "next-themes"
+import { transformerNotationDiff, transformerNotationFocus } from "@shikijs/transformers";
+import { FileIcon } from "lucide-react";
+import { useTheme } from "next-themes";
+import { useEffect, useMemo, useState } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 interface CodeComparisonProps {
-  beforeCode: string
-  afterCode: string
-  language: string
-  filename: string
-  lightTheme: string
-  darkTheme: string
-  highlightColor?: string
+  beforeCode: string;
+  afterCode: string;
+  language: string;
+  filename: string;
+  lightTheme: string;
+  darkTheme: string;
+  highlightColor?: string;
 }
 
 export function CodeComparison({
@@ -29,30 +26,29 @@ export function CodeComparison({
   darkTheme,
   highlightColor = "#ff3333",
 }: CodeComparisonProps) {
-  const { theme, systemTheme } = useTheme()
-  const [highlightedBefore, setHighlightedBefore] = useState("")
-  const [highlightedAfter, setHighlightedAfter] = useState("")
-  const [hasLeftFocus, setHasLeftFocus] = useState(false)
-  const [hasRightFocus, setHasRightFocus] = useState(false)
+  const { theme, systemTheme } = useTheme();
+  const [highlightedBefore, setHighlightedBefore] = useState("");
+  const [highlightedAfter, setHighlightedAfter] = useState("");
+  const [hasLeftFocus, setHasLeftFocus] = useState(false);
+  const [hasRightFocus, setHasRightFocus] = useState(false);
 
   const selectedTheme = useMemo(() => {
-    const currentTheme = theme === "system" ? systemTheme : theme
-    return currentTheme === "dark" ? darkTheme : lightTheme
-  }, [theme, systemTheme, darkTheme, lightTheme])
+    const currentTheme = theme === "system" ? systemTheme : theme;
+    return currentTheme === "dark" ? darkTheme : lightTheme;
+  }, [theme, systemTheme, darkTheme, lightTheme]);
 
   useEffect(() => {
     if (highlightedBefore || highlightedAfter) {
-      setHasLeftFocus(highlightedBefore.includes('class="line focused"'))
-      setHasRightFocus(highlightedAfter.includes('class="line focused"'))
+      setHasLeftFocus(highlightedBefore.includes('class="line focused"'));
+      setHasRightFocus(highlightedAfter.includes('class="line focused"'));
     }
-  }, [highlightedBefore, highlightedAfter])
+  }, [highlightedBefore, highlightedAfter]);
 
   useEffect(() => {
     async function highlightCode() {
       try {
-        const { codeToHtml } = await import("shiki")
-        const { transformerNotationHighlight } =
-          await import("@shikijs/transformers")
+        const { codeToHtml } = await import("shiki");
+        const { transformerNotationHighlight } = await import("@shikijs/transformers");
 
         const before = await codeToHtml(beforeCode, {
           lang: language,
@@ -62,7 +58,7 @@ export function CodeComparison({
             transformerNotationDiff({ matchAlgorithm: "v3" }),
             transformerNotationFocus({ matchAlgorithm: "v3" }),
           ],
-        })
+        });
         const after = await codeToHtml(afterCode, {
           lang: language,
           theme: selectedTheme,
@@ -71,17 +67,17 @@ export function CodeComparison({
             transformerNotationDiff({ matchAlgorithm: "v3" }),
             transformerNotationFocus({ matchAlgorithm: "v3" }),
           ],
-        })
-        setHighlightedBefore(before)
-        setHighlightedAfter(after)
+        });
+        setHighlightedBefore(before);
+        setHighlightedAfter(after);
       } catch (error) {
-        console.error("Error highlighting code:", error)
-        setHighlightedBefore(`<pre>${beforeCode}</pre>`)
-        setHighlightedAfter(`<pre>${afterCode}</pre>`)
+        console.error("Error highlighting code:", error);
+        setHighlightedBefore(`<pre>${beforeCode}</pre>`);
+        setHighlightedAfter(`<pre>${afterCode}</pre>`);
       }
     }
-    highlightCode()
-  }, [beforeCode, afterCode, language, selectedTheme])
+    highlightCode();
+  }, [beforeCode, afterCode, language, selectedTheme]);
 
   const renderCode = (code: string, highlighted: string) => {
     if (highlighted) {
@@ -102,15 +98,15 @@ export function CodeComparison({
           )}
           dangerouslySetInnerHTML={{ __html: highlighted }}
         />
-      )
+      );
     } else {
       return (
         <pre className="bg-background text-foreground h-full overflow-auto p-4 font-mono text-xs break-all">
           {code}
         </pre>
-      )
+      );
     }
-  }
+  };
 
   return (
     <div className="mx-auto w-full max-w-5xl">
@@ -152,5 +148,5 @@ export function CodeComparison({
         </div>
       </div>
     </div>
-  )
+  );
 }

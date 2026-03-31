@@ -14,9 +14,7 @@ export const ourFileRouter = {
     .middleware(async ({ req }) => {
       const limit = await checkRateLimit(req);
       if (!limit.success) {
-        throw new UploadThingError(
-          "Rate limit exceeded, please try again later.",
-        );
+        throw new UploadThingError("Rate limit exceeded, please try again later.");
       }
 
       return {};

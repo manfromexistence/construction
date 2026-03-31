@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Link Floating Toolbar",
   "description": "A floating interface for link editing.",
-  "dependencies": [
-    "@platejs/link",
-    "@platejs/floating"
-  ],
+  "dependencies": ["@platejs/link", "@platejs/floating"],
   "registryDependencies": [
     "@shadcn/button",
     "@shadcn/input",
@@ -33,9 +30,6 @@
         "route": "https://pro.platejs.org/docs/components/link-toolbar"
       }
     ],
-    "examples": [
-      "link-demo",
-      "link-pro"
-    ]
+    "examples": ["link-demo", "link-pro"]
   }
 }

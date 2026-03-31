@@ -2,17 +2,16 @@ import {
   type Descendant,
   type NodeEntry,
   type NodeProps,
-  type TNode,
   queryNode,
-} from '@platejs/slate';
-import { isDefined } from '@udecode/utils';
-import castArray from 'lodash/castArray.js';
-import cloneDeep from 'lodash/cloneDeep.js';
+  type TNode,
+} from "@platejs/slate";
+import { isDefined } from "@udecode/utils";
+import castArray from "lodash/castArray.js";
+import cloneDeep from "lodash/cloneDeep.js";
 
-import type { OverrideEditor } from '../../plugin';
-import type { NodeIdConfig } from './NodeIdPlugin';
-
-import { applyDeepToNodes, defaultsDeepToNodes } from '../../utils';
+import type { OverrideEditor } from "../../plugin";
+import { applyDeepToNodes, defaultsDeepToNodes } from "../../utils";
+import type { NodeIdConfig } from "./NodeIdPlugin";
 
 /** Enables support for inserting nodes with an id key. */
 export const withNodeId: OverrideEditor<NodeIdConfig> = ({
@@ -21,30 +20,25 @@ export const withNodeId: OverrideEditor<NodeIdConfig> = ({
   tf: { apply, insertNode, insertNodes },
 }) => {
   const idPropsCreator = () => ({
-    [getOptions().idKey ?? '']: getOptions().idCreator!(),
+    [getOptions().idKey ?? ""]: getOptions().idCreator!(),
   });
 
   const filterNode = (nodeEntry: NodeEntry) => {
     const { filter, filterText } = getOptions();
 
-    return (
-      filter!(nodeEntry) && (!filterText || nodeEntry[0]?.type !== undefined)
-    );
+    return filter!(nodeEntry) && (!filterText || nodeEntry[0]?.type !== undefined);
   };
 
   const removeIdFromNodeIfDuplicate = <N extends Descendant>(node: N) => {
-    const { idKey = '', reuseId } = getOptions();
+    const { idKey = "", reuseId } = getOptions();
 
-    if (
-      !reuseId &&
-      editor.api.some({ at: [], match: { [idKey]: node[idKey] } })
-    ) {
+    if (!reuseId && editor.api.some({ at: [], match: { [idKey]: node[idKey] } })) {
       delete node[idKey];
     }
   };
 
   const overrideIdIfSet = (node: TNode) => {
-    const { idKey = '' } = getOptions();
+    const { idKey = "" } = getOptions();
 
     if (isDefined(node._id)) {
       const id = node._id;
@@ -64,7 +58,7 @@ export const withNodeId: OverrideEditor<NodeIdConfig> = ({
           disableInsertOverrides,
           exclude,
           idCreator,
-          idKey = '',
+          idKey = "",
           reuseId,
         } = getOptions();
 
@@ -74,7 +68,7 @@ export const withNodeId: OverrideEditor<NodeIdConfig> = ({
           filter: filterNode,
         };
 
-        if (operation.type === 'insert_node') {
+        if (operation.type === "insert_node") {
           // clone to be able to write (read-only)
           const node = cloneDeep(operation.node);
 
@@ -107,7 +101,7 @@ export const withNodeId: OverrideEditor<NodeIdConfig> = ({
             node,
           });
         }
-        if (operation.type === 'split_node') {
+        if (operation.type === "split_node") {
           const node = operation.properties as NodeProps<TNode>;
           let id = (operation.properties as any)[idKey];
 
@@ -149,7 +143,7 @@ export const withNodeId: OverrideEditor<NodeIdConfig> = ({
       },
 
       insertNode(node) {
-        const { disableInsertOverrides, idKey = '' } = getOptions();
+        const { disableInsertOverrides, idKey = "" } = getOptions();
 
         if (!disableInsertOverrides && node[idKey]) {
           if (!Object.isExtensible(node)) {
@@ -164,13 +158,11 @@ export const withNodeId: OverrideEditor<NodeIdConfig> = ({
       },
 
       insertNodes(_nodes, options) {
-        const nodes = castArray<Descendant>(_nodes as any).filter(
-          (node) => !!node
-        );
+        const nodes = castArray<Descendant>(_nodes as any).filter((node) => !!node);
 
         if (nodes.length === 0) return;
 
-        const { disableInsertOverrides, idKey = '' } = getOptions();
+        const { disableInsertOverrides, idKey = "" } = getOptions();
 
         insertNodes(
           nodes.map((node) => {

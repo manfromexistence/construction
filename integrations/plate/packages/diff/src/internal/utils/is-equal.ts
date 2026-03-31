@@ -1,5 +1,5 @@
-import baseIsEqual from 'lodash/isEqual.js';
-import isPlainObject from 'lodash/isPlainObject.js';
+import baseIsEqual from "lodash/isEqual.js";
+import isPlainObject from "lodash/isPlainObject.js";
 
 export type IsEqualOptions = {
   // Ignore props on all descendant objects
@@ -13,8 +13,7 @@ const without = (
   x: unknown,
   { ignoreDeep = [], ignoreShallow = [] }: IsEqualOptions = {}
 ): unknown => {
-  if (Array.isArray(x))
-    return x.map((y) => without(y, { ignoreDeep, ignoreShallow }));
+  if (Array.isArray(x)) return x.map((y) => without(y, { ignoreDeep, ignoreShallow }));
 
   if (!isPlainObject(x)) return x;
   const obj = x as Record<string, unknown>;
@@ -29,8 +28,5 @@ const without = (
   return result;
 };
 
-export const isEqual = (
-  value: unknown,
-  other: unknown,
-  options?: IsEqualOptions
-) => baseIsEqual(without(value, options), without(other, options));
+export const isEqual = (value: unknown, other: unknown, options?: IsEqualOptions) =>
+  baseIsEqual(without(value, options), without(other, options));

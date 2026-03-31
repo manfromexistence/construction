@@ -1,6 +1,6 @@
-import { type TElement, NodeApi, PathApi } from 'platejs';
+import { NodeApi, PathApi, type TElement } from "platejs";
 
-import { type GetSiblingListOptions, BaseListPlugin } from '../lib';
+import { BaseListPlugin, type GetSiblingListOptions } from "../lib";
 
 export const listPluginPage = BaseListPlugin.extend(({ editor }) => ({
   options: {

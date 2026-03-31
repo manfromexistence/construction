@@ -19,8 +19,7 @@ export const suggestion = {
     // Filter based on the query
     return themeItems
       .filter((item) => {
-        const labelWithoutSpaces =
-          item.label?.replace(/\s+/g, "").toLowerCase() || "";
+        const labelWithoutSpaces = item.label?.replace(/\s+/g, "").toLowerCase() || "";
         const queryWithoutSpaces = query.replace(/\s+/g, "").toLowerCase();
         return labelWithoutSpaces.includes(queryWithoutSpaces);
       })
@@ -30,10 +29,10 @@ export const suggestion = {
 
   render: () => {
     let component: ReactRenderer | null = null;
-    let popup: any | null = null;
+    let popup: unknown | null = null;
 
     return {
-      onStart: (props: any) => {
+      onStart: (props: { editor: Editor; clientRect: DOMRect }) => {
         component = new ReactRenderer(MentionList, {
           props,
           editor: props.editor,
@@ -54,7 +53,7 @@ export const suggestion = {
         });
       },
 
-      onUpdate(props: any) {
+      onUpdate(props: { editor: Editor; clientRect: DOMRect }) {
         component?.updateProps(props);
 
         if (!props.clientRect) {
@@ -66,7 +65,7 @@ export const suggestion = {
         });
       },
 
-      onKeyDown(props: any) {
+      onKeyDown(props: { event: KeyboardEvent }) {
         if (props.event.key === "Escape") {
           popup?.[0]?.hide();
           return true;

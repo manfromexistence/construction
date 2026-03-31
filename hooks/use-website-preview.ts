@@ -52,17 +52,17 @@ export function useWebsitePreview({ allowCrossOrigin = false }: UseWebsitePrevie
   const setCurrentUrlStore = useWebsitePreviewStore((state) => state.setCurrentUrl);
   const resetStore = useWebsitePreviewStore((state) => state.reset);
 
-  const clearLoadingTimeout = () => {
+  const clearLoadingTimeout = useCallback(() => {
     if (loadingTimeoutRef.current) {
       clearTimeout(loadingTimeoutRef.current);
       loadingTimeoutRef.current = null;
     }
-  };
+  }, []);
 
   const handleIframeLoad = useCallback(() => {
     clearLoadingTimeout();
     dispatch({ type: "SET_LOAD_SUCCESS" });
-  }, []);
+  }, [clearLoadingTimeout]);
 
   const handleIframeError = useCallback(() => {
     clearLoadingTimeout();
@@ -71,7 +71,7 @@ export function useWebsitePreview({ allowCrossOrigin = false }: UseWebsitePrevie
       payload:
         "Failed to load website. This could be due to CORS restrictions or the site blocking iframes.",
     });
-  }, []);
+  }, [clearLoadingTimeout]);
 
   useEffect(() => {
     if (state.isLoading && currentUrl) {
@@ -85,7 +85,7 @@ export function useWebsitePreview({ allowCrossOrigin = false }: UseWebsitePrevie
       }, LOADING_TIMEOUT_MS);
       return clearLoadingTimeout;
     }
-  }, [state.isLoading, currentUrl]);
+  }, [state.isLoading, currentUrl, clearLoadingTimeout]);
 
   const setInputUrl = useCallback(
     (url: string) => {
@@ -142,7 +142,7 @@ export function useWebsitePreview({ allowCrossOrigin = false }: UseWebsitePrevie
     clearLoadingTimeout();
     resetStore();
     dispatch({ type: "RESET" });
-  }, [resetStore]);
+  }, [resetStore, clearLoadingTimeout]);
 
   return {
     inputUrl,

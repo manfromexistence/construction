@@ -1,6 +1,6 @@
-import { useEditorRef, useElement } from 'platejs/react';
+import { useEditorRef, useElement } from "platejs/react";
 
-import { BaseCaptionPlugin } from '../../lib';
+import { BaseCaptionPlugin } from "../../lib";
 
 export const useCaptionButtonState = (): any => {
   const editor = useEditorRef();
@@ -16,10 +16,10 @@ export const useCaptionButton = ({
   props: {
     onClick: () => {
       const path = editor.api.findPath(element);
-      editor.setOption(BaseCaptionPlugin, 'visibleId', element.id as string);
+      editor.setOption(BaseCaptionPlugin, "visibleId", element.id as string);
       setTimeout(() => {
         if (path) {
-          editor.setOption(BaseCaptionPlugin, 'focusEndPath', path);
+          editor.setOption(BaseCaptionPlugin, "focusEndPath", path);
         }
       }, 0);
     },

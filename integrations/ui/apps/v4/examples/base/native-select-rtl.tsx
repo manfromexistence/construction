@@ -1,15 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/styles/base-nova/ui-rtl/native-select"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { NativeSelect, NativeSelectOption } from "@/styles/base-nova/ui-rtl/native-select";
 
 const translations: Translations = {
   en: {
@@ -42,20 +36,18 @@ const translations: Translations = {
       cancelled: "בוטל",
     },
   },
-}
+};
 
 export function NativeSelectRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <NativeSelect dir={dir}>
       <NativeSelectOption value="">{t.placeholder}</NativeSelectOption>
       <NativeSelectOption value="todo">{t.todo}</NativeSelectOption>
-      <NativeSelectOption value="in-progress">
-        {t.inProgress}
-      </NativeSelectOption>
+      <NativeSelectOption value="in-progress">{t.inProgress}</NativeSelectOption>
       <NativeSelectOption value="done">{t.done}</NativeSelectOption>
       <NativeSelectOption value="cancelled">{t.cancelled}</NativeSelectOption>
     </NativeSelect>
-  )
+  );
 }

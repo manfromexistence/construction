@@ -1,45 +1,36 @@
-import type { MdHeading, MdRootContent } from '../mdast';
-import type { DeserializeMdOptions } from './deserializeMd';
+import { createTestEditor } from "../__tests__/createTestEditor";
+import type { MdHeading, MdRootContent } from "../mdast";
+import { defaultRules } from "../rules";
+import { buildSlateNode, convertNodesDeserialize } from "./convertNodesDeserialize";
+import type { DeserializeMdOptions } from "./deserializeMd";
 
-import { createTestEditor } from '../__tests__/createTestEditor';
-import { defaultRules } from '../rules';
-import {
-  buildSlateNode,
-  convertNodesDeserialize,
-} from './convertNodesDeserialize';
-
-describe('convertNodesDeserialize', () => {
+describe("convertNodesDeserialize", () => {
   const editor = createTestEditor();
 
   const mockParagraphNode: MdRootContent = {
-    children: [{ type: 'text', value: 'Hello' }],
-    type: 'paragraph',
+    children: [{ type: "text", value: "Hello" }],
+    type: "paragraph",
   };
 
   const mockHeadingNode: MdHeading = {
-    children: [{ type: 'text', value: 'Title' }],
+    children: [{ type: "text", value: "Title" }],
     depth: 1,
-    type: 'heading',
+    type: "heading",
   };
 
   const mockThematicBreakNode: MdRootContent = {
-    type: 'thematicBreak',
+    type: "thematicBreak",
   };
 
   const mockBoldNode: MdRootContent = {
     children: [
-      { children: [{ type: 'text', value: 'Hello' }], type: 'strong' },
-      { type: 'text', value: 'World' },
+      { children: [{ type: "text", value: "Hello" }], type: "strong" },
+      { type: "text", value: "World" },
     ],
-    type: 'paragraph',
+    type: "paragraph",
   };
 
-  const mockNodes = [
-    mockParagraphNode,
-    mockHeadingNode,
-    mockThematicBreakNode,
-    mockBoldNode,
-  ];
+  const mockNodes = [mockParagraphNode, mockHeadingNode, mockThematicBreakNode, mockBoldNode];
 
   const baseOptions: DeserializeMdOptions = {
     editor,
@@ -47,23 +38,23 @@ describe('convertNodesDeserialize', () => {
   };
 
   const mockParagraphNodeSlate = {
-    children: [{ text: 'Hello' }],
-    type: 'p',
+    children: [{ text: "Hello" }],
+    type: "p",
   };
 
   const mockHeadingNodeSlate = {
-    children: [{ text: 'Title' }],
-    type: 'h1',
+    children: [{ text: "Title" }],
+    type: "h1",
   };
 
   const mockThematicBreakNodeSlate = {
-    children: [{ text: '' }],
-    type: 'hr',
+    children: [{ text: "" }],
+    type: "hr",
   };
 
   const mockBoldNodeSlate = {
-    children: [{ bold: true, text: 'Hello' }, { text: 'World' }],
-    type: 'p',
+    children: [{ bold: true, text: "Hello" }, { text: "World" }],
+    type: "p",
   };
 
   const mockNodesSlate = [
@@ -73,25 +64,25 @@ describe('convertNodesDeserialize', () => {
     mockBoldNodeSlate,
   ];
 
-  describe('allowedNodes option', () => {
-    it('throws when allowedNodes and disallowedNodes are both configured', () => {
+  describe("allowedNodes option", () => {
+    it("throws when allowedNodes and disallowedNodes are both configured", () => {
       expect(() =>
         convertNodesDeserialize(
           mockNodes,
           {},
           {
             ...baseOptions,
-            allowedNodes: ['heading'],
-            disallowedNodes: ['paragraph'],
+            allowedNodes: ["heading"],
+            disallowedNodes: ["paragraph"],
           }
         )
-      ).toThrow('Cannot combine allowedNodes with disallowedNodes');
+      ).toThrow("Cannot combine allowedNodes with disallowedNodes");
     });
 
-    it('only include nodes specified in allowedNodes', () => {
+    it("only include nodes specified in allowedNodes", () => {
       const options: DeserializeMdOptions = {
         ...baseOptions,
-        allowedNodes: ['heading', 'text'],
+        allowedNodes: ["heading", "text"],
       };
 
       const result = convertNodesDeserialize(mockNodes, {}, options);
@@ -100,7 +91,7 @@ describe('convertNodesDeserialize', () => {
       expect(result).toEqual([mockHeadingNodeSlate]);
     });
 
-    it('include all nodes when allowedNodes is null or undefined', () => {
+    it("include all nodes when allowedNodes is null or undefined", () => {
       const options: DeserializeMdOptions = {
         ...baseOptions,
         allowedNodes: null,
@@ -111,7 +102,7 @@ describe('convertNodesDeserialize', () => {
       expect(result).toEqual(mockNodesSlate);
     });
 
-    it('include no nodes when allowedNodes is empty', () => {
+    it("include no nodes when allowedNodes is empty", () => {
       const options: DeserializeMdOptions = {
         ...baseOptions,
         allowedNodes: [],
@@ -122,11 +113,11 @@ describe('convertNodesDeserialize', () => {
     });
   });
 
-  describe('disabledNodes option', () => {
-    it('exclude nodes specified in disabledNodes', () => {
+  describe("disabledNodes option", () => {
+    it("exclude nodes specified in disabledNodes", () => {
       const options: DeserializeMdOptions = {
         ...baseOptions,
-        disallowedNodes: ['heading'],
+        disallowedNodes: ["heading"],
       };
 
       const result = convertNodesDeserialize(mockNodes, {}, options);
@@ -138,10 +129,10 @@ describe('convertNodesDeserialize', () => {
       ]);
     });
 
-    it('exclude inline nodes specified in disallowedNodes', () => {
+    it("exclude inline nodes specified in disallowedNodes", () => {
       const options: DeserializeMdOptions = {
         ...baseOptions,
-        disallowedNodes: ['bold'],
+        disallowedNodes: ["bold"],
       };
 
       const result = convertNodesDeserialize(mockNodes, {}, options);
@@ -151,20 +142,20 @@ describe('convertNodesDeserialize', () => {
         mockHeadingNodeSlate,
         mockThematicBreakNodeSlate,
         {
-          children: [{ text: 'World' }],
-          type: 'p',
+          children: [{ text: "World" }],
+          type: "p",
         },
       ]);
     });
   });
 
-  describe('allowNode option', () => {
-    it('exclude nodes specified in allowNode', () => {
+  describe("allowNode option", () => {
+    it("exclude nodes specified in allowNode", () => {
       const options: DeserializeMdOptions = {
         ...baseOptions,
         allowNode: {
           deserialize(node) {
-            if (node.type === 'hr') return false;
+            if (node.type === "hr") return false;
 
             return true;
           },
@@ -172,19 +163,15 @@ describe('convertNodesDeserialize', () => {
       };
       const result = convertNodesDeserialize(mockNodes, {}, options);
 
-      expect(result).toEqual([
-        mockParagraphNodeSlate,
-        mockHeadingNodeSlate,
-        mockBoldNodeSlate,
-      ]);
+      expect(result).toEqual([mockParagraphNodeSlate, mockHeadingNodeSlate, mockBoldNodeSlate]);
     });
 
-    it('exclude inline nodes specified in allowNode', () => {
+    it("exclude inline nodes specified in allowNode", () => {
       const options: DeserializeMdOptions = {
         ...baseOptions,
         allowNode: {
           deserialize(node) {
-            if (node.type === 'bold') return false;
+            if (node.type === "bold") return false;
 
             return true;
           },
@@ -197,18 +184,18 @@ describe('convertNodesDeserialize', () => {
         mockHeadingNodeSlate,
         mockThematicBreakNodeSlate,
         {
-          children: [{ text: 'World' }],
-          type: 'p',
+          children: [{ text: "World" }],
+          type: "p",
         },
       ]);
     });
   });
 
-  it('returns an empty array for unknown node types without a registered rule', () => {
+  it("returns an empty array for unknown node types without a registered rule", () => {
     expect(
       buildSlateNode(
         {
-          type: 'mysteryNode',
+          type: "mysteryNode",
         } as any,
         {},
         baseOptions

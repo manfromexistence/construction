@@ -47,11 +47,10 @@ const Sponsorship = () => {
         Support the project
       </h1>
       <p className="mt-5 max-w-[582px] px-4 text-center font-mono text-secondary text-sm">
-        this is a place for those who want to go beyond a simple thank you.
-        I&apos;m grateful for any kind of support, whether it&apos;s just a DM
-        with kind words or something more. your donation is by no means required
-        - this page is made just for those who asked for it. I am incredibly
-        grateful for any support you choose to provide
+        this is a place for those who want to go beyond a simple thank you. I&apos;m grateful for
+        any kind of support, whether it&apos;s just a DM with kind words or something more. your
+        donation is by no means required - this page is made just for those who asked for it. I am
+        incredibly grateful for any support you choose to provide
         <br />
         <br />
         Choose amount you want to support the project with:

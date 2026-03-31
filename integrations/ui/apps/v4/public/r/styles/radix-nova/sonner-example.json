@@ -2,10 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "sonner-example",
   "title": "Sonner",
-  "registryDependencies": [
-    "sonner",
-    "example"
-  ],
+  "registryDependencies": ["sonner", "example"],
   "files": [
     {
       "path": "registry/radix-nova/examples/sonner-example.tsx",

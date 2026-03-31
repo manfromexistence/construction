@@ -1,10 +1,10 @@
-import { ThemeEditorState } from "@/types/editor";
-import { colorFormatter } from "./color-converter";
-import { ColorFormat } from "../types";
-import { getShadowMap } from "./shadows";
 import { defaultLightThemeStyles } from "@/config/theme";
+import { ThemeEditorState } from "@/types/editor";
 import { ThemeStyles } from "@/types/theme";
+import { ColorFormat } from "../types";
+import { colorFormatter } from "./color-converter";
 import { extractFontFamily } from "./fonts";
+import { getShadowMap } from "./shadows";
 
 type ThemeMode = "light" | "dark";
 

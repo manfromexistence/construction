@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Avatar Circles Demo",
   "description": "Example showing overlapping avatar circles.",
-  "registryDependencies": [
-    "@magicui/avatar-circles"
-  ],
+  "registryDependencies": ["@magicui/avatar-circles"],
   "files": [
     {
       "path": "registry/example/avatar-circles-demo.tsx",

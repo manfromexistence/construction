@@ -1,34 +1,29 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Field,
   FieldContent,
   FieldDescription,
   FieldLabel,
-} from "@/styles/radix-nova/ui-rtl/field"
-import { Switch } from "@/styles/radix-nova/ui-rtl/switch"
+} from "@/styles/radix-nova/ui-rtl/field";
+import { Switch } from "@/styles/radix-nova/ui-rtl/switch";
 
 const translations: Translations = {
   en: {
     dir: "ltr",
     values: {
       label: "Share across devices",
-      description:
-        "Focus is shared across devices, and turns off when you leave the app.",
+      description: "Focus is shared across devices, and turns off when you leave the app.",
     },
   },
   ar: {
     dir: "rtl",
     values: {
       label: "المشاركة عبر الأجهزة",
-      description:
-        "يتم مشاركة التركيز عبر الأجهزة، ويتم إيقاف تشغيله عند مغادرة التطبيق.",
+      description: "يتم مشاركة التركيز عبر الأجهزة، ويتم إيقاف تشغيله عند مغادرة التطبيق.",
     },
   },
   he: {
@@ -38,10 +33,10 @@ const translations: Translations = {
       description: "המיקוד משותף בין מכשירים, וכבה כשאתה עוזב את האפליקציה.",
     },
   },
-}
+};
 
 export function SwitchRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Field orientation="horizontal" className="max-w-sm" dir={dir}>
@@ -53,5 +48,5 @@ export function SwitchRtl() {
       </FieldContent>
       <Switch id="switch-focus-mode-rtl" dir={dir} />
     </Field>
-  )
+  );
 }

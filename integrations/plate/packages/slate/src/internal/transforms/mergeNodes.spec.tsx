@@ -1,20 +1,20 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
-import type { Editor, LegacyEditorMethods } from '../../interfaces';
-import { TextApi } from '../../interfaces';
-import { syncLegacyMethods } from '../../utils/assignLegacyTransforms';
+import { createEditor } from "../../create-editor";
+import type { Editor, LegacyEditorMethods } from "../../interfaces";
+import { TextApi } from "../../interfaces";
+import { syncLegacyMethods } from "../../utils/assignLegacyTransforms";
 
 jsxt;
 
-describe('mergeNodes', () => {
-  it('returns early without a selection or explicit location', () => {
+describe("mergeNodes", () => {
+  it("returns early without a selection or explicit location", () => {
     const editor = createEditor({
       children: [
-        { type: 'p', children: [{ text: 'one' }] },
-        { type: 'p', children: [{ text: 'two' }] },
+        { type: "p", children: [{ text: "one" }] },
+        { type: "p", children: [{ text: "two" }] },
       ] as any,
     });
 
@@ -22,12 +22,12 @@ describe('mergeNodes', () => {
     editor.tf.mergeNodes();
 
     expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'one' }] },
-      { type: 'p', children: [{ text: 'two' }] },
+      { type: "p", children: [{ text: "one" }] },
+      { type: "p", children: [{ text: "two" }] },
     ]);
   });
 
-  it('merges block siblings by default when the selection is inside the second block', () => {
+  it("merges block siblings by default when the selection is inside the second block", () => {
     const editor = createEditor(
       (
         <editor>
@@ -56,11 +56,11 @@ describe('mergeNodes', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('deletes an expanded selection before merging and reselects the merged point', () => {
+  it("deletes an expanded selection before merging and reselects the merged point", () => {
     const editor = createEditor({
       children: [
-        { type: 'p', children: [{ text: 'one' }] },
-        { type: 'p', children: [{ text: 'two' }] },
+        { type: "p", children: [{ text: "one" }] },
+        { type: "p", children: [{ text: "two" }] },
       ] as any,
       selection: {
         anchor: { offset: 0, path: [1, 0] },
@@ -70,20 +70,16 @@ describe('mergeNodes', () => {
 
     editor.tf.mergeNodes();
 
-    expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'one' }] },
-    ]);
+    expect(editor.children).toEqual([{ type: "p", children: [{ text: "one" }] }]);
     expect(editor.selection).toEqual({
       anchor: { offset: 3, path: [0, 0] },
       focus: { offset: 3, path: [0, 0] },
     });
   });
 
-  it('merges adjacent text nodes', () => {
+  it("merges adjacent text nodes", () => {
     const editor = createEditor({
-      children: [
-        { type: 'p', children: [{ text: 'one' }, { text: 'two' }] },
-      ] as any,
+      children: [{ type: "p", children: [{ text: "one" }, { text: "two" }] }] as any,
       selection: {
         anchor: { offset: 0, path: [0, 1] },
         focus: { offset: 0, path: [0, 1] },
@@ -92,36 +88,32 @@ describe('mergeNodes', () => {
 
     editor.tf.mergeNodes({ at: [0, 1] });
 
-    expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'onetwo' }] },
-    ]);
+    expect(editor.children).toEqual([{ type: "p", children: [{ text: "onetwo" }] }]);
   });
 
-  it('moves cross-parent text nodes together before merging them', () => {
+  it("moves cross-parent text nodes together before merging them", () => {
     const editor = createEditor({
       children: [
-        { type: 'p', children: [{ text: 'one' }] },
-        { type: 'p', children: [{ text: 'two' }] },
+        { type: "p", children: [{ text: "one" }] },
+        { type: "p", children: [{ text: "two" }] },
       ] as any,
     });
 
     editor.tf.mergeNodes({ at: [1, 0], match: TextApi.isText });
 
-    expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'onetwo' }] },
-    ]);
+    expect(editor.children).toEqual([{ type: "p", children: [{ text: "onetwo" }] }]);
   });
 
-  it('merges sibling blocks and removes the emptied ancestor', () => {
+  it("merges sibling blocks and removes the emptied ancestor", () => {
     const editor = createEditor({
       children: [
         {
-          type: 'blockquote',
-          children: [{ type: 'p', children: [{ text: 'one' }] }],
+          type: "blockquote",
+          children: [{ type: "p", children: [{ text: "one" }] }],
         },
         {
-          type: 'blockquote',
-          children: [{ type: 'p', children: [{ text: 'two' }] }],
+          type: "blockquote",
+          children: [{ type: "p", children: [{ text: "two" }] }],
         },
       ] as any,
       selection: {
@@ -134,59 +126,59 @@ describe('mergeNodes', () => {
 
     expect(editor.children).toEqual([
       {
-        type: 'blockquote',
+        type: "blockquote",
         children: [
-          { type: 'p', children: [{ text: 'one' }] },
-          { type: 'p', children: [{ text: 'two' }] },
+          { type: "p", children: [{ text: "one" }] },
+          { type: "p", children: [{ text: "two" }] },
         ],
       },
     ]);
   });
 
-  it('returns early when there is no previous matching node', () => {
+  it("returns early when there is no previous matching node", () => {
     const editor = createEditor({
       children: [
-        { type: 'p', children: [{ text: 'one' }] },
-        { type: 'p', children: [{ text: 'two' }] },
+        { type: "p", children: [{ text: "one" }] },
+        { type: "p", children: [{ text: "two" }] },
       ] as any,
     });
 
     editor.tf.mergeNodes({ at: [0] });
 
     expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'one' }] },
-      { type: 'p', children: [{ text: 'two' }] },
+      { type: "p", children: [{ text: "one" }] },
+      { type: "p", children: [{ text: "two" }] },
     ]);
   });
 
-  it('merges text inside a void element when voids is true', () => {
+  it("merges text inside a void element when voids is true", () => {
     const editor = createEditor({
       children: [
         {
-          children: [{ text: 'one' }, { text: 'two' }],
-          type: 'tag',
+          children: [{ text: "one" }, { text: "two" }],
+          type: "tag",
         },
       ] as any,
     }) as Editor & LegacyEditorMethods;
 
-    editor.isVoid = (element) => element.type === 'tag';
+    editor.isVoid = (element) => element.type === "tag";
     syncLegacyMethods(editor);
 
     editor.tf.mergeNodes({ at: [0, 1], voids: true });
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'onetwo' }],
-        type: 'tag',
+        children: [{ text: "onetwo" }],
+        type: "tag",
       },
     ]);
   });
 
-  it('respects shouldMergeNodes when it rejects the merge', () => {
+  it("respects shouldMergeNodes when it rejects the merge", () => {
     const editor = createEditor({
       children: [
-        { type: 'p', children: [{ text: 'one' }] },
-        { type: 'p', children: [{ text: 'two' }] },
+        { type: "p", children: [{ text: "one" }] },
+        { type: "p", children: [{ text: "two" }] },
       ] as any,
       selection: {
         anchor: { offset: 0, path: [1, 0] },
@@ -199,12 +191,12 @@ describe('mergeNodes', () => {
     editor.tf.mergeNodes({ at: [1] });
 
     expect(editor.children).toEqual([
-      { type: 'p', children: [{ text: 'one' }] },
-      { type: 'p', children: [{ text: 'two' }] },
+      { type: "p", children: [{ text: "one" }] },
+      { type: "p", children: [{ text: "two" }] },
     ]);
   });
 
-  it('throws when the current and previous nodes are different kinds', () => {
+  it("throws when the current and previous nodes are different kinds", () => {
     const editor = createEditor(
       (
         <editor>
@@ -217,15 +209,14 @@ describe('mergeNodes', () => {
     ) as Editor & LegacyEditorMethods;
     const { isInline } = editor;
 
-    editor.isInline = (element) => element.type === 'a' || isInline(element);
+    editor.isInline = (element) => element.type === "a" || isInline(element);
     syncLegacyMethods(editor);
 
     expect(() =>
       editor.tf.mergeNodes({
         at: [0, 1],
-        match: (node: any) =>
-          node?.type === 'a' || typeof node?.text === 'string',
-        mode: 'highest',
+        match: (node: any) => node?.type === "a" || typeof node?.text === "string",
+        mode: "highest",
       })
     ).toThrow(TypeError);
   });

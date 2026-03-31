@@ -1,4 +1,4 @@
-import { createAtomStore } from 'platejs/react';
+import { createAtomStore } from "platejs/react";
 
 type PlaceholderStore = {
   isUploading: boolean;
@@ -25,5 +25,5 @@ export const {
     size: null,
     updatedFiles: [],
   } as PlaceholderStore,
-  { name: 'placeholder' }
+  { name: "placeholder" }
 ) as any;

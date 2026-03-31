@@ -3,14 +3,11 @@ function getType(value: any): string {
 }
 
 function isPlainObject(value: any): value is Record<string, any> {
-  if (getType(value) !== 'Object') {
+  if (getType(value) !== "Object") {
     return false;
   }
 
-  return (
-    value.constructor === Object &&
-    Object.getPrototypeOf(value) === Object.prototype
-  );
+  return value.constructor === Object && Object.getPrototypeOf(value) === Object.prototype;
 }
 
 export function mergeDeep(

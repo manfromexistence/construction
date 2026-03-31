@@ -1,8 +1,6 @@
 {
   "name": "color-picker-demo",
-  "registryDependencies": [
-    "color-picker"
-  ],
+  "registryDependencies": ["color-picker"],
   "files": [
     {
       "path": "examples/color-picker-demo.tsx",

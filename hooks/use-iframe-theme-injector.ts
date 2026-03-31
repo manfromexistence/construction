@@ -1,7 +1,7 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useEditorStore } from "@/store/editor-store";
 import { EmbedMessage, IframeStatus, MESSAGE } from "@/types/live-preview-embed";
 import { applyThemeToElement } from "@/utils/apply-theme";
-import { useCallback, useEffect, useRef, useState } from "react";
 
 const THEME_UPDATE_DEBOUNCE_MS = 50;
 
@@ -91,7 +91,7 @@ export const useIframeThemeInjector = ({
 
     iframe.addEventListener("load", handleLoad);
     return () => iframe.removeEventListener("load", handleLoad);
-  }, [allowCrossOrigin, startCrossOriginValidation, applySameOriginTheme]);
+  }, [allowCrossOrigin, startCrossOriginValidation, applySameOriginTheme, ref.current]);
 
   // Listen for cross-origin messages (only when needed)
   useEffect(() => {

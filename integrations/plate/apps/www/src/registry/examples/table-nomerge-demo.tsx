@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { TablePlugin } from "@platejs/table/react";
+import { Plate, usePlateEditor } from "platejs/react";
+import * as React from "react";
 
-import { TablePlugin } from '@platejs/table/react';
-import { Plate, usePlateEditor } from 'platejs/react';
-
-import { EditorKit } from '@/registry/components/editor/editor-kit';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
-import { createValue } from '@/registry/examples/values/demo-values';
+import { EditorKit } from "@/registry/components/editor/editor-kit";
+import { createValue } from "@/registry/examples/values/demo-values";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 export default function TableNoMergeDemo() {
   const editor = usePlateEditor({
@@ -19,7 +18,7 @@ export default function TableNoMergeDemo() {
         },
       }),
     ],
-    value: createValue('table'),
+    value: createValue("table"),
   });
 
   return (

@@ -1,16 +1,16 @@
-import "@/styles/globals.css"
+import "@/styles/globals.css";
 
-import { GoogleTagManager } from "@next/third-parties/google"
-import type { Metadata, Viewport } from "next"
-import Script from "next/script"
-import { NuqsAdapter } from "nuqs/adapters/next/app"
-import type { WebSite, WithContext } from "schema-dts"
+import { GoogleTagManager } from "@next/third-parties/google";
+import type { Metadata, Viewport } from "next";
+import Script from "next/script";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import type { WebSite, WithContext } from "schema-dts";
 
-import { DuckFollower } from "@/components/duck-follower"
-import { Providers } from "@/components/providers"
-import { META_THEME_COLORS, SITE_INFO, X_USERNAME } from "@/config/site"
-import { USER } from "@/features/portfolio/data/user"
-import { fontVariables } from "@/lib/fonts"
+import { DuckFollower } from "@/components/duck-follower";
+import { Providers } from "@/components/providers";
+import { META_THEME_COLORS, SITE_INFO, X_USERNAME } from "@/config/site";
+import { USER } from "@/features/portfolio/data/user";
+import { fontVariables } from "@/lib/fonts";
 
 function getWebSiteJsonLd(): WithContext<WebSite> {
   return {
@@ -19,7 +19,7 @@ function getWebSiteJsonLd(): WithContext<WebSite> {
     name: SITE_INFO.name,
     url: SITE_INFO.url,
     alternateName: [USER.username],
-  }
+  };
 }
 
 // Thanks @shadcn-ui, @tailwindcss
@@ -35,7 +35,7 @@ const darkModeScript = String.raw`
       document.documentElement.classList.add('os-macos')
     }
   } catch (_) {}
-`
+`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_INFO.url),
@@ -93,27 +93,20 @@ export const metadata: Metadata = {
       sizes: "180x180",
     },
   },
-}
+};
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
   themeColor: META_THEME_COLORS.light,
-}
+};
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={fontVariables} suppressHydrationWarning>
       <head>
-        <script
-          type="text/javascript"
-          dangerouslySetInnerHTML={{ __html: darkModeScript }}
-        />
+        <script type="text/javascript" dangerouslySetInnerHTML={{ __html: darkModeScript }} />
         {/*
           Thanks @tailwindcss. We inject the script via the `<Script/>` tag again,
           since we found the regular `<script>` tag to not execute when rendering a not-found page.
@@ -140,5 +133,5 @@ export default function RootLayout({
         </Providers>
       </body>
     </html>
-  )
+  );
 }

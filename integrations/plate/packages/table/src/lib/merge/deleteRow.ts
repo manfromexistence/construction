@@ -1,22 +1,9 @@
-import type {
-  SlateEditor,
-  TTableCellElement,
-  TTableElement,
-  TTableRowElement,
-} from 'platejs';
-
-import cloneDeep from 'lodash/cloneDeep.js';
-import { getEditorPlugin, KEYS } from 'platejs';
-
-import type { TableConfig } from '../BaseTablePlugin';
-
-import {
-  findCellByIndexes,
-  getCellIndices,
-  getCellTypes,
-  getTableColumnCount,
-} from '..';
-import { deleteRowWhenExpanded } from './deleteRowWhenExpanded';
+import cloneDeep from "lodash/cloneDeep.js";
+import type { SlateEditor, TTableCellElement, TTableElement, TTableRowElement } from "platejs";
+import { getEditorPlugin, KEYS } from "platejs";
+import { findCellByIndexes, getCellIndices, getCellTypes, getTableColumnCount } from "..";
+import type { TableConfig } from "../BaseTablePlugin";
+import { deleteRowWhenExpanded } from "./deleteRowWhenExpanded";
 
 export const deleteTableMergeRow = (editor: SlateEditor) => {
   const { api, tf, type } = getEditorPlugin<TableConfig>(editor, {
@@ -33,8 +20,7 @@ export const deleteTableMergeRow = (editor: SlateEditor) => {
     });
 
     if (!currentTableItem) return;
-    if (editor.api.isExpanded())
-      return deleteRowWhenExpanded(editor, currentTableItem);
+    if (editor.api.isExpanded()) return deleteRowWhenExpanded(editor, currentTableItem);
 
     const table = currentTableItem[0] as TTableElement;
 
@@ -76,10 +62,7 @@ export const deleteTableMergeRow = (editor: SlateEditor) => {
 
         if (curRowIndex < deletingRowIndex && curRowSpan > 1) {
           acc.squizeRowSpanCells.push(currentCell);
-        } else if (
-          curRowSpan > 1 &&
-          curRowIndex + curRowSpan - 1 > endingRowIndex
-        ) {
+        } else if (curRowSpan > 1 && curRowIndex + curRowSpan - 1 > endingRowIndex) {
           acc.moveToNextRowCells.push(currentCell);
         }
 
@@ -89,9 +72,7 @@ export const deleteTableMergeRow = (editor: SlateEditor) => {
     );
 
     const nextRowIndex = deletingRowIndex + rowsDeleteNumber;
-    const nextRow = table.children[nextRowIndex] as
-      | TTableCellElement
-      | undefined;
+    const nextRow = table.children[nextRowIndex] as TTableCellElement | undefined;
 
     if (nextRow === undefined && deletingRowIndex === 0) {
       tf.remove.table();
@@ -101,8 +82,10 @@ export const deleteTableMergeRow = (editor: SlateEditor) => {
     if (nextRow) {
       for (let index = 0; index < moveToNextRowCells.length; index++) {
         const curRowCell = moveToNextRowCells[index] as TTableCellElement;
-        const { col: curRowCellColIndex, row: curRowCellRowIndex } =
-          getCellIndices(editor, curRowCell);
+        const { col: curRowCellColIndex, row: curRowCellRowIndex } = getCellIndices(
+          editor,
+          curRowCell
+        );
         const curRowCellRowSpan = api.table.getRowSpan(curRowCell);
 
         // search for anchor cell where to place current cell
@@ -135,9 +118,7 @@ export const deleteTableMergeRow = (editor: SlateEditor) => {
           continue;
         }
 
-        const startingCell = nextRow.children[
-          startingCellIndex
-        ] as TTableCellElement;
+        const startingCell = nextRow.children[startingCellIndex] as TTableCellElement;
         const { col: startingColIndex } = getCellIndices(editor, startingCell);
 
         // consider already inserted cell by adding index each time to the col path
@@ -152,11 +133,7 @@ export const deleteTableMergeRow = (editor: SlateEditor) => {
         const tablePath = startingCellPath.slice(0, -2);
         const colPath = startingCellPath.at(-1)!;
 
-        const nextRowStartCellPath = [
-          ...tablePath,
-          nextRowIndex,
-          colPath + incrementBy,
-        ];
+        const nextRowStartCellPath = [...tablePath, nextRowIndex, colPath + incrementBy];
 
         const rowsNumberAffected = endingRowIndex - curRowCellRowIndex + 1;
         const rowSpan = curRowCellRowSpan - rowsNumberAffected;

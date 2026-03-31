@@ -1,3 +1,5 @@
+import { Check, Copy } from "lucide-react";
+import { usePostHog } from "posthog-js/react";
 import {
   Tabs,
   TabsContent,
@@ -14,8 +16,6 @@ import {
   ResponsiveDialogTitle,
 } from "@/components/ui/revola";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { Check, Copy } from "lucide-react";
-import { usePostHog } from "posthog-js/react";
 
 interface MCPDialogProps {
   open: boolean;

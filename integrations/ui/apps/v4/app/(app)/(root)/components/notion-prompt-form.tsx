@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import { useMemo, useState } from "react"
 import {
   IconApps,
   IconArrowUp,
@@ -11,14 +10,11 @@ import {
   IconPlus,
   IconWorld,
   IconX,
-} from "@tabler/icons-react"
+} from "@tabler/icons-react";
+import { useMemo, useState } from "react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/radix-nova/ui/avatar"
-import { Badge } from "@/styles/radix-nova/ui/badge"
+import { Avatar, AvatarFallback, AvatarImage } from "@/styles/radix-nova/ui/avatar";
+import { Badge } from "@/styles/radix-nova/ui/badge";
 import {
   Command,
   CommandEmpty,
@@ -26,7 +22,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/styles/radix-nova/ui/command"
+} from "@/styles/radix-nova/ui/command";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -39,25 +35,17 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
-import { Field, FieldLabel } from "@/styles/radix-nova/ui/field"
+} from "@/styles/radix-nova/ui/dropdown-menu";
+import { Field, FieldLabel } from "@/styles/radix-nova/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupTextarea,
-} from "@/styles/radix-nova/ui/input-group"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/radix-nova/ui/popover"
-import { Switch } from "@/styles/radix-nova/ui/switch"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/radix-nova/ui/tooltip"
+} from "@/styles/radix-nova/ui/input-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/radix-nova/ui/popover";
+import { Switch } from "@/styles/radix-nova/ui/switch";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/radix-nova/ui/tooltip";
 
 const SAMPLE_DATA = {
   mentionable: [
@@ -142,52 +130,46 @@ const SAMPLE_DATA = {
       name: "Plan Mode",
     },
   ],
-}
+};
 
-function MentionableIcon({
-  item,
-}: {
-  item: (typeof SAMPLE_DATA.mentionable)[0]
-}) {
+function MentionableIcon({ item }: { item: (typeof SAMPLE_DATA.mentionable)[0] }) {
   return item.type === "page" ? (
-    <span className="flex size-4 items-center justify-center">
-      {item.image}
-    </span>
+    <span className="flex size-4 items-center justify-center">{item.image}</span>
   ) : (
     <Avatar className="size-4">
       <AvatarImage src={item.image} />
       <AvatarFallback>{item.title[0]}</AvatarFallback>
     </Avatar>
-  )
+  );
 }
 
 export function NotionPromptForm() {
-  const [mentions, setMentions] = useState<string[]>([])
-  const [mentionPopoverOpen, setMentionPopoverOpen] = useState(false)
-  const [modelPopoverOpen, setModelPopoverOpen] = useState(false)
-  const [selectedModel, setSelectedModel] = useState<
-    (typeof SAMPLE_DATA.models)[0]
-  >(SAMPLE_DATA.models[0])
-  const [scopeMenuOpen, setScopeMenuOpen] = useState(false)
+  const [mentions, setMentions] = useState<string[]>([]);
+  const [mentionPopoverOpen, setMentionPopoverOpen] = useState(false);
+  const [modelPopoverOpen, setModelPopoverOpen] = useState(false);
+  const [selectedModel, setSelectedModel] = useState<(typeof SAMPLE_DATA.models)[0]>(
+    SAMPLE_DATA.models[0]
+  );
+  const [scopeMenuOpen, setScopeMenuOpen] = useState(false);
 
   const grouped = useMemo(() => {
     return SAMPLE_DATA.mentionable.reduce(
       (acc, item) => {
-        const isAvailable = !mentions.includes(item.title)
+        const isAvailable = !mentions.includes(item.title);
 
         if (isAvailable) {
           if (!acc[item.type]) {
-            acc[item.type] = []
+            acc[item.type] = [];
           }
-          acc[item.type].push(item)
+          acc[item.type].push(item);
         }
-        return acc
+        return acc;
       },
       {} as Record<string, typeof SAMPLE_DATA.mentionable>
-    )
-  }, [mentions])
+    );
+  }, [mentions]);
 
-  const hasMentions = mentions.length > 0
+  const hasMentions = mentions.length > 0;
 
   return (
     <form>
@@ -196,20 +178,11 @@ export function NotionPromptForm() {
           Prompt
         </FieldLabel>
         <InputGroup className="rounded-xl">
-          <InputGroupTextarea
-            id="notion-prompt"
-            placeholder="Ask, search, or make anything..."
-          />
+          <InputGroupTextarea id="notion-prompt" placeholder="Ask, search, or make anything..." />
           <InputGroupAddon align="block-start" className="pt-3">
-            <Popover
-              open={mentionPopoverOpen}
-              onOpenChange={setMentionPopoverOpen}
-            >
+            <Popover open={mentionPopoverOpen} onOpenChange={setMentionPopoverOpen}>
               <Tooltip>
-                <TooltipTrigger
-                  asChild
-                  onFocusCapture={(e) => e.stopPropagation()}
-                >
+                <TooltipTrigger asChild onFocusCapture={(e) => e.stopPropagation()}>
                   <PopoverTrigger asChild>
                     <InputGroupButton
                       variant="outline"
@@ -228,17 +201,14 @@ export function NotionPromptForm() {
                   <CommandList>
                     <CommandEmpty>No pages found</CommandEmpty>
                     {Object.entries(grouped).map(([type, items]) => (
-                      <CommandGroup
-                        key={type}
-                        heading={type === "page" ? "Pages" : "Users"}
-                      >
+                      <CommandGroup key={type} heading={type === "page" ? "Pages" : "Users"}>
                         {items.map((item) => (
                           <CommandItem
                             key={item.title}
                             value={item.title}
                             onSelect={(currentValue) => {
-                              setMentions((prev) => [...prev, currentValue])
-                              setMentionPopoverOpen(false)
+                              setMentions((prev) => [...prev, currentValue]);
+                              setMentionPopoverOpen(false);
                             }}
                             className="rounded-lg"
                           >
@@ -254,12 +224,10 @@ export function NotionPromptForm() {
             </Popover>
             <div className="-m-1.5 no-scrollbar flex gap-1 overflow-y-auto p-1.5">
               {mentions.map((mention) => {
-                const item = SAMPLE_DATA.mentionable.find(
-                  (item) => item.title === mention
-                )
+                const item = SAMPLE_DATA.mentionable.find((item) => item.title === mention);
 
                 if (!item) {
-                  return null
+                  return null;
                 }
 
                 return (
@@ -269,34 +237,27 @@ export function NotionPromptForm() {
                     variant="secondary"
                     className="rounded-full pl-2!"
                     onClick={() => {
-                      setMentions((prev) => prev.filter((m) => m !== mention))
+                      setMentions((prev) => prev.filter((m) => m !== mention));
                     }}
                   >
                     <MentionableIcon item={item} />
                     {item.title}
                     <IconX />
                   </InputGroupButton>
-                )
+                );
               })}
             </div>
           </InputGroupAddon>
           <InputGroupAddon align="block-end" className="gap-1">
             <Tooltip>
               <TooltipTrigger asChild>
-                <InputGroupButton
-                  size="icon-sm"
-                  className="rounded-full"
-                  aria-label="Attach file"
-                >
+                <InputGroupButton size="icon-sm" className="rounded-full" aria-label="Attach file">
                   <IconPaperclip />
                 </InputGroupButton>
               </TooltipTrigger>
               <TooltipContent>Attach file</TooltipContent>
             </Tooltip>
-            <DropdownMenu
-              open={modelPopoverOpen}
-              onOpenChange={setModelPopoverOpen}
-            >
+            <DropdownMenu open={modelPopoverOpen} onOpenChange={setModelPopoverOpen}>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <DropdownMenuTrigger asChild>
@@ -307,11 +268,7 @@ export function NotionPromptForm() {
                 </TooltipTrigger>
                 <TooltipContent>Select AI model</TooltipContent>
               </Tooltip>
-              <DropdownMenuContent
-                side="top"
-                align="start"
-                className="min-w-48"
-              >
+              <DropdownMenuContent side="top" align="start" className="min-w-48">
                 <DropdownMenuGroup>
                   <DropdownMenuLabel className="text-xs text-muted-foreground">
                     Select Agent Mode
@@ -322,7 +279,7 @@ export function NotionPromptForm() {
                       checked={model.name === selectedModel.name}
                       onCheckedChange={(checked) => {
                         if (checked) {
-                          setSelectedModel(model)
+                          setSelectedModel(model);
                         }
                       }}
                       className="pl-2 *:[span:first-child]:right-2 *:[span:first-child]:left-auto"
@@ -349,26 +306,16 @@ export function NotionPromptForm() {
               </DropdownMenuTrigger>
               <DropdownMenuContent side="top" align="end" className="w-72">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    asChild
-                    onSelect={(e) => e.preventDefault()}
-                  >
+                  <DropdownMenuItem asChild onSelect={(e) => e.preventDefault()}>
                     <label htmlFor="web-search">
                       <IconWorld /> Web Search{" "}
-                      <Switch
-                        id="web-search"
-                        className="ml-auto"
-                        defaultChecked
-                      />
+                      <Switch id="web-search" className="ml-auto" defaultChecked />
                     </label>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    asChild
-                    onSelect={(e) => e.preventDefault()}
-                  >
+                  <DropdownMenuItem asChild onSelect={(e) => e.preventDefault()}>
                     <label htmlFor="apps">
                       <IconApps /> Apps and Integrations
                       <Switch id="apps" className="ml-auto" defaultChecked />
@@ -387,10 +334,7 @@ export function NotionPromptForm() {
                     </DropdownMenuSubTrigger>
                     <DropdownMenuSubContent className="w-72 p-0 [--radius:1rem]">
                       <Command>
-                        <CommandInput
-                          placeholder="Find or use knowledge in..."
-                          autoFocus
-                        />
+                        <CommandInput placeholder="Find or use knowledge in..." autoFocus />
                         <CommandList>
                           <CommandEmpty>No knowledge found</CommandEmpty>
                           <CommandGroup>
@@ -402,19 +346,15 @@ export function NotionPromptForm() {
                                   value={user.title}
                                   onSelect={() => {
                                     // Handle user selection here
-                                    console.log("Selected user:", user.title)
+                                    console.log("Selected user:", user.title);
                                   }}
                                 >
                                   <Avatar className="size-4">
                                     <AvatarImage src={user.image} />
-                                    <AvatarFallback>
-                                      {user.title[0]}
-                                    </AvatarFallback>
+                                    <AvatarFallback>{user.title[0]}</AvatarFallback>
                                   </Avatar>
                                   {user.title}{" "}
-                                  <span className="text-muted-foreground">
-                                    - {user.workspace}
-                                  </span>
+                                  <span className="text-muted-foreground">- {user.workspace}</span>
                                 </CommandItem>
                               ))}
                           </CommandGroup>
@@ -449,5 +389,5 @@ export function NotionPromptForm() {
         </InputGroup>
       </Field>
     </form>
-  )
+  );
 }

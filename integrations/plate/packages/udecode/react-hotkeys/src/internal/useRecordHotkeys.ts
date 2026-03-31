@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
-import { mapKey } from './parseHotkeys';
+import { mapKey } from "./parseHotkeys";
 
 export default function useRecordHotkeys() {
   const [keys, setKeys] = useState(new Set<string>());
@@ -25,8 +25,8 @@ export default function useRecordHotkeys() {
   }, []);
 
   const stop = useCallback(() => {
-    if (typeof document !== 'undefined') {
-      document.removeEventListener('keydown', handler);
+    if (typeof document !== "undefined") {
+      document.removeEventListener("keydown", handler);
 
       setIsRecording(false);
     }
@@ -35,10 +35,10 @@ export default function useRecordHotkeys() {
   const start = useCallback(() => {
     setKeys(new Set<string>());
 
-    if (typeof document !== 'undefined') {
+    if (typeof document !== "undefined") {
       stop();
 
-      document.addEventListener('keydown', handler);
+      document.addEventListener("keydown", handler);
 
       setIsRecording(true);
     }

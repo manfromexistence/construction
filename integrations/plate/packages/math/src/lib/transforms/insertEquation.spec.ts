@@ -1,10 +1,10 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BaseEquationPlugin } from '../BaseEquationPlugin';
-import { insertEquation } from './insertEquation';
+import { BaseEquationPlugin } from "../BaseEquationPlugin";
+import { insertEquation } from "./insertEquation";
 
-describe('insertEquation', () => {
-  it('inserts the default equation node shape at the cursor', () => {
+describe("insertEquation", () => {
+  it("inserts the default equation node shape at the cursor", () => {
     const editor = createSlateEditor({
       plugins: [BaseEquationPlugin],
       selection: {
@@ -13,7 +13,7 @@ describe('insertEquation', () => {
       },
       value: [
         {
-          children: [{ text: 'hi' }],
+          children: [{ text: "hi" }],
           type: KEYS.p,
         },
       ],
@@ -23,22 +23,22 @@ describe('insertEquation', () => {
 
     expect(editor.children).toMatchObject([
       {
-        children: [{ text: 'hi' }],
+        children: [{ text: "hi" }],
         type: KEYS.p,
       },
       {
-        children: [{ text: '' }],
-        texExpression: '',
+        children: [{ text: "" }],
+        texExpression: "",
         type: KEYS.equation,
       },
     ]);
   });
 
-  it('respects the configured node type and explicit insertion target', () => {
+  it("respects the configured node type and explicit insertion target", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseEquationPlugin.configure({
-          node: { type: 'custom-equation' },
+          node: { type: "custom-equation" },
         }),
       ],
       selection: {
@@ -47,7 +47,7 @@ describe('insertEquation', () => {
       },
       value: [
         {
-          children: [{ text: 'a' }, { text: 'b' }],
+          children: [{ text: "a" }, { text: "b" }],
           type: KEYS.p,
         },
       ],
@@ -57,13 +57,13 @@ describe('insertEquation', () => {
 
     expect(editor.children).toMatchObject([
       {
-        children: [{ text: 'a' }, { text: 'b' }],
+        children: [{ text: "a" }, { text: "b" }],
         type: KEYS.p,
       },
       {
-        children: [{ text: '' }],
-        texExpression: '',
-        type: 'custom-equation',
+        children: [{ text: "" }],
+        texExpression: "",
+        type: "custom-equation",
       },
     ]);
   });

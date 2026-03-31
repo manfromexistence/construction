@@ -1,8 +1,8 @@
-import type { SlateEditor, TTableCellElement } from 'platejs';
+import type { SlateEditor, TTableCellElement } from "platejs";
 
-import { getCellIndices } from '../utils';
-import { getColSpan } from './getColSpan';
-import { getRowSpan } from './getRowSpan';
+import { getCellIndices } from "../utils";
+import { getColSpan } from "./getColSpan";
+import { getRowSpan } from "./getRowSpan";
 
 /** Return bounding box [minRow..maxRow, minCol..maxCol] of all selected cells. */
 export function getSelectedCellsBoundingBox(

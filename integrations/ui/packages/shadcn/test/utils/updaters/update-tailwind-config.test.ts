@@ -1,12 +1,14 @@
-import { Project, SyntaxKind } from "ts-morph"
-import { beforeEach, describe, expect, test } from "vitest"
+import { Project, SyntaxKind } from "ts-morph";
+import { beforeEach, describe, expect, test } from "vitest";
 
 import {
-  buildTailwindThemeColorsFromCssVars, nestSpreadElements,
+  buildTailwindThemeColorsFromCssVars,
+  nestSpreadElements,
   nestSpreadProperties,
   transformTailwindConfig,
-  unnestSpreadProperties, unsetSpreadElements,
-} from "../../../src/utils/updaters/update-tailwind-config"
+  unnestSpreadProperties,
+  unsetSpreadElements,
+} from "../../../src/utils/updaters/update-tailwind-config";
 
 const SHARED_CONFIG = {
   $schema: "https://ui.shadcn.com/schema.json",
@@ -31,7 +33,7 @@ const SHARED_CONFIG = {
     utils: "./lib/utils",
     ui: "./components/ui",
   },
-}
+};
 
 describe("transformTailwindConfig -> darkMode property", () => {
   test("should add darkMode property if not in config", async () => {
@@ -70,7 +72,7 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
+    ).toMatchSnapshot();
 
     expect(
       await transformTailwindConfig(
@@ -96,7 +98,7 @@ export default {
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
+    ).toMatchSnapshot();
 
     expect(
       await transformTailwindConfig(
@@ -125,8 +127,8 @@ export default {
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should append class to darkMode property if existing array", async () => {
     expect(
@@ -165,8 +167,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should preserve quote kind", async () => {
     expect(
@@ -205,8 +207,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should convert string to array and add class if darkMode is string", async () => {
     expect(
@@ -245,8 +247,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should work with multiple darkMode selectors", async () => {
     expect(
@@ -288,8 +290,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should not add darkMode property if already in config", async () => {
     expect(
@@ -328,7 +330,7 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
+    ).toMatchSnapshot();
 
     expect(
       await transformTailwindConfig(
@@ -366,9 +368,9 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
-})
+    ).toMatchSnapshot();
+  });
+});
 
 describe("transformTailwindConfig -> plugin", () => {
   test("should add plugin if not in config", async () => {
@@ -401,8 +403,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should append plugin to existing array", async () => {
     expect(
@@ -435,8 +437,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should not add plugin if already in config", async () => {
     expect(
@@ -469,9 +471,9 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
-})
+    ).toMatchSnapshot();
+  });
+});
 
 describe("transformTailwindConfig -> theme", () => {
   test("should add theme if not in config", async () => {
@@ -506,8 +508,8 @@ describe("transformTailwindConfig -> theme", () => {
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should merge existing theme", async () => {
     expect(
@@ -557,8 +559,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should keep spread assignments", async () => {
     expect(
@@ -603,8 +605,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should handle multiple properties", async () => {
     expect(
@@ -679,8 +681,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should not make any updates running on already updated config", async () => {
     const input = `import type { Config } from 'tailwindcss'
@@ -717,7 +719,7 @@ theme: {
 },
 }
 export default config
-`
+`;
 
     const tailwindConfig = {
       theme: {
@@ -749,23 +751,23 @@ export default config
           },
         },
       },
-    }
+    };
 
     const output1 = await transformTailwindConfig(input, tailwindConfig, {
       config: SHARED_CONFIG,
-    })
+    });
 
     const output2 = await transformTailwindConfig(output1, tailwindConfig, {
       config: SHARED_CONFIG,
-    })
+    });
 
     const output3 = await transformTailwindConfig(output2, tailwindConfig, {
       config: SHARED_CONFIG,
-    })
+    });
 
-    expect(output3).toBe(output1)
-    expect(output3).toBe(output2)
-  })
+    expect(output3).toBe(output1);
+    expect(output3).toBe(output2);
+  });
 
   test("should keep quotes in strings", async () => {
     expect(
@@ -813,8 +815,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should keep arrays when formatted on multilines", async () => {
     expect(
@@ -844,8 +846,8 @@ export default config
           theme: {
             extend: {
               fontFamily: {
-                mono: ['Foo']
-              }
+                mono: ["Foo"],
+              },
             },
           },
         },
@@ -853,8 +855,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should handle objects nested in arrays", async () => {
     expect(
@@ -888,14 +890,14 @@ export default config
             extend: {
               fontSize: {
                 xl: [
-                  'clamp(1.5rem, 1.04vi + 1.17rem, 2rem)',
+                  "clamp(1.5rem, 1.04vi + 1.17rem, 2rem)",
                   {
-                    lineHeight: '1.2',
-                    letterSpacing: '-0.02em',
-                    fontWeight: '600',
+                    lineHeight: "1.2",
+                    letterSpacing: "-0.02em",
+                    fontWeight: "600",
                   },
                 ],
-              }
+              },
             },
           },
         },
@@ -903,8 +905,8 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
+    ).toMatchSnapshot();
+  });
 
   test("should preserve boolean values", async () => {
     expect(
@@ -930,339 +932,258 @@ export default config
           config: SHARED_CONFIG,
         }
       )
-    ).toMatchSnapshot()
-  })
-})
+    ).toMatchSnapshot();
+  });
+});
 
 describe("nestSpreadProperties", () => {
-  let project: Project
+  let project: Project;
 
   beforeEach(() => {
-    project = new Project({ useInMemoryFileSystem: true })
-  })
+    project = new Project({ useInMemoryFileSystem: true });
+  });
 
   function testTransformation(input: string, expected: string) {
-    const sourceFile = project.createSourceFile(
-      "test.ts",
-      `const config = ${input};`
-    )
-    const configObject = sourceFile.getFirstDescendantByKind(
-      SyntaxKind.ObjectLiteralExpression
-    )
-    if (!configObject) throw new Error("Config object not found")
+    const sourceFile = project.createSourceFile("test.ts", `const config = ${input};`);
+    const configObject = sourceFile.getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
+    if (!configObject) throw new Error("Config object not found");
 
-    nestSpreadProperties(configObject)
+    nestSpreadProperties(configObject);
 
-    const result = configObject.getText()
-    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""))
+    const result = configObject.getText();
+    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""));
   }
 
   test("should nest spread properties", () => {
     testTransformation(
       `{ theme: { ...foo, bar: { ...baz, one: "two" }, other: { a: "b", ...c } } }`,
       `{ theme: { "___foo": "...foo", bar: { "___baz": "...baz", one: "two" }, other: { a: "b", "___c": "...c" } } }`
-    )
-  })
+    );
+  });
 
   test("should handle mixed property assignments", () => {
     testTransformation(
       `{ ...foo, a: 1, b() {}, ...bar, c: { ...baz } }`,
       `{ "___foo": "...foo", a: 1, b() {}, "___bar": "...bar", c: { "___baz": "...baz" } }`
-    )
-  })
+    );
+  });
 
   test("should handle objects with only spread properties", () => {
     testTransformation(
       `{ ...foo, ...bar, ...baz }`,
       `{ "___foo": "...foo", "___bar": "...bar", "___baz": "...baz" }`
-    )
-  })
+    );
+  });
 
   test("should handle property name conflicts", () => {
-    testTransformation(`{ foo: 1, ...foo }`, `{ foo: 1, "___foo": "...foo" }`)
-  })
+    testTransformation(`{ foo: 1, ...foo }`, `{ foo: 1, "___foo": "...foo" }`);
+  });
 
   test("should handle shorthand property names", () => {
-    testTransformation(`{ a, ...foo, b }`, `{ a, "___foo": "...foo", b }`)
-  })
+    testTransformation(`{ a, ...foo, b }`, `{ a, "___foo": "...foo", b }`);
+  });
 
   test("should handle computed property names", () => {
-    testTransformation(
-      `{ ["computed"]: 1, ...foo }`,
-      `{ ["computed"]: 1, "___foo": "...foo" }`
-    )
-  })
+    testTransformation(`{ ["computed"]: 1, ...foo }`, `{ ["computed"]: 1, "___foo": "...foo" }`);
+  });
 
   test("should handle spreads in arrays", () => {
-    testTransformation(
-      `{ foo: [{ ...bar }] }`,
-      `{ foo: [{ "___bar": "...bar" }] }`
-    )
-  })
+    testTransformation(`{ foo: [{ ...bar }] }`, `{ foo: [{ "___bar": "...bar" }] }`);
+  });
 
   test("should handle deep nesting in arrays", () => {
     testTransformation(
       `{ foo: [{ baz: { ...other.baz }, ...bar }] }`,
       `{ foo: [{ baz: { "___other.baz": "...other.baz" }, "___bar": "...bar" }] }`
-    )
-  })
-})
+    );
+  });
+});
 
 describe("nestSpreadElements", () => {
-  let project: Project
+  let project: Project;
 
   beforeEach(() => {
-    project = new Project({ useInMemoryFileSystem: true })
-  })
+    project = new Project({ useInMemoryFileSystem: true });
+  });
 
   function testTransformation(input: string, expected: string) {
-    const sourceFile = project.createSourceFile(
-      "test.ts",
-      `const config = ${input};`
-    )
-    const configObject = sourceFile.getFirstDescendantByKind(
-      SyntaxKind.ArrayLiteralExpression
-    )
-    if (!configObject) throw new Error("Config object not found")
+    const sourceFile = project.createSourceFile("test.ts", `const config = ${input};`);
+    const configObject = sourceFile.getFirstDescendantByKind(SyntaxKind.ArrayLiteralExpression);
+    if (!configObject) throw new Error("Config object not found");
 
-    nestSpreadElements(configObject)
+    nestSpreadElements(configObject);
 
-    const result = configObject.getText()
-    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""))
+    const result = configObject.getText();
+    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""));
   }
 
   test("should spread elements", () => {
-    testTransformation(
-      `[...bar]`,
-      `["...bar"]`
-    )
-  })
+    testTransformation(`[...bar]`, `["...bar"]`);
+  });
 
   test("should handle mixed element types", () => {
-    testTransformation(
-      `['foo', 2, true, ...bar, "baz"]`,
-      `['foo', 2, true, "...bar", "baz"]`
-    )
-  })
+    testTransformation(`['foo', 2, true, ...bar, "baz"]`, `['foo', 2, true, "...bar", "baz"]`);
+  });
 
   test("should handle arrays with only spread elements", () => {
-    testTransformation(
-      `[...foo, ...foo.bar, ...baz]`,
-      `["...foo", "...foo.bar", "...baz"]`
-    )
-  })
+    testTransformation(`[...foo, ...foo.bar, ...baz]`, `["...foo", "...foo.bar", "...baz"]`);
+  });
 
   test("should handle nested arrays with spreads", () => {
-    testTransformation(
-      `[...foo, [...bar]]`,
-      `["...foo", ["...bar"]]`
-    )
-  })
+    testTransformation(`[...foo, [...bar]]`, `["...foo", ["...bar"]]`);
+  });
 
   test("should handle nested arrays within objects", () => {
-    testTransformation(
-      `[{ foo: [...foo] }]`,
-      `[{ foo: ["...foo"] }]`
-    )
-  })
+    testTransformation(`[{ foo: [...foo] }]`, `[{ foo: ["...foo"] }]`);
+  });
 
   test("should handle deeply nested arrays within spread objects", () => {
     testTransformation(
       `[{ foo: [...foo, { bar: ['bar', ...bar ]}] }]`,
       `[{ foo: ["...foo", { bar: ['bar', "...bar" ]}] }]`
-    )
-  })
+    );
+  });
 
   test("should handle optional paths in spread", () => {
-    testTransformation(
-      `[{ foo: [...foo?.bar] }]`,
-      `[{ foo: ["...foo?.bar"] }]`
-    )
-  })
+    testTransformation(`[{ foo: [...foo?.bar] }]`, `[{ foo: ["...foo?.bar"] }]`);
+  });
 
-  test('should handle computed property paths within spread', () => {
-    testTransformation(
-      `[{ foo: [...foo["bar"]] }]`,
-      `[{ foo: ["...foo["bar"]"] }]`
-    )
-  })
+  test("should handle computed property paths within spread", () => {
+    testTransformation(`[{ foo: [...foo["bar"]] }]`, `[{ foo: ["...foo["bar"]"] }]`);
+  });
 
-  test('should handle indexed paths in spread', () => {
-    testTransformation(
-      `[{ foo: [...foo[0]] }]`,
-      `[{ foo: ["...foo[0]"] }]`
-    )
-  })
-})
+  test("should handle indexed paths in spread", () => {
+    testTransformation(`[{ foo: [...foo[0]] }]`, `[{ foo: ["...foo[0]"] }]`);
+  });
+});
 
 describe("unnestSpreadProperties", () => {
-  let project: Project
+  let project: Project;
 
   beforeEach(() => {
-    project = new Project({ useInMemoryFileSystem: true })
-  })
+    project = new Project({ useInMemoryFileSystem: true });
+  });
 
   function testTransformation(input: string, expected: string) {
-    const sourceFile = project.createSourceFile(
-      "test.ts",
-      `const config = ${input};`
-    )
-    const configObject = sourceFile.getFirstDescendantByKind(
-      SyntaxKind.ObjectLiteralExpression
-    )
-    if (!configObject) throw new Error("Config object not found")
+    const sourceFile = project.createSourceFile("test.ts", `const config = ${input};`);
+    const configObject = sourceFile.getFirstDescendantByKind(SyntaxKind.ObjectLiteralExpression);
+    if (!configObject) throw new Error("Config object not found");
 
-    unnestSpreadProperties(configObject)
+    unnestSpreadProperties(configObject);
 
-    const result = configObject.getText()
-    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""))
+    const result = configObject.getText();
+    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""));
   }
 
   test("should nest spread properties", () => {
     testTransformation(
       `{ theme: { ___foo: "...foo", bar: { ___baz: "...baz", one: "two" }, other: { a: "b", ___c: "...c" } } }`,
       `{ theme: { ...foo, bar: { ...baz, one: "two" }, other: { a: "b", ...c } } }`
-    )
-  })
+    );
+  });
 
   test("should handle mixed property assignments", () => {
     testTransformation(
       `{ ___foo: "...foo", a: 1, b() {}, ___bar: "...bar", c: { ___baz: "...baz" } }`,
       `{ ...foo, a: 1, b() {}, ...bar, c: { ...baz } }`
-    )
-  })
+    );
+  });
 
   test("should handle objects with only spread properties", () => {
     testTransformation(
       `{ ___foo: "...foo", ___bar: "...bar", ___baz: "...baz" }`,
       `{ ...foo, ...bar, ...baz }`
-    )
-  })
+    );
+  });
 
   test("should handle property name conflicts", () => {
-    testTransformation(`{ foo: 1, ___foo: "...foo" }`, `{ foo: 1, ...foo }`)
-  })
+    testTransformation(`{ foo: 1, ___foo: "...foo" }`, `{ foo: 1, ...foo }`);
+  });
 
   test("should handle shorthand property names", () => {
-    testTransformation(`{ a, ___foo: "...foo", b }`, `{ a, ...foo, b }`)
-  })
+    testTransformation(`{ a, ___foo: "...foo", b }`, `{ a, ...foo, b }`);
+  });
 
   test("should handle computed property names", () => {
-    testTransformation(
-      `{ ["computed"]: 1, "___foo": "...foo" }`,
-      `{ ["computed"]: 1, ...foo }`
-    )
-  })
+    testTransformation(`{ ["computed"]: 1, "___foo": "...foo" }`, `{ ["computed"]: 1, ...foo }`);
+  });
 
   test("should handle spread objects within arrays", () => {
     testTransformation(
       `{ ["computed"]: 1, foo: [{ "___foo": "...foo" }] }`,
       `{ ["computed"]: 1, foo: [{...foo}] }`
-    )
-  })
+    );
+  });
 
   test("should handle deeply nested spread objects within an array", () => {
     testTransformation(
       `{ ["computed"]: 1, foo: [{ "___foo": "...foo", bar: { baz: 'baz', "___foo.bar": "...foo.bar" } }] }`,
       `{ ["computed"]: 1, foo: [{...foo, bar: { baz: 'baz', ...foo.bar } }] }`
-    )
-  })
-})
+    );
+  });
+});
 
 describe("unnestSpreadElements", () => {
-  let project: Project
+  let project: Project;
 
   beforeEach(() => {
-    project = new Project({ useInMemoryFileSystem: true })
-  })
+    project = new Project({ useInMemoryFileSystem: true });
+  });
 
   function testTransformation(input: string, expected: string) {
-    const sourceFile = project.createSourceFile(
-      "test.ts",
-      `const config = ${input};`
-    )
-    const configObject = sourceFile.getFirstDescendantByKind(
-      SyntaxKind.ArrayLiteralExpression
-    )
-    if (!configObject) throw new Error("Config object not found")
+    const sourceFile = project.createSourceFile("test.ts", `const config = ${input};`);
+    const configObject = sourceFile.getFirstDescendantByKind(SyntaxKind.ArrayLiteralExpression);
+    if (!configObject) throw new Error("Config object not found");
 
-    unsetSpreadElements(configObject)
+    unsetSpreadElements(configObject);
 
-    const result = configObject.getText()
-    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""))
+    const result = configObject.getText();
+    expect(result.replace(/\s+/g, "")).toBe(expected.replace(/\s+/g, ""));
   }
 
   test("should spread elements", () => {
-    testTransformation(
-      `["...bar"]`,
-      `[...bar]`,
-    )
-  })
+    testTransformation(`["...bar"]`, `[...bar]`);
+  });
 
   test("should handle mixed element types", () => {
-    testTransformation(
-      `['foo', 2, true, "...bar", "baz"]`,
-      `['foo', 2, true, ...bar, "baz"]`,
-    )
-  })
+    testTransformation(`['foo', 2, true, "...bar", "baz"]`, `['foo', 2, true, ...bar, "baz"]`);
+  });
 
   test("should handle arrays with only spread elements", () => {
-    testTransformation(
-      `["...foo", "...foo.bar", "...baz"]`,
-      `[...foo, ...foo.bar, ...baz]`,
-    )
-  })
+    testTransformation(`["...foo", "...foo.bar", "...baz"]`, `[...foo, ...foo.bar, ...baz]`);
+  });
 
   test("should handle nested arrays with spreads", () => {
-    testTransformation(
-      `["...foo", ["...bar"]]`,
-      `[...foo, [...bar]]`,
-    )
-  })
+    testTransformation(`["...foo", ["...bar"]]`, `[...foo, [...bar]]`);
+  });
 
   test("should handle nested arrays within objects", () => {
-    testTransformation(
-      `[{ foo: ["...foo"] }]`,
-      `[{ foo: [...foo] }]`,
-    )
-  })
+    testTransformation(`[{ foo: ["...foo"] }]`, `[{ foo: [...foo] }]`);
+  });
 
   test("should handle deeply nested arrays within spread objects", () => {
     testTransformation(
       `[{ foo: ["...foo", { bar: ['bar', "...bar" ]}] }]`,
-      `[{ foo: [...foo, { bar: ['bar', ...bar ]}] }]`,
-    )
-  })
+      `[{ foo: [...foo, { bar: ['bar', ...bar ]}] }]`
+    );
+  });
 
   test("should handle optional paths in spread", () => {
-    testTransformation(
-      `[{ foo: ["...foo?.bar"] }]`,
-      `[{ foo: [...foo?.bar] }]`,
-
-    )
-  })
+    testTransformation(`[{ foo: ["...foo?.bar"] }]`, `[{ foo: [...foo?.bar] }]`);
+  });
 
   test("should handle computed property paths (') within spread", () => {
-    testTransformation(
-      `[{ foo: ["...foo['bar']"] }]`,
-      `[{ foo: [...foo['bar']] }]`,
-    )
-  })
+    testTransformation(`[{ foo: ["...foo['bar']"] }]`, `[{ foo: [...foo['bar']] }]`);
+  });
 
   test('should handle computed property paths (") within spread', () => {
-    testTransformation(
-      `[{ foo: ['...foo["bar"]'] }]`,
-      `[{ foo: [...foo["bar"]] }]`,
-    )
-  })
+    testTransformation(`[{ foo: ['...foo["bar"]'] }]`, `[{ foo: [...foo["bar"]] }]`);
+  });
 
-  test('should handle indexed paths in spread', () => {
-    testTransformation(
-      `[{ foo: ["...foo[0]"] }]`,
-      `[{ foo: [...foo[0]] }]`,
-    )
-  })
-})
+  test("should handle indexed paths in spread", () => {
+    testTransformation(`[{ foo: ["...foo[0]"] }]`, `[{ foo: [...foo[0]] }]`);
+  });
+});
 
 describe("buildTailwindThemeColorsFromCssVars", () => {
   test("should inline color names", () => {
@@ -1288,8 +1209,8 @@ describe("buildTailwindThemeColorsFromCssVars", () => {
         hover: "hsl(var(--accent-hover))",
         active: "hsl(var(--accent-active))",
       },
-    })
-  })
+    });
+  });
 
   test("should not add a DEFAULT if not present", () => {
     expect(
@@ -1312,8 +1233,8 @@ describe("buildTailwindThemeColorsFromCssVars", () => {
         hover: "hsl(var(--accent-hover))",
         active: "hsl(var(--accent-active))",
       },
-    })
-  })
+    });
+  });
 
   test("should build tailwind theme colors from css vars", () => {
     expect(
@@ -1372,6 +1293,6 @@ describe("buildTailwindThemeColorsFromCssVars", () => {
         DEFAULT: "hsl(var(--card))",
         foreground: "hsl(var(--card-foreground))",
       },
-    })
-  })
-})
+    });
+  });
+});

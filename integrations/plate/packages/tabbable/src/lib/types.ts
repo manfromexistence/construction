@@ -10,10 +10,10 @@ export type TabDestination = TabDestinationDOMNode | TabDestinationPath;
 
 export type TabDestinationDOMNode = {
   domNode: HTMLElement;
-  type: 'dom-node';
+  type: "dom-node";
 };
 
 export type TabDestinationPath = {
   path: Path;
-  type: 'path';
+  type: "path";
 };

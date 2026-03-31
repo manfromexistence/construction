@@ -1,19 +1,5 @@
 "use client";
 
-import Logo from "@/assets/logo.svg";
-import { CodeBlock, CodeBlockCopyButton } from "@/components/ai-elements/code-block";
-import { BlockViewer, BlockViewerDisplay, BlockViewerToolbar } from "@/components/block-viewer";
-import { LoadingLogo } from "@/components/editor/ai/loading-logo";
-import { TooltipWrapper } from "@/components/tooltip-wrapper";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useIframeThemeInjector } from "@/hooks/use-iframe-theme-injector";
-import { useWebsitePreview } from "@/hooks/use-website-preview";
-import { cn } from "@/lib/utils";
-import { IframeStatus } from "@/types/live-preview-embed";
 import {
   AlertCircle,
   CheckCircle,
@@ -28,6 +14,20 @@ import {
 } from "lucide-react";
 import { usePostHog } from "posthog-js/react";
 import React, { useEffect, useRef } from "react";
+import Logo from "@/assets/logo.svg";
+import { CodeBlock, CodeBlockCopyButton } from "@/components/ai-elements/code-block";
+import { BlockViewer, BlockViewerDisplay, BlockViewerToolbar } from "@/components/block-viewer";
+import { LoadingLogo } from "@/components/editor/ai/loading-logo";
+import { TooltipWrapper } from "@/components/tooltip-wrapper";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useIframeThemeInjector } from "@/hooks/use-iframe-theme-injector";
+import { useWebsitePreview } from "@/hooks/use-website-preview";
+import { cn } from "@/lib/utils";
+import { IframeStatus } from "@/types/live-preview-embed";
 
 /**
  * Dynamic Website Preview - Load and theme external websites

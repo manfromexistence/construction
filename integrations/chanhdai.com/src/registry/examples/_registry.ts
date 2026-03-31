@@ -1,6 +1,6 @@
-import type { Registry } from "shadcn/schema"
+import type { Registry } from "shadcn/schema";
 
-import { getRegistryItemUrl } from "@/utils/registry"
+import { getRegistryItemUrl } from "@/utils/registry";
 
 export const examples: Registry["items"] = [
   {
@@ -105,10 +105,7 @@ export const examples: Registry["items"] = [
   {
     name: "slide-to-unlock-demo-01",
     type: "registry:example",
-    registryDependencies: [
-      getRegistryItemUrl("slide-to-unlock"),
-      getRegistryItemUrl("use-sound"),
-    ],
+    registryDependencies: [getRegistryItemUrl("slide-to-unlock"), getRegistryItemUrl("use-sound")],
     files: [
       {
         path: "examples/slide-to-unlock-demo-01.tsx",
@@ -207,11 +204,7 @@ export const examples: Registry["items"] = [
   {
     name: "scroll-fade-effect-demo-03",
     type: "registry:example",
-    registryDependencies: [
-      getRegistryItemUrl("scroll-fade-effect"),
-      "scroll-area",
-      "separator",
-    ],
+    registryDependencies: [getRegistryItemUrl("scroll-fade-effect"), "scroll-area", "separator"],
     files: [
       {
         path: "examples/scroll-fade-effect-demo-03.tsx",
@@ -222,10 +215,7 @@ export const examples: Registry["items"] = [
   {
     name: "scroll-fade-effect-demo-04",
     type: "registry:example",
-    registryDependencies: [
-      getRegistryItemUrl("scroll-fade-effect"),
-      "scroll-area",
-    ],
+    registryDependencies: [getRegistryItemUrl("scroll-fade-effect"), "scroll-area"],
     files: [
       {
         path: "examples/scroll-fade-effect-demo-04.tsx",
@@ -310,4 +300,4 @@ export const examples: Registry["items"] = [
       },
     ],
   },
-]
+];

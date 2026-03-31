@@ -1,20 +1,19 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { isHotkey } from "platejs";
+import { useEditorRef } from "platejs/react";
+import { useCallback, useEffect, useMemo } from "react";
 
-import { isHotkey } from 'platejs';
-import { useEditorRef } from 'platejs/react';
-
-import type { PreviewItem } from './ImagePreviewStore';
-import { ImagePreviewStore, useImagePreviewValue } from './ImagePreviewStore';
-import { useZoom } from './useZoom';
+import type { PreviewItem } from "./ImagePreviewStore";
+import { ImagePreviewStore, useImagePreviewValue } from "./ImagePreviewStore";
+import { useZoom } from "./useZoom";
 
 export const useImagePreview = ({ scrollSpeed }: { scrollSpeed: number }) => {
   const editor = useEditorRef();
-  const isOpen = useImagePreviewValue('isOpen', editor.id);
-  const scale = useImagePreviewValue('scale');
-  const translate = useImagePreviewValue('translate');
-  const boundingClientRect = useImagePreviewValue('boundingClientRect');
-  const currentPreview = useImagePreviewValue('currentPreview');
-  const previewList = useImagePreviewValue('previewList');
+  const isOpen = useImagePreviewValue("isOpen", editor.id);
+  const scale = useImagePreviewValue("scale");
+  const translate = useImagePreviewValue("translate");
+  const boundingClientRect = useImagePreviewValue("boundingClientRect");
+  const currentPreview = useImagePreviewValue("currentPreview");
+  const previewList = useImagePreviewValue("previewList");
 
   // zoom in/out and move image
   useEffect(() => {
@@ -47,18 +46,18 @@ export const useImagePreview = ({ scrollSpeed }: { scrollSpeed: number }) => {
         topOffset = y;
       }
 
-      ImagePreviewStore.set('translate', {
+      ImagePreviewStore.set("translate", {
         x: leftOffset,
         y: topOffset,
       });
     };
 
-    if (!isOpen) return document.removeEventListener('wheel', wheel);
+    if (!isOpen) return document.removeEventListener("wheel", wheel);
 
-    document.addEventListener('wheel', wheel);
+    document.addEventListener("wheel", wheel);
 
     return () => {
-      document.removeEventListener('wheel', wheel);
+      document.removeEventListener("wheel", wheel);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, translate, scale]);
@@ -69,8 +68,7 @@ export const useImagePreview = ({ scrollSpeed }: { scrollSpeed: number }) => {
     if (!currentPreview) return null;
 
     return previewList.findIndex(
-      (item: PreviewItem) =>
-        item.url === currentPreview.url && item.id === currentPreview.id
+      (item: PreviewItem) => item.url === currentPreview.url && item.id === currentPreview.id
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPreview]);
@@ -81,33 +79,27 @@ export const useImagePreview = ({ scrollSpeed }: { scrollSpeed: number }) => {
   }, []);
 
   const [prevDisabled, nextDisabled] = useMemo(
-    () => [
-      currentPreviewIndex === 0,
-      currentPreviewIndex === previewList.length - 1,
-    ],
+    () => [currentPreviewIndex === 0, currentPreviewIndex === previewList.length - 1],
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [currentPreviewIndex]
   );
 
-  const [zoomOutDisabled, zoomInDisabled] = useMemo(
-    () => [scale <= 0.5, scale >= 2],
-    [scale]
-  );
+  const [zoomOutDisabled, zoomInDisabled] = useMemo(() => [scale <= 0.5, scale >= 2], [scale]);
 
   useEffect(() => {
     const keydown = (e: KeyboardEvent) => {
-      if (isHotkey('escape')(e)) {
+      if (isHotkey("escape")(e)) {
         e.stopPropagation();
         onClose();
       }
     };
 
-    if (!isOpen) return document.removeEventListener('keydown', keydown);
+    if (!isOpen) return document.removeEventListener("keydown", keydown);
 
-    document.addEventListener('keydown', keydown);
+    document.addEventListener("keydown", keydown);
 
     return () => {
-      document.removeEventListener('keydown', keydown);
+      document.removeEventListener("keydown", keydown);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
@@ -124,28 +116,22 @@ export const useImagePreview = ({ scrollSpeed }: { scrollSpeed: number }) => {
     nextProps: {
       disabled: nextDisabled,
       onClick: () => {
-        if (typeof currentPreviewIndex !== 'number') return;
+        if (typeof currentPreviewIndex !== "number") return;
 
-        ImagePreviewStore.set(
-          'currentPreview',
-          previewList[currentPreviewIndex + 1]
-        );
+        ImagePreviewStore.set("currentPreview", previewList[currentPreviewIndex + 1]);
       },
     },
     prevDisabled,
     prevProps: {
       disabled: prevDisabled,
       onClick: () => {
-        if (typeof currentPreviewIndex !== 'number') return;
+        if (typeof currentPreviewIndex !== "number") return;
 
-        ImagePreviewStore.set(
-          'currentPreview',
-          previewList[currentPreviewIndex - 1]
-        );
+        ImagePreviewStore.set("currentPreview", previewList[currentPreviewIndex - 1]);
       },
     },
     scaleTextProps: {
-      onClick: () => ImagePreviewStore.set('isEditingScale', true),
+      onClick: () => ImagePreviewStore.set("isEditingScale", true),
     },
     zommOutProps: {
       disabled: zoomOutDisabled,

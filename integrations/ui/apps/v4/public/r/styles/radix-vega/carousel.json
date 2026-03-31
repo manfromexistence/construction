@@ -1,12 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "carousel",
-  "dependencies": [
-    "embla-carousel-react"
-  ],
-  "registryDependencies": [
-    "button"
-  ],
+  "dependencies": ["embla-carousel-react"],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "registry/radix-vega/ui/carousel.tsx",

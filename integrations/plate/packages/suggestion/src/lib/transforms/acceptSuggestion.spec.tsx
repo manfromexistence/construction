@@ -1,28 +1,27 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { acceptSuggestion } from './acceptSuggestion';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { acceptSuggestion } from "./acceptSuggestion";
 
 jsxt;
 
 const suggestionPlugin = BaseSuggestionPlugin.configure({
   options: {
-    currentUserId: 'testId',
+    currentUserId: "testId",
   },
 });
 
-describe('acceptSuggestion', () => {
-  it('accept insert suggestion', () => {
+describe("acceptSuggestion", () => {
+  it("accept insert suggestion", () => {
     const insertData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -49,19 +48,19 @@ describe('acceptSuggestion', () => {
     });
 
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('accept remove suggestion', () => {
+  it("accept remove suggestion", () => {
     const removeData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'remove',
-      userId: 'testId',
+      type: "remove",
+      userId: "testId",
     };
 
     const input = (
@@ -88,22 +87,22 @@ describe('acceptSuggestion', () => {
     });
 
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('accept update suggestion', () => {
+  it("accept update suggestion", () => {
     const updateData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
       newProperties: {
         bold: true,
       },
-      type: 'update',
-      userId: 'testId',
+      type: "update",
+      userId: "testId",
     };
 
     const input = (
@@ -134,20 +133,20 @@ describe('acceptSuggestion', () => {
     });
 
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('accept line break suggestion', () => {
+  it("accept line break suggestion", () => {
     const lineBreakData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
       isLineBreak: true,
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -170,20 +169,20 @@ describe('acceptSuggestion', () => {
     });
 
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('merge nodes when accepting line break remove suggestion', () => {
+  it("merge nodes when accepting line break remove suggestion", () => {
     const lineBreakData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
       isLineBreak: true,
-      type: 'remove',
-      userId: 'testId',
+      type: "remove",
+      userId: "testId",
     };
 
     const input = (
@@ -205,27 +204,27 @@ describe('acceptSuggestion', () => {
     });
 
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
-  it('accept node with both remove and insert suggestions', () => {
+  it("accept node with both remove and insert suggestions", () => {
     const time = Date.now();
 
     const removeData = {
-      id: '1',
+      id: "1",
       createdAt: time,
-      type: 'remove',
-      userId: 'testId',
+      type: "remove",
+      userId: "testId",
     };
 
     const insertData = {
-      id: '1',
+      id: "1",
       createdAt: time,
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -256,19 +255,19 @@ describe('acceptSuggestion', () => {
 
     // Accept should replace the remove suggestion with the insert suggestion
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('accept remove nodes', () => {
+  it("accept remove nodes", () => {
     const removeData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'remove',
-      userId: 'testId',
+      type: "remove",
+      userId: "testId",
     };
 
     const input = (
@@ -290,19 +289,19 @@ describe('acceptSuggestion', () => {
     });
 
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('accept insert nodes', () => {
+  it("accept insert nodes", () => {
     const insertData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -325,8 +324,8 @@ describe('acceptSuggestion', () => {
     });
 
     acceptSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);

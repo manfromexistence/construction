@@ -1,18 +1,9 @@
-import type {
-  NodeEntry,
-  PathRef,
-  SlateEditor,
-  TTableCellElement,
-} from 'platejs';
+import type { NodeEntry, PathRef, SlateEditor, TTableCellElement } from "platejs";
 
-import { getEditorPlugin } from 'platejs';
+import { getEditorPlugin } from "platejs";
 
-import {
-  BaseTablePlugin,
-  getCellRowIndexByPath,
-  getTableMergedColumnCount,
-} from '..';
-import { getTableGridAbove } from '../queries';
+import { BaseTablePlugin, getCellRowIndexByPath, getTableMergedColumnCount } from "..";
+import { getTableGridAbove } from "../queries";
 
 export const deleteRowWhenExpanded = (
   editor: SlateEditor,
@@ -22,7 +13,7 @@ export const deleteRowWhenExpanded = (
   const columnCount = getTableMergedColumnCount(table);
 
   const cells = getTableGridAbove(editor, {
-    format: 'cell',
+    format: "cell",
   }) as NodeEntry<TTableCellElement>[];
 
   const firsRowIndex = getCellRowIndexByPath(cells[0][1]);

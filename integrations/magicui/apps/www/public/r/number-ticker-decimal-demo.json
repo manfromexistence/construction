@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Number Ticker Decimal Demo",
   "description": "Example showing animated counting decimal numbers.",
-  "registryDependencies": [
-    "@magicui/number-ticker"
-  ],
+  "registryDependencies": ["@magicui/number-ticker"],
   "files": [
     {
       "path": "registry/example/number-ticker-decimal-demo.tsx",

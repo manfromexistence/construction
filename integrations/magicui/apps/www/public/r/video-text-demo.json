@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Video Text Demo",
   "description": "Example showing text with a video background.",
-  "registryDependencies": [
-    "@magicui/video-text"
-  ],
+  "registryDependencies": ["@magicui/video-text"],
   "files": [
     {
       "path": "registry/example/video-text-demo.tsx",

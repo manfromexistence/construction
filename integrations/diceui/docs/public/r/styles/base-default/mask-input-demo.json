@@ -1,8 +1,6 @@
 {
   "name": "mask-input-demo",
-  "registryDependencies": [
-    "mask-input"
-  ],
+  "registryDependencies": ["mask-input"],
   "files": [
     {
       "path": "examples/mask-input-demo.tsx",

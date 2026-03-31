@@ -1,6 +1,6 @@
-import { getSelectedDomBlocks } from './getSelectedDomBlocks';
+import { getSelectedDomBlocks } from "./getSelectedDomBlocks";
 
-describe('getSelectedDomBlocks', () => {
+describe("getSelectedDomBlocks", () => {
   let mockSelection: Selection;
   let mockRange: Range;
   let originalGetSelection: typeof window.getSelection;
@@ -29,20 +29,20 @@ describe('getSelectedDomBlocks', () => {
     window.getSelection = originalGetSelection;
   });
 
-  describe('when selection exists', () => {
-    it('returns array of slate blocks with data attributes', () => {
+  describe("when selection exists", () => {
+    it("returns array of slate blocks with data attributes", () => {
       const mockFragment = document.createDocumentFragment();
 
       // Create slate blocks
-      const block1 = document.createElement('div');
-      block1.dataset.slateNode = 'element';
-      block1.dataset.slateId = 'block-1';
-      block1.textContent = 'First block';
+      const block1 = document.createElement("div");
+      block1.dataset.slateNode = "element";
+      block1.dataset.slateId = "block-1";
+      block1.textContent = "First block";
 
-      const block2 = document.createElement('div');
-      block2.dataset.slateNode = 'element';
-      block2.dataset.slateId = 'block-2';
-      block2.textContent = 'Second block';
+      const block2 = document.createElement("div");
+      block2.dataset.slateNode = "element";
+      block2.dataset.slateId = "block-2";
+      block2.textContent = "Second block";
 
       mockFragment.append(block1);
       mockFragment.append(block2);
@@ -55,23 +55,23 @@ describe('getSelectedDomBlocks', () => {
       expect(result).toHaveLength(2);
       expect(result?.[0]).toBe(block1);
       expect(result?.[1]).toBe(block2);
-      expect((result?.[0] as HTMLElement).dataset.slateId).toBe('block-1');
-      expect((result?.[1] as HTMLElement).dataset.slateId).toBe('block-2');
+      expect((result?.[0] as HTMLElement).dataset.slateId).toBe("block-1");
+      expect((result?.[1] as HTMLElement).dataset.slateId).toBe("block-2");
     });
 
-    it('filter out non-slate elements', () => {
+    it("filter out non-slate elements", () => {
       const mockFragment = document.createDocumentFragment();
 
       // Create mixed elements
-      const regularDiv = document.createElement('div');
-      regularDiv.textContent = 'Regular div';
+      const regularDiv = document.createElement("div");
+      regularDiv.textContent = "Regular div";
 
-      const slateBlock = document.createElement('div');
-      slateBlock.dataset.slateNode = 'element';
-      slateBlock.dataset.slateId = 'block-1';
+      const slateBlock = document.createElement("div");
+      slateBlock.dataset.slateNode = "element";
+      slateBlock.dataset.slateId = "block-1";
 
-      const paragraph = document.createElement('p');
-      paragraph.textContent = 'Regular paragraph';
+      const paragraph = document.createElement("p");
+      paragraph.textContent = "Regular paragraph";
 
       mockFragment.append(regularDiv);
       mockFragment.append(slateBlock);
@@ -86,16 +86,16 @@ describe('getSelectedDomBlocks', () => {
       expect(result?.[0]).toBe(slateBlock);
     });
 
-    it('handle nested slate blocks', () => {
+    it("handle nested slate blocks", () => {
       const mockFragment = document.createDocumentFragment();
 
-      const parentBlock = document.createElement('div');
-      parentBlock.dataset.slateNode = 'element';
-      parentBlock.dataset.slateId = 'parent-1';
+      const parentBlock = document.createElement("div");
+      parentBlock.dataset.slateNode = "element";
+      parentBlock.dataset.slateId = "parent-1";
 
-      const childBlock = document.createElement('div');
-      childBlock.dataset.slateNode = 'element';
-      childBlock.dataset.slateId = 'child-1';
+      const childBlock = document.createElement("div");
+      childBlock.dataset.slateNode = "element";
+      childBlock.dataset.slateId = "child-1";
 
       parentBlock.append(childBlock);
       mockFragment.append(parentBlock);
@@ -110,11 +110,11 @@ describe('getSelectedDomBlocks', () => {
       expect(result?.[1]).toBe(childBlock);
     });
 
-    it('returns empty array when no slate blocks found', () => {
+    it("returns empty array when no slate blocks found", () => {
       const mockFragment = document.createDocumentFragment();
 
-      const regularDiv = document.createElement('div');
-      regularDiv.textContent = 'No slate attributes';
+      const regularDiv = document.createElement("div");
+      regularDiv.textContent = "No slate attributes";
 
       mockFragment.append(regularDiv);
 
@@ -126,11 +126,11 @@ describe('getSelectedDomBlocks', () => {
       expect(result).toHaveLength(0);
     });
 
-    it('handle blocks with only data-slate-node attribute', () => {
+    it("handle blocks with only data-slate-node attribute", () => {
       const mockFragment = document.createDocumentFragment();
 
-      const block = document.createElement('div');
-      block.dataset.slateNode = 'element';
+      const block = document.createElement("div");
+      block.dataset.slateNode = "element";
       // Missing data-slate-id
 
       mockFragment.append(block);
@@ -144,11 +144,11 @@ describe('getSelectedDomBlocks', () => {
       expect(result).toHaveLength(0);
     });
 
-    it('handle blocks with only data-slate-id attribute', () => {
+    it("handle blocks with only data-slate-id attribute", () => {
       const mockFragment = document.createDocumentFragment();
 
-      const block = document.createElement('div');
-      block.dataset.slateId = 'block-1';
+      const block = document.createElement("div");
+      block.dataset.slateId = "block-1";
       // Missing data-slate-node="element"
 
       mockFragment.append(block);
@@ -162,7 +162,7 @@ describe('getSelectedDomBlocks', () => {
       expect(result).toHaveLength(0);
     });
 
-    it('handle empty fragment', () => {
+    it("handle empty fragment", () => {
       const mockFragment = document.createDocumentFragment();
       mockRange.cloneContents = mock(() => mockFragment);
 
@@ -173,8 +173,8 @@ describe('getSelectedDomBlocks', () => {
     });
   });
 
-  describe('when selection does not exist', () => {
-    it('returns undefined when getSelection returns null', () => {
+  describe("when selection does not exist", () => {
+    it("returns undefined when getSelection returns null", () => {
       window.getSelection = mock(() => null);
 
       const result = getSelectedDomBlocks();
@@ -182,7 +182,7 @@ describe('getSelectedDomBlocks', () => {
       expect(result).toBeUndefined();
     });
 
-    it('returns undefined when rangeCount is 0', () => {
+    it("returns undefined when rangeCount is 0", () => {
       (mockSelection as any).rangeCount = 0;
 
       const result = getSelectedDomBlocks();
@@ -191,7 +191,7 @@ describe('getSelectedDomBlocks', () => {
       expect(mockSelection.getRangeAt).not.toHaveBeenCalled();
     });
 
-    it('handle negative rangeCount', () => {
+    it("handle negative rangeCount", () => {
       (mockSelection as any).rangeCount = -1;
       // Mock cloneContents to return a valid fragment
       const mockFragment = document.createDocumentFragment();
@@ -206,17 +206,17 @@ describe('getSelectedDomBlocks', () => {
     });
   });
 
-  describe('edge cases', () => {
-    it('handle slate blocks with different node types', () => {
+  describe("edge cases", () => {
+    it("handle slate blocks with different node types", () => {
       const mockFragment = document.createDocumentFragment();
 
-      const textNode = document.createElement('span');
-      textNode.dataset.slateNode = 'text';
-      textNode.dataset.slateId = 'text-1';
+      const textNode = document.createElement("span");
+      textNode.dataset.slateNode = "text";
+      textNode.dataset.slateId = "text-1";
 
-      const elementNode = document.createElement('div');
-      elementNode.dataset.slateNode = 'element';
-      elementNode.dataset.slateId = 'element-1';
+      const elementNode = document.createElement("div");
+      elementNode.dataset.slateNode = "element";
+      elementNode.dataset.slateId = "element-1";
 
       mockFragment.append(textNode);
       mockFragment.append(elementNode);
@@ -231,28 +231,28 @@ describe('getSelectedDomBlocks', () => {
       expect(result?.[0]).toBe(elementNode);
     });
 
-    it('handle getRangeAt throwing an error', () => {
+    it("handle getRangeAt throwing an error", () => {
       mockSelection.getRangeAt = mock(() => {
-        throw new Error('Index out of bounds');
+        throw new Error("Index out of bounds");
       });
 
       // The function doesn't catch the error, so it will throw
-      expect(() => getSelectedDomBlocks()).toThrow('Index out of bounds');
+      expect(() => getSelectedDomBlocks()).toThrow("Index out of bounds");
     });
 
-    it('handle cloneContents throwing an error', () => {
+    it("handle cloneContents throwing an error", () => {
       mockRange.cloneContents = mock(() => {
-        throw new Error('Failed to clone');
+        throw new Error("Failed to clone");
       });
 
       // The function doesn't catch the error, so it will throw
-      expect(() => getSelectedDomBlocks()).toThrow('Failed to clone');
+      expect(() => getSelectedDomBlocks()).toThrow("Failed to clone");
     });
 
-    it('handle complex DOM structures', () => {
+    it("handle complex DOM structures", () => {
       const mockFragment = document.createDocumentFragment();
 
-      const wrapper = document.createElement('div');
+      const wrapper = document.createElement("div");
       wrapper.innerHTML = `
         <div data-slate-node="element" data-slate-id="1">
           <p>Content</p>
@@ -276,17 +276,17 @@ describe('getSelectedDomBlocks', () => {
 
       expect(result).toBeDefined();
       expect(result).toHaveLength(3);
-      expect((result?.[0] as HTMLElement).dataset.slateId).toBe('1');
-      expect((result?.[1] as HTMLElement).dataset.slateId).toBe('2');
-      expect((result?.[2] as HTMLElement).dataset.slateId).toBe('3');
+      expect((result?.[0] as HTMLElement).dataset.slateId).toBe("1");
+      expect((result?.[1] as HTMLElement).dataset.slateId).toBe("2");
+      expect((result?.[2] as HTMLElement).dataset.slateId).toBe("3");
     });
 
-    it('preserve order of blocks', () => {
+    it("preserve order of blocks", () => {
       const mockFragment = document.createDocumentFragment();
 
       for (let i = 1; i <= 5; i++) {
-        const block = document.createElement('div');
-        block.dataset.slateNode = 'element';
+        const block = document.createElement("div");
+        block.dataset.slateNode = "element";
         block.dataset.slateId = `block-${i}`;
         mockFragment.append(block);
       }
@@ -297,9 +297,7 @@ describe('getSelectedDomBlocks', () => {
 
       expect(result).toHaveLength(5);
       for (let i = 0; i < 5; i++) {
-        expect((result?.[i] as HTMLElement).dataset.slateId).toBe(
-          `block-${i + 1}`
-        );
+        expect((result?.[i] as HTMLElement).dataset.slateId).toBe(`block-${i + 1}`);
       }
     });
   });

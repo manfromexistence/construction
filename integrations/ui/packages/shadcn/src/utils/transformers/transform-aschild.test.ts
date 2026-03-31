@@ -1,8 +1,8 @@
-import { type Config } from "@/src/utils/get-config"
-import { transformAsChild } from "@/src/utils/transformers/transform-aschild"
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
+import { type Config } from "@/src/utils/get-config";
+import { transformAsChild } from "@/src/utils/transformers/transform-aschild";
 
-import { transform } from "."
+import { transform } from ".";
 
 const testConfig: Config = {
   style: "base-default",
@@ -28,7 +28,7 @@ const testConfig: Config = {
     tailwindConfig: "tailwind.config.ts",
     tailwindCss: "tailwind.css",
   },
-}
+};
 
 describe("transformAsChild", () => {
   describe("DialogTrigger with Button child", () => {
@@ -58,9 +58,9 @@ export function Component() {
             <DialogTrigger render={<Button variant="outline" />}>Edit Profile</DialogTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("DialogTrigger with non-Button child", () => {
     test("transforms asChild to render prop without nativeButton", async () => {
@@ -89,9 +89,9 @@ export function Component() {
             <DialogTrigger render={<a href="#" />}>Open Dialog</DialogTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("Button with anchor child", () => {
     test("transforms asChild to render prop with nativeButton={false}", async () => {
@@ -120,9 +120,9 @@ export function Component() {
             <Button render={<a href="#" />} nativeButton={false}>Create project</Button>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("Button with span child", () => {
     test("transforms asChild to render prop with nativeButton={false}", async () => {
@@ -151,9 +151,9 @@ export function Component() {
             <Button variant="outline" size="icon" className="w-12" render={<span />} nativeButton={false}>1.2K</Button>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("PopoverTrigger with custom component child", () => {
     test("transforms asChild to render prop without nativeButton", async () => {
@@ -182,9 +182,9 @@ export function Component() {
             <PopoverTrigger render={<InputGroupAddon />}>Click me</PopoverTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("Button with Link child", () => {
     test("transforms asChild to render prop with nativeButton={false}", async () => {
@@ -213,9 +213,9 @@ export function Component() {
             <Button render={<Link href="/" />} nativeButton={false}>Home</Button>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("preserves child props", () => {
     test("preserves className and other attributes on child", async () => {
@@ -247,9 +247,9 @@ export function Component() {
                     </Button>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("handles nested children", () => {
     test("preserves complex children content", async () => {
@@ -280,9 +280,9 @@ export function Component() {
             <Button render={<a href="#" />} nativeButton={false}>Learn more <Icon /></Button>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("self-closing child element", () => {
     test("handles self-closing child with no children", async () => {
@@ -311,9 +311,9 @@ export function Component() {
             <TooltipTrigger render={<InputGroupButton size="icon-xs" />}></TooltipTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("non-base style", () => {
     test("does not transform when style is not base-*", async () => {
@@ -347,9 +347,9 @@ export function Component() {
             </DialogTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("multiple asChild elements", () => {
     test("transforms multiple asChild elements in same file", async () => {
@@ -386,9 +386,9 @@ export function Component() {
             </div>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("nested asChild", () => {
     test("transforms inner asChild first, then outer", async () => {
@@ -419,8 +419,8 @@ export function Component() {
             <Collapsible render={<SidebarMenuButton render={<a href="#" />} />}>Home</Collapsible>
           )
         }"
-      `)
-    })
+      `);
+    });
 
     test("adds nativeButton={false} only on nested Button", async () => {
       expect(
@@ -450,8 +450,8 @@ export function Component() {
             <DialogTrigger render={<Button render={<a href="#" />} nativeButton={false} />}>Open</DialogTrigger>
           )
         }"
-      `)
-    })
+      `);
+    });
 
     test("transforms nested with sibling asChild elements", async () => {
       expect(
@@ -489,8 +489,8 @@ export function Component() {
             </div>
           )
         }"
-      `)
-    })
+      `);
+    });
 
     test("transforms nested with self-closing inner child", async () => {
       expect(
@@ -520,8 +520,8 @@ export function Component() {
             <Collapsible render={<SidebarMenuButton render={<Icon className="size-4" />} />}></Collapsible>
           )
         }"
-      `)
-    })
+      `);
+    });
 
     test("transforms triple-nested asChild", async () => {
       expect(
@@ -553,9 +553,9 @@ export function Component() {
             <TooltipTrigger render={<Collapsible render={<SidebarMenuButton render={<a href="#" />} />} />}>Home</TooltipTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("idempotency", () => {
     test("running twice produces same output", async () => {
@@ -567,7 +567,7 @@ export function Component() {
       <Button variant="outline">Edit Profile</Button>
     </DialogTrigger>
   )
-}`
+}`;
 
       const firstRun = await transform(
         {
@@ -576,7 +576,7 @@ export function Component() {
           config: testConfig,
         },
         [transformAsChild]
-      )
+      );
 
       const secondRun = await transform(
         {
@@ -585,9 +585,9 @@ export function Component() {
           config: testConfig,
         },
         [transformAsChild]
-      )
+      );
 
-      expect(secondRun).toBe(firstRun)
-    })
-  })
-})
+      expect(secondRun).toBe(firstRun);
+    });
+  });
+});

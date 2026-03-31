@@ -1,7 +1,7 @@
-import { makeClientRect } from './makeClientRect';
+import { makeClientRect } from "./makeClientRect";
 
-describe('makeClientRect', () => {
-  it('derives width, height, x, y, and toJSON from the edges', () => {
+describe("makeClientRect", () => {
+  it("derives width, height, x, y, and toJSON from the edges", () => {
     const rect = makeClientRect({
       bottom: 26,
       left: 5,

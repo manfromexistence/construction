@@ -1,19 +1,18 @@
-import React from 'react';
-
-import { mergeProps } from 'platejs';
+import { mergeProps } from "platejs";
 import {
   useEditorReadOnly,
   useEditorRef,
   useEditorSelector,
   useFocused,
   useOnClickOutside,
-} from 'platejs/react';
+} from "platejs/react";
+import React from "react";
 
 import {
-  type UseVirtualFloatingOptions,
   getSelectionBoundingClientRect,
+  type UseVirtualFloatingOptions,
   useVirtualFloating,
-} from '..';
+} from "..";
 
 export type FloatingToolbarState = {
   floatingOptions?: UseVirtualFloatingOptions;
@@ -32,18 +31,14 @@ export const useFloatingToolbarState = ({
   focusedEditorId: string | null;
 } & FloatingToolbarState) => {
   const editor = useEditorRef();
-  const selectionExpanded = useEditorSelector(
-    () => editor.api.isExpanded(),
-    []
-  );
+  const selectionExpanded = useEditorSelector(() => editor.api.isExpanded(), []);
   const selectionText = useEditorSelector(() => editor.api.string(), []);
   const readOnly = useEditorReadOnly();
 
   const focused = useFocused();
 
   const [open, setOpen] = React.useState(false);
-  const [waitForCollapsedSelection, setWaitForCollapsedSelection] =
-    React.useState(false);
+  const [waitForCollapsedSelection, setWaitForCollapsedSelection] = React.useState(false);
   const [mousedown, setMousedown] = React.useState(false);
 
   const floating = useVirtualFloating(
@@ -101,23 +96,18 @@ export const useFloatingToolbar = ({
     if (!selectionExpanded) {
       setWaitForCollapsedSelection(false);
     }
-  }, [
-    editorId,
-    focusedEditorId,
-    selectionExpanded,
-    setWaitForCollapsedSelection,
-  ]);
+  }, [editorId, focusedEditorId, selectionExpanded, setWaitForCollapsedSelection]);
 
   React.useEffect(() => {
     const mouseup = () => setMousedown(false);
     const mousedown = () => setMousedown(true);
 
-    document.addEventListener('mouseup', mouseup);
-    document.addEventListener('mousedown', mousedown);
+    document.addEventListener("mouseup", mouseup);
+    document.addEventListener("mousedown", mousedown);
 
     return () => {
-      document.removeEventListener('mouseup', mouseup);
-      document.removeEventListener('mousedown', mousedown);
+      document.removeEventListener("mouseup", mouseup);
+      document.removeEventListener("mousedown", mousedown);
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,11 +124,7 @@ export const useFloatingToolbar = ({
       ) {
         return false;
       }
-      if (
-        selectionText &&
-        selectionExpanded &&
-        (!waitForCollapsedSelection || readOnly)
-      ) {
+      if (selectionText && selectionExpanded && (!waitForCollapsedSelection || readOnly)) {
         return true;
       }
       return prevOpen; // No change needed
@@ -168,7 +154,7 @@ export const useFloatingToolbar = ({
       setOpen(false);
     },
     {
-      ignoreClass: 'ignore-click-outside/toolbar',
+      ignoreClass: "ignore-click-outside/toolbar",
     }
   );
 

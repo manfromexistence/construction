@@ -1,11 +1,8 @@
-import React from 'react';
-
-import { useAtomStoreSet, useAtomStoreValue } from 'jotai-x';
-
-import type { AnyEditorPlatePlugin } from '../plugin/PlatePlugin';
-
-import { getEditorPlugin, getPlugin } from '../plugin';
-import { useEditorRef, usePlateStore } from '../stores';
+import { useAtomStoreSet, useAtomStoreValue } from "jotai-x";
+import React from "react";
+import { getEditorPlugin, getPlugin } from "../plugin";
+import type { AnyEditorPlatePlugin } from "../plugin/PlatePlugin";
+import { useEditorRef, usePlateStore } from "../stores";
 
 export function EditorRefPluginEffect({
   id,
@@ -23,8 +20,8 @@ export function EditorRefPluginEffect({
 
 export function EditorRefEffect({ id }: { id?: string }) {
   const store = usePlateStore(id);
-  const editor = useAtomStoreValue(store, 'editor');
-  const setIsMounted = useAtomStoreSet(store, 'isMounted');
+  const editor = useAtomStoreValue(store, "editor");
+  const setIsMounted = useAtomStoreSet(store, "isMounted");
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -37,11 +34,7 @@ export function EditorRefEffect({ id }: { id?: string }) {
   return (
     <>
       {editor.meta.pluginCache.useHooks.map((key) => (
-        <EditorRefPluginEffect
-          id={id}
-          key={key}
-          plugin={getPlugin(editor, { key })}
-        />
+        <EditorRefPluginEffect id={id} key={key} plugin={getPlugin(editor, { key })} />
       ))}
     </>
   );

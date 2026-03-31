@@ -1,9 +1,6 @@
 {
   "name": "stepper",
-  "dependencies": [
-    "@base-ui/react",
-    "lucide-react"
-  ],
+  "dependencies": ["@base-ui/react", "lucide-react"],
   "registryDependencies": [
     "direction",
     "compose-refs",

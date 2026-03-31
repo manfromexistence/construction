@@ -1,23 +1,17 @@
-import type {
-  Descendant,
-  NodeEntry,
-  SlateEditor,
-  TTableCellElement,
-} from 'platejs';
+import cloneDeep from "lodash/cloneDeep.js";
+import type { Descendant, NodeEntry, SlateEditor, TTableCellElement } from "platejs";
+import { getEditorPlugin, KEYS } from "platejs";
 
-import cloneDeep from 'lodash/cloneDeep.js';
-import { getEditorPlugin, KEYS } from 'platejs';
-
-import { getCellIndices } from '..';
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { getTableGridAbove } from '../queries';
+import { getCellIndices } from "..";
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { getTableGridAbove } from "../queries";
 
 /** Merges multiple selected cells into one. */
 export const mergeTableCells = (editor: SlateEditor) => {
   const { api } = getEditorPlugin(editor, BaseTablePlugin);
 
   const cellEntries = getTableGridAbove(editor, {
-    format: 'cell',
+    format: "cell",
   }) as NodeEntry<TTableCellElement>[];
 
   editor.tf.withoutNormalizing(() => {
@@ -56,10 +50,7 @@ export const mergeTableCells = (editor: SlateEditor) => {
 
       const cellChildren = api.table.getCellChildren!(el);
 
-      if (
-        cellChildren.length !== 1 ||
-        !editor.api.isEmpty(cellChildren[0] as any)
-      ) {
+      if (cellChildren.length !== 1 || !editor.api.isEmpty(cellChildren[0] as any)) {
         mergingCellChildren.push(...cloneDeep(cellChildren));
       }
     }

@@ -1,5 +1,5 @@
-import type { TElement, TText } from '@platejs/slate';
-import type { AnyObject } from '@udecode/utils';
+import type { TElement, TText } from "@platejs/slate";
+import type { AnyObject } from "@udecode/utils";
 
 import type {
   AnyPluginConfig,
@@ -8,9 +8,9 @@ import type {
   RenderLeafProps,
   RenderTextProps,
   SlatePluginContext,
-} from '..';
+} from "..";
 
-export type BoxStaticProps = React.ComponentProps<'div'> & {
+export type BoxStaticProps = React.ComponentProps<"div"> & {
   as?: React.ElementType;
 };
 

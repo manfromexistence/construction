@@ -32,8 +32,7 @@ const CliBlock = ({ icons, staticIconName, className }: CliBlockProps) => {
 
   const handleCopyToClipboard = () => {
     startTransition(async () => {
-      const iconName =
-        staticIconName || currentIconName.current || icons?.[0]?.name || "";
+      const iconName = staticIconName || currentIconName.current || icons?.[0]?.name || "";
 
       try {
         await navigator.clipboard.writeText(
@@ -55,14 +54,8 @@ const CliBlock = ({ icons, staticIconName, className }: CliBlockProps) => {
   };
 
   return (
-    <div
-      className={cn("relative mt-[40px] w-full max-w-[642px] px-4", className)}
-    >
-      <Tabs
-        className="w-full"
-        onValueChange={setPackageName}
-        value={packageName}
-      >
+    <div className={cn("relative mt-[40px] w-full max-w-[642px] px-4", className)}>
+      <Tabs className="w-full" onValueChange={setPackageName} value={packageName}>
         <TabsList className="w-full" onClick={(e) => e.stopPropagation()}>
           {Object.values(PACKAGE_MANAGER).map((pm) => (
             <TabsTrigger key={pm} value={pm}>
@@ -98,19 +91,14 @@ const CliBlock = ({ icons, staticIconName, className }: CliBlockProps) => {
                   {getPackageManagerPrefix(pm)} shadcn add @lucide-animated/
                   {staticIconName || currentIconName.current}
                 </span>
-                <span
-                  aria-hidden="true"
-                  className="text-neutral-600 dark:text-neutral-400"
-                >
+                <span aria-hidden="true" className="text-neutral-600 dark:text-neutral-400">
                   {getPackageManagerPrefix(pm)}
                 </span>{" "}
                 <span aria-hidden="true" className="text-black dark:text-white">
                   shadcn add @lucide-animated/
                 </span>
                 {isStatic ? (
-                  <span className="shrink-0 text-primary">
-                    {staticIconName}
-                  </span>
+                  <span className="shrink-0 text-primary">{staticIconName}</span>
                 ) : (
                   <TextLoop
                     interval={1.5}

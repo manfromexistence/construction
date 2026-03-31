@@ -1,14 +1,13 @@
-import React from 'react';
-
-import { createPlateEditor, Plate } from '@platejs/core/react';
-import { renderHook } from '@testing-library/react';
+import { createPlateEditor, Plate } from "@platejs/core/react";
+import { renderHook } from "@testing-library/react";
+import React from "react";
 
 import {
   useSelectionAcrossBlocks,
   useSelectionCollapsed,
   useSelectionExpanded,
   useSelectionWithinBlock,
-} from './useSelection';
+} from "./useSelection";
 
 const createWrapper = (editor: ReturnType<typeof createPlateEditor>) =>
   function Wrapper({ children }: { children: React.ReactNode }) {
@@ -19,14 +18,14 @@ const createWrapper = (editor: ReturnType<typeof createPlateEditor>) =>
     );
   };
 
-describe('useSelection hooks', () => {
-  it('reports a collapsed selection within one block', () => {
+describe("useSelection hooks", () => {
+  it("reports a collapsed selection within one block", () => {
     const editor = createPlateEditor({
       selection: {
         anchor: { offset: 1, path: [0, 0] },
         focus: { offset: 1, path: [0, 0] },
       },
-      value: [{ children: [{ text: 'one' }], type: 'p' }],
+      value: [{ children: [{ text: "one" }], type: "p" }],
     });
 
     const wrapper = createWrapper(editor);
@@ -37,18 +36,12 @@ describe('useSelection hooks', () => {
     const { result: expanded } = renderHook(() => useSelectionExpanded(), {
       wrapper,
     });
-    const { result: withinBlock } = renderHook(
-      () => useSelectionWithinBlock(),
-      {
-        wrapper,
-      }
-    );
-    const { result: acrossBlocks } = renderHook(
-      () => useSelectionAcrossBlocks(),
-      {
-        wrapper,
-      }
-    );
+    const { result: withinBlock } = renderHook(() => useSelectionWithinBlock(), {
+      wrapper,
+    });
+    const { result: acrossBlocks } = renderHook(() => useSelectionAcrossBlocks(), {
+      wrapper,
+    });
 
     expect(collapsed.current).toBe(true);
     expect(expanded.current).toBe(false);
@@ -56,15 +49,15 @@ describe('useSelection hooks', () => {
     expect(acrossBlocks.current).toBe(false);
   });
 
-  it('reports an expanded selection across blocks', () => {
+  it("reports an expanded selection across blocks", () => {
     const editor = createPlateEditor({
       selection: {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 3, path: [1, 0] },
       },
       value: [
-        { children: [{ text: 'one' }], type: 'p' },
-        { children: [{ text: 'two' }], type: 'p' },
+        { children: [{ text: "one" }], type: "p" },
+        { children: [{ text: "two" }], type: "p" },
       ],
     });
 
@@ -76,18 +69,12 @@ describe('useSelection hooks', () => {
     const { result: expanded } = renderHook(() => useSelectionExpanded(), {
       wrapper,
     });
-    const { result: withinBlock } = renderHook(
-      () => useSelectionWithinBlock(),
-      {
-        wrapper,
-      }
-    );
-    const { result: acrossBlocks } = renderHook(
-      () => useSelectionAcrossBlocks(),
-      {
-        wrapper,
-      }
-    );
+    const { result: withinBlock } = renderHook(() => useSelectionWithinBlock(), {
+      wrapper,
+    });
+    const { result: acrossBlocks } = renderHook(() => useSelectionAcrossBlocks(), {
+      wrapper,
+    });
 
     expect(collapsed.current).toBe(false);
     expect(expanded.current).toBe(true);

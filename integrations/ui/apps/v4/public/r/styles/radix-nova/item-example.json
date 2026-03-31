@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "item-example",
   "title": "Item",
-  "registryDependencies": [
-    "button",
-    "item",
-    "example"
-  ],
+  "registryDependencies": ["button", "item", "example"],
   "files": [
     {
       "path": "registry/radix-nova/examples/item-example.tsx",

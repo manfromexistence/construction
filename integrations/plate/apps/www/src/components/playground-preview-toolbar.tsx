@@ -1,27 +1,18 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { CheckIcon, Fullscreen, Monitor, Smartphone, Tablet, TerminalIcon } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
+import type { ImperativePanelHandle } from "react-resizable-panels";
 
-import type { ImperativePanelHandle } from 'react-resizable-panels';
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { siteConfig } from "@/config/site";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { cn } from "@/lib/utils";
 
-import {
-  CheckIcon,
-  Fullscreen,
-  Monitor,
-  Smartphone,
-  Tablet,
-  TerminalIcon,
-} from 'lucide-react';
-import Link from 'next/link';
-
-import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { siteConfig } from '@/config/site';
-import { useCopyToClipboard } from '@/hooks/use-copy-to-clipboard';
-import { cn } from '@/lib/utils';
-
-import { BlockCopyButton } from './block-copy-button';
-import { ToggleGroup, ToggleGroupItem } from './ui/toggle-group';
+import { BlockCopyButton } from "./block-copy-button";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 export function PlaygroundPreviewToolbar({
   block,
@@ -41,17 +32,13 @@ export function PlaygroundPreviewToolbar({
   return (
     <div
       className={cn(
-        'mb-4 flex items-center gap-4'
+        "mb-4 flex items-center gap-4"
         // 'absolute right-0 z-50',
         // '-top-4 -translate-y-full'
         // fullScreen && 'bottom-4'
       )}
     >
-      <Button
-        asChild
-        variant="link"
-        className="whitespace-normal px-1 pb-0 md:px-2"
-      >
+      <Button asChild variant="link" className="whitespace-normal px-1 pb-0 md:px-2">
         <a
           className="whitespace-nowrap"
           href={src ?? `#${block.name}`}
@@ -68,9 +55,7 @@ export function PlaygroundPreviewToolbar({
           variant="ghost"
           className="h-7 rounded-md border bg-muted shadow-none"
           onClick={() => {
-            copyToClipboard(
-              `npx shadcn@latest add ${siteConfig.registryUrl}${block.name}`
-            );
+            copyToClipboard(`npx shadcn@latest add ${siteConfig.registryUrl}${block.name}`);
           }}
         >
           {isCopied ? <CheckIcon /> : <TerminalIcon />}
@@ -132,15 +117,8 @@ export function PlaygroundPreviewToolbar({
 
         {block.code && (
           <>
-            <Separator
-              orientation="vertical"
-              className="mx-2 hidden h-4 md:flex"
-            />
-            <BlockCopyButton
-              name={block.name}
-              code={block.code}
-              event="copy_block_code"
-            />
+            <Separator orientation="vertical" className="mx-2 hidden h-4 md:flex" />
+            <BlockCopyButton name={block.name} code={block.code} event="copy_block_code" />
           </>
         )}
       </div>

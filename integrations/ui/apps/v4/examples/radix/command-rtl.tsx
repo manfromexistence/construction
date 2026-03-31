@@ -1,19 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import {
-  Calculator,
-  Calendar,
-  CreditCard,
-  Settings,
-  Smile,
-  User,
-} from "lucide-react"
+import { Calculator, Calendar, CreditCard, Settings, Smile, User } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Command,
   CommandEmpty,
@@ -23,7 +13,7 @@ import {
   CommandList,
   CommandSeparator,
   CommandShortcut,
-} from "@/styles/radix-nova/ui-rtl/command"
+} from "@/styles/radix-nova/ui-rtl/command";
 
 const translations: Translations = {
   en: {
@@ -68,10 +58,10 @@ const translations: Translations = {
       billing: "חיוב",
     },
   },
-}
+};
 
 export function CommandRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Command className="max-w-sm rounded-lg border" dir={dir}>
@@ -112,5 +102,5 @@ export function CommandRtl() {
         </CommandGroup>
       </CommandList>
     </Command>
-  )
+  );
 }

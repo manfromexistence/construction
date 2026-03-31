@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 /**
  * Performance debugging utilities for table rendering
@@ -27,17 +27,15 @@ export function resetPerfMeasures(): void {
 }
 
 export function logPerfResults(): void {
-  console.log('\n=== Performance Breakdown ===');
-  const sorted = Array.from(perfMeasures.entries()).sort(
-    (a, b) => b[1].total - a[1].total
-  );
+  console.log("\n=== Performance Breakdown ===");
+  const sorted = Array.from(perfMeasures.entries()).sort((a, b) => b[1].total - a[1].total);
 
   for (const [name, { count, total }] of sorted) {
     console.log(
       `${name}: ${total.toFixed(2)}ms total, ${count} calls, ${(total / count).toFixed(3)}ms avg`
     );
   }
-  console.log('=============================\n');
+  console.log("=============================\n");
 }
 
 // Hook call counter for debugging

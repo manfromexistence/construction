@@ -1,5 +1,5 @@
-import { ImageUploadAction, PromptImageWithLoading } from "@/hooks/use-image-upload";
 import { Reducer } from "react";
+import { ImageUploadAction, PromptImageWithLoading } from "@/hooks/use-image-upload";
 
 export const imageUploadReducer: Reducer<PromptImageWithLoading[], ImageUploadAction> = (
   state,

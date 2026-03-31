@@ -1,11 +1,6 @@
 {
   "name": "cropper-controlled-demo",
-  "registryDependencies": [
-    "cropper",
-    "button",
-    "label",
-    "slider"
-  ],
+  "registryDependencies": ["cropper", "button", "label", "slider"],
   "files": [
     {
       "path": "examples/cropper-controlled-demo.tsx",

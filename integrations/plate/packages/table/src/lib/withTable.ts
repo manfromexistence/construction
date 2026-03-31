@@ -1,27 +1,23 @@
-import type { OverrideEditor, TElement } from 'platejs';
+import type { OverrideEditor, TElement } from "platejs";
 
-import type { TableConfig } from './BaseTablePlugin';
+import type { TableConfig } from "./BaseTablePlugin";
 
-import {
-  getNextTableCell,
-  getPreviousTableCell,
-  getTableEntries,
-} from './queries';
-import { getCellTypes } from './utils';
-import { withApplyTable } from './withApplyTable';
-import { withDeleteTable } from './withDeleteTable';
-import { withGetFragmentTable } from './withGetFragmentTable';
-import { withInsertFragmentTable } from './withInsertFragmentTable';
-import { withInsertTextTable } from './withInsertTextTable';
-import { withNormalizeTable } from './withNormalizeTable';
-import { withSetFragmentDataTable } from './withSetFragmentDataTable';
-import { withTableCellSelection } from './withTableCellSelection';
-import { moveSelectionFromCell } from './transforms';
+import { getNextTableCell, getPreviousTableCell, getTableEntries } from "./queries";
+import { moveSelectionFromCell } from "./transforms";
 import {
   getTableMoveSelectionContext,
   hasAdjacentBlockInCell,
   shouldMoveSelectionFromCell,
-} from './transforms/shouldMoveSelectionFromCell';
+} from "./transforms/shouldMoveSelectionFromCell";
+import { getCellTypes } from "./utils";
+import { withApplyTable } from "./withApplyTable";
+import { withDeleteTable } from "./withDeleteTable";
+import { withGetFragmentTable } from "./withGetFragmentTable";
+import { withInsertFragmentTable } from "./withInsertFragmentTable";
+import { withInsertTextTable } from "./withInsertTextTable";
+import { withNormalizeTable } from "./withNormalizeTable";
+import { withSetFragmentDataTable } from "./withSetFragmentDataTable";
+import { withTableCellSelection } from "./withTableCellSelection";
 
 export const withTable: OverrideEditor<TableConfig> = (ctx) => {
   const {
@@ -108,7 +104,7 @@ export const withTable: OverrideEditor<TableConfig> = (ctx) => {
 
             if (tdEntries.length > 1) {
               editor.tf.collapse({
-                edge: 'end',
+                edge: "end",
               });
 
               return true;
@@ -124,12 +120,7 @@ export const withTable: OverrideEditor<TableConfig> = (ctx) => {
 
           if (options.reverse) {
             // move left with shift+tab
-            const previousCell = getPreviousTableCell(
-              editor,
-              cell,
-              cellPath,
-              row
-            );
+            const previousCell = getPreviousTableCell(editor, cell, cellPath, row);
 
             if (previousCell) {
               const [, previousCellPath] = previousCell;

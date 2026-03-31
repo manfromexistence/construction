@@ -1,8 +1,7 @@
 "use client"; // @NOTE: Add in case you are using Next.js
 
+import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useCallback, useState } from "react";
-
-import { AnimatePresence, type Variants, motion } from "motion/react";
 import useMeasure from "react-use-measure";
 
 import { cn } from "@/utils/cn";
@@ -20,8 +19,7 @@ const STEPS = [
   },
   {
     title: "Results",
-    description:
-      "Luxe will add extra shine to your application, with smooth components.",
+    description: "Luxe will add extra shine to your application, with smooth components.",
   },
   {
     title: "Copy now",
@@ -44,7 +42,7 @@ export function MultiStepModal() {
       setDirection(direction);
       setActiveIdx(idx);
     },
-    [activeIdx],
+    [activeIdx]
   );
 
   const variants: Variants = {
@@ -103,7 +101,7 @@ export function MultiStepModal() {
               onClick={() => handleSetActiveIdx(activeIdx - 1)}
               className={cn(
                 "h-8 w-24 rounded-full border border-neutral-300 bg-neutral-100 px-3 text-[13px] font-medium text-black dark:text-white",
-                "disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-[#171717]",
+                "disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-[#171717]"
               )}
             >
               Back
@@ -117,7 +115,7 @@ export function MultiStepModal() {
               }}
               className={cn(
                 "h-8 w-24 rounded-full border border-neutral-300 bg-neutral-100 px-3 text-[13px] font-medium text-black dark:text-white",
-                "disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-[#171717]",
+                "disabled:cursor-not-allowed disabled:opacity-50 dark:border-neutral-800 dark:bg-[#171717]"
               )}
             >
               Continue

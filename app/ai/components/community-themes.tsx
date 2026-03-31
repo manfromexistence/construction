@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Suspense } from "react";
-import { CommunityThemeCard, CommunityThemeCardSkeleton } from "./community-theme-card";
+import { Button } from "@/components/ui/button";
 import { ThemePreset } from "@/types/theme";
 import { defaultPresets } from "@/utils/theme-presets";
+import { CommunityThemeCard, CommunityThemeCardSkeleton } from "./community-theme-card";
 
 // TODO: Remove this once we have a real API to fetch the community themes
 const getDefaultThemePresets = async () => {

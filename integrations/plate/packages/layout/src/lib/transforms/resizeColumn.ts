@@ -1,4 +1,4 @@
-import type { TColumnGroupElement } from 'platejs';
+import type { TColumnGroupElement } from "platejs";
 
 export function resizeColumn(
   columnGroup: TColumnGroupElement,
@@ -6,9 +6,7 @@ export function resizeColumn(
   newWidthPercent: number
 ): TColumnGroupElement {
   // Convert widths to numbers for easier math
-  const widths = columnGroup.children.map((col) =>
-    col.width ? Number.parseFloat(col.width) : 0
-  );
+  const widths = columnGroup.children.map((col) => (col.width ? Number.parseFloat(col.width) : 0));
 
   const totalBefore = widths.reduce((sum, w) => sum + w, 0);
 

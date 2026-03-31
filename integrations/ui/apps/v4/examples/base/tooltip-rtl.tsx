@@ -1,15 +1,8 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/base-nova/ui-rtl/tooltip"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/base-nova/ui-rtl/tooltip";
 
 const translations: Translations = {
   en: {
@@ -48,22 +41,20 @@ const translations: Translations = {
       "inline-end": "סוף השורה",
     },
   },
-}
+};
 
-const physicalSides = ["left", "top", "bottom", "right"] as const
-const logicalSides = ["inline-start", "inline-end"] as const
+const physicalSides = ["left", "top", "bottom", "right"] as const;
+const logicalSides = ["inline-start", "inline-end"] as const;
 
 export function TooltipRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap justify-center gap-2">
         {physicalSides.map((side) => (
           <Tooltip key={side}>
-            <TooltipTrigger render={<Button variant="outline" />}>
-              {t[side]}
-            </TooltipTrigger>
+            <TooltipTrigger render={<Button variant="outline" />}>{t[side]}</TooltipTrigger>
             <TooltipContent side={side} dir={dir}>
               {t.content}
             </TooltipContent>
@@ -73,9 +64,7 @@ export function TooltipRtl() {
       <div className="flex flex-wrap justify-center gap-2">
         {logicalSides.map((side) => (
           <Tooltip key={side}>
-            <TooltipTrigger render={<Button variant="outline" />}>
-              {t[side]}
-            </TooltipTrigger>
+            <TooltipTrigger render={<Button variant="outline" />}>{t[side]}</TooltipTrigger>
             <TooltipContent side={side} dir={dir}>
               {t.content}
             </TooltipContent>
@@ -83,5 +72,5 @@ export function TooltipRtl() {
         ))}
       </div>
     </div>
-  )
+  );
 }

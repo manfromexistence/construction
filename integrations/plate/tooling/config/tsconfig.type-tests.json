@@ -10,10 +10,5 @@
     "../../packages/udecode/*/type-tests/**/*.tsx",
     "../../tooling/config/global.d.ts"
   ],
-  "exclude": [
-    "../../node_modules",
-    "../../**/node_modules",
-    "../../dist",
-    "../../**/dist"
-  ]
+  "exclude": ["../../node_modules", "../../**/node_modules", "../../dist", "../../**/dist"]
 }

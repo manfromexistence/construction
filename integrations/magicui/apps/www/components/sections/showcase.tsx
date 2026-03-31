@@ -1,32 +1,27 @@
-import Image from "next/image"
-import Link from "next/link"
-import { ChevronRightIcon } from "@radix-ui/react-icons"
+import { ChevronRightIcon } from "@radix-ui/react-icons";
+import Image from "next/image";
+import Link from "next/link";
 
-import { showcaseSource } from "@/lib/source"
-import { Marquee } from "@/registry/magicui/marquee"
+import { showcaseSource } from "@/lib/source";
+import { Marquee } from "@/registry/magicui/marquee";
 
 function isExternalHref(href: string) {
   try {
-    const url = new URL(href)
-    return url.protocol === "http:" || url.protocol === "https:"
+    const url = new URL(href);
+    return url.protocol === "http:" || url.protocol === "https:";
   } catch {
-    return false
+    return false;
   }
 }
 
 export interface ShowcaseCardProps {
-  title: string
-  image: string
-  href: string
-  affiliation?: string
+  title: string;
+  image: string;
+  href: string;
+  affiliation?: string;
 }
-export function ShowcaseCard({
-  title,
-  image,
-  href,
-  affiliation,
-}: ShowcaseCardProps) {
-  const isExternal = isExternalHref(href)
+export function ShowcaseCard({ title, image, href, affiliation }: ShowcaseCardProps) {
+  const isExternal = isExternalHref(href);
   return (
     <Link
       href={href}
@@ -51,11 +46,11 @@ export function ShowcaseCard({
         <p className="text-sm text-neutral-400">{affiliation}</p>
       </div>
     </Link>
-  )
+  );
 }
 
 export function Showcase() {
-  const showcases = showcaseSource.getPages()
+  const showcases = showcaseSource.getPages();
   return (
     <section id="showcase" className="container py-10 md:py-14">
       <h2 className="text-foreground mb-2 text-center text-3xl leading-[1.2] font-semibold tracking-tighter text-balance md:text-4xl lg:text-5xl">
@@ -82,5 +77,5 @@ export function Showcase() {
         <div className="from-background pointer-events-none absolute inset-y-0 right-0 h-full w-1/12 bg-linear-to-l"></div>
       </div>
     </section>
-  )
+  );
 }

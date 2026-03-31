@@ -1,12 +1,11 @@
-import type { NodeComponent, PluginConfig } from '../../lib';
+import { resolvePluginTest } from "../../internal/plugin/resolveCreatePluginTest";
+import type { NodeComponent, PluginConfig } from "../../lib";
+import { createPlatePlugin } from "./createPlatePlugin";
 
-import { resolvePluginTest } from '../../internal/plugin/resolveCreatePluginTest';
-import { createPlatePlugin } from './createPlatePlugin';
-
-describe('withComponent method', () => {
-  it('set the component for the plugin', () => {
+describe("withComponent method", () => {
+  it("set the component for the plugin", () => {
     const MockComponent: NodeComponent = () => null;
-    const basePlugin = createPlatePlugin({ key: 'testPlugin' });
+    const basePlugin = createPlatePlugin({ key: "testPlugin" });
 
     const pluginWithComponent = basePlugin.withComponent(MockComponent);
     const resolvedPlugin = resolvePluginTest(pluginWithComponent);
@@ -14,12 +13,12 @@ describe('withComponent method', () => {
     expect(resolvedPlugin.render.node).toBe(MockComponent);
   });
 
-  it('override an existing component', () => {
+  it("override an existing component", () => {
     const OriginalComponent: NodeComponent = () => null;
     const NewComponent: NodeComponent = () => null;
 
     const basePlugin = createPlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
       render: { node: OriginalComponent },
     });
 
@@ -32,12 +31,12 @@ describe('withComponent method', () => {
     expect(resolvedPlugin.node.component).toBe(NewComponent);
   });
 
-  it('override an existing component with node.component', () => {
+  it("override an existing component with node.component", () => {
     const OriginalComponent: NodeComponent = () => null;
     const NewComponent: NodeComponent = () => null;
 
     const basePlugin = createPlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
       node: { component: OriginalComponent },
     });
 
@@ -50,9 +49,9 @@ describe('withComponent method', () => {
     expect(resolvedPlugin.node.component).toBe(NewComponent);
   });
 
-  it('extendEditorApi', () => {
+  it("extendEditorApi", () => {
     type CodeBlockConfig = PluginConfig<
-      'code_block',
+      "code_block",
       { syntax: boolean; syntaxPopularFirst: boolean },
       {
         plugin: {
@@ -63,10 +62,10 @@ describe('withComponent method', () => {
     >;
 
     createPlatePlugin({
-      key: 'code_block',
+      key: "code_block",
       options: { syntax: true, syntaxPopularFirst: false },
     })
-      .extendEditorApi<CodeBlockConfig['api']>(() => ({
+      .extendEditorApi<CodeBlockConfig["api"]>(() => ({
         plugin: {
           getSyntaxState: () => true,
         },
@@ -74,7 +73,7 @@ describe('withComponent method', () => {
       }))
       .extend(() => ({
         options: {
-          hotkey: ['mod+opt+8', 'mod+shift+8'],
+          hotkey: ["mod+opt+8", "mod+shift+8"],
         },
         extendEditor: ({ api, editor }) => {
           // No type error

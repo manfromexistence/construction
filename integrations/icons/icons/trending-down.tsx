@@ -70,81 +70,80 @@ const ARROW_VARIANTS: Variants = {
   },
 };
 
-const TrendingDownIcon = forwardRef<
-  TrendingDownIconHandle,
-  TrendingDownIconProps
->(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
-  const controls = useAnimation();
-  const isControlledRef = useRef(false);
+const TrendingDownIcon = forwardRef<TrendingDownIconHandle, TrendingDownIconProps>(
+  ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+    const controls = useAnimation();
+    const isControlledRef = useRef(false);
 
-  useImperativeHandle(ref, () => {
-    isControlledRef.current = true;
+    useImperativeHandle(ref, () => {
+      isControlledRef.current = true;
 
-    return {
-      startAnimation: () => controls.start("animate"),
-      stopAnimation: () => controls.start("normal"),
-    };
-  });
+      return {
+        startAnimation: () => controls.start("animate"),
+        stopAnimation: () => controls.start("normal"),
+      };
+    });
 
-  const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) {
-        onMouseEnter?.(e);
-      } else {
-        controls.start("animate");
-      }
-    },
-    [controls, onMouseEnter]
-  );
+    const handleMouseEnter = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) {
+          onMouseEnter?.(e);
+        } else {
+          controls.start("animate");
+        }
+      },
+      [controls, onMouseEnter]
+    );
 
-  const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) {
-        onMouseLeave?.(e);
-      } else {
-        controls.start("normal");
-      }
-    },
-    [controls, onMouseLeave]
-  );
+    const handleMouseLeave = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) {
+          onMouseLeave?.(e);
+        } else {
+          controls.start("normal");
+        }
+      },
+      [controls, onMouseLeave]
+    );
 
-  return (
-    <div
-      className={cn(className)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      <motion.svg
-        animate={controls}
-        fill="none"
-        height={size}
-        initial="normal"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        variants={SVG_VARIANTS}
-        viewBox="0 0 24 24"
-        width={size}
-        xmlns="http://www.w3.org/2000/svg"
+    return (
+      <div
+        className={cn(className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...props}
       >
-        <motion.polyline
+        <motion.svg
           animate={controls}
+          fill="none"
+          height={size}
           initial="normal"
-          points="22 17 13.5 8.5 8.5 13.5 2 7"
-          variants={PATH_VARIANTS}
-        />
-        <motion.polyline
-          animate={controls}
-          initial="normal"
-          points="16 17 22 17 22 11"
-          variants={ARROW_VARIANTS}
-        />
-      </motion.svg>
-    </div>
-  );
-});
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          variants={SVG_VARIANTS}
+          viewBox="0 0 24 24"
+          width={size}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <motion.polyline
+            animate={controls}
+            initial="normal"
+            points="22 17 13.5 8.5 8.5 13.5 2 7"
+            variants={PATH_VARIANTS}
+          />
+          <motion.polyline
+            animate={controls}
+            initial="normal"
+            points="16 17 22 17 22 11"
+            variants={ARROW_VARIANTS}
+          />
+        </motion.svg>
+      </div>
+    );
+  }
+);
 
 TrendingDownIcon.displayName = "TrendingDownIcon";
 

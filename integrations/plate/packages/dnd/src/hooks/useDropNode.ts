@@ -1,23 +1,16 @@
+import type { NodeEntry, TElement } from "platejs";
+import type { PlateEditor } from "platejs/react";
 import {
   type ConnectDropTarget,
   type DropTargetHookSpec,
   type DropTargetMonitor,
   useDrop,
-} from 'react-dnd';
-
-import type { NodeEntry, TElement } from 'platejs';
-import type { PlateEditor } from 'platejs/react';
-
-import type {
-  DragItemNode,
-  ElementDragItemNode,
-  FileDragItemNode,
-} from '../types';
-
-import { DndPlugin } from '../DndPlugin';
-import { getDropPath, onDropNode } from '../transforms/onDropNode';
-import { onHoverNode } from '../transforms/onHoverNode';
-import { canUseDomDnd, noopConnector } from '../utils/dndEnvironment';
+} from "react-dnd";
+import { DndPlugin } from "../DndPlugin";
+import { getDropPath, onDropNode } from "../transforms/onDropNode";
+import { onHoverNode } from "../transforms/onHoverNode";
+import type { DragItemNode, ElementDragItemNode, FileDragItemNode } from "../types";
+import { canUseDomDnd, noopConnector } from "../utils/dndEnvironment";
 
 export type CanDropCallback = (args: {
   dragEntry: NodeEntry<TElement>;
@@ -44,7 +37,7 @@ export interface UseDropNodeOptions
    */
   canDropNode?: CanDropCallback;
 
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: "horizontal" | "vertical";
 
   onDropHandler?: (
     editor: PlateEditor,
@@ -80,14 +73,7 @@ export interface UseDropNodeOptions
  */
 export const useDropNode = (
   editor: PlateEditor,
-  {
-    canDropNode,
-    element,
-    nodeRef,
-    orientation,
-    onDropHandler,
-    ...options
-  }: UseDropNodeOptions
+  { canDropNode, element, nodeRef, orientation, onDropHandler, ...options }: UseDropNodeOptions
 ): [{ isOver: boolean }, ConnectDropTarget] => {
   const id = element.id as string;
 

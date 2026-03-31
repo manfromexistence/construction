@@ -1,13 +1,13 @@
-import { ChevronDownIcon } from "lucide-react"
-import { Slot } from "radix-ui"
-import React from "react"
+import { ChevronDownIcon } from "lucide-react";
+import { Slot } from "radix-ui";
+import React from "react";
 
-import { Button } from "@/components/base/ui/button"
+import { Button } from "@/components/base/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/components/base/ui/collapsible"
+} from "@/components/base/ui/collapsible";
 
 export function CollapsibleList<T>({
   items,
@@ -16,11 +16,11 @@ export function CollapsibleList<T>({
   keyExtractor,
   renderItem,
 }: {
-  items: T[]
-  max?: number
+  items: T[];
+  max?: number;
 
-  keyExtractor?: (item: T) => string
-  renderItem: (item: T) => React.ReactNode
+  keyExtractor?: (item: T) => string;
+  renderItem: (item: T) => React.ReactNode;
 }) {
   return (
     <Collapsible className="group/collapsible">
@@ -36,11 +36,7 @@ export function CollapsibleList<T>({
       <CollapsibleContent>
         {items.slice(max).map((award, index) => (
           <Slot.Root
-            key={
-              typeof keyExtractor === "function"
-                ? keyExtractor(award)
-                : max + index
-            }
+            key={typeof keyExtractor === "function" ? keyExtractor(award) : max + index}
             className="border-b border-line"
           >
             {renderItem(award)}
@@ -53,13 +49,9 @@ export function CollapsibleList<T>({
           <CollapsibleTrigger
             render={
               <Button className="gap-2 border-none pr-2.5 pl-3" size="sm">
-                <span className="hidden group-data-closed/collapsible:block">
-                  Show More
-                </span>
+                <span className="hidden group-data-closed/collapsible:block">Show More</span>
 
-                <span className="hidden group-data-open/collapsible:block">
-                  Show Less
-                </span>
+                <span className="hidden group-data-open/collapsible:block">Show Less</span>
 
                 <ChevronDownIcon className="group-data-open/collapsible:rotate-180" />
               </Button>
@@ -68,5 +60,5 @@ export function CollapsibleList<T>({
         </div>
       )}
     </Collapsible>
-  )
+  );
 }

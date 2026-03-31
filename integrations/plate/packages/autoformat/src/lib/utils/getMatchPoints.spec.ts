@@ -1,8 +1,8 @@
-import * as previousCharModule from './isPreviousCharacterEmpty';
-import { getMatchPoints } from './getMatchPoints';
+import { getMatchPoints } from "./getMatchPoints";
+import * as previousCharModule from "./isPreviousCharacterEmpty";
 
-describe('getMatchPoints', () => {
-  it('returns undefined when the end marker cannot be found', () => {
+describe("getMatchPoints", () => {
+  it("returns undefined when the end marker cannot be found", () => {
     const editor = {
       api: {
         before: mock(() => {}),
@@ -12,14 +12,13 @@ describe('getMatchPoints', () => {
       },
     } as any;
 
-    expect(getMatchPoints(editor, { end: '**', start: '' })).toBeUndefined();
+    expect(getMatchPoints(editor, { end: "**", start: "" })).toBeUndefined();
   });
 
-  it('returns undefined when the start marker is not preceded by whitespace', () => {
-    const previousCharSpy = spyOn(
-      previousCharModule,
-      'isPreviousCharacterEmpty'
-    ).mockReturnValue(false);
+  it("returns undefined when the start marker is not preceded by whitespace", () => {
+    const previousCharSpy = spyOn(previousCharModule, "isPreviousCharacterEmpty").mockReturnValue(
+      false
+    );
     const editor = {
       api: {
         before: mock((_point, options) => {
@@ -35,20 +34,16 @@ describe('getMatchPoints', () => {
       },
     } as any;
 
-    expect(getMatchPoints(editor, { end: '*', start: '*' })).toBeUndefined();
+    expect(getMatchPoints(editor, { end: "*", start: "*" })).toBeUndefined();
     previousCharSpy.mockRestore();
   });
 
-  it('returns all relevant points when both start and end markers match', () => {
-    const previousCharSpy = spyOn(
-      previousCharModule,
-      'isPreviousCharacterEmpty'
-    ).mockReturnValue(true);
+  it("returns all relevant points when both start and end markers match", () => {
+    const previousCharSpy = spyOn(previousCharModule, "isPreviousCharacterEmpty").mockReturnValue(
+      true
+    );
     const before = mock((_point, options) => {
-      if (
-        options?.matchString === '**' &&
-        (_point?.offset === 7 || _point?.anchor?.offset === 7)
-      ) {
+      if (options?.matchString === "**" && (_point?.offset === 7 || _point?.anchor?.offset === 7)) {
         return { offset: 5, path: [0, 0] };
       }
 
@@ -65,7 +60,7 @@ describe('getMatchPoints', () => {
       },
     } as any;
 
-    expect(getMatchPoints(editor, { end: '**', start: '**' })).toEqual({
+    expect(getMatchPoints(editor, { end: "**", start: "**" })).toEqual({
       afterStartMatchPoint: { offset: 2, path: [0, 0] },
       beforeEndMatchPoint: { offset: 5, path: [0, 0] },
       beforeStartMatchPoint: { offset: 0, path: [0, 0] },

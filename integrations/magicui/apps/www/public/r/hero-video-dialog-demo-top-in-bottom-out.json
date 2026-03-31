@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Hero Video Dialog Top In Bottom Out Demo",
   "description": "Example showing a hero video dialog with top-in bottom-out animation.",
-  "registryDependencies": [
-    "@magicui/hero-video-dialog"
-  ],
+  "registryDependencies": ["@magicui/hero-video-dialog"],
   "files": [
     {
       "path": "registry/example/hero-video-dialog-demo-top-in-bottom-out.tsx",

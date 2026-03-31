@@ -1,48 +1,47 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react'
-
-import { motion, stagger, useAnimate, useInView } from 'motion/react'
+import { motion, stagger, useAnimate, useInView } from "motion/react";
+import { useEffect } from "react";
 
 const words = [
   {
-    text: 'Illuminate',
+    text: "Illuminate",
   },
   {
-    text: 'your',
+    text: "your",
   },
   {
-    text: 'applications.',
+    text: "applications.",
   },
-]
+];
 
 export function TypewriterTitle() {
-  const [scope, animate] = useAnimate()
-  const isInView = useInView(scope)
+  const [scope, animate] = useAnimate();
+  const isInView = useInView(scope);
 
   useEffect(() => {
     if (isInView) {
       animate(
-        'span',
+        "span",
         {
-          display: 'inline-block',
+          display: "inline-block",
           opacity: 1,
         },
         {
           duration: 0.3,
           delay: stagger(0.1),
-          ease: 'easeInOut',
-        },
-      )
+          ease: "easeInOut",
+        }
+      );
     }
-  }, [isInView, animate])
+  }, [isInView, animate]);
 
-  const wordsArray = words.map(word => {
+  const wordsArray = words.map((word) => {
     return {
       ...word,
-      text: word.text.split(''),
-    }
-  })
+      text: word.text.split(""),
+    };
+  });
 
   function renderWords() {
     return (
@@ -57,10 +56,10 @@ export function TypewriterTitle() {
               ))}
               &nbsp;
             </div>
-          )
+          );
         })}
       </>
-    )
+    );
   }
 
   return (
@@ -68,14 +67,14 @@ export function TypewriterTitle() {
       <motion.div
         className="overflow-hidden pb-2"
         initial={{
-          width: '0%',
+          width: "0%",
         }}
         whileInView={{
-          width: 'fit-content',
+          width: "fit-content",
         }}
         transition={{
           duration: 2,
-          ease: 'linear',
+          ease: "linear",
           delay: 1,
         }}
         viewport={{ once: true }}
@@ -86,7 +85,7 @@ export function TypewriterTitle() {
       </motion.div>
       <Cursor />
     </div>
-  )
+  );
 }
 
 function Cursor() {
@@ -101,9 +100,9 @@ function Cursor() {
       transition={{
         duration: 0.8,
         repeat: Number.POSITIVE_INFINITY,
-        repeatType: 'reverse',
+        repeatType: "reverse",
       }}
       className="block h-8 w-[4px] rounded-sm bg-neutral-500 max-[400px]:h-[26px] lg:h-12"
     />
-  )
+  );
 }

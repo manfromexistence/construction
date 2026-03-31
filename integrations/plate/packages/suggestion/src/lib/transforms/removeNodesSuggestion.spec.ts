@@ -1,17 +1,17 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { removeNodesSuggestion } from './removeNodesSuggestion';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { removeNodesSuggestion } from "./removeNodesSuggestion";
 
-describe('removeNodesSuggestion', () => {
-  it('does nothing for an empty node list', () => {
+describe("removeNodesSuggestion", () => {
+  it("does nothing for an empty node list", () => {
     const editor = createSlateEditor({
       plugins: [BaseSuggestionPlugin],
       selection: {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 0, path: [0, 0] },
       },
-      value: [{ type: 'p', children: [{ text: 'one' }] }],
+      value: [{ type: "p", children: [{ text: "one" }] }],
     });
 
     removeNodesSuggestion(editor, []);
@@ -19,12 +19,12 @@ describe('removeNodesSuggestion', () => {
     expect(editor.children).toEqual([{ ...editor.children[0] }]);
   });
 
-  it('reuses one removal id and timestamp across every marked node', () => {
+  it("reuses one removal id and timestamp across every marked node", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseSuggestionPlugin.configure({
           options: {
-            currentUserId: 'user-1',
+            currentUserId: "user-1",
           },
         }),
       ],
@@ -33,8 +33,8 @@ describe('removeNodesSuggestion', () => {
         focus: { offset: 0, path: [0, 0] },
       },
       value: [
-        { type: 'p', children: [{ text: 'one' }] },
-        { type: 'p', children: [{ text: 'two' }] },
+        { type: "p", children: [{ text: "one" }] },
+        { type: "p", children: [{ text: "two" }] },
       ],
     });
 
@@ -48,8 +48,8 @@ describe('removeNodesSuggestion', () => {
     const firstSuggestion = (editor.children[0] as any).suggestion;
     const secondSuggestion = (editor.children[1] as any).suggestion;
 
-    expect(firstSuggestion).toMatchObject({ type: 'remove' });
-    expect(secondSuggestion).toMatchObject({ type: 'remove' });
+    expect(firstSuggestion).toMatchObject({ type: "remove" });
+    expect(secondSuggestion).toMatchObject({ type: "remove" });
     expect(firstSuggestion.id).toBe(secondSuggestion.id);
     expect(firstSuggestion.createdAt).toBe(secondSuggestion.createdAt);
   });

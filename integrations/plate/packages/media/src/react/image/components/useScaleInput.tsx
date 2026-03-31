@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { isHotkey } from "platejs";
+import { useEffect, useRef, useState } from "react";
 
-import { isHotkey } from 'platejs';
-
-import { ImagePreviewStore, useImagePreviewValue } from '../ImagePreviewStore';
+import { ImagePreviewStore, useImagePreviewValue } from "../ImagePreviewStore";
 
 export const useScaleInput = () => {
-  const scale = useImagePreviewValue('scale');
-  const isEditingScale = useImagePreviewValue('isEditingScale');
+  const scale = useImagePreviewValue("scale");
+  const isEditingScale = useImagePreviewValue("isEditingScale");
 
   const [value, setValue] = useState(`${scale * 100}`);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -27,25 +26,22 @@ export const useScaleInput = () => {
         setValue(e.target.value);
       },
       onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (isHotkey('enter')(e)) {
+        if (isHotkey("enter")(e)) {
           if (Number(value) <= 50) {
-            ImagePreviewStore.set('scale', 0.5);
-            ImagePreviewStore.set('isEditingScale', false);
+            ImagePreviewStore.set("scale", 0.5);
+            ImagePreviewStore.set("isEditingScale", false);
 
             return;
           }
           if (Number(value) >= 200) {
-            ImagePreviewStore.set('scale', 2);
-            ImagePreviewStore.set('isEditingScale', false);
+            ImagePreviewStore.set("scale", 2);
+            ImagePreviewStore.set("isEditingScale", false);
 
             return;
           }
 
-          ImagePreviewStore.set(
-            'scale',
-            Number((Number(value) / 100).toFixed(2))
-          );
-          ImagePreviewStore.set('isEditingScale', false);
+          ImagePreviewStore.set("scale", Number((Number(value) / 100).toFixed(2)));
+          ImagePreviewStore.set("isEditingScale", false);
         }
       },
     },

@@ -1,17 +1,17 @@
-import Link from 'next/link';
+import Link from "next/link";
 
-import { ModeSwitcher } from '@/components/mode-switcher';
-import { Button } from '@/components/ui/button';
-import { docsConfig } from '@/config/docs';
-import { siteConfig } from '@/config/site';
+import { ModeSwitcher } from "@/components/mode-switcher";
+import { Button } from "@/components/ui/button";
+import { docsConfig } from "@/config/docs";
+import { siteConfig } from "@/config/site";
 
-import { CommandMenu } from './command-menu';
-import { Icons } from './icons';
-import { LanguagesDropdownMenu } from './languages-dropdown-menu';
-import { Logo } from './logo';
-import { MainNav } from './main-nav';
-import { SetupMCPDialog } from './mcp-dialog';
-import { MobileNav } from './mobile-nav';
+import { CommandMenu } from "./command-menu";
+import { Icons } from "./icons";
+import { LanguagesDropdownMenu } from "./languages-dropdown-menu";
+import { Logo } from "./logo";
+import { MainNav } from "./main-nav";
+import { SetupMCPDialog } from "./mcp-dialog";
+import { MobileNav } from "./mobile-nav";
 
 export function SiteHeader() {
   // const { stargazers_count: count } = await fetch(
@@ -64,16 +64,8 @@ export function SiteHeader() {
               </Link>
             </Button>
 
-            <Button
-              size="icon"
-              variant="ghost"
-              className="size-8 px-0 max-md:hidden"
-            >
-              <Link
-                href={siteConfig.links.discord}
-                rel="noreferrer"
-                target="_blank"
-              >
+            <Button size="icon" variant="ghost" className="size-8 px-0 max-md:hidden">
+              <Link href={siteConfig.links.discord} rel="noreferrer" target="_blank">
                 <Icons.discord className="size-4 fill-current" />
                 <span className="sr-only">Discord</span>
               </Link>

@@ -1,13 +1,9 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-
-import type { SidebarNavItem } from '@/types/nav';
-
-import { ChevronsUpDown, CircleDashedIcon } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-
-import { Button } from '@/components/ui/button';
+import { ChevronsUpDown, CircleDashedIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -15,14 +11,11 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
-import { getDocIcon } from '@/config/docs-icons';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { getDocIcon } from "@/config/docs-icons";
+import { cn } from "@/lib/utils";
+import type { SidebarNavItem } from "@/types/nav";
 
 // Recursive function to flatten nested items
 const flattenItems = (items: SidebarNavItem[]): SidebarNavItem[] => {
@@ -47,9 +40,9 @@ export function DocBreadcrumb({
   buttonClassName,
   category,
   combobox = true,
-  emptyText = 'No results found.',
+  emptyText = "No results found.",
   items,
-  placeholder = 'Search...',
+  placeholder = "Search...",
   value,
 }: {
   items: SidebarNavItem[];
@@ -64,14 +57,11 @@ export function DocBreadcrumb({
   const [open, setOpen] = React.useState(false);
 
   const flatItems = React.useMemo(
-    () =>
-      items.flatMap((group) => (group.items ? flattenItems(group.items) : [])),
+    () => items.flatMap((group) => (group.items ? flattenItems(group.items) : [])),
     [items]
   );
 
-  const selectedItem = flatItems.find(
-    (item) => (item?.value ?? item?.href) === value
-  );
+  const selectedItem = flatItems.find((item) => (item?.value ?? item?.href) === value);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -80,10 +70,7 @@ export function DocBreadcrumb({
           <Button
             size="sm"
             variant="outline"
-            className={cn(
-              'min-w-32 justify-between focus:outline-none',
-              buttonClassName
-            )}
+            className={cn("min-w-32 justify-between focus:outline-none", buttonClassName)}
           >
             {selectedItem?.title ?? placeholder}
             <ChevronsUpDown className="shrink-0 opacity-50" />
@@ -94,22 +81,13 @@ export function DocBreadcrumb({
           </Button>
         )}
       </PopoverTrigger>
-      <PopoverContent
-        className={cn('w-[200px] p-0', category && 'w-[300px]')}
-        align="start"
-      >
+      <PopoverContent className={cn("w-[200px] p-0", category && "w-[300px]")} align="start">
         <Command>
-          {combobox && (
-            <CommandInput className="h-9" placeholder={placeholder} />
-          )}
+          {combobox && <CommandInput className="h-9" placeholder={placeholder} />}
           <CommandEmpty>{emptyText}</CommandEmpty>
-          <CommandList className={cn('max-h-[70vh]', !combobox && 'min-h-0')}>
+          <CommandList className={cn("max-h-[70vh]", !combobox && "min-h-0")}>
             {items.map((group, index) => (
-              <CommandGroup
-                key={group.title ?? index}
-                className="px-2"
-                heading={group.title}
-              >
+              <CommandGroup key={group.title ?? index} className="px-2" heading={group.title}>
                 {group.items &&
                   flattenItems(group.items).map((item) => {
                     const Icon = getDocIcon(item, category) ?? CircleDashedIcon;
@@ -132,7 +110,7 @@ export function DocBreadcrumb({
                         <div>
                           <div
                             className={cn(
-                              'line-clamp-1'
+                              "line-clamp-1"
                               // category && 'font-medium'
                             )}
                           >

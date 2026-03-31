@@ -1,18 +1,13 @@
-'use client';
+"use client";
 
-import React, { type ReactNode, createContext, useState } from 'react';
+import React, { createContext, type ReactNode, useState } from "react";
 
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
-import { Icons } from './icons';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from './ui/accordion';
-import { Card, CardContent } from './ui/card';
+import { Icons } from "./icons";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "./ui/accordion";
+import { Card, CardContent } from "./ui/card";
 
 type Item = {
   children: ReactNode;
@@ -28,28 +23,27 @@ type Item = {
 const APIContext = createContext<{ listType?: string; name?: string }>({});
 
 const listTypeToId: any = {
-  api: 'api',
-  attributes: 'attrs',
-  methods: 'methods',
-  options: 'opt',
-  parameters: 'params',
-  props: 'props',
-  returns: 'returns',
-  state: 'state',
-  transforms: 'tf',
+  api: "api",
+  attributes: "attrs",
+  methods: "methods",
+  options: "opt",
+  parameters: "params",
+  props: "props",
+  returns: "returns",
+  state: "state",
+  transforms: "tf",
 };
 
 const listTypeToBadgeStyles: Record<string, string> = {
-  api: 'bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300',
-  attributes: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
-  methods: 'bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300',
-  options: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-  parameters: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
-  props: 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300',
-  returns: 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300',
-  state: 'bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300',
-  transforms:
-    'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300',
+  api: "bg-pink-50 text-pink-700 dark:bg-pink-950 dark:text-pink-300",
+  attributes: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300",
+  methods: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950 dark:text-cyan-300",
+  options: "bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300",
+  parameters: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
+  props: "bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300",
+  returns: "bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300",
+  state: "bg-orange-50 text-orange-700 dark:bg-orange-950 dark:text-orange-300",
+  transforms: "bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300",
 };
 
 export function API({ children, name }: { children: ReactNode; name: string }) {
@@ -62,21 +56,14 @@ export function API({ children, name }: { children: ReactNode; name: string }) {
   );
 }
 
-export function APIItem({
-  children,
-  name,
-  optional,
-  required,
-  type,
-  value,
-}: Item) {
+export function APIItem({ children, name, optional, required, type, value }: Item) {
   const { listType, name: contextName } = React.useContext(APIContext);
 
   const id = contextName
-    ? `${contextName}-${listType ? `${listTypeToId[listType]}-` : ''}${name}`
+    ? `${contextName}-${listType ? `${listTypeToId[listType]}-` : ""}${name}`
         .toLowerCase()
-        .replace(/[^\da-z]+/g, '-')
-        .replace(/^-|-$/g, '')
+        .replace(/[^\da-z]+/g, "-")
+        .replace(/^-|-$/g, "")
     : undefined;
 
   return (
@@ -86,9 +73,7 @@ export function APIItem({
           <h4 className="relative py-2 text-start font-semibold leading-none tracking-tight">
             {id && (
               <a
-                className={cn(
-                  'opacity-0 hover:opacity-100 group-hover:opacity-100'
-                )}
+                className={cn("opacity-0 hover:opacity-100 group-hover:opacity-100")}
                 onClick={(e) => e.stopPropagation()}
                 href={`#${id}`}
               >
@@ -101,13 +86,10 @@ export function APIItem({
               {name}
             </span>
             {required && (
-              <span className="font-mono text-orange-500 text-xs leading-none">
-                {' '}
-                REQUIRED
-              </span>
+              <span className="font-mono text-orange-500 text-xs leading-none"> REQUIRED</span>
             )}
             <span className="text-left font-medium font-mono text-muted-foreground text-sm leading-none">
-              {!required && optional && ' optional'} {type}
+              {!required && optional && " optional"} {type}
             </span>
           </h4>
         </li>
@@ -199,23 +181,21 @@ type APIListProps = {
 export function APIList({
   children,
   collapsed = false,
-  listType = 'parameters',
+  listType = "parameters",
   type,
 }: APIListProps) {
   const { name } = React.useContext(APIContext);
   const childCount = React.Children.count(children);
   const hasItems = React.Children.toArray(children).some(
-    (child) => (child as any)?.type?.name === 'APIItem'
+    (child) => (child as any)?.type?.name === "APIItem"
   );
-  const newValues = Array.from(Array.from({ length: childCount }).keys()).map(
-    (i) => i.toString()
-  );
+  const newValues = Array.from(Array.from({ length: childCount }).keys()).map((i) => i.toString());
   const defaultValues = collapsed ? [] : newValues;
 
   const [values, setValues] = useState<string[]>(defaultValues);
   const [expanded, setExpanded] = useState(!collapsed);
 
-  if (listType === 'returns' && !childCount) return null;
+  if (listType === "returns" && !childCount) return null;
 
   const id = name ? `${name}-${listTypeToId[listType]}` : undefined;
 
@@ -231,9 +211,7 @@ export function APIList({
               >
                 {id && (
                   <a
-                    className={cn(
-                      'opacity-0 hover:opacity-100 group-hover:opacity-100'
-                    )}
+                    className={cn("opacity-0 hover:opacity-100 group-hover:opacity-100")}
                     onClick={(e) => e.stopPropagation()}
                     href={`#${id}`}
                   >
@@ -245,20 +223,20 @@ export function APIList({
 
                 <span
                   className={cn(
-                    'inline-flex items-center rounded-md px-2 py-0.5 font-medium text-base',
-                    'ring-1 ring-black/5 ring-inset dark:ring-white/5',
+                    "inline-flex items-center rounded-md px-2 py-0.5 font-medium text-base",
+                    "ring-1 ring-black/5 ring-inset dark:ring-white/5",
                     listTypeToBadgeStyles[listType]
                   )}
                 >
-                  {listType === 'parameters' && 'Parameters'}
-                  {listType === 'attributes' && 'Attributes'}
-                  {listType === 'returns' && 'Returns'}
-                  {listType === 'props' && 'Props'}
-                  {listType === 'state' && 'State'}
-                  {listType === 'options' && 'Options'}
-                  {listType === 'api' && 'API'}
-                  {listType === 'methods' && 'Methods'}
-                  {listType === 'transforms' && 'Transforms'}
+                  {listType === "parameters" && "Parameters"}
+                  {listType === "attributes" && "Attributes"}
+                  {listType === "returns" && "Returns"}
+                  {listType === "props" && "Props"}
+                  {listType === "state" && "State"}
+                  {listType === "options" && "Options"}
+                  {listType === "api" && "API"}
+                  {listType === "methods" && "Methods"}
+                  {listType === "transforms" && "Transforms"}
                 </span>
 
                 {type && (
@@ -281,7 +259,7 @@ export function APIList({
                     setExpanded(!expanded);
                   }}
                 >
-                  {values.length === childCount ? 'Collapse all' : 'Expand all'}
+                  {values.length === childCount ? "Collapse all" : "Expand all"}
                 </button>
               )}
             </div>
@@ -299,7 +277,7 @@ export function APIList({
                 >
                   {React.Children.map(children, (child, i) =>
                     React.cloneElement(child as any, {
-                      className: 'pt-4',
+                      className: "pt-4",
                       value: i.toString(),
                     })
                   )}
@@ -307,9 +285,7 @@ export function APIList({
               ) : childCount > 0 ? (
                 children
               ) : (
-                <div className="py-4 text-muted-foreground text-sm">
-                  No parameters.
-                </div>
+                <div className="py-4 text-muted-foreground text-sm">No parameters.</div>
               )}
             </ul>
           </div>
@@ -337,10 +313,10 @@ export function APISubListItem({
   const { listType, name: contextName } = React.useContext(APIContext);
 
   const id = contextName
-    ? `${contextName}-${listType ? `${listTypeToId[listType]}-` : ''}${parent}-${name}`
+    ? `${contextName}-${listType ? `${listTypeToId[listType]}-` : ""}${parent}-${name}`
         .toLowerCase()
-        .replace(/[^\da-z]+/g, '-')
-        .replace(/^-|-$/g, '')
+        .replace(/[^\da-z]+/g, "-")
+        .replace(/^-|-$/g, "")
     : undefined;
 
   return (
@@ -348,9 +324,7 @@ export function APISubListItem({
       <h4 className="relative py-2 font-mono font-semibold tracking-tight">
         {id && (
           <a
-            className={cn(
-              'opacity-0 hover:opacity-100 group-hover:opacity-100'
-            )}
+            className={cn("opacity-0 hover:opacity-100 group-hover:opacity-100")}
             onClick={(e) => e.stopPropagation()}
             href={`#${id}`}
           >
@@ -359,18 +333,13 @@ export function APISubListItem({
             </div>
           </a>
         )}
-        <span className="font-semibold text-muted-foreground leading-none">
-          {parent}.
-        </span>
+        <span className="font-semibold text-muted-foreground leading-none">{parent}.</span>
         <span className="font-semibold leading-none">{name}</span>
         {required && (
-          <span className="ml-1 font-mono text-orange-500 text-xs leading-none">
-            {' '}
-            REQUIRED
-          </span>
+          <span className="ml-1 font-mono text-orange-500 text-xs leading-none"> REQUIRED</span>
         )}
         <span className="text-left font-medium font-mono text-muted-foreground text-sm leading-none group-hover:no-underline">
-          {!required && optional && ' optional'} {type}
+          {!required && optional && " optional"} {type}
         </span>
       </h4>
       <div>{children}</div>
@@ -378,27 +347,21 @@ export function APISubListItem({
   );
 }
 
-export function APISubList({
-  children,
-  open,
-}: {
-  children: ReactNode;
-  open?: boolean;
-}) {
-  const [value, setValue] = useState(open ? '1' : '');
+export function APISubList({ children, open }: { children: ReactNode; open?: boolean }) {
+  const [value, setValue] = useState(open ? "1" : "");
 
   return (
     <Card className="my-2 p-0">
       <Accordion
         className="w-full py-0"
-        defaultValue={open ? '1' : ''}
+        defaultValue={open ? "1" : ""}
         onValueChange={setValue}
         type="single"
         collapsible
       >
         <AccordionItem className="border-none" value="1">
           <AccordionTrigger className="group px-3 py-2" iconVariant="plus">
-            {value ? 'Hide' : 'Show'} child attributes
+            {value ? "Hide" : "Show"} child attributes
           </AccordionTrigger>
           <AccordionContent>{children}</AccordionContent>
         </AccordionItem>

@@ -4,16 +4,14 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from "@/styles/base-nova/ui/field"
-import { RadioGroup, RadioGroupItem } from "@/styles/base-nova/ui/radio-group"
+} from "@/styles/base-nova/ui/field";
+import { RadioGroup, RadioGroupItem } from "@/styles/base-nova/ui/radio-group";
 
 export function RadioGroupInvalid() {
   return (
     <FieldSet className="w-full max-w-xs">
       <FieldLegend variant="label">Notification Preferences</FieldLegend>
-      <FieldDescription>
-        Choose how you want to receive notifications.
-      </FieldDescription>
+      <FieldDescription>Choose how you want to receive notifications.</FieldDescription>
       <RadioGroup defaultValue="email">
         <Field orientation="horizontal" data-invalid>
           <RadioGroupItem value="email" id="invalid-email" aria-invalid />
@@ -35,5 +33,5 @@ export function RadioGroupInvalid() {
         </Field>
       </RadioGroup>
     </FieldSet>
-  )
+  );
 }

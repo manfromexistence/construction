@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Line Shadow Text",
   "description": "A text component with a moving line shadow.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/line-shadow-text.tsx",

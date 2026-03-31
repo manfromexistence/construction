@@ -1,27 +1,23 @@
-"use client"
+"use client";
 
-import { ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/radix-nova/ui/avatar"
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/styles/radix-nova/ui/avatar";
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
+} from "@/styles/radix-nova/ui/dropdown-menu";
 import {
   Item,
   ItemContent,
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from "@/styles/radix-nova/ui/item"
+} from "@/styles/radix-nova/ui/item";
 
 const people = [
   {
@@ -39,7 +35,7 @@ const people = [
     avatar: "https://github.com/evilrabbit.png",
     email: "evilrabbit@vercel.com",
   },
-]
+];
 
 export function ItemDropdown() {
   return (
@@ -62,9 +58,7 @@ export function ItemDropdown() {
                 </ItemMedia>
                 <ItemContent className="gap-0">
                   <ItemTitle>{person.username}</ItemTitle>
-                  <ItemDescription className="leading-none">
-                    {person.email}
-                  </ItemDescription>
+                  <ItemDescription className="leading-none">{person.email}</ItemDescription>
                 </ItemContent>
               </Item>
             </DropdownMenuItem>
@@ -72,5 +66,5 @@ export function ItemDropdown() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

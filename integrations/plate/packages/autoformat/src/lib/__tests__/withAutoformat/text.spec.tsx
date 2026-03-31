@@ -1,19 +1,16 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import {
-  autoformatLegal,
-  autoformatLegalHtml,
-} from '../../rules/autoformatLegal';
-import { autoformatPunctuation } from '../../rules/autoformatPunctuation';
-import { autoformatSmartQuotes } from '../../rules/autoformatSmartQuotes';
-import { autoformatOperation } from '../../rules/math/autoformatOperation';
-import { createAutoformatEditor } from './createAutoformatEditor';
+import { autoformatLegal, autoformatLegalHtml } from "../../rules/autoformatLegal";
+import { autoformatPunctuation } from "../../rules/autoformatPunctuation";
+import { autoformatSmartQuotes } from "../../rules/autoformatSmartQuotes";
+import { autoformatOperation } from "../../rules/math/autoformatOperation";
+import { createAutoformatEditor } from "./createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin text rules', () => {
+describe("AutoformatPlugin text rules", () => {
   it.each([
     {
       expected: (
@@ -35,8 +32,8 @@ describe('AutoformatPlugin text rules', () => {
         </fragment>
       ) as any,
       rules: autoformatPunctuation,
-      text: '-',
-      title: 'formats -- into an em dash',
+      text: "-",
+      title: "formats -- into an em dash",
     },
     {
       expected: (
@@ -58,8 +55,8 @@ describe('AutoformatPlugin text rules', () => {
         </fragment>
       ) as any,
       rules: autoformatPunctuation,
-      text: '-',
-      title: 'leaves a single intervening character alone',
+      text: "-",
+      title: "leaves a single intervening character alone",
     },
     {
       expected: (
@@ -81,8 +78,8 @@ describe('AutoformatPlugin text rules', () => {
         </fragment>
       ) as any,
       rules: autoformatPunctuation,
-      text: '-',
-      title: 'leaves multiple intervening characters alone',
+      text: "-",
+      title: "leaves multiple intervening characters alone",
     },
     {
       expected: (
@@ -104,8 +101,8 @@ describe('AutoformatPlugin text rules', () => {
         </fragment>
       ) as any,
       rules: autoformatLegal,
-      text: ')',
-      title: 'formats (tm) into the trademark symbol',
+      text: ")",
+      title: "formats (tm) into the trademark symbol",
     },
     {
       expected: (
@@ -127,8 +124,8 @@ describe('AutoformatPlugin text rules', () => {
         </fragment>
       ) as any,
       rules: autoformatLegalHtml,
-      text: ';',
-      title: 'formats &sect; into the section symbol',
+      text: ";",
+      title: "formats &sect; into the section symbol",
     },
     {
       expected: (
@@ -150,8 +147,8 @@ describe('AutoformatPlugin text rules', () => {
         </fragment>
       ) as any,
       rules: autoformatOperation,
-      text: '/',
-      title: 'formats // into the division symbol',
+      text: "/",
+      title: "formats // into the division symbol",
     },
     {
       expected: (
@@ -169,9 +166,9 @@ describe('AutoformatPlugin text rules', () => {
       ) as any,
       rules: autoformatSmartQuotes,
       text: '"',
-      title: 'formats straight quotes into smart quotes',
+      title: "formats straight quotes into smart quotes",
     },
-  ])('$title', ({ expected, input, rules, text }) => {
+  ])("$title", ({ expected, input, rules, text }) => {
     const editor = createAutoformatEditor({
       rules,
       value: input,
@@ -182,7 +179,7 @@ describe('AutoformatPlugin text rules', () => {
     expect(input.children).toEqual(expected.children);
   });
 
-  it('formats %% and %%% into per-mille then per-ten-thousand', () => {
+  it("formats %% and %%% into per-mille then per-ten-thousand", () => {
     const input = (
       <fragment>
         <hp>
@@ -218,10 +215,10 @@ describe('AutoformatPlugin text rules', () => {
       value: input,
     });
 
-    editor.tf.insertText('%');
+    editor.tf.insertText("%");
     expect(input.children).toEqual(perMille.children);
 
-    editor.tf.insertText('%');
+    editor.tf.insertText("%");
     expect(input.children).toEqual(perTenThousand.children);
   });
 });

@@ -1,17 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { ChevronRightIcon } from "lucide-react"
-import { type RegistryItem } from "shadcn/schema"
-
-import { cn } from "@/lib/utils"
-import { type Base } from "@/registry/bases"
+import { ChevronRightIcon } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
+import { type RegistryItem } from "shadcn/schema";
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { groupItemsByType } from "@/app/(app)/create/lib/utils";
+import { cn } from "@/lib/utils";
+import { type Base } from "@/registry/bases";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/base-nova/ui/collapsible"
+} from "@/styles/base-nova/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -20,31 +21,27 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/styles/base-nova/ui/sidebar"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
-import { groupItemsByType } from "@/app/(app)/create/lib/utils"
+} from "@/styles/base-nova/ui/sidebar";
 
-const cachedGroupedItems = React.cache(
-  (items: Pick<RegistryItem, "name" | "title" | "type">[]) => {
-    return groupItemsByType(items)
-  }
-)
+const cachedGroupedItems = React.cache((items: Pick<RegistryItem, "name" | "title" | "type">[]) => {
+  return groupItemsByType(items);
+});
 
 export function ItemExplorer({
   base,
   items,
 }: {
-  base: Base["name"]
-  items: Pick<RegistryItem, "name" | "title" | "type">[]
+  base: Base["name"];
+  items: Pick<RegistryItem, "name" | "title" | "type">[];
 }) {
-  const [params, setParams] = useDesignSystemSearchParams()
+  const [params, setParams] = useDesignSystemSearchParams();
 
-  const groupedItems = React.useMemo(() => cachedGroupedItems(items), [items])
+  const groupedItems = React.useMemo(() => cachedGroupedItems(items), [items]);
 
   const currentItem = React.useMemo(
     () => items.find((item) => item.name === params.item) ?? null,
     [items, params.item]
-  )
+  );
 
   return (
     <Sidebar
@@ -53,11 +50,7 @@ export function ItemExplorer({
     >
       <SidebarContent className="-mx-1 no-scrollbar overflow-x-hidden">
         {groupedItems.map((group) => (
-          <Collapsible
-            key={group.type}
-            defaultOpen
-            className="group/collapsible"
-          >
+          <Collapsible key={group.type} defaultOpen className="group/collapsible">
             <SidebarGroup className="px-1 py-0">
               <CollapsibleTrigger className="flex w-full items-center gap-1 py-1.5 text-[0.8rem] font-medium [&[data-state=open]>svg]:rotate-90">
                 <ChevronRightIcon className="size-3.5 text-muted-foreground transition-transform" />
@@ -104,5 +97,5 @@ export function ItemExplorer({
         ))}
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

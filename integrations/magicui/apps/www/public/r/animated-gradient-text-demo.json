@@ -4,12 +4,8 @@
   "type": "registry:example",
   "title": "Animated Gradient Text Demo",
   "description": "Example showing text with animated gradient backgrounds.",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "@magicui/animated-gradient-text"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["@magicui/animated-gradient-text"],
   "files": [
     {
       "path": "registry/example/animated-gradient-text-demo.tsx",

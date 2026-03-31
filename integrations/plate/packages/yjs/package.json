@@ -2,12 +2,7 @@
   "name": "@platejs/yjs",
   "version": "52.3.10",
   "description": "Yjs plugin for Plate",
-  "keywords": [
-    "plate",
-    "plugin",
-    "slate",
-    "yjs"
-  ],
+  "keywords": ["plate", "plugin", "slate", "yjs"],
   "homepage": "https://platejs.org",
   "bugs": {
     "url": "https://github.com/udecode/plate/issues"
@@ -26,9 +21,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist/**/*"],
   "scripts": {
     "brl": "plate-pkg p:brl",
     "build": "plate-pkg p:build",

@@ -1,15 +1,14 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
 import { Heart } from "lucide-react";
-
+import { ThemePreview } from "@/components/theme-preview";
 import { useTheme } from "@/components/theme-provider";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { useToggleLike } from "@/hooks/themes";
 import { useSessionGuard } from "@/hooks/use-guards";
 import { usePostLoginAction } from "@/hooks/use-post-login-action";
-import { ThemePreview } from "@/components/theme-preview";
+import { cn } from "@/lib/utils";
 import type { CommunityTheme } from "@/types/community";
 
 interface CommunityThemeCardProps {
@@ -50,10 +49,10 @@ export function CommunityThemeCard({ theme, onPreview }: CommunityThemeCardProps
     .slice(0, 2)
     .toUpperCase();
 
-  const publishedDate = new Date(theme.publishedAt).toLocaleDateString(
-    "en-US",
-    { day: "numeric", month: "short" }
-  );
+  const publishedDate = new Date(theme.publishedAt).toLocaleDateString("en-US", {
+    day: "numeric",
+    month: "short",
+  });
 
   return (
     <div
@@ -93,22 +92,13 @@ export function CommunityThemeCard({ theme, onPreview }: CommunityThemeCardProps
             <div className="flex min-w-0 max-w-[120px] items-center gap-1.5">
               <Avatar className="h-4 w-4 shrink-0">
                 {theme.author.image && (
-                  <AvatarImage
-                    src={theme.author.image}
-                    alt={theme.author.name}
-                  />
+                  <AvatarImage src={theme.author.image} alt={theme.author.name} />
                 )}
-                <AvatarFallback className="text-[8px]">
-                  {authorInitials}
-                </AvatarFallback>
+                <AvatarFallback className="text-[8px]">{authorInitials}</AvatarFallback>
               </Avatar>
-              <span className="truncate text-xs text-muted-foreground">
-                {theme.author.name}
-              </span>
+              <span className="truncate text-xs text-muted-foreground">{theme.author.name}</span>
             </div>
-            <span className="text-xs text-muted-foreground/60">
-              {publishedDate}
-            </span>
+            <span className="text-xs text-muted-foreground/60">{publishedDate}</span>
           </div>
         </div>
         <button
@@ -120,12 +110,7 @@ export function CommunityThemeCard({ theme, onPreview }: CommunityThemeCardProps
               : "text-muted-foreground hover:bg-accent hover:text-foreground"
           )}
         >
-          <Heart
-            className={cn(
-              "h-3.5 w-3.5",
-              theme.isLikedByMe && "fill-current"
-            )}
-          />
+          <Heart className={cn("h-3.5 w-3.5", theme.isLikedByMe && "fill-current")} />
           {theme.likeCount > 0 && <span>{theme.likeCount}</span>}
         </button>
       </div>

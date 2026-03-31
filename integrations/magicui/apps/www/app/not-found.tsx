@@ -1,13 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-
-import { Button, buttonVariants } from "@/components/ui/button"
-import { Icons } from "@/components/icons"
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { Icons } from "@/components/icons";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 export default function NotFound() {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <section>
       <div className="container mx-auto flex min-h-[calc(100vh-8rem)] items-center px-6 py-12">
@@ -38,5 +37,5 @@ export default function NotFound() {
         </div>
       </div>
     </section>
-  )
+  );
 }

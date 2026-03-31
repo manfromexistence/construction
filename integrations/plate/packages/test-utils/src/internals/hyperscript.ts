@@ -1,4 +1,4 @@
-import { createEditor as makeEditor, type TElement } from '@platejs/slate';
+import { createEditor as makeEditor, type TElement } from "@platejs/slate";
 
 import {
   createAnchor,
@@ -9,13 +9,11 @@ import {
   createFragment,
   createSelection,
   createText,
-} from './creators';
+} from "./creators";
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
   return (
-    typeof value === 'object' &&
-    value !== null &&
-    Object.getPrototypeOf(value) === Object.prototype
+    typeof value === "object" && value !== null && Object.getPrototypeOf(value) === Object.prototype
   );
 }
 
@@ -53,10 +51,7 @@ type HyperscriptShorthands = Record<string, Record<string, any>>;
 /** Create a Slate hyperscript function with `options`. */
 
 const createHyperscript = (
-  options: {
-    creators?: HyperscriptCreators;
-    elements?: HyperscriptShorthands;
-  } = {}
+  options: { creators?: HyperscriptCreators; elements?: HyperscriptShorthands } = {}
 ) => {
   const { elements = {} } = options;
   const elementCreators = normalizeElements(elements);
@@ -83,7 +78,7 @@ const createFactory = <T extends HyperscriptCreators>(creators: T) => {
     let kids = children;
 
     for (const key in attrs) {
-      if (key.startsWith('__')) {
+      if (key.startsWith("__")) {
         delete (attrs as any)[key];
       }
     }
@@ -122,28 +117,20 @@ const normalizeElements = (elements: HyperscriptShorthands) => {
 
     const props = elements[tagName];
 
-    if (typeof props !== 'object') {
+    if (typeof props !== "object") {
       throw new TypeError(
         `Properties specified for a hyperscript shorthand should be an object, but for the custom element <${tagName}>  tag you passed: ${props}`
       );
     }
 
-    creators[tagName] = (
-      _tagName: string,
-      attributes: Record<string, any>,
-      children: any[]
-    ) => {
+    creators[tagName] = (_tagName: string, attributes: Record<string, any>, children: any[]) => {
       for (const key in attributes) {
-        if (key.startsWith('__')) {
+        if (key.startsWith("__")) {
           delete attributes[key];
         }
       }
 
-      const el = createElement(
-        'element',
-        { ...props, ...attributes },
-        children
-      );
+      const el = createElement("element", { ...props, ...attributes }, children);
 
       return el;
     };

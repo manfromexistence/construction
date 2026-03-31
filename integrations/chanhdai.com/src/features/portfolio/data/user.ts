@@ -1,4 +1,4 @@
-import type { User } from "@/features/portfolio/types/user"
+import type { User } from "@/features/portfolio/types/user";
 
 export const USER: User = {
   firstName: "Chánh Đại",
@@ -46,8 +46,7 @@ export const USER: User = {
 <p class="text-muted-foreground">* Peak metrics recorded; actual current figures may vary.</p>
 `,
   avatar: "https://assets.chanhdai.com/images/chanhdai-avatar-ghibli.webp",
-  ogImage:
-    "https://assets.chanhdai.com/images/screenshot-og-image-dark.png?v=8",
+  ogImage: "https://assets.chanhdai.com/images/screenshot-og-image-dark.png?v=8",
   namePronunciationUrl: "https://assets.chanhdai.com/audio/chanhdai.mp3",
   timeZone: "Asia/Ho_Chi_Minh",
   keywords: [
@@ -63,4 +62,4 @@ export const USER: User = {
     "chánh đại",
   ],
   dateCreated: "2023-10-20", // YYYY-MM-DD
-}
+};

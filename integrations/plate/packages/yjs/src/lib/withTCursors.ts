@@ -1,21 +1,12 @@
-import type { SlateEditor } from 'platejs';
-import type { Awareness } from 'y-protocols/awareness';
+import { type CursorEditor, type WithCursorsOptions, withCursors } from "@slate-yjs/core";
+import type { SlateEditor } from "platejs";
+import type { Awareness } from "y-protocols/awareness";
 
-import {
-  type CursorEditor,
-  type WithCursorsOptions,
-  withCursors,
-} from '@slate-yjs/core';
-
-import type { YjsEditorProps } from './withTYjs';
+import type { YjsEditorProps } from "./withTYjs";
 
 export type PlateYjsEditorProps = Pick<
   CursorEditor,
-  | 'awareness'
-  | 'cursorDataField'
-  | 'selectionStateField'
-  | 'sendCursorData'
-  | 'sendCursorPosition'
+  "awareness" | "cursorDataField" | "selectionStateField" | "sendCursorData" | "sendCursorPosition"
 > &
   YjsEditorProps;
 

@@ -1,6 +1,6 @@
-import { getContainerTypes } from '@platejs/core';
-import { useEditorSelector } from '@platejs/core/react';
-import type { EditorPropOptions, TElement } from '@platejs/slate';
+import { getContainerTypes } from "@platejs/core";
+import { useEditorSelector } from "@platejs/core/react";
+import type { EditorPropOptions, TElement } from "@platejs/slate";
 
 export const useSelectionFragment = () =>
   useEditorSelector(
@@ -11,9 +11,7 @@ export const useSelectionFragment = () =>
     []
   );
 
-export const useSelectionFragmentProp = (
-  options: Omit<EditorPropOptions, 'nodes'> = {}
-) =>
+export const useSelectionFragmentProp = (options: Omit<EditorPropOptions, "nodes"> = {}) =>
   useEditorSelector((editor) => {
     const fragment = editor.api.fragment<TElement>(editor.selection, {
       unwrap: getContainerTypes(editor),

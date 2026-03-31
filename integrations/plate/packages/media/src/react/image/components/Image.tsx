@@ -1,12 +1,8 @@
-import type { TMediaElement } from 'platejs';
+import type { TMediaElement } from "platejs";
 
-import {
-  createPrimitiveComponent,
-  useEditorRef,
-  useElement,
-} from 'platejs/react';
+import { createPrimitiveComponent, useEditorRef, useElement } from "platejs/react";
 
-import { openImagePreview } from '../openImagePreview';
+import { openImagePreview } from "../openImagePreview";
 
 export const useImage = () => {
   const element = useElement<TMediaElement>();
@@ -23,6 +19,6 @@ export const useImage = () => {
   };
 };
 
-export const Image = createPrimitiveComponent('img')({
+export const Image = createPrimitiveComponent("img")({
   propsHook: useImage,
 });

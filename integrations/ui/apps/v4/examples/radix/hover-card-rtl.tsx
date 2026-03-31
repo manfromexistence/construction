@@ -1,15 +1,12 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/styles/radix-nova/ui-rtl/hover-card"
+} from "@/styles/radix-nova/ui-rtl/hover-card";
 
 const translations: Translations = {
   en: {
@@ -48,17 +45,17 @@ const translations: Translations = {
       right: "ימין",
     },
   },
-}
+};
 
 const physicalSides: Array<"left" | "top" | "bottom" | "right"> = [
   "left",
   "top",
   "bottom",
   "right",
-]
+];
 
 export function HoverCardRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="flex flex-wrap justify-center gap-2">
@@ -67,16 +64,12 @@ export function HoverCardRtl() {
           <HoverCardTrigger asChild>
             <Button variant="outline">{t[side]}</Button>
           </HoverCardTrigger>
-          <HoverCardContent
-            side={side}
-            className="flex w-64 flex-col gap-1"
-            dir={dir}
-          >
+          <HoverCardContent side={side} className="flex w-64 flex-col gap-1" dir={dir}>
             <div className="font-semibold">{t.name}</div>
             <div className="text-sm text-muted-foreground">{t.price}</div>
           </HoverCardContent>
         </HoverCard>
       ))}
     </div>
-  )
+  );
 }

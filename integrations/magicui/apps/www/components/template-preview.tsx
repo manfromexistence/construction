@@ -1,17 +1,10 @@
-import { ReactNode } from "react"
-import Link from "next/link"
-import { ExternalLinkIcon } from "@radix-ui/react-icons"
+import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import Link from "next/link";
+import { ReactNode } from "react";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-
-export function TemplatePreview({
-  href,
-  children,
-}: {
-  href: string
-  children: ReactNode
-}) {
+export function TemplatePreview({ href, children }: { href: string; children: ReactNode }) {
   return (
     <Link
       className={cn(
@@ -26,5 +19,5 @@ export function TemplatePreview({
       {children}
       <ExternalLinkIcon className="size-4" />
     </Link>
-  )
+  );
 }

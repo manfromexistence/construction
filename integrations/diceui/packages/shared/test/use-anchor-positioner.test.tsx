@@ -19,21 +19,15 @@ function TestPopover({
   const [open, setOpen] = React.useState(defaultOpen);
   const anchorRef = React.useRef<HTMLButtonElement>(null);
 
-  const {
-    refs,
-    floatingStyles,
-    getFloatingProps,
-    arrowStyles,
-    onArrowChange,
-    placement,
-  } = useAnchorPositioner({
-    open,
-    onOpenChange: setOpen,
-    anchorRef,
-    side,
-    align,
-    disableArrow: false,
-  });
+  const { refs, floatingStyles, getFloatingProps, arrowStyles, onArrowChange, placement } =
+    useAnchorPositioner({
+      open,
+      onOpenChange: setOpen,
+      anchorRef,
+      side,
+      align,
+      disableArrow: false,
+    });
 
   const arrowRef = React.useRef<HTMLDivElement>(null);
 
@@ -46,11 +40,7 @@ function TestPopover({
 
   return (
     <>
-      <button
-        ref={anchorRef}
-        onClick={() => setOpen(!open)}
-        data-testid="anchor"
-      >
+      <button ref={anchorRef} onClick={() => setOpen(!open)} data-testid="anchor">
         Toggle
       </button>
       {open && (
@@ -122,7 +112,7 @@ describe("useAnchorPositioner", () => {
         ...defaultProps,
         side: "top",
         align: "end",
-      }),
+      })
     );
 
     expect(result.current.side).toBe("top");
@@ -139,7 +129,7 @@ describe("useAnchorPositioner", () => {
         side: "right",
         align: "start",
         disableArrow: false,
-      }),
+      })
     );
 
     expect(result.current.placement).toBe("right-start");
@@ -150,7 +140,7 @@ describe("useAnchorPositioner", () => {
       useAnchorPositioner({
         ...defaultProps,
         disableArrow: true,
-      }),
+      })
     );
 
     expect(result.current.arrowStyles).toEqual({});
@@ -162,7 +152,7 @@ describe("useAnchorPositioner", () => {
       ({ open }) => useAnchorPositioner({ ...defaultProps, open }),
       {
         initialProps: { open: false },
-      },
+      }
     );
 
     expect(result.current.isPositioned).toBe(false);
@@ -193,7 +183,7 @@ describe("useAnchorPositioner", () => {
       useAnchorPositioner({
         ...defaultProps,
         anchorRef: virtualElement,
-      }),
+      })
     );
 
     await act(async () => {
@@ -217,7 +207,7 @@ describe("useAnchorPositioner", () => {
       useAnchorPositioner({
         ...defaultProps,
         disableArrow: false,
-      }),
+      })
     );
 
     const arrowElement = document.createElement("div");
@@ -234,7 +224,7 @@ describe("useAnchorPositioner", () => {
         ...defaultProps,
         avoidCollisions: true,
         collisionPadding: 10,
-      }),
+      })
     );
 
     expect(result.current.middlewareData).toBeDefined();
@@ -245,7 +235,7 @@ describe("useAnchorPositioner", () => {
       useAnchorPositioner({
         ...defaultProps,
         fitViewport: true,
-      }),
+      })
     );
 
     expect(result.current.middlewareData).toBeDefined();

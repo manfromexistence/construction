@@ -1,11 +1,11 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'codeblock';
+const name = "codeblock";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
@@ -14,8 +14,8 @@ describe(getDocxTestName(name), () => {
         <hp>This is some code:</hp>
         <hcodeblock>
           <hcodeline>readDocx :: ReaderOptions</hcodeline>
-          <hcodeline>{'         -> B.ByteString'}</hcodeline>
-          <hcodeline>{'         -> Pandoc'}</hcodeline>
+          <hcodeline>{"         -> B.ByteString"}</hcodeline>
+          <hcodeline>{"         -> Pandoc"}</hcodeline>
         </hcodeblock>
         <hp>from the beginning of the docx reader.</hp>
       </editor>

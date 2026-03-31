@@ -1,19 +1,18 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { useStoreValue } from "platejs/react";
+import * as React from "react";
 
-import { useStoreValue } from 'platejs/react';
+import { ThemeCustomizer } from "@/components/theme-customizer";
+import { SettingsStore } from "@/components/themes-button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { useViewport } from "@/hooks/use-viewport";
+import { useMounted } from "@/registry/hooks/use-mounted";
 
-import { ThemeCustomizer } from '@/components/theme-customizer';
-import { SettingsStore } from '@/components/themes-button';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
-import { useViewport } from '@/hooks/use-viewport';
-import { useMounted } from '@/registry/hooks/use-mounted';
-
-import { Sheet, SheetContent } from './ui/sheet';
+import { Sheet, SheetContent } from "./ui/sheet";
 
 export default function CustomizerDrawer() {
-  const open = useStoreValue(SettingsStore, 'open');
+  const open = useStoreValue(SettingsStore, "open");
   const mounted = useMounted();
   const { width } = useViewport();
 
@@ -25,7 +24,7 @@ export default function CustomizerDrawer() {
         <Dialog
           open={open}
           onOpenChange={(value) => {
-            SettingsStore.set('open', value);
+            SettingsStore.set("open", value);
           }}
           // shouldScaleBackground={false}
         >
@@ -43,7 +42,7 @@ export default function CustomizerDrawer() {
         <Sheet
           open={open}
           onOpenChange={(value) => {
-            SettingsStore.set('open', value);
+            SettingsStore.set("open", value);
           }}
           modal={false}
         >

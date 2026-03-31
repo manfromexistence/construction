@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('getFragment', () => {
-  it('returns an empty array for null or bad paths', () => {
+describe("getFragment", () => {
+  it("returns an empty array for null or bad paths", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -20,7 +20,7 @@ describe('getFragment', () => {
     expect(editor.getFragment([9])).toEqual([]);
   });
 
-  it('unwraps configured container node types', () => {
+  it("unwraps configured container node types", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -32,9 +32,9 @@ describe('getFragment', () => {
       ) as any
     );
 
-    expect(editor.getFragment([0], { unwrap: ['blockquote'] })).toEqual([
-      { children: [{ text: 'one' }], type: 'p' },
-      { children: [{ text: 'two' }], type: 'p' },
+    expect(editor.getFragment([0], { unwrap: ["blockquote"] })).toEqual([
+      { children: [{ text: "one" }], type: "p" },
+      { children: [{ text: "two" }], type: "p" },
     ]);
   });
 });

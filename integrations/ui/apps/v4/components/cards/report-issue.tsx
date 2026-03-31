@@ -1,36 +1,34 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
-import { Field, FieldGroup, FieldLabel } from "@/registry/new-york-v4/ui/field"
-import { Input } from "@/registry/new-york-v4/ui/input"
+} from "@/registry/new-york-v4/ui/card";
+import { Field, FieldGroup, FieldLabel } from "@/registry/new-york-v4/ui/field";
+import { Input } from "@/registry/new-york-v4/ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/registry/new-york-v4/ui/select"
-import { Textarea } from "@/registry/new-york-v4/ui/textarea"
+} from "@/registry/new-york-v4/ui/select";
+import { Textarea } from "@/registry/new-york-v4/ui/textarea";
 
 export function CardsReportIssue() {
-  const id = React.useId()
+  const id = React.useId();
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Report an issue</CardTitle>
-        <CardDescription>
-          What area are you having problems with?
-        </CardDescription>
+        <CardDescription>What area are you having problems with?</CardDescription>
       </CardHeader>
       <CardContent>
         <FieldGroup>
@@ -38,11 +36,7 @@ export function CardsReportIssue() {
             <Field>
               <FieldLabel htmlFor={`area-${id}`}>Area</FieldLabel>
               <Select defaultValue="billing">
-                <SelectTrigger
-                  id={`area-${id}`}
-                  aria-label="Area"
-                  className="w-full"
-                >
+                <SelectTrigger id={`area-${id}`} aria-label="Area" className="w-full">
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent>
@@ -55,9 +49,7 @@ export function CardsReportIssue() {
               </Select>
             </Field>
             <Field>
-              <FieldLabel htmlFor={`security-level-${id}`}>
-                Security Level
-              </FieldLabel>
+              <FieldLabel htmlFor={`security-level-${id}`}>Security Level</FieldLabel>
               <Select defaultValue="2">
                 <SelectTrigger
                   id={`security-level-${id}`}
@@ -96,5 +88,5 @@ export function CardsReportIssue() {
         </FieldGroup>
       </CardContent>
     </Card>
-  )
+  );
 }

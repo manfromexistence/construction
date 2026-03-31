@@ -1,48 +1,44 @@
-import type { Meta, StoryObj } from '@storybook/react'
-
-import { cn } from '@/utils/cn'
-
+import type { Meta, StoryObj } from "@storybook/react";
 import {
-  DropdownMenu,
-  DrodpownMenuTrigger,
-  DropdownMenuItem,
-  DropdownMenuContent,
-} from '@/components/dropdown-menu'
-
-import {
+  BellIcon,
+  Building2,
+  ChevronRightIcon,
   LayoutGridIcon,
   TrashIcon,
-  Building2,
   UserCircleIcon,
-  ChevronRightIcon,
-  BellIcon,
-} from 'lucide-react'
+} from "lucide-react";
+
+import {
+  DrodpownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/dropdown-menu";
+import { cn } from "@/utils/cn";
 
 const ITEMS = [
-  { icon: <UserCircleIcon size={16} />, name: 'Profile' },
-  { icon: <LayoutGridIcon size={16} />, name: 'Your applications' },
-  { icon: <Building2 size={16} />, name: 'Teams' },
-  { icon: <BellIcon size={16} />, name: 'Notifications' },
+  { icon: <UserCircleIcon size={16} />, name: "Profile" },
+  { icon: <LayoutGridIcon size={16} />, name: "Your applications" },
+  { icon: <Building2 size={16} />, name: "Teams" },
+  { icon: <BellIcon size={16} />, name: "Notifications" },
   {
     icon: <TrashIcon size={16} />,
-    name: 'Remove account',
+    name: "Remove account",
     customStyle:
-      '!text-red-500 duration-150 hover:!bg-red-600/10 focus-visible:text-red-500 focus-visible:!bg-red-500/10 focus-visible:!border-red-500/10',
+      "!text-red-500 duration-150 hover:!bg-red-600/10 focus-visible:text-red-500 focus-visible:!bg-red-500/10 focus-visible:!border-red-500/10",
   },
-]
+];
 
 const meta: Meta = {
-  title: 'components/Dropdown',
+  title: "components/Dropdown",
   component: () => (
     <DropdownMenu>
       <DrodpownMenuTrigger>
-        <span className="text-sm font-medium text-neutral-500 dark:text-neutral-300">
-          Settings
-        </span>
+        <span className="text-sm font-medium text-neutral-500 dark:text-neutral-300">Settings</span>
       </DrodpownMenuTrigger>
       <DropdownMenuContent>
         {ITEMS.map(({ icon, name, customStyle }, index) => (
-          <DropdownMenuItem key={index} className={cn('group', customStyle)}>
+          <DropdownMenuItem key={index} className={cn("group", customStyle)}>
             {icon}
             <span className="flex items-center gap-1 text-sm font-medium">
               {name}
@@ -57,10 +53,10 @@ const meta: Meta = {
     </DropdownMenu>
   ),
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
+export default meta;
 
-export const Basic: StoryObj = {}
+export const Basic: StoryObj = {};

@@ -1,6 +1,6 @@
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
 
-import { applyPrefix } from "../../src/utils/transformers/transform-tw-prefix"
+import { applyPrefix } from "../../src/utils/transformers/transform-tw-prefix";
 
 describe("apply tailwind prefix v3", () => {
   test.each([
@@ -25,8 +25,7 @@ describe("apply tailwind prefix v3", () => {
         "tw-text-red-500 tw-border-red-500/50 dark:tw-border-red-500 [&>svg]:tw-text-red-500 tw-text-red-500 dark:tw-text-red-900 dark:tw-border-red-900/50 dark:dark:tw-border-red-900 dark:[&>svg]:tw-text-red-900 dark:tw-text-red-900",
     },
     {
-      input:
-        "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      input: "flex h-full w-full items-center justify-center rounded-full bg-muted",
       output:
         "tw-flex tw-h-full tw-w-full tw-items-center tw-justify-center tw-rounded-full tw-bg-muted",
     },
@@ -37,9 +36,9 @@ describe("apply tailwind prefix v3", () => {
         "tw-absolute tw-right-4 tw-top-4 tw-bg-primary tw-rounded-sm tw-opacity-70 tw-ring-offset-background tw-transition-opacity hover:tw-opacity-100 focus:tw-outline-none focus:tw-ring-2 focus:tw-ring-ring focus:tw-ring-offset-2 disabled:tw-pointer-events-none data-[state=open]:tw-bg-secondary",
     },
   ])(`applyTwPrefix($input) -> $output`, ({ input, output }) => {
-    expect(applyPrefix(input, "tw-", "v3")).toBe(output)
-  })
-})
+    expect(applyPrefix(input, "tw-", "v3")).toBe(output);
+  });
+});
 
 describe("apply tailwind prefix v4", () => {
   test.each([
@@ -64,8 +63,7 @@ describe("apply tailwind prefix v4", () => {
         "tw:text-red-500 tw:border-red-500/50 tw:dark:border-red-500 tw:[&>svg]:text-red-500 tw:text-red-500 tw:dark:text-red-900 tw:dark:border-red-900/50 tw:dark:dark:border-red-900 tw:dark:[&>svg]:text-red-900 tw:dark:text-red-900",
     },
     {
-      input:
-        "flex h-full w-full items-center justify-center rounded-full bg-muted",
+      input: "flex h-full w-full items-center justify-center rounded-full bg-muted",
       output:
         "tw:flex tw:h-full tw:w-full tw:items-center tw:justify-center tw:rounded-full tw:bg-muted",
     },
@@ -76,6 +74,6 @@ describe("apply tailwind prefix v4", () => {
         "tw:absolute tw:right-4 tw:top-4 tw:bg-primary tw:rounded-sm tw:opacity-70 tw:ring-offset-background tw:transition-opacity tw:hover:opacity-100 tw:focus:outline-none tw:focus:ring-2 tw:focus:ring-ring tw:focus:ring-offset-2 tw:disabled:pointer-events-none tw:data-[state=open]:bg-secondary",
     },
   ])(`applyTwPrefix($input) -> $output`, ({ input, output }) => {
-    expect(applyPrefix(input, "tw", "v4")).toBe(output)
-  })
-})
+    expect(applyPrefix(input, "tw", "v4")).toBe(output);
+  });
+});

@@ -1,5 +1,5 @@
-import { defaultFont, defaultFontSize, defaultLang } from '../constants';
-import namespaces from '../namespaces';
+import { defaultFont, defaultFontSize, defaultLang } from "../constants";
+import namespaces from "../namespaces";
 
 const generateStylesXML = (
   font: string = defaultFont,

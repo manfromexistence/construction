@@ -1,5 +1,5 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseEquationPlugin } from '../lib';
+import { BaseEquationPlugin } from "../lib";
 
 export const EquationPlugin = toPlatePlugin(BaseEquationPlugin);

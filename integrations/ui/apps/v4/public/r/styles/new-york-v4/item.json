@@ -1,12 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "item",
-  "dependencies": [
-    "radix-ui"
-  ],
-  "registryDependencies": [
-    "separator"
-  ],
+  "dependencies": ["radix-ui"],
+  "registryDependencies": ["separator"],
   "files": [
     {
       "path": "registry/new-york-v4/ui/item.tsx",

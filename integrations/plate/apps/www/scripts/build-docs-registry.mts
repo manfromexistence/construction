@@ -1,22 +1,22 @@
-import type { SidebarNavItem } from '@/types/nav';
-import type { Registry, RegistryItem } from 'shadcn/registry';
+import { promises as fs } from "node:fs";
+import path from "node:path";
 
-import matter from 'gray-matter';
-import { promises as fs } from 'node:fs';
-import path from 'node:path';
-import { rimraf } from 'rimraf';
+import matter from "gray-matter";
+import { rimraf } from "rimraf";
+import type { Registry, RegistryItem } from "shadcn/registry";
+import type { SidebarNavItem } from "@/types/nav";
 
-import { docsConfig } from '../src/config/docs';
+import { docsConfig } from "../src/config/docs";
 
-const HOMEPAGE = 'https://platejs.org';
-const NAME = 'plate';
+const HOMEPAGE = "https://platejs.org";
+const NAME = "plate";
 
-const isDev = process.env.NODE_ENV === 'development';
-const REGISTRY_URL = isDev ? 'http://localhost:3000/rd' : `${HOMEPAGE}/r`;
-const RELATIVE_SOURCE_DIR = '../../content';
+const isDev = process.env.NODE_ENV === "development";
+const REGISTRY_URL = isDev ? "http://localhost:3000/rd" : `${HOMEPAGE}/r`;
+const RELATIVE_SOURCE_DIR = "../../content";
 const SOURCE_DIR = path.join(process.cwd(), RELATIVE_SOURCE_DIR);
-const TARGET_FILE = 'registry-docs.json';
-const TARGET_DIR = isDev ? 'public/rd' : 'public/r';
+const TARGET_FILE = "registry-docs.json";
+const TARGET_DIR = isDev ? "public/rd" : "public/r";
 const TARGET = `${TARGET_DIR}/${TARGET_FILE}`;
 
 const DIRECTORY_PATTERN_REGEX = /\(([^)]*)\)\//g;
@@ -31,9 +31,9 @@ async function getFiles(dir: string): Promise<string[]> {
         return getFiles(fullPath);
       }
       if (
-        entry.name.endsWith('.mdx') &&
+        entry.name.endsWith(".mdx") &&
         // Ignore translated docs
-        !entry.name.endsWith('.cn.mdx')
+        !entry.name.endsWith(".cn.mdx")
       ) {
         return [fullPath];
       }
@@ -45,15 +45,15 @@ async function getFiles(dir: string): Promise<string[]> {
 }
 
 function pathToTitle(filePath: string): string {
-  const basename = path.basename(filePath, '.mdx');
+  const basename = path.basename(filePath, ".mdx");
   return basename
-    .split('-')
+    .split("-")
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 async function getFrontmatter(filePath: string) {
-  const source = await fs.readFile(filePath, 'utf8');
+  const source = await fs.readFile(filePath, "utf8");
   const { data } = matter(source);
   return {
     description: data.description,
@@ -74,8 +74,8 @@ export async function buildDocsRegistry() {
 
   // Create meta.json content
   const _metaContent = {
-    description: 'Rich-text editor framework',
-    pages: ['index', ...Object.keys(docsStructure)],
+    description: "Rich-text editor framework",
+    pages: ["index", ...Object.keys(docsStructure)],
     root: true,
     title: NAME.charAt(0).toUpperCase() + NAME.slice(1),
   };
@@ -108,14 +108,12 @@ export async function buildDocsRegistry() {
   const items = await Promise.all(
     files.map(async (filePath) => {
       const relativePath = path.relative(SOURCE_DIR, filePath);
-      const pathWithoutExt = relativePath.replace('.mdx', '');
+      const pathWithoutExt = relativePath.replace(".mdx", "");
 
       // Apply the same (directory) pattern removal as contentlayer
-      const cleanPath = pathWithoutExt.replace(DIRECTORY_PATTERN_REGEX, '');
+      const cleanPath = pathWithoutExt.replace(DIRECTORY_PATTERN_REGEX, "");
 
-      const name = `${cleanPath
-        .toLowerCase()
-        .replace(/[^a-z0-9]+/g, '-')}-docs`;
+      const name = `${cleanPath.toLowerCase().replace(/[^a-z0-9]+/g, "-")}-docs`;
 
       const { description, title } = await getFrontmatter(filePath);
 
@@ -139,18 +137,17 @@ export async function buildDocsRegistry() {
       // }
 
       return {
-        description:
-          description || `Documentation for ${title || pathToTitle(filePath)}`,
+        description: description || `Documentation for ${title || pathToTitle(filePath)}`,
         files: [
           {
             path: `${RELATIVE_SOURCE_DIR}/${relativePath}`,
             target: targetPath,
-            type: 'registry:file',
+            type: "registry:file",
           },
         ],
         name,
         title: title || pathToTitle(filePath),
-        type: 'registry:file',
+        type: "registry:file",
       } as RegistryItem;
     })
   );
@@ -161,47 +158,45 @@ export async function buildDocsRegistry() {
       {
         description: `All documentation files for ${NAME}`,
         files: [],
-        name: 'docs',
-        registryDependencies: items.map(
-          (item) => `${REGISTRY_URL}/${item.name}`
-        ),
-        title: 'Documentation',
-        type: 'registry:file',
+        name: "docs",
+        registryDependencies: items.map((item) => `${REGISTRY_URL}/${item.name}`),
+        title: "Documentation",
+        type: "registry:file",
       },
       {
         dependencies: [
-          '@radix-ui/react-separator',
-          '@radix-ui/react-accordion',
-          'lucide-react',
-          'class-variance-authority',
-          'tailwind-merge',
-          'clsx',
+          "@radix-ui/react-separator",
+          "@radix-ui/react-accordion",
+          "lucide-react",
+          "class-variance-authority",
+          "tailwind-merge",
+          "clsx",
         ],
         description: `Fumadocs app for ${NAME}`,
         files: [
           {
-            path: 'src/registry/blocks/fumadocs/content/docs/index.mdx',
-            target: 'content/docs/index.mdx',
-            type: 'registry:file',
+            path: "src/registry/blocks/fumadocs/content/docs/index.mdx",
+            target: "content/docs/index.mdx",
+            type: "registry:file",
           },
           {
-            path: 'src/registry/blocks/fumadocs/fumadocs-mdx-components.tsx',
-            target: 'mdx-components.tsx',
-            type: 'registry:file',
+            path: "src/registry/blocks/fumadocs/fumadocs-mdx-components.tsx",
+            target: "mdx-components.tsx",
+            type: "registry:file",
           },
           {
-            path: 'src/registry/blocks/fumadocs/mdx-plate-components.tsx',
-            target: 'mdx-plate-components.tsx',
-            type: 'registry:file',
+            path: "src/registry/blocks/fumadocs/mdx-plate-components.tsx",
+            target: "mdx-plate-components.tsx",
+            type: "registry:file",
           },
         ],
-        name: 'fumadocs',
+        name: "fumadocs",
         registryDependencies: [
           `${REGISTRY_URL}/docs`,
           // `${REGISTRY_URL}/docs-meta`,
         ],
-        title: 'Fumadocs app',
-        type: 'registry:file',
+        title: "Fumadocs app",
+        type: "registry:file",
       },
       ...items,
     ],
@@ -231,21 +226,16 @@ function buildPathMap(nav: SidebarNavItem[], parentTitle?: string) {
   nav.forEach((item) => {
     if (!item.title) return;
 
-    const currentTitle = item.title.toLowerCase().replace(/\s+/g, '-');
-    const fullTitle = parentTitle
-      ? `${parentTitle}/${currentTitle}`
-      : currentTitle;
+    const currentTitle = item.title.toLowerCase().replace(/\s+/g, "-");
+    const fullTitle = parentTitle ? `${parentTitle}/${currentTitle}` : currentTitle;
 
     // Map this item's href if it has one
     if (item.href) {
-      const href = item.href.replace(DOCS_PREFIX_REGEX, '');
+      const href = item.href.replace(DOCS_PREFIX_REGEX, "");
       // Apply the same (directory) pattern removal as contentlayer
-      const cleanHref = href.replace(DIRECTORY_PATTERN_REGEX, '');
+      const cleanHref = href.replace(DIRECTORY_PATTERN_REGEX, "");
       // Skip get-started section mapping except for installation
-      if (
-        !fullTitle.startsWith('get-started') ||
-        cleanHref === 'installation'
-      ) {
+      if (!fullTitle.startsWith("get-started") || cleanHref === "installation") {
         pathMap.set(cleanHref, fullTitle);
       }
     }
@@ -255,25 +245,21 @@ function buildPathMap(nav: SidebarNavItem[], parentTitle?: string) {
       item.items.forEach((subItem) => {
         if (!subItem.href) return;
 
-        const href = subItem.href.replace(DOCS_PREFIX_REGEX, '');
+        const href = subItem.href.replace(DOCS_PREFIX_REGEX, "");
         // Apply the same (directory) pattern removal as contentlayer
-        const cleanHref = href.replace(DIRECTORY_PATTERN_REGEX, '');
+        const cleanHref = href.replace(DIRECTORY_PATTERN_REGEX, "");
 
         // If subItem has its own items, it's a parent
         if (subItem.items) {
           const subTitle =
-            subItem.title?.toLowerCase().replace(/\s+/g, '-') ??
-            path.basename(cleanHref);
+            subItem.title?.toLowerCase().replace(/\s+/g, "-") ?? path.basename(cleanHref);
           pathMap.set(cleanHref, `${fullTitle}/${subTitle}`);
 
           // Process its children
           subItem.items.forEach((nestedItem) => {
             if (!nestedItem.href) return;
-            const nestedHref = nestedItem.href.replace(DOCS_PREFIX_REGEX, '');
-            const cleanNestedHref = nestedHref.replace(
-              DIRECTORY_PATTERN_REGEX,
-              ''
-            );
+            const nestedHref = nestedItem.href.replace(DOCS_PREFIX_REGEX, "");
+            const cleanNestedHref = nestedHref.replace(DIRECTORY_PATTERN_REGEX, "");
             pathMap.set(cleanNestedHref, `${fullTitle}/${subTitle}`);
           });
         } else {
@@ -295,17 +281,17 @@ function transformNavToFumadocs(
     if (
       !item.items ||
       !item.title ||
-      (item.title === 'Get Started' && !item.href?.includes('installation'))
+      (item.title === "Get Started" && !item.href?.includes("installation"))
     )
       return;
 
-    const folderName = item.title.toLowerCase().replace(/\s+/g, '-');
+    const folderName = item.title.toLowerCase().replace(/\s+/g, "-");
 
     result[folderName] = {
       pages: item.items.map((subItem) => {
-        if (!subItem.href) return 'index';
-        const pagePath = subItem.href.split('/').pop();
-        return pagePath === folderName ? 'index' : pagePath || 'index';
+        if (!subItem.href) return "index";
+        const pagePath = subItem.href.split("/").pop();
+        return pagePath === folderName ? "index" : pagePath || "index";
       }),
       title: item.title,
     };
@@ -316,31 +302,28 @@ function transformNavToFumadocs(
 
 function _generateMetaFiles(
   nav: SidebarNavItem[],
-  parentPath = ''
+  parentPath = ""
 ): { content: string; path: string; target: string }[] {
   const files: { content: string; path: string; target: string }[] = [];
 
   nav.forEach((item) => {
     // Skip only the Get Started section, but keep Installation
-    if (
-      !item.title ||
-      (item.title === 'Get Started' && !item.href?.includes('installation'))
-    )
+    if (!item.title || (item.title === "Get Started" && !item.href?.includes("installation")))
       return;
 
     const currentPath = parentPath
-      ? `${parentPath}/${item.title.toLowerCase().replace(/\s+/g, '-')}`
-      : item.title.toLowerCase().replace(/\s+/g, '-');
+      ? `${parentPath}/${item.title.toLowerCase().replace(/\s+/g, "-")}`
+      : item.title.toLowerCase().replace(/\s+/g, "-");
 
     if (item.items) {
       // Add meta.json for this section
       const content = {
         pages: item.items.map((subItem) => {
-          if (!subItem.href) return 'index';
+          if (!subItem.href) return "index";
           // Get the last part of the href
-          const parts = subItem.href.split('/');
+          const parts = subItem.href.split("/");
           const lastPart = parts.at(-1);
-          return lastPart === currentPath ? 'index' : lastPart;
+          return lastPart === currentPath ? "index" : lastPart;
         }),
         title: item.title,
       };
@@ -354,11 +337,11 @@ function _generateMetaFiles(
       // Process nested items that have their own subitems
       item.items.forEach((subItem) => {
         if (subItem.items && subItem.title) {
-          const subPath = `${currentPath}/${subItem.title.toLowerCase().replace(/\s+/g, '-')}`;
+          const subPath = `${currentPath}/${subItem.title.toLowerCase().replace(/\s+/g, "-")}`;
           const subContent = {
             pages: subItem.items.map((nestedItem) => {
-              if (!nestedItem.href) return 'index';
-              const parts = nestedItem.href.split('/');
+              if (!nestedItem.href) return "index";
+              const parts = nestedItem.href.split("/");
               return parts.at(-1);
             }),
             title: subItem.title,

@@ -1,1 +1,1 @@
-export { createZustandStore } from 'zustand-x';
+export { createZustandStore } from "zustand-x";

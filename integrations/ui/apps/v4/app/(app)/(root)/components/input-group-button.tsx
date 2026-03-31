@@ -1,23 +1,19 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { IconInfoCircle, IconStar } from "@tabler/icons-react"
+import { IconInfoCircle, IconStar } from "@tabler/icons-react";
+import * as React from "react";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/radix-nova/ui/input-group"
-import { Label } from "@/styles/radix-nova/ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/radix-nova/ui/popover"
+} from "@/styles/radix-nova/ui/input-group";
+import { Label } from "@/styles/radix-nova/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/radix-nova/ui/popover";
 
 export function InputGroupButtonExample() {
-  const [isFavorite, setIsFavorite] = React.useState(false)
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
   return (
     <div className="grid w-full max-w-sm gap-6">
@@ -29,11 +25,7 @@ export function InputGroupButtonExample() {
         <Popover>
           <PopoverTrigger asChild>
             <InputGroupAddon>
-              <InputGroupButton
-                variant="secondary"
-                size="icon-xs"
-                aria-label="Info"
-              >
+              <InputGroupButton variant="secondary" size="icon-xs" aria-label="Info">
                 <IconInfoCircle />
               </InputGroupButton>
             </InputGroupAddon>
@@ -47,9 +39,7 @@ export function InputGroupButtonExample() {
             <p>You should not enter any sensitive information on this site.</p>
           </PopoverContent>
         </Popover>
-        <InputGroupAddon className="pl-1! text-muted-foreground">
-          https://
-        </InputGroupAddon>
+        <InputGroupAddon className="pl-1! text-muted-foreground">https://</InputGroupAddon>
         <InputGroupAddon align="inline-end">
           <InputGroupButton
             onClick={() => setIsFavorite(!isFavorite)}
@@ -64,5 +54,5 @@ export function InputGroupButtonExample() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

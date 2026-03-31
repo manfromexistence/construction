@@ -1,21 +1,16 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { BaseParagraphPlugin, createSlateEditor, createSlatePlugin } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import {
-  BaseParagraphPlugin,
-  createSlateEditor,
-  createSlatePlugin,
-} from 'platejs';
-
-import { CodeBlockPlugin } from './CodeBlockPlugin';
+import { CodeBlockPlugin } from "./CodeBlockPlugin";
 
 jsxt;
 
-describe('code block deserialization', () => {
-  describe('when selection in code line', () => {
-    it('disable all deserializers except the ast serializer', () => {
+describe("code block deserialization", () => {
+  describe("when selection in code line", () => {
+    it("disable all deserializers except the ast serializer", () => {
       const input = (
         <editor>
           <hcodeblock>
@@ -40,11 +35,11 @@ describe('code block deserialization', () => {
           BaseParagraphPlugin,
           CodeBlockPlugin,
           createSlatePlugin({
-            key: 'a',
+            key: "a",
             parser: {
-              format: 'text/plain',
+              format: "text/plain",
               deserialize() {
-                return [{ text: 'test' }];
+                return [{ text: "test" }];
               },
             },
           }),
@@ -61,8 +56,8 @@ describe('code block deserialization', () => {
     });
   });
 
-  describe('when selection outside of code line', () => {
-    it('does not affect deserialization', () => {
+  describe("when selection outside of code line", () => {
+    it("does not affect deserialization", () => {
       const input = (
         <editor>
           <hp>
@@ -86,16 +81,15 @@ describe('code block deserialization', () => {
       });
 
       editor.tf.insertData({
-        getData: (format: string) =>
-          format === 'text/html' && `<pre><code>test</code></pre>`,
+        getData: (format: string) => format === "text/html" && `<pre><code>test</code></pre>`,
       } as any);
 
       expect(editor.children).toEqual(output.children);
     });
   });
 
-  describe('deleting lines after the codeblock', () => {
-    it('normalizes inserted nodes into code lines', () => {
+  describe("deleting lines after the codeblock", () => {
+    it("normalizes inserted nodes into code lines", () => {
       const input = (
         <editor>
           <hcodeblock>

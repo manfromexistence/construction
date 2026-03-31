@@ -115,36 +115,16 @@ const PartyPopperIcon = forwardRef<PartyPopperIconHandle, PartyPopperIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.path
-            animate={controls}
-            d="M5.8 11.3 2 22l10.7-3.79"
-            variants={POPPER_VARIANTS}
-          />
+          <motion.path animate={controls} d="M5.8 11.3 2 22l10.7-3.79" variants={POPPER_VARIANTS} />
           <motion.path
             animate={controls}
             d="M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"
             variants={POPPER_VARIANTS}
           />
-          <motion.path
-            animate={controls}
-            d="M4 3h.01"
-            variants={DOTS_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            d="M22 8h.01"
-            variants={DOTS_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            d="M15 2h.01"
-            variants={DOTS_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            d="M22 20h.01"
-            variants={DOTS_VARIANTS}
-          />
+          <motion.path animate={controls} d="M4 3h.01" variants={DOTS_VARIANTS} />
+          <motion.path animate={controls} d="M22 8h.01" variants={DOTS_VARIANTS} />
+          <motion.path animate={controls} d="M15 2h.01" variants={DOTS_VARIANTS} />
+          <motion.path animate={controls} d="M22 20h.01" variants={DOTS_VARIANTS} />
           <motion.path
             animate={controls}
             d="m14 10 1.21-1.06c0.16-0.84 0.9-1.44 1.76-1.44h0.38c0.88 0 1.55-0.77 1.45-1.63a2.9 2.9 0 0 1 1.96-3.12L22 2"

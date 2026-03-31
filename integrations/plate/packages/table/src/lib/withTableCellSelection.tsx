@@ -1,19 +1,19 @@
 import {
   type At,
-  type Path,
-  type OverrideEditor,
   combineTransformMatchOptions,
+  type OverrideEditor,
+  type Path,
   PathApi,
   RangeApi,
   TextApi,
-} from 'platejs';
+} from "platejs";
 
-import type { TableConfig } from '.';
+import type { TableConfig } from ".";
 
-import { getTableGridAbove } from './queries';
+import { getTableGridAbove } from "./queries";
 
 const isTargetingSelectedCell = (
-  editor: Parameters<OverrideEditor<TableConfig>>[0]['editor'],
+  editor: Parameters<OverrideEditor<TableConfig>>[0]["editor"],
   target: At,
   cellPaths: Path[]
 ) => {
@@ -50,7 +50,7 @@ export const withTableCellSelection: OverrideEditor<TableConfig> = ({
 
         if (!selection || editor.api.isCollapsed()) return;
 
-        const matchesCell = getTableGridAbove(editor, { format: 'cell' });
+        const matchesCell = getTableGridAbove(editor, { format: "cell" });
 
         if (matchesCell.length <= 1) return;
 
@@ -70,7 +70,7 @@ export const withTableCellSelection: OverrideEditor<TableConfig> = ({
 
             if (keys.length === 1) return;
 
-            keys.splice(keys.indexOf('text'), 1);
+            keys.splice(keys.indexOf("text"), 1);
 
             keys.forEach((k) => {
               markCounts[k] = (markCounts[k] || 0) + 1;
@@ -99,10 +99,9 @@ export const withTableCellSelection: OverrideEditor<TableConfig> = ({
       const apply = () => {
         const { selection } = editor;
 
-        if (!selection || editor.api.isCollapsed() || editor.meta.isNormalizing)
-          return;
+        if (!selection || editor.api.isCollapsed() || editor.meta.isNormalizing) return;
 
-        const matchesCell = getTableGridAbove(editor, { format: 'cell' });
+        const matchesCell = getTableGridAbove(editor, { format: "cell" });
 
         if (matchesCell.length <= 1) return;
 
@@ -132,10 +131,9 @@ export const withTableCellSelection: OverrideEditor<TableConfig> = ({
       const apply = () => {
         const { selection } = editor;
 
-        if (!selection || editor.api.isCollapsed() || editor.meta.isNormalizing)
-          return;
+        if (!selection || editor.api.isCollapsed() || editor.meta.isNormalizing) return;
 
-        const matchesCell = getTableGridAbove(editor, { format: 'cell' });
+        const matchesCell = getTableGridAbove(editor, { format: "cell" });
 
         if (matchesCell.length <= 1) return;
 
@@ -163,15 +161,11 @@ export const withTableCellSelection: OverrideEditor<TableConfig> = ({
       const apply = () => {
         const { selection } = editor;
 
-        if (
-          !selection ||
-          editor.api.isCollapsed() ||
-          editor.meta.isNormalizing
-        ) {
+        if (!selection || editor.api.isCollapsed() || editor.meta.isNormalizing) {
           return;
         }
 
-        const matchesCell = getTableGridAbove(editor, { format: 'cell' });
+        const matchesCell = getTableGridAbove(editor, { format: "cell" });
         if (matchesCell.length <= 1) return;
 
         if (options?.at) {
@@ -186,10 +180,7 @@ export const withTableCellSelection: OverrideEditor<TableConfig> = ({
           ...options,
           match: combineTransformMatchOptions(
             editor,
-            (_, p) =>
-              matchesCell.some(([_, cellPath]) =>
-                PathApi.isCommon(cellPath, p)
-              ),
+            (_, p) => matchesCell.some(([_, cellPath]) => PathApi.isCommon(cellPath, p)),
             options
           ),
         });

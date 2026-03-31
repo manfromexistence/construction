@@ -1,10 +1,5 @@
-import {
-  CARRIAGE_RETURN,
-  LINE_FEED,
-  NO_BREAK_SPACE,
-  SPACE,
-} from '../constants';
-import { traverseHtmlTexts } from './traverseHtmlTexts';
+import { CARRIAGE_RETURN, LINE_FEED, NO_BREAK_SPACE, SPACE } from "../constants";
+import { traverseHtmlTexts } from "./traverseHtmlTexts";
 
 const NEWLINE_WHITESPACE_REGEX = /^\n\s*$/;
 const NON_WHITESPACE_REGEX = /\S/;
@@ -21,7 +16,7 @@ export const cleanHtmlTextNodes = (rootNode: Node): void => {
       return true;
     }
 
-    textNode.data = textNode.data.replaceAll(/\n\s*/g, '\n');
+    textNode.data = textNode.data.replaceAll(/\n\s*/g, "\n");
 
     if (
       textNode.data.includes(CARRIAGE_RETURN) ||
@@ -45,7 +40,7 @@ export const cleanHtmlTextNodes = (rootNode: Node): void => {
       }
       if (
         textNode.previousSibling &&
-        textNode.previousSibling.nodeName === 'BR' &&
+        textNode.previousSibling.nodeName === "BR" &&
         textNode.parentElement
       ) {
         textNode.previousSibling.remove();
@@ -55,13 +50,13 @@ export const cleanHtmlTextNodes = (rootNode: Node): void => {
 
         textNode.data = textNode.data
           .slice(Math.max(0, offset))
-          .replaceAll(new RegExp(LINE_FEED, 'g'), SPACE)
-          .replaceAll(new RegExp(CARRIAGE_RETURN, 'g'), SPACE);
+          .replaceAll(new RegExp(LINE_FEED, "g"), SPACE)
+          .replaceAll(new RegExp(CARRIAGE_RETURN, "g"), SPACE);
         textNode.data = `\n${textNode.data}`;
       } else {
         textNode.data = textNode.data
-          .replaceAll(new RegExp(LINE_FEED, 'g'), SPACE)
-          .replaceAll(new RegExp(CARRIAGE_RETURN, 'g'), SPACE);
+          .replaceAll(new RegExp(LINE_FEED, "g"), SPACE)
+          .replaceAll(new RegExp(CARRIAGE_RETURN, "g"), SPACE);
       }
     }
 

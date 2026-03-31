@@ -1,20 +1,20 @@
-import { type Metadata } from "next"
-import Link from "next/link"
+import { type Metadata } from "next";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
-import { BlocksNav } from "@/components/blocks-nav"
+import { Announcement } from "@/components/announcement";
+import { BlocksNav } from "@/components/blocks-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { PageNav } from "@/components/page-nav"
-import { Button } from "@/registry/new-york-v4/ui/button"
+} from "@/components/page-header";
+import { PageNav } from "@/components/page-nav";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
-const title = "Building Blocks for the Web"
+const title = "Building Blocks for the Web";
 const description =
-  "Clean, modern building blocks. Copy and paste into your apps. Works with all React frameworks. Open Source. Free forever."
+  "Clean, modern building blocks. Copy and paste into your apps. Works with all React frameworks. Open Source. Free forever.";
 
 export const metadata: Metadata = {
   title,
@@ -38,13 +38,9 @@ export const metadata: Metadata = {
       },
     ],
   },
-}
+};
 
-export default function BlocksLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function BlocksLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <PageHeader>
@@ -62,12 +58,7 @@ export default function BlocksLayout({
       </PageHeader>
       <PageNav id="blocks">
         <BlocksNav />
-        <Button
-          asChild
-          variant="secondary"
-          size="sm"
-          className="mr-7 hidden shadow-none lg:flex"
-        >
+        <Button asChild variant="secondary" size="sm" className="mr-7 hidden shadow-none lg:flex">
           <Link href="/blocks/sidebar">Browse all blocks</Link>
         </Button>
       </PageNav>
@@ -75,5 +66,5 @@ export default function BlocksLayout({
         <div className="container">{children}</div>
       </div>
     </>
-  )
+  );
 }

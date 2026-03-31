@@ -1,17 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form-rhf-checkbox",
-  "dependencies": [
-    "react-hook-form",
-    "@hookform/resolvers",
-    "zod"
-  ],
-  "registryDependencies": [
-    "field",
-    "checkbox",
-    "button",
-    "card"
-  ],
+  "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
+  "registryDependencies": ["field", "checkbox", "button", "card"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/form-rhf-checkbox.tsx",

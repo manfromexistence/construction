@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -9,11 +9,11 @@ export const mentionValue: any = (
     <hh2>提及</hh2>
     <hp>使用@提及功能在文本中提及和引用其他用户或实体。</hp>
     <hp>
-      试试提及{' '}
+      试试提及{" "}
       <hmention value="BB-8">
         <htext />
-      </hmention>{' '}
-      或{' '}
+      </hmention>{" "}
+      或{" "}
       <hmention value="Boba Fett">
         <htext />
       </hmention>

@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Typing Animation Start on View",
   "description": "Example showing animation that starts when in viewport.",
-  "registryDependencies": [
-    "@magicui/typing-animation"
-  ],
+  "registryDependencies": ["@magicui/typing-animation"],
   "files": [
     {
       "path": "registry/example/typing-animation-demo-4.tsx",

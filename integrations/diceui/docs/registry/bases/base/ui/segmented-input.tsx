@@ -25,8 +25,7 @@ interface SegmentedInputContextValue {
   required?: boolean;
 }
 
-const SegmentedInputContext =
-  React.createContext<SegmentedInputContextValue | null>(null);
+const SegmentedInputContext = React.createContext<SegmentedInputContextValue | null>(null);
 
 function useSegmentedInputContext(consumerName: string) {
   const context = React.useContext(SegmentedInputContext);
@@ -36,9 +35,7 @@ function useSegmentedInputContext(consumerName: string) {
   return context;
 }
 
-interface SegmentedInputProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {
+interface SegmentedInputProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {
   dir?: Direction;
   orientation?: Orientation;
   size?: Size;
@@ -73,7 +70,7 @@ function SegmentedInput(props: SegmentedInputProps) {
       invalid,
       required,
     }),
-    [dir, orientation, size, disabled, invalid, required],
+    [dir, orientation, size, disabled, invalid, required]
   );
 
   const childrenArray = React.Children.toArray(children);
@@ -112,11 +109,11 @@ function SegmentedInput(props: SegmentedInputProps) {
             className: cn(
               "flex",
               orientation === "horizontal" ? "flex-row" : "flex-col",
-              className,
+              className
             ),
             children: segmentedInputItems,
           },
-          rootProps,
+          rootProps
         ),
         render,
         state: {
@@ -179,8 +176,7 @@ interface SegmentedInputItemProps
     useRender.ComponentProps<"input"> {}
 
 function SegmentedInputItem(props: SegmentedInputItemProps) {
-  const { render, className, position, disabled, required, ...inputProps } =
-    props;
+  const { render, className, position, disabled, required, ...inputProps } = props;
   const context = useSegmentedInputContext(ITEM_NAME);
 
   const isDisabled = disabled ?? context.disabled;
@@ -192,7 +188,7 @@ function SegmentedInputItem(props: SegmentedInputItemProps) {
       orientation: context.orientation,
       size: context.size,
       className,
-    }),
+    })
   );
 
   const renderedElement = useRender({
@@ -205,7 +201,7 @@ function SegmentedInputItem(props: SegmentedInputItemProps) {
         required: isRequired,
         className: itemClassName,
       },
-      inputProps,
+      inputProps
     ),
     render,
     state: {

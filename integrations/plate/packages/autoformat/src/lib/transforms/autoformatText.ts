@@ -1,11 +1,10 @@
-import type { SlateEditor } from 'platejs';
+import castArray from "lodash/castArray.js";
+import type { SlateEditor } from "platejs";
 
-import castArray from 'lodash/castArray.js';
+import type { AutoformatTextRule } from "../types";
 
-import type { AutoformatTextRule } from '../types';
-
-import { getMatchPoints } from '../utils/getMatchPoints';
-import { getMatchRange } from '../utils/getMatchRange';
+import { getMatchPoints } from "../utils/getMatchPoints";
+import { getMatchRange } from "../utils/getMatchRange";
 
 export interface AutoformatTextOptions extends AutoformatTextRule {
   text: string;
@@ -25,7 +24,7 @@ export const autoformatText = (
         ? match
         : {
             end: match,
-            start: '',
+            start: "",
           },
       trigger,
     });
@@ -36,8 +35,7 @@ export const autoformatText = (
 
     if (!matched) continue;
 
-    const { afterStartMatchPoint, beforeEndMatchPoint, beforeStartMatchPoint } =
-      matched;
+    const { afterStartMatchPoint, beforeEndMatchPoint, beforeStartMatchPoint } = matched;
 
     if (end) {
       editor.tf.delete({
@@ -47,7 +45,7 @@ export const autoformatText = (
         },
       });
     }
-    if (typeof format === 'function') {
+    if (typeof format === "function") {
       format(editor, matched as any);
     } else {
       const formatEnd = Array.isArray(format) ? format[1] : format;

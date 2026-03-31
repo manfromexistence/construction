@@ -1,4 +1,4 @@
-import { type Editor, type TElement, PathApi } from 'platejs';
+import { type Editor, PathApi, type TElement } from "platejs";
 
 /** Get table row index of a cell node. */
 export const getTableRowIndex = (editor: Editor, cellNode: TElement) => {

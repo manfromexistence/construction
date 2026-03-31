@@ -1,7 +1,7 @@
-import { type TIdElement, PathApi } from 'platejs';
-import { type PlateEditor, getEditorPlugin } from 'platejs/react';
+import { PathApi, type TIdElement } from "platejs";
+import { getEditorPlugin, type PlateEditor } from "platejs/react";
 
-import { BlockSelectionPlugin } from '../../BlockSelectionPlugin';
+import { BlockSelectionPlugin } from "../../BlockSelectionPlugin";
 
 /**
  * SHIFT-based expand-or-shrink selection.
@@ -17,14 +17,8 @@ import { BlockSelectionPlugin } from '../../BlockSelectionPlugin';
  * - If anchor is bottom-most => expand up (add block above top-most).
  * - Otherwise => shrink from bottom-most (unless bottom-most is the anchor).
  */
-export const shiftSelection = (
-  editor: PlateEditor,
-  direction: 'down' | 'up'
-) => {
-  const { api, getOption, getOptions, setOption } = getEditorPlugin(
-    editor,
-    BlockSelectionPlugin
-  );
+export const shiftSelection = (editor: PlateEditor, direction: "down" | "up") => {
+  const { api, getOption, getOptions, setOption } = getEditorPlugin(editor, BlockSelectionPlugin);
 
   const blocks = api.blockSelection.getNodes();
 
@@ -37,8 +31,8 @@ export const shiftSelection = (
 
   // If no anchor is set, default to bottom-most if SHIFT+UP, else top-most if SHIFT+DOWN.
   if (!anchorId) {
-    anchorId = (direction === 'up' ? bottomNode.id : topNode.id) as string;
-    setOption('anchorId', anchorId);
+    anchorId = (direction === "up" ? bottomNode.id : topNode.id) as string;
+    setOption("anchorId", anchorId);
   }
 
   // Find the anchor block within the current selection array.
@@ -46,7 +40,7 @@ export const shiftSelection = (
 
   if (anchorIndex === -1) {
     // If anchor not found in the current selection, fallback:
-    setOption('anchorId', bottomNode.id as string);
+    setOption("anchorId", bottomNode.id as string);
 
     return;
   }
@@ -54,18 +48,17 @@ export const shiftSelection = (
   const anchorIsTop = anchorIndex === 0;
   const anchorIsBottom = anchorIndex === blocks.length - 1;
 
-  const newSelected = new Set(getOption('selectedIds'));
+  const newSelected = new Set(getOption("selectedIds"));
 
-  if (direction === 'down') {
+  if (direction === "down") {
     // SHIFT+DOWN
     if (anchorIsTop) {
       // Expand down => add block below the bottom-most
       const belowEntry = editor.api.next({
         at: bottomPath,
-        mode: 'highest',
+        mode: "highest",
         match: (n, p) =>
-          api.blockSelection.isSelectable(n as any, p) &&
-          !PathApi.isAncestor(p, bottomPath),
+          api.blockSelection.isSelectable(n as any, p) && !PathApi.isAncestor(p, bottomPath),
       });
 
       if (!belowEntry) return;
@@ -83,7 +76,7 @@ export const shiftSelection = (
     // Expand up => add block above the top-most
     const aboveEntry = editor.api.previous<TIdElement>({
       at: topPath,
-      from: 'parent',
+      from: "parent",
       match: api.blockSelection.isSelectable,
     });
 
@@ -101,7 +94,7 @@ export const shiftSelection = (
 
           if (id === anchorId) {
             anchorId = aboveNode.id;
-            setOption('anchorId', anchorId);
+            setOption("anchorId", anchorId);
           }
         }
       });
@@ -116,5 +109,5 @@ export const shiftSelection = (
   // Always ensure the anchor remains selected
   newSelected.add(anchorId!);
 
-  setOption('selectedIds', newSelected);
+  setOption("selectedIds", newSelected);
 };

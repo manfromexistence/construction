@@ -1,16 +1,11 @@
-import React from 'react';
+import { createPrimitiveComponent, useEditorPlugin, usePluginOption } from "platejs/react";
+import React from "react";
 
-import {
-  createPrimitiveComponent,
-  useEditorPlugin,
-  usePluginOption,
-} from 'platejs/react';
-
-import { LinkPlugin } from '../../LinkPlugin';
+import { LinkPlugin } from "../../LinkPlugin";
 
 export const useFloatingLinkNewTabInputState = () => {
   const { getOptions } = useEditorPlugin(LinkPlugin);
-  const updated = usePluginOption(LinkPlugin, 'updated');
+  const updated = usePluginOption(LinkPlugin, "updated");
   const ref = React.useRef<HTMLInputElement>(null);
   const [checked, setChecked] = React.useState<boolean>(getOptions().newTab);
 
@@ -36,26 +31,25 @@ export const useFloatingLinkNewTabInput = ({
 }: ReturnType<typeof useFloatingLinkNewTabInputState>) => {
   const { setOption } = useEditorPlugin(LinkPlugin);
 
-  const onChange: React.ChangeEventHandler<HTMLInputElement> =
-    React.useCallback(
-      (e) => {
-        setChecked(e.target.checked);
-        setOption('newTab', e.target.checked);
-      },
-      [setOption, setChecked]
-    );
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
+    (e) => {
+      setChecked(e.target.checked);
+      setOption("newTab", e.target.checked);
+    },
+    [setOption, setChecked]
+  );
 
   return {
     props: {
       checked,
-      type: 'checkbox',
+      type: "checkbox",
       onChange,
     },
     ref,
   };
 };
 
-export const FloatingLinkNewTabInput = createPrimitiveComponent('input')({
+export const FloatingLinkNewTabInput = createPrimitiveComponent("input")({
   propsHook: useFloatingLinkNewTabInput,
   stateHook: useFloatingLinkNewTabInputState,
 });

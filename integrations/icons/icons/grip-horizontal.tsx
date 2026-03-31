@@ -49,83 +49,83 @@ const VARIANTS: Variants = {
   },
 };
 
-const GripHorizontalIcon = forwardRef<
-  GripHorizontalIconHandle,
-  GripHorizontalIconProps
->(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
-  const controls = useAnimation();
-  const isControlledRef = useRef(false);
-  const isAnimatingRef = useRef(false);
+const GripHorizontalIcon = forwardRef<GripHorizontalIconHandle, GripHorizontalIconProps>(
+  ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+    const controls = useAnimation();
+    const isControlledRef = useRef(false);
+    const isAnimatingRef = useRef(false);
 
-  const startAnimation = useCallback(async () => {
-    if (isAnimatingRef.current) return;
-    isAnimatingRef.current = true;
-    await controls.start("animate");
-    await controls.start("normal");
-    isAnimatingRef.current = false;
-  }, [controls]);
+    const startAnimation = useCallback(async () => {
+      if (isAnimatingRef.current) return;
+      isAnimatingRef.current = true;
+      await controls.start("animate");
+      await controls.start("normal");
+      isAnimatingRef.current = false;
+    }, [controls]);
 
-  const stopAnimation = useCallback(async () => {
-    if (!isAnimatingRef.current) return;
-    await controls.start("normal");
-    isAnimatingRef.current = false;
-  }, [controls]);
+    const stopAnimation = useCallback(async () => {
+      if (!isAnimatingRef.current) return;
+      await controls.start("normal");
+      isAnimatingRef.current = false;
+    }, [controls]);
 
-  useImperativeHandle(ref, () => {
-    isControlledRef.current = true;
-    return { startAnimation, stopAnimation };
-  });
+    useImperativeHandle(ref, () => {
+      isControlledRef.current = true;
+      return { startAnimation, stopAnimation };
+    });
 
-  const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!isControlledRef.current) startAnimation();
-      onMouseEnter?.(e);
-    },
-    [startAnimation, onMouseEnter]
-  );
+    const handleMouseEnter = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!isControlledRef.current) startAnimation();
+        onMouseEnter?.(e);
+      },
+      [startAnimation, onMouseEnter]
+    );
 
-  const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (!isControlledRef.current) stopAnimation();
-      onMouseLeave?.(e);
-    },
-    [stopAnimation, onMouseLeave]
-  );
+    const handleMouseLeave = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!isControlledRef.current) stopAnimation();
+        onMouseLeave?.(e);
+      },
+      [stopAnimation, onMouseLeave]
+    );
 
-  return (
-    <div
-      className={cn("inline-flex items-center justify-center", className)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      <svg
-        fill="none"
-        height={size}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        width={size}
-        xmlns="http://www.w3.org/2000/svg"
+    return (
+      <div
+        className={cn("inline-flex items-center justify-center", className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...props}
       >
-        {CIRCLES.map((circle, index) => (
-          <motion.circle
-            animate={controls}
-            custom={index}
-            cx={circle.cx}
-            cy={circle.cy}
-            initial="normal"
-            key={`${circle.cx}-${circle.cy}`}
-            r="1"
-            variants={VARIANTS}
-          />
-        ))}
-      </svg>
-    </div>
-  );
-});
+        <svg
+          fill="none"
+          height={size}
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          width={size}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {CIRCLES.map((circle, index) => (
+            <motion.circle
+              animate={controls}
+              custom={index}
+              cx={circle.cx}
+              cy={circle.cy}
+              initial="normal"
+              key={`${circle.cx}-${circle.cy}`}
+              r="1"
+              variants={VARIANTS}
+            />
+          ))}
+        </svg>
+      </div>
+    );
+  }
+);
 
 GripHorizontalIcon.displayName = "GripHorizontalIcon";
+
 export { GripHorizontalIcon };

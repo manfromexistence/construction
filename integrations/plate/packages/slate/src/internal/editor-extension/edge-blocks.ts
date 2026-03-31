@@ -4,7 +4,7 @@ import type {
   ElementOf,
   NodeEntry,
   ValueOf,
-} from '../../interfaces/index';
+} from "../../interfaces/index";
 
 export const edgeBlocks = <
   N1 extends ElementOf<E>,

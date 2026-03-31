@@ -1,13 +1,13 @@
-import type { TTableElement } from 'platejs';
+import type { TTableElement } from "platejs";
 
-import { useEditorPlugin, useEditorSelector, useElement } from 'platejs/react';
+import { useEditorPlugin, useEditorSelector, useElement } from "platejs/react";
 
 import {
-  type TableBorderStates,
   getSelectedCellsBorders,
-} from '../../../lib/queries/getSelectedCellsBorders';
-import { TablePlugin } from '../../TablePlugin';
-import { getOnSelectTableBorderFactory } from './getOnSelectTableBorderFactory';
+  type TableBorderStates,
+} from "../../../lib/queries/getSelectedCellsBorders";
+import { TablePlugin } from "../../TablePlugin";
+import { getOnSelectTableBorderFactory } from "./getOnSelectTableBorderFactory";
 
 export const useTableBordersDropdownMenuContentState = ({
   element: el,

@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
 import {
   FileArchiveIcon,
@@ -12,6 +11,7 @@ import {
   FileVideoIcon,
 } from "lucide-react";
 import * as React from "react";
+import { cn } from "@/lib/utils";
 
 const ROOT_NAME = "FileUpload";
 const DROPZONE_NAME = "FileUploadDropzone";
@@ -93,7 +93,7 @@ function createStore(
   listeners: Set<() => void>,
   files: Map<File, FileState>,
   onValueChange?: (files: File[]) => void,
-  invalid?: boolean,
+  invalid?: boolean
 ) {
   const initialState: StoreState = {
     files,
@@ -115,9 +115,7 @@ function createStore(
         }
 
         if (onValueChange) {
-          const fileList = Array.from(files.values()).map(
-            (fileState) => fileState.file,
-          );
+          const fileList = Array.from(files.values()).map((fileState) => fileState.file);
           onValueChange(fileList);
         }
         return { ...state, files };
@@ -184,9 +182,7 @@ function createStore(
         files.delete(action.file);
 
         if (onValueChange) {
-          const fileList = Array.from(files.values()).map(
-            (fileState) => fileState.file,
-          );
+          const fileList = Array.from(files.values()).map((fileState) => fileState.file);
           onValueChange(fileList);
         }
         return { ...state, files };
@@ -232,9 +228,7 @@ function createStore(
   return { getState, dispatch, subscribe };
 }
 
-const StoreContext = React.createContext<ReturnType<typeof createStore> | null>(
-  null,
-);
+const StoreContext = React.createContext<ReturnType<typeof createStore> | null>(null);
 StoreContext.displayName = ROOT_NAME;
 
 function useStoreContext(name: keyof typeof FILE_UPLOAD_ERRORS) {
@@ -248,9 +242,7 @@ function useStoreContext(name: keyof typeof FILE_UPLOAD_ERRORS) {
 function useStore<T>(selector: (state: StoreState) => T): T {
   const store = useStoreContext(ROOT_NAME);
 
-  const lastValueRef = useLazyRef<{ value: T; state: StoreState } | null>(
-    () => null,
-  );
+  const lastValueRef = useLazyRef<{ value: T; state: StoreState } | null>(() => null);
 
   const getSnapshot = React.useCallback(() => {
     const state = store.getState();
@@ -278,9 +270,7 @@ interface FileUploadContextValue {
   inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-const FileUploadContext = React.createContext<FileUploadContextValue | null>(
-  null,
-);
+const FileUploadContext = React.createContext<FileUploadContextValue | null>(null);
 
 function useFileUploadContext(name: keyof typeof FILE_UPLOAD_ERRORS) {
   const context = React.useContext(FileUploadContext);
@@ -291,10 +281,7 @@ function useFileUploadContext(name: keyof typeof FILE_UPLOAD_ERRORS) {
 }
 
 interface FileUploadRootProps
-  extends Omit<
-    React.ComponentPropsWithoutRef<"div">,
-    "defaultValue" | "onChange"
-  > {
+  extends Omit<React.ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange"> {
   value?: File[];
   defaultValue?: File[];
   onValueChange?: (files: File[]) => void;
@@ -308,7 +295,7 @@ interface FileUploadRootProps
       onProgress: (file: File, progress: number) => void;
       onSuccess: (file: File) => void;
       onError: (file: File, error: Error) => void;
-    },
+    }
   ) => Promise<void> | void;
   accept?: string;
   maxFiles?: number;
@@ -364,7 +351,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
 
     const store = React.useMemo(
       () => createStore(listeners, files, onValueChange, invalid),
-      [listeners, files, onValueChange, invalid],
+      [listeners, files, onValueChange, invalid]
     );
 
     const contextValue = React.useMemo<FileUploadContextValue>(
@@ -377,17 +364,13 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
         disabled,
         inputRef,
       }),
-      [dropzoneId, inputId, listId, labelId, dir, disabled],
+      [dropzoneId, inputId, listId, labelId, dir, disabled]
     );
 
     React.useEffect(() => {
       if (isControlled) {
         store.dispatch({ variant: "SET_FILES", files: value });
-      } else if (
-        defaultValue &&
-        defaultValue.length > 0 &&
-        !store.getState().files.size
-      ) {
+      } else if (defaultValue && defaultValue.length > 0 && !store.getState().files.size) {
         store.dispatch({ variant: "SET_FILES", files: defaultValue });
       }
     }, [value, defaultValue, isControlled, store]);
@@ -401,10 +384,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
 
         if (propsRef.current.maxFiles) {
           const currentCount = store.getState().files.size;
-          const remainingSlotCount = Math.max(
-            0,
-            propsRef.current.maxFiles - currentCount,
-          );
+          const remainingSlotCount = Math.max(0, propsRef.current.maxFiles - currentCount);
 
           if (remainingSlotCount < filesToProcess.length) {
             const rejectedFiles = filesToProcess.slice(remainingSlotCount);
@@ -446,9 +426,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
           }
 
           if (propsRef.current.accept) {
-            const acceptTypes = propsRef.current.accept
-              .split(",")
-              .map((t) => t.trim());
+            const acceptTypes = propsRef.current.accept.split(",").map((t) => t.trim());
             const fileType = file.type;
             const fileExtension = `.${file.name.split(".").pop()}`;
 
@@ -457,8 +435,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
                 (type) =>
                   type === fileType ||
                   type === fileExtension ||
-                  (type.includes("/*") &&
-                    fileType.startsWith(type.replace("/*", "/"))),
+                  (type.includes("/*") && fileType.startsWith(type.replace("/*", "/")))
               )
             ) {
               rejectionMessage = "File type not accepted";
@@ -468,10 +445,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
             }
           }
 
-          if (
-            propsRef.current.maxSize &&
-            file.size > propsRef.current.maxSize
-          ) {
+          if (propsRef.current.maxSize && file.size > propsRef.current.maxSize) {
             rejectionMessage = "File too large";
             propsRef.current.onFileReject?.(file, rejectionMessage);
             rejected = true;
@@ -496,9 +470,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
           store.dispatch({ variant: "ADD_FILES", files: acceptedFiles });
 
           if (isControlled && propsRef.current.onValueChange) {
-            const currentFiles = Array.from(
-              store.getState().files.values(),
-            ).map((f) => f.file);
+            const currentFiles = Array.from(store.getState().files.values()).map((f) => f.file);
             propsRef.current.onValueChange([...currentFiles]);
           }
 
@@ -517,7 +489,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
           }
         }
       },
-      [store, isControlled, propsRef],
+      [store, isControlled, propsRef]
     );
 
     const onFilesUpload = React.useCallback(
@@ -553,8 +525,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
             }
           }
         } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : "Upload failed";
+          const errorMessage = error instanceof Error ? error.message : "Upload failed";
           for (const file of files) {
             store.dispatch({
               variant: "SET_ERROR",
@@ -564,7 +535,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
           }
         }
       },
-      [store, propsRef.current.onUpload],
+      [store, propsRef.current.onUpload]
     );
 
     const onInputChange = React.useCallback(
@@ -573,7 +544,7 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
         onFilesChange(files);
         event.target.value = "";
       },
-      [onFilesChange],
+      [onFilesChange]
     );
 
     const RootPrimitive = asChild ? Slot : "div";
@@ -614,192 +585,184 @@ const FileUploadRoot = React.forwardRef<HTMLDivElement, FileUploadRootProps>(
         </StoreContext.Provider>
       </DirectionContext.Provider>
     );
-  },
+  }
 );
 FileUploadRoot.displayName = ROOT_NAME;
 
-interface FileUploadDropzoneProps
-  extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadDropzoneProps extends React.ComponentPropsWithoutRef<"div"> {
   asChild?: boolean;
 }
 
-const FileUploadDropzone = React.forwardRef<
-  HTMLDivElement,
-  FileUploadDropzoneProps
->((props, forwardedRef) => {
-  const { asChild, className, ...dropzoneProps } = props;
+const FileUploadDropzone = React.forwardRef<HTMLDivElement, FileUploadDropzoneProps>(
+  (props, forwardedRef) => {
+    const { asChild, className, ...dropzoneProps } = props;
 
-  const context = useFileUploadContext(DROPZONE_NAME);
-  const store = useStoreContext(DROPZONE_NAME);
-  const dragOver = useStore((state) => state.dragOver);
-  const invalid = useStore((state) => state.invalid);
-  const propsRef = useAsRef(dropzoneProps);
+    const context = useFileUploadContext(DROPZONE_NAME);
+    const store = useStoreContext(DROPZONE_NAME);
+    const dragOver = useStore((state) => state.dragOver);
+    const invalid = useStore((state) => state.invalid);
+    const propsRef = useAsRef(dropzoneProps);
 
-  const onClick = React.useCallback(
-    (event: React.MouseEvent<HTMLDivElement>) => {
-      propsRef.current?.onClick?.(event);
+    const onClick = React.useCallback(
+      (event: React.MouseEvent<HTMLDivElement>) => {
+        propsRef.current?.onClick?.(event);
 
-      if (event.defaultPrevented) return;
+        if (event.defaultPrevented) return;
 
-      const target = event.target;
+        const target = event.target;
 
-      const isFromTrigger =
-        target instanceof HTMLElement &&
-        target.closest('[data-slot="file-upload-trigger"]');
+        const isFromTrigger =
+          target instanceof HTMLElement && target.closest('[data-slot="file-upload-trigger"]');
 
-      if (!isFromTrigger) {
-        context.inputRef.current?.click();
-      }
-    },
-    [context.inputRef, propsRef],
-  );
+        if (!isFromTrigger) {
+          context.inputRef.current?.click();
+        }
+      },
+      [context.inputRef, propsRef]
+    );
 
-  const onDragOver = React.useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      propsRef.current?.onDragOver?.(event);
+    const onDragOver = React.useCallback(
+      (event: React.DragEvent<HTMLDivElement>) => {
+        propsRef.current?.onDragOver?.(event);
 
-      if (event.defaultPrevented) return;
+        if (event.defaultPrevented) return;
 
-      event.preventDefault();
-      store.dispatch({ variant: "SET_DRAG_OVER", dragOver: true });
-    },
-    [store, propsRef.current.onDragOver],
-  );
-
-  const onDragEnter = React.useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      propsRef.current?.onDragEnter?.(event);
-
-      if (event.defaultPrevented) return;
-
-      event.preventDefault();
-      store.dispatch({ variant: "SET_DRAG_OVER", dragOver: true });
-    },
-    [store, propsRef.current.onDragEnter],
-  );
-
-  const onDragLeave = React.useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      propsRef.current?.onDragLeave?.(event);
-
-      if (event.defaultPrevented) return;
-
-      event.preventDefault();
-      store.dispatch({ variant: "SET_DRAG_OVER", dragOver: false });
-    },
-    [store, propsRef.current.onDragLeave],
-  );
-
-  const onDrop = React.useCallback(
-    (event: React.DragEvent<HTMLDivElement>) => {
-      propsRef.current?.onDrop?.(event);
-
-      if (event.defaultPrevented) return;
-
-      event.preventDefault();
-      store.dispatch({ variant: "SET_DRAG_OVER", dragOver: false });
-
-      const files = Array.from(event.dataTransfer.files);
-      const inputElement = context.inputRef.current;
-      if (!inputElement) return;
-
-      const dataTransfer = new DataTransfer();
-      for (const file of files) {
-        dataTransfer.items.add(file);
-      }
-
-      inputElement.files = dataTransfer.files;
-      inputElement.dispatchEvent(new Event("change", { bubbles: true }));
-    },
-    [store, context.inputRef, propsRef.current.onDrop],
-  );
-
-  const onKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLDivElement>) => {
-      propsRef.current?.onKeyDown?.(event);
-
-      if (
-        !event.defaultPrevented &&
-        (event.key === "Enter" || event.key === " ")
-      ) {
         event.preventDefault();
-        context.inputRef.current?.click();
-      }
-    },
-    [context.inputRef, propsRef.current.onKeyDown],
-  );
+        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: true });
+      },
+      [store, propsRef.current.onDragOver]
+    );
 
-  const DropzonePrimitive = asChild ? Slot : "div";
+    const onDragEnter = React.useCallback(
+      (event: React.DragEvent<HTMLDivElement>) => {
+        propsRef.current?.onDragEnter?.(event);
 
-  return (
-    <DropzonePrimitive
-      role="region"
-      id={context.dropzoneId}
-      aria-controls={`${context.inputId} ${context.listId}`}
-      aria-disabled={context.disabled}
-      aria-invalid={invalid}
-      data-disabled={context.disabled ? "" : undefined}
-      data-dragging={dragOver ? "" : undefined}
-      data-invalid={invalid ? "" : undefined}
-      data-slot="file-upload-dropzone"
-      dir={context.dir}
-      {...dropzoneProps}
-      ref={forwardedRef}
-      tabIndex={context.disabled ? undefined : 0}
-      className={cn(
-        "relative flex select-none flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-6 outline-none transition-colors hover:bg-accent/30 focus-visible:border-ring/50 data-[disabled]:pointer-events-none data-[dragging]:border-primary data-[invalid]:border-destructive data-[invalid]:ring-destructive/20",
-        className,
-      )}
-      onClick={onClick}
-      onDragEnter={onDragEnter}
-      onDragLeave={onDragLeave}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
-      onKeyDown={onKeyDown}
-    />
-  );
-});
+        if (event.defaultPrevented) return;
+
+        event.preventDefault();
+        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: true });
+      },
+      [store, propsRef.current.onDragEnter]
+    );
+
+    const onDragLeave = React.useCallback(
+      (event: React.DragEvent<HTMLDivElement>) => {
+        propsRef.current?.onDragLeave?.(event);
+
+        if (event.defaultPrevented) return;
+
+        event.preventDefault();
+        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: false });
+      },
+      [store, propsRef.current.onDragLeave]
+    );
+
+    const onDrop = React.useCallback(
+      (event: React.DragEvent<HTMLDivElement>) => {
+        propsRef.current?.onDrop?.(event);
+
+        if (event.defaultPrevented) return;
+
+        event.preventDefault();
+        store.dispatch({ variant: "SET_DRAG_OVER", dragOver: false });
+
+        const files = Array.from(event.dataTransfer.files);
+        const inputElement = context.inputRef.current;
+        if (!inputElement) return;
+
+        const dataTransfer = new DataTransfer();
+        for (const file of files) {
+          dataTransfer.items.add(file);
+        }
+
+        inputElement.files = dataTransfer.files;
+        inputElement.dispatchEvent(new Event("change", { bubbles: true }));
+      },
+      [store, context.inputRef, propsRef.current.onDrop]
+    );
+
+    const onKeyDown = React.useCallback(
+      (event: React.KeyboardEvent<HTMLDivElement>) => {
+        propsRef.current?.onKeyDown?.(event);
+
+        if (!event.defaultPrevented && (event.key === "Enter" || event.key === " ")) {
+          event.preventDefault();
+          context.inputRef.current?.click();
+        }
+      },
+      [context.inputRef, propsRef.current.onKeyDown]
+    );
+
+    const DropzonePrimitive = asChild ? Slot : "div";
+
+    return (
+      <DropzonePrimitive
+        role="region"
+        id={context.dropzoneId}
+        aria-controls={`${context.inputId} ${context.listId}`}
+        aria-disabled={context.disabled}
+        aria-invalid={invalid}
+        data-disabled={context.disabled ? "" : undefined}
+        data-dragging={dragOver ? "" : undefined}
+        data-invalid={invalid ? "" : undefined}
+        data-slot="file-upload-dropzone"
+        dir={context.dir}
+        {...dropzoneProps}
+        ref={forwardedRef}
+        tabIndex={context.disabled ? undefined : 0}
+        className={cn(
+          "relative flex select-none flex-col items-center justify-center gap-2 rounded-lg border-2 border-dashed p-6 outline-none transition-colors hover:bg-accent/30 focus-visible:border-ring/50 data-[disabled]:pointer-events-none data-[dragging]:border-primary data-[invalid]:border-destructive data-[invalid]:ring-destructive/20",
+          className
+        )}
+        onClick={onClick}
+        onDragEnter={onDragEnter}
+        onDragLeave={onDragLeave}
+        onDragOver={onDragOver}
+        onDrop={onDrop}
+        onKeyDown={onKeyDown}
+      />
+    );
+  }
+);
 FileUploadDropzone.displayName = DROPZONE_NAME;
 
-interface FileUploadTriggerProps
-  extends React.ComponentPropsWithoutRef<"button"> {
+interface FileUploadTriggerProps extends React.ComponentPropsWithoutRef<"button"> {
   asChild?: boolean;
 }
 
-const FileUploadTrigger = React.forwardRef<
-  HTMLButtonElement,
-  FileUploadTriggerProps
->((props, forwardedRef) => {
-  const { asChild, ...triggerProps } = props;
-  const context = useFileUploadContext(TRIGGER_NAME);
-  const propsRef = useAsRef(triggerProps);
+const FileUploadTrigger = React.forwardRef<HTMLButtonElement, FileUploadTriggerProps>(
+  (props, forwardedRef) => {
+    const { asChild, ...triggerProps } = props;
+    const context = useFileUploadContext(TRIGGER_NAME);
+    const propsRef = useAsRef(triggerProps);
 
-  const onClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      propsRef.current?.onClick?.(event);
+    const onClick = React.useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        propsRef.current?.onClick?.(event);
 
-      if (event.defaultPrevented) return;
+        if (event.defaultPrevented) return;
 
-      context.inputRef.current?.click();
-    },
-    [context.inputRef, propsRef.current],
-  );
+        context.inputRef.current?.click();
+      },
+      [context.inputRef, propsRef.current]
+    );
 
-  const TriggerPrimitive = asChild ? Slot : "button";
+    const TriggerPrimitive = asChild ? Slot : "button";
 
-  return (
-    <TriggerPrimitive
-      type="button"
-      aria-controls={context.inputId}
-      data-disabled={context.disabled ? "" : undefined}
-      data-slot="file-upload-trigger"
-      {...triggerProps}
-      ref={forwardedRef}
-      disabled={context.disabled}
-      onClick={onClick}
-    />
-  );
-});
+    return (
+      <TriggerPrimitive
+        type="button"
+        aria-controls={context.inputId}
+        data-disabled={context.disabled ? "" : undefined}
+        data-slot="file-upload-trigger"
+        {...triggerProps}
+        ref={forwardedRef}
+        disabled={context.disabled}
+        onClick={onClick}
+      />
+    );
+  }
+);
 FileUploadTrigger.displayName = TRIGGER_NAME;
 
 interface FileUploadListProps extends React.ComponentPropsWithoutRef<"div"> {
@@ -810,18 +773,11 @@ interface FileUploadListProps extends React.ComponentPropsWithoutRef<"div"> {
 
 const FileUploadList = React.forwardRef<HTMLDivElement, FileUploadListProps>(
   (props, forwardedRef) => {
-    const {
-      className,
-      orientation = "vertical",
-      asChild,
-      forceMount,
-      ...listProps
-    } = props;
+    const { className, orientation = "vertical", asChild, forceMount, ...listProps } = props;
 
     const context = useFileUploadContext(LIST_NAME);
 
-    const shouldRender =
-      forceMount || useStore((state) => state.files.size > 0);
+    const shouldRender = forceMount || useStore((state) => state.files.size > 0);
 
     if (!shouldRender) return null;
 
@@ -841,11 +797,11 @@ const FileUploadList = React.forwardRef<HTMLDivElement, FileUploadListProps>(
         className={cn(
           "data-[state=inactive]:fade-out-0 data-[state=active]:fade-in-0 data-[state=inactive]:slide-out-to-top-2 data-[state=active]:slide-in-from-top-2 flex flex-col gap-2 data-[state=active]:animate-in data-[state=inactive]:animate-out",
           orientation === "horizontal" && "flex-row overflow-x-auto p-1.5",
-          className,
+          className
         )}
       />
     );
-  },
+  }
 );
 FileUploadList.displayName = LIST_NAME;
 
@@ -858,8 +814,7 @@ interface FileUploadItemContextValue {
   messageId: string;
 }
 
-const FileUploadItemContext =
-  React.createContext<FileUploadItemContextValue | null>(null);
+const FileUploadItemContext = React.createContext<FileUploadItemContextValue | null>(null);
 
 function useFileUploadItemContext(name: keyof typeof FILE_UPLOAD_ERRORS) {
   const context = React.useContext(FileUploadItemContext);
@@ -901,7 +856,7 @@ const FileUploadItem = React.forwardRef<HTMLDivElement, FileUploadItemProps>(
         statusId,
         messageId,
       }),
-      [id, fileState, statusId, nameId, sizeId, messageId],
+      [id, fileState, statusId, nameId, sizeId, messageId]
     );
 
     if (!fileState) return null;
@@ -923,9 +878,7 @@ const FileUploadItem = React.forwardRef<HTMLDivElement, FileUploadItemProps>(
           id={id}
           aria-setsize={fileCount}
           aria-posinset={fileIndex}
-          aria-describedby={`${nameId} ${sizeId} ${statusId} ${
-            fileState.error ? messageId : ""
-          }`}
+          aria-describedby={`${nameId} ${sizeId} ${statusId} ${fileState.error ? messageId : ""}`}
           aria-labelledby={nameId}
           data-slot="file-upload-item"
           dir={context.dir}
@@ -933,7 +886,7 @@ const FileUploadItem = React.forwardRef<HTMLDivElement, FileUploadItemProps>(
           ref={forwardedRef}
           className={cn(
             "relative flex items-center gap-2.5 rounded-md border p-3 has-[_[data-slot=file-upload-progress]]:flex-col has-[_[data-slot=file-upload-progress]]:items-start",
-            className,
+            className
           )}
         >
           {props.children}
@@ -943,7 +896,7 @@ const FileUploadItem = React.forwardRef<HTMLDivElement, FileUploadItemProps>(
         </ItemPrimitive>
       </FileUploadItemContext.Provider>
     );
-  },
+  }
 );
 FileUploadItem.displayName = ITEM_NAME;
 
@@ -966,10 +919,7 @@ function getFileIcon(file: File) {
     return <FileAudioIcon />;
   }
 
-  if (
-    type.startsWith("text/") ||
-    ["txt", "md", "rtf", "pdf"].includes(extension)
-  ) {
+  if (type.startsWith("text/") || ["txt", "md", "rtf", "pdf"].includes(extension)) {
     return <FileTextIcon />;
   }
 
@@ -1009,148 +959,175 @@ function getFileIcon(file: File) {
   return <FileIcon />;
 }
 
-interface FileUploadItemPreviewProps
-  extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadItemPreviewProps extends React.ComponentPropsWithoutRef<"div"> {
   render?: (file: File) => React.ReactNode;
   asChild?: boolean;
 }
 
-const FileUploadItemPreview = React.forwardRef<
-  HTMLDivElement,
-  FileUploadItemPreviewProps
->((props, forwardedRef) => {
-  const { render, asChild, children, className, ...previewProps } = props;
+const FileUploadItemPreview = React.forwardRef<HTMLDivElement, FileUploadItemPreviewProps>(
+  (props, forwardedRef) => {
+    const { render, asChild, children, className, ...previewProps } = props;
 
-  const itemContext = useFileUploadItemContext(ITEM_PREVIEW_NAME);
+    const itemContext = useFileUploadItemContext(ITEM_PREVIEW_NAME);
 
-  const isImage = itemContext.fileState?.file.type.startsWith("image/");
+    const isImage = itemContext.fileState?.file.type.startsWith("image/");
 
-  const onPreviewRender = React.useCallback(
-    (file: File) => {
-      if (render) return render(file);
+    const onPreviewRender = React.useCallback(
+      (file: File) => {
+        if (render) return render(file);
 
-      if (isImage) {
-        return (
-          <img
-            src={URL.createObjectURL(file)}
-            alt={file.name}
-            className="size-full rounded object-cover"
-            onLoad={(event) => {
-              if (!(event.target instanceof HTMLImageElement)) return;
-              URL.revokeObjectURL(event.target.src);
-            }}
-          />
-        );
-      }
+        if (isImage) {
+          return (
+            <img
+              src={URL.createObjectURL(file)}
+              alt={file.name}
+              className="size-full rounded object-cover"
+              onLoad={(event) => {
+                if (!(event.target instanceof HTMLImageElement)) return;
+                URL.revokeObjectURL(event.target.src);
+              }}
+            />
+          );
+        }
 
-      return getFileIcon(file);
-    },
-    [isImage, render],
-  );
+        return getFileIcon(file);
+      },
+      [isImage, render]
+    );
 
-  if (!itemContext.fileState) return null;
+    if (!itemContext.fileState) return null;
 
-  const ItemPreviewPrimitive = asChild ? Slot : "div";
+    const ItemPreviewPrimitive = asChild ? Slot : "div";
 
-  return (
-    <ItemPreviewPrimitive
-      aria-labelledby={itemContext.nameId}
-      data-slot="file-upload-preview"
-      {...previewProps}
-      ref={forwardedRef}
-      className={cn(
-        "relative flex size-10 shrink-0 items-center justify-center rounded-md",
-        isImage ? "object-cover" : "bg-accent/50 [&>svg]:size-7",
-        className,
-      )}
-    >
-      {onPreviewRender(itemContext.fileState.file)}
-      {children}
-    </ItemPreviewPrimitive>
-  );
-});
+    return (
+      <ItemPreviewPrimitive
+        aria-labelledby={itemContext.nameId}
+        data-slot="file-upload-preview"
+        {...previewProps}
+        ref={forwardedRef}
+        className={cn(
+          "relative flex size-10 shrink-0 items-center justify-center rounded-md",
+          isImage ? "object-cover" : "bg-accent/50 [&>svg]:size-7",
+          className
+        )}
+      >
+        {onPreviewRender(itemContext.fileState.file)}
+        {children}
+      </ItemPreviewPrimitive>
+    );
+  }
+);
 FileUploadItemPreview.displayName = ITEM_PREVIEW_NAME;
 
-interface FileUploadItemMetadataProps
-  extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadItemMetadataProps extends React.ComponentPropsWithoutRef<"div"> {
   asChild?: boolean;
 }
 
-const FileUploadItemMetadata = React.forwardRef<
-  HTMLDivElement,
-  FileUploadItemMetadataProps
->((props, forwardedRef) => {
-  const { asChild, children, className, ...metadataProps } = props;
+const FileUploadItemMetadata = React.forwardRef<HTMLDivElement, FileUploadItemMetadataProps>(
+  (props, forwardedRef) => {
+    const { asChild, children, className, ...metadataProps } = props;
 
-  const context = useFileUploadContext(ITEM_METADATA_NAME);
-  const itemContext = useFileUploadItemContext(ITEM_METADATA_NAME);
+    const context = useFileUploadContext(ITEM_METADATA_NAME);
+    const itemContext = useFileUploadItemContext(ITEM_METADATA_NAME);
 
-  if (!itemContext.fileState) return null;
+    if (!itemContext.fileState) return null;
 
-  const ItemMetadataPrimitive = asChild ? Slot : "div";
+    const ItemMetadataPrimitive = asChild ? Slot : "div";
 
-  return (
-    <ItemMetadataPrimitive
-      data-slot="file-upload-metadata"
-      dir={context.dir}
-      {...metadataProps}
-      ref={forwardedRef}
-      className={cn("flex min-w-0 flex-1 flex-col", className)}
-    >
-      {children ?? (
-        <>
-          <span
-            id={itemContext.nameId}
-            className="truncate font-medium text-sm"
-          >
-            {itemContext.fileState.file.name}
-          </span>
-          <span
-            id={itemContext.sizeId}
-            className="text-muted-foreground text-xs"
-          >
-            {formatBytes(itemContext.fileState.file.size)}
-          </span>
-          {itemContext.fileState.error && (
-            <span
-              id={itemContext.messageId}
-              className="text-destructive text-xs"
-            >
-              {itemContext.fileState.error}
+    return (
+      <ItemMetadataPrimitive
+        data-slot="file-upload-metadata"
+        dir={context.dir}
+        {...metadataProps}
+        ref={forwardedRef}
+        className={cn("flex min-w-0 flex-1 flex-col", className)}
+      >
+        {children ?? (
+          <>
+            <span id={itemContext.nameId} className="truncate font-medium text-sm">
+              {itemContext.fileState.file.name}
             </span>
-          )}
-        </>
-      )}
-    </ItemMetadataPrimitive>
-  );
-});
+            <span id={itemContext.sizeId} className="text-muted-foreground text-xs">
+              {formatBytes(itemContext.fileState.file.size)}
+            </span>
+            {itemContext.fileState.error && (
+              <span id={itemContext.messageId} className="text-destructive text-xs">
+                {itemContext.fileState.error}
+              </span>
+            )}
+          </>
+        )}
+      </ItemMetadataPrimitive>
+    );
+  }
+);
 FileUploadItemMetadata.displayName = ITEM_METADATA_NAME;
 
-interface FileUploadItemProgressProps
-  extends React.ComponentPropsWithoutRef<"div"> {
+interface FileUploadItemProgressProps extends React.ComponentPropsWithoutRef<"div"> {
   asChild?: boolean;
   circular?: boolean;
   size?: number;
 }
 
-const FileUploadItemProgress = React.forwardRef<
-  HTMLDivElement,
-  FileUploadItemProgressProps
->((props, forwardedRef) => {
-  const { circular, size = 40, asChild, className, ...progressProps } = props;
+const FileUploadItemProgress = React.forwardRef<HTMLDivElement, FileUploadItemProgressProps>(
+  (props, forwardedRef) => {
+    const { circular, size = 40, asChild, className, ...progressProps } = props;
 
-  const itemContext = useFileUploadItemContext(ITEM_PROGRESS_NAME);
+    const itemContext = useFileUploadItemContext(ITEM_PROGRESS_NAME);
 
-  if (!itemContext.fileState) return null;
+    if (!itemContext.fileState) return null;
 
-  const ItemProgressPrimitive = asChild ? Slot : "div";
+    const ItemProgressPrimitive = asChild ? Slot : "div";
 
-  if (circular) {
-    if (itemContext.fileState.status === "success") return null;
+    if (circular) {
+      if (itemContext.fileState.status === "success") return null;
 
-    const circumference = 2 * Math.PI * ((size - 4) / 2);
-    const strokeDashoffset =
-      circumference - (itemContext.fileState.progress / 100) * circumference;
+      const circumference = 2 * Math.PI * ((size - 4) / 2);
+      const strokeDashoffset =
+        circumference - (itemContext.fileState.progress / 100) * circumference;
+
+      return (
+        <ItemProgressPrimitive
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={itemContext.fileState.progress}
+          aria-valuetext={`${itemContext.fileState.progress}%`}
+          aria-labelledby={itemContext.nameId}
+          data-slot="file-upload-progress"
+          {...progressProps}
+          ref={forwardedRef}
+          className={cn("-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2", className)}
+        >
+          <svg
+            className="rotate-[-90deg] transform"
+            width={size}
+            height={size}
+            viewBox={`0 0 ${size} ${size}`}
+            fill="none"
+            stroke="currentColor"
+          >
+            <circle
+              className="text-primary/20"
+              strokeWidth="2"
+              cx={size / 2}
+              cy={size / 2}
+              r={(size - 4) / 2}
+            />
+            <circle
+              className="text-primary transition-all"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+              cx={size / 2}
+              cy={size / 2}
+              r={(size - 4) / 2}
+            />
+          </svg>
+        </ItemProgressPrimitive>
+      );
+    }
 
     return (
       <ItemProgressPrimitive
@@ -1164,162 +1141,113 @@ const FileUploadItemProgress = React.forwardRef<
         {...progressProps}
         ref={forwardedRef}
         className={cn(
-          "-translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2",
-          className,
+          "relative h-1.5 w-full overflow-hidden rounded-full bg-primary/20",
+          className
         )}
       >
-        <svg
-          className="rotate-[-90deg] transform"
-          width={size}
-          height={size}
-          viewBox={`0 0 ${size} ${size}`}
-          fill="none"
-          stroke="currentColor"
-        >
-          <circle
-            className="text-primary/20"
-            strokeWidth="2"
-            cx={size / 2}
-            cy={size / 2}
-            r={(size - 4) / 2}
-          />
-          <circle
-            className="text-primary transition-all"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-            cx={size / 2}
-            cy={size / 2}
-            r={(size - 4) / 2}
-          />
-        </svg>
+        <div
+          className="h-full w-full flex-1 bg-primary transition-all"
+          style={{
+            transform: `translateX(-${100 - itemContext.fileState.progress}%)`,
+          }}
+        />
       </ItemProgressPrimitive>
     );
   }
-
-  return (
-    <ItemProgressPrimitive
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={100}
-      aria-valuenow={itemContext.fileState.progress}
-      aria-valuetext={`${itemContext.fileState.progress}%`}
-      aria-labelledby={itemContext.nameId}
-      data-slot="file-upload-progress"
-      {...progressProps}
-      ref={forwardedRef}
-      className={cn(
-        "relative h-1.5 w-full overflow-hidden rounded-full bg-primary/20",
-        className,
-      )}
-    >
-      <div
-        className="h-full w-full flex-1 bg-primary transition-all"
-        style={{
-          transform: `translateX(-${100 - itemContext.fileState.progress}%)`,
-        }}
-      />
-    </ItemProgressPrimitive>
-  );
-});
+);
 FileUploadItemProgress.displayName = ITEM_PROGRESS_NAME;
 
-interface FileUploadItemDeleteProps
-  extends React.ComponentPropsWithoutRef<"button"> {
+interface FileUploadItemDeleteProps extends React.ComponentPropsWithoutRef<"button"> {
   asChild?: boolean;
 }
 
-const FileUploadItemDelete = React.forwardRef<
-  HTMLButtonElement,
-  FileUploadItemDeleteProps
->((props, forwardedRef) => {
-  const { asChild, ...deleteProps } = props;
+const FileUploadItemDelete = React.forwardRef<HTMLButtonElement, FileUploadItemDeleteProps>(
+  (props, forwardedRef) => {
+    const { asChild, ...deleteProps } = props;
 
-  const store = useStoreContext(ITEM_DELETE_NAME);
-  const itemContext = useFileUploadItemContext(ITEM_DELETE_NAME);
-  const propsRef = useAsRef(deleteProps);
+    const store = useStoreContext(ITEM_DELETE_NAME);
+    const itemContext = useFileUploadItemContext(ITEM_DELETE_NAME);
+    const propsRef = useAsRef(deleteProps);
 
-  const onClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      propsRef.current?.onClick?.(event);
+    const onClick = React.useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        propsRef.current?.onClick?.(event);
 
-      if (!itemContext.fileState || event.defaultPrevented) return;
+        if (!itemContext.fileState || event.defaultPrevented) return;
 
-      store.dispatch({
-        variant: "REMOVE_FILE",
-        file: itemContext.fileState.file,
-      });
-    },
-    [store, itemContext.fileState, propsRef.current?.onClick],
-  );
+        store.dispatch({
+          variant: "REMOVE_FILE",
+          file: itemContext.fileState.file,
+        });
+      },
+      [store, itemContext.fileState, propsRef.current?.onClick]
+    );
 
-  if (!itemContext.fileState) return null;
+    if (!itemContext.fileState) return null;
 
-  const ItemDeletePrimitive = asChild ? Slot : "button";
+    const ItemDeletePrimitive = asChild ? Slot : "button";
 
-  return (
-    <ItemDeletePrimitive
-      type="button"
-      aria-controls={itemContext.id}
-      aria-describedby={itemContext.nameId}
-      data-slot="file-upload-item-delete"
-      {...deleteProps}
-      ref={forwardedRef}
-      onClick={onClick}
-    />
-  );
-});
+    return (
+      <ItemDeletePrimitive
+        type="button"
+        aria-controls={itemContext.id}
+        aria-describedby={itemContext.nameId}
+        data-slot="file-upload-item-delete"
+        {...deleteProps}
+        ref={forwardedRef}
+        onClick={onClick}
+      />
+    );
+  }
+);
 FileUploadItemDelete.displayName = ITEM_DELETE_NAME;
 
-interface FileUploadClearProps
-  extends React.ComponentPropsWithoutRef<"button"> {
+interface FileUploadClearProps extends React.ComponentPropsWithoutRef<"button"> {
   forceMount?: boolean;
   asChild?: boolean;
 }
 
-const FileUploadClear = React.forwardRef<
-  HTMLButtonElement,
-  FileUploadClearProps
->((props, forwardedRef) => {
-  const { asChild, forceMount, disabled, ...clearProps } = props;
+const FileUploadClear = React.forwardRef<HTMLButtonElement, FileUploadClearProps>(
+  (props, forwardedRef) => {
+    const { asChild, forceMount, disabled, ...clearProps } = props;
 
-  const context = useFileUploadContext(CLEAR_NAME);
-  const store = useStoreContext(CLEAR_NAME);
-  const propsRef = useAsRef(clearProps);
+    const context = useFileUploadContext(CLEAR_NAME);
+    const store = useStoreContext(CLEAR_NAME);
+    const propsRef = useAsRef(clearProps);
 
-  const isDisabled = disabled || context.disabled;
+    const isDisabled = disabled || context.disabled;
 
-  const onClick = React.useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      propsRef.current?.onClick?.(event);
+    const onClick = React.useCallback(
+      (event: React.MouseEvent<HTMLButtonElement>) => {
+        propsRef.current?.onClick?.(event);
 
-      if (event.defaultPrevented) return;
+        if (event.defaultPrevented) return;
 
-      store.dispatch({ variant: "CLEAR" });
-    },
-    [store, propsRef],
-  );
+        store.dispatch({ variant: "CLEAR" });
+      },
+      [store, propsRef]
+    );
 
-  const shouldRender = forceMount || useStore((state) => state.files.size > 0);
+    const shouldRender = forceMount || useStore((state) => state.files.size > 0);
 
-  if (!shouldRender) return null;
+    if (!shouldRender) return null;
 
-  const ClearPrimitive = asChild ? Slot : "button";
+    const ClearPrimitive = asChild ? Slot : "button";
 
-  return (
-    <ClearPrimitive
-      type="button"
-      aria-controls={context.listId}
-      data-slot="file-upload-clear"
-      data-disabled={isDisabled ? "" : undefined}
-      {...clearProps}
-      ref={forwardedRef}
-      disabled={isDisabled}
-      onClick={onClick}
-    />
-  );
-});
+    return (
+      <ClearPrimitive
+        type="button"
+        aria-controls={context.listId}
+        data-slot="file-upload-clear"
+        data-disabled={isDisabled ? "" : undefined}
+        {...clearProps}
+        ref={forwardedRef}
+        disabled={isDisabled}
+        onClick={onClick}
+      />
+    );
+  }
+);
 FileUploadClear.displayName = CLEAR_NAME;
 
 const FileUpload = FileUploadRoot;
@@ -1335,27 +1263,27 @@ const ItemDelete = FileUploadItemDelete;
 const Clear = FileUploadClear;
 
 export {
+  Clear,
+  Dropzone,
   FileUpload,
-  FileUploadDropzone,
-  FileUploadTrigger,
-  FileUploadList,
-  FileUploadItem,
-  FileUploadItemPreview,
-  FileUploadItemMetadata,
-  FileUploadItemProgress,
-  FileUploadItemDelete,
   FileUploadClear,
+  FileUploadDropzone,
+  FileUploadItem,
+  FileUploadItemDelete,
+  FileUploadItemMetadata,
+  FileUploadItemPreview,
+  FileUploadItemProgress,
+  FileUploadList,
+  FileUploadTrigger,
+  Item,
+  ItemDelete,
+  ItemMetadata,
+  ItemPreview,
+  ItemProgress,
+  List,
   //
   Root,
-  Dropzone,
   Trigger,
-  List,
-  Item,
-  ItemPreview,
-  ItemMetadata,
-  ItemProgress,
-  ItemDelete,
-  Clear,
   //
   useStore as useFileUpload,
 };

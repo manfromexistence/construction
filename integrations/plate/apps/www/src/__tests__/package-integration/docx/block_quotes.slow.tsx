@@ -1,11 +1,11 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'block_quotes';
+const name = "block_quotes";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
@@ -21,8 +21,7 @@ describe(getDocxTestName(name), () => {
         </hp>
         <hblockquote>
           <htext italic>
-            I don’t know why this would be in italics, but so it appears to be
-            on my screen.
+            I don’t know why this would be in italics, but so it appears to be on my screen.
           </htext>
         </hblockquote>
         <hp>
@@ -33,13 +32,13 @@ describe(getDocxTestName(name), () => {
           <htext />
         </hp>
         <hp indent={2}>
-          I just indented this, so it looks like a block quote. I think this is
-          how most people do block quotes in their documents.
+          I just indented this, so it looks like a block quote. I think this is how most people do
+          block quotes in their documents.
         </hp>
         <hp indent={2}>
           <htext />
         </hp>
-        <hp>{'And back to the normal  style.'}</hp>
+        <hp>{"And back to the normal  style."}</hp>
       </editor>
     ),
     filename: name,

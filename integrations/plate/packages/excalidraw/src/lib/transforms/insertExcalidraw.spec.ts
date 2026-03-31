@@ -1,9 +1,9 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { insertExcalidraw } from './insertExcalidraw';
+import { insertExcalidraw } from "./insertExcalidraw";
 
-describe('insertExcalidraw', () => {
-  it('does nothing without a selection or parent entry', () => {
+describe("insertExcalidraw", () => {
+  it("does nothing without a selection or parent entry", () => {
     const editor = {
       api: { parent: mock(() => null) },
       selection: null,
@@ -21,10 +21,10 @@ describe('insertExcalidraw', () => {
     expect(editor.tf.insertNodes).not.toHaveBeenCalled();
   });
 
-  it('inserts a next block at the parent path and merges custom props', () => {
+  it("inserts a next block at the parent path and merges custom props", () => {
     const editor = {
       api: {
-        parent: mock(() => [{ children: [{ text: '' }], type: 'p' }, [0]]),
+        parent: mock(() => [{ children: [{ text: "" }], type: "p" }, [0]]),
       },
       getType: mock(() => KEYS.excalidraw),
       selection: {
@@ -36,14 +36,14 @@ describe('insertExcalidraw', () => {
 
     insertExcalidraw(
       editor,
-      { data: { elements: [], state: { theme: 'dark' } as any } } as any,
+      { data: { elements: [], state: { theme: "dark" } as any } } as any,
       { select: true } as any
     );
 
     expect(editor.tf.insertNodes).toHaveBeenCalledWith(
       {
-        children: [{ text: '' }],
-        data: { elements: [], state: { theme: 'dark' } },
+        children: [{ text: "" }],
+        data: { elements: [], state: { theme: "dark" } },
         type: KEYS.excalidraw,
       },
       { at: [0], nextBlock: true, select: true }

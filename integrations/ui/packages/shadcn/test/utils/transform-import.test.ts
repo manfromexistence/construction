@@ -1,9 +1,8 @@
-import { expect, test } from "vitest"
+import { expect, test } from "vitest";
 
-import { transform } from "../../src/utils/transformers"
+import { transform } from "../../src/utils/transformers";
 
-
-test('transform nested workspace folder for utils, website/src/utils', async () => {
+test("transform nested workspace folder for utils, website/src/utils", async () => {
   expect(
     await transform({
       filename: "test.ts",
@@ -30,9 +29,8 @@ test('transform nested workspace folder for utils, website/src/utils', async () 
           import { Box } from "website/src/components/box"
           import { cn } from "website/src/utils"
         "
-  `)
-
-})
+  `);
+});
 
 test("transform import", async () => {
   expect(
@@ -58,7 +56,7 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -80,7 +78,7 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -102,7 +100,7 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -125,7 +123,7 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -148,7 +146,7 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -173,8 +171,8 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
-})
+  ).toMatchSnapshot();
+});
 
 test("transform import for monorepo", async () => {
   expect(
@@ -200,7 +198,7 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -225,8 +223,8 @@ import { Foo } from "bar"
         },
       },
     })
-  ).toMatchSnapshot()
-})
+  ).toMatchSnapshot();
+});
 
 test("transform async/dynamic imports", async () => {
   expect(
@@ -253,7 +251,7 @@ function lazyLoad() {
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -277,8 +275,8 @@ const cardModule = import("@/registry/new-york/ui/card")
         },
       },
     })
-  ).toMatchSnapshot()
-})
+  ).toMatchSnapshot();
+});
 
 test("transform dynamic imports with cn utility", async () => {
   expect(
@@ -303,7 +301,7 @@ async function loadMultiple() {
         },
       },
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -321,8 +319,8 @@ async function loadMultiple() {
         },
       },
     })
-  ).toMatchSnapshot()
-})
+  ).toMatchSnapshot();
+});
 
 test("transform re-exports with dynamic imports", async () => {
   expect(
@@ -344,5 +342,5 @@ async function load() {
         },
       },
     })
-  ).toMatchSnapshot()
-})
+  ).toMatchSnapshot();
+});

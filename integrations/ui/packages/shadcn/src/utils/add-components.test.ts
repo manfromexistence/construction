@@ -1,6 +1,6 @@
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { addComponents } from "./add-components"
+import { addComponents } from "./add-components";
 
 const {
   mockResolveRegistryTree,
@@ -21,8 +21,8 @@ const {
     fail: vi.fn(),
     stop: vi.fn(),
     info: vi.fn(),
-  }
-  spinner.start.mockReturnValue(spinner)
+  };
+  spinner.start.mockReturnValue(spinner);
 
   return {
     mockResolveRegistryTree: vi.fn(),
@@ -36,68 +36,67 @@ const {
     mockGetProjectTailwindVersionFromConfig: vi.fn(),
     mockMassageTreeForFonts: vi.fn(),
     spinnerInstance: spinner,
-  }
-})
+  };
+});
 
 vi.mock("@/src/registry/api", () => ({
   getRegistryItems: vi.fn(),
-}))
+}));
 
 vi.mock("@/src/registry/config", () => ({
   configWithDefaults: vi.fn((config) => config),
-}))
+}));
 
 vi.mock("@/src/registry/resolver", () => ({
   resolveRegistryTree: mockResolveRegistryTree,
-}))
+}));
 
 vi.mock("@/src/utils/get-config", async () => {
-  const actual = await vi.importActual<typeof import("@/src/utils/get-config")>(
-    "@/src/utils/get-config"
-  )
+  const actual =
+    await vi.importActual<typeof import("@/src/utils/get-config")>("@/src/utils/get-config");
 
   return {
     ...actual,
     getWorkspaceConfig: mockGetWorkspaceConfig,
-  }
-})
+  };
+});
 
 vi.mock("@/src/utils/get-project-info", () => ({
   getProjectTailwindVersionFromConfig: mockGetProjectTailwindVersionFromConfig,
-}))
+}));
 
 vi.mock("@/src/utils/updaters/update-dependencies", () => ({
   updateDependencies: mockUpdateDependencies,
-}))
+}));
 
 vi.mock("@/src/utils/updaters/update-tailwind-config", () => ({
   updateTailwindConfig: mockUpdateTailwindConfig,
-}))
+}));
 
 vi.mock("@/src/utils/updaters/update-env-vars", () => ({
   updateEnvVars: mockUpdateEnvVars,
-}))
+}));
 
 vi.mock("@/src/utils/updaters/update-fonts", () => ({
   massageTreeForFonts: mockMassageTreeForFonts,
   updateFonts: mockUpdateFonts,
-}))
+}));
 
 vi.mock("@/src/utils/updaters/update-files", () => ({
   updateFiles: mockUpdateFiles,
-}))
+}));
 
 vi.mock("@/src/utils/updaters/update-css", () => ({
   updateCss: mockUpdateCss,
-}))
+}));
 
 vi.mock("@/src/utils/spinner", () => ({
   spinner: vi.fn(() => spinnerInstance),
-}))
+}));
 
 vi.mock("@/src/utils/handle-error", () => ({
   handleError: vi.fn(),
-}))
+}));
 
 vi.mock("@/src/utils/logger", () => ({
   logger: {
@@ -106,27 +105,27 @@ vi.mock("@/src/utils/logger", () => ({
     error: vi.fn(),
     log: vi.fn(),
   },
-}))
+}));
 
 describe("addComponents", () => {
   beforeEach(() => {
-    vi.clearAllMocks()
+    vi.clearAllMocks();
 
-    spinnerInstance.start.mockReturnValue(spinnerInstance)
-    mockGetWorkspaceConfig.mockResolvedValue(null)
-    mockGetProjectTailwindVersionFromConfig.mockResolvedValue("v4")
-    mockMassageTreeForFonts.mockImplementation(async (tree) => tree)
-    mockUpdateDependencies.mockResolvedValue(undefined)
-    mockUpdateTailwindConfig.mockResolvedValue(undefined)
-    mockUpdateEnvVars.mockResolvedValue(undefined)
-    mockUpdateFonts.mockResolvedValue(undefined)
+    spinnerInstance.start.mockReturnValue(spinnerInstance);
+    mockGetWorkspaceConfig.mockResolvedValue(null);
+    mockGetProjectTailwindVersionFromConfig.mockResolvedValue("v4");
+    mockMassageTreeForFonts.mockImplementation(async (tree) => tree);
+    mockUpdateDependencies.mockResolvedValue(undefined);
+    mockUpdateTailwindConfig.mockResolvedValue(undefined);
+    mockUpdateEnvVars.mockResolvedValue(undefined);
+    mockUpdateFonts.mockResolvedValue(undefined);
     mockUpdateFiles.mockResolvedValue({
       filesCreated: [],
       filesUpdated: [],
       filesSkipped: [],
-    })
-    mockUpdateCss.mockResolvedValue(undefined)
-  })
+    });
+    mockUpdateCss.mockResolvedValue(undefined);
+  });
 
   it("passes pending heading font markers into updateFiles before CSS is written", async () => {
     mockResolveRegistryTree.mockResolvedValue({
@@ -159,7 +158,7 @@ describe("addComponents", () => {
           "--font-heading": "var(--font-heading)",
         },
       },
-    })
+    });
 
     await addComponents(
       ["card"],
@@ -192,14 +191,12 @@ describe("addComponents", () => {
         silent: true,
         overwriteCssVars: false,
       }
-    )
+    );
 
-    expect(mockUpdateFiles).toHaveBeenCalledOnce()
-    expect(mockUpdateFiles.mock.calls[0]?.[2]?.supportedFontMarkers).toEqual([
-      "cn-font-heading",
-    ])
+    expect(mockUpdateFiles).toHaveBeenCalledOnce();
+    expect(mockUpdateFiles.mock.calls[0]?.[2]?.supportedFontMarkers).toEqual(["cn-font-heading"]);
     expect(mockUpdateFiles.mock.invocationCallOrder[0]).toBeLessThan(
       mockUpdateCss.mock.invocationCallOrder[0]
-    )
-  })
-})
+    );
+  });
+});

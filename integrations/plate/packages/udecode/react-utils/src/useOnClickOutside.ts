@@ -1,31 +1,25 @@
-import React from 'react';
+import React from "react";
 
 const canUsePassiveEvents = (): boolean => {
-  if (
-    typeof window === 'undefined' ||
-    typeof window.addEventListener !== 'function'
-  )
-    return false;
+  if (typeof window === "undefined" || typeof window.addEventListener !== "function") return false;
 
   let passive = false;
-  const options = Object.defineProperty({}, 'passive', {
+  const options = Object.defineProperty({}, "passive", {
     get() {
       passive = true;
     },
   });
   const noop = () => null;
 
-  window.addEventListener('test', noop, options);
-  window.removeEventListener('test', noop, options);
+  window.addEventListener("test", noop, options);
+  window.removeEventListener("test", noop, options);
 
   return passive;
 };
 
-export const DEFAULT_IGNORE_CLASS = 'ignore-onclickoutside';
+export const DEFAULT_IGNORE_CLASS = "ignore-onclickoutside";
 
-export type UseOnClickOutsideCallback<T extends Event = Event> = (
-  event: T
-) => void;
+export type UseOnClickOutsideCallback<T extends Event = Event> = (event: T) => void;
 
 export type UseOnClickOutsideOptions = {
   detectIFrame?: boolean;
@@ -42,8 +36,7 @@ type El = HTMLElement;
 
 type Refs = React.RefObject<El | null>[];
 
-const checkClass = (el: HTMLElement, cl: string): boolean =>
-  el.classList?.contains(cl);
+const checkClass = (el: HTMLElement, cl: string): boolean => el.classList?.contains(cl);
 
 const hasIgnoreClass = (e: any, ignoreClass: string[] | string): boolean => {
   let el = e.target || e;
@@ -66,14 +59,14 @@ const clickedOnScrollbar = (e: MouseEvent): boolean =>
   document.documentElement.clientHeight <= e.clientY;
 
 const getEventOptions = (type: string): { passive: boolean } | boolean =>
-  type.includes('touch') && canUsePassiveEvents() ? { passive: true } : false;
+  type.includes("touch") && canUsePassiveEvents() ? { passive: true } : false;
 
 export const useOnClickOutside = (
   callback: UseOnClickOutsideCallback,
   {
     detectIFrame = true,
     disabled,
-    eventTypes = ['mousedown', 'touchstart'],
+    eventTypes = ["mousedown", "touchstart"],
     excludeScrollbar,
     ignoreClass = DEFAULT_IGNORE_CLASS,
     refs: refsOpt,
@@ -118,7 +111,7 @@ export const useOnClickOutside = (
           const { activeElement } = document;
 
           if (
-            activeElement?.tagName === 'IFRAME' &&
+            activeElement?.tagName === "IFRAME" &&
             !hasIgnoreClass(activeElement, ignoreClass) &&
             !getEls().includes(activeElement as HTMLIFrameElement)
           )
@@ -127,14 +120,10 @@ export const useOnClickOutside = (
 
       const removeEventListener = () => {
         for (const type of eventTypes) {
-          document.removeEventListener(
-            type,
-            handler,
-            getEventOptions(type) as any
-          );
+          document.removeEventListener(type, handler, getEventOptions(type) as any);
         }
 
-        if (detectIFrame) window.removeEventListener('blur', blurHandler);
+        if (detectIFrame) window.removeEventListener("blur", blurHandler);
       };
 
       if (disabled) {
@@ -147,7 +136,7 @@ export const useOnClickOutside = (
         document.addEventListener(type, handler, getEventOptions(type));
       }
 
-      if (detectIFrame) window.addEventListener('blur', blurHandler);
+      if (detectIFrame) window.addEventListener("blur", blurHandler);
 
       return () => removeEventListener();
     },

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,19 +6,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { BorderBeam } from "@/registry/magicui/border-beam"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { BorderBeam } from "@/registry/magicui/border-beam";
 
 export default function LoginForm() {
   return (
     <Card className="relative w-[350px] overflow-hidden">
       <CardHeader>
         <CardTitle>Login</CardTitle>
-        <CardDescription>
-          Enter your credentials to access your account.
-        </CardDescription>
+        <CardDescription>Enter your credentials to access your account.</CardDescription>
       </CardHeader>
       <CardContent>
         <form>
@@ -29,11 +27,7 @@ export default function LoginForm() {
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Enter your password"
-              />
+              <Input id="password" type="password" placeholder="Enter your password" />
             </div>
           </div>
         </form>
@@ -49,5 +43,5 @@ export default function LoginForm() {
         className="from-transparent via-green-500 to-transparent"
       />
     </Card>
-  )
+  );
 }

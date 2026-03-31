@@ -1,95 +1,87 @@
-import fs from "fs"
-import path from "path"
-import { ExamplesIndex } from "@/examples/__index__"
-import { u } from "unist-builder"
-import { visit } from "unist-util-visit"
+import fs from "fs";
+import path from "path";
+import { u } from "unist-builder";
+import { visit } from "unist-util-visit";
+import { ExamplesIndex } from "@/examples/__index__";
 
-import { formatCode } from "@/lib/format-code"
-import { Index as StylesIndex } from "@/registry/__index__"
-import { getActiveStyle } from "@/registry/_legacy-styles"
-import { BASES } from "@/registry/bases"
-import { Index as BasesIndex } from "@/registry/bases/__index__"
+import { formatCode } from "@/lib/format-code";
+import { Index as StylesIndex } from "@/registry/__index__";
+import { getActiveStyle } from "@/registry/_legacy-styles";
+import { BASES } from "@/registry/bases";
+import { Index as BasesIndex } from "@/registry/bases/__index__";
 
-export { formatCode } from "@/lib/format-code"
+export { formatCode } from "@/lib/format-code";
 
 function getBaseForStyle(styleName: string) {
   for (const base of BASES) {
     if (styleName.startsWith(`${base.name}-`)) {
-      return base.name
+      return base.name;
     }
   }
 
-  return null
+  return null;
 }
 
 function getDemoFilePath(name: string, styleName: string) {
-  const base = getBaseForStyle(styleName)
-  const demo =
-    ExamplesIndex[styleName]?.[name] ??
-    (base ? ExamplesIndex[base]?.[name] : undefined)
-  if (!demo) return null
+  const base = getBaseForStyle(styleName);
+  const demo = ExamplesIndex[styleName]?.[name] ?? (base ? ExamplesIndex[base]?.[name] : undefined);
+  if (!demo) return null;
 
-  return demo.filePath
+  return demo.filePath;
 }
 
 function getRegistryEntry(name: string, styleName: string) {
-  const base = getBaseForStyle(styleName)
-  return (
-    StylesIndex[styleName]?.[name] ??
-    (base ? BasesIndex[base]?.[name] : undefined)
-  )
+  const base = getBaseForStyle(styleName);
+  return StylesIndex[styleName]?.[name] ?? (base ? BasesIndex[base]?.[name] : undefined);
 }
 
 interface UnistNode {
-  type: string
-  name?: string
-  tagName?: string
-  value?: string
-  properties?: Record<string, unknown>
+  type: string;
+  name?: string;
+  tagName?: string;
+  value?: string;
+  properties?: Record<string, unknown>;
   attributes?: {
-    name: string
-    value: unknown
-    type?: string
-  }[]
-  children?: UnistNode[]
+    name: string;
+    value: unknown;
+    type?: string;
+  }[];
+  children?: UnistNode[];
 }
 
 export interface UnistTree {
-  type: string
-  children: UnistNode[]
+  type: string;
+  children: UnistNode[];
 }
 
 interface NodeToProcess {
-  node: UnistNode
-  type: "ComponentSource" | "ComponentPreview"
-  name: string
-  styleName: string
-  fileName?: string
-  srcPath?: string
-  hideCode?: boolean
+  node: UnistNode;
+  type: "ComponentSource" | "ComponentPreview";
+  name: string;
+  styleName: string;
+  fileName?: string;
+  srcPath?: string;
+  hideCode?: boolean;
 }
 
 export function rehypeComponent() {
   return async (tree: UnistTree) => {
-    const activeStyle = await getActiveStyle()
-    const nodesToProcess: NodeToProcess[] = []
+    const activeStyle = await getActiveStyle();
+    const nodesToProcess: NodeToProcess[] = [];
 
     visit(tree, (node: UnistNode) => {
       const { value: srcPath } =
         (getNodeAttributeByName(node, "src") as {
-          name: string
-          value?: string
-          type?: string
-        }) || {}
+          name: string;
+          value?: string;
+          type?: string;
+        }) || {};
 
       if (node.name === "ComponentSource") {
-        const name = getNodeAttributeByName(node, "name")?.value as string
-        const fileName = getNodeAttributeByName(node, "fileName")?.value as
-          | string
-          | undefined
+        const name = getNodeAttributeByName(node, "name")?.value as string;
+        const fileName = getNodeAttributeByName(node, "fileName")?.value as string | undefined;
         const styleName =
-          (getNodeAttributeByName(node, "styleName")?.value as string) ||
-          activeStyle.name
+          (getNodeAttributeByName(node, "styleName")?.value as string) || activeStyle.name;
 
         if (name || srcPath) {
           nodesToProcess.push({
@@ -99,18 +91,15 @@ export function rehypeComponent() {
             styleName,
             fileName,
             srcPath,
-          })
+          });
         }
       }
 
       if (node.name === "ComponentPreview") {
-        const name = getNodeAttributeByName(node, "name")?.value as string
+        const name = getNodeAttributeByName(node, "name")?.value as string;
         const styleName =
-          (getNodeAttributeByName(node, "styleName")?.value as string) ||
-          activeStyle.name
-        const hideCode = isTruthyMdxAttribute(
-          getNodeAttributeByName(node, "hideCode")
-        )
+          (getNodeAttributeByName(node, "styleName")?.value as string) || activeStyle.name;
+        const hideCode = isTruthyMdxAttribute(getNodeAttributeByName(node, "hideCode"));
 
         if (name) {
           nodesToProcess.push({
@@ -119,30 +108,30 @@ export function rehypeComponent() {
             name,
             styleName,
             hideCode,
-          })
+          });
         }
       }
-    })
+    });
 
     await Promise.all(
       nodesToProcess.map(async (item) => {
         try {
           if (item.type === "ComponentPreview" && item.hideCode) {
-            return
+            return;
           }
 
-          let src: string | null = null
+          let src: string | null = null;
 
           if (item.srcPath) {
-            src = path.join(process.cwd(), item.srcPath)
+            src = path.join(process.cwd(), item.srcPath);
           } else {
-            src = getDemoFilePath(item.name, item.styleName)
+            src = getDemoFilePath(item.name, item.styleName);
 
             if (!src) {
-              const component = getRegistryEntry(item.name, item.styleName)
+              const component = getRegistryEntry(item.name, item.styleName);
 
               if (!component?.files) {
-                return
+                return;
               }
 
               if (item.type === "ComponentSource" && item.fileName) {
@@ -152,22 +141,22 @@ export function rehypeComponent() {
                       return (
                         file.endsWith(`${item.fileName}.tsx`) ||
                         file.endsWith(`${item.fileName}.ts`)
-                      )
+                      );
                     }
-                    return false
-                  }) || component.files[0]?.path
+                    return false;
+                  }) || component.files[0]?.path;
               } else {
-                src = component.files[0]?.path
+                src = component.files[0]?.path;
               }
             }
           }
 
           if (!src) {
-            return
+            return;
           }
 
-          const raw = fs.readFileSync(path.join(process.cwd(), src), "utf8")
-          const source = await formatCode(raw, item.styleName)
+          const raw = fs.readFileSync(path.join(process.cwd(), src), "utf8");
+          const source = await formatCode(raw, item.styleName);
 
           item.node.children?.push(
             u("element", {
@@ -190,32 +179,32 @@ export function rehypeComponent() {
                 }),
               ],
             })
-          )
+          );
         } catch (error) {
-          console.error(error)
+          console.error(error);
         }
       })
-    )
-  }
+    );
+  };
 }
 
 function getNodeAttributeByName(node: UnistNode, name: string) {
-  return node.attributes?.find((attribute) => attribute.name === name)
+  return node.attributes?.find((attribute) => attribute.name === name);
 }
 
 function isTruthyMdxAttribute(
   attribute?: {
-    value?: unknown
+    value?: unknown;
   } | null
 ) {
-  if (!attribute) return false
+  if (!attribute) return false;
 
-  if (!("value" in attribute)) return true
+  if (!("value" in attribute)) return true;
 
-  const { value } = attribute
+  const { value } = attribute;
 
-  if (value === undefined || value === null) return true
-  if (typeof value === "boolean") return value
-  if (typeof value === "string") return value !== "false"
-  return Boolean(value)
+  if (value === undefined || value === null) return true;
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") return value !== "false";
+  return Boolean(value);
 }

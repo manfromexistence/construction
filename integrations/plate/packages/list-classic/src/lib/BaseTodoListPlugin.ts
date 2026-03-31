@@ -1,7 +1,7 @@
-import { type TElement, createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS, type TElement } from "platejs";
 
-import { getTodoListItemEntry } from './queries';
-import { insertTodoListItem } from './transforms';
+import { getTodoListItemEntry } from "./queries";
+import { insertTodoListItem } from "./transforms";
 
 export interface TTodoListItemElement extends TElement {
   checked?: boolean;

@@ -47,10 +47,7 @@ function useStoreContext(consumerName: string) {
   return context;
 }
 
-function useStore<T>(
-  selector: (state: StoreState) => T,
-  ogStore?: Store | null,
-): T {
+function useStore<T>(selector: (state: StoreState) => T, ogStore?: Store | null): T {
   const contextStore = React.useContext(StoreContext);
 
   const store = ogStore ?? contextStore;
@@ -59,10 +56,7 @@ function useStore<T>(
     throw new Error(`\`useStore\` must be used within \`${ROOT_NAME}\``);
   }
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
@@ -99,10 +93,7 @@ function useEditableContext(consumerName: string) {
 }
 
 interface EditableProps
-  extends Omit<
-    React.ComponentProps<"div"> & useRender.ComponentProps<"div">,
-    "onSubmit"
-  > {
+  extends Omit<React.ComponentProps<"div"> & useRender.ComponentProps<"div">, "onSubmit"> {
   id?: string;
   defaultValue?: string;
   value?: string;
@@ -168,9 +159,7 @@ function Editable(props: EditableProps) {
 
   const previousValueRef = React.useRef(defaultValue);
 
-  const [formTrigger, setFormTrigger] = React.useState<RootElement | null>(
-    null,
-  );
+  const [formTrigger, setFormTrigger] = React.useState<RootElement | null>(null);
   const composedRef = useComposedRefs(ref, (node) => setFormTrigger(node));
   const isFormControl = formTrigger ? !!formTrigger.closest("form") : true;
 
@@ -254,7 +243,7 @@ function Editable(props: EditableProps) {
       store.setState("editing", false);
       propsRef.current.onSubmit?.(newValue);
     },
-    [store, propsRef],
+    [store, propsRef]
   );
 
   const contextValue = React.useMemo<EditableContextValue>(
@@ -297,7 +286,7 @@ function Editable(props: EditableProps) {
       required,
       readOnly,
       invalid,
-    ],
+    ]
   );
 
   const element = useRender({
@@ -308,7 +297,7 @@ function Editable(props: EditableProps) {
         ref: composedRef,
         className: cn("flex min-w-0 flex-col gap-2", className),
       },
-      rootProps,
+      rootProps
     ),
     render,
     state: {
@@ -353,11 +342,11 @@ function EditableLabel(props: EditableLabelProps) {
         htmlFor: context.inputId,
         className: cn(
           "font-medium text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 data-required:after:ml-0.5 data-required:after:text-destructive data-required:after:content-['*']",
-          className,
+          className
         ),
         children,
       },
-      labelProps,
+      labelProps
     ),
     render,
     state: {
@@ -369,9 +358,7 @@ function EditableLabel(props: EditableLabelProps) {
   });
 }
 
-interface EditableAreaProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {}
+interface EditableAreaProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {}
 
 function EditableArea(props: EditableAreaProps) {
   const { className, render, ref, ...areaProps } = props;
@@ -387,10 +374,10 @@ function EditableArea(props: EditableAreaProps) {
         ref,
         className: cn(
           "relative inline-block min-w-0 data-disabled:cursor-not-allowed data-disabled:opacity-50",
-          className,
+          className
         ),
       },
-      areaProps,
+      areaProps
     ),
     render,
     state: {
@@ -440,7 +427,7 @@ function EditablePreview(props: EditablePreviewProps) {
 
       onTrigger();
     },
-    [propsRef, onTrigger, context.triggerMode],
+    [propsRef, onTrigger, context.triggerMode]
   );
 
   const onDoubleClick = React.useCallback(
@@ -450,7 +437,7 @@ function EditablePreview(props: EditablePreviewProps) {
 
       onTrigger();
     },
-    [propsRef, onTrigger, context.triggerMode],
+    [propsRef, onTrigger, context.triggerMode]
   );
 
   const onFocus = React.useCallback(
@@ -460,7 +447,7 @@ function EditablePreview(props: EditablePreviewProps) {
 
       onTrigger();
     },
-    [propsRef, onTrigger, context.triggerMode],
+    [propsRef, onTrigger, context.triggerMode]
   );
 
   const onKeyDown = React.useCallback(
@@ -477,7 +464,7 @@ function EditablePreview(props: EditablePreviewProps) {
         onTrigger();
       }
     },
-    [propsRef, onTrigger, context.onEnterKeyDown],
+    [propsRef, onTrigger, context.onEnterKeyDown]
   );
 
   const element = useRender({
@@ -493,11 +480,11 @@ function EditablePreview(props: EditablePreviewProps) {
         onKeyDown,
         className: cn(
           "cursor-text truncate rounded-sm border border-transparent py-1 text-base focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring data-disabled:cursor-not-allowed data-readonly:cursor-default data-empty:text-muted-foreground data-disabled:opacity-50 md:text-sm",
-          className,
+          className
         ),
         children: value || context.placeholder,
       },
-      previewProps,
+      previewProps
     ),
     render,
     state: {
@@ -563,7 +550,7 @@ function EditableInput(props: EditableInputProps) {
         target.style.width = `${target.scrollWidth + 4}px`;
       }
     },
-    [context.autosize],
+    [context.autosize]
   );
 
   const onBlur = React.useCallback(
@@ -584,7 +571,7 @@ function EditableInput(props: EditableInputProps) {
         context.onSubmit(value);
       }
     },
-    [value, context.onSubmit, propsRef, isDisabled, isReadOnly],
+    [value, context.onSubmit, propsRef, isDisabled, isReadOnly]
   );
 
   const onChange = React.useCallback(
@@ -597,7 +584,7 @@ function EditableInput(props: EditableInputProps) {
       store.setState("value", event.target.value);
       onAutosize(event.target);
     },
-    [store, propsRef, onAutosize, isDisabled, isReadOnly],
+    [store, propsRef, onAutosize, isDisabled, isReadOnly]
   );
 
   const onKeyDown = React.useCallback(
@@ -626,7 +613,7 @@ function EditableInput(props: EditableInputProps) {
       propsRef,
       isDisabled,
       isReadOnly,
-    ],
+    ]
   );
 
   useIsomorphicLayoutEffect(() => {
@@ -667,10 +654,10 @@ function EditableInput(props: EditableInputProps) {
         className: cn(
           "flex rounded-sm border border-input bg-transparent py-1 text-base shadow-xs transition-colors file:border-0 file:bg-transparent file:font-medium file:text-foreground file:text-sm placeholder:text-muted-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
           context.autosize ? "w-auto" : "w-full",
-          className,
+          className
         ),
       },
-      inputProps,
+      inputProps
     ),
     render,
     state: {
@@ -708,10 +695,9 @@ function EditableTrigger(props: EditableTriggerProps) {
         "aria-disabled": context.disabled || context.readOnly,
         ref,
         onClick: context.triggerMode === "click" ? onTrigger : undefined,
-        onDoubleClick:
-          context.triggerMode === "dblclick" ? onTrigger : undefined,
+        onDoubleClick: context.triggerMode === "dblclick" ? onTrigger : undefined,
       },
-      triggerProps,
+      triggerProps
     ),
     render,
     state: {
@@ -733,13 +719,7 @@ interface EditableToolbarProps
 }
 
 function EditableToolbar(props: EditableToolbarProps) {
-  const {
-    className,
-    orientation = "horizontal",
-    render,
-    ref,
-    ...toolbarProps
-  } = props;
+  const { className, orientation = "horizontal", render, ref, ...toolbarProps } = props;
   const context = useEditableContext(TOOLBAR_NAME);
 
   return useRender({
@@ -754,10 +734,10 @@ function EditableToolbar(props: EditableToolbarProps) {
         className: cn(
           "flex items-center gap-2",
           orientation === "vertical" && "flex-col",
-          className,
+          className
         ),
       },
-      toolbarProps,
+      toolbarProps
     ),
     render,
     state: {
@@ -788,7 +768,7 @@ function EditableCancel(props: EditableCancelProps) {
 
       context.onCancel();
     },
-    [propsRef, context.onCancel, context.disabled, context.readOnly],
+    [propsRef, context.onCancel, context.disabled, context.readOnly]
   );
 
   const element = useRender({
@@ -800,7 +780,7 @@ function EditableCancel(props: EditableCancelProps) {
         ref,
         onClick,
       },
-      cancelProps,
+      cancelProps
     ),
     render,
     state: {
@@ -836,7 +816,7 @@ function EditableSubmit(props: EditableSubmitProps) {
 
       context.onSubmit(value);
     },
-    [propsRef, context.onSubmit, value, context.disabled, context.readOnly],
+    [propsRef, context.onSubmit, value, context.disabled, context.readOnly]
   );
 
   const element = useRender({
@@ -848,7 +828,7 @@ function EditableSubmit(props: EditableSubmitProps) {
         ref,
         onClick,
       },
-      submitProps,
+      submitProps
     ),
     render,
     state: {

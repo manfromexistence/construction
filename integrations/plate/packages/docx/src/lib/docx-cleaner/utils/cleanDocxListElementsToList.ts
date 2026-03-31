@@ -1,16 +1,16 @@
-import { traverseHtmlElements } from 'platejs';
+import { traverseHtmlElements } from "platejs";
 
-import { docxListToList } from './docxListToList';
-import { isDocxList } from './isDocxList';
+import { docxListToList } from "./docxListToList";
+import { isDocxList } from "./isDocxList";
 
 export const cleanDocxListElementsToList = (rootNode: Node): void => {
   traverseHtmlElements(rootNode, (element) => {
-    const styleAttribute = element.getAttribute('style');
+    const styleAttribute = element.getAttribute("style");
 
     if (styleAttribute) {
       element.setAttribute(
-        'style',
-        styleAttribute.replaceAll(/mso-list:\s*ignore/gi, 'mso-list:Ignore')
+        "style",
+        styleAttribute.replaceAll(/mso-list:\s*ignore/gi, "mso-list:Ignore")
       );
     }
 
@@ -34,9 +34,7 @@ export const cleanDocxListElementsToList = (rootNode: Node): void => {
       return true;
     }
 
-    const beforeElement = previousSibling
-      ? previousSibling.nextSibling
-      : parentElement.firstChild;
+    const beforeElement = previousSibling ? previousSibling.nextSibling : parentElement.firstChild;
 
     if (beforeElement) {
       beforeElement.before(list);

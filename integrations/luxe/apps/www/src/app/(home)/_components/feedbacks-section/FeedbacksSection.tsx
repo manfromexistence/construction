@@ -7,10 +7,7 @@ export function FeedbacksSection() {
       <div className="relative overflow-hidden rounded-t-3xl border-t border-border pt-16 sm:[mask-image:linear-gradient(to_right,transparent,black_30%,black_70%,transparent)]">
         <Line />
         <Blur />
-        <AnimateEnter
-          className="flex flex-col items-center justify-center gap-14"
-          delay={0.2}
-        >
+        <AnimateEnter className="flex flex-col items-center justify-center gap-14" delay={0.2}>
           <FeedbacksCard />
         </AnimateEnter>
       </div>

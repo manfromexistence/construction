@@ -1,4 +1,4 @@
-import { diffNodes, isEqualNode, isEqualNodeChildren } from './diff-nodes';
+import { diffNodes, isEqualNode, isEqualNodeChildren } from "./diff-nodes";
 
 const options = {
   getDeleteProps: () => ({}),
@@ -7,18 +7,17 @@ const options = {
   isInline: () => false,
 } as any;
 
-describe('diffNodes', () => {
-  it('respects elementsAreRelated and emits leading inserts before the related node', () => {
+describe("diffNodes", () => {
+  it("respects elementsAreRelated and emits leading inserts before the related node", () => {
     const result = diffNodes(
-      [{ type: 'heading', children: [{ text: 'same' }] }] as any,
+      [{ type: "heading", children: [{ text: "same" }] }] as any,
       [
-        { type: 'paragraph', children: [{ text: 'same' }] },
-        { type: 'heading', children: [{ text: 'same' }] },
+        { type: "paragraph", children: [{ text: "same" }] },
+        { type: "heading", children: [{ text: "same" }] },
       ] as any,
       {
         ...options,
-        elementsAreRelated: (element, nextElement) =>
-          element.type === nextElement.type,
+        elementsAreRelated: (element, nextElement) => element.type === nextElement.type,
       }
     );
 
@@ -26,8 +25,8 @@ describe('diffNodes', () => {
       {
         insert: true,
         originNode: {
-          type: 'paragraph',
-          children: [{ text: 'same' }],
+          type: "paragraph",
+          children: [{ text: "same" }],
         },
       },
       {
@@ -35,24 +34,24 @@ describe('diffNodes', () => {
         delete: false,
         nodeUpdated: false,
         originNode: {
-          type: 'heading',
-          children: [{ text: 'same' }],
+          type: "heading",
+          children: [{ text: "same" }],
         },
         relatedNode: {
-          type: 'heading',
-          children: [{ text: 'same' }],
+          type: "heading",
+          children: [{ text: "same" }],
         },
       },
     ]);
   });
 
-  it('matches nodes when ignored props are the only prop differences', () => {
+  it("matches nodes when ignored props are the only prop differences", () => {
     const result = diffNodes(
-      [{ type: 'p', id: 'a', children: [{ text: 'same' }] }] as any,
-      [{ type: 'p', id: 'b', children: [{ text: 'same' }] }] as any,
+      [{ type: "p", id: "a", children: [{ text: "same" }] }] as any,
+      [{ type: "p", id: "b", children: [{ text: "same" }] }] as any,
       {
         ...options,
-        ignoreProps: ['id'],
+        ignoreProps: ["id"],
       }
     );
 
@@ -61,42 +60,38 @@ describe('diffNodes', () => {
       delete: false,
       nodeUpdated: true,
       relatedNode: {
-        id: 'b',
-        type: 'p',
+        id: "b",
+        type: "p",
       },
     });
   });
 });
 
-describe('isEqualNode', () => {
-  it('compares element props while ignoring children and ignored props', () => {
+describe("isEqualNode", () => {
+  it("compares element props while ignoring children and ignored props", () => {
     expect(
       isEqualNode(
         {
-          type: 'p',
-          id: 'a',
-          align: 'left',
-          children: [{ text: 'one' }],
+          type: "p",
+          id: "a",
+          align: "left",
+          children: [{ text: "one" }],
         } as any,
         {
-          type: 'p',
-          id: 'b',
-          align: 'left',
-          children: [{ text: 'two' }],
+          type: "p",
+          id: "b",
+          align: "left",
+          children: [{ text: "two" }],
         } as any,
-        ['id']
+        ["id"]
       )
     ).toBe(true);
   });
 });
 
-describe('isEqualNodeChildren', () => {
-  it('compares text-node content directly', () => {
-    expect(
-      isEqualNodeChildren({ text: 'same' } as any, { text: 'same' } as any)
-    ).toBe(true);
-    expect(
-      isEqualNodeChildren({ text: 'same' } as any, { text: 'next' } as any)
-    ).toBe(false);
+describe("isEqualNodeChildren", () => {
+  it("compares text-node content directly", () => {
+    expect(isEqualNodeChildren({ text: "same" } as any, { text: "same" } as any)).toBe(true);
+    expect(isEqualNodeChildren({ text: "same" } as any, { text: "next" } as any)).toBe(false);
   });
 });

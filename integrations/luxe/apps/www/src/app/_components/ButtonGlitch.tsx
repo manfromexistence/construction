@@ -7,19 +7,15 @@ type ButtonGlitchProps = {
   children: React.ReactNode;
 } & React.ComponentProps<typeof Link>;
 
-export function ButtonGlitch({
-  href,
-  children,
-  className,
-}: ButtonGlitchProps) {
+export function ButtonGlitch({ href, children, className }: ButtonGlitchProps) {
   return (
     <Link
       href={href}
       className={cn(
         "group relative inline-flex justify-center items-center gap-1 overflow-hidden rounded-xl outline-none",
-				"bg-black/80 p-4 h-10 sm:h-11 text-sm sm:text-base font-semibold text-white backdrop-blur-sm duration-300",
-				" hover:bg-black dark:bg-white/80 dark:text-black dark:hover:bg-white focus-visible:bg-black dark:focus-visible:bg-white",
-        className,
+        "bg-black/80 p-4 h-10 sm:h-11 text-sm sm:text-base font-semibold text-white backdrop-blur-sm duration-300",
+        " hover:bg-black dark:bg-white/80 dark:text-black dark:hover:bg-white focus-visible:bg-black dark:focus-visible:bg-white",
+        className
       )}
     >
       <TextGlitch>{children}</TextGlitch>

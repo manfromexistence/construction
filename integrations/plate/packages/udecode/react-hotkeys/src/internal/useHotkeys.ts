@@ -7,23 +7,14 @@ import {
   useMemo,
   useRef,
   useState,
-} from 'react';
-import { useBoundHotkeysProxy } from './BoundHotkeysProxyProvider';
-import { useHotkeysContext } from './HotkeysProvider';
-import {
-  pushToCurrentlyPressedKeys,
-  removeFromCurrentlyPressedKeys,
-} from './isHotkeyPressed';
-import type { Key } from './key';
-import { mapKey, parseHotkey, parseKeysHookInput } from './parseHotkeys';
-import type {
-  HotkeyCallback,
-  Keys,
-  Options,
-  OptionsOrDependencyArray,
-  RefType,
-} from './types';
-import useDeepEqualMemo from './useDeepEqualMemo';
+} from "react";
+import { useBoundHotkeysProxy } from "./BoundHotkeysProxyProvider";
+import { useHotkeysContext } from "./HotkeysProvider";
+import { pushToCurrentlyPressedKeys, removeFromCurrentlyPressedKeys } from "./isHotkeyPressed";
+import type { Key } from "./key";
+import { mapKey, parseHotkey, parseKeysHookInput } from "./parseHotkeys";
+import type { HotkeyCallback, Keys, Options, OptionsOrDependencyArray, RefType } from "./types";
+import useDeepEqualMemo from "./useDeepEqualMemo";
 import {
   isHotkeyEnabled,
   isHotkeyEnabledOnTag,
@@ -31,7 +22,7 @@ import {
   isKeyboardEventTriggeredByInput,
   isScopeActive,
   maybePreventDefault,
-} from './validators';
+} from "./validators";
 
 const stopPropagation = (e: KeyboardEvent): void => {
   e.stopPropagation();
@@ -39,8 +30,7 @@ const stopPropagation = (e: KeyboardEvent): void => {
   e.stopImmediatePropagation();
 };
 
-const useSafeLayoutEffect =
-  typeof window === 'undefined' ? useEffect : useLayoutEffect;
+const useSafeLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 export default function useHotkeys<T extends HTMLElement>(
   keys: Keys,
@@ -61,13 +51,11 @@ export default function useHotkeys<T extends HTMLElement>(
     if (Array.isArray(keys) && keys.length > 0 && Array.isArray(keys[0])) {
       // Handle Keys[][] case
       return (keys as (keyof typeof Key)[][])
-        .map((keyCombo) =>
-          keyCombo.map((k) => k.toString()).join(_options?.splitKey || '+')
-        )
-        .join(_options?.delimiter || ',');
+        .map((keyCombo) => keyCombo.map((k) => k.toString()).join(_options?.splitKey || "+"))
+        .join(_options?.delimiter || ",");
     }
     if (Array.isArray(keys)) {
-      return keys.join(_options?.delimiter || ',');
+      return keys.join(_options?.delimiter || ",");
     }
 
     return keys as string;
@@ -128,25 +116,14 @@ export default function useHotkeys<T extends HTMLElement>(
       }
 
       parseKeysHookInput(_keys, memoisedOptions?.delimiter).forEach((key) => {
-        const hotkey = parseHotkey(
-          key,
-          memoisedOptions?.splitKey,
-          memoisedOptions?.useKey
-        );
+        const hotkey = parseHotkey(key, memoisedOptions?.splitKey, memoisedOptions?.useKey);
 
         if (
-          isHotkeyMatchingKeyboardEvent(
-            e,
-            hotkey,
-            memoisedOptions?.ignoreModifiers
-          ) ||
-          hotkey.keys?.includes('*')
+          isHotkeyMatchingKeyboardEvent(e, hotkey, memoisedOptions?.ignoreModifiers) ||
+          hotkey.keys?.includes("*")
         ) {
           // DIFF+
-          if (
-            (memoisedOptions?.ignoreEventWhenPrevented ?? true) &&
-            e.defaultPrevented
-          ) {
+          if ((memoisedOptions?.ignoreEventWhenPrevented ?? true) && e.defaultPrevented) {
             // Skip the handler if the event's default action has been prevented
             return;
           }
@@ -184,8 +161,7 @@ export default function useHotkeys<T extends HTMLElement>(
       pushToCurrentlyPressedKeys(mapKey(event.code));
 
       if (
-        (memoisedOptions?.keydown === undefined &&
-          memoisedOptions?.keyup !== true) ||
+        (memoisedOptions?.keydown === undefined && memoisedOptions?.keyup !== true) ||
         memoisedOptions?.keydown
       ) {
         listener(event);
@@ -209,8 +185,8 @@ export default function useHotkeys<T extends HTMLElement>(
 
     const domNode = ref || _options?.document || document;
 
-    domNode.addEventListener('keyup', handleKeyUp as any);
-    domNode.addEventListener('keydown', handleKeyDown as any);
+    domNode.addEventListener("keyup", handleKeyUp as any);
+    domNode.addEventListener("keydown", handleKeyDown as any);
 
     if (proxy) {
       for (const key of parseKeysHookInput(_keys, memoisedOptions?.delimiter)) {
@@ -226,14 +202,11 @@ export default function useHotkeys<T extends HTMLElement>(
     }
 
     return () => {
-      domNode.removeEventListener('keyup', handleKeyUp as any);
-      domNode.removeEventListener('keydown', handleKeyDown as any);
+      domNode.removeEventListener("keyup", handleKeyUp as any);
+      domNode.removeEventListener("keydown", handleKeyDown as any);
 
       if (proxy) {
-        for (const key of parseKeysHookInput(
-          _keys,
-          memoisedOptions?.delimiter
-        )) {
+        for (const key of parseKeysHookInput(_keys, memoisedOptions?.delimiter)) {
           proxy.removeHotkey(
             parseHotkey(
               key,

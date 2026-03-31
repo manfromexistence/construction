@@ -1,21 +1,15 @@
-import { getPluginType, KEYS } from 'platejs';
-
-import type { MdRules } from '../types';
-
-import { convertChildrenDeserialize } from '../deserializer/convertChildrenDeserialize';
-import { convertNodesSerialize } from '../serializer';
-import { parseAttributes, propsToAttributes } from './utils';
+import { getPluginType, KEYS } from "platejs";
+import { convertChildrenDeserialize } from "../deserializer/convertChildrenDeserialize";
+import { convertNodesSerialize } from "../serializer";
+import type { MdRules } from "../types";
+import { parseAttributes, propsToAttributes } from "./utils";
 
 export const columnRules: MdRules = {
   column: {
     deserialize: (mdastNode, deco, options) => {
       const props = parseAttributes(mdastNode.attributes);
       return {
-        children: convertChildrenDeserialize(
-          mdastNode.children,
-          { ...deco },
-          options
-        ) as any,
+        children: convertChildrenDeserialize(mdastNode.children, { ...deco }, options) as any,
         type: getPluginType(options.editor!, KEYS.column),
         ...props,
       } as any;
@@ -27,7 +21,7 @@ export const columnRules: MdRules = {
         attributes: propsToAttributes(rest),
         children: convertNodesSerialize(children, options) as any,
         name: type,
-        type: 'mdxJsxFlowElement',
+        type: "mdxJsxFlowElement",
       };
     },
   },
@@ -36,11 +30,7 @@ export const columnRules: MdRules = {
       const props = parseAttributes(mdastNode.attributes);
 
       return {
-        children: convertChildrenDeserialize(
-          mdastNode.children,
-          { ...deco },
-          options
-        ) as any,
+        children: convertChildrenDeserialize(mdastNode.children, { ...deco }, options) as any,
         type: getPluginType(options.editor!, KEYS.columnGroup) as any,
         ...props,
       };
@@ -52,7 +42,7 @@ export const columnRules: MdRules = {
         attributes: propsToAttributes(rest),
         children: convertNodesSerialize(children, options) as any,
         name: type,
-        type: 'mdxJsxFlowElement',
+        type: "mdxJsxFlowElement",
       };
     },
   },

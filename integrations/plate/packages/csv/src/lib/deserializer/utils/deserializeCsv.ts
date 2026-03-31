@@ -1,9 +1,8 @@
-import type { SlateEditor } from 'platejs';
+import Papa from "papaparse";
+import type { SlateEditor } from "platejs";
+import { KEYS } from "platejs";
 
-import Papa from 'papaparse';
-import { KEYS } from 'platejs';
-
-import { type CsvParseOptions, CsvPlugin } from '../../CsvPlugin';
+import { type CsvParseOptions, CsvPlugin } from "../../CsvPlugin";
 
 type CsvTextNode = {
   text: string;
@@ -50,8 +49,7 @@ const isValidCsv = (
     return false;
   }
 
-  if (errors.length > 0 && errors.length > tolerance * data.length)
-    return false;
+  if (errors.length > 0 && errors.length > tolerance * data.length) return false;
 
   return true;
 };
@@ -64,9 +62,8 @@ export const deserializeCsv = (
   }: {
     data: string;
   } & CsvParseOptions
-): SlateEditor['children'] | undefined => {
-  const { errorTolerance, parseOptions: pluginParseOptions } =
-    editor.getOptions(CsvPlugin);
+): SlateEditor["children"] | undefined => {
+  const { errorTolerance, parseOptions: pluginParseOptions } = editor.getOptions(CsvPlugin);
 
   // Verify it's a csv string
   const testCsv = parseCsv<unknown[]>(data, { preview: 2 });
@@ -111,9 +108,7 @@ export const deserializeCsv = (
       for (const row of csv.data as Record<string, string>[]) {
         ast.children.push({
           children: csv.meta.fields.map((field: string) => ({
-            children: [
-              { children: [{ text: row[field] || '' }], type: paragraph },
-            ],
+            children: [{ children: [{ text: row[field] || "" }], type: paragraph }],
             type: td,
           })),
           type: tr,
@@ -138,12 +133,12 @@ export const deserializeCsv = (
 
     return [
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         type: paragraph,
       },
       ast,
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         type: paragraph,
       },
     ];

@@ -1,11 +1,10 @@
-import merge from 'lodash/merge.js';
+import merge from "lodash/merge.js";
 
-import type { SlateEditor } from '../../lib/editor';
-import type { PluginConfig } from '../../lib/plugin/BasePlugin';
-import type { AnySlatePlugin, SlatePlugin } from '../../lib/plugin/SlatePlugin';
-
-import { getEditorPlugin } from '../../lib/plugin/getEditorPlugin';
-import { mergePlugins } from '../utils/mergePlugins';
+import type { SlateEditor } from "../../lib/editor";
+import type { PluginConfig } from "../../lib/plugin/BasePlugin";
+import { getEditorPlugin } from "../../lib/plugin/getEditorPlugin";
+import type { AnySlatePlugin, SlatePlugin } from "../../lib/plugin/SlatePlugin";
+import { mergePlugins } from "../utils/mergePlugins";
 
 /**
  * Resolves and finalizes a plugin configuration for use in a Plate editor.
@@ -22,10 +21,7 @@ import { mergePlugins } from '../utils/mergePlugins';
  *   const plugin = createSlatePlugin({ key: 'myPlugin', ...otherOptions }).extend(...);
  *   const resolvedPlugin = resolvePlugin(editor, plugin);
  */
-export const resolvePlugin = <P extends AnySlatePlugin>(
-  editor: SlateEditor,
-  _plugin: P
-): P => {
+export const resolvePlugin = <P extends AnySlatePlugin>(editor: SlateEditor, _plugin: P): P => {
   // Create a deep clone of the plugin
   let plugin = mergePlugins({}, _plugin) as P;
 
@@ -33,9 +29,7 @@ export const resolvePlugin = <P extends AnySlatePlugin>(
 
   // Apply the stored configuration first
   if (plugin.__configuration) {
-    const configResult = plugin.__configuration(
-      getEditorPlugin(editor, plugin as any)
-    );
+    const configResult = plugin.__configuration(getEditorPlugin(editor, plugin as any));
 
     plugin = mergePlugins(plugin, configResult);
 
@@ -44,10 +38,7 @@ export const resolvePlugin = <P extends AnySlatePlugin>(
   // Apply all stored extensions
   if (plugin.__extensions && plugin.__extensions.length > 0) {
     for (const extension of plugin.__extensions) {
-      plugin = mergePlugins(
-        plugin,
-        extension(getEditorPlugin(editor, plugin as any))
-      );
+      plugin = mergePlugins(plugin, extension(getEditorPlugin(editor, plugin as any)));
     }
     plugin.__extensions = [];
   }
@@ -84,26 +75,20 @@ export const resolvePlugin = <P extends AnySlatePlugin>(
   return plugin;
 };
 
-export const validatePlugin = <
-  K extends string = any,
-  O = {},
-  A = {},
-  T = {},
-  S = {},
->(
+export const validatePlugin = <K extends string = any, O = {}, A = {}, T = {}, S = {}>(
   editor: SlateEditor,
   plugin: SlatePlugin<PluginConfig<K, O, A, T, S>>
 ) => {
   if (!plugin.__extensions) {
     editor.api.debug.error(
       `Invalid plugin '${plugin.key}', you should use createSlatePlugin.`,
-      'USE_CREATE_PLUGIN'
+      "USE_CREATE_PLUGIN"
     );
   }
   if (plugin.node.isElement && plugin.node.isLeaf) {
     editor.api.debug.error(
       `Plugin ${plugin.key} cannot be both an element and a leaf.`,
-      'PLUGIN_NODE_TYPE'
+      "PLUGIN_NODE_TYPE"
     );
   }
 };

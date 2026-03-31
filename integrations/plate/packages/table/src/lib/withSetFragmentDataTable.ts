@@ -1,15 +1,10 @@
-import type {
-  OverrideEditor,
-  TElement,
-  TTableCellElement,
-  TTableElement,
-} from 'platejs';
+import type { OverrideEditor, TElement, TTableCellElement, TTableElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { TableConfig } from './BaseTablePlugin';
+import type { TableConfig } from "./BaseTablePlugin";
 
-import { getTableGridAbove } from './queries';
+import { getTableGridAbove } from "./queries";
 
 export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
   api,
@@ -20,10 +15,10 @@ export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
   transforms: {
     setFragmentData(data, originEvent) {
       const tableEntry = getTableGridAbove(editor, {
-        format: 'table',
+        format: "table",
       })?.[0];
       const selectedCellEntries = getTableGridAbove(editor, {
-        format: 'cell',
+        format: "cell",
       });
 
       const initialSelection = editor.selection;
@@ -40,11 +35,11 @@ export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
         (v) => (v as TTableCellElement).children.length > 0
       );
 
-      let textCsv = '';
-      let textTsv = '';
+      let textCsv = "";
+      let textTsv = "";
 
-      const divElement = document.createElement('div');
-      const tableElement = document.createElement('table');
+      const divElement = document.createElement("div");
+      const tableElement = document.createElement("table");
 
       /**
        * Cover single cell copy | cut operation. In this case, copy cell content
@@ -54,7 +49,7 @@ export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
         tableEntry &&
         initialSelection &&
         selectedCellEntries.length === 1 &&
-        (originEvent === 'copy' || originEvent === 'cut')
+        (originEvent === "copy" || originEvent === "cut")
       ) {
         setFragmentData(data);
 
@@ -67,8 +62,8 @@ export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
           const cellStrings: string[] = [];
           const rowElement =
             row.type === editor.getType(KEYS.th)
-              ? document.createElement('th')
-              : document.createElement('tr');
+              ? document.createElement("th")
+              : document.createElement("tr");
 
           rowCells.forEach((cell) => {
             // need to clean data before every iteration
@@ -86,23 +81,23 @@ export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
             setFragmentData(data);
 
             // get plain text
-            cellStrings.push(data.getData('text/plain'));
+            cellStrings.push(data.getData("text/plain"));
 
-            const cellElement = document.createElement('td');
+            const cellElement = document.createElement("td");
 
             const colSpan = api.table.getColSpan(cell);
             cellElement.colSpan = colSpan;
             const rowSpan = api.table.getRowSpan(cell);
             cellElement.rowSpan = rowSpan;
 
-            cellElement.innerHTML = data.getData('text/html');
+            cellElement.innerHTML = data.getData("text/html");
             rowElement.append(cellElement);
           });
 
           tableElement.append(rowElement);
 
-          textCsv += `${cellStrings.join(',')}\n`;
-          textTsv += `${cellStrings.join('\t')}\n`;
+          textCsv += `${cellStrings.join(",")}\n`;
+          textTsv += `${cellStrings.join("\t")}\n`;
         });
 
         const _tableEntry = editor.api.node<TTableElement>({
@@ -115,10 +110,7 @@ export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
 
           if (realTable.attributes != null) {
             Object.entries(realTable.attributes).forEach(([key, value]) => {
-              if (
-                value != null &&
-                plugin.node.dangerouslyAllowAttributes?.includes(key)
-              ) {
+              if (value != null && plugin.node.dangerouslyAllowAttributes?.includes(key)) {
                 tableElement.setAttribute(key, String(value));
               }
             });
@@ -131,17 +123,15 @@ export const withSetFragmentDataTable: OverrideEditor<TableConfig> = ({
         divElement.append(tableElement);
       });
 
-      data.setData('text/csv', textCsv);
-      data.setData('text/tsv', textTsv);
-      data.setData('text/plain', textTsv);
-      data.setData('text/html', divElement.innerHTML);
+      data.setData("text/csv", textCsv);
+      data.setData("text/tsv", textTsv);
+      data.setData("text/plain", textTsv);
+      data.setData("text/html", divElement.innerHTML);
 
       // set slate fragment
       const selectedFragmentStr = JSON.stringify([tableNode]);
-      const encodedFragment = window.btoa(
-        encodeURIComponent(selectedFragmentStr)
-      );
-      data.setData('application/x-slate-fragment', encodedFragment);
+      const encodedFragment = window.btoa(encodeURIComponent(selectedFragmentStr));
+      data.setData("application/x-slate-fragment", encodedFragment);
     },
   },
 });

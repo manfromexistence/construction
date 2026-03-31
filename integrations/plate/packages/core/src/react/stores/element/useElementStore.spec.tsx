@@ -1,18 +1,15 @@
 /// <reference types="@testing-library/jest-dom" />
 
-import React from 'react';
+import type { TElement } from "@platejs/slate";
+import { act, render } from "@testing-library/react";
+import React from "react";
+import { DebugPlugin } from "../../../lib/plugins/debug/DebugPlugin";
+import { TestPlate as Plate } from "../../__tests__/TestPlate";
+import { createPlateEditor } from "../../editor";
+import { useElement } from "./useElement";
+import { ElementProvider } from "./useElementStore";
 
-import type { TElement } from '@platejs/slate';
-
-import { act, render } from '@testing-library/react';
-
-import { TestPlate as Plate } from '../../__tests__/TestPlate';
-import { createPlateEditor } from '../../editor';
-import { DebugPlugin } from '../../../lib/plugins/debug/DebugPlugin';
-import { useElement } from './useElement';
-import { ElementProvider } from './useElementStore';
-
-describe('ElementProvider', () => {
+describe("ElementProvider", () => {
   const PlateWrapper = ({ children }: { children: React.ReactNode }) => {
     const editor = createPlateEditor({
       plugins: [
@@ -30,33 +27,27 @@ describe('ElementProvider', () => {
 
   interface TNameElement extends TElement {
     name: string;
-    type: 'name';
+    type: "name";
   }
 
   interface TAgeElement extends TElement {
     age: number;
-    type: 'age';
+    type: "age";
   }
 
   const makeNameElement = (name: string): TNameElement => ({
     children: [],
     name,
-    type: 'name',
+    type: "name",
   });
 
   const makeAgeElement = (age: number): TAgeElement => ({
     age,
     children: [],
-    type: 'age',
+    type: "age",
   });
 
-  const NameElementProvider = ({
-    children,
-    name,
-  }: {
-    children: React.ReactNode;
-    name: string;
-  }) => {
+  const NameElementProvider = ({ children, name }: { children: React.ReactNode; name: string }) => {
     const element = React.useMemo(() => makeNameElement(name), [name]);
 
     return (
@@ -66,13 +57,7 @@ describe('ElementProvider', () => {
     );
   };
 
-  const AgeElementProvider = ({
-    age,
-    children,
-  }: {
-    age: number;
-    children: React.ReactNode;
-  }) => {
+  const AgeElementProvider = ({ age, children }: { age: number; children: React.ReactNode }) => {
     const element = React.useMemo(() => makeAgeElement(age), [age]);
 
     return (
@@ -109,37 +94,31 @@ describe('ElementProvider', () => {
     label?: string;
   };
 
-  const NameElementConsumer = ({ label = '' }: ConsumerProps) => {
-    const element = useElement<TNameElement>('name');
+  const NameElementConsumer = ({ label = "" }: ConsumerProps) => {
+    const element = useElement<TNameElement>("name");
 
     return <div>{label + element.name}</div>;
   };
 
-  const AgeElementConsumer = ({ label = '' }: ConsumerProps) => {
-    const element = useElement<TAgeElement>('age');
+  const AgeElementConsumer = ({ label = "" }: ConsumerProps) => {
+    const element = useElement<TAgeElement>("age");
 
     return <div>{label + element.age}</div>;
   };
 
-  const TypeConsumer = ({
-    label = '',
-    type,
-  }: ConsumerProps & { type?: 'age' | 'name' }) => {
+  const TypeConsumer = ({ label = "", type }: ConsumerProps & { type?: "age" | "name" }) => {
     const element = useElement(type);
 
     return <div>{label + element.type}</div>;
   };
 
-  const JsonConsumer = ({
-    label = '',
-    type,
-  }: ConsumerProps & { type?: 'age' | 'name' }) => {
+  const JsonConsumer = ({ label = "", type }: ConsumerProps & { type?: "age" | "name" }) => {
     const element = useElement(type);
 
     return <div>{label + JSON.stringify(element)}</div>;
   };
 
-  it('returns the first ancestor matching the element type', () => {
+  it("returns the first ancestor matching the element type", () => {
     const { getByText } = render(
       <PlateWrapper>
         <NameElementProvider name="John">
@@ -156,12 +135,12 @@ describe('ElementProvider', () => {
       </PlateWrapper>
     );
 
-    (expect(getByText('Name: Jane')) as any).toBeInTheDocument();
-    (expect(getByText('Age: 30')) as any).toBeInTheDocument();
-    (expect(getByText('Type: age')) as any).toBeInTheDocument();
+    (expect(getByText("Name: Jane")) as any).toBeInTheDocument();
+    (expect(getByText("Age: 30")) as any).toBeInTheDocument();
+    (expect(getByText("Type: age")) as any).toBeInTheDocument();
   });
 
-  it('returns the first ancestor of any type if given type does not match', () => {
+  it("returns the first ancestor of any type if given type does not match", () => {
     const { getByText } = render(
       <PlateWrapper>
         <NameElementProvider name="John">
@@ -172,54 +151,46 @@ describe('ElementProvider', () => {
       </PlateWrapper>
     );
 
-    (expect(getByText('Type: name')) as any).toBeInTheDocument();
+    (expect(getByText("Type: name")) as any).toBeInTheDocument();
   });
 
-  it('propagates updated elements to consumers', () => {
+  it("propagates updated elements to consumers", () => {
     const { getByText } = render(
       <PlateWrapper>
-        <UpdatingAgeElementProvider
-          buttonLabel="updateAge1"
-          increment={10}
-          initialAge={20}
-        >
+        <UpdatingAgeElementProvider buttonLabel="updateAge1" increment={10} initialAge={20}>
           <AgeElementConsumer label="Age 1: " />
-          <UpdatingAgeElementProvider
-            buttonLabel="updateAge2"
-            increment={10}
-            initialAge={140}
-          >
+          <UpdatingAgeElementProvider buttonLabel="updateAge2" increment={10} initialAge={140}>
             <AgeElementConsumer label="Age 2: " />
           </UpdatingAgeElementProvider>
         </UpdatingAgeElementProvider>
       </PlateWrapper>
     );
 
-    (expect(getByText('Age 1: 20')) as any).toBeInTheDocument();
-    (expect(getByText('Age 2: 140')) as any).toBeInTheDocument();
+    (expect(getByText("Age 1: 20")) as any).toBeInTheDocument();
+    (expect(getByText("Age 2: 140")) as any).toBeInTheDocument();
 
-    void act(() => getByText('updateAge1').click());
+    void act(() => getByText("updateAge1").click());
 
-    (expect(getByText('Age 1: 30')) as any).toBeInTheDocument();
-    (expect(getByText('Age 2: 140')) as any).toBeInTheDocument();
+    (expect(getByText("Age 1: 30")) as any).toBeInTheDocument();
+    (expect(getByText("Age 2: 140")) as any).toBeInTheDocument();
 
-    void act(() => getByText('updateAge2').click());
+    void act(() => getByText("updateAge2").click());
 
-    (expect(getByText('Age 1: 30')) as any).toBeInTheDocument();
-    (expect(getByText('Age 2: 150')) as any).toBeInTheDocument();
+    (expect(getByText("Age 1: 30")) as any).toBeInTheDocument();
+    (expect(getByText("Age 2: 150")) as any).toBeInTheDocument();
 
-    void act(() => getByText('updateAge1').click());
+    void act(() => getByText("updateAge1").click());
 
-    (expect(getByText('Age 1: 40')) as any).toBeInTheDocument();
-    (expect(getByText('Age 2: 150')) as any).toBeInTheDocument();
+    (expect(getByText("Age 1: 40")) as any).toBeInTheDocument();
+    (expect(getByText("Age 2: 150")) as any).toBeInTheDocument();
   });
 
-  it('returns empty object if no ancestor exists', () => {
+  it("returns empty object if no ancestor exists", () => {
     const { getByText } = render(
       <PlateWrapper>
         <JsonConsumer />
       </PlateWrapper>
     );
-    (expect(getByText('{}')) as any).toBeInTheDocument();
+    (expect(getByText("{}")) as any).toBeInTheDocument();
   });
 });

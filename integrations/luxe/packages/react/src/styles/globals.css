@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
 
 @import "tailwindcss";
 @import "./luxe.css";
@@ -39,7 +39,7 @@
   --color-primary: var(--primary);
   --color-foreground: var(--foreground);
   --color-muted: #0a0a0a;
-	--font-sans: "Geist", sans-serif; 
+  --font-sans: "Geist", sans-serif;
 
   --animate-spotlight: spotlight 2s ease 1 forwards;
 

@@ -1,19 +1,9 @@
 "use client";
 
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  Sortable,
-  SortableContent,
-  SortableItem,
-  SortableOverlay,
-} from "@/components/ui/sortable";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 import * as React from "react";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Sortable, SortableContent, SortableItem, SortableOverlay } from "@/components/ui/sortable";
 
 interface Trick {
   id: string;
@@ -45,8 +35,7 @@ const data: Trick[] = [
   {
     id: "5",
     title: "Kickflip Backflip",
-    description:
-      "The Kickflip Backflip is a trick where you kickflip backflip.",
+    description: "The Kickflip Backflip is a trick where you kickflip backflip.",
   },
   {
     id: "6",
@@ -56,14 +45,12 @@ const data: Trick[] = [
   {
     id: "7",
     title: "Double Cork 1080",
-    description:
-      "A complex aerial maneuver combining three rotations with two off-axis flips.",
+    description: "A complex aerial maneuver combining three rotations with two off-axis flips.",
   },
   {
     id: "8",
     title: "Triple Cork 1440",
-    description:
-      "An advanced aerial trick with four full rotations and three off-axis flips.",
+    description: "An advanced aerial trick with four full rotations and three off-axis flips.",
   },
   {
     id: "9",
@@ -74,20 +61,17 @@ const data: Trick[] = [
   {
     id: "10",
     title: "Switch Double Backflip",
-    description:
-      "Two backflips performed while riding in the opposite stance from normal.",
+    description: "Two backflips performed while riding in the opposite stance from normal.",
   },
   {
     id: "11",
     title: "Misty 720",
-    description:
-      "An off-axis rotation combining a front flip with two full spins.",
+    description: "An off-axis rotation combining a front flip with two full spins.",
   },
   {
     id: "12",
     title: "Cork 720 Japan",
-    description:
-      "A cork rotation with two spins while grabbing the board in japan position.",
+    description: "A cork rotation with two spins while grabbing the board in japan position.",
   },
   {
     id: "13",
@@ -98,20 +82,17 @@ const data: Trick[] = [
   {
     id: "14",
     title: "Frontside Triple Underflip",
-    description:
-      "Three underflipped rotations performed while spinning frontside.",
+    description: "Three underflipped rotations performed while spinning frontside.",
   },
   {
     id: "15",
     title: "Double Wildcat",
-    description:
-      "Two consecutive backflips performed without vertical rotation, staying flat.",
+    description: "Two consecutive backflips performed without vertical rotation, staying flat.",
   },
   {
     id: "16",
     title: "Quad Cork 1800",
-    description:
-      "A groundbreaking trick combining five rotations with four off-axis flips.",
+    description: "A groundbreaking trick combining five rotations with four off-axis flips.",
   },
 ];
 
@@ -131,7 +112,7 @@ export function MixedSortingDemo() {
 
       return <TrickCard trick={trick} />;
     },
-    [tricks],
+    [tricks]
   );
 
   return (
@@ -162,9 +143,7 @@ function TrickCard({ trick, ...props }: TrickCardProps) {
       <Card className="h-full rounded-md bg-zinc-100 dark:bg-zinc-900">
         <CardHeader>
           <CardTitle className="sm:text-lg">{trick.title}</CardTitle>
-          <CardDescription className="line-clamp-3">
-            {trick.description}
-          </CardDescription>
+          <CardDescription className="line-clamp-3">{trick.description}</CardDescription>
         </CardHeader>
       </Card>
     </SortableItem>

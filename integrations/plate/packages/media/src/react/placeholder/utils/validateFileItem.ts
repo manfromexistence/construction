@@ -1,19 +1,15 @@
-import type { AllowedFileType } from '../internal/mimes';
+import type { AllowedFileType } from "../internal/mimes";
 
-import { type FileSize, type MediaItemConfig, UploadErrorCode } from '../type';
-import { createUploadError } from './createUploadError';
-import { fileSizeToBytes } from './fileSizeToBytes';
+import { type FileSize, type MediaItemConfig, UploadErrorCode } from "../type";
+import { createUploadError } from "./createUploadError";
+import { fileSizeToBytes } from "./fileSizeToBytes";
 
 export const validateFileItem = (
   files: File[],
   config: MediaItemConfig,
   key: AllowedFileType
 ): UploadErrorCode | true => {
-  const {
-    maxFileCount = Number.POSITIVE_INFINITY,
-    maxFileSize,
-    minFileCount = 1,
-  } = config;
+  const { maxFileCount = Number.POSITIVE_INFINITY, maxFileSize, minFileCount = 1 } = config;
 
   if (files.length < minFileCount)
     throw createUploadError(UploadErrorCode.TOO_LESS_FILES, {

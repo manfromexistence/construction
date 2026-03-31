@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { KEYS, createSlateEditor } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BaseDatePlugin } from './BaseDatePlugin';
+import { BaseDatePlugin } from "./BaseDatePlugin";
 
 jsxt;
 
-describe('BaseDatePlugin', () => {
-  it('configure date as void inline element', () => {
+describe("BaseDatePlugin", () => {
+  it("configure date as void inline element", () => {
     const editor = createSlateEditor({
       plugins: [BaseDatePlugin],
     } as any);
@@ -20,7 +20,7 @@ describe('BaseDatePlugin', () => {
     expect(plugin.node.isElement).toBe(true);
   });
 
-  it('mark date elements as not selectable', () => {
+  it("mark date elements as not selectable", () => {
     const editor = createSlateEditor({
       plugins: [BaseDatePlugin],
     } as any);
@@ -30,12 +30,12 @@ describe('BaseDatePlugin', () => {
     expect(plugin.node.isSelectable).toBe(false);
   });
 
-  it('provide insert.date transform', () => {
+  it("provide insert.date transform", () => {
     const editor = createSlateEditor({
       plugins: [BaseDatePlugin],
     } as any);
 
     expect((editor.tf as any).insert.date).toBeDefined();
-    expect(typeof (editor.tf as any).insert.date).toBe('function');
+    expect(typeof (editor.tf as any).insert.date).toBe("function");
   });
 });

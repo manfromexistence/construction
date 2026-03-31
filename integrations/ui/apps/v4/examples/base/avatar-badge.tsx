@@ -1,9 +1,4 @@
-import {
-  Avatar,
-  AvatarBadge,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/base-nova/ui/avatar"
+import { Avatar, AvatarBadge, AvatarFallback, AvatarImage } from "@/styles/base-nova/ui/avatar";
 
 export function AvatarWithBadge() {
   return (
@@ -12,5 +7,5 @@ export function AvatarWithBadge() {
       <AvatarFallback>CN</AvatarFallback>
       <AvatarBadge className="bg-green-600 dark:bg-green-800" />
     </Avatar>
-  )
+  );
 }

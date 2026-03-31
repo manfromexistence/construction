@@ -63,8 +63,8 @@ export async function createTask(input: CreateTaskSchema) {
               .where(not(eq(tasks.id, newTask.id)))
               .orderBy(asc(tasks.createdAt))
               .then(takeFirstOrThrow)
-          ).id,
-        ),
+          ).id
+        )
       );
     });
 

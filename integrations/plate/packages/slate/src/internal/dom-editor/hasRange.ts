@@ -1,7 +1,7 @@
-import { DOMEditor } from 'slate-dom';
+import { DOMEditor } from "slate-dom";
 
-import type { TRange } from '../../interfaces';
-import type { Editor } from '../../interfaces/editor';
+import type { TRange } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor";
 
 export const hasRange = (editor: Editor, range: TRange): boolean => {
   try {

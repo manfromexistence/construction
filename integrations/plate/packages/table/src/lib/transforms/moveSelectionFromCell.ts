@@ -1,7 +1,7 @@
-import { type SlateEditor, type TLocation, NodeApi } from 'platejs';
+import { NodeApi, type SlateEditor, type TLocation } from "platejs";
 
-import { getTableGridAbove } from '../queries/getTableGridAbove';
-import { getCellTypes } from '../utils/getCellType';
+import { getTableGridAbove } from "../queries/getTableGridAbove";
+import { getCellTypes } from "../utils/getCellType";
 
 /** Move selection by cell unit. */
 export const moveSelectionFromCell = (
@@ -14,7 +14,7 @@ export const moveSelectionFromCell = (
   }: {
     at?: TLocation;
     /** Expand cell selection to an edge. */
-    edge?: 'bottom' | 'left' | 'right' | 'top';
+    edge?: "bottom" | "left" | "right" | "top";
     /** Move selection from one selected cell */
     fromOneCell?: boolean;
     /** False: move selection to cell below true: move selection to cell above */
@@ -22,7 +22,7 @@ export const moveSelectionFromCell = (
   } = {}
 ) => {
   if (edge) {
-    const cellEntries = getTableGridAbove(editor, { at, format: 'cell' });
+    const cellEntries = getTableGridAbove(editor, { at, format: "cell" });
 
     const minCell = fromOneCell ? 0 : 1;
 
@@ -34,22 +34,22 @@ export const moveSelectionFromCell = (
       const focusPath = [...lastCellPath];
 
       switch (edge) {
-        case 'bottom': {
+        case "bottom": {
           focusPath[focusPath.length - 2] += 1;
 
           break;
         }
-        case 'left': {
+        case "left": {
           anchorPath[anchorPath.length - 1] -= 1;
 
           break;
         }
-        case 'right': {
+        case "right": {
           focusPath[focusPath.length - 1] += 1;
 
           break;
         }
-        case 'top': {
+        case "top": {
           anchorPath[anchorPath.length - 2] -= 1;
 
           break;

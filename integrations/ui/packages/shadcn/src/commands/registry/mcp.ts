@@ -1,6 +1,6 @@
-import { highlighter } from "@/src/utils/highlighter"
-import { logger } from "@/src/utils/logger"
-import { Command } from "commander"
+import { Command } from "commander";
+import { highlighter } from "@/src/utils/highlighter";
+import { logger } from "@/src/utils/logger";
 
 export const mcp = new Command()
   .name("registry:mcp")
@@ -14,9 +14,7 @@ export const mcp = new Command()
     logger.warn(
       `The ${highlighter.info(
         "shadcn registry:mcp"
-      )} command is deprecated. Use the ${highlighter.info(
-        "shadcn mcp"
-      )} command instead.`
-    )
-    logger.break()
-  })
+      )} command is deprecated. Use the ${highlighter.info("shadcn mcp")} command instead.`
+    );
+    logger.break();
+  });

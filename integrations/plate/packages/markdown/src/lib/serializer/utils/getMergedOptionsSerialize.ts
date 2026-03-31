@@ -1,9 +1,7 @@
-import type { SlateEditor } from 'platejs';
-
-import type { SerializeMdOptions } from '../serializeMd';
-
-import { MarkdownPlugin } from '../../MarkdownPlugin';
-import { buildRules } from '../../rules';
+import type { SlateEditor } from "platejs";
+import { MarkdownPlugin } from "../../MarkdownPlugin";
+import { buildRules } from "../../rules";
+import type { SerializeMdOptions } from "../serializeMd";
 
 /**
  * Merges Markdown configurations, following the principle that options take
@@ -40,8 +38,7 @@ export const getMergedOptionsSerialize = (
     plainMarks: options?.plainMarks ?? PluginPlainMarks,
     preserveEmptyParagraphs: options?.preserveEmptyParagraphs,
     remarkPlugins: options?.remarkPlugins ?? PluginRemarkPlugins ?? [],
-    remarkStringifyOptions:
-      options?.remarkStringifyOptions ?? PluginRemarkStringifyOptions,
+    remarkStringifyOptions: options?.remarkStringifyOptions ?? PluginRemarkStringifyOptions,
     rules: mergedRules,
     spread: options?.spread,
     value: options?.value ?? editor.children,

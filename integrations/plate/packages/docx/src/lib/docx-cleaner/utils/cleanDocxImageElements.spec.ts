@@ -1,14 +1,13 @@
-import { cleanDocxImageElements } from './cleanDocxImageElements';
+import { cleanDocxImageElements } from "./cleanDocxImageElements";
 
-const parseHtml = (html: string) =>
-  new DOMParser().parseFromString(html, 'text/html');
+const parseHtml = (html: string) => new DOMParser().parseFromString(html, "text/html");
 
-describe('cleanDocxImageElements', () => {
-  it('keeps external alt urls instead of trying to recover the local file', () => {
+describe("cleanDocxImageElements", () => {
+  it("keeps external alt urls instead of trying to recover the local file", () => {
     const document = parseHtml(
       '<img alt="https://cdn.example.com/image.png" src="file:///C:/image.png" />'
     );
-    const image = document.querySelector('img')!;
+    const image = document.querySelector("img")!;
 
     cleanDocxImageElements(
       document,
@@ -16,14 +15,12 @@ describe('cleanDocxImageElements', () => {
       document.body
     );
 
-    expect(image.getAttribute('src')).toBe('https://cdn.example.com/image.png');
+    expect(image.getAttribute("src")).toBe("https://cdn.example.com/image.png");
   });
 
-  it('replaces local image src values with recovered rtf data uris', () => {
-    const document = parseHtml(
-      '<img src="file:///C:/image.png" v:shapes="_x0000_i1025" />'
-    );
-    const image = document.querySelector('img')!;
+  it("replaces local image src values with recovered rtf data uris", () => {
+    const document = parseHtml('<img src="file:///C:/image.png" v:shapes="_x0000_i1025" />');
+    const image = document.querySelector("img")!;
 
     cleanDocxImageElements(
       document,
@@ -31,10 +28,10 @@ describe('cleanDocxImageElements', () => {
       document.body
     );
 
-    expect(image.getAttribute('src')).toBe('data:image/png;base64,aGVsbG8=');
+    expect(image.getAttribute("src")).toBe("data:image/png;base64,aGVsbG8=");
   });
 
-  it('removes unresolved local images instead of leaving broken file references', () => {
+  it("removes unresolved local images instead of leaving broken file references", () => {
     const document = parseHtml(
       '<div><img src="file:///C:/missing.png" v:shapes="_x0000_i9999" /></div>'
     );
@@ -45,10 +42,10 @@ describe('cleanDocxImageElements', () => {
       document.body
     );
 
-    expect(document.querySelector('img')).toBeNull();
+    expect(document.querySelector("img")).toBeNull();
   });
 
-  it('replaces vml image wrappers with img elements when rtf recovery succeeds', () => {
+  it("replaces vml image wrappers with img elements when rtf recovery succeeds", () => {
     const document = parseHtml(
       '<div><v:shape o:spid="_x0000_s2049"><v:imagedata src="file:///C:/shape.png"></v:imagedata></v:shape></div>'
     );
@@ -59,12 +56,10 @@ describe('cleanDocxImageElements', () => {
       document.body
     );
 
-    expect(document.body.firstElementChild?.tagName).toBe('DIV');
-    expect(document.body.firstElementChild?.firstElementChild?.tagName).toBe(
-      'IMG'
+    expect(document.body.firstElementChild?.tagName).toBe("DIV");
+    expect(document.body.firstElementChild?.firstElementChild?.tagName).toBe("IMG");
+    expect(document.body.firstElementChild?.firstElementChild?.getAttribute("src")).toBe(
+      "data:image/jpeg;base64,/9j/"
     );
-    expect(
-      document.body.firstElementChild?.firstElementChild?.getAttribute('src')
-    ).toBe('data:image/jpeg;base64,/9j/');
   });
 });

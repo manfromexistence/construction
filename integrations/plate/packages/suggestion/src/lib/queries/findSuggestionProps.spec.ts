@@ -1,15 +1,15 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { findSuggestionProps } from './findSuggestionProps';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { findSuggestionProps } from "./findSuggestionProps";
 
-describe('findSuggestionProps', () => {
-  it('reuses metadata only for same-type current-user suggestions', () => {
+describe("findSuggestionProps", () => {
+  it("reuses metadata only for same-type current-user suggestions", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseSuggestionPlugin.configure({
           options: {
-            currentUserId: 'user-1',
+            currentUserId: "user-1",
           },
         }),
       ],
@@ -19,16 +19,16 @@ describe('findSuggestionProps', () => {
       },
       value: [
         {
-          type: 'p',
+          type: "p",
           children: [
             {
-              text: 'a',
+              text: "a",
               suggestion: true,
               suggestion_same: {
-                id: 'same',
+                id: "same",
                 createdAt: 11,
-                type: 'insert',
-                userId: 'user-1',
+                type: "insert",
+                userId: "user-1",
               },
             },
           ],
@@ -39,30 +39,30 @@ describe('findSuggestionProps', () => {
     expect(
       findSuggestionProps(editor, {
         at: editor.selection!,
-        type: 'insert',
+        type: "insert",
       })
     ).toEqual({
       createdAt: 11,
-      id: 'same',
+      id: "same",
     });
 
     expect(
       findSuggestionProps(editor, {
         at: editor.selection!,
-        type: 'remove',
+        type: "remove",
       })
     ).not.toEqual({
       createdAt: 11,
-      id: 'same',
+      id: "same",
     });
   });
 
-  it('falls back to the previous line-break suggestion at the start of the next block', () => {
+  it("falls back to the previous line-break suggestion at the start of the next block", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseSuggestionPlugin.configure({
           options: {
-            currentUserId: 'user-1',
+            currentUserId: "user-1",
           },
         }),
       ],
@@ -72,28 +72,28 @@ describe('findSuggestionProps', () => {
       },
       value: [
         {
-          type: 'p',
+          type: "p",
           suggestion: {
-            id: 'line-break',
+            id: "line-break",
             createdAt: 42,
             isLineBreak: true,
-            type: 'insert',
-            userId: 'user-1',
+            type: "insert",
+            userId: "user-1",
           },
-          children: [{ text: 'one' }],
+          children: [{ text: "one" }],
         },
-        { type: 'p', children: [{ text: '' }] },
+        { type: "p", children: [{ text: "" }] },
       ],
     });
 
     expect(
       findSuggestionProps(editor, {
         at: editor.selection!,
-        type: 'insert',
+        type: "insert",
       })
     ).toEqual({
       createdAt: 42,
-      id: 'line-break',
+      id: "line-break",
     });
   });
 });

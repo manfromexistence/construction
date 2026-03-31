@@ -1,12 +1,11 @@
 "use server";
 
-import { db } from "@/db";
-import { user as userTable, subscription } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { getCurrentUserId } from "@/lib/shared";
-import { logError } from "@/lib/shared";
-import { actionError, actionSuccess, ErrorCode, type ActionResult } from "@/types/errors";
+import { db } from "@/db";
+import { subscription, user as userTable } from "@/db/schema";
 import { polar } from "@/lib/polar";
+import { getCurrentUserId, logError } from "@/lib/shared";
+import { type ActionResult, actionError, actionSuccess, ErrorCode } from "@/types/errors";
 
 export async function deleteAccount(): Promise<ActionResult<boolean>> {
   try {

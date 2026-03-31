@@ -1,18 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form-rhf-demo",
-  "dependencies": [
-    "react-hook-form",
-    "@hookform/resolvers",
-    "zod"
-  ],
-  "registryDependencies": [
-    "field",
-    "input",
-    "input-group",
-    "button",
-    "card"
-  ],
+  "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
+  "registryDependencies": ["field", "input", "input-group", "button", "card"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/form-rhf-demo.tsx",

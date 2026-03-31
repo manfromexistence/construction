@@ -1,9 +1,9 @@
-import { type PluginConfig, createSlatePlugin } from '../../plugin';
+import { createSlatePlugin, type PluginConfig } from "../../plugin";
 
-export type ParagraphConfig = PluginConfig<'p'>;
+export type ParagraphConfig = PluginConfig<"p">;
 
 export const BaseParagraphPlugin = createSlatePlugin({
-  key: 'p',
+  key: "p",
   node: {
     isElement: true,
   },
@@ -12,10 +12,10 @@ export const BaseParagraphPlugin = createSlatePlugin({
       deserializer: {
         rules: [
           {
-            validNodeName: 'P',
+            validNodeName: "P",
           },
         ],
-        query: ({ element }) => element.style.fontFamily !== 'Consolas',
+        query: ({ element }) => element.style.fontFamily !== "Consolas",
       },
     },
   },

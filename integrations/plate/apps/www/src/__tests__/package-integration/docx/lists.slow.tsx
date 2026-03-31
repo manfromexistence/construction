@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { BaseListPlugin } from '@platejs/list';
-import { jsxt } from '@platejs/test-utils';
+import { BaseListPlugin } from "@platejs/list";
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'lists';
+const name = "lists";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({

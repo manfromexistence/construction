@@ -1,9 +1,9 @@
-import type { Editor, NodeEntry } from 'platejs';
+import type { Editor, NodeEntry } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { ListStyleType } from '../types';
-import { setIndentTodoNode, setListNode } from './setListNode';
+import { ListStyleType } from "../types";
+import { setIndentTodoNode, setListNode } from "./setListNode";
 
 /**
  * Set indent list to the given entries. Add indent if listStyleType was not
@@ -23,12 +23,9 @@ export const setListNodes = (
       const [node, path] = entry;
 
       let indent = (node[KEYS.indent] as number) ?? 0;
-      indent =
-        node[KEYS.listType] || Object.hasOwn(node, KEYS.listChecked)
-          ? indent
-          : indent + 1;
+      indent = node[KEYS.listType] || Object.hasOwn(node, KEYS.listChecked) ? indent : indent + 1;
 
-      if (listStyleType === 'todo') {
+      if (listStyleType === "todo") {
         editor.tf.unsetNodes(KEYS.listType, { at: path });
         setIndentTodoNode(editor, {
           at: path,

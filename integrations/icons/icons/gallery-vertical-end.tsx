@@ -94,18 +94,8 @@ const GalleryVerticalEndIcon = forwardRef<
         width={size}
         xmlns="http://www.w3.org/2000/svg"
       >
-        <motion.path
-          animate={controls}
-          custom={1}
-          d="M7 2h10"
-          variants={PATH_VARIANTS}
-        />
-        <motion.path
-          animate={controls}
-          custom={2}
-          d="M5 6h14"
-          variants={PATH_VARIANTS}
-        />
+        <motion.path animate={controls} custom={1} d="M7 2h10" variants={PATH_VARIANTS} />
+        <motion.path animate={controls} custom={2} d="M5 6h14" variants={PATH_VARIANTS} />
         <rect height="12" rx="2" width="18" x="3" y="10" />
       </svg>
     </div>

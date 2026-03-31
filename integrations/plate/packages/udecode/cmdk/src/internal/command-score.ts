@@ -97,18 +97,14 @@ function commandScoreInner(
         score *= SCORE_CONTINUE_MATCH;
       } else if (IS_GAP_REGEXP.test(string.charAt(index - 1))) {
         score *= SCORE_NON_SPACE_WORD_JUMP;
-        wordBreaks = string
-          .slice(stringIndex, index - 1)
-          .match(COUNT_GAPS_REGEXP);
+        wordBreaks = string.slice(stringIndex, index - 1).match(COUNT_GAPS_REGEXP);
 
         if (wordBreaks && stringIndex > 0) {
           score *= PENALTY_SKIPPED ** wordBreaks.length;
         }
       } else if (IS_SPACE_REGEXP.test(string.charAt(index - 1))) {
         score *= SCORE_SPACE_WORD_JUMP;
-        spaceBreaks = string
-          .slice(stringIndex, index - 1)
-          .match(COUNT_SPACE_REGEXP);
+        spaceBreaks = string.slice(stringIndex, index - 1).match(COUNT_SPACE_REGEXP);
 
         if (spaceBreaks && stringIndex > 0) {
           score *= PENALTY_SKIPPED ** spaceBreaks.length;
@@ -126,12 +122,10 @@ function commandScoreInner(
     }
     if (
       (score < SCORE_TRANSPOSITION &&
-        lowerString.charAt(index - 1) ===
-          lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
+        lowerString.charAt(index - 1) === lowerAbbreviation.charAt(abbreviationIndex + 1)) ||
       (lowerAbbreviation.charAt(abbreviationIndex + 1) ===
         lowerAbbreviation.charAt(abbreviationIndex) && // allow duplicate letters. Ref #7428
-        lowerString.charAt(index - 1) !==
-          lowerAbbreviation.charAt(abbreviationIndex))
+        lowerString.charAt(index - 1) !== lowerAbbreviation.charAt(abbreviationIndex))
     ) {
       transposedScore = commandScoreInner(
         string,
@@ -161,20 +155,15 @@ function commandScoreInner(
 
 function formatInput(string: string) {
   // convert all valid space characters to space so they match each other
-  return string.toLowerCase().replaceAll(COUNT_SPACE_REGEXP, ' ');
+  return string.toLowerCase().replaceAll(COUNT_SPACE_REGEXP, " ");
 }
 
-export function commandScore(
-  string: string,
-  abbreviation: string,
-  aliases?: string[]
-): number {
+export function commandScore(string: string, abbreviation: string, aliases?: string[]): number {
   /* NOTE:
    * in the original, we used to do the lower-casing on each recursive call, but this meant that toLowerCase()
    * was the dominating cost in the algorithm, passing both is a little ugly, but considerably faster.
    */
-  const searchString =
-    aliases && aliases.length > 0 ? `${string} ${aliases.join(' ')}` : string;
+  const searchString = aliases && aliases.length > 0 ? `${string} ${aliases.join(" ")}` : string;
 
   return commandScoreInner(
     searchString,

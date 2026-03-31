@@ -1,12 +1,8 @@
-import { useEditorRef } from 'platejs/react';
+import { useEditorRef } from "platejs/react";
 
-import { insertMedia } from '../../lib/media/insertMedia';
+import { insertMedia } from "../../lib/media/insertMedia";
 
-export const useMediaToolbarButton = ({
-  nodeType,
-}: {
-  nodeType?: string;
-} = {}) => {
+export const useMediaToolbarButton = ({ nodeType }: { nodeType?: string } = {}) => {
   const editor = useEditorRef();
 
   return {

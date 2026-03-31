@@ -1,9 +1,9 @@
-import { type Transformer } from "@/src/utils/transformers"
-import { transformFromAstSync } from "@babel/core"
-import { parse, ParserOptions } from "@babel/parser"
+import { transformFromAstSync } from "@babel/core";
+import { ParserOptions, parse } from "@babel/parser";
 // @ts-ignore
-import transformTypescript from "@babel/plugin-transform-typescript"
-import * as recast from "recast"
+import transformTypescript from "@babel/plugin-transform-typescript";
+import * as recast from "recast";
+import { type Transformer } from "@/src/utils/transformers";
 
 // TODO.
 // I'm using recast for the AST here.
@@ -59,25 +59,22 @@ const PARSE_OPTIONS: ParserOptions = {
     "typescript",
     "jsx",
   ],
-}
+};
 
-export const transformJsx: Transformer<string> = async ({
-  sourceFile,
-  config,
-}) => {
-  const output = sourceFile.getFullText()
+export const transformJsx: Transformer<string> = async ({ sourceFile, config }) => {
+  const output = sourceFile.getFullText();
 
   if (config.tsx) {
-    return output
+    return output;
   }
 
   const ast = recast.parse(output, {
     parser: {
       parse: (code: string) => {
-        return parse(code, PARSE_OPTIONS)
+        return parse(code, PARSE_OPTIONS);
       },
     },
-  })
+  });
 
   const result = transformFromAstSync(ast, output, {
     cloneInputAst: false,
@@ -85,11 +82,11 @@ export const transformJsx: Transformer<string> = async ({
     ast: true,
     plugins: [transformTypescript],
     configFile: false,
-  })
+  });
 
   if (!result || !result.ast) {
-    throw new Error("Failed to transform JSX")
+    throw new Error("Failed to transform JSX");
   }
 
-  return recast.print(result.ast).code
-}
+  return recast.print(result.ast).code;
+};

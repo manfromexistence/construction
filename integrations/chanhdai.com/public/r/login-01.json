@@ -4,13 +4,7 @@
   "title": "Login 01",
   "author": "ncdai <dai@chanhdai.com>",
   "description": "A simple login form.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input",
-    "label",
-    "field"
-  ],
+  "registryDependencies": ["button", "card", "input", "label", "field"],
   "files": [
     {
       "path": "src/registry/blocks/login-01/page.tsx",
@@ -24,9 +18,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "application",
-    "login"
-  ],
+  "categories": ["application", "login"],
   "type": "registry:block"
 }

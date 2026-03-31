@@ -1,12 +1,12 @@
-import { type Ancestor, NodeApi } from '@platejs/slate';
+import { type Ancestor, NodeApi } from "@platejs/slate";
 
-import type { PluginConfig } from '../../plugin/BasePlugin';
+import type { PluginConfig } from "../../plugin/BasePlugin";
 
-import { createTSlatePlugin } from '../../plugin/createSlatePlugin';
-import { withChunking } from './withChunking';
+import { createTSlatePlugin } from "../../plugin/createSlatePlugin";
+import { withChunking } from "./withChunking";
 
 export type ChunkingConfig = PluginConfig<
-  'chunking',
+  "chunking",
   {
     /**
      * The number of blocks per chunk.
@@ -33,7 +33,7 @@ export type ChunkingConfig = PluginConfig<
 >;
 
 export const ChunkingPlugin = createTSlatePlugin<ChunkingConfig>({
-  key: 'chunking',
+  key: "chunking",
   options: {
     chunkSize: 1000,
     contentVisibilityAuto: true,

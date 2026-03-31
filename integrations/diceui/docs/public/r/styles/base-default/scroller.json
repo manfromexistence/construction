@@ -1,9 +1,6 @@
 {
   "name": "scroller",
-  "dependencies": [
-    "@base-ui/react",
-    "lucide-react"
-  ],
+  "dependencies": ["@base-ui/react", "lucide-react"],
   "files": [
     {
       "path": "ui/scroller.tsx",

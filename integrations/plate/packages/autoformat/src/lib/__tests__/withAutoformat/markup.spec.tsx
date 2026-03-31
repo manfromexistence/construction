@@ -1,23 +1,23 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import { createAutoformatEditor } from './createAutoformatEditor';
+import { createAutoformatEditor } from "./createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin mark match parsing', () => {
+describe("AutoformatPlugin mark match parsing", () => {
   it.each([
     {
-      match: ['_***', '***_'],
-      title: 'formats a mark rule when match is an array',
+      match: ["_***", "***_"],
+      title: "formats a mark rule when match is an array",
     },
     {
-      match: '_***',
-      title: 'formats a mark rule when match is a string',
+      match: "_***",
+      title: "formats a mark rule when match is a string",
     },
-  ])('$title', ({ match }) => {
+  ])("$title", ({ match }) => {
     const input = (
       <fragment>
         <hp>
@@ -42,14 +42,14 @@ describe('AutoformatPlugin mark match parsing', () => {
         {
           ignoreTrim: true,
           match,
-          mode: 'mark',
+          mode: "mark",
           type: [KEYS.underline, KEYS.bold, KEYS.italic],
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('_');
+    editor.tf.insertText("_");
 
     expect(input.children).toEqual(output.children);
   });

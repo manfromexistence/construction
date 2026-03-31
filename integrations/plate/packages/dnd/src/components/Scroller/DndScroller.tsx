@@ -1,12 +1,11 @@
-import React from 'react';
+import { usePluginOption } from "platejs/react";
+import React from "react";
 
-import { usePluginOption } from 'platejs/react';
-
-import { DndPlugin } from '../../DndPlugin';
-import { type ScrollerProps, Scroller } from './Scroller';
+import { DndPlugin } from "../../DndPlugin";
+import { Scroller, type ScrollerProps } from "./Scroller";
 
 export function DndScroller(props: Partial<ScrollerProps>) {
-  const isDragging = usePluginOption(DndPlugin, 'isDragging');
+  const isDragging = usePluginOption(DndPlugin, "isDragging");
 
   const [show, setShow] = React.useState(false);
 

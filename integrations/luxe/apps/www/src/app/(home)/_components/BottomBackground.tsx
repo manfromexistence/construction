@@ -1,14 +1,14 @@
 "use client";
 
-import { cn } from "@/utils/cn";
 import { motion } from "motion/react";
+import { cn } from "@/utils/cn";
 
 export function BottomBackground() {
   return (
     <motion.svg
       className={cn(
         "pointer-events-none absolute -z-[1] mx-auto hidden w-full dark:block",
-        "-bottom-[420px] md:-bottom-96",
+        "-bottom-[420px] md:-bottom-96"
       )}
       width="944"
       height="1033"
@@ -36,10 +36,7 @@ export function BottomBackground() {
             fillOpacity="0.5"
           />
         </g>
-        <g
-          style={{ mixBlendMode: "color-dodge" }}
-          filter="url(#filter1_f_2076_3208)"
-        >
+        <g style={{ mixBlendMode: "color-dodge" }} filter="url(#filter1_f_2076_3208)">
           <ellipse
             cx="468.5"
             cy="589.25"
@@ -50,10 +47,7 @@ export function BottomBackground() {
             fillOpacity="0.5"
           />
         </g>
-        <g
-          style={{ mixBlendMode: "lighten" }}
-          filter="url(#filter2_f_2076_3208)"
-        >
+        <g style={{ mixBlendMode: "lighten" }} filter="url(#filter2_f_2076_3208)">
           <ellipse
             cx="365.16"
             cy="517.917"
@@ -64,10 +58,7 @@ export function BottomBackground() {
             fillOpacity="0.5"
           />
         </g>
-        <g
-          style={{ mixBlendMode: "lighten" }}
-          filter="url(#filter3_f_2076_3208)"
-        >
+        <g style={{ mixBlendMode: "lighten" }} filter="url(#filter3_f_2076_3208)">
           <ellipse
             cx="417.083"
             cy="711.695"
@@ -78,10 +69,7 @@ export function BottomBackground() {
             fillOpacity="0.5"
           />
         </g>
-        <g
-          style={{ mixBlendMode: "lighten" }}
-          filter="url(#filter4_f_2076_3208)"
-        >
+        <g style={{ mixBlendMode: "lighten" }} filter="url(#filter4_f_2076_3208)">
           <ellipse
             cx="471.75"
             cy="470.5"
@@ -92,10 +80,7 @@ export function BottomBackground() {
             fillOpacity="0.5"
           />
         </g>
-        <g
-          style={{ mixBlendMode: "lighten" }}
-          filter="url(#filter5_f_2076_3208)"
-        >
+        <g style={{ mixBlendMode: "lighten" }} filter="url(#filter5_f_2076_3208)">
           <ellipse
             cx="472"
             cy="695"
@@ -106,10 +91,7 @@ export function BottomBackground() {
             fillOpacity="0.5"
           />
         </g>
-        <g
-          style={{ mixBlendMode: "lighten" }}
-          filter="url(#filter6_f_2076_3208)"
-        >
+        <g style={{ mixBlendMode: "lighten" }} filter="url(#filter6_f_2076_3208)">
           <ellipse
             cx="472"
             cy="787"
@@ -120,10 +102,7 @@ export function BottomBackground() {
             fillOpacity="0.5"
           />
         </g>
-        <g
-          style={{ mixBlendMode: "lighten" }}
-          filter="url(#filter7_f_2076_3208)"
-        >
+        <g style={{ mixBlendMode: "lighten" }} filter="url(#filter7_f_2076_3208)">
           <ellipse
             cx="472"
             cy="779.75"
@@ -146,16 +125,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="44.5"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="44.5" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <filter
           id="filter1_f_2076_3208"
@@ -167,16 +138,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="44.5"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="44.5" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <filter
           id="filter2_f_2076_3208"
@@ -188,16 +151,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="44.5"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="44.5" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <filter
           id="filter3_f_2076_3208"
@@ -209,16 +164,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="44.5"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="44.5" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <filter
           id="filter4_f_2076_3208"
@@ -230,16 +177,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="44.5"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="44.5" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <filter
           id="filter5_f_2076_3208"
@@ -251,16 +190,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="75"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <filter
           id="filter6_f_2076_3208"
@@ -272,16 +203,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="75"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <filter
           id="filter7_f_2076_3208"
@@ -293,16 +216,8 @@ export function BottomBackground() {
           colorInterpolationFilters="sRGB"
         >
           <feFlood floodOpacity="0" result="BackgroundImageFix"></feFlood>
-          <feBlend
-            mode="normal"
-            in="SourceGraphic"
-            in2="BackgroundImageFix"
-            result="shape"
-          />
-          <feGaussianBlur
-            stdDeviation="75"
-            result="effect1_foregroundBlur_2076_3208"
-          />
+          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+          <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_2076_3208" />
         </filter>
         <linearGradient
           id="paint0_linear_2076_3208"

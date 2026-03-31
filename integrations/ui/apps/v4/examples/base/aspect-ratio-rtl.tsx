@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Image from "next/image"
+import Image from "next/image";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { AspectRatio } from "@/styles/base-nova/ui-rtl/aspect-ratio"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { AspectRatio } from "@/styles/base-nova/ui-rtl/aspect-ratio";
 
 const translations: Translations = {
   en: {
@@ -28,10 +25,10 @@ const translations: Translations = {
       caption: "נוף יפה",
     },
   },
-}
+};
 
 export function AspectRatioRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <figure className="w-full max-w-sm" dir={dir}>
@@ -47,5 +44,5 @@ export function AspectRatioRtl() {
         {t.caption}
       </figcaption>
     </figure>
-  )
+  );
 }

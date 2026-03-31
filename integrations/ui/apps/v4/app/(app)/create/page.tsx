@@ -1,12 +1,11 @@
-import { type Metadata } from "next"
-
-import { siteConfig } from "@/lib/config"
-import { absoluteUrl } from "@/lib/utils"
-import { Customizer } from "@/app/(app)/create/components/customizer"
-import { PresetHandler } from "@/app/(app)/create/components/preset-handler"
-import { Preview } from "@/app/(app)/create/components/preview"
-import { WelcomeDialog } from "@/app/(app)/create/components/welcome-dialog"
-import { getAllItems } from "@/app/(app)/create/lib/api"
+import { type Metadata } from "next";
+import { Customizer } from "@/app/(app)/create/components/customizer";
+import { PresetHandler } from "@/app/(app)/create/components/preset-handler";
+import { Preview } from "@/app/(app)/create/components/preview";
+import { WelcomeDialog } from "@/app/(app)/create/components/welcome-dialog";
+import { getAllItems } from "@/app/(app)/create/lib/api";
+import { siteConfig } from "@/lib/config";
+import { absoluteUrl } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "New Project",
@@ -35,10 +34,10 @@ export const metadata: Metadata = {
     images: [siteConfig.ogImage],
     creator: "@shadcn",
   },
-}
+};
 
 export default async function CreatePage() {
-  const itemsByBase = await getAllItems()
+  const itemsByBase = await getAllItems();
 
   return (
     <div className="relative z-10 flex min-h-0 flex-1 flex-col overflow-hidden section-soft [--customizer-width:--spacing(48)] [--gap:--spacing(4)] md:[--gap:--spacing(6)] 2xl:[--customizer-width:--spacing(56)]">
@@ -52,5 +51,5 @@ export default async function CreatePage() {
       <PresetHandler />
       <WelcomeDialog />
     </div>
-  )
+  );
 }

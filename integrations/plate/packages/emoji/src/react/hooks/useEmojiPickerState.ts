@@ -1,8 +1,7 @@
-import React from 'react';
+import type { Emoji } from "@emoji-mart/data";
+import React from "react";
 
-import type { Emoji } from '@emoji-mart/data';
-
-import { type EmojiCategoryList, EmojiCategory } from '../../lib';
+import { EmojiCategory, type EmojiCategoryList } from "../../lib";
 
 export type EmojiPickerStateDispatch = {
   type: string;
@@ -31,7 +30,7 @@ const initialState: EmojiPickerStateProps = {
   isOpen: false,
   isSearching: false,
   searchResult: [],
-  searchValue: '',
+  searchValue: "",
   visibleCategories: new Map(),
 };
 
@@ -44,50 +43,50 @@ export const useEmojiPickerState = (): [
       const { payload, type } = action;
 
       switch (type) {
-        case 'CLEAR_SEARCH': {
+        case "CLEAR_SEARCH": {
           return {
             ...state,
             focusedCategory: EmojiCategory.Frequent,
             hasFound: false,
             isSearching: false,
-            searchValue: '',
+            searchValue: "",
           };
         }
-        case 'SET_CLOSE': {
+        case "SET_CLOSE": {
           return {
             ...state,
             emoji: undefined,
             isOpen: false,
           };
         }
-        case 'SET_EMOJI':
-        case 'SET_FOCUSED_AND_VISIBLE_CATEGORIES':
-        case 'SET_SEARCH': {
+        case "SET_EMOJI":
+        case "SET_FOCUSED_AND_VISIBLE_CATEGORIES":
+        case "SET_SEARCH": {
           return { ...state, ...payload };
         }
-        case 'SET_FOCUSED_CATEGORY': {
+        case "SET_FOCUSED_CATEGORY": {
           return {
             ...state,
             ...payload,
             hasFound: false,
             isSearching: false,
-            searchValue: '',
+            searchValue: "",
           };
         }
-        case 'SET_OPEN': {
+        case "SET_OPEN": {
           return {
             ...state,
             isOpen: true,
           };
         }
-        case 'UPDATE_FREQUENT_EMOJIS': {
+        case "UPDATE_FREQUENT_EMOJIS": {
           return {
             ...state,
             ...payload,
             emoji: undefined,
           };
         }
-        case 'UPDATE_SEARCH_RESULT': {
+        case "UPDATE_SEARCH_RESULT": {
           return {
             ...state,
             ...payload,

@@ -372,24 +372,18 @@
     --fade-linear-gradient: linear-gradient(
       to right,
       transparent 0,
-      color-mix(in oklab, var(--fade-color, var(--background)) 20%, transparent)
-        10px,
-      color-mix(in oklab, var(--fade-color, var(--background)) 50%, transparent)
-        25px,
-      color-mix(in oklab, var(--fade-color, var(--background)) 80%, transparent)
-        35px,
+      color-mix(in oklab, var(--fade-color, var(--background)) 20%, transparent) 10px,
+      color-mix(in oklab, var(--fade-color, var(--background)) 50%, transparent) 25px,
+      color-mix(in oklab, var(--fade-color, var(--background)) 80%, transparent) 35px,
       var(--fade-color, var(--background)) 45px
     );
 
     --fade-radial-gradient: radial-gradient(
       ellipse at top right,
       var(--fade-color, var(--background)) 30%,
-      color-mix(in oklab, var(--fade-color, var(--background)) 80%, transparent)
-        40%,
-      color-mix(in oklab, var(--fade-color, var(--background)) 50%, transparent)
-        50%,
-      color-mix(in oklab, var(--fade-color, var(--background)) 20%, transparent)
-        60%,
+      color-mix(in oklab, var(--fade-color, var(--background)) 80%, transparent) 40%,
+      color-mix(in oklab, var(--fade-color, var(--background)) 50%, transparent) 50%,
+      color-mix(in oklab, var(--fade-color, var(--background)) 20%, transparent) 60%,
       transparent 70%
     );
 

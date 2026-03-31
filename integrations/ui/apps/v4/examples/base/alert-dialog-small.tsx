@@ -8,15 +8,13 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/styles/base-nova/ui/alert-dialog"
-import { Button } from "@/styles/base-nova/ui/button"
+} from "@/styles/base-nova/ui/alert-dialog";
+import { Button } from "@/styles/base-nova/ui/button";
 
 export function AlertDialogSmall() {
   return (
     <AlertDialog>
-      <AlertDialogTrigger
-        render={<Button variant="outline">Show Dialog</Button>}
-      />
+      <AlertDialogTrigger render={<Button variant="outline">Show Dialog</Button>} />
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
           <AlertDialogTitle>Allow accessory to connect?</AlertDialogTitle>
@@ -30,5 +28,5 @@ export function AlertDialogSmall() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

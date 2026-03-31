@@ -2,13 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input-otp-example",
   "title": "Input OTP",
-  "registryDependencies": [
-    "button",
-    "card",
-    "field",
-    "input-otp",
-    "example"
-  ],
+  "registryDependencies": ["button", "card", "field", "input-otp", "example"],
   "files": [
     {
       "path": "registry/base-nova/examples/input-otp-example.tsx",

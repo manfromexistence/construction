@@ -1,10 +1,6 @@
 {
   "name": "media-player-playlist-demo",
-  "registryDependencies": [
-    "media-player",
-    "button",
-    "scroll-area"
-  ],
+  "registryDependencies": ["media-player", "button", "scroll-area"],
   "files": [
     {
       "path": "examples/media-player-playlist-demo.tsx",

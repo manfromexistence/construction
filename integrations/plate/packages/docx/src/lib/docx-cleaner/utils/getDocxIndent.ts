@@ -6,11 +6,11 @@ const NON_NUMERIC_PATTERN = /[^\d,.]+/;
  * starting by "." are replaced by "0."
  */
 const extractNumber = (str: string) => {
-  if (str.startsWith('-')) return 0;
+  if (str.startsWith("-")) return 0;
 
-  let number = str.replace(NON_NUMERIC_PATTERN, '');
+  let number = str.replace(NON_NUMERIC_PATTERN, "");
 
-  if (number.startsWith('.')) {
+  if (number.startsWith(".")) {
     number = `0${number}`;
   }
 
@@ -21,7 +21,7 @@ const styleToIndent = (style: string, indentStep = DOCX_INDENT_STEP) => {
   const indent = extractNumber(style);
 
   if (indent) {
-    if (style.includes('in')) {
+    if (style.includes("in")) {
       return Math.round((indent * 72) / indentStep);
     }
 
@@ -40,8 +40,6 @@ export const getDocxSpacing = (element: Element, cssProp: string): number => {
   return styleToIndent(spacing) || 0;
 };
 
-export const getDocxIndent = (element: Element) =>
-  getDocxSpacing(element, 'marginLeft');
+export const getDocxIndent = (element: Element) => getDocxSpacing(element, "marginLeft");
 
-export const getDocxTextIndent = (element: Element) =>
-  getDocxSpacing(element, 'textIndent');
+export const getDocxTextIndent = (element: Element) => getDocxSpacing(element, "textIndent");

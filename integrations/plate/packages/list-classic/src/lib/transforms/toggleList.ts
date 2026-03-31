@@ -1,26 +1,12 @@
-import {
-  type SlateEditor,
-  type TElement,
-  ElementApi,
-  KEYS,
-  NodeApi,
-  RangeApi,
-} from 'platejs';
+import { ElementApi, KEYS, NodeApi, RangeApi, type SlateEditor, type TElement } from "platejs";
 
-import { BaseListPlugin } from '../BaseListPlugin';
-import {
-  getListItemEntry,
-  getListTypes,
-  getPropsIfTaskList,
-} from '../queries/index';
-import { unwrapList } from './unwrapList';
+import { BaseListPlugin } from "../BaseListPlugin";
+import { getListItemEntry, getListTypes, getPropsIfTaskList } from "../queries/index";
+import { unwrapList } from "./unwrapList";
 
 type ToggleListOptions = { type: string; checked?: boolean };
 
-const _toggleList = (
-  editor: SlateEditor,
-  { checked = false, type }: ToggleListOptions
-) =>
+const _toggleList = (editor: SlateEditor, { checked = false, type }: ToggleListOptions) =>
   editor.tf.withoutNormalizing(() => {
     if (!editor.selection) {
       return;
@@ -42,10 +28,8 @@ const _toggleList = (
             { type },
             {
               at: editor.selection,
-              mode: 'lowest',
-              match: (n) =>
-                ElementApi.isElement(n) &&
-                getListTypes(editor).includes(n.type),
+              mode: "lowest",
+              match: (n) => ElementApi.isElement(n) && getListTypes(editor).includes(n.type),
             }
           );
         }
@@ -84,11 +68,7 @@ const _toggleList = (
       // selection is a range
 
       const [startPoint, endPoint] = RangeApi.edges(editor.selection!);
-      const commonEntry = NodeApi.common<TElement>(
-        editor,
-        startPoint.path,
-        endPoint.path
-      )!;
+      const commonEntry = NodeApi.common<TElement>(editor, startPoint.path, endPoint.path)!;
 
       if (
         getListTypes(editor).includes(commonEntry[0].type) ||
@@ -100,23 +80,20 @@ const _toggleList = (
           const startList = editor.api.node({
             at: RangeApi.start(editor.selection),
             match: { type: getListTypes(editor) },
-            mode: 'lowest',
+            mode: "lowest",
           });
           const endList = editor.api.node({
             at: RangeApi.end(editor.selection),
             match: { type: getListTypes(editor) },
-            mode: 'lowest',
+            mode: "lowest",
           });
-          const rangeLength = Math.min(
-            startList![1].length,
-            endList![1].length
-          );
+          const rangeLength = Math.min(startList![1].length, endList![1].length);
 
           editor.tf.setNodes(
             { type },
             {
               at: editor.selection,
-              mode: 'all',
+              mode: "all",
               match: (n, path) =>
                 ElementApi.isElement(n) &&
                 getListTypes(editor).includes(n.type) &&
@@ -127,11 +104,9 @@ const _toggleList = (
       } else {
         const rootPathLength = commonEntry[1].length;
         const _nodes = editor.api.nodes<TElement>({
-          mode: 'all',
+          mode: "all",
         });
-        const nodes = Array.from(_nodes).filter(
-          ([, path]) => path.length === rootPathLength + 1
-        );
+        const nodes = Array.from(_nodes).filter(([, path]) => path.length === rootPathLength + 1);
 
         nodes.forEach((n) => {
           if (getListTypes(editor).includes(n[0].type)) {
@@ -139,18 +114,13 @@ const _toggleList = (
               { type },
               {
                 at: n[1],
-                mode: 'all',
-                match: (_n) =>
-                  ElementApi.isElement(_n) &&
-                  getListTypes(editor).includes(_n.type),
+                mode: "all",
+                match: (_n) => ElementApi.isElement(_n) && getListTypes(editor).includes(_n.type),
               }
             );
           } else {
             if (!validLiChildrenTypes?.includes(n[0].type)) {
-              editor.tf.setNodes(
-                { type: editor.getType(KEYS.lic) },
-                { at: n[1] }
-              );
+              editor.tf.setNodes({ type: editor.getType(KEYS.lic) }, { at: n[1] });
             }
 
             const listItem = {

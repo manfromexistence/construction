@@ -1,17 +1,16 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseLinkPlugin } from '../BaseLinkPlugin';
-import { unwrapLink } from './unwrapLink';
+import { BaseLinkPlugin } from "../BaseLinkPlugin";
+import { unwrapLink } from "./unwrapLink";
 
 jsxt;
 
-describe('unwrapLink', () => {
-  it('unwraps an entire link when split mode is off', () => {
+describe("unwrapLink", () => {
+  it("unwraps an entire link when split mode is off", () => {
     const input = (
       <editor>
         <hp>
@@ -40,7 +39,7 @@ describe('unwrapLink', () => {
     );
   });
 
-  it('split mode preserves the linked prefix and unwraps the trailing fragment', () => {
+  it("split mode preserves the linked prefix and unwraps the trailing fragment", () => {
     const editor = createSlateEditor({
       plugins: [BaseLinkPlugin],
       selection: {
@@ -50,15 +49,15 @@ describe('unwrapLink', () => {
       value: [
         {
           children: [
-            { text: 'x' },
+            { text: "x" },
             {
-              children: [{ text: 'abcdef' }],
-              type: 'a',
-              url: 'https://example.com',
+              children: [{ text: "abcdef" }],
+              type: "a",
+              url: "https://example.com",
             },
-            { text: 'y' },
+            { text: "y" },
           ],
-          type: 'p',
+          type: "p",
         },
       ],
     });
@@ -68,20 +67,20 @@ describe('unwrapLink', () => {
     expect(editor.children).toEqual([
       {
         children: [
-          { text: 'x' },
+          { text: "x" },
           {
-            children: [{ text: 'abcd' }],
-            type: 'a',
-            url: 'https://example.com',
+            children: [{ text: "abcd" }],
+            type: "a",
+            url: "https://example.com",
           },
-          { text: 'efy' },
+          { text: "efy" },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
   });
 
-  it('split mode preserves the linked suffix when only the focus is inside the link', () => {
+  it("split mode preserves the linked suffix when only the focus is inside the link", () => {
     const editor = createSlateEditor({
       plugins: [BaseLinkPlugin],
       selection: {
@@ -91,15 +90,15 @@ describe('unwrapLink', () => {
       value: [
         {
           children: [
-            { text: 'x' },
+            { text: "x" },
             {
-              children: [{ text: 'abcdef' }],
-              type: 'a',
-              url: 'https://example.com',
+              children: [{ text: "abcdef" }],
+              type: "a",
+              url: "https://example.com",
             },
-            { text: 'y' },
+            { text: "y" },
           ],
-          type: 'p',
+          type: "p",
         },
       ],
     });
@@ -109,20 +108,20 @@ describe('unwrapLink', () => {
     expect(editor.children).toEqual([
       {
         children: [
-          { text: 'x' },
+          { text: "x" },
           {
-            children: [{ text: 'ab' }],
-            type: 'a',
-            url: 'https://example.com',
+            children: [{ text: "ab" }],
+            type: "a",
+            url: "https://example.com",
           },
-          { text: 'cdefy' },
+          { text: "cdefy" },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
   });
 
-  it('split mode preserves the linked suffix when only the anchor is inside the link', () => {
+  it("split mode preserves the linked suffix when only the anchor is inside the link", () => {
     const editor = createSlateEditor({
       plugins: [BaseLinkPlugin],
       selection: {
@@ -132,15 +131,15 @@ describe('unwrapLink', () => {
       value: [
         {
           children: [
-            { text: 'x' },
+            { text: "x" },
             {
-              children: [{ text: 'abcdef' }],
-              type: 'a',
-              url: 'https://example.com',
+              children: [{ text: "abcdef" }],
+              type: "a",
+              url: "https://example.com",
             },
-            { text: 'y' },
+            { text: "y" },
           ],
-          type: 'p',
+          type: "p",
         },
       ],
     });
@@ -150,15 +149,15 @@ describe('unwrapLink', () => {
     expect(editor.children).toEqual([
       {
         children: [
-          { text: 'x' },
+          { text: "x" },
           {
-            children: [{ text: 'abcd' }],
-            type: 'a',
-            url: 'https://example.com',
+            children: [{ text: "abcd" }],
+            type: "a",
+            url: "https://example.com",
           },
-          { text: 'efy' },
+          { text: "efy" },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
   });

@@ -1,26 +1,23 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
+  type ColumnDef,
+  type ColumnFiltersState,
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable,
-  type ColumnDef,
-  type ColumnFiltersState,
   type SortingState,
+  useReactTable,
   type VisibilityState,
-} from "@tanstack/react-table"
-import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react"
+} from "@tanstack/react-table";
+import { ArrowUpDown, ChevronDown, MoreHorizontal } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
-import { Checkbox } from "@/styles/radix-nova/ui-rtl/checkbox"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
+import { Checkbox } from "@/styles/radix-nova/ui-rtl/checkbox";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -30,8 +27,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui-rtl/dropdown-menu"
-import { Input } from "@/styles/radix-nova/ui-rtl/input"
+} from "@/styles/radix-nova/ui-rtl/dropdown-menu";
+import { Input } from "@/styles/radix-nova/ui-rtl/input";
 import {
   Table,
   TableBody,
@@ -39,7 +36,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/styles/radix-nova/ui-rtl/table"
+} from "@/styles/radix-nova/ui-rtl/table";
 
 const translations: Translations = {
   en: {
@@ -120,14 +117,14 @@ const translations: Translations = {
       pending: "ממתין",
     },
   },
-}
+};
 
 type Payment = {
-  id: string
-  amount: number
-  status: "pending" | "processing" | "success" | "failed"
-  email: string
-}
+  id: string;
+  amount: number;
+  status: "pending" | "processing" | "success" | "failed";
+  email: string;
+};
 
 const data: Payment[] = [
   {
@@ -160,17 +157,14 @@ const data: Payment[] = [
     status: "failed",
     email: "carmella@example.com",
   },
-]
+];
 
 export function DataTableRtl() {
-  const { t, dir, language } = useTranslation(translations, "ar")
-  const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
-  const [rowSelection, setRowSelection] = React.useState({})
+  const { t, dir, language } = useTranslation(translations, "ar");
+  const [sorting, setSorting] = React.useState<SortingState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = React.useState({});
 
   const columns: ColumnDef<Payment>[] = React.useMemo(
     () => [
@@ -179,12 +173,9 @@ export function DataTableRtl() {
         header: ({ table }) => (
           <Checkbox
             checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() ? true : false)
+              table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() ? true : false)
             }
-            onCheckedChange={(value) =>
-              table.toggleAllPageRowsSelected(!!value)
-            }
+            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
             aria-label={t.selectAll}
           />
         ),
@@ -202,14 +193,14 @@ export function DataTableRtl() {
         accessorKey: "status",
         header: t.status,
         cell: ({ row }) => {
-          const status = row.getValue("status") as string
+          const status = row.getValue("status") as string;
           const statusMap: Record<string, string> = {
             success: t.success,
             processing: t.processing,
             failed: t.failed,
             pending: t.pending,
-          }
-          return <div className="capitalize">{statusMap[status]}</div>
+          };
+          return <div className="capitalize">{statusMap[status]}</div>;
         },
       },
       {
@@ -218,40 +209,33 @@ export function DataTableRtl() {
           return (
             <Button
               variant="ghost"
-              onClick={() =>
-                column.toggleSorting(column.getIsSorted() === "asc")
-              }
+              onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
             >
               {t.email}
               <ArrowUpDown />
             </Button>
-          )
+          );
         },
-        cell: ({ row }) => (
-          <div className="lowercase">{row.getValue("email")}</div>
-        ),
+        cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
       },
       {
         accessorKey: "amount",
         header: () => <div className="text-start">{t.amount}</div>,
         cell: ({ row }) => {
-          const amount = parseFloat(row.getValue("amount"))
-          const formatted = new Intl.NumberFormat(
-            dir === "rtl" ? "ar-SA" : "en-US",
-            {
-              style: "currency",
-              currency: "USD",
-            }
-          ).format(amount)
+          const amount = parseFloat(row.getValue("amount"));
+          const formatted = new Intl.NumberFormat(dir === "rtl" ? "ar-SA" : "en-US", {
+            style: "currency",
+            currency: "USD",
+          }).format(amount);
 
-          return <div className="text-start font-medium">{formatted}</div>
+          return <div className="text-start font-medium">{formatted}</div>;
         },
       },
       {
         id: "actions",
         enableHiding: false,
         cell: ({ row }) => {
-          const payment = row.original
+          const payment = row.original;
 
           return (
             <DropdownMenu>
@@ -268,9 +252,7 @@ export function DataTableRtl() {
               >
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>{t.actions}</DropdownMenuLabel>
-                  <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(payment.id)}
-                  >
+                  <DropdownMenuItem onClick={() => navigator.clipboard.writeText(payment.id)}>
                     {t.copyPaymentId}
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
@@ -281,12 +263,12 @@ export function DataTableRtl() {
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-          )
+          );
         },
       },
     ],
     [t, dir, language]
-  )
+  );
 
   const table = useReactTable({
     data,
@@ -305,7 +287,7 @@ export function DataTableRtl() {
       columnVisibility,
       rowSelection,
     },
-  })
+  });
 
   return (
     <div className="w-full">
@@ -313,9 +295,7 @@ export function DataTableRtl() {
         <Input
           placeholder={t.filterEmails}
           value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("email")?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => table.getColumn("email")?.setFilterValue(event.target.value)}
           className="max-w-sm"
         />
         <DropdownMenu>
@@ -338,13 +318,11 @@ export function DataTableRtl() {
                       key={column.id}
                       className="capitalize"
                       checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
+                      onCheckedChange={(value) => column.toggleVisibility(!!value)}
                     >
                       {column.id}
                     </DropdownMenuCheckboxItem>
-                  )
+                  );
                 })}
             </DropdownMenuGroup>
           </DropdownMenuContent>
@@ -360,12 +338,9 @@ export function DataTableRtl() {
                     <TableHead key={header.id}>
                       {header.isPlaceholder
                         ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                        : flexRender(header.column.columnDef.header, header.getContext())}
                     </TableHead>
-                  )
+                  );
                 })}
               </TableRow>
             ))}
@@ -373,26 +348,17 @@ export function DataTableRtl() {
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
+                <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
                   ))}
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={columns.length}
-                  className="h-24 text-center"
-                >
+                <TableCell colSpan={columns.length} className="h-24 text-center">
                   {t.noResults}
                 </TableCell>
               </TableRow>
@@ -425,5 +391,5 @@ export function DataTableRtl() {
         </div>
       </div>
     </div>
-  )
+  );
 }

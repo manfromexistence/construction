@@ -1,13 +1,13 @@
 "use client";
 
+import { Moon, Sun } from "lucide-react";
+import Link from "next/link";
 import { ThemePresetButtons } from "@/components/home/theme-preset-buttons";
 import { useTheme } from "@/components/theme-provider";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { useEditorStore } from "@/store/editor-store";
 import { defaultPresets } from "@/utils/theme-presets";
-import { Sun, Moon } from "lucide-react";
-import Link from "next/link";
 
 export default function NotFound() {
   const { theme, toggleTheme } = useTheme();

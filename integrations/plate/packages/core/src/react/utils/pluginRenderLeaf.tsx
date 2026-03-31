@@ -1,12 +1,10 @@
-import React from 'react';
-
-import type { PlateEditor } from '../editor/PlateEditor';
-import type { AnyEditorPlatePlugin } from '../plugin/PlatePlugin';
-
-import { isEditOnly } from '../../internal/plugin/isEditOnlyDisabled';
-import { type PlateLeafProps, PlateLeaf } from '../components/plate-nodes';
-import { useReadOnly } from '../slate-react';
-import { getRenderNodeProps } from './getRenderNodeProps';
+import React from "react";
+import { isEditOnly } from "../../internal/plugin/isEditOnlyDisabled";
+import { PlateLeaf, type PlateLeafProps } from "../components/plate-nodes";
+import type { PlateEditor } from "../editor/PlateEditor";
+import type { AnyEditorPlatePlugin } from "../plugin/PlatePlugin";
+import { useReadOnly } from "../slate-react";
+import { getRenderNodeProps } from "./getRenderNodeProps";
 
 export type RenderLeaf = (props: PlateLeafProps) => React.ReactElement<any>;
 
@@ -15,10 +13,7 @@ export type RenderLeaf = (props: PlateLeafProps) => React.ReactElement<any>;
  * equals to the slate leaf type, render `plugin.render.node`. Else, return
  * `children`.
  */
-export const pluginRenderLeaf = (
-  editor: PlateEditor,
-  plugin: AnyEditorPlatePlugin
-): RenderLeaf =>
+export const pluginRenderLeaf = (editor: PlateEditor, plugin: AnyEditorPlatePlugin): RenderLeaf =>
   function render(props) {
     const {
       render: { leaf: leafComponent, node },
@@ -27,7 +22,7 @@ export const pluginRenderLeaf = (
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const readOnly = useReadOnly();
 
-    if (isEditOnly(readOnly, plugin, 'render')) return children;
+    if (isEditOnly(readOnly, plugin, "render")) return children;
 
     if (leaf[plugin.node.type]) {
       const Component = leafComponent ?? node;

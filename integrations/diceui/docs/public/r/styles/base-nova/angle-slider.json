@@ -1,9 +1,6 @@
 {
   "name": "angle-slider",
-  "dependencies": [
-    "@base-ui/react",
-    "react-dom"
-  ],
+  "dependencies": ["@base-ui/react", "react-dom"],
   "registryDependencies": [
     "compose-refs",
     "direction",

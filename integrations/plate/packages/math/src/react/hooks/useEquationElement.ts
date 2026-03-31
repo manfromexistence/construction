@@ -1,8 +1,7 @@
-import React from 'react';
+import katex, { type KatexOptions } from "katex";
 
-import type { TEquationElement } from 'platejs';
-
-import katex, { type KatexOptions } from 'katex';
+import type { TEquationElement } from "platejs";
+import React from "react";
 
 export const useEquationElement = ({
   element,

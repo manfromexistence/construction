@@ -1,17 +1,17 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { streamDeserializeMd } from "../../../../../../packages/ai/src/react/ai-chat/streaming/streamDeserializeMd";
+import { streamSerializeMd } from "../../../../../../packages/ai/src/react/ai-chat/streaming/streamSerializeMd";
+import { createTestEditor } from "./__tests__/createTestEditor";
 
-import { createTestEditor } from './__tests__/createTestEditor';
-import { streamDeserializeMd } from '../../../../../../packages/ai/src/react/ai-chat/streaming/streamDeserializeMd';
-import { streamSerializeMd } from '../../../../../../packages/ai/src/react/ai-chat/streaming/streamSerializeMd';
 const { editor } = createTestEditor() as any;
 
 jsxt;
 
-describe('streamDeserializeMd', () => {
-  it('round-trips a paragraph chunk with a trailing blank line', async () => {
-    const chunk = 'chunk1\n\n';
+describe("streamDeserializeMd", () => {
+  it("round-trips a paragraph chunk with a trailing blank line", async () => {
+    const chunk = "chunk1\n\n";
 
     const result = streamDeserializeMd(editor, chunk);
 
@@ -29,27 +29,27 @@ describe('streamDeserializeMd', () => {
     expect(streamSerializeMd(editor, { value: result }, chunk)).toEqual(chunk);
   });
 
-  it('keeps trailing line breaks inside code blocks', async () => {
-    const chunk = '```typescript\nconst a = 1\n\n';
+  it("keeps trailing line breaks inside code blocks", async () => {
+    const chunk = "```typescript\nconst a = 1\n\n";
 
     const result = streamDeserializeMd(editor, chunk);
 
     const output = [
       {
         children: [
-          { children: [{ text: 'const a = 1' }], type: 'code_line' },
-          { children: [{ text: '' }], type: 'code_line' },
+          { children: [{ text: "const a = 1" }], type: "code_line" },
+          { children: [{ text: "" }], type: "code_line" },
         ],
-        lang: 'typescript',
-        type: 'code_block',
+        lang: "typescript",
+        type: "code_block",
       },
     ];
 
     expect(result).toEqual(output);
   });
 
-  it('round-trips inline math without altering the chunk', async () => {
-    const chunk = '$$a^2 ';
+  it("round-trips inline math without altering the chunk", async () => {
+    const chunk = "$$a^2 ";
 
     const result = streamDeserializeMd(editor, chunk);
 
@@ -58,8 +58,8 @@ describe('streamDeserializeMd', () => {
     expect(serialized).toEqual(chunk);
   });
 
-  it('round-trips incomplete html without forcing markdown parsing', async () => {
-    const chunk = '<!DOCTYPE ';
+  it("round-trips incomplete html without forcing markdown parsing", async () => {
+    const chunk = "<!DOCTYPE ";
 
     const result = streamDeserializeMd(editor, chunk);
 

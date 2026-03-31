@@ -16,10 +16,7 @@ export async function GET() {
     return NextResponse.json(allSkaters);
   } catch (error) {
     console.error({ error });
-    return NextResponse.json(
-      { error: "Failed to fetch skaters" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to fetch skaters" }, { status: 500 });
   }
 }
 
@@ -38,10 +35,7 @@ export async function POST(request: Request) {
     // Try bulk insert first
     const bulkResult = insertSkatersSchema.safeParse(body);
     if (bulkResult.success) {
-      const newSkaters = await db
-        .insert(skaters)
-        .values(bulkResult.data.skaters)
-        .returning();
+      const newSkaters = await db.insert(skaters).values(bulkResult.data.skaters).returning();
 
       return NextResponse.json({
         inserted: newSkaters.length,
@@ -57,7 +51,7 @@ export async function POST(request: Request) {
           error: "Invalid request body",
           details: singleResult.error.flatten(),
         },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -70,10 +64,7 @@ export async function POST(request: Request) {
     return NextResponse.json(newSkater);
   } catch (error) {
     console.error({ error });
-    return NextResponse.json(
-      { error: "Failed to create skater" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to create skater" }, { status: 500 });
   }
 }
 
@@ -92,7 +83,7 @@ export async function PATCH(request: Request) {
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid request body", details: result.error.flatten() },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -100,10 +91,7 @@ export async function PATCH(request: Request) {
     // Zod schema guarantees min 1 element, but we check anyway for type safety
     const firstUpdate = updates.at(0);
     if (!firstUpdate) {
-      return NextResponse.json(
-        { error: "updates array is empty" },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "updates array is empty" }, { status: 400 });
     }
 
     // Single update - just update directly
@@ -120,9 +108,7 @@ export async function PATCH(request: Request) {
     // Group updates by the same changes for efficiency
     // If all updates have the same changes, we can do a single query
     const firstChanges = JSON.stringify(firstUpdate.changes);
-    const allSameChanges = updates.every(
-      (u) => JSON.stringify(u.changes) === firstChanges,
-    );
+    const allSameChanges = updates.every((u) => JSON.stringify(u.changes) === firstChanges);
 
     if (allSameChanges) {
       // All updates have the same changes - use single query with IN clause
@@ -154,10 +140,7 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ updated: results.length });
   } catch (error) {
     console.error({ error });
-    return NextResponse.json(
-      { error: "Failed to update skaters" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to update skaters" }, { status: 500 });
   }
 }
 
@@ -176,7 +159,7 @@ export async function DELETE(request: Request) {
     if (!result.success) {
       return NextResponse.json(
         { error: "Invalid request body", details: result.error.flatten() },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -188,9 +171,6 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ deleted: deletedSkaters.length });
   } catch (error) {
     console.error({ error });
-    return NextResponse.json(
-      { error: "Failed to delete skaters" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to delete skaters" }, { status: 500 });
   }
 }

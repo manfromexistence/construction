@@ -1,9 +1,9 @@
-import { isDefined } from '@udecode/utils';
-import { clsx } from 'clsx';
-import React from 'react';
+import { isDefined } from "@udecode/utils";
+import { clsx } from "clsx";
+import React from "react";
 
-import { createSlotComponent } from './createSlotComponent';
-import { useComposedRef } from './useComposedRef';
+import { createSlotComponent } from "./createSlotComponent";
+import { useComposedRef } from "./useComposedRef";
 
 /**
  * Primitive component factory. It uses hooks for managing state and props, and
@@ -54,7 +54,7 @@ export const createPrimitiveComponent = <
         options?: Parameters<SH>[0];
         state?: Parameters<PH>[0];
         style?: React.CSSProperties;
-        setProps?: (hookProps: NonNullable<ReturnType<PH>['props']>) => P;
+        setProps?: (hookProps: NonNullable<ReturnType<PH>["props"]>) => P;
       } & P
     >(
       (
@@ -79,9 +79,7 @@ export const createPrimitiveComponent = <
           hidden,
           props: hookProps,
           ref: hookRef,
-        } = propsHook
-          ? propsHook(state)
-          : { hidden: false, props: {}, ref: null };
+        } = propsHook ? propsHook(state) : { hidden: false, props: {}, ref: null };
 
         const _ref = useComposedRef(ref, hookRef);
         const className =
@@ -89,9 +87,7 @@ export const createPrimitiveComponent = <
             ? clsx(hookProps?.className, classNameProp)
             : undefined;
         const style =
-          hookProps?.style || styleProp
-            ? { ...hookProps?.style, ...styleProp }
-            : undefined;
+          hookProps?.style || styleProp ? { ...hookProps?.style, ...styleProp } : undefined;
 
         if (!asChild && hidden) return null;
 

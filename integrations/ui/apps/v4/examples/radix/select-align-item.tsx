@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
 import {
   Field,
@@ -8,7 +8,7 @@ import {
   FieldDescription,
   FieldGroup,
   FieldLabel,
-} from "@/styles/radix-nova/ui/field"
+} from "@/styles/radix-nova/ui/field";
 import {
   Select,
   SelectContent,
@@ -16,20 +16,18 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/radix-nova/ui/select"
-import { Switch } from "@/styles/radix-nova/ui/switch"
+} from "@/styles/radix-nova/ui/select";
+import { Switch } from "@/styles/radix-nova/ui/switch";
 
 export function SelectAlignItem() {
-  const [alignItemWithTrigger, setAlignItemWithTrigger] = React.useState(true)
+  const [alignItemWithTrigger, setAlignItemWithTrigger] = React.useState(true);
 
   return (
     <FieldGroup className="w-full max-w-xs">
       <Field orientation="horizontal">
         <FieldContent>
           <FieldLabel htmlFor="align-item">Align Item</FieldLabel>
-          <FieldDescription>
-            Toggle to align the item with the trigger.
-          </FieldDescription>
+          <FieldDescription>Toggle to align the item with the trigger.</FieldDescription>
         </FieldContent>
         <Switch
           id="align-item"
@@ -42,9 +40,7 @@ export function SelectAlignItem() {
           <SelectTrigger>
             <SelectValue />
           </SelectTrigger>
-          <SelectContent
-            position={alignItemWithTrigger ? "item-aligned" : "popper"}
-          >
+          <SelectContent position={alignItemWithTrigger ? "item-aligned" : "popper"}>
             <SelectGroup>
               <SelectItem value="apple">Apple</SelectItem>
               <SelectItem value="banana">Banana</SelectItem>
@@ -56,5 +52,5 @@ export function SelectAlignItem() {
         </Select>
       </Field>
     </FieldGroup>
-  )
+  );
 }

@@ -57,8 +57,7 @@
   /* Set up the mask layers */
   mask-image:
     linear-gradient(to top, transparent, black 90%),
-    linear-gradient(to bottom, transparent 0%, black 100%),
-    linear-gradient(black, black);
+    linear-gradient(to bottom, transparent 0%, black 100%), linear-gradient(black, black);
 
   mask-size:
     100% var(--top-mask-height),
@@ -88,8 +87,7 @@
 
   mask-image:
     linear-gradient(to left, transparent, black 90%),
-    linear-gradient(to right, transparent 0%, black 100%),
-    linear-gradient(black, black);
+    linear-gradient(to right, transparent 0%, black 100%), linear-gradient(black, black);
 
   mask-size:
     var(--left-mask-width) 100%,

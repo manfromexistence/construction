@@ -1,19 +1,19 @@
-import { withGetFragmentExcludeDiff } from './withGetFragmentExcludeDiff';
+import { withGetFragmentExcludeDiff } from "./withGetFragmentExcludeDiff";
 
-describe('withGetFragmentExcludeDiff', () => {
-  it('returns a deep-cloned fragment without diff metadata', () => {
+describe("withGetFragmentExcludeDiff", () => {
+  it("returns a deep-cloned fragment without diff metadata", () => {
     const original = [
       {
         children: [
           {
             diff: { insert: true },
-            diffOperation: 'insert',
-            text: 'child',
+            diffOperation: "insert",
+            text: "child",
           },
         ],
         diff: { remove: true },
-        diffOperation: 'remove',
-        type: 'p',
+        diffOperation: "remove",
+        type: "p",
       },
     ] as any;
 
@@ -31,15 +31,15 @@ describe('withGetFragmentExcludeDiff', () => {
           {
             diff: undefined,
             diffOperation: undefined,
-            text: 'child',
+            text: "child",
           },
         ],
         diff: undefined,
         diffOperation: undefined,
-        type: 'p',
+        type: "p",
       },
     ]);
     expect(original[0].diff).toEqual({ remove: true });
-    expect(original[0].children[0].diffOperation).toBe('insert');
+    expect(original[0].children[0].diffOperation).toBe("insert");
   });
 });

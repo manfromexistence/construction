@@ -1,4 +1,4 @@
-import type { UnknownObject } from 'platejs';
+import type { UnknownObject } from "platejs";
 
 // TODO
 export type SuggestionEditorProps = {
@@ -16,7 +16,7 @@ export type TResolvedSuggestion = {
   createdAt: Date;
   keyId: string;
   suggestionId: string;
-  type: 'insert' | 'remove' | 'replace' | 'update';
+  type: "insert" | "remove" | "replace" | "update";
   userId: string;
   newProperties?: any;
   newText?: string;

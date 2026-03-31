@@ -1,46 +1,37 @@
-import { traverseHtmlElements } from 'platejs';
-import validator from 'validator';
+import { traverseHtmlElements } from "platejs";
+import validator from "validator";
 
-import { getRtfImagesMap } from './getRtfImagesMap';
-import { getVShapeSpid } from './getVShapeSpid';
+import { getRtfImagesMap } from "./getRtfImagesMap";
+import { getVShapeSpid } from "./getVShapeSpid";
 
 const hexToBase64 = (hex: string): string => {
   const hexPairs = hex.match(/\w{2}/g) || [];
-  const binary = hexPairs.map((hexPair) =>
-    String.fromCodePoint(Number.parseInt(hexPair, 16))
-  );
+  const binary = hexPairs.map((hexPair) => String.fromCodePoint(Number.parseInt(hexPair, 16)));
 
-  return btoa(binary.join(''));
+  return btoa(binary.join(""));
 };
 
 /** Clean docx image elements. */
-export const cleanDocxImageElements = (
-  document: Document,
-  rtf: string,
-  rootNode: Node
-): void => {
+export const cleanDocxImageElements = (document: Document, rtf: string, rootNode: Node): void => {
   if (!rtf) {
     return;
   }
 
   traverseHtmlElements(rootNode, (element) => {
-    if (!['IMG', 'V:IMAGEDATA'].includes(element.tagName)) {
+    if (!["IMG", "V:IMAGEDATA"].includes(element.tagName)) {
       return true;
     }
-    if (element.tagName === 'IMG') {
-      const src = element.getAttribute('src');
+    if (element.tagName === "IMG") {
+      const src = element.getAttribute("src");
 
-      if (!src?.startsWith('file://')) {
+      if (!src?.startsWith("file://")) {
         return true;
       }
 
-      const alt = element.getAttribute('alt');
+      const alt = element.getAttribute("alt");
 
-      if (
-        typeof alt === 'string' &&
-        validator.isURL(alt, { require_protocol: true })
-      ) {
-        element.setAttribute('src', alt);
+      if (typeof alt === "string" && validator.isURL(alt, { require_protocol: true })) {
+        element.setAttribute("src", alt);
 
         return true;
       }
@@ -63,19 +54,14 @@ export const cleanDocxImageElements = (
       return true;
     }
 
-    const dataUri = `data:${rtfImage.mimeType};base64,${hexToBase64(
-      rtfImage.hex
-    )}`;
+    const dataUri = `data:${rtfImage.mimeType};base64,${hexToBase64(rtfImage.hex)}`;
 
-    if (element.tagName === 'IMG') {
-      element.setAttribute('src', dataUri);
+    if (element.tagName === "IMG") {
+      element.setAttribute("src", dataUri);
     } else if (element.parentNode?.parentNode) {
-      const imageElement = document.createElement('img');
-      imageElement.setAttribute('src', dataUri);
-      element.parentNode.parentNode.replaceChild(
-        imageElement,
-        element.parentNode
-      );
+      const imageElement = document.createElement("img");
+      imageElement.setAttribute("src", dataUri);
+      element.parentNode.parentNode.replaceChild(imageElement, element.parentNode);
     }
 
     return true;

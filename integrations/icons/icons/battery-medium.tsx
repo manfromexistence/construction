@@ -35,92 +35,91 @@ const LINE_VARIANTS: Variants = {
   }),
 };
 
-const BatteryMediumIcon = forwardRef<
-  BatteryMediumIconHandle,
-  BatteryMediumIconProps
->(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
-  const controls = useAnimation();
-  const isControlledRef = useRef(false);
+const BatteryMediumIcon = forwardRef<BatteryMediumIconHandle, BatteryMediumIconProps>(
+  ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+    const controls = useAnimation();
+    const isControlledRef = useRef(false);
 
-  useImperativeHandle(ref, () => {
-    isControlledRef.current = true;
+    useImperativeHandle(ref, () => {
+      isControlledRef.current = true;
 
-    return {
-      startAnimation: async () => {
-        await controls.start("fadeOut");
-        controls.start("fadeIn");
+      return {
+        startAnimation: async () => {
+          await controls.start("fadeOut");
+          controls.start("fadeIn");
+        },
+        stopAnimation: () => controls.start("initial"),
+      };
+    });
+
+    const handleMouseEnter = useCallback(
+      async (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) {
+          onMouseEnter?.(e);
+        } else {
+          await controls.start("fadeOut");
+          controls.start("fadeIn");
+        }
       },
-      stopAnimation: () => controls.start("initial"),
-    };
-  });
+      [controls, onMouseEnter]
+    );
 
-  const handleMouseEnter = useCallback(
-    async (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) {
-        onMouseEnter?.(e);
-      } else {
-        await controls.start("fadeOut");
-        controls.start("fadeIn");
-      }
-    },
-    [controls, onMouseEnter]
-  );
+    const handleMouseLeave = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) {
+          onMouseLeave?.(e);
+        } else {
+          controls.start("initial");
+        }
+      },
+      [controls, onMouseLeave]
+    );
 
-  const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) {
-        onMouseLeave?.(e);
-      } else {
-        controls.start("initial");
-      }
-    },
-    [controls, onMouseLeave]
-  );
-
-  return (
-    <div
-      className={cn(className)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      <motion.svg
-        fill="none"
-        height={size}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        width={size}
-        xmlns="http://www.w3.org/2000/svg"
+    return (
+      <div
+        className={cn(className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...props}
       >
-        <rect height="10" rx="2" ry="2" width="16" x="2" y="7" />
-        <line x1="22" x2="22" y1="11" y2="13" />
-        <motion.line
-          animate={controls}
-          custom={0}
-          initial="initial"
-          variants={LINE_VARIANTS}
-          x1="6"
-          x2="6"
-          y1="11"
-          y2="13"
-        />
-        <motion.line
-          animate={controls}
-          custom={1}
-          initial="initial"
-          variants={LINE_VARIANTS}
-          x1="10"
-          x2="10"
-          y1="11"
-          y2="13"
-        />
-      </motion.svg>
-    </div>
-  );
-});
+        <motion.svg
+          fill="none"
+          height={size}
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          width={size}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect height="10" rx="2" ry="2" width="16" x="2" y="7" />
+          <line x1="22" x2="22" y1="11" y2="13" />
+          <motion.line
+            animate={controls}
+            custom={0}
+            initial="initial"
+            variants={LINE_VARIANTS}
+            x1="6"
+            x2="6"
+            y1="11"
+            y2="13"
+          />
+          <motion.line
+            animate={controls}
+            custom={1}
+            initial="initial"
+            variants={LINE_VARIANTS}
+            x1="10"
+            x2="10"
+            y1="11"
+            y2="13"
+          />
+        </motion.svg>
+      </div>
+    );
+  }
+);
 
 BatteryMediumIcon.displayName = "BatteryMediumIcon";
 

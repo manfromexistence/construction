@@ -14,10 +14,7 @@ export async function POST(request: Request) {
     const { fileKeys } = (await request.json()) as { fileKeys: string[] };
 
     if (!fileKeys || fileKeys.length === 0) {
-      return NextResponse.json(
-        { error: "No file keys provided" },
-        { status: 400 },
-      );
+      return NextResponse.json({ error: "No file keys provided" }, { status: 400 });
     }
 
     // Delete files from UploadThing
@@ -26,9 +23,6 @@ export async function POST(request: Request) {
     return NextResponse.json({ success: true, result });
   } catch (error) {
     console.error("Error deleting files:", error);
-    return NextResponse.json(
-      { error: "Failed to delete files" },
-      { status: 500 },
-    );
+    return NextResponse.json({ error: "Failed to delete files" }, { status: 500 });
   }
 }

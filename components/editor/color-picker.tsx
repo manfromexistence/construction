@@ -1,9 +1,9 @@
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { DEBOUNCE_DELAY } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { useColorControlFocus } from "@/store/color-control-focus-store";
 import { ColorPickerProps } from "@/types";
 import { debounce } from "@/utils/debounce";
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ColorSelectorPopover } from "./color-selector-popover";
 import { SectionContext } from "./section-context";
 

@@ -1,6 +1,5 @@
-import Link from "next/link";
-
 import { ArrowUpRightIcon } from "lucide-react";
+import Link from "next/link";
 
 import { AnimateEnter } from "@/app/(home)/_components/AnimateEnter";
 
@@ -53,10 +52,7 @@ export function Footer() {
                 </Link>
               ))}
             </AnimateEnter>
-            <AnimateEnter
-              delay={0.2}
-              className="[@media(max-width:534px)]:hidden"
-            >
+            <AnimateEnter delay={0.2} className="[@media(max-width:534px)]:hidden">
               <Divider />
             </AnimateEnter>
             <AnimateEnter delay={0.2} className="flex gap-5">

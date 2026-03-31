@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { AlertTriangle, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { usePostHog } from "posthog-js/react";
-import { AlertTriangle, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { deleteAccount } from "@/actions/account";
 import {
   AlertDialog,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
+  AlertDialogHeader,
+  AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
 import { authClient } from "@/lib/auth-client";
-import { deleteAccount } from "@/actions/account";
 
 const CONFIRMATION_TEXT = "DELETE";
 
@@ -55,24 +55,22 @@ export function DeleteAccountSection() {
       <div className="border-destructive/50 rounded-lg border p-6">
         <h3 className="text-lg font-semibold text-destructive">Danger Zone</h3>
         <p className="text-muted-foreground mt-1 text-sm">
-          Permanently delete your account and all associated data. This action
-          cannot be undone.
+          Permanently delete your account and all associated data. This action cannot be undone.
         </p>
-        <Button
-          variant="destructive"
-          className="mt-4"
-          onClick={() => setOpen(true)}
-        >
+        <Button variant="destructive" className="mt-4" onClick={() => setOpen(true)}>
           Delete Account
         </Button>
       </div>
 
-      <AlertDialog open={open} onOpenChange={(v) => {
-        if (!isDeleting) {
-          setOpen(v);
-          if (!v) setConfirmText("");
-        }
-      }}>
+      <AlertDialog
+        open={open}
+        onOpenChange={(v) => {
+          if (!isDeleting) {
+            setOpen(v);
+            if (!v) setConfirmText("");
+          }
+        }}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="flex items-center gap-2">
@@ -81,10 +79,7 @@ export function DeleteAccountSection() {
             </AlertDialogTitle>
             <AlertDialogDescription asChild>
               <div className="space-y-3">
-                <p>
-                  This will permanently delete your account and all associated
-                  data, including:
-                </p>
+                <p>This will permanently delete your account and all associated data, including:</p>
                 <ul className="list-disc space-y-1 pl-5">
                   <li>All saved themes</li>
                   <li>Community published themes</li>
@@ -93,12 +88,8 @@ export function DeleteAccountSection() {
                 </ul>
                 <p className="font-medium">This action cannot be undone.</p>
                 <div className="pt-1">
-                  <label
-                    htmlFor="confirm-delete"
-                    className="text-sm font-medium"
-                  >
-                    Type <span className="font-mono font-bold">{CONFIRMATION_TEXT}</span> to
-                    confirm
+                  <label htmlFor="confirm-delete" className="text-sm font-medium">
+                    Type <span className="font-mono font-bold">{CONFIRMATION_TEXT}</span> to confirm
                   </label>
                   <Input
                     id="confirm-delete"

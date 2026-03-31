@@ -4,8 +4,8 @@ import {
   PointApi,
   RangeApi,
   type TLocation,
-} from '../../interfaces';
-import type { Editor, ValueOf } from '../../interfaces/editor/editor-type';
+} from "../../interfaces";
+import type { Editor, ValueOf } from "../../interfaces/editor/editor-type";
 
 const WHITESPACE_OR_END_REGEX = /^(?:\s|$)/;
 
@@ -52,7 +52,7 @@ export const isAt = <E extends Editor>(
     text?: boolean;
     /** Check if point is at word boundary (only with end=true) */
     word?: boolean;
-  } & Omit<EditorAboveOptions<ValueOf<E>>, 'at' | 'block'> = {}
+  } & Omit<EditorAboveOptions<ValueOf<E>>, "at" | "block"> = {}
 ) => {
   if (!at) return false;
   // Handle Point

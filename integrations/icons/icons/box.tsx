@@ -100,12 +100,7 @@ const BoxIcon = forwardRef<BoxIconHandle, BoxIconProps>(
             initial="normal"
             variants={PATH_VARIANTS}
           />
-          <motion.path
-            animate={controls}
-            d="M12 22V12"
-            initial="normal"
-            variants={PATH_VARIANTS}
-          />
+          <motion.path animate={controls} d="M12 22V12" initial="normal" variants={PATH_VARIANTS} />
         </svg>
       </div>
     );

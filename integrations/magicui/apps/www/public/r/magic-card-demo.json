@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Magic Card Demo",
   "description": "Example showing a spotlight effect that follows your mouse cursor and highlights borders on hover.",
-  "registryDependencies": [
-    "@magicui/magic-card"
-  ],
+  "registryDependencies": ["@magicui/magic-card"],
   "files": [
     {
       "path": "registry/example/magic-card-demo.tsx",

@@ -1,1 +1,1 @@
-export { nanoid } from 'nanoid';
+export { nanoid } from "nanoid";

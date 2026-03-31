@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { IconCheck, IconCopy, IconPlus } from "@tabler/icons-react"
-
-import { useConfig } from "@/hooks/use-config"
-import { useIsMobile } from "@/hooks/use-mobile"
-import { copyToClipboardWithMeta } from "@/components/copy-button"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { IconCheck, IconCopy, IconPlus } from "@tabler/icons-react";
+import * as React from "react";
+import { copyToClipboardWithMeta } from "@/components/copy-button";
+import { useConfig } from "@/hooks/use-config";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -16,7 +15,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/registry/new-york-v4/ui/dialog"
+} from "@/registry/new-york-v4/ui/dialog";
 import {
   Drawer,
   DrawerClose,
@@ -26,30 +25,17 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/registry/new-york-v4/ui/drawer"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/registry/new-york-v4/ui/tabs"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/registry/new-york-v4/ui/tooltip"
+} from "@/registry/new-york-v4/ui/drawer";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/new-york-v4/ui/tabs";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/registry/new-york-v4/ui/tooltip";
 
-export function DirectoryAddButton({
-  registry,
-}: {
-  registry: { name: string }
-}) {
-  const [config, setConfig] = useConfig()
-  const [hasCopied, setHasCopied] = React.useState(false)
-  const [open, setOpen] = React.useState(false)
-  const isMobile = useIsMobile()
+export function DirectoryAddButton({ registry }: { registry: { name: string } }) {
+  const [config, setConfig] = useConfig();
+  const [hasCopied, setHasCopied] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const isMobile = useIsMobile();
 
-  const packageManager = config.packageManager || "pnpm"
+  const packageManager = config.packageManager || "pnpm";
 
   const commands = React.useMemo(() => {
     return {
@@ -57,17 +43,17 @@ export function DirectoryAddButton({
       npm: `npx shadcn@latest registry add ${registry.name}`,
       yarn: `yarn dlx shadcn@latest registry add ${registry.name}`,
       bun: `bunx --bun shadcn@latest registry add ${registry.name}`,
-    }
-  }, [registry.name])
+    };
+  }, [registry.name]);
 
-  const command = commands[packageManager]
+  const command = commands[packageManager];
 
   React.useEffect(() => {
     if (hasCopied) {
-      const timer = setTimeout(() => setHasCopied(false), 2000)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => setHasCopied(false), 2000);
+      return () => clearTimeout(timer);
     }
-  }, [hasCopied])
+  }, [hasCopied]);
 
   const handleCopy = React.useCallback(() => {
     copyToClipboardWithMeta(command, {
@@ -76,15 +62,15 @@ export function DirectoryAddButton({
         command,
         registry: registry.name,
       },
-    })
-    setHasCopied(true)
-  }, [command, registry.name])
+    });
+    setHasCopied(true);
+  }, [command, registry.name]);
 
   const Trigger = (
     <Button size="sm" variant="outline" className="relative z-10">
       Add <IconPlus />
     </Button>
-  )
+  );
 
   const Content = (
     <Tabs
@@ -93,7 +79,7 @@ export function DirectoryAddButton({
         setConfig({
           ...config,
           packageManager: value as "pnpm" | "npm" | "yarn" | "bun",
-        })
+        });
       }}
       className="gap-0 overflow-hidden rounded-lg border"
     >
@@ -112,17 +98,11 @@ export function DirectoryAddButton({
               className="ml-auto size-7 rounded-lg"
               onClick={handleCopy}
             >
-              {hasCopied ? (
-                <IconCheck className="size-4" />
-              ) : (
-                <IconCopy className="size-4" />
-              )}
+              {hasCopied ? <IconCheck className="size-4" /> : <IconCopy className="size-4" />}
               <span className="sr-only">Copy command</span>
             </Button>
           </TooltipTrigger>
-          <TooltipContent>
-            {hasCopied ? "Copied!" : "Copy command"}
-          </TooltipContent>
+          <TooltipContent>{hasCopied ? "Copied!" : "Copy command"}</TooltipContent>
         </Tooltip>
       </div>
       {Object.entries(commands).map(([key, cmd]) => (
@@ -135,7 +115,7 @@ export function DirectoryAddButton({
         </TabsContent>
       ))}
     </Tabs>
-  )
+  );
 
   if (isMobile) {
     return (
@@ -156,7 +136,7 @@ export function DirectoryAddButton({
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
-    )
+    );
   }
 
   return (
@@ -177,5 +157,5 @@ export function DirectoryAddButton({
         </DialogFooter>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

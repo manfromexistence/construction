@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { type ScrollAreaProps, ScrollArea } from './ScrollArea';
+import { ScrollArea, type ScrollAreaProps } from "./ScrollArea";
 
-export type ScrollerProps = Omit<ScrollAreaProps, 'placement'>;
+export type ScrollerProps = Omit<ScrollAreaProps, "placement">;
 
 /**
  * Set up an edge scroller at the top of the page for scrolling up. One at the

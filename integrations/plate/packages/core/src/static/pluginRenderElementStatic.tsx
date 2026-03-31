@@ -1,14 +1,12 @@
-import React from 'react';
+import React from "react";
 
-import type { AnyEditorPlugin, RenderElementProps, SlateEditor } from '../lib';
+import type { AnyEditorPlugin, RenderElementProps, SlateEditor } from "../lib";
 
-import { SlateElement } from './components/slate-nodes';
-import { getPluginDataAttributes } from './utils';
-import { getRenderNodeStaticProps } from './utils/getRenderNodeStaticProps';
+import { SlateElement } from "./components/slate-nodes";
+import { getPluginDataAttributes } from "./utils";
+import { getRenderNodeStaticProps } from "./utils/getRenderNodeStaticProps";
 
-export type SlateRenderElement = (
-  props: RenderElementProps
-) => React.ReactElement<any> | undefined;
+export type SlateRenderElement = (props: RenderElementProps) => React.ReactElement<any> | undefined;
 
 export const pluginRenderElementStatic = (
   editor: SlateEditor,

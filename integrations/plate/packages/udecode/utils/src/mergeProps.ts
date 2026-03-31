@@ -4,7 +4,7 @@ export const mergeProps = <T>(
   overrideProps?: T,
   {
     handlerKeys,
-    handlerQuery = (key) => key.startsWith('on'),
+    handlerQuery = (key) => key.startsWith("on"),
   }: {
     /** The keys of the handlers to merge. */
     handlerKeys?: string[];
@@ -27,7 +27,7 @@ export const mergeProps = <T>(
       if (
         (!handlerKeys || handlerKeys.includes(key)) &&
         (!handlerQuery || handlerQuery(key)) &&
-        typeof value === 'function'
+        typeof value === "function"
       ) {
         if (!map.has(key)) {
           map.set(key, []);

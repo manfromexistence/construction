@@ -4,7 +4,7 @@ import {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea,
-} from "@/styles/radix-nova/ui/input-group"
+} from "@/styles/radix-nova/ui/input-group";
 
 export default function InputGroupTextExample() {
   return (
@@ -42,5 +42,5 @@ export default function InputGroupTextExample() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

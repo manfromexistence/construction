@@ -1,12 +1,7 @@
 {
   "name": "checkbox-group-horizontal-demo",
-  "dependencies": [
-    "@diceui/checkbox-group",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "checkbox-group"
-  ],
+  "dependencies": ["@diceui/checkbox-group", "lucide-react"],
+  "registryDependencies": ["checkbox-group"],
   "files": [
     {
       "path": "examples/checkbox-group-horizontal-demo.tsx",

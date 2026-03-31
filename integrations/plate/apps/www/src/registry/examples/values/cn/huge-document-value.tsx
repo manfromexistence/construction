@@ -1,8 +1,8 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import type { Descendant, Value } from 'platejs';
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
+import type { Descendant, Value } from "platejs";
 
 jsx;
 
@@ -13,9 +13,7 @@ export const createHugeDocumentValue = () => {
   const hugeDocument: Descendant[] = [];
 
   for (let h = 0; h < HEADINGS; h++) {
-    hugeDocument.push(
-      (<hh1>我们想要通过这种方式来展示和测试大型文档的性能。</hh1>) as any
-    );
+    hugeDocument.push((<hh1>我们想要通过这种方式来展示和测试大型文档的性能。</hh1>) as any);
 
     for (let p = 0; p < PARAGRAPHS; p++) {
       hugeDocument.push(

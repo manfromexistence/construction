@@ -126,11 +126,7 @@ const LaughIcon = forwardRef<LaughIconHandle, LaughIconProps>(
           xmlns="http://www.w3.org/2000/svg"
         >
           <circle cx="12" cy="12" r="10" />
-          <motion.path
-            animate={controls}
-            initial="normal"
-            variants={mouthVariants}
-          />
+          <motion.path animate={controls} initial="normal" variants={mouthVariants} />
           <motion.line
             animate={controls}
             initial="normal"

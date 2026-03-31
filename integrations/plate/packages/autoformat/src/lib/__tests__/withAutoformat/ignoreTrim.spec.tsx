@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import { createAutoformatEditor } from './createAutoformatEditor';
+import { createAutoformatEditor } from "./createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin ignoreTrim handling', () => {
-  it('formats a mark when ignoreTrim allows surrounding whitespace', () => {
+describe("AutoformatPlugin ignoreTrim handling", () => {
+  it("formats a mark when ignoreTrim allows surrounding whitespace", () => {
     const input = (
       <fragment>
         <hp>
@@ -30,20 +30,20 @@ describe('AutoformatPlugin ignoreTrim handling', () => {
       rules: [
         {
           ignoreTrim: true,
-          match: '*',
-          mode: 'mark',
+          match: "*",
+          mode: "mark",
           type: KEYS.italic,
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('*');
+    editor.tf.insertText("*");
 
     expect(input.children).toEqual(output.children);
   });
 
-  it('leaves the text alone when whitespace prevents a trim-sensitive match', () => {
+  it("leaves the text alone when whitespace prevents a trim-sensitive match", () => {
     const input = (
       <fragment>
         <hp>
@@ -62,16 +62,16 @@ describe('AutoformatPlugin ignoreTrim handling', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          match: { end: '***__', start: '___***' },
-          mode: 'mark',
-          trigger: '_',
+          match: { end: "***__", start: "___***" },
+          mode: "mark",
+          trigger: "_",
           type: [KEYS.underline, KEYS.bold, KEYS.italic],
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText(' ');
+    editor.tf.insertText(" ");
 
     expect(input.children).toEqual(output.children);
   });

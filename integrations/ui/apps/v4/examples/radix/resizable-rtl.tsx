@@ -1,16 +1,13 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/styles/radix-nova/ui-rtl/resizable"
+} from "@/styles/radix-nova/ui-rtl/resizable";
 
 const translations: Translations = {
   en: {
@@ -37,17 +34,13 @@ const translations: Translations = {
       three: "שלושה",
     },
   },
-}
+};
 
 export function ResizableRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
-    <ResizablePanelGroup
-      orientation="horizontal"
-      className="max-w-sm rounded-lg border"
-      dir={dir}
-    >
+    <ResizablePanelGroup orientation="horizontal" className="max-w-sm rounded-lg border" dir={dir}>
       <ResizablePanel defaultSize="50%">
         <div className="flex h-[200px] items-center justify-center p-6">
           <span className="font-semibold">{t.one}</span>
@@ -70,5 +63,5 @@ export function ResizableRtl() {
         </ResizablePanelGroup>
       </ResizablePanel>
     </ResizablePanelGroup>
-  )
+  );
 }

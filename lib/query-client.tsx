@@ -2,8 +2,8 @@
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { useState, ReactNode } from "react";
 import posthog from "posthog-js";
+import { ReactNode, useState } from "react";
 
 function logClientError(error: Error, context: Record<string, unknown>) {
   console.error("Query error:", error, context);

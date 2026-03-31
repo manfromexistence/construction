@@ -1,12 +1,7 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { NavItemWithChildren } from "@/types"
-
-import { docsConfig } from "@/config/docs"
-import { trackEvent } from "@/lib/events"
-import { cn } from "@/lib/utils"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -16,24 +11,25 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+
+import { docsConfig } from "@/config/docs";
+import { trackEvent } from "@/lib/events";
+import { cn } from "@/lib/utils";
+import { NavItemWithChildren } from "@/types";
 
 interface DocsSidebarNavItemsProps {
-  items: NavItemWithChildren[]
-  pathname: string
-  level?: number
+  items: NavItemWithChildren[];
+  pathname: string;
+  level?: number;
 }
 
-function DocsSidebarNavItems({
-  items,
-  pathname,
-  level = 0,
-}: DocsSidebarNavItemsProps) {
+function DocsSidebarNavItems({ items, pathname, level = 0 }: DocsSidebarNavItemsProps) {
   return (
     <SidebarMenu className={cn("gap-0.5", level > 0 && "ml-4")}>
       {items.map((item) => {
-        const isActive = item.href ? pathname === item.href : false
-        const hasChildren = item.items && item.items.length > 0
+        const isActive = item.href ? pathname === item.href : false;
+        const hasChildren = item.items && item.items.length > 0;
 
         return (
           <div key={item.href || item.title}>
@@ -46,9 +42,7 @@ function DocsSidebarNavItems({
                 {item.href ? (
                   <Link
                     href={item.href}
-                    onClick={() =>
-                      item.event && trackEvent({ name: item.event })
-                    }
+                    onClick={() => item.event && trackEvent({ name: item.event })}
                   >
                     <span className="absolute inset-0 flex w-(--sidebar-width) bg-transparent" />
                     <span className="flex items-center gap-2">
@@ -78,23 +72,17 @@ function DocsSidebarNavItems({
               </SidebarMenuButton>
             </SidebarMenuItem>
             {hasChildren && (
-              <DocsSidebarNavItems
-                items={item.items!}
-                pathname={pathname}
-                level={level + 1}
-              />
+              <DocsSidebarNavItems items={item.items!} pathname={pathname} level={level + 1} />
             )}
           </div>
-        )
+        );
       })}
     </SidebarMenu>
-  )
+  );
 }
 
-export function DocsSidebar({
-  ...props
-}: React.ComponentProps<typeof Sidebar>) {
-  const pathname = usePathname()
+export function DocsSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname();
 
   return (
     <Sidebar
@@ -111,15 +99,12 @@ export function DocsSidebar({
                 {section.title}
               </SidebarGroupLabel>
               <SidebarGroupContent>
-                <DocsSidebarNavItems
-                  items={section.items ?? []}
-                  pathname={pathname}
-                />
+                <DocsSidebarNavItems items={section.items ?? []} pathname={pathname} />
               </SidebarGroupContent>
             </SidebarGroup>
-          )
+          );
         })}
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

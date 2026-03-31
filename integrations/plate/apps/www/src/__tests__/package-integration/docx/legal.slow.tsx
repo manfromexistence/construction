@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { BaseListPlugin } from '@platejs/list';
-import { jsxt } from '@platejs/test-utils';
+import { BaseListPlugin } from "@platejs/list";
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'legal';
+const name = "legal";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
@@ -54,8 +54,8 @@ describe(getDocxTestName(name), () => {
           C
         </hp>
         <hp indent={7}>
-          <htext underline>{'\t'}</htext>
-          {'\n'}Name
+          <htext underline>{"\t"}</htext>
+          {"\n"}Name
         </hp>
         <hp indent={7}>Date of signature: </hp>
         <hp indent={7}>

@@ -1,15 +1,14 @@
 /** @jsx jsxt */
 
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { moveListSiblingsAfterCursor } from './moveListSiblingsAfterCursor';
+import { moveListSiblingsAfterCursor } from "./moveListSiblingsAfterCursor";
 
 jsxt;
 
-describe('moveListSiblingsAfterCursor', () => {
-  it('moves the following list items into the destination list', () => {
+describe("moveListSiblingsAfterCursor", () => {
+  it("moves the following list items into the destination list", () => {
     const input = (
       <editor>
         <hul>
@@ -45,33 +44,33 @@ describe('moveListSiblingsAfterCursor', () => {
       {
         children: [
           {
-            children: [{ children: [{ text: '1' }], type: 'p' }],
-            type: 'li',
+            children: [{ children: [{ text: "1" }], type: "p" }],
+            type: "li",
           },
         ],
-        type: 'ul',
+        type: "ul",
       },
       {
         children: [
           {
-            children: [{ children: [{ text: 'x' }], type: 'p' }],
-            type: 'li',
+            children: [{ children: [{ text: "x" }], type: "p" }],
+            type: "li",
           },
           {
-            children: [{ children: [{ text: '2' }], type: 'p' }],
-            type: 'li',
+            children: [{ children: [{ text: "2" }], type: "p" }],
+            type: "li",
           },
           {
-            children: [{ children: [{ text: '3' }], type: 'p' }],
-            type: 'li',
+            children: [{ children: [{ text: "3" }], type: "p" }],
+            type: "li",
           },
         ],
-        type: 'ul',
+        type: "ul",
       },
     ]);
   });
 
-  it('returns false when the destination stays inside the same list', () => {
+  it("returns false when the destination stays inside the same list", () => {
     const input = (
       <editor>
         <hul>

@@ -1,8 +1,8 @@
-import { existsSync, promises as fs } from "fs"
-import path from "path"
-import { afterAll, afterEach, describe, expect, test, vi } from "vitest"
+import { existsSync, promises as fs } from "fs";
+import path from "path";
+import { afterAll, afterEach, describe, expect, test, vi } from "vitest";
 
-import { getConfig } from "../../../src/utils/get-config"
+import { getConfig } from "../../../src/utils/get-config";
 import {
   findCommonRoot,
   resolveFilePath,
@@ -10,23 +10,21 @@ import {
   resolveNestedFilePath,
   toAliasedImport,
   updateFiles,
-} from "../../../src/utils/updaters/update-files"
+} from "../../../src/utils/updaters/update-files";
 
 vi.mock("fs/promises", async () => {
-  const actual = (await vi.importActual(
-    "fs/promises"
-  )) as typeof import("fs/promises")
+  const actual = (await vi.importActual("fs/promises")) as typeof import("fs/promises");
 
   return {
     ...actual,
     writeFile: vi.fn().mockResolvedValue(undefined),
     readFile: vi.fn().mockImplementation(actual.readFile),
     mkdir: vi.fn().mockResolvedValue(undefined),
-  }
-})
+  };
+});
 
 vi.mock("fs", async () => {
-  const actual = (await vi.importActual("fs")) as typeof import("fs")
+  const actual = (await vi.importActual("fs")) as typeof import("fs");
   return {
     ...actual,
     existsSync: vi.fn().mockImplementation(actual.existsSync),
@@ -34,21 +32,21 @@ vi.mock("fs", async () => {
       ...actual.promises,
       writeFile: vi.fn().mockResolvedValue(undefined),
     },
-  }
-})
+  };
+});
 
-vi.mock("prompts")
+vi.mock("prompts");
 
 afterEach(async () => {
-  vi.clearAllMocks()
+  vi.clearAllMocks();
   // Restore the actual implementation of existsSync after clearing mocks
-  const actual = (await vi.importActual("fs")) as typeof import("fs")
-  vi.mocked(existsSync).mockImplementation(actual.existsSync)
-})
+  const actual = (await vi.importActual("fs")) as typeof import("fs");
+  vi.mocked(existsSync).mockImplementation(actual.existsSync);
+});
 
 afterAll(() => {
-  vi.resetAllMocks()
-})
+  vi.resetAllMocks();
+});
 
 describe("resolveFilePath", () => {
   test.each([
@@ -103,8 +101,8 @@ describe("resolveFilePath", () => {
         },
         projectInfo
       )
-    ).toBe(resolvedPath)
-  })
+    ).toBe(resolvedPath);
+  });
 
   test.each([
     {
@@ -170,8 +168,8 @@ describe("resolveFilePath", () => {
         },
         projectInfo
       )
-    ).toBe(resolvedPath)
-  })
+    ).toBe(resolvedPath);
+  });
 
   test("should resolve registry:ui file types", () => {
     expect(
@@ -193,7 +191,7 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/components/ui/button.tsx")
+    ).toBe("/foo/bar/components/ui/button.tsx");
 
     expect(
       resolveFilePath(
@@ -214,8 +212,8 @@ describe("resolveFilePath", () => {
           isSrcDir: true,
         }
       )
-    ).toBe("/foo/bar/src/primitives/button.tsx")
-  })
+    ).toBe("/foo/bar/src/primitives/button.tsx");
+  });
 
   test("should resolve registry:component and registry:block file types", () => {
     expect(
@@ -237,7 +235,7 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/components/example-card.tsx")
+    ).toBe("/foo/bar/components/example-card.tsx");
 
     expect(
       resolveFilePath(
@@ -258,7 +256,7 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/components/example-card.tsx")
+    ).toBe("/foo/bar/components/example-card.tsx");
 
     expect(
       resolveFilePath(
@@ -279,7 +277,7 @@ describe("resolveFilePath", () => {
           isSrcDir: true,
         }
       )
-    ).toBe("/foo/bar/src/components/example-card.tsx")
+    ).toBe("/foo/bar/src/components/example-card.tsx");
 
     expect(
       resolveFilePath(
@@ -300,8 +298,8 @@ describe("resolveFilePath", () => {
           isSrcDir: true,
         }
       )
-    ).toBe("/foo/bar/src/components/example-card.tsx")
-  })
+    ).toBe("/foo/bar/src/components/example-card.tsx");
+  });
 
   test("should resolve registry:lib file types", () => {
     expect(
@@ -323,7 +321,7 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/lib/foo.ts")
+    ).toBe("/foo/bar/lib/foo.ts");
 
     expect(
       resolveFilePath(
@@ -344,8 +342,8 @@ describe("resolveFilePath", () => {
           isSrcDir: true,
         }
       )
-    ).toBe("/foo/bar/src/lib/foo.ts")
-  })
+    ).toBe("/foo/bar/src/lib/foo.ts");
+  });
 
   test("should resolve registry:hook file types", () => {
     expect(
@@ -367,7 +365,7 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/hooks/use-foo.ts")
+    ).toBe("/foo/bar/hooks/use-foo.ts");
 
     expect(
       resolveFilePath(
@@ -388,8 +386,8 @@ describe("resolveFilePath", () => {
           isSrcDir: true,
         }
       )
-    ).toBe("/foo/bar/src/hooks/use-foo.ts")
-  })
+    ).toBe("/foo/bar/src/hooks/use-foo.ts");
+  });
 
   test("should resolve registry:file file types", () => {
     expect(
@@ -408,8 +406,8 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/baz/.env")
-  })
+    ).toBe("/foo/bar/baz/.env");
+  });
 
   test("should resolve nested files", () => {
     expect(
@@ -431,7 +429,7 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/components/path/to/example-card.tsx")
+    ).toBe("/foo/bar/components/path/to/example-card.tsx");
 
     expect(
       resolveFilePath(
@@ -452,9 +450,9 @@ describe("resolveFilePath", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/components/ui/button.tsx")
-  })
-})
+    ).toBe("/foo/bar/components/ui/button.tsx");
+  });
+});
 
 describe("resolveFilePath with custom path", () => {
   test("should use custom file path for exact file target", () => {
@@ -479,8 +477,8 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/custom/my-button.tsx")
-  })
+    ).toBe("/foo/bar/custom/my-button.tsx");
+  });
 
   test("should use custom directory path and strip type prefix", () => {
     expect(
@@ -504,8 +502,8 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/custom/button.tsx")
-  })
+    ).toBe("/foo/bar/custom/button.tsx");
+  });
 
   test("should strip nested paths when using custom directory", () => {
     expect(
@@ -529,8 +527,8 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/custom/card.tsx")
-  })
+    ).toBe("/foo/bar/custom/card.tsx");
+  });
 
   test("should handle lib files with custom directory", () => {
     expect(
@@ -554,8 +552,8 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/custom/utils.ts")
-  })
+    ).toBe("/foo/bar/custom/utils.ts");
+  });
 
   test("should handle hooks with custom directory", () => {
     expect(
@@ -579,8 +577,8 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/custom/use-toast.ts")
-  })
+    ).toBe("/foo/bar/custom/use-toast.ts");
+  });
 
   test("should use custom file path with different extension", () => {
     expect(
@@ -604,8 +602,8 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/my-components/custom-card.jsx")
-  })
+    ).toBe("/foo/bar/my-components/custom-card.jsx");
+  });
 
   test("should not use custom path when not provided", () => {
     expect(
@@ -627,8 +625,8 @@ describe("resolveFilePath with custom path", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("/foo/bar/components/ui/button.tsx")
-  })
+    ).toBe("/foo/bar/components/ui/button.tsx");
+  });
 
   test("should support any file extension for file paths", () => {
     // Test with .json
@@ -654,7 +652,7 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/custom/my-config.json")
+    ).toBe("/foo/bar/custom/my-config.json");
 
     // Test with .css
     expect(
@@ -679,7 +677,7 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/custom/theme.css")
+    ).toBe("/foo/bar/custom/theme.css");
 
     // Test with .md
     expect(
@@ -704,9 +702,9 @@ describe("resolveFilePath with custom path", () => {
           fileIndex: 0,
         }
       )
-    ).toBe("/foo/bar/docs/guide.md")
-  })
-})
+    ).toBe("/foo/bar/docs/guide.md");
+  });
+});
 
 describe("resolveFilePath with framework", () => {
   test("should not resolve for unknown or unsupported framework", () => {
@@ -730,7 +728,7 @@ describe("resolveFilePath with framework", () => {
           isSrcDir: false,
         }
       )
-    ).toBe("")
+    ).toBe("");
 
     expect(
       resolveFilePath(
@@ -753,8 +751,8 @@ describe("resolveFilePath with framework", () => {
           framework: "vite",
         }
       )
-    ).toBe("")
-  })
+    ).toBe("");
+  });
 
   test("should resolve for next-app", () => {
     expect(
@@ -778,8 +776,8 @@ describe("resolveFilePath with framework", () => {
           framework: "next-app",
         }
       )
-    ).toBe("/foo/bar/app/login/page.tsx")
-  })
+    ).toBe("/foo/bar/app/login/page.tsx");
+  });
 
   test("should resolve for next-pages", () => {
     expect(
@@ -803,7 +801,7 @@ describe("resolveFilePath with framework", () => {
           framework: "next-pages",
         }
       )
-    ).toBe("/foo/bar/src/pages/login.tsx")
+    ).toBe("/foo/bar/src/pages/login.tsx");
 
     expect(
       resolveFilePath(
@@ -826,8 +824,8 @@ describe("resolveFilePath with framework", () => {
           framework: "next-pages",
         }
       )
-    ).toBe("/foo/bar/pages/blog/[slug].tsx")
-  })
+    ).toBe("/foo/bar/pages/blog/[slug].tsx");
+  });
 
   test("should resolve for react-router", () => {
     expect(
@@ -851,8 +849,8 @@ describe("resolveFilePath with framework", () => {
           framework: "react-router",
         }
       )
-    ).toBe("/foo/bar/app/routes/login.tsx")
-  })
+    ).toBe("/foo/bar/app/routes/login.tsx");
+  });
 
   test("should resolve for laravel", () => {
     expect(
@@ -876,9 +874,9 @@ describe("resolveFilePath with framework", () => {
           framework: "laravel",
         }
       )
-    ).toBe("/foo/bar/resources/js/pages/login.tsx")
-  })
-})
+    ).toBe("/foo/bar/resources/js/pages/login.tsx");
+  });
+});
 
 describe("findCommonRoot", () => {
   test.each([
@@ -917,9 +915,9 @@ describe("findCommonRoot", () => {
       expected: "/foo/bar",
     },
   ])("$description", ({ paths, needle, expected }) => {
-    expect(findCommonRoot(paths, needle)).toBe(expected)
-  })
-})
+    expect(findCommonRoot(paths, needle)).toBe(expected);
+  });
+});
 
 describe("resolveNestedFilePath", () => {
   test.each([
@@ -954,15 +952,13 @@ describe("resolveNestedFilePath", () => {
       expected: "button.tsx",
     },
   ])("$description", ({ filePath, targetDir, expected }) => {
-    expect(resolveNestedFilePath(filePath, targetDir)).toBe(expected)
-  })
-})
+    expect(resolveNestedFilePath(filePath, targetDir)).toBe(expected);
+  });
+});
 
 describe("updateFiles", () => {
   test("should create missing files", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     expect(
       await updateFiles(
         [
@@ -988,13 +984,11 @@ describe("updateFiles", () => {
         "filesSkipped": [],
         "filesUpdated": [],
       }
-    `)
-  })
+    `);
+  });
 
   test("should skip existing files if same content", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     expect(
       await updateFiles(
         [
@@ -1029,13 +1023,11 @@ return <div>Hello World</div>
         ],
         "filesUpdated": [],
       }
-    `)
-  })
+    `);
+  });
 
   test("should update file if different content", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     expect(
       await updateFiles(
         [
@@ -1070,13 +1062,11 @@ return <div>Hello World</div>
           "src/components/ui/button.tsx",
         ],
       }
-    `)
-  })
+    `);
+  });
 
   test("should mark .env file as created when it doesn't exist", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
 
     const result = await updateFiles(
       [
@@ -1093,24 +1083,19 @@ ANOTHER_NEW_KEY=another_value`,
         overwrite: true,
         silent: true,
       }
-    )
+    );
 
-    expect(result.filesCreated).toContain(".env")
-    expect(result.filesUpdated).not.toContain(".env")
-  })
+    expect(result.filesCreated).toContain(".env");
+    expect(result.filesUpdated).not.toContain(".env");
+  });
 
   test("should mark .env file as updated when merging content", async () => {
-    const tempDir = path.join(
-      path.resolve(__dirname, "../../fixtures"),
-      "temp-env-test"
-    )
-    const fsActual = (await vi.importActual(
-      "fs/promises"
-    )) as typeof import("fs/promises")
-    const writeFileMock = fs.writeFile as any
+    const tempDir = path.join(path.resolve(__dirname, "../../fixtures"), "temp-env-test");
+    const fsActual = (await vi.importActual("fs/promises")) as typeof import("fs/promises");
+    const writeFileMock = fs.writeFile as any;
 
     try {
-      await fsActual.mkdir(tempDir, { recursive: true })
+      await fsActual.mkdir(tempDir, { recursive: true });
       await fsActual.writeFile(
         path.join(tempDir, "components.json"),
         JSON.stringify({
@@ -1127,17 +1112,17 @@ ANOTHER_NEW_KEY=another_value`,
           },
         }),
         "utf-8"
-      )
+      );
 
-      const config = await getConfig(tempDir)
-      const envPath = path.join(config?.resolvedPaths.cwd!, ".env")
+      const config = await getConfig(tempDir);
+      const envPath = path.join(config?.resolvedPaths.cwd!, ".env");
 
       await fsActual.writeFile(
         envPath,
         `EXISTING_KEY=existing_value
 DATABASE_URL=postgres://localhost:5432/mydb`,
         "utf-8"
-      )
+      );
 
       const result = await updateFiles(
         [
@@ -1155,10 +1140,10 @@ ANOTHER_NEW_KEY=another_value`,
           overwrite: true,
           silent: true,
         }
-      )
+      );
 
-      expect(result.filesUpdated).toContain(".env")
-      expect(result.filesCreated).not.toContain(".env")
+      expect(result.filesUpdated).toContain(".env");
+      expect(result.filesCreated).not.toContain(".env");
 
       // Verify writeFile was called with the correct merged content.
       expect(writeFileMock).toHaveBeenCalledWith(
@@ -1170,25 +1155,23 @@ NEW_API_KEY=new_api_key_value
 ANOTHER_NEW_KEY=another_value
 `,
         "utf-8"
-      )
+      );
     } finally {
-      await fsActual.rm(tempDir, { recursive: true }).catch(() => {})
+      await fsActual.rm(tempDir, { recursive: true }).catch(() => {});
     }
-  })
+  });
 
   test("should use .env.local when .env doesn't exist", async () => {
     const tempDir = path.join(
       path.resolve(__dirname, "../../fixtures"),
       "temp-env-alternative-test"
-    )
-    const fsActual = (await vi.importActual(
-      "fs/promises"
-    )) as typeof import("fs/promises")
+    );
+    const fsActual = (await vi.importActual("fs/promises")) as typeof import("fs/promises");
 
-    const writeFileMock = fs.writeFile as any
+    const writeFileMock = fs.writeFile as any;
 
     try {
-      await fsActual.mkdir(tempDir, { recursive: true })
+      await fsActual.mkdir(tempDir, { recursive: true });
 
       await fsActual.writeFile(
         path.join(tempDir, "components.json"),
@@ -1206,13 +1189,13 @@ ANOTHER_NEW_KEY=another_value
           },
         }),
         "utf-8"
-      )
+      );
 
-      const config = await getConfig(tempDir)
+      const config = await getConfig(tempDir);
       if (!config) {
-        throw new Error("Failed to get config")
+        throw new Error("Failed to get config");
       }
-      const envLocalPath = path.join(config.resolvedPaths.cwd, ".env.local")
+      const envLocalPath = path.join(config.resolvedPaths.cwd, ".env.local");
 
       // Create .env.local instead of .env
       await fsActual.writeFile(
@@ -1220,7 +1203,7 @@ ANOTHER_NEW_KEY=another_value
         `EXISTING_KEY=existing_value
 DATABASE_URL=postgres://localhost:5432/mydb`,
         "utf-8"
-      )
+      );
 
       const result = await updateFiles(
         [
@@ -1237,11 +1220,11 @@ NEW_API_KEY=new_api_key_value`,
           overwrite: true,
           silent: true,
         }
-      )
+      );
 
-      expect(result.filesUpdated).toContain(".env.local")
-      expect(result.filesCreated).not.toContain(".env")
-      expect(result.filesCreated).not.toContain(".env.local")
+      expect(result.filesUpdated).toContain(".env.local");
+      expect(result.filesCreated).not.toContain(".env");
+      expect(result.filesCreated).not.toContain(".env.local");
 
       expect(writeFileMock).toHaveBeenCalledWith(
         envLocalPath,
@@ -1251,25 +1234,23 @@ DATABASE_URL=postgres://localhost:5432/mydb
 NEW_API_KEY=new_api_key_value
 `,
         "utf-8"
-      )
+      );
     } finally {
-      await fsActual.rm(tempDir, { recursive: true }).catch(() => {})
+      await fsActual.rm(tempDir, { recursive: true }).catch(() => {});
     }
-  })
+  });
 
   test("should use existing .env when target is .env.local but doesn't exist", async () => {
     const tempDir = path.join(
       path.resolve(__dirname, "../../fixtures"),
       "temp-env-target-local-test"
-    )
-    const fsActual = (await vi.importActual(
-      "fs/promises"
-    )) as typeof import("fs/promises")
+    );
+    const fsActual = (await vi.importActual("fs/promises")) as typeof import("fs/promises");
 
-    const writeFileMock = fs.writeFile as any
+    const writeFileMock = fs.writeFile as any;
 
     try {
-      await fsActual.mkdir(tempDir, { recursive: true })
+      await fsActual.mkdir(tempDir, { recursive: true });
 
       await fsActual.writeFile(
         path.join(tempDir, "components.json"),
@@ -1287,16 +1268,16 @@ NEW_API_KEY=new_api_key_value
           },
         }),
         "utf-8"
-      )
+      );
 
-      const config = await getConfig(tempDir)
+      const config = await getConfig(tempDir);
       if (!config) {
-        throw new Error("Failed to get config")
+        throw new Error("Failed to get config");
       }
-      const envPath = path.join(config.resolvedPaths.cwd, ".env")
+      const envPath = path.join(config.resolvedPaths.cwd, ".env");
 
       // Create .env file (not .env.local)
-      await fsActual.writeFile(envPath, `EXISTING_KEY=existing_value`, "utf-8")
+      await fsActual.writeFile(envPath, `EXISTING_KEY=existing_value`, "utf-8");
 
       const result = await updateFiles(
         [
@@ -1312,11 +1293,11 @@ NEW_API_KEY=new_api_key_value
           overwrite: true,
           silent: true,
         }
-      )
+      );
 
       // Should update .env instead of creating .env.local
-      expect(result.filesUpdated).toContain(".env")
-      expect(result.filesCreated).not.toContain(".env.local")
+      expect(result.filesUpdated).toContain(".env");
+      expect(result.filesCreated).not.toContain(".env.local");
 
       expect(writeFileMock).toHaveBeenCalledWith(
         envPath,
@@ -1325,25 +1306,20 @@ NEW_API_KEY=new_api_key_value
 NEW_KEY=new_value
 `,
         "utf-8"
-      )
+      );
     } finally {
-      await fsActual.rm(tempDir, { recursive: true }).catch(() => {})
+      await fsActual.rm(tempDir, { recursive: true }).catch(() => {});
     }
-  })
+  });
 
   test("should create .env when no env variants exist", async () => {
-    const tempDir = path.join(
-      path.resolve(__dirname, "../../fixtures"),
-      "temp-env-create-test"
-    )
-    const fsActual = (await vi.importActual(
-      "fs/promises"
-    )) as typeof import("fs/promises")
+    const tempDir = path.join(path.resolve(__dirname, "../../fixtures"), "temp-env-create-test");
+    const fsActual = (await vi.importActual("fs/promises")) as typeof import("fs/promises");
 
-    const writeFileMock = fs.writeFile as any
+    const writeFileMock = fs.writeFile as any;
 
     try {
-      await fsActual.mkdir(tempDir, { recursive: true })
+      await fsActual.mkdir(tempDir, { recursive: true });
 
       await fsActual.writeFile(
         path.join(tempDir, "components.json"),
@@ -1361,24 +1337,19 @@ NEW_KEY=new_value
           },
         }),
         "utf-8"
-      )
+      );
 
-      const config = await getConfig(tempDir)
+      const config = await getConfig(tempDir);
       if (!config) {
-        throw new Error("Failed to get config")
+        throw new Error("Failed to get config");
       }
-      const envPath = path.join(config.resolvedPaths.cwd, ".env")
+      const envPath = path.join(config.resolvedPaths.cwd, ".env");
 
       // Ensure no env files exist
-      const envVariants = [
-        ".env",
-        ".env.local",
-        ".env.development.local",
-        ".env.development",
-      ]
+      const envVariants = [".env", ".env.local", ".env.development.local", ".env.development"];
       for (const variant of envVariants) {
-        const variantPath = path.join(config.resolvedPaths.cwd, variant)
-        await fsActual.unlink(variantPath).catch(() => {})
+        const variantPath = path.join(config.resolvedPaths.cwd, variant);
+        await fsActual.unlink(variantPath).catch(() => {});
       }
 
       const result = await updateFiles(
@@ -1396,27 +1367,25 @@ DATABASE_URL=postgres://localhost:5432/mydb`,
           overwrite: true,
           silent: true,
         }
-      )
+      );
 
-      expect(result.filesCreated).toContain(".env")
-      expect(result.filesUpdated).not.toContain(".env")
-      expect(result.filesUpdated).not.toContain(".env.local")
+      expect(result.filesCreated).toContain(".env");
+      expect(result.filesUpdated).not.toContain(".env");
+      expect(result.filesUpdated).not.toContain(".env.local");
 
       expect(writeFileMock).toHaveBeenCalledWith(
         envPath,
         `NEW_API_KEY=new_api_key_value
 DATABASE_URL=postgres://localhost:5432/mydb`,
         "utf-8"
-      )
+      );
     } finally {
-      await fsActual.rm(tempDir, { recursive: true }).catch(() => {})
+      await fsActual.rm(tempDir, { recursive: true }).catch(() => {});
     }
-  })
+  });
 
   test("should place first file at custom file path", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     expect(
       await updateFiles(
         [
@@ -1443,13 +1412,11 @@ DATABASE_URL=postgres://localhost:5432/mydb`,
         "filesSkipped": [],
         "filesUpdated": [],
       }
-    `)
-  })
+    `);
+  });
 
   test("should place all files in custom directory", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     expect(
       await updateFiles(
         [
@@ -1484,13 +1451,11 @@ DATABASE_URL=postgres://localhost:5432/mydb`,
         "filesSkipped": [],
         "filesUpdated": [],
       }
-    `)
-  })
+    `);
+  });
 
   test("should only apply file path to first file", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     expect(
       await updateFiles(
         [
@@ -1524,13 +1489,11 @@ DATABASE_URL=postgres://localhost:5432/mydb`,
           "src/lib/utils.ts",
         ],
       }
-    `)
-  })
+    `);
+  });
 
   test("should preserve 'use client' directive for universal item files (registry:file)", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     const result = await updateFiles(
       [
         {
@@ -1549,23 +1512,21 @@ export function CustomComponent() {
         overwrite: true,
         silent: true,
       }
-    )
+    );
 
     // Verify that the file was created
-    expect(result.filesCreated).toContain("custom-component.tsx")
+    expect(result.filesCreated).toContain("custom-component.tsx");
 
     // Read the written file and check if 'use client' is preserved
     const writtenContent = (fs.writeFile as any).mock.calls.find((call: any) =>
       call[0].endsWith("custom-component.tsx")
-    )?.[1]
+    )?.[1];
 
-    expect(writtenContent).toContain('"use client"')
-  })
+    expect(writtenContent).toContain('"use client"');
+  });
 
   test("should preserve 'use client' directive for universal item files (registry:item)", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     const result = await updateFiles(
       [
         {
@@ -1584,23 +1545,21 @@ export function UniversalWidget() {
         overwrite: true,
         silent: true,
       }
-    )
+    );
 
     // Verify that the file was created
-    expect(result.filesCreated).toContain("universal-widget.tsx")
+    expect(result.filesCreated).toContain("universal-widget.tsx");
 
     // Read the written file and check if 'use client' is preserved
     const writtenContent = (fs.writeFile as any).mock.calls.find((call: any) =>
       call[0].endsWith("universal-widget.tsx")
-    )?.[1]
+    )?.[1];
 
-    expect(writtenContent).toContain("'use client'")
-  })
+    expect(writtenContent).toContain("'use client'");
+  });
 
   test("should remove 'use client' directive for non-universal item files when rsc is false", async () => {
-    const config = await getConfig(
-      path.resolve(__dirname, "../../fixtures/vite-with-tailwind")
-    )
+    const config = await getConfig(path.resolve(__dirname, "../../fixtures/vite-with-tailwind"));
     const result = await updateFiles(
       [
         {
@@ -1618,126 +1577,112 @@ export function RegularComponent() {
         overwrite: true,
         silent: true,
       }
-    )
+    );
 
     // Verify that the file was created (filesCreated contains relative paths)
-    expect(result.filesCreated.length).toBeGreaterThan(0)
+    expect(result.filesCreated.length).toBeGreaterThan(0);
 
     // Read the written file and check if 'use client' was removed
     const writtenContent = (fs.writeFile as any).mock.calls.find((call: any) =>
       call[0].endsWith("regular-component.tsx")
-    )?.[1]
+    )?.[1];
 
     // The 'use client' should be removed by the RSC transformer
-    expect(writtenContent).not.toContain('"use client"')
-  })
-})
+    expect(writtenContent).not.toContain('"use client"');
+  });
+});
 
 describe("resolveModuleByProbablePath", () => {
   test("should resolve exact file match in provided files list", () => {
-    const files = [
-      "components/button.tsx",
-      "components/card.tsx",
-      "lib/utils.ts",
-    ]
+    const files = ["components/button.tsx", "components/card.tsx", "lib/utils.ts"];
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
       },
-    }
-    expect(
-      resolveModuleByProbablePath("/foo/bar/components/button", files, config)
-    ).toBe("components/button.tsx")
-  })
+    };
+    expect(resolveModuleByProbablePath("/foo/bar/components/button", files, config)).toBe(
+      "components/button.tsx"
+    );
+  });
 
   test("should resolve index file", () => {
-    const files = ["components/button/index.tsx", "components/card.tsx"]
+    const files = ["components/button/index.tsx", "components/card.tsx"];
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
       },
-    }
-    expect(
-      resolveModuleByProbablePath("/foo/bar/components/button", files, config)
-    ).toBe("components/button/index.tsx")
-  })
+    };
+    expect(resolveModuleByProbablePath("/foo/bar/components/button", files, config)).toBe(
+      "components/button/index.tsx"
+    );
+  });
 
   test("should try different extensions", () => {
-    const files = ["components/button.jsx", "components/card.tsx"]
+    const files = ["components/button.jsx", "components/card.tsx"];
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
       },
-    }
-    expect(
-      resolveModuleByProbablePath("/foo/bar/components/button", files, config)
-    ).toBe("components/button.jsx")
-  })
+    };
+    expect(resolveModuleByProbablePath("/foo/bar/components/button", files, config)).toBe(
+      "components/button.jsx"
+    );
+  });
 
   test("should fallback to basename matching", () => {
-    const files = ["components/ui/button.tsx", "components/card.tsx"]
+    const files = ["components/ui/button.tsx", "components/card.tsx"];
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
       },
-    }
-    expect(
-      resolveModuleByProbablePath("/foo/bar/components/button", files, config)
-    ).toBe("components/ui/button.tsx")
-  })
+    };
+    expect(resolveModuleByProbablePath("/foo/bar/components/button", files, config)).toBe(
+      "components/ui/button.tsx"
+    );
+  });
 
   test("should return null when file not found", () => {
-    const files = ["components/card.tsx", "lib/utils.ts"]
+    const files = ["components/card.tsx", "lib/utils.ts"];
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
       },
-    }
-    expect(
-      resolveModuleByProbablePath("/foo/bar/components/button", files, config)
-    ).toBeNull()
-  })
+    };
+    expect(resolveModuleByProbablePath("/foo/bar/components/button", files, config)).toBeNull();
+  });
 
   test("should sort by extension priority", () => {
-    const files = [
-      "components/button.jsx",
-      "components/button.tsx",
-      "components/button.js",
-    ]
+    const files = ["components/button.jsx", "components/button.tsx", "components/button.js"];
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
       },
-    }
+    };
     expect(
       resolveModuleByProbablePath("/foo/bar/components/button", files, config, [
         ".tsx",
         ".jsx",
         ".js",
       ])
-    ).toBe("components/button.tsx")
-  })
+    ).toBe("components/button.tsx");
+  });
 
   test("should preserve extension if specified in path", () => {
-    const files = ["components/button.tsx", "components/button.css"]
+    const files = ["components/button.tsx", "components/button.css"];
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
       },
-    }
-    expect(
-      resolveModuleByProbablePath(
-        "/foo/bar/components/button.css",
-        files,
-        config
-      )
-    ).toBe("components/button.css")
-  })
-})
+    };
+    expect(resolveModuleByProbablePath("/foo/bar/components/button.css", files, config)).toBe(
+      "components/button.css"
+    );
+  });
+});
 
 describe("toAliasedImport", () => {
   test("should convert components path to aliased import", () => {
-    const filePath = "components/button.tsx"
+    const filePath = "components/button.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1750,17 +1695,15 @@ describe("toAliasedImport", () => {
         ui: "@/components/ui",
         lib: "@/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe(
-      "@/components/button"
-    )
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/components/button");
+  });
 
   test("should convert ui path to aliased import", () => {
-    const filePath = "components/ui/button.tsx"
+    const filePath = "components/ui/button.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1773,17 +1716,15 @@ describe("toAliasedImport", () => {
         ui: "@/components/ui",
         lib: "@/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe(
-      "@/components/ui/button"
-    )
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/components/ui/button");
+  });
 
   test("should collapse index files", () => {
-    const filePath = "components/ui/button/index.tsx"
+    const filePath = "components/ui/button/index.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1796,17 +1737,15 @@ describe("toAliasedImport", () => {
         ui: "@/components/ui",
         lib: "@/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe(
-      "@/components/ui/button"
-    )
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/components/ui/button");
+  });
 
   test("should return null when no matching alias found", () => {
-    const filePath = "src/pages/index.tsx"
+    const filePath = "src/pages/index.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1819,15 +1758,15 @@ describe("toAliasedImport", () => {
         ui: "@/components/ui",
         lib: "@/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/pages")
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/pages");
+  });
 
   test("should handle nested directories", () => {
-    const filePath = "components/forms/inputs/text-input.tsx"
+    const filePath = "components/forms/inputs/text-input.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1840,17 +1779,17 @@ describe("toAliasedImport", () => {
         ui: "@/components/ui",
         lib: "@/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
+    };
     expect(toAliasedImport(filePath, config, projectInfo)).toBe(
       "@/components/forms/inputs/text-input"
-    )
-  })
+    );
+  });
 
   test("should keep non-code file extensions", () => {
-    const filePath = "components/styles/theme.css"
+    const filePath = "components/styles/theme.css";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1863,17 +1802,15 @@ describe("toAliasedImport", () => {
         ui: "@/components/ui",
         lib: "@/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe(
-      "@/components/styles/theme.css"
-    )
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/components/styles/theme.css");
+  });
 
   test("should prefer longer matching paths", () => {
-    const filePath = "components/ui/button.tsx"
+    const filePath = "components/ui/button.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1884,15 +1821,15 @@ describe("toAliasedImport", () => {
         components: "@/components",
         ui: "@/ui",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/ui/button")
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/ui/button");
+  });
 
   test("should support tilde (~) alias prefix", () => {
-    const filePath = "components/button.tsx"
+    const filePath = "components/button.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1901,17 +1838,15 @@ describe("toAliasedImport", () => {
       aliases: {
         components: "~components",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "~",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe(
-      "~components/button"
-    )
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("~components/button");
+  });
 
   test("should support @shadcn alias prefix", () => {
-    const filePath = "components/ui/button.tsx"
+    const filePath = "components/ui/button.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1922,17 +1857,15 @@ describe("toAliasedImport", () => {
         components: "@shadcn/components",
         ui: "@shadcn/ui",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@shadcn",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe(
-      "@shadcn/ui/button"
-    )
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@shadcn/ui/button");
+  });
 
   test("should support ~cn alias prefix", () => {
-    const filePath = "lib/utils/index.tsx"
+    const filePath = "lib/utils/index.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1941,15 +1874,15 @@ describe("toAliasedImport", () => {
       aliases: {
         lib: "~cn/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "~cn",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe("~cn/lib/utils")
-  })
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("~cn/lib/utils");
+  });
 
   test("should use project alias prefix when aliasKey is cwd", () => {
-    const filePath = "src/pages/home.tsx"
+    const filePath = "src/pages/home.tsx";
     const config = {
       resolvedPaths: {
         cwd: "/foo/bar",
@@ -1962,10 +1895,10 @@ describe("toAliasedImport", () => {
         ui: "@/components/ui",
         lib: "@/lib",
       },
-    }
+    };
     const projectInfo = {
       aliasPrefix: "@",
-    }
-    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/pages/home")
-  })
-})
+    };
+    expect(toAliasedImport(filePath, config, projectInfo)).toBe("@/pages/home");
+  });
+});

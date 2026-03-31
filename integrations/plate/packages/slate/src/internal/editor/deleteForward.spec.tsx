@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('deleteForward', () => {
-  it('deletes the next character', () => {
+describe("deleteForward", () => {
+  it("deletes the next character", () => {
     const editor: any = createEditor(
       (
         <editor>

@@ -1,12 +1,12 @@
-import { createEditor } from '../create-editor';
+import { createEditor } from "../create-editor";
 import {
   assignLegacyApi,
   assignLegacyTransforms,
   syncLegacyMethods,
-} from './assignLegacyTransforms';
+} from "./assignLegacyTransforms";
 
-describe('legacy method sync', () => {
-  it('assignLegacyTransforms keeps only whitelisted transform names', () => {
+describe("legacy method sync", () => {
+  it("assignLegacyTransforms keeps only whitelisted transform names", () => {
     const editor = createEditor();
     const insertText = mock();
 
@@ -19,7 +19,7 @@ describe('legacy method sync', () => {
     expect((editor as any).notReal).toBeUndefined();
   });
 
-  it('assignLegacyApi maps marks to getMarks and ignores unknown keys', () => {
+  it("assignLegacyApi maps marks to getMarks and ignores unknown keys", () => {
     const editor = createEditor();
     const marks = mock();
     const point = mock();
@@ -35,7 +35,7 @@ describe('legacy method sync', () => {
     expect((editor as any).notReal).toBeUndefined();
   });
 
-  it('syncLegacyMethods copies legacy methods into editor.api and editor.tf', () => {
+  it("syncLegacyMethods copies legacy methods into editor.api and editor.tf", () => {
     const editor = createEditor();
     const getMarks = mock(() => null) as typeof editor.getMarks;
     const point = mock(() => {}) as typeof editor.point;
@@ -54,7 +54,7 @@ describe('legacy method sync', () => {
     expect(editor.tf.insertText as any).toBe(insertText as any);
   });
 
-  it('does not touch additive non-whitelisted selection fields', () => {
+  it("does not touch additive non-whitelisted selection fields", () => {
     const editor: any = createEditor();
     const selections = [
       {
@@ -64,13 +64,13 @@ describe('legacy method sync', () => {
     ];
 
     editor.selections = selections;
-    editor.api.selections = 'api-selections';
-    editor.tf.selections = 'tf-selections';
+    editor.api.selections = "api-selections";
+    editor.tf.selections = "tf-selections";
 
     syncLegacyMethods(editor);
 
     expect(editor.selections).toBe(selections);
-    expect(editor.api.selections).toBe('api-selections');
-    expect(editor.tf.selections).toBe('tf-selections');
+    expect(editor.api.selections).toBe("api-selections");
+    expect(editor.tf.selections).toBe("tf-selections");
   });
 });

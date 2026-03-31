@@ -1,34 +1,34 @@
+import { Check, Copy, Heart } from "lucide-react";
+import { usePostHog } from "posthog-js/react";
 import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Copy, Check, Heart } from "lucide-react";
-import { ThemeEditorState } from "@/types/editor";
-import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 import { CodeBlock } from "@/components/ai-elements/code-block";
 import {
   Tabs,
-  TabsList,
-  TabsTrigger,
   TabsContent,
   TabsIndicator,
+  TabsList,
+  TabsTrigger,
 } from "@/components/ui/base-ui-tabs";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
+  SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectItem,
 } from "@/components/ui/select";
-import { usePostHog } from "posthog-js/react";
+import { useDialogActions } from "@/hooks/use-dialog-actions";
 import { useEditorStore } from "@/store/editor-store";
 import { usePreferencesStore } from "@/store/preferences-store";
-import {
-  generateThemeCode,
-  generateTailwindConfigCode,
-  generateLayoutCode,
-} from "@/utils/theme-style-generator";
 import { useThemePresetStore } from "@/store/theme-preset-store";
-import { useDialogActions } from "@/hooks/use-dialog-actions";
 import { ColorFormat } from "@/types";
+import { ThemeEditorState } from "@/types/editor";
+import {
+  generateLayoutCode,
+  generateTailwindConfigCode,
+  generateThemeCode,
+} from "@/utils/theme-style-generator";
+import { ScrollArea, ScrollBar } from "../ui/scroll-area";
 
 interface CodePanelProps {
   themeEditorState: ThemeEditorState;
@@ -81,7 +81,9 @@ const CodePanel: React.FC<CodePanelProps> = ({ themeEditorState, themeId }) => {
 
   const copyRegistryCommand = async () => {
     try {
-      await navigator.clipboard.writeText(getRegistryCommand(registryId ?? "default", isRegistrySaved));
+      await navigator.clipboard.writeText(
+        getRegistryCommand(registryId ?? "default", isRegistrySaved)
+      );
       setRegistryCopied(true);
       setTimeout(() => setRegistryCopied(false), 2000);
       captureCopyEvent("COPY_REGISTRY_COMMAND");
@@ -171,7 +173,9 @@ const CodePanel: React.FC<CodePanelProps> = ({ themeEditorState, themeId }) => {
             {showRegistryCommand ? (
               <ScrollArea className="w-full">
                 <div className="overflow-y-hidden pb-2 whitespace-nowrap">
-                  <code className="font-mono text-sm">{getRegistryCommand(registryId as string, isRegistrySaved)}</code>
+                  <code className="font-mono text-sm">
+                    {getRegistryCommand(registryId as string, isRegistrySaved)}
+                  </code>
                 </div>
                 <ScrollBar orientation="horizontal" />
               </ScrollArea>
@@ -294,11 +298,7 @@ const CodePanel: React.FC<CodePanelProps> = ({ themeEditorState, themeId }) => {
 
         <TabsContent value="layout.tsx" className="overflow-hidden">
           <ScrollArea className="relative h-full">
-            <CodeBlock
-              code={layoutCode}
-              language="tsx"
-              className="h-full rounded-none border-0"
-            />
+            <CodeBlock code={layoutCode} language="tsx" className="h-full rounded-none border-0" />
             <ScrollBar orientation="horizontal" />
             <ScrollBar orientation="vertical" />
           </ScrollArea>

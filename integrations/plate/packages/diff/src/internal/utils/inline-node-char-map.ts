@@ -1,4 +1,4 @@
-import { type Descendant, type TText, NodeApi, TextApi } from 'platejs';
+import { type Descendant, NodeApi, TextApi, type TText } from "platejs";
 
 export class InlineNodeCharMap {
   private readonly _charGenerator: Generator<string>;
@@ -46,10 +46,7 @@ export class InlineNodeCharMap {
        * 'Hello ' }, replacementWithProps, { text: ' world ' },
        * replacementWithProps, { text: '' }, ]
        */
-      const nodeList = this.insertBetweenPairs(
-        nodesForTexts,
-        replacementWithProps
-      );
+      const nodeList = this.insertBetweenPairs(nodesForTexts, replacementWithProps);
 
       // Remove empty text nodes
       return nodeList.filter((n) => !TextApi.isText(n) || n.text.length > 0);

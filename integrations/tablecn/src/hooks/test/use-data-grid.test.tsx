@@ -34,7 +34,7 @@ const testData: TestData[] = [
 const simpleFilterFn = (
   row: { getValue: (id: string) => unknown },
   _columnId: string,
-  filterValue: string,
+  filterValue: string
 ) => {
   const value = String(row.getValue(_columnId) ?? "");
   return value.toLowerCase().includes(filterValue.toLowerCase());
@@ -109,7 +109,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.table).toBeDefined();
@@ -126,7 +126,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             rowHeight: "tall",
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.rowHeight).toBe("tall");
@@ -142,12 +142,10 @@ describe("useDataGrid", () => {
               sorting: [{ id: "name", desc: false }],
             },
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
-      expect(result.current.table.getState().sorting).toEqual([
-        { id: "name", desc: false },
-      ]);
+      expect(result.current.table.getState().sorting).toEqual([{ id: "name", desc: false }]);
     });
 
     it("should provide table meta with required callbacks", () => {
@@ -157,7 +155,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const meta = result.current.tableMeta;
@@ -181,7 +179,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -201,7 +199,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -232,7 +230,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // First click to focus
@@ -258,7 +256,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -278,7 +276,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       await act(async () => {
@@ -302,7 +300,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             readOnly: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -321,13 +319,11 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Initially no cells are selected
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        false,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(false);
 
       // Click to focus (which doesn't select)
       act(() => {
@@ -335,9 +331,7 @@ describe("useDataGrid", () => {
       });
 
       // Single click focuses but doesn't select
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        false,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(false);
     });
 
     it("should clear selection via onSelectionClear", () => {
@@ -347,7 +341,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Trigger mouse down to start selection
@@ -363,9 +357,7 @@ describe("useDataGrid", () => {
         result.current.tableMeta.onSelectionClear?.();
       });
 
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        false,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(false);
     });
   });
 
@@ -377,7 +369,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a cell first
@@ -401,7 +393,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             readOnly: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a cell first
@@ -429,7 +421,7 @@ describe("useDataGrid", () => {
             readOnly: true,
             onDataChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a cell first
@@ -457,7 +449,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onDataChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -469,9 +461,7 @@ describe("useDataGrid", () => {
       });
 
       expect(onDataChange).toHaveBeenCalledWith(
-        expect.arrayContaining([
-          expect.objectContaining({ name: "Updated Name" }),
-        ]),
+        expect.arrayContaining([expect.objectContaining({ name: "Updated Name" })])
       );
     });
 
@@ -485,7 +475,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onDataChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -499,7 +489,7 @@ describe("useDataGrid", () => {
         expect.arrayContaining([
           expect.objectContaining({ name: "Updated Name 1" }),
           expect.objectContaining({ name: "Updated Name 2" }),
-        ]),
+        ])
       );
     });
 
@@ -514,7 +504,7 @@ describe("useDataGrid", () => {
             onDataChange,
             readOnly: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -543,7 +533,7 @@ describe("useDataGrid", () => {
               ],
             },
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Get filtered rows - should only have 1 row (Tony Hawk)
@@ -608,7 +598,7 @@ describe("useDataGrid", () => {
               ],
             },
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Get filtered rows - should have 2 rows (Bob and Bam)
@@ -656,7 +646,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onRowAdd,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.onRowAdd).toBeDefined();
@@ -679,7 +669,7 @@ describe("useDataGrid", () => {
             onRowAdd,
             readOnly: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // onRowAdd should still be defined on tableMeta (for internal use)
@@ -697,7 +687,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onRowsDelete,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // tableMeta.onRowsDelete should be defined when prop is provided
@@ -711,7 +701,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // tableMeta.onRowsDelete should be undefined when prop is not provided
@@ -728,7 +718,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.searchState).toBeDefined();
@@ -745,7 +735,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: false,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.searchState).toBeUndefined();
@@ -759,7 +749,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       await act(async () => {
@@ -779,16 +769,14 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
         result.current.searchState?.onSearch("Tony");
       });
 
-      expect(result.current.searchState?.searchMatches.length).toBeGreaterThan(
-        0,
-      );
+      expect(result.current.searchState?.searchMatches.length).toBeGreaterThan(0);
     });
 
     it("should clear search results when query is empty", () => {
@@ -799,7 +787,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // First search for something
@@ -807,9 +795,7 @@ describe("useDataGrid", () => {
         result.current.searchState?.onSearch("Tony");
       });
 
-      expect(result.current.searchState?.searchMatches.length).toBeGreaterThan(
-        0,
-      );
+      expect(result.current.searchState?.searchMatches.length).toBeGreaterThan(0);
 
       // Clear search
       act(() => {
@@ -828,7 +814,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const mockEvent = {
@@ -854,7 +840,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Open context menu
@@ -890,7 +876,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.virtualItems).toBeDefined();
@@ -904,7 +890,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.virtualTotalSize).toBeDefined();
@@ -918,7 +904,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.measureElement).toBeDefined();
@@ -934,7 +920,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.columnSizeVars).toBeDefined();
@@ -955,7 +941,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.dataGridRef).toBeDefined();
@@ -969,7 +955,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.headerRef).toBeDefined();
@@ -982,7 +968,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.footerRef).toBeDefined();
@@ -1000,7 +986,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onRowHeightChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       await act(async () => {
@@ -1021,7 +1007,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.pasteDialog.open).toBe(false);
@@ -1034,7 +1020,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Close it (even though it's already closed, this tests the callback)
@@ -1058,7 +1044,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onDataChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a number cell
@@ -1087,7 +1073,7 @@ describe("useDataGrid", () => {
             onRowAdd,
             enablePaste: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a cell
@@ -1113,7 +1099,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onDataChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a number cell
@@ -1141,7 +1127,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onPaste,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a cell
@@ -1161,14 +1147,14 @@ describe("useDataGrid", () => {
             columnId: "name",
             value: "New Name",
           }),
-        ]),
+        ])
       );
     });
 
     it("should preserve multiline content within cells when pasting", async () => {
       const onPaste = vi.fn().mockResolvedValue(undefined);
       mockClipboard.readText.mockResolvedValue(
-        'Alice\tKickflip\t95\nBob\t"Trick with\nmultiple\nlines"\t98',
+        'Alice\tKickflip\t95\nBob\t"Trick with\nmultiple\nlines"\t98'
       );
 
       const { result } = renderHook(
@@ -1178,7 +1164,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onPaste,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -1206,14 +1192,14 @@ describe("useDataGrid", () => {
             columnId: "score",
             value: 98,
           }),
-        ]),
+        ])
       );
     });
 
     it("should preserve unquoted multiline content when pasting (Excel format)", async () => {
       const onPaste = vi.fn().mockResolvedValue(undefined);
       mockClipboard.readText.mockResolvedValue(
-        "Alice\tKickflip\t95\nBob\tTrick with\nmultiple\nlines\t98",
+        "Alice\tKickflip\t95\nBob\tTrick with\nmultiple\nlines\t98"
       );
 
       const { result } = renderHook(
@@ -1223,7 +1209,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onPaste,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -1251,7 +1237,7 @@ describe("useDataGrid", () => {
             columnId: "score",
             value: 98,
           }),
-        ]),
+        ])
       );
     });
   });
@@ -1264,7 +1250,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus and select a cell
@@ -1287,7 +1273,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a cell
@@ -1320,7 +1306,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const mockEvent = {
@@ -1347,7 +1333,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // First click to set anchor
@@ -1367,9 +1353,7 @@ describe("useDataGrid", () => {
         result.current.tableMeta.onCellClick?.(1, "trick", mockEvent);
       });
 
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        true,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(true);
     });
 
     it("should handle mouse drag selection", () => {
@@ -1379,7 +1363,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Mouse down to start selection
@@ -1403,9 +1387,7 @@ describe("useDataGrid", () => {
         result.current.tableMeta.onCellMouseUp?.();
       });
 
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        true,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(true);
     });
 
     it("should select column when enableColumnSelection is true", () => {
@@ -1416,7 +1398,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableColumnSelection: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -1424,15 +1406,9 @@ describe("useDataGrid", () => {
       });
 
       // All cells in the column should be selected
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        true,
-      );
-      expect(result.current.tableMeta.getIsCellSelected?.(1, "name")).toBe(
-        true,
-      );
-      expect(result.current.tableMeta.getIsCellSelected?.(2, "name")).toBe(
-        true,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(true);
+      expect(result.current.tableMeta.getIsCellSelected?.(1, "name")).toBe(true);
+      expect(result.current.tableMeta.getIsCellSelected?.(2, "name")).toBe(true);
     });
 
     it("should clear selection when clicking column with enableColumnSelection false", () => {
@@ -1443,7 +1419,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableColumnSelection: false,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Select a cell first
@@ -1459,9 +1435,7 @@ describe("useDataGrid", () => {
         result.current.tableMeta.onColumnClick?.("name");
       });
 
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        false,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(false);
     });
 
     it("should handle right-click without affecting existing selection", () => {
@@ -1471,7 +1445,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const mockRightClickEvent = {
@@ -1497,7 +1471,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Search for "Kickflip"
@@ -1521,7 +1495,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Search for "Kickflip"
@@ -1550,7 +1524,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Search for "Kickflip"
@@ -1579,7 +1553,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Search for something
@@ -1598,7 +1572,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Search for something
@@ -1617,7 +1591,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       await act(async () => {
@@ -1636,7 +1610,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             enableSearch: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Open search
@@ -1670,7 +1644,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             getRowId: (row) => row.id,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const firstRowId = result.current.table.getRowModel().rows[0]?.id;
@@ -1690,7 +1664,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             getRowId: (row) => row.id,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const rows = result.current.table.getRowModel().rows;
@@ -1719,7 +1693,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             getRowId: (row) => row.id,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const firstRowId = result.current.table.getRowModel().rows[0]?.id;
@@ -1749,7 +1723,7 @@ describe("useDataGrid", () => {
               columnFilters: [{ id: "name", value: "Tony" }],
             },
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // With filter "name contains Tony", only Tony Hawk (id: "1") should be visible
@@ -1760,11 +1734,7 @@ describe("useDataGrid", () => {
 
       // Select the visible (filtered) row
       act(() => {
-        result.current.tableMeta.onRowSelect?.(
-          visibleRowId ?? "1",
-          true,
-          false,
-        );
+        result.current.tableMeta.onRowSelect?.(visibleRowId ?? "1", true, false);
       });
 
       const rowSelection = result.current.table.getState().rowSelection;
@@ -1781,7 +1751,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Start editing
@@ -1809,7 +1779,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Start editing
@@ -1832,7 +1802,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // First click to focus
@@ -1867,7 +1837,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             autoFocus: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Auto focus should set focused cell
@@ -1882,7 +1852,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             autoFocus: { rowIndex: 1, columnId: "trick" },
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Should focus the specified cell
@@ -1897,7 +1867,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             autoFocus: false,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.focusedCell).toBeNull();
@@ -1915,7 +1885,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onSortingChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Get the column and toggle sorting
@@ -1938,7 +1908,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onColumnFiltersChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Set a filter
@@ -1959,7 +1929,7 @@ describe("useDataGrid", () => {
               sorting: [{ id: "score", desc: true }],
             },
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const sorting = result.current.table.getState().sorting;
@@ -1976,7 +1946,7 @@ describe("useDataGrid", () => {
               columnFilters: [{ id: "name", value: "Tony" }],
             },
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const filters = result.current.table.getState().columnFilters;
@@ -1995,7 +1965,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onFilesUpload,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.tableMeta.onFilesUpload).toBeDefined();
@@ -2008,7 +1978,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.tableMeta.onFilesUpload).toBeUndefined();
@@ -2024,7 +1994,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onFilesDelete,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.tableMeta.onFilesDelete).toBeDefined();
@@ -2037,7 +2007,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.tableMeta.onFilesDelete).toBeUndefined();
@@ -2058,7 +2028,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             dir: "rtl",
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.dir).toBeDefined();
@@ -2073,7 +2043,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const mockEvent = {
@@ -2089,9 +2059,7 @@ describe("useDataGrid", () => {
       });
 
       // Should select the cell and open context menu
-      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(
-        true,
-      );
+      expect(result.current.tableMeta.getIsCellSelected?.(0, "name")).toBe(true);
       expect(result.current.contextMenu.open).toBe(true);
     });
 
@@ -2102,7 +2070,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Select multiple cells first
@@ -2153,7 +2121,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Initially should be null (no selection)
@@ -2181,7 +2149,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             overscan: 10,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Virtualizer should be initialized with custom overscan
@@ -2202,7 +2170,7 @@ describe("useDataGrid", () => {
             onDataChange,
             enablePaste: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Focus a cell
@@ -2227,7 +2195,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const nameColumn = result.current.table.getColumn("name");
@@ -2246,7 +2214,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const columns = result.current.table.getAllColumns();
@@ -2265,7 +2233,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Access meta getters
@@ -2288,7 +2256,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             readOnly: true,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       expect(result.current.tableMeta.readOnly).toBe(true);
@@ -2306,7 +2274,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onDataChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -2326,7 +2294,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onDataChange,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       act(() => {
@@ -2350,7 +2318,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // Select a cell
@@ -2382,7 +2350,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onRowAdd,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       await act(async () => {
@@ -2403,7 +2371,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onRowAdd,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       await act(async () => {
@@ -2423,7 +2391,7 @@ describe("useDataGrid", () => {
             columns: testColumns,
             onRowAdd,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       const mockEvent = {
@@ -2446,7 +2414,7 @@ describe("useDataGrid", () => {
             data: testData,
             columns: testColumns,
           }),
-        { wrapper: createWrapper() },
+        { wrapper: createWrapper() }
       );
 
       // First click to focus

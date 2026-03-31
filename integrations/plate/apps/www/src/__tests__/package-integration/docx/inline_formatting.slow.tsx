@@ -1,11 +1,11 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'inline_formatting';
+const name = "inline_formatting";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
@@ -23,8 +23,7 @@ describe(getDocxTestName(name), () => {
           <htext />
         </hp>
         <hp>
-          This is Small Caps, and this is{' '}
-          <htext strikethrough>strikethrough</htext>.
+          This is Small Caps, and this is <htext strikethrough>strikethrough</htext>.
         </hp>
         <hp>
           <htext />
@@ -40,14 +39,14 @@ describe(getDocxTestName(name), () => {
           <htext />
         </hp>
         <hp>
-          Above the line is <htext superscript>superscript</htext> and below the
-          line is <htext subscript>subscript</htext>.
+          Above the line is <htext superscript>superscript</htext> and below the line is{" "}
+          <htext subscript>subscript</htext>.
         </hp>
         <hp>
           <htext />
         </hp>
         <hp>
-          A line{'\n'}
+          A line{"\n"}
           break.
         </hp>
         <hp>

@@ -1,17 +1,17 @@
 import {
+  KEYS,
   type OverrideEditor,
+  RangeApi,
   type TElement,
   type TRange,
   type TTableCellElement,
   type TTableElement,
   type TTableRowElement,
-  KEYS,
-  RangeApi,
-} from 'platejs';
+} from "platejs";
 
-import type { TableConfig } from './BaseTablePlugin';
+import type { TableConfig } from "./BaseTablePlugin";
 
-import { computeCellIndices, getCellTypes } from './utils';
+import { computeCellIndices, getCellTypes } from "./utils";
 
 // TODO: tests
 
@@ -33,7 +33,7 @@ export const withApplyTable: OverrideEditor<TableConfig> = ({
 }) => ({
   transforms: {
     apply(op) {
-      if (op.type === 'set_selection' && op.newProperties) {
+      if (op.type === "set_selection" && op.newProperties) {
         const newSelection = {
           ...editor.selection,
           ...op.newProperties,
@@ -89,21 +89,19 @@ export const withApplyTable: OverrideEditor<TableConfig> = ({
       }
 
       const opType =
-        op.type === 'remove_node'
+        op.type === "remove_node"
           ? (op.node.type as string)
-          : op.type === 'move_node'
+          : op.type === "move_node"
             ? editor.api.node<TElement>(op.path)?.[0].type
             : undefined;
 
       const isTableOperation =
-        (op.type === 'remove_node' || op.type === 'move_node') &&
+        (op.type === "remove_node" || op.type === "move_node") &&
         opType &&
-        [editor.getType(KEYS.tr), tableType, ...getCellTypes(editor)].includes(
-          opType as string
-        );
+        [editor.getType(KEYS.tr), tableType, ...getCellTypes(editor)].includes(opType as string);
 
       // Cleanup cell indices when removing a table cell
-      if (isTableOperation && op.type === 'remove_node') {
+      if (isTableOperation && op.type === "remove_node") {
         const cells = [
           ...editor.api.nodes<TTableCellElement>({
             at: op.path,
@@ -128,7 +126,7 @@ export const withApplyTable: OverrideEditor<TableConfig> = ({
         opType !== tableType
       ) {
         table = editor.api.node<TTableRowElement>({
-          at: op.type === 'move_node' ? op.newPath : op.path,
+          at: op.type === "move_node" ? op.newPath : op.path,
           match: { type: tableType },
         })?.[0];
 

@@ -4,10 +4,7 @@ interface GitHubStarsResponse {
   stargazers_count: number;
 }
 
-async function fetchGithubStars(
-  owner: string,
-  repo: string
-): Promise<GitHubStarsResponse> {
+async function fetchGithubStars(owner: string, repo: string): Promise<GitHubStarsResponse> {
   const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`);
   if (!response.ok) {
     throw new Error("Failed to fetch stargazers count");

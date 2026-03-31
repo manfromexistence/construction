@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { getCellInPreviousTableRow } from './getCellInPreviousTableRow';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { getCellInPreviousTableRow } from "./getCellInPreviousTableRow";
 
 jsxt;
 
@@ -16,8 +15,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('getCellInPreviousTableRow', () => {
-  it('returns the last cell from the previous row', () => {
+describe("getCellInPreviousTableRow", () => {
+  it("returns the last cell from the previous row", () => {
     const input = (
       <editor>
         <htable>
@@ -42,10 +41,10 @@ describe('getCellInPreviousTableRow', () => {
     const previousCell = getCellInPreviousTableRow(editor, [0, 1])!;
 
     expect(previousCell[1]).toEqual([0, 0, 1]);
-    expect(editor.api.string(previousCell[1])).toBe('12');
+    expect(editor.api.string(previousCell[1])).toBe("12");
   });
 
-  it('returns undefined when there is no previous row', () => {
+  it("returns undefined when there is no previous row", () => {
     const input = (
       <editor>
         <htable>

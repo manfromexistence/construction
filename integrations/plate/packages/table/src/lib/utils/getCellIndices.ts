@@ -1,28 +1,20 @@
-import {
-  type SlateEditor,
-  type TTableCellElement,
-  getEditorPlugin,
-  KEYS,
-} from 'platejs';
+import { getEditorPlugin, KEYS, type SlateEditor, type TTableCellElement } from "platejs";
 
-import type { TableConfig } from '../BaseTablePlugin';
+import type { TableConfig } from "../BaseTablePlugin";
 
-import { computeCellIndices } from './computeCellIndices';
+import { computeCellIndices } from "./computeCellIndices";
 
 export type CellIndices = {
   col: number;
   row: number;
 };
 
-export const getCellIndices = (
-  editor: SlateEditor,
-  element: TTableCellElement
-): CellIndices => {
+export const getCellIndices = (editor: SlateEditor, element: TTableCellElement): CellIndices => {
   const { getOption } = getEditorPlugin<TableConfig>(editor, {
     key: KEYS.table,
   });
 
-  let indices = getOption('cellIndices', element.id!);
+  let indices = getOption("cellIndices", element.id!);
 
   if (!indices) {
     indices = computeCellIndices(editor, {
@@ -31,8 +23,8 @@ export const getCellIndices = (
 
     if (!indices) {
       editor.api.debug.warn(
-        'No cell indices found for element. Make sure all table cells have an id.',
-        'TABLE_CELL_INDICES'
+        "No cell indices found for element. Make sure all table cells have an id.",
+        "TABLE_CELL_INDICES"
       );
     }
   }

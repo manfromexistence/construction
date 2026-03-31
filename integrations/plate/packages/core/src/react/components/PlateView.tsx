@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 
-import { type PlateStaticProps, PlateStatic } from '../../static';
+import { PlateStatic, type PlateStaticProps } from "../../static";
 
 export type PlateViewProps = PlateStaticProps & {};
 
@@ -8,8 +8,8 @@ export const PlateView = (props: PlateViewProps) => (
   <PlateStatic
     onCopy={useCallback(
       (e: React.ClipboardEvent<HTMLDivElement>) => {
-        props.editor.tf.setFragmentData(e.clipboardData, 'copy');
-        if (e.clipboardData.getData('application/x-slate-fragment')) {
+        props.editor.tf.setFragmentData(e.clipboardData, "copy");
+        if (e.clipboardData.getData("application/x-slate-fragment")) {
           e.preventDefault();
         }
       },

@@ -1,28 +1,23 @@
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  useInfiniteQuery,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
-import {
-  getCommunityThemes,
   getCommunityTagCounts,
-  publishTheme,
-  unpublishTheme,
-  toggleLikeTheme,
+  getCommunityThemes,
   getMyPublishedThemeIds,
+  publishTheme,
+  toggleLikeTheme,
+  unpublishTheme,
   updateCommunityThemeTags,
 } from "@/actions/community-themes";
 import { toast } from "@/components/ui/use-toast";
 import type {
-  CommunityTheme,
-  CommunitySortOption,
   CommunityFilterOption,
-  CommunityTimeRange,
+  CommunitySortOption,
+  CommunityTheme,
   CommunityThemesResponse,
+  CommunityTimeRange,
 } from "@/types/community";
-import { themeKeys } from "./use-themes-data";
 import { ErrorCode } from "@/types/errors";
+import { themeKeys } from "./use-themes-data";
 
 export const communityKeys = {
   all: ["community-themes"] as const,
@@ -31,8 +26,7 @@ export const communityKeys = {
     filter: CommunityFilterOption = "all",
     tags: string[] = [],
     timeRange: CommunityTimeRange = "all"
-  ) =>
-    [...communityKeys.all, "list", { sort, filter, tags, timeRange }] as const,
+  ) => [...communityKeys.all, "list", { sort, filter, tags, timeRange }] as const,
   myPublished: () => [...communityKeys.all, "my-published"] as const,
   tagCounts: () => [...communityKeys.all, "tag-counts"] as const,
 };
@@ -46,14 +40,7 @@ export function useCommunityThemes(
   return useInfiniteQuery({
     queryKey: communityKeys.list(sort, filter, tags, timeRange),
     queryFn: async ({ pageParam }) => {
-      return getCommunityThemes(
-        sort,
-        pageParam,
-        undefined,
-        filter,
-        tags,
-        timeRange
-      );
+      return getCommunityThemes(sort, pageParam, undefined, filter, tags, timeRange);
     },
     initialPageParam: undefined as string | number | undefined,
     getNextPageParam: (lastPage: CommunityThemesResponse) => {
@@ -83,13 +70,7 @@ export function usePublishTheme() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      themeId,
-      tags = [],
-    }: {
-      themeId: string;
-      tags?: string[];
-    }) => {
+    mutationFn: async ({ themeId, tags = [] }: { themeId: string; tags?: string[] }) => {
       const result = await publishTheme(themeId, tags);
       if (!result.success) {
         if (result.error.code === ErrorCode.ALREADY_PUBLISHED) {
@@ -120,8 +101,7 @@ export function usePublishTheme() {
       }
       toast({
         title: "Failed to publish theme",
-        description:
-          (error as Error).message || "An unexpected error occurred.",
+        description: (error as Error).message || "An unexpected error occurred.",
         variant: "destructive",
       });
     },
@@ -145,8 +125,7 @@ export function useUnpublishTheme() {
     onError: (error) => {
       toast({
         title: "Failed to unpublish theme",
-        description:
-          (error as Error).message || "An unexpected error occurred.",
+        description: (error as Error).message || "An unexpected error occurred.",
         variant: "destructive",
       });
     },
@@ -172,34 +151,29 @@ export function useToggleLike() {
         queryKey: communityKeys.all,
       });
 
-      queryClient.setQueriesData(
-        { queryKey: communityKeys.all },
-        (old: unknown) => {
-          if (!old || typeof old !== "object") return old;
-          const data = old as {
-            pages?: CommunityThemesResponse[];
-            pageParams?: unknown[];
-          };
-          if (!data.pages) return old;
-          return {
-            ...data,
-            pages: data.pages.map((page) => ({
-              ...page,
-              themes: page.themes.map((theme: CommunityTheme) =>
-                theme.id === communityThemeId
-                  ? {
-                      ...theme,
-                      isLikedByMe: !theme.isLikedByMe,
-                      likeCount: theme.isLikedByMe
-                        ? theme.likeCount - 1
-                        : theme.likeCount + 1,
-                    }
-                  : theme
-              ),
-            })),
-          };
-        }
-      );
+      queryClient.setQueriesData({ queryKey: communityKeys.all }, (old: unknown) => {
+        if (!old || typeof old !== "object") return old;
+        const data = old as {
+          pages?: CommunityThemesResponse[];
+          pageParams?: unknown[];
+        };
+        if (!data.pages) return old;
+        return {
+          ...data,
+          pages: data.pages.map((page) => ({
+            ...page,
+            themes: page.themes.map((theme: CommunityTheme) =>
+              theme.id === communityThemeId
+                ? {
+                    ...theme,
+                    isLikedByMe: !theme.isLikedByMe,
+                    likeCount: theme.isLikedByMe ? theme.likeCount - 1 : theme.likeCount + 1,
+                  }
+                : theme
+            ),
+          })),
+        };
+      });
 
       return { previousData };
     },
@@ -226,13 +200,7 @@ export function useUpdateCommunityThemeTags() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({
-      themeId,
-      tags,
-    }: {
-      themeId: string;
-      tags: string[];
-    }) => {
+    mutationFn: async ({ themeId, tags }: { themeId: string; tags: string[] }) => {
       const result = await updateCommunityThemeTags(themeId, tags);
       if (!result.success) {
         throw new Error(result.error.message);
@@ -249,8 +217,7 @@ export function useUpdateCommunityThemeTags() {
     onError: (error) => {
       toast({
         title: "Failed to update tags",
-        description:
-          (error as Error).message || "An unexpected error occurred.",
+        description: (error as Error).message || "An unexpected error occurred.",
         variant: "destructive",
       });
     },

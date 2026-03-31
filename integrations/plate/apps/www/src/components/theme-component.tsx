@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 
-import { Index } from '@/__registry__';
-import { cn } from '@/lib/utils';
+import { Index } from "@/__registry__";
+import { cn } from "@/lib/utils";
 
-import { Icons } from './icons';
+import { Icons } from "./icons";
 
 interface ThemeComponentProps extends React.HTMLAttributes<HTMLDivElement> {
   name: string;
-  align?: 'center' | 'end' | 'start';
+  align?: "center" | "end" | "start";
   extractClassname?: boolean;
   extractedClassNames?: string;
 }
@@ -21,10 +21,10 @@ export function ThemeComponent({ name, ...props }: ThemeComponentProps) {
     if (!Component) {
       return (
         <p className="text-muted-foreground text-sm">
-          Component{' '}
+          Component{" "}
           <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">
             {name}
-          </code>{' '}
+          </code>{" "}
           not found in registry.
         </p>
       );
@@ -34,7 +34,7 @@ export function ThemeComponent({ name, ...props }: ThemeComponentProps) {
   }, [name]);
 
   return (
-    <div className={cn('relative')} {...props}>
+    <div className={cn("relative")} {...props}>
       <React.Suspense
         fallback={
           <div className="flex items-center text-muted-foreground text-sm">

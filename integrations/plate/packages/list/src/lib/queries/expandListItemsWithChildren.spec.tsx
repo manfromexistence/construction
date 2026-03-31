@@ -1,15 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type Descendant, type SlateEditor, createEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, type Descendant, type SlateEditor } from "platejs";
 
-import { expandListItemsWithChildren } from './expandListItemsWithChildren';
+import { expandListItemsWithChildren } from "./expandListItemsWithChildren";
 
 jsxt;
 
-describe('expandListItemsWithChildren', () => {
-  describe('when input contains no list items', () => {
-    it('returns the same blocks unchanged', () => {
+describe("expandListItemsWithChildren", () => {
+  describe("when input contains no list items", () => {
+    it("returns the same blocks unchanged", () => {
       const input = (
         <fragment>
           <hp id="1">
@@ -20,9 +20,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entries = [
         [input[0], [0]],
@@ -36,8 +34,8 @@ describe('expandListItemsWithChildren', () => {
     });
   });
 
-  describe('when input contains list items without children', () => {
-    it('returns the same list items', () => {
+  describe("when input contains list items without children", () => {
+    it("returns the same list items", () => {
       const input = (
         <fragment>
           <hp id="1" indent={1} listStyleType="disc">
@@ -52,9 +50,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entries = [
         [input[0], [0]],
@@ -68,8 +64,8 @@ describe('expandListItemsWithChildren', () => {
     });
   });
 
-  describe('when input contains list items with children', () => {
-    it('expand single list item to include its children', () => {
+  describe("when input contains list items with children", () => {
+    it("expand single list item to include its children", () => {
       const input = (
         <fragment>
           <hp id="1" indent={1} listStyleType="disc">
@@ -88,9 +84,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       // Only pass the parent item
       const entries = [[input[0], [0]]] as any;
@@ -104,7 +98,7 @@ describe('expandListItemsWithChildren', () => {
       ] as any);
     });
 
-    it('handle multiple list items with children', () => {
+    it("handle multiple list items with children", () => {
       const input = (
         <fragment>
           <hp id="1" indent={1} listStyleType="disc">
@@ -125,9 +119,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       // Pass both parent items
       const entries = [
@@ -146,7 +138,7 @@ describe('expandListItemsWithChildren', () => {
       ] as any);
     });
 
-    it('avoid duplicates when children are already in input', () => {
+    it("avoid duplicates when children are already in input", () => {
       const input = (
         <fragment>
           <hp id="1" indent={1} listStyleType="disc">
@@ -161,9 +153,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       // Pass parent and one child (child 1)
       const entries = [
@@ -182,8 +172,8 @@ describe('expandListItemsWithChildren', () => {
     });
   });
 
-  describe('when input contains mixed blocks', () => {
-    it('expand only list items and keep other blocks as-is', () => {
+  describe("when input contains mixed blocks", () => {
+    it("expand only list items and keep other blocks as-is", () => {
       const input = (
         <fragment>
           <hp id="1">paragraph before</hp>
@@ -198,9 +188,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entries = [
         [input[0], [0]], // paragraph
@@ -219,8 +207,8 @@ describe('expandListItemsWithChildren', () => {
     });
   });
 
-  describe('edge cases', () => {
-    it('handle empty input', () => {
+  describe("edge cases", () => {
+    it("handle empty input", () => {
       const editor = createEditor((<editor />) as any as SlateEditor);
 
       const result = expandListItemsWithChildren(editor, []);
@@ -228,7 +216,7 @@ describe('expandListItemsWithChildren', () => {
       expect(result).toEqual([]);
     });
 
-    it('handle list items at end of document', () => {
+    it("handle list items at end of document", () => {
       const input = (
         <fragment>
           <hp id="1" indent={1} listStyleType="disc">
@@ -241,9 +229,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entries = [[input[0], [0]]] as any;
 
@@ -255,7 +241,7 @@ describe('expandListItemsWithChildren', () => {
       ] as any);
     });
 
-    it('handle deeply nested lists', () => {
+    it("handle deeply nested lists", () => {
       const input = (
         <fragment>
           <hp id="1" indent={1} listStyleType="disc">
@@ -276,9 +262,7 @@ describe('expandListItemsWithChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entries = [[input[0], [0]]] as any;
 

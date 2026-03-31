@@ -1,4 +1,4 @@
-import { atom, useAtom } from 'jotai';
+import { atom, useAtom } from "jotai";
 
 export type PackageInfoType = {
   gzip: string;
@@ -8,10 +8,10 @@ export type PackageInfoType = {
 };
 
 export const packageInfoAtom = atom<PackageInfoType>({
-  gzip: '',
-  name: '',
-  npm: '',
-  source: '',
+  gzip: "",
+  name: "",
+  npm: "",
+  source: "",
 });
 
 export function usePackageInfo() {

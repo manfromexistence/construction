@@ -1,26 +1,21 @@
 import {
   type EditorAboveOptions,
   type ElementEntry,
-  type SlateEditor,
   KEYS,
   PathApi,
-} from 'platejs';
-
-import type { TableConfig } from '../BaseTablePlugin';
-
-import { getCellTypes } from '../../lib/utils';
-import {
-  type GetTableGridByRangeOptions,
-  getTableGridByRange,
-} from './getTableGridByRange';
+  type SlateEditor,
+} from "platejs";
+import { getCellTypes } from "../../lib/utils";
+import type { TableConfig } from "../BaseTablePlugin";
+import { type GetTableGridByRangeOptions, getTableGridByRange } from "./getTableGridByRange";
 
 export type GetTableGridAboveOptions = EditorAboveOptions &
-  Pick<GetTableGridByRangeOptions, 'format'>;
+  Pick<GetTableGridByRangeOptions, "format">;
 
 /** Get sub table above anchor and focus. Format: tables or cells. */
 export const getTableGridAbove = (
   editor: SlateEditor,
-  { format = 'table', ...options }: GetTableGridAboveOptions = {}
+  { format = "table", ...options }: GetTableGridAboveOptions = {}
 ): ElementEntry[] => {
   const { api } = editor.getPlugin<TableConfig>({ key: KEYS.table });
 
@@ -49,7 +44,7 @@ export const getTableGridAbove = (
         format,
       });
     }
-    if (format === 'table') {
+    if (format === "table") {
       const table = api.create.table({ rowCount: 1 });
       table.children[0].children = [start[0]];
 

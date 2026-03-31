@@ -1,8 +1,6 @@
 {
   "name": "timeline-custom-dot-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
+  "dependencies": ["lucide-react"],
   "files": [
     {
       "path": "examples/timeline-custom-dot-demo.tsx",

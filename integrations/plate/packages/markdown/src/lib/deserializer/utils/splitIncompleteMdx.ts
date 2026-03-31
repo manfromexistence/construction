@@ -32,7 +32,7 @@ export const splitIncompleteMdx = (data: string): string[] | string => {
     } // Stream breaks at '<'
 
     let closing = false;
-    if (data[i] === '/') {
+    if (data[i] === "/") {
       closing = true;
       i++;
     }
@@ -57,9 +57,9 @@ export const splitIncompleteMdx = (data: string): string[] | string => {
       if (inQuote) {
         if (ch === inQuote) inQuote = null;
       } else if (ch === '"' || ch === "'") inQuote = ch;
-      else if (ch === '>') {
+      else if (ch === ">") {
         foundTagEnd = true;
-        selfClosing = data[i - 1] === '/';
+        selfClosing = data[i - 1] === "/";
         i++; // Include '>'
         break;
       }

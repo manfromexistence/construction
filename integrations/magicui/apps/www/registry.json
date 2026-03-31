@@ -5,16 +5,9 @@
     {
       "name": "index",
       "type": "registry:style",
-      "dependencies": [
-        "class-variance-authority",
-        "lucide-react"
-      ],
-      "devDependencies": [
-        "tw-animate-css"
-      ],
-      "registryDependencies": [
-        "utils"
-      ],
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "devDependencies": ["tw-animate-css"],
+      "registryDependencies": ["utils"],
       "files": [],
       "cssVars": {}
     },
@@ -23,10 +16,7 @@
       "type": "registry:ui",
       "title": "Magic Card",
       "description": "A spotlight effect that follows your mouse cursor and highlights borders on hover.",
-      "dependencies": [
-        "motion",
-        "next-themes"
-      ],
+      "dependencies": ["motion", "next-themes"],
       "files": [
         {
           "path": "registry/magicui/magic-card.tsx",
@@ -51,9 +41,7 @@
       "type": "registry:ui",
       "title": "Warp Background",
       "description": "A card with a time warping background effect.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/warp-background.tsx",
@@ -66,9 +54,7 @@
       "type": "registry:ui",
       "title": "Line Shadow Text",
       "description": "A text component with a moving line shadow.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/line-shadow-text.tsx",
@@ -149,9 +135,7 @@
       "type": "registry:ui",
       "title": "Scroll Progress",
       "description": "Animated Scroll Progress for your pages",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/scroll-progress.tsx",
@@ -164,9 +148,7 @@
       "type": "registry:ui",
       "title": "Lens",
       "description": "A interactive component that enables zooming into images, videos and other elements.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/lens.tsx",
@@ -179,9 +161,7 @@
       "type": "registry:ui",
       "title": "Pointer",
       "description": "A component that displays a pointer when hovering over an element",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/pointer.tsx",
@@ -193,9 +173,7 @@
       "name": "smooth-cursor",
       "type": "registry:ui",
       "description": "A customizable, physics-based smooth cursor animation component with spring animations and rotation effects",
-      "dependencies": [
-        "framer-motion"
-      ],
+      "dependencies": ["framer-motion"],
       "files": [
         {
           "path": "registry/magicui/smooth-cursor.tsx",
@@ -340,9 +318,7 @@
       "type": "registry:ui",
       "title": "Hero Video Dialog",
       "description": "A hero video dialog component.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/hero-video-dialog.tsx",
@@ -355,10 +331,7 @@
       "type": "registry:ui",
       "title": "Code Comparison",
       "description": "A component which compares two code snippets.",
-      "dependencies": [
-        "shiki",
-        "next-themes"
-      ],
+      "dependencies": ["shiki", "next-themes"],
       "files": [
         {
           "path": "registry/magicui/code-comparison.tsx",
@@ -407,10 +380,7 @@
       "type": "registry:ui",
       "title": "Globe",
       "description": "An autorotating, interactive, and highly performant globe made using WebGL.",
-      "dependencies": [
-        "cobe",
-        "motion"
-      ],
+      "dependencies": ["cobe", "motion"],
       "files": [
         {
           "path": "registry/magicui/globe.tsx",
@@ -462,9 +432,7 @@
       "type": "registry:ui",
       "title": "Tweet Card",
       "description": "A card that displays a tweet with the author's name, handle, and profile picture.",
-      "dependencies": [
-        "react-tweet"
-      ],
+      "dependencies": ["react-tweet"],
       "files": [
         {
           "path": "registry/magicui/tweet-card.tsx",
@@ -477,9 +445,7 @@
       "type": "registry:ui",
       "title": "Client Tweet Card",
       "description": "A client-side version of the tweet card that displays a tweet with the author's name, handle, and profile picture.",
-      "dependencies": [
-        "react-tweet"
-      ],
+      "dependencies": ["react-tweet"],
       "files": [
         {
           "path": "registry/magicui/client-tweet-card.tsx",
@@ -492,12 +458,8 @@
       "type": "registry:ui",
       "title": "Bento Grid",
       "description": "Bento grid is a layout used to showcase the features of a product in a simple and elegant way.",
-      "dependencies": [
-        "@radix-ui/react-icons"
-      ],
-      "registryDependencies": [
-        "button"
-      ],
+      "dependencies": ["@radix-ui/react-icons"],
+      "registryDependencies": ["button"],
       "files": [
         {
           "path": "registry/magicui/bento-grid.tsx",
@@ -522,9 +484,7 @@
       "type": "registry:ui",
       "title": "Number Ticker",
       "description": "Animate numbers to count up or down to a target number",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/number-ticker.tsx",
@@ -576,9 +536,7 @@
       "type": "registry:ui",
       "title": "Animated List",
       "description": "A list that animates each item in sequence with a delay. Used to showcase notifications or events on your landing page.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/animated-list.tsx",
@@ -618,9 +576,7 @@
       "type": "registry:ui",
       "title": "Animated Grid Pattern",
       "description": "A animated background grid pattern made with SVGs, fully customizable using Tailwind CSS.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/animated-grid-pattern.tsx",
@@ -633,9 +589,7 @@
       "type": "registry:ui",
       "title": "Border Beam",
       "description": "An animated beam of light which travels along the border of its container.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/border-beam.tsx",
@@ -648,9 +602,7 @@
       "type": "registry:ui",
       "title": "Animated Beam",
       "description": "An animated beam of light which travels along a path. Useful for showcasing the integration features of a website.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/animated-beam.tsx",
@@ -663,9 +615,7 @@
       "type": "registry:ui",
       "title": "Text Reveal",
       "description": "Fade in text as you scroll down the page.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/text-reveal.tsx",
@@ -678,9 +628,7 @@
       "type": "registry:ui",
       "title": "Hyper Text",
       "description": "A text animation that scrambles letters before revealing the final text.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/hyper-text.tsx",
@@ -744,9 +692,7 @@
       "type": "registry:ui",
       "title": "Dock",
       "description": "An implementation of the MacOS dock using react + tailwindcss + motion",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/dock.tsx",
@@ -759,9 +705,7 @@
       "type": "registry:ui",
       "title": "Word Rotate",
       "description": "A vertical rotation of words",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/word-rotate.tsx",
@@ -786,9 +730,7 @@
       "type": "registry:ui",
       "title": "Typing Animation",
       "description": "Characters appearing in typed animation",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/typing-animation.tsx",
@@ -816,9 +758,7 @@
       "type": "registry:ui",
       "title": "Sparkles Text",
       "description": "A dynamic text that generates continuous sparkles with smooth transitions, perfect for highlighting text with animated stars.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/sparkles-text.tsx",
@@ -831,9 +771,7 @@
       "type": "registry:ui",
       "title": "Spinning Text",
       "description": "The Spinning Text component animates text in a circular motion with customizable speed, direction, color, and transitions for dynamic and engaging effects.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/spinning-text.tsx",
@@ -846,9 +784,7 @@
       "type": "registry:ui",
       "title": "Comic Text",
       "description": "Comic text animation",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/comic-text.tsx",
@@ -874,9 +810,7 @@
       "type": "registry:ui",
       "title": "Text Animate",
       "description": "A text animation component that animates text using a variety of different animations.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/text-animate.tsx",
@@ -889,9 +823,7 @@
       "type": "registry:ui",
       "title": "Scroll Based Velocity",
       "description": "Scrolling text whose speed changes based on scroll speed",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/scroll-based-velocity.tsx",
@@ -904,9 +836,7 @@
       "type": "registry:ui",
       "title": "Shiny Button",
       "description": "A shiny button component with dynamic styles in the dark mode or light mode.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/shiny-button.tsx",
@@ -961,13 +891,8 @@
       "type": "registry:ui",
       "title": "Confetti",
       "description": "Confetti animations are best used to delight your users when something special happens",
-      "dependencies": [
-        "canvas-confetti",
-        "@types/canvas-confetti"
-      ],
-      "registryDependencies": [
-        "button"
-      ],
+      "dependencies": ["canvas-confetti", "@types/canvas-confetti"],
+      "registryDependencies": ["button"],
       "files": [
         {
           "path": "registry/magicui/confetti.tsx",
@@ -1059,9 +984,7 @@
       "type": "registry:ui",
       "title": "Blur Fade",
       "description": "Blur fade in and out animation. Used to smoothly fade in and out content.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/blur-fade.tsx",
@@ -1185,9 +1108,7 @@
       "type": "registry:ui",
       "title": "Highlighter",
       "description": "A text highlighter that mimics the effect of a human-drawn marker stroke.",
-      "dependencies": [
-        "rough-notation"
-      ],
+      "dependencies": ["rough-notation"],
       "files": [
         {
           "path": "registry/magicui/highlighter.tsx",
@@ -1200,9 +1121,7 @@
       "type": "registry:ui",
       "title": "Theme Toggler",
       "description": "A component for theme changing animation.",
-      "dependencies": [
-        "lucide-react"
-      ],
+      "dependencies": ["lucide-react"],
       "files": [
         {
           "path": "registry/magicui/animated-theme-toggler.tsx",
@@ -1221,9 +1140,7 @@
       "type": "registry:ui",
       "title": "Light Rays",
       "description": "A component with animated light rays which shine down from above.",
-      "dependencies": [
-        "motion"
-      ],
+      "dependencies": ["motion"],
       "files": [
         {
           "path": "registry/magicui/light-rays.tsx",
@@ -1236,9 +1153,7 @@
       "type": "registry:ui",
       "title": "Dotted Map",
       "description": "A component with a dotted map.",
-      "dependencies": [
-        "svg-dotted-map"
-      ],
+      "dependencies": ["svg-dotted-map"],
       "files": [
         {
           "path": "registry/magicui/dotted-map.tsx",
@@ -1264,9 +1179,7 @@
       "type": "registry:example",
       "title": "Magic Card Demo",
       "description": "Example showing a spotlight effect that follows your mouse cursor and highlights borders on hover.",
-      "registryDependencies": [
-        "@magicui/magic-card"
-      ],
+      "registryDependencies": ["@magicui/magic-card"],
       "files": [
         {
           "path": "registry/example/magic-card-demo.tsx",
@@ -1279,10 +1192,7 @@
       "type": "registry:example",
       "title": "Magic Card Demo 2",
       "description": "Example showing a magic card with an orb effect.",
-      "registryDependencies": [
-        "@magicui/magic-card",
-        "@magicui/avatar-circles"
-      ],
+      "registryDependencies": ["@magicui/magic-card", "@magicui/avatar-circles"],
       "files": [
         {
           "path": "registry/example/magic-card-demo2.tsx",
@@ -1295,9 +1205,7 @@
       "type": "registry:example",
       "title": "Android Demo",
       "description": "Example showing a mockup of an Android device.",
-      "registryDependencies": [
-        "@magicui/android"
-      ],
+      "registryDependencies": ["@magicui/android"],
       "files": [
         {
           "path": "registry/example/android-demo.tsx",
@@ -1310,9 +1218,7 @@
       "type": "registry:example",
       "title": "Android Demo 2",
       "description": "Second example showing a mockup of an Android device.",
-      "registryDependencies": [
-        "@magicui/android"
-      ],
+      "registryDependencies": ["@magicui/android"],
       "files": [
         {
           "path": "registry/example/android-demo-2.tsx",
@@ -1325,9 +1231,7 @@
       "type": "registry:example",
       "title": "Android Demo 3",
       "description": "Third example showing a mockup of an Android device.",
-      "registryDependencies": [
-        "@magicui/android"
-      ],
+      "registryDependencies": ["@magicui/android"],
       "files": [
         {
           "path": "registry/example/android-demo-3.tsx",
@@ -1340,9 +1244,7 @@
       "type": "registry:example",
       "title": "Warp Background Demo",
       "description": "Example showing a card with a time warping background effect.",
-      "registryDependencies": [
-        "@magicui/warp-background"
-      ],
+      "registryDependencies": ["@magicui/warp-background"],
       "files": [
         {
           "path": "registry/example/warp-background-demo.tsx",
@@ -1355,9 +1257,7 @@
       "type": "registry:example",
       "title": "Line Shadow Text Demo",
       "description": "Example showing a text component with a moving line shadow.",
-      "registryDependencies": [
-        "@magicui/line-shadow-text"
-      ],
+      "registryDependencies": ["@magicui/line-shadow-text"],
       "files": [
         {
           "path": "registry/example/line-shadow-text-demo.tsx",
@@ -1370,9 +1270,7 @@
       "type": "registry:example",
       "title": "Aurora Text Demo",
       "description": "Example showing a beautiful aurora text effect.",
-      "registryDependencies": [
-        "@magicui/aurora-text"
-      ],
+      "registryDependencies": ["@magicui/aurora-text"],
       "files": [
         {
           "path": "registry/example/aurora-text-demo.tsx",
@@ -1385,9 +1283,7 @@
       "type": "registry:example",
       "title": "Morphing Text Demo",
       "description": "Example showing a dynamic text morphing component.",
-      "registryDependencies": [
-        "@magicui/morphing-text"
-      ],
+      "registryDependencies": ["@magicui/morphing-text"],
       "files": [
         {
           "path": "registry/example/morphing-text-demo.tsx",
@@ -1400,9 +1296,7 @@
       "type": "registry:example",
       "title": "Scroll Progress Demo",
       "description": "Example showing animated scroll progress for your pages.",
-      "registryDependencies": [
-        "@magicui/scroll-progress"
-      ],
+      "registryDependencies": ["@magicui/scroll-progress"],
       "files": [
         {
           "path": "registry/example/scroll-progress-demo.tsx",
@@ -1415,11 +1309,7 @@
       "type": "registry:example",
       "title": "Lens Demo",
       "description": "Example showing a lens effect component",
-      "registryDependencies": [
-        "button",
-        "card",
-        "@magicui/lens"
-      ],
+      "registryDependencies": ["button", "card", "@magicui/lens"],
       "files": [
         {
           "path": "registry/example/lens-demo.tsx",
@@ -1432,11 +1322,7 @@
       "type": "registry:example",
       "title": "Lens Demo 2",
       "description": "Second example showing a lens effect component",
-      "registryDependencies": [
-        "button",
-        "card",
-        "@magicui/lens"
-      ],
+      "registryDependencies": ["button", "card", "@magicui/lens"],
       "files": [
         {
           "path": "registry/example/lens-demo-2.tsx",
@@ -1449,11 +1335,7 @@
       "type": "registry:example",
       "title": "Lens Demo 3",
       "description": "Third example showing a lens effect component",
-      "registryDependencies": [
-        "button",
-        "card",
-        "@magicui/lens"
-      ],
+      "registryDependencies": ["button", "card", "@magicui/lens"],
       "files": [
         {
           "path": "registry/example/lens-demo-3.tsx",
@@ -1466,9 +1348,7 @@
       "type": "registry:example",
       "title": "Pointer Demo 1",
       "description": "Example showing a pointer effect component",
-      "registryDependencies": [
-        "@magicui/pointer"
-      ],
+      "registryDependencies": ["@magicui/pointer"],
       "files": [
         {
           "path": "registry/example/pointer-demo-1.tsx",
@@ -1480,9 +1360,7 @@
       "name": "smooth-cursor-demo",
       "type": "registry:example",
       "description": "Basic smooth cursor example",
-      "registryDependencies": [
-        "@magicui/smooth-cursor"
-      ],
+      "registryDependencies": ["@magicui/smooth-cursor"],
       "files": [
         {
           "path": "registry/example/smooth-cursor-demo.tsx",
@@ -1495,9 +1373,7 @@
       "type": "registry:example",
       "title": "Progressive Blur Demo",
       "description": "Example showing progressive blur effect for scrollable content.",
-      "registryDependencies": [
-        "@magicui/progressive-blur"
-      ],
+      "registryDependencies": ["@magicui/progressive-blur"],
       "files": [
         {
           "path": "registry/example/progressive-blur-demo.tsx",
@@ -1510,9 +1386,7 @@
       "type": "registry:example",
       "title": "Neon Gradient Card Demo",
       "description": "Example showing a beautiful neon card effect.",
-      "registryDependencies": [
-        "@magicui/neon-gradient-card"
-      ],
+      "registryDependencies": ["@magicui/neon-gradient-card"],
       "files": [
         {
           "path": "registry/example/neon-gradient-card-demo.tsx",
@@ -1525,9 +1399,7 @@
       "type": "registry:example",
       "title": "Meteors Demo",
       "description": "Example showing a meteor shower effect.",
-      "registryDependencies": [
-        "@magicui/meteors"
-      ],
+      "registryDependencies": ["@magicui/meteors"],
       "files": [
         {
           "path": "registry/example/meteors-demo.tsx",
@@ -1540,9 +1412,7 @@
       "type": "registry:example",
       "title": "Grid Pattern Demo",
       "description": "Example showing a background grid pattern made with SVGs.",
-      "registryDependencies": [
-        "@magicui/grid-pattern"
-      ],
+      "registryDependencies": ["@magicui/grid-pattern"],
       "files": [
         {
           "path": "registry/example/grid-pattern-demo.tsx",
@@ -1555,9 +1425,7 @@
       "type": "registry:example",
       "title": "Striped Pattern Demo",
       "description": "Example showing a background striped pattern made with SVGs.",
-      "registryDependencies": [
-        "@magicui/striped-pattern"
-      ],
+      "registryDependencies": ["@magicui/striped-pattern"],
       "files": [
         {
           "path": "registry/example/striped-pattern-demo.tsx",
@@ -1571,9 +1439,7 @@
       "type": "registry:example",
       "title": "Striped Pattern (Dashed)",
       "description": "Example showing a background striped pattern with a dashed stroke.",
-      "registryDependencies": [
-        "@magicui/striped-pattern"
-      ],
+      "registryDependencies": ["@magicui/striped-pattern"],
       "files": [
         {
           "path": "registry/example/striped-pattern-dashed.tsx",
@@ -1587,9 +1453,7 @@
       "type": "registry:example",
       "title": "Striped Pattern (Right)",
       "description": "Example showing a background striped pattern slanting to the right using SVG.",
-      "registryDependencies": [
-        "@magicui/striped-pattern"
-      ],
+      "registryDependencies": ["@magicui/striped-pattern"],
       "files": [
         {
           "path": "registry/example/striped-pattern-right.tsx",
@@ -1603,9 +1467,7 @@
       "type": "registry:example",
       "title": "Grid Pattern Linear Gradient",
       "description": "Example showing a grid pattern with linear gradient effects.",
-      "registryDependencies": [
-        "@magicui/grid-pattern"
-      ],
+      "registryDependencies": ["@magicui/grid-pattern"],
       "files": [
         {
           "path": "registry/example/grid-pattern-linear-gradient.tsx",
@@ -1618,9 +1480,7 @@
       "type": "registry:example",
       "title": "Grid Pattern Dashed",
       "description": "Example showing a dashed grid pattern.",
-      "registryDependencies": [
-        "@magicui/grid-pattern"
-      ],
+      "registryDependencies": ["@magicui/grid-pattern"],
       "files": [
         {
           "path": "registry/example/grid-pattern-dashed.tsx",
@@ -1633,9 +1493,7 @@
       "type": "registry:example",
       "title": "Dot Pattern Demo",
       "description": "Example showing a background dot pattern made with SVGs.",
-      "registryDependencies": [
-        "@magicui/dot-pattern"
-      ],
+      "registryDependencies": ["@magicui/dot-pattern"],
       "files": [
         {
           "path": "registry/example/dot-pattern-demo.tsx",
@@ -1648,9 +1506,7 @@
       "type": "registry:example",
       "title": "Dot Pattern Linear Gradient",
       "description": "Example showing a dot pattern with linear gradient effects.",
-      "registryDependencies": [
-        "@magicui/dot-pattern"
-      ],
+      "registryDependencies": ["@magicui/dot-pattern"],
       "files": [
         {
           "path": "registry/example/dot-pattern-linear-gradient.tsx",
@@ -1663,9 +1519,7 @@
       "type": "registry:example",
       "title": "Dot Pattern with glow effect",
       "description": "Example showing a dot pattern with glow effect",
-      "registryDependencies": [
-        "@magicui/dot-pattern"
-      ],
+      "registryDependencies": ["@magicui/dot-pattern"],
       "files": [
         {
           "path": "registry/example/dot-pattern-with-glow-effect.tsx",
@@ -1678,9 +1532,7 @@
       "type": "registry:example",
       "title": "Flickering Grid Demo",
       "description": "Example showing a flickering grid background.",
-      "registryDependencies": [
-        "@magicui/flickering-grid"
-      ],
+      "registryDependencies": ["@magicui/flickering-grid"],
       "files": [
         {
           "path": "registry/example/flickering-grid-demo.tsx",
@@ -1693,9 +1545,7 @@
       "type": "registry:example",
       "title": "Flickering Grid Rounded Demo",
       "description": "Example showing a flickering grid background with rounded corners.",
-      "registryDependencies": [
-        "@magicui/flickering-grid"
-      ],
+      "registryDependencies": ["@magicui/flickering-grid"],
       "files": [
         {
           "path": "registry/example/flickering-grid-rounded-demo.tsx",
@@ -1708,9 +1558,7 @@
       "type": "registry:example",
       "title": "Hero Video Dialog Demo",
       "description": "Example showing a hero video dialog component.",
-      "registryDependencies": [
-        "@magicui/hero-video-dialog"
-      ],
+      "registryDependencies": ["@magicui/hero-video-dialog"],
       "files": [
         {
           "path": "registry/example/hero-video-dialog-demo.tsx",
@@ -1723,9 +1571,7 @@
       "type": "registry:example",
       "title": "Hero Video Dialog Top In Bottom Out Demo",
       "description": "Example showing a hero video dialog with top-in bottom-out animation.",
-      "registryDependencies": [
-        "@magicui/hero-video-dialog"
-      ],
+      "registryDependencies": ["@magicui/hero-video-dialog"],
       "files": [
         {
           "path": "registry/example/hero-video-dialog-demo-top-in-bottom-out.tsx",
@@ -1738,9 +1584,7 @@
       "type": "registry:example",
       "title": "Code Comparison Demo",
       "description": "Example showing a component which compares two code snippets.",
-      "registryDependencies": [
-        "@magicui/code-comparison"
-      ],
+      "registryDependencies": ["@magicui/code-comparison"],
       "files": [
         {
           "path": "registry/example/code-comparison-demo.tsx",
@@ -1753,9 +1597,7 @@
       "type": "registry:example",
       "title": "Marquee Demo",
       "description": "Example showing an infinite scrolling component.",
-      "registryDependencies": [
-        "@magicui/marquee"
-      ],
+      "registryDependencies": ["@magicui/marquee"],
       "files": [
         {
           "path": "registry/example/marquee-demo.tsx",
@@ -1768,9 +1610,7 @@
       "type": "registry:example",
       "title": "Marquee Vertical Demo",
       "description": "Example showing a vertical infinite scrolling component.",
-      "registryDependencies": [
-        "@magicui/marquee"
-      ],
+      "registryDependencies": ["@magicui/marquee"],
       "files": [
         {
           "path": "registry/example/marquee-demo-vertical.tsx",
@@ -1783,9 +1623,7 @@
       "type": "registry:example",
       "title": "Marquee Logos",
       "description": "Example showing an infinite scrolling logo carousel.",
-      "registryDependencies": [
-        "@magicui/marquee"
-      ],
+      "registryDependencies": ["@magicui/marquee"],
       "files": [
         {
           "path": "registry/example/marquee-logos.tsx",
@@ -1798,9 +1636,7 @@
       "type": "registry:example",
       "title": "Marquee 3D",
       "description": "Example showing a 3D infinite scrolling component.",
-      "registryDependencies": [
-        "@magicui/marquee"
-      ],
+      "registryDependencies": ["@magicui/marquee"],
       "files": [
         {
           "path": "registry/example/marquee-3d.tsx",
@@ -1813,9 +1649,7 @@
       "type": "registry:example",
       "title": "Globe Demo",
       "description": "Example showing an autorotating, interactive WebGL globe.",
-      "registryDependencies": [
-        "@magicui/globe"
-      ],
+      "registryDependencies": ["@magicui/globe"],
       "files": [
         {
           "path": "registry/example/globe-demo.tsx",
@@ -1828,10 +1662,7 @@
       "type": "registry:example",
       "title": "Tweet Card Demo",
       "description": "Example showing a tweet card with author info.",
-      "registryDependencies": [
-        "@magicui/client-tweet-card",
-        "@magicui/tweet-card"
-      ],
+      "registryDependencies": ["@magicui/client-tweet-card", "@magicui/tweet-card"],
       "files": [
         {
           "path": "registry/example/tweet-card-demo.tsx",
@@ -1844,10 +1675,7 @@
       "type": "registry:example",
       "title": "Tweet Card Images",
       "description": "Example showing a tweet card with images.",
-      "registryDependencies": [
-        "@magicui/client-tweet-card",
-        "@magicui/tweet-card"
-      ],
+      "registryDependencies": ["@magicui/client-tweet-card", "@magicui/tweet-card"],
       "files": [
         {
           "path": "registry/example/tweet-card-images.tsx",
@@ -1860,10 +1688,7 @@
       "type": "registry:example",
       "title": "Tweet Card Meta Preview",
       "description": "Example showing a tweet card with meta preview.",
-      "registryDependencies": [
-        "@magicui/client-tweet-card",
-        "@magicui/tweet-card"
-      ],
+      "registryDependencies": ["@magicui/client-tweet-card", "@magicui/tweet-card"],
       "files": [
         {
           "path": "registry/example/tweet-card-meta-preview.tsx",
@@ -1876,9 +1701,7 @@
       "type": "registry:example",
       "title": "Shimmer Button Demo",
       "description": "Example showing a button with a shimmering light effect.",
-      "registryDependencies": [
-        "@magicui/shimmer-button"
-      ],
+      "registryDependencies": ["@magicui/shimmer-button"],
       "files": [
         {
           "path": "registry/example/shimmer-button-demo.tsx",
@@ -1891,9 +1714,7 @@
       "type": "registry:example",
       "title": "Bento Demo",
       "description": "Example showing a bento grid layout for showcasing features.",
-      "dependencies": [
-        "@radix-ui/react-icons"
-      ],
+      "dependencies": ["@radix-ui/react-icons"],
       "registryDependencies": [
         "button",
         "calendar",
@@ -1916,12 +1737,8 @@
       "type": "registry:example",
       "title": "Bento Vertical Demo",
       "description": "Example showing a vertical bento grid layout.",
-      "dependencies": [
-        "@radix-ui/react-icons"
-      ],
-      "registryDependencies": [
-        "@magicui/bento-grid"
-      ],
+      "dependencies": ["@radix-ui/react-icons"],
+      "registryDependencies": ["@magicui/bento-grid"],
       "files": [
         {
           "path": "registry/example/bento-demo-vertical.tsx",
@@ -1934,9 +1751,7 @@
       "type": "registry:example",
       "title": "Number Ticker Demo",
       "description": "Example showing animated counting numbers.",
-      "registryDependencies": [
-        "@magicui/number-ticker"
-      ],
+      "registryDependencies": ["@magicui/number-ticker"],
       "files": [
         {
           "path": "registry/example/number-ticker-demo.tsx",
@@ -1949,9 +1764,7 @@
       "type": "registry:example",
       "title": "Number Ticker Demo 2",
       "description": "Example showing animated counting numbers.",
-      "registryDependencies": [
-        "@magicui/number-ticker"
-      ],
+      "registryDependencies": ["@magicui/number-ticker"],
       "files": [
         {
           "path": "registry/example/number-ticker-demo-2.tsx",
@@ -1964,9 +1777,7 @@
       "type": "registry:example",
       "title": "Number Ticker Decimal Demo",
       "description": "Example showing animated counting decimal numbers.",
-      "registryDependencies": [
-        "@magicui/number-ticker"
-      ],
+      "registryDependencies": ["@magicui/number-ticker"],
       "files": [
         {
           "path": "registry/example/number-ticker-decimal-demo.tsx",
@@ -1979,9 +1790,7 @@
       "type": "registry:example",
       "title": "Ripple Demo",
       "description": "Example showing an animated ripple effect.",
-      "registryDependencies": [
-        "@magicui/ripple"
-      ],
+      "registryDependencies": ["@magicui/ripple"],
       "files": [
         {
           "path": "registry/example/ripple-demo.tsx",
@@ -1994,9 +1803,7 @@
       "type": "registry:example",
       "title": "Retro Grid Demo",
       "description": "Example showing an animated scrolling retro grid effect.",
-      "registryDependencies": [
-        "@magicui/retro-grid"
-      ],
+      "registryDependencies": ["@magicui/retro-grid"],
       "files": [
         {
           "path": "registry/example/retro-grid-demo.tsx",
@@ -2009,9 +1816,7 @@
       "type": "registry:example",
       "title": "Animated List Demo",
       "description": "Example showing a list with sequenced item animations.",
-      "registryDependencies": [
-        "@magicui/animated-list"
-      ],
+      "registryDependencies": ["@magicui/animated-list"],
       "files": [
         {
           "path": "registry/example/animated-list-demo.tsx",
@@ -2024,12 +1829,8 @@
       "type": "registry:example",
       "title": "Animated Shiny Text Demo",
       "description": "Example showing text with a shimmering light effect.",
-      "dependencies": [
-        "@radix-ui/react-icons"
-      ],
-      "registryDependencies": [
-        "@magicui/animated-shiny-text"
-      ],
+      "dependencies": ["@radix-ui/react-icons"],
+      "registryDependencies": ["@magicui/animated-shiny-text"],
       "files": [
         {
           "path": "registry/example/animated-shiny-text-demo.tsx",
@@ -2042,12 +1843,8 @@
       "type": "registry:example",
       "title": "Particles Demo",
       "description": "Example showing interactive particle effects.",
-      "dependencies": [
-        "next-themes"
-      ],
-      "registryDependencies": [
-        "@magicui/particles"
-      ],
+      "dependencies": ["next-themes"],
+      "registryDependencies": ["@magicui/particles"],
       "files": [
         {
           "path": "registry/example/particles-demo.tsx",
@@ -2060,9 +1857,7 @@
       "type": "registry:example",
       "title": "Animated Grid Pattern Demo",
       "description": "Example showing an animated grid pattern background.",
-      "registryDependencies": [
-        "@magicui/animated-grid-pattern"
-      ],
+      "registryDependencies": ["@magicui/animated-grid-pattern"],
       "files": [
         {
           "path": "registry/example/animated-grid-pattern-demo.tsx",
@@ -2075,9 +1870,7 @@
       "type": "registry:example",
       "title": "Interactive Grid Pattern Demo",
       "description": "Example showing an interactive grid pattern background.",
-      "registryDependencies": [
-        "@magicui/interactive-grid-pattern"
-      ],
+      "registryDependencies": ["@magicui/interactive-grid-pattern"],
       "files": [
         {
           "path": "registry/example/interactive-grid-pattern-demo.tsx",
@@ -2090,9 +1883,7 @@
       "type": "registry:example",
       "title": "Interactive Grid Pattern Demo 2",
       "description": "Second example showing an interactive grid pattern background.",
-      "registryDependencies": [
-        "@magicui/interactive-grid-pattern"
-      ],
+      "registryDependencies": ["@magicui/interactive-grid-pattern"],
       "files": [
         {
           "path": "registry/example/interactive-grid-pattern-demo-2.tsx",
@@ -2105,9 +1896,7 @@
       "type": "registry:example",
       "title": "Border Beam Demo",
       "description": "Example showing an animated border beam effect.",
-      "registryDependencies": [
-        "@magicui/border-beam"
-      ],
+      "registryDependencies": ["@magicui/border-beam"],
       "files": [
         {
           "path": "registry/example/border-beam-demo.tsx",
@@ -2120,11 +1909,7 @@
       "type": "registry:example",
       "title": "Border Beam Demo",
       "description": "Example showing an animated border beam effect.",
-      "registryDependencies": [
-        "button",
-        "card",
-        "@magicui/border-beam"
-      ],
+      "registryDependencies": ["button", "card", "@magicui/border-beam"],
       "files": [
         {
           "path": "registry/example/border-beam-demo-2.tsx",
@@ -2137,13 +1922,7 @@
       "type": "registry:example",
       "title": "Border Beam Demo 3",
       "description": "Example showing an animated border beam effect.",
-      "registryDependencies": [
-        "button",
-        "card",
-        "input",
-        "label",
-        "@magicui/border-beam"
-      ],
+      "registryDependencies": ["button", "card", "input", "label", "@magicui/border-beam"],
       "files": [
         {
           "path": "registry/example/border-beam-demo-3.tsx",
@@ -2156,10 +1935,7 @@
       "type": "registry:example",
       "title": "Border Beam Demo 4",
       "description": "Example showing an animated border beam effect.",
-      "registryDependencies": [
-        "button",
-        "@magicui/border-beam"
-      ],
+      "registryDependencies": ["button", "@magicui/border-beam"],
       "files": [
         {
           "path": "registry/example/border-beam-demo-4.tsx",
@@ -2172,12 +1948,8 @@
       "type": "registry:example",
       "title": "Animated Beam Demo",
       "description": "Example showing an animated beam of light effect.",
-      "dependencies": [
-        "@radix-ui/react-icons"
-      ],
-      "registryDependencies": [
-        "@magicui/animated-beam"
-      ],
+      "dependencies": ["@radix-ui/react-icons"],
+      "registryDependencies": ["@magicui/animated-beam"],
       "files": [
         {
           "path": "registry/example/animated-beam-demo.tsx",
@@ -2190,9 +1962,7 @@
       "type": "registry:example",
       "title": "Animated Beam Unidirectional",
       "description": "Example showing a unidirectional animated beam effect.",
-      "registryDependencies": [
-        "@magicui/animated-beam"
-      ],
+      "registryDependencies": ["@magicui/animated-beam"],
       "files": [
         {
           "path": "registry/example/animated-beam-unidirectional.tsx",
@@ -2205,9 +1975,7 @@
       "type": "registry:example",
       "title": "Animated Beam Bidirectional",
       "description": "Example showing a bidirectional animated beam effect.",
-      "registryDependencies": [
-        "@magicui/animated-beam"
-      ],
+      "registryDependencies": ["@magicui/animated-beam"],
       "files": [
         {
           "path": "registry/example/animated-beam-bidirectional.tsx",
@@ -2220,9 +1988,7 @@
       "type": "registry:example",
       "title": "Animated Beam Multiple Inputs",
       "description": "Example showing animated beams with multiple input points.",
-      "registryDependencies": [
-        "@magicui/animated-beam"
-      ],
+      "registryDependencies": ["@magicui/animated-beam"],
       "files": [
         {
           "path": "registry/example/animated-beam-multiple-inputs.tsx",
@@ -2235,9 +2001,7 @@
       "type": "registry:example",
       "title": "Animated Beam Multiple Outputs",
       "description": "Example showing animated beams with multiple output points.",
-      "registryDependencies": [
-        "@magicui/animated-beam"
-      ],
+      "registryDependencies": ["@magicui/animated-beam"],
       "files": [
         {
           "path": "registry/example/animated-beam-multiple-outputs.tsx",
@@ -2250,9 +2014,7 @@
       "type": "registry:example",
       "title": "Text Reveal Demo",
       "description": "Example showing text that fades in on scroll.",
-      "registryDependencies": [
-        "@magicui/text-reveal"
-      ],
+      "registryDependencies": ["@magicui/text-reveal"],
       "files": [
         {
           "path": "registry/example/text-reveal-demo.tsx",
@@ -2265,12 +2027,8 @@
       "type": "registry:example",
       "title": "Animated Gradient Text Demo",
       "description": "Example showing text with animated gradient backgrounds.",
-      "dependencies": [
-        "lucide-react"
-      ],
-      "registryDependencies": [
-        "@magicui/animated-gradient-text"
-      ],
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["@magicui/animated-gradient-text"],
       "files": [
         {
           "path": "registry/example/animated-gradient-text-demo.tsx",
@@ -2283,9 +2041,7 @@
       "type": "registry:example",
       "title": "Animated Gradient Text Demo 2",
       "description": "Second example showing text with animated gradient backgrounds.",
-      "registryDependencies": [
-        "@magicui/animated-gradient-text"
-      ],
+      "registryDependencies": ["@magicui/animated-gradient-text"],
       "files": [
         {
           "path": "registry/example/animated-gradient-text-demo-2.tsx",
@@ -2298,12 +2054,8 @@
       "type": "registry:example",
       "title": "Orbiting Circles Demo",
       "description": "Example showing circles moving in orbital paths.",
-      "dependencies": [
-        "@radix-ui/react-icons"
-      ],
-      "registryDependencies": [
-        "@magicui/orbiting-circles"
-      ],
+      "dependencies": ["@radix-ui/react-icons"],
+      "registryDependencies": ["@magicui/orbiting-circles"],
       "files": [
         {
           "path": "registry/example/orbiting-circles-demo.tsx",
@@ -2316,13 +2068,8 @@
       "type": "registry:example",
       "title": "Dock Demo",
       "description": "Example showing a MacOS-style dock implementation.",
-      "dependencies": [
-        "next-themes"
-      ],
-      "registryDependencies": [
-        "button",
-        "@magicui/dock"
-      ],
+      "dependencies": ["next-themes"],
+      "registryDependencies": ["button", "@magicui/dock"],
       "files": [
         {
           "path": "registry/example/dock-demo.tsx",
@@ -2335,9 +2082,7 @@
       "type": "registry:example",
       "title": "Dock Demo 2",
       "description": "Second example showing a MacOS-style dock implementation.",
-      "registryDependencies": [
-        "@magicui/dock"
-      ],
+      "registryDependencies": ["@magicui/dock"],
       "files": [
         {
           "path": "registry/example/dock-demo-2.tsx",
@@ -2350,9 +2095,7 @@
       "type": "registry:example",
       "title": "Dock Demo 3",
       "description": "Third example showing a MacOS-style dock implementation.",
-      "registryDependencies": [
-        "@magicui/dock"
-      ],
+      "registryDependencies": ["@magicui/dock"],
       "files": [
         {
           "path": "registry/example/dock-demo-3.tsx",
@@ -2365,9 +2108,7 @@
       "type": "registry:example",
       "title": "Word Rotate Demo",
       "description": "Example showing vertical word rotation animation.",
-      "registryDependencies": [
-        "@magicui/word-rotate"
-      ],
+      "registryDependencies": ["@magicui/word-rotate"],
       "files": [
         {
           "path": "registry/example/word-rotate-demo.tsx",
@@ -2380,9 +2121,7 @@
       "type": "registry:example",
       "title": "Hyper Text Demo",
       "description": "Example showing text with scrambling letter animations.",
-      "registryDependencies": [
-        "@magicui/hyper-text"
-      ],
+      "registryDependencies": ["@magicui/hyper-text"],
       "files": [
         {
           "path": "registry/example/hyper-text-demo.tsx",
@@ -2395,9 +2134,7 @@
       "type": "registry:example",
       "title": "Avatar Circles Demo",
       "description": "Example showing overlapping avatar circles.",
-      "registryDependencies": [
-        "@magicui/avatar-circles"
-      ],
+      "registryDependencies": ["@magicui/avatar-circles"],
       "files": [
         {
           "path": "registry/example/avatar-circles-demo.tsx",
@@ -2410,9 +2147,7 @@
       "type": "registry:example",
       "title": "Typing Animation Demo",
       "description": "Example showing typed character animations.",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo.tsx",
@@ -2425,9 +2160,7 @@
       "type": "registry:example",
       "title": "Typing Animation Multiple Words",
       "description": "Example showing multiple words with looping.",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo-2.tsx",
@@ -2440,9 +2173,7 @@
       "type": "registry:example",
       "title": "Typing Animation Custom Speed",
       "description": "Example showing custom typing and deleting speeds.",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo-3.tsx",
@@ -2455,9 +2186,7 @@
       "type": "registry:example",
       "title": "Typing Animation Start on View",
       "description": "Example showing animation that starts when in viewport.",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo-4.tsx",
@@ -2470,9 +2199,7 @@
       "type": "registry:example",
       "title": "Typing Animation Without Cursor",
       "description": "Example showing typing animation without cursor.",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo-5.tsx",
@@ -2485,9 +2212,7 @@
       "type": "registry:example",
       "title": "Typing Animation Single Play",
       "description": "Example showing single play without looping.",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo-6.tsx",
@@ -2500,9 +2225,7 @@
       "type": "registry:example",
       "title": "Typing Animation Cursor Blinking",
       "description": "Example showing cursor blinking control.",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo-7.tsx",
@@ -2515,9 +2238,7 @@
       "type": "registry:example",
       "title": "Typing Animation Cursor Styles",
       "description": "Example showing different cursor styles (line, block, underscore).",
-      "registryDependencies": [
-        "@magicui/typing-animation"
-      ],
+      "registryDependencies": ["@magicui/typing-animation"],
       "files": [
         {
           "path": "registry/example/typing-animation-demo-8.tsx",
@@ -2530,9 +2251,7 @@
       "type": "registry:example",
       "title": "Scroll Based Velocity Demo",
       "description": "Example showing text speed changes based on scroll velocity.",
-      "registryDependencies": [
-        "@magicui/scroll-based-velocity"
-      ],
+      "registryDependencies": ["@magicui/scroll-based-velocity"],
       "files": [
         {
           "path": "registry/example/scroll-based-velocity-demo.tsx",
@@ -2545,9 +2264,7 @@
       "type": "registry:example",
       "title": "Scroll Based Velocity Images",
       "description": "Example showing Unsplash images scrolling with speed reacting to scroll velocity.",
-      "registryDependencies": [
-        "@magicui/scroll-based-velocity"
-      ],
+      "registryDependencies": ["@magicui/scroll-based-velocity"],
       "files": [
         {
           "path": "registry/example/scroll-based-velocity-images-demo.tsx",
@@ -2560,9 +2277,7 @@
       "type": "registry:example",
       "title": "Sparkles Text Demo",
       "description": "Example showing text with animated sparkle effects.",
-      "registryDependencies": [
-        "@magicui/sparkles-text"
-      ],
+      "registryDependencies": ["@magicui/sparkles-text"],
       "files": [
         {
           "path": "registry/example/sparkles-text-demo.tsx",
@@ -2575,9 +2290,7 @@
       "type": "registry:example",
       "title": "Spinning Text Demo",
       "description": "Example showing spinning text animation.",
-      "registryDependencies": [
-        "@magicui/spinning-text"
-      ],
+      "registryDependencies": ["@magicui/spinning-text"],
       "files": [
         {
           "path": "registry/example/spinning-text-demo.tsx",
@@ -2590,9 +2303,7 @@
       "type": "registry:example",
       "title": "Spinning Text Demo 2",
       "description": "Example showing spinning text animation.",
-      "registryDependencies": [
-        "@magicui/spinning-text"
-      ],
+      "registryDependencies": ["@magicui/spinning-text"],
       "files": [
         {
           "path": "registry/example/spinning-text-demo-2.tsx",
@@ -2605,9 +2316,7 @@
       "type": "registry:example",
       "title": "Comic Text Demo",
       "description": "Example showing comic text animation.",
-      "registryDependencies": [
-        "@magicui/comic-text"
-      ],
+      "registryDependencies": ["@magicui/comic-text"],
       "files": [
         {
           "path": "registry/example/comic-text-demo.tsx",
@@ -2620,9 +2329,7 @@
       "type": "registry:example",
       "title": "Icon Cloud Demo",
       "description": "Example showing an interactive 3D icon cloud.",
-      "registryDependencies": [
-        "@magicui/icon-cloud"
-      ],
+      "registryDependencies": ["@magicui/icon-cloud"],
       "files": [
         {
           "path": "registry/example/icon-cloud-demo.tsx",
@@ -2635,9 +2342,7 @@
       "type": "registry:example",
       "title": "Icon Cloud Demo 2",
       "description": "Second example showing an interactive 3D icon cloud.",
-      "registryDependencies": [
-        "@magicui/icon-cloud"
-      ],
+      "registryDependencies": ["@magicui/icon-cloud"],
       "files": [
         {
           "path": "registry/example/icon-cloud-demo-2.tsx",
@@ -2650,9 +2355,7 @@
       "type": "registry:example",
       "title": "Icon Cloud Demo 3",
       "description": "Third example showing an interactive 3D icon cloud.",
-      "registryDependencies": [
-        "@magicui/icon-cloud"
-      ],
+      "registryDependencies": ["@magicui/icon-cloud"],
       "files": [
         {
           "path": "registry/example/icon-cloud-demo-3.tsx",
@@ -2665,9 +2368,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo",
       "description": "Example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo.tsx",
@@ -2680,9 +2381,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 2",
       "description": "Second example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-2.tsx",
@@ -2695,9 +2394,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 3",
       "description": "Third example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-3.tsx",
@@ -2710,9 +2407,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 4",
       "description": "Fourth example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-4.tsx",
@@ -2725,9 +2420,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 5",
       "description": "Fifth example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-5.tsx",
@@ -2740,9 +2433,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 6",
       "description": "Sixth example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-6.tsx",
@@ -2755,9 +2446,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 7",
       "description": "Seventh example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-7.tsx",
@@ -2770,9 +2459,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 8",
       "description": "Eighth example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-8.tsx",
@@ -2785,9 +2472,7 @@
       "type": "registry:example",
       "title": "Text Animate Demo 9",
       "description": "Ninth example showing various text animations.",
-      "registryDependencies": [
-        "@magicui/text-animate"
-      ],
+      "registryDependencies": ["@magicui/text-animate"],
       "files": [
         {
           "path": "registry/example/text-animate-demo-9.tsx",
@@ -2800,9 +2485,7 @@
       "type": "registry:example",
       "title": "Shiny Button Demo",
       "description": "Example showing a shiny button with dynamic styles.",
-      "registryDependencies": [
-        "@magicui/shiny-button"
-      ],
+      "registryDependencies": ["@magicui/shiny-button"],
       "files": [
         {
           "path": "registry/example/shiny-button-demo.tsx",
@@ -2815,9 +2498,7 @@
       "type": "registry:example",
       "title": "Animated Circular Progress Bar Demo",
       "description": "Example showing an animated circular progress gauge.",
-      "registryDependencies": [
-        "@magicui/animated-circular-progress-bar"
-      ],
+      "registryDependencies": ["@magicui/animated-circular-progress-bar"],
       "files": [
         {
           "path": "registry/example/animated-circular-progress-bar-demo.tsx",
@@ -2830,9 +2511,7 @@
       "type": "registry:example",
       "title": "Shine Border Demo",
       "description": "Example showing an animated shining border effect.",
-      "registryDependencies": [
-        "@magicui/shine-border"
-      ],
+      "registryDependencies": ["@magicui/shine-border"],
       "files": [
         {
           "path": "registry/example/shine-border-demo.tsx",
@@ -2845,9 +2524,7 @@
       "type": "registry:example",
       "title": "Shine Border Demo 2",
       "description": "Second example showing an animated shining border effect.",
-      "registryDependencies": [
-        "@magicui/shine-border"
-      ],
+      "registryDependencies": ["@magicui/shine-border"],
       "files": [
         {
           "path": "registry/example/shine-border-demo-2.tsx",
@@ -2860,9 +2537,7 @@
       "type": "registry:example",
       "title": "Confetti Demo",
       "description": "Example showing confetti animations for celebrations.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-demo.tsx",
@@ -2875,9 +2550,7 @@
       "type": "registry:example",
       "title": "Confetti Basic Cannon",
       "description": "Example showing basic confetti cannon animation.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-basic-cannon.tsx",
@@ -2890,9 +2563,7 @@
       "type": "registry:example",
       "title": "Confetti Random Direction",
       "description": "Example showing confetti with random directions.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-random-direction.tsx",
@@ -2905,9 +2576,7 @@
       "type": "registry:example",
       "title": "Confetti Fireworks",
       "description": "Example showing fireworks-style confetti animation.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-fireworks.tsx",
@@ -2920,9 +2589,7 @@
       "type": "registry:example",
       "title": "Confetti Stars",
       "description": "Example showing star-shaped confetti animation.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-stars.tsx",
@@ -2935,9 +2602,7 @@
       "type": "registry:example",
       "title": "Confetti Side Cannons",
       "description": "Example showing side-mounted confetti cannons.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-side-cannons.tsx",
@@ -2950,9 +2615,7 @@
       "type": "registry:example",
       "title": "Confetti Custom Shapes",
       "description": "Example showing confetti with custom shape particles.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-custom-shapes.tsx",
@@ -2965,9 +2628,7 @@
       "type": "registry:example",
       "title": "Confetti Emoji",
       "description": "Example showing confetti with emoji particles.",
-      "registryDependencies": [
-        "@magicui/confetti"
-      ],
+      "registryDependencies": ["@magicui/confetti"],
       "files": [
         {
           "path": "registry/example/confetti-emoji.tsx",
@@ -2980,9 +2641,7 @@
       "type": "registry:example",
       "title": "Cool Mode Demo",
       "description": "Example showing cool mode effect for buttons and links.",
-      "registryDependencies": [
-        "@magicui/cool-mode"
-      ],
+      "registryDependencies": ["@magicui/cool-mode"],
       "files": [
         {
           "path": "registry/example/cool-mode-demo.tsx",
@@ -2995,9 +2654,7 @@
       "type": "registry:example",
       "title": "Cool Mode Custom",
       "description": "Example showing customized cool mode effects.",
-      "registryDependencies": [
-        "@magicui/cool-mode"
-      ],
+      "registryDependencies": ["@magicui/cool-mode"],
       "files": [
         {
           "path": "registry/example/cool-mode-custom.tsx",
@@ -3010,9 +2667,7 @@
       "type": "registry:example",
       "title": "Pulsating Button Demo",
       "description": "Example showing an animated pulsating button.",
-      "registryDependencies": [
-        "@magicui/pulsating-button"
-      ],
+      "registryDependencies": ["@magicui/pulsating-button"],
       "files": [
         {
           "path": "registry/example/pulsating-button-demo.tsx",
@@ -3025,9 +2680,7 @@
       "type": "registry:example",
       "title": "Ripple Button Demo",
       "description": "Example showing an animated button with ripple effect.",
-      "registryDependencies": [
-        "@magicui/ripple-button"
-      ],
+      "registryDependencies": ["@magicui/ripple-button"],
       "files": [
         {
           "path": "registry/example/ripple-button-demo.tsx",
@@ -3040,9 +2693,7 @@
       "type": "registry:example",
       "title": "File Tree Demo",
       "description": "Example showing a component that displays folder and file structure.",
-      "registryDependencies": [
-        "@magicui/file-tree"
-      ],
+      "registryDependencies": ["@magicui/file-tree"],
       "files": [
         {
           "path": "registry/example/file-tree-demo.tsx",
@@ -3055,9 +2706,7 @@
       "type": "registry:example",
       "title": "Blur Fade Demo",
       "description": "Example showing blur fade in and out animations.",
-      "registryDependencies": [
-        "@magicui/blur-fade"
-      ],
+      "registryDependencies": ["@magicui/blur-fade"],
       "files": [
         {
           "path": "registry/example/blur-fade-demo.tsx",
@@ -3070,9 +2719,7 @@
       "type": "registry:example",
       "title": "Blur Fade Text Demo",
       "description": "Example showing blur fade animations with text.",
-      "registryDependencies": [
-        "@magicui/blur-fade"
-      ],
+      "registryDependencies": ["@magicui/blur-fade"],
       "files": [
         {
           "path": "registry/example/blur-fade-text-demo.tsx",
@@ -3085,9 +2732,7 @@
       "type": "registry:example",
       "title": "Safari Demo",
       "description": "Example showing a Safari browser mockup.",
-      "registryDependencies": [
-        "@magicui/safari"
-      ],
+      "registryDependencies": ["@magicui/safari"],
       "files": [
         {
           "path": "registry/example/safari-demo.tsx",
@@ -3100,9 +2745,7 @@
       "type": "registry:example",
       "title": "Safari Demo 2",
       "description": "Second example showing a Safari browser mockup.",
-      "registryDependencies": [
-        "@magicui/safari"
-      ],
+      "registryDependencies": ["@magicui/safari"],
       "files": [
         {
           "path": "registry/example/safari-demo-2.tsx",
@@ -3115,9 +2758,7 @@
       "type": "registry:example",
       "title": "Safari Demo 3",
       "description": "Third example showing a Safari browser mockup.",
-      "registryDependencies": [
-        "@magicui/safari"
-      ],
+      "registryDependencies": ["@magicui/safari"],
       "files": [
         {
           "path": "registry/example/safari-demo-3.tsx",
@@ -3130,9 +2771,7 @@
       "type": "registry:example",
       "title": "Safari Demo 4",
       "description": "Fourth example showing a Safari browser mockup.",
-      "registryDependencies": [
-        "@magicui/safari"
-      ],
+      "registryDependencies": ["@magicui/safari"],
       "files": [
         {
           "path": "registry/example/safari-demo-4.tsx",
@@ -3145,9 +2784,7 @@
       "type": "registry:example",
       "title": "iPhone Demo",
       "description": "Example showing an iPhone mockup.",
-      "registryDependencies": [
-        "@magicui/iphone"
-      ],
+      "registryDependencies": ["@magicui/iphone"],
       "files": [
         {
           "path": "registry/example/iphone-demo.tsx",
@@ -3160,9 +2797,7 @@
       "type": "registry:example",
       "title": "iPhone Demo 2",
       "description": "Second example showing an iPhone mockup.",
-      "registryDependencies": [
-        "@magicui/iphone"
-      ],
+      "registryDependencies": ["@magicui/iphone"],
       "files": [
         {
           "path": "registry/example/iphone-demo-2.tsx",
@@ -3175,9 +2810,7 @@
       "type": "registry:example",
       "title": "iPhone Demo 3",
       "description": "Third example showing an iPhone mockup.",
-      "registryDependencies": [
-        "@magicui/iphone"
-      ],
+      "registryDependencies": ["@magicui/iphone"],
       "files": [
         {
           "path": "registry/example/iphone-demo-3.tsx",
@@ -3190,9 +2823,7 @@
       "type": "registry:example",
       "title": "Rainbow Button Demo",
       "description": "Example showing an animated button with rainbow effect.",
-      "registryDependencies": [
-        "@magicui/rainbow-button"
-      ],
+      "registryDependencies": ["@magicui/rainbow-button"],
       "files": [
         {
           "path": "registry/example/rainbow-button-demo.tsx",
@@ -3205,9 +2836,7 @@
       "type": "registry:example",
       "title": "Rainbow Button Demo 2",
       "description": "Example showing an animated button with rainbow effect.",
-      "registryDependencies": [
-        "@magicui/rainbow-button"
-      ],
+      "registryDependencies": ["@magicui/rainbow-button"],
       "files": [
         {
           "path": "registry/example/rainbow-button-demo-2.tsx",
@@ -3220,9 +2849,7 @@
       "type": "registry:example",
       "title": "Interactive Hover Button Demo",
       "description": "Example showing an interactive button with hover effects.",
-      "registryDependencies": [
-        "@magicui/interactive-hover-button"
-      ],
+      "registryDependencies": ["@magicui/interactive-hover-button"],
       "files": [
         {
           "path": "registry/example/interactive-hover-button-demo.tsx",
@@ -3235,9 +2862,7 @@
       "type": "registry:example",
       "title": "Terminal Demo",
       "description": "Example showing a terminal with animated text.",
-      "registryDependencies": [
-        "@magicui/terminal"
-      ],
+      "registryDependencies": ["@magicui/terminal"],
       "files": [
         {
           "path": "registry/example/terminal-demo.tsx",
@@ -3250,9 +2875,7 @@
       "type": "registry:example",
       "title": "Terminal Demo",
       "description": "Example showing a terminal with animated text and custom delays",
-      "registryDependencies": [
-        "@magicui/terminal"
-      ],
+      "registryDependencies": ["@magicui/terminal"],
       "files": [
         {
           "path": "registry/example/terminal-demo-2.tsx",
@@ -3265,9 +2888,7 @@
       "type": "registry:example",
       "title": "Video Text Demo",
       "description": "Example showing text with a video background.",
-      "registryDependencies": [
-        "@magicui/video-text"
-      ],
+      "registryDependencies": ["@magicui/video-text"],
       "files": [
         {
           "path": "registry/example/video-text-demo.tsx",
@@ -3280,9 +2901,7 @@
       "type": "registry:example",
       "title": "Pixel Image Demo",
       "description": "Example showing a pixelated image effect.",
-      "registryDependencies": [
-        "@magicui/pixel-image"
-      ],
+      "registryDependencies": ["@magicui/pixel-image"],
       "files": [
         {
           "path": "registry/example/pixel-image-demo.tsx",
@@ -3295,12 +2914,8 @@
       "type": "registry:example",
       "title": "Highlighter Demo",
       "description": "Example showing the demo of a Highlighter",
-      "dependencies": [
-        "rough-notation"
-      ],
-      "registryDependencies": [
-        "@magicui/highlighter"
-      ],
+      "dependencies": ["rough-notation"],
+      "registryDependencies": ["@magicui/highlighter"],
       "files": [
         {
           "path": "registry/example/highlighter-demo.tsx",
@@ -3317,9 +2932,7 @@
       "type": "registry:example",
       "title": "Animated Theme Toggler Demo",
       "description": "Example showing animation while changing the theme.",
-      "registryDependencies": [
-        "@magicui/animated-theme-toggler"
-      ],
+      "registryDependencies": ["@magicui/animated-theme-toggler"],
       "files": [
         {
           "path": "registry/example/animated-theme-toggler-demo.tsx",
@@ -3331,9 +2944,7 @@
       "name": "light-rays-demo",
       "type": "registry:example",
       "description": "Demo of the light-rays component showcasing animated light rays",
-      "registryDependencies": [
-        "@magicui/light-rays"
-      ],
+      "registryDependencies": ["@magicui/light-rays"],
       "files": [
         {
           "path": "registry/example/light-rays-demo.tsx",
@@ -3346,12 +2957,8 @@
       "type": "registry:example",
       "title": "Dotted Map Demo",
       "description": "Example showing a dotted map.",
-      "dependencies": [
-        "countries-list"
-      ],
-      "registryDependencies": [
-        "@magicui/dotted-map"
-      ],
+      "dependencies": ["countries-list"],
+      "registryDependencies": ["@magicui/dotted-map"],
       "files": [
         {
           "path": "registry/example/dotted-map-demo.tsx",
@@ -3364,9 +2971,7 @@
       "type": "registry:example",
       "title": "Dotted Map Demo 2",
       "description": "Example showing a dotted map.",
-      "registryDependencies": [
-        "@magicui/dotted-map"
-      ],
+      "registryDependencies": ["@magicui/dotted-map"],
       "files": [
         {
           "path": "registry/example/dotted-map-demo-2.tsx",
@@ -3379,9 +2984,7 @@
       "type": "registry:example",
       "title": "Dotted Map Demo 3",
       "description": "Example showing a dotted map with pulse animation.",
-      "registryDependencies": [
-        "@magicui/dotted-map"
-      ],
+      "registryDependencies": ["@magicui/dotted-map"],
       "files": [
         {
           "path": "registry/example/dotted-map-demo-3.tsx",
@@ -3393,9 +2996,7 @@
       "name": "backlight-video-demo",
       "type": "registry:example",
       "description": "An example of the backlight component with a video.",
-      "registryDependencies": [
-        "@magicui/backlight"
-      ],
+      "registryDependencies": ["@magicui/backlight"],
       "files": [
         {
           "path": "registry/example/backlight-video-demo.tsx",
@@ -3407,9 +3008,7 @@
       "name": "backlight-image-demo",
       "type": "registry:example",
       "description": "An example of the backlight component with a image.",
-      "registryDependencies": [
-        "@magicui/backlight"
-      ],
+      "registryDependencies": ["@magicui/backlight"],
       "files": [
         {
           "path": "registry/example/backlight-image-demo.tsx",
@@ -3421,9 +3020,7 @@
       "name": "backlight-svg-demo",
       "type": "registry:example",
       "description": "An example of the backlight component with SVGs.",
-      "registryDependencies": [
-        "@magicui/backlight"
-      ],
+      "registryDependencies": ["@magicui/backlight"],
       "files": [
         {
           "path": "registry/example/backlight-svg-demo.tsx",
@@ -3434,10 +3031,7 @@
     {
       "name": "utils",
       "type": "registry:lib",
-      "dependencies": [
-        "clsx",
-        "tailwind-merge"
-      ],
+      "dependencies": ["clsx", "tailwind-merge"],
       "files": [
         {
           "path": "registry/lib/utils.ts",

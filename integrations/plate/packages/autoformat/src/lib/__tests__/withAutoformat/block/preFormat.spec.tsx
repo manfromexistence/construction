@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import { createAutoformatEditor } from '../createAutoformatEditor';
+import { createAutoformatEditor } from "../createAutoformatEditor";
 
 jsxt;
 
@@ -27,13 +27,13 @@ const output = (
   </fragment>
 ) as any;
 
-it('formats a heading from inside a nested list wrapper', () => {
+it("formats a heading from inside a nested list wrapper", () => {
   const editor = createAutoformatEditor({
-    rules: [{ match: '# ', mode: 'block', type: KEYS.h1 }],
+    rules: [{ match: "# ", mode: "block", type: KEYS.h1 }],
     value: input,
   });
 
-  editor.tf.insertText(' ');
+  editor.tf.insertText(" ");
 
   expect(input.children).toEqual(output.children);
 });

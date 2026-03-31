@@ -1,20 +1,20 @@
 import {
-  type Point,
-  type SlateEditor,
-  type TElement,
-  type TRange,
-  type TSuggestionElement,
   ElementApi,
   KEYS,
   PathApi,
+  type Point,
   PointApi,
+  type SlateEditor,
+  type TElement,
   TextApi,
-} from 'platejs';
+  type TRange,
+  type TSuggestionElement,
+} from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { findSuggestionProps } from '../queries/';
-import { getInlineSuggestionData, isCurrentUserSuggestion } from '../utils';
-import { setSuggestionNodes } from './setSuggestionNodes';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { findSuggestionProps } from "../queries/";
+import { getInlineSuggestionData, isCurrentUserSuggestion } from "../utils";
+import { setSuggestionNodes } from "./setSuggestionNodes";
 
 /**
  * Suggest deletion one character at a time until target point is reached.
@@ -36,7 +36,7 @@ export const deleteSuggestion = (
 
     const { id, createdAt } = findSuggestionProps(editor, {
       at: from,
-      type: 'remove',
+      type: "remove",
     });
 
     resId = id;
@@ -79,7 +79,7 @@ export const deleteSuggestion = (
       const getPoint = reverse ? editor.api.before : editor.api.after;
 
       const pointNext: Point | undefined = getPoint(pointCurrent, {
-        unit: 'character',
+        unit: "character",
       });
 
       if (!pointNext) break;
@@ -102,7 +102,7 @@ export const deleteSuggestion = (
         match: (n) =>
           n[KEYS.suggestion] &&
           TextApi.isText(n) &&
-          getInlineSuggestionData(n)?.type === 'insert' &&
+          getInlineSuggestionData(n)?.type === "insert" &&
           isCurrentUserSuggestion(editor, n),
       });
 
@@ -129,22 +129,20 @@ export const deleteSuggestion = (
           if (isBlockSuggestion) {
             const node = previousAboveNode[0] as TSuggestionElement;
 
-            if (node.suggestion.type === 'insert') {
-              editor
-                .getApi(BaseSuggestionPlugin)
-                .suggestion.withoutSuggestions(() => {
-                  editor.tf.unsetNodes([KEYS.suggestion], {
-                    at: previousAboveNode[1],
-                  });
-                  editor.tf.mergeNodes({
-                    at: PathApi.next(previousAboveNode[1]),
-                  });
+            if (node.suggestion.type === "insert") {
+              editor.getApi(BaseSuggestionPlugin).suggestion.withoutSuggestions(() => {
+                editor.tf.unsetNodes([KEYS.suggestion], {
+                  at: previousAboveNode[1],
                 });
+                editor.tf.mergeNodes({
+                  at: PathApi.next(previousAboveNode[1]),
+                });
+              });
             }
-            if (node.suggestion.type === 'remove') {
+            if (node.suggestion.type === "remove") {
               editor.tf.move({
                 reverse,
-                unit: 'character',
+                unit: "character",
               });
             }
             break;
@@ -156,16 +154,15 @@ export const deleteSuggestion = (
                 [KEYS.suggestion]: {
                   id,
                   createdAt,
-                  type: 'remove',
-                  userId:
-                    editor.getOptions(BaseSuggestionPlugin).currentUserId!,
+                  type: "remove",
+                  userId: editor.getOptions(BaseSuggestionPlugin).currentUserId!,
                 },
               },
               { at: previousAboveNode[1] }
             );
             editor.tf.move({
               reverse,
-              unit: 'character',
+              unit: "character",
             });
             break;
           }
@@ -177,7 +174,7 @@ export const deleteSuggestion = (
       if (PointApi.equals(pointCurrent, editor.selection!.anchor)) {
         editor.tf.move({
           reverse,
-          unit: 'character',
+          unit: "character",
         });
       }
 
@@ -187,12 +184,12 @@ export const deleteSuggestion = (
         isText: true,
         match: (n) =>
           TextApi.isText(n) &&
-          getInlineSuggestionData(n)?.type === 'insert' &&
+          getInlineSuggestionData(n)?.type === "insert" &&
           isCurrentUserSuggestion(editor, n),
       });
 
       if (entryText) {
-        editor.tf.delete({ at: range, unit: 'character' });
+        editor.tf.delete({ at: range, unit: "character" });
 
         continue;
       }

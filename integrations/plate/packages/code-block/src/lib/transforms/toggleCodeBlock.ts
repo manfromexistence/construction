@@ -1,8 +1,8 @@
-import type { SlateEditor, TElement } from 'platejs';
+import type { SlateEditor, TElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { unwrapCodeBlock } from './unwrapCodeBlock';
+import { unwrapCodeBlock } from "./unwrapCodeBlock";
 
 export const toggleCodeBlock = (editor: SlateEditor) => {
   if (!editor.selection) return;

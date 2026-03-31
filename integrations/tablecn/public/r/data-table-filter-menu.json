@@ -3,22 +3,8 @@
   "name": "data-table-filter-menu",
   "title": "Data Table Filter Menu",
   "description": "A filter menu component for the data table",
-  "dependencies": [
-    "@tanstack/react-table",
-    "lucide-react",
-    "motion",
-    "nanoid",
-    "nuqs"
-  ],
-  "registryDependencies": [
-    "badge",
-    "button",
-    "calendar",
-    "command",
-    "input",
-    "popover",
-    "select"
-  ],
+  "dependencies": ["@tanstack/react-table", "lucide-react", "motion", "nanoid", "nuqs"],
+  "registryDependencies": ["badge", "button", "calendar", "command", "input", "popover", "select"],
   "files": [
     {
       "path": "src/components/data-table/data-table-filter-menu.tsx",

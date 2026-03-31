@@ -13,15 +13,8 @@ function isValidValueNumber(value: unknown, max: number): value is number {
   return isNumber(value) && !Number.isNaN(value) && value <= max && value >= 0;
 }
 
-function getProgressState(
-  value: number | undefined | null,
-  maxValue: number,
-): ProgressState {
-  return value == null
-    ? "indeterminate"
-    : value === maxValue
-      ? "complete"
-      : "loading";
+function getProgressState(value: number | undefined | null, maxValue: number): ProgressState {
+  return value == null ? "indeterminate" : value === maxValue ? "complete" : "loading";
 }
 
 interface UseProgressProps {
@@ -38,24 +31,15 @@ interface UseProgressProps {
   max?: number;
 }
 
-function useProgress({
-  value: valueProp = null,
-  max: maxProp,
-}: UseProgressProps) {
-  const max = React.useMemo(
-    () => (isValidMaxNumber(maxProp) ? maxProp : 100),
-    [maxProp],
-  );
+function useProgress({ value: valueProp = null, max: maxProp }: UseProgressProps) {
+  const max = React.useMemo(() => (isValidMaxNumber(maxProp) ? maxProp : 100), [maxProp]);
 
   const value = React.useMemo(
     () => (isValidValueNumber(valueProp, max) ? valueProp : null),
-    [valueProp, max],
+    [valueProp, max]
   );
 
-  const state = React.useMemo<ProgressState>(
-    () => getProgressState(value, max),
-    [value, max],
-  );
+  const state = React.useMemo<ProgressState>(() => getProgressState(value, max), [value, max]);
 
   const progressProps = React.useMemo<React.HTMLAttributes<HTMLDivElement>>(
     () => ({
@@ -67,7 +51,7 @@ function useProgress({
       "data-value": value ?? undefined,
       "data-max": max,
     }),
-    [max, value, state],
+    [max, value, state]
   );
 
   return {

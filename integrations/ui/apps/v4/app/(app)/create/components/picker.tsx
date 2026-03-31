@@ -1,17 +1,16 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Menu as MenuPrimitive } from "@base-ui/react/menu"
-
-import { cn } from "@/registry/bases/base/lib/utils"
-import { IconPlaceholder } from "@/app/(app)/create/components/icon-placeholder"
+import { Menu as MenuPrimitive } from "@base-ui/react/menu";
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(app)/create/components/icon-placeholder";
+import { cn } from "@/registry/bases/base/lib/utils";
 
 function Picker({ ...props }: MenuPrimitive.Root.Props) {
-  return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />
+  return <MenuPrimitive.Root data-slot="dropdown-menu" {...props} />;
 }
 
 function PickerPortal({ ...props }: MenuPrimitive.Portal.Props) {
-  return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />
+  return <MenuPrimitive.Portal data-slot="dropdown-menu-portal" {...props} />;
 }
 
 function PickerTrigger({ className, ...props }: MenuPrimitive.Trigger.Props) {
@@ -24,7 +23,7 @@ function PickerTrigger({ className, ...props }: MenuPrimitive.Trigger.Props) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function PickerContent({
@@ -61,11 +60,11 @@ function PickerContent({
       </MenuPrimitive.Positioner>
       <div className="absolute inset-y-0 right-0 left-62 z-40 bg-transparent" />
     </MenuPrimitive.Portal>
-  )
+  );
 }
 
 function PickerGroup({ ...props }: MenuPrimitive.Group.Props) {
-  return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />
+  return <MenuPrimitive.Group data-slot="dropdown-menu-group" {...props} />;
 }
 
 function PickerLabel({
@@ -73,19 +72,16 @@ function PickerLabel({
   inset,
   ...props
 }: MenuPrimitive.GroupLabel.Props & {
-  inset?: boolean
+  inset?: boolean;
 }) {
   return (
     <MenuPrimitive.GroupLabel
       data-slot="dropdown-menu-label"
       data-inset={inset}
-      className={cn(
-        "px-2 py-1.5 text-xs font-medium text-neutral-400 data-inset:pl-8",
-        className
-      )}
+      className={cn("px-2 py-1.5 text-xs font-medium text-neutral-400 data-inset:pl-8", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PickerItem({
@@ -94,8 +90,8 @@ function PickerItem({
   variant = "default",
   ...props
 }: MenuPrimitive.Item.Props & {
-  inset?: boolean
-  variant?: "default" | "destructive"
+  inset?: boolean;
+  variant?: "default" | "destructive";
 }) {
   return (
     <MenuPrimitive.Item
@@ -108,11 +104,11 @@ function PickerItem({
       )}
       {...props}
     />
-  )
+  );
 }
 
 function PickerSub({ ...props }: MenuPrimitive.SubmenuRoot.Props) {
-  return <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />
+  return <MenuPrimitive.SubmenuRoot data-slot="dropdown-menu-sub" {...props} />;
 }
 
 function PickerSubTrigger({
@@ -121,7 +117,7 @@ function PickerSubTrigger({
   children,
   ...props
 }: MenuPrimitive.SubmenuTrigger.Props & {
-  inset?: boolean
+  inset?: boolean;
 }) {
   return (
     <MenuPrimitive.SubmenuTrigger
@@ -143,7 +139,7 @@ function PickerSubTrigger({
         className="ml-auto"
       />
     </MenuPrimitive.SubmenuTrigger>
-  )
+  );
 }
 
 function PickerSubContent({
@@ -167,7 +163,7 @@ function PickerSubContent({
       sideOffset={sideOffset}
       {...props}
     />
-  )
+  );
 }
 
 function PickerCheckboxItem({
@@ -199,23 +195,14 @@ function PickerCheckboxItem({
       </span>
       {children}
     </MenuPrimitive.CheckboxItem>
-  )
+  );
 }
 
 function PickerRadioGroup({ ...props }: MenuPrimitive.RadioGroup.Props) {
-  return (
-    <MenuPrimitive.RadioGroup
-      data-slot="dropdown-menu-radio-group"
-      {...props}
-    />
-  )
+  return <MenuPrimitive.RadioGroup data-slot="dropdown-menu-radio-group" {...props} />;
 }
 
-function PickerRadioItem({
-  className,
-  children,
-  ...props
-}: MenuPrimitive.RadioItem.Props) {
+function PickerRadioItem({ className, children, ...props }: MenuPrimitive.RadioItem.Props) {
   return (
     <MenuPrimitive.RadioItem
       data-slot="dropdown-menu-radio-item"
@@ -242,23 +229,17 @@ function PickerRadioItem({
       </span>
       {children}
     </MenuPrimitive.RadioItem>
-  )
+  );
 }
 
-function PickerSeparator({
-  className,
-  ...props
-}: MenuPrimitive.Separator.Props) {
+function PickerSeparator({ className, ...props }: MenuPrimitive.Separator.Props) {
   return (
     <MenuPrimitive.Separator
       data-slot="dropdown-menu-separator"
-      className={cn(
-        "-mx-1.5 my-1.5 h-px bg-neutral-600 dark:bg-neutral-700",
-        className
-      )}
+      className={cn("-mx-1.5 my-1.5 h-px bg-neutral-600 dark:bg-neutral-700", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PickerShortcut({ className, ...props }: React.ComponentProps<"span">) {
@@ -271,23 +252,23 @@ function PickerShortcut({ className, ...props }: React.ComponentProps<"span">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 export {
   Picker,
-  PickerPortal,
-  PickerTrigger,
+  PickerCheckboxItem,
   PickerContent,
   PickerGroup,
-  PickerLabel,
   PickerItem,
-  PickerCheckboxItem,
+  PickerLabel,
+  PickerPortal,
   PickerRadioGroup,
   PickerRadioItem,
   PickerSeparator,
   PickerShortcut,
   PickerSub,
-  PickerSubTrigger,
   PickerSubContent,
-}
+  PickerSubTrigger,
+  PickerTrigger,
+};

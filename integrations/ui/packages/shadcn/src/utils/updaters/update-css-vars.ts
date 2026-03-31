@@ -1,32 +1,29 @@
-import { promises as fs } from "fs"
-import path from "path"
-import {
-  registryItemCssVarsSchema,
-  registryItemTailwindSchema,
-} from "@/src/schema"
-import { Config } from "@/src/utils/get-config"
-import { TailwindVersion } from "@/src/utils/get-project-info"
-import { highlighter } from "@/src/utils/highlighter"
-import { spinner } from "@/src/utils/spinner"
-import postcss from "postcss"
-import AtRule from "postcss/lib/at-rule"
-import Root from "postcss/lib/root"
-import Rule from "postcss/lib/rule"
-import { z } from "zod"
+import { promises as fs } from "fs";
+import path from "path";
+import postcss from "postcss";
+import AtRule from "postcss/lib/at-rule";
+import Root from "postcss/lib/root";
+import Rule from "postcss/lib/rule";
+import { z } from "zod";
+import { registryItemCssVarsSchema, registryItemTailwindSchema } from "@/src/schema";
+import { Config } from "@/src/utils/get-config";
+import { TailwindVersion } from "@/src/utils/get-project-info";
+import { highlighter } from "@/src/utils/highlighter";
+import { spinner } from "@/src/utils/spinner";
 
 export async function updateCssVars(
   cssVars: z.infer<typeof registryItemCssVarsSchema> | undefined,
   config: Config,
   options: {
-    cleanupDefaultNextStyles?: boolean
-    overwriteCssVars?: boolean
-    silent?: boolean
-    tailwindVersion?: TailwindVersion
-    tailwindConfig?: z.infer<typeof registryItemTailwindSchema>["config"]
+    cleanupDefaultNextStyles?: boolean;
+    overwriteCssVars?: boolean;
+    silent?: boolean;
+    tailwindVersion?: TailwindVersion;
+    tailwindConfig?: z.infer<typeof registryItemTailwindSchema>["config"];
   }
 ) {
   if (!config.resolvedPaths.tailwindCss || !Object.keys(cssVars ?? {}).length) {
-    return
+    return;
   }
 
   options = {
@@ -35,27 +32,24 @@ export async function updateCssVars(
     tailwindVersion: "v3",
     overwriteCssVars: false,
     ...options,
-  }
-  const cssFilepath = config.resolvedPaths.tailwindCss
-  const cssFilepathRelative = path.relative(
-    config.resolvedPaths.cwd,
-    cssFilepath
-  )
+  };
+  const cssFilepath = config.resolvedPaths.tailwindCss;
+  const cssFilepathRelative = path.relative(config.resolvedPaths.cwd, cssFilepath);
   const cssVarsSpinner = spinner(
     `Updating CSS variables in ${highlighter.info(cssFilepathRelative)}`,
     {
       silent: options.silent,
     }
-  ).start()
-  const raw = await fs.readFile(cssFilepath, "utf8")
-  let output = await transformCssVars(raw, cssVars ?? {}, config, {
+  ).start();
+  const raw = await fs.readFile(cssFilepath, "utf8");
+  const output = await transformCssVars(raw, cssVars ?? {}, config, {
     cleanupDefaultNextStyles: options.cleanupDefaultNextStyles,
     tailwindVersion: options.tailwindVersion,
     tailwindConfig: options.tailwindConfig,
     overwriteCssVars: options.overwriteCssVars,
-  })
-  await fs.writeFile(cssFilepath, output, "utf8")
-  cssVarsSpinner.succeed()
+  });
+  await fs.writeFile(cssFilepath, output, "utf8");
+  cssVarsSpinner.succeed();
 }
 
 export async function transformCssVars(
@@ -63,10 +57,10 @@ export async function transformCssVars(
   cssVars: z.infer<typeof registryItemCssVarsSchema>,
   config: Config,
   options: {
-    cleanupDefaultNextStyles?: boolean
-    tailwindVersion?: TailwindVersion
-    tailwindConfig?: z.infer<typeof registryItemTailwindSchema>["config"]
-    overwriteCssVars?: boolean
+    cleanupDefaultNextStyles?: boolean;
+    tailwindVersion?: TailwindVersion;
+    tailwindConfig?: z.infer<typeof registryItemTailwindSchema>["config"];
+    overwriteCssVars?: boolean;
   } = {
     cleanupDefaultNextStyles: false,
     tailwindVersion: "v3",
@@ -80,64 +74,59 @@ export async function transformCssVars(
     tailwindConfig: undefined,
     overwriteCssVars: false,
     ...options,
-  }
+  };
 
-  let plugins = [updateCssVarsPlugin(cssVars)]
+  let plugins = [updateCssVarsPlugin(cssVars)];
 
   if (options.cleanupDefaultNextStyles) {
-    plugins.push(cleanupDefaultNextStylesPlugin())
+    plugins.push(cleanupDefaultNextStylesPlugin());
   }
 
   if (options.tailwindVersion === "v4") {
-    plugins = []
+    plugins = [];
 
-    plugins.push(addCustomVariant({ params: "dark (&:is(.dark *))" }))
+    plugins.push(addCustomVariant({ params: "dark (&:is(.dark *))" }));
 
     if (options.cleanupDefaultNextStyles) {
-      plugins.push(cleanupDefaultNextStylesPlugin())
+      plugins.push(cleanupDefaultNextStylesPlugin());
     }
 
     plugins.push(
       updateCssVarsPluginV4(cssVars, {
         overwriteCssVars: options.overwriteCssVars,
       })
-    )
-    plugins.push(updateThemePlugin(cssVars))
+    );
+    plugins.push(updateThemePlugin(cssVars));
 
     if (options.tailwindConfig) {
-      plugins.push(updateTailwindConfigPlugin(options.tailwindConfig))
-      plugins.push(updateTailwindConfigAnimationPlugin(options.tailwindConfig))
-      plugins.push(updateTailwindConfigKeyframesPlugin(options.tailwindConfig))
+      plugins.push(updateTailwindConfigPlugin(options.tailwindConfig));
+      plugins.push(updateTailwindConfigAnimationPlugin(options.tailwindConfig));
+      plugins.push(updateTailwindConfigKeyframesPlugin(options.tailwindConfig));
     }
   }
 
   const result = await postcss(plugins).process(input, {
     from: undefined,
-  })
+  });
 
-  let output = result.css
+  let output = result.css;
 
-  output = output.replace(/\/\* ---break--- \*\//g, "")
+  output = output.replace(/\/\* ---break--- \*\//g, "");
 
   if (options.tailwindVersion === "v4") {
-    output = output.replace(/(\n\s*\n)+/g, "\n\n")
+    output = output.replace(/(\n\s*\n)+/g, "\n\n");
   }
 
-  return output
+  return output;
 }
 
-function updateCssVarsPlugin(
-  cssVars: z.infer<typeof registryItemCssVarsSchema>
-) {
+function updateCssVarsPlugin(cssVars: z.infer<typeof registryItemCssVarsSchema>) {
   return {
     postcssPlugin: "update-css-vars",
     Once(root: Root) {
       let baseLayer = root.nodes.find(
-        (node) =>
-          node.type === "atrule" &&
-          node.name === "layer" &&
-          node.params === "base"
-      ) as AtRule | undefined
+        (node) => node.type === "atrule" && node.name === "layer" && node.params === "base"
+      ) as AtRule | undefined;
 
       if (!(baseLayer instanceof AtRule)) {
         baseLayer = postcss.atRule({
@@ -149,40 +138,40 @@ function updateCssVarsPlugin(
             before: "\n",
             between: " ",
           },
-        })
-        root.append(baseLayer)
-        root.insertBefore(baseLayer, postcss.comment({ text: "---break---" }))
+        });
+        root.append(baseLayer);
+        root.insertBefore(baseLayer, postcss.comment({ text: "---break---" }));
       }
 
       if (baseLayer !== undefined) {
         // Add variables for each key in cssVars
         Object.entries(cssVars).forEach(([key, vars]) => {
-          const selector = key === "light" ? ":root" : `.${key}`
+          const selector = key === "light" ? ":root" : `.${key}`;
           // TODO: Fix typecheck.
-          addOrUpdateVars(baseLayer as AtRule, selector, vars)
-        })
+          addOrUpdateVars(baseLayer as AtRule, selector, vars);
+        });
       }
     },
-  }
+  };
 }
 
 function removeConflictVars(root: Rule | Root) {
   const rootRule = root.nodes.find(
     (node): node is Rule => node.type === "rule" && node.selector === ":root"
-  )
+  );
 
   if (rootRule) {
-    const propsToRemove = ["--background", "--foreground"]
+    const propsToRemove = ["--background", "--foreground"];
 
     rootRule.nodes
       .filter(
         (node): node is postcss.Declaration =>
           node.type === "decl" && propsToRemove.includes(node.prop)
       )
-      .forEach((node) => node.remove())
+      .forEach((node) => node.remove());
 
     if (rootRule.nodes.length === 0) {
-      rootRule.remove()
+      rootRule.remove();
     }
   }
 }
@@ -193,7 +182,7 @@ function cleanupDefaultNextStylesPlugin() {
     Once(root: Root) {
       const bodyRule = root.nodes.find(
         (node): node is Rule => node.type === "rule" && node.selector === "body"
-      )
+      );
       if (bodyRule) {
         // Remove color from the body node.
         bodyRule.nodes
@@ -201,11 +190,9 @@ function cleanupDefaultNextStylesPlugin() {
             (node): node is postcss.Declaration =>
               node.type === "decl" &&
               node.prop === "color" &&
-              ["rgb(var(--foreground-rgb))", "var(--foreground)"].includes(
-                node.value
-              )
+              ["rgb(var(--foreground-rgb))", "var(--foreground)"].includes(node.value)
           )
-          ?.remove()
+          ?.remove();
 
         // Remove background: linear-gradient.
         bodyRule.nodes
@@ -214,11 +201,10 @@ function cleanupDefaultNextStylesPlugin() {
               node.type === "decl" &&
               node.prop === "background" &&
               // This is only going to run on create project, so all good.
-              (node.value.startsWith("linear-gradient") ||
-                node.value === "var(--background)")
-            )
+              (node.value.startsWith("linear-gradient") || node.value === "var(--background)")
+            );
           })
-          ?.remove()
+          ?.remove();
 
         // Remove font-family: Arial, Helvetica, sans-serif;
         bodyRule.nodes
@@ -228,95 +214,88 @@ function cleanupDefaultNextStylesPlugin() {
               node.prop === "font-family" &&
               node.value === "Arial, Helvetica, sans-serif"
           )
-          ?.remove()
+          ?.remove();
 
         // If the body rule is empty, remove it.
         if (bodyRule.nodes.length === 0) {
-          bodyRule.remove()
+          bodyRule.remove();
         }
       }
 
-      removeConflictVars(root)
+      removeConflictVars(root);
 
       const darkRootRule = root.nodes.find(
         (node): node is Rule =>
-          node.type === "atrule" &&
-          node.params === "(prefers-color-scheme: dark)"
-      )
+          node.type === "atrule" && node.params === "(prefers-color-scheme: dark)"
+      );
 
       if (darkRootRule) {
-        removeConflictVars(darkRootRule)
+        removeConflictVars(darkRootRule);
         if (darkRootRule.nodes.length === 0) {
-          darkRootRule.remove()
+          darkRootRule.remove();
         }
       }
     },
-  }
+  };
 }
 
-function addOrUpdateVars(
-  baseLayer: AtRule,
-  selector: string,
-  vars: Record<string, string>
-) {
+function addOrUpdateVars(baseLayer: AtRule, selector: string, vars: Record<string, string>) {
   let ruleNode = baseLayer.nodes?.find(
     (node): node is Rule => node.type === "rule" && node.selector === selector
-  )
+  );
 
   if (!ruleNode) {
     if (Object.keys(vars).length > 0) {
       ruleNode = postcss.rule({
         selector,
         raws: { between: " ", before: "\n  " },
-      })
-      baseLayer.append(ruleNode)
+      });
+      baseLayer.append(ruleNode);
     }
   }
 
   Object.entries(vars).forEach(([key, value]) => {
-    const prop = `--${key.replace(/^--/, "")}`
+    const prop = `--${key.replace(/^--/, "")}`;
     const newDecl = postcss.decl({
       prop,
       value,
       raws: { semicolon: true },
-    })
+    });
 
     const existingDecl = ruleNode?.nodes.find(
-      (node): node is postcss.Declaration =>
-        node.type === "decl" && node.prop === prop
-    )
+      (node): node is postcss.Declaration => node.type === "decl" && node.prop === prop
+    );
 
-    existingDecl ? existingDecl.replaceWith(newDecl) : ruleNode?.append(newDecl)
-  })
+    existingDecl ? existingDecl.replaceWith(newDecl) : ruleNode?.append(newDecl);
+  });
 }
 
 function updateCssVarsPluginV4(
   cssVars: z.infer<typeof registryItemCssVarsSchema>,
   options: {
-    overwriteCssVars?: boolean
+    overwriteCssVars?: boolean;
   }
 ) {
   return {
     postcssPlugin: "update-css-vars-v4",
     Once(root: Root) {
       Object.entries(cssVars).forEach(([key, vars]) => {
-        let selector = key === "light" ? ":root" : `.${key}`
+        let selector = key === "light" ? ":root" : `.${key}`;
 
         if (key === "theme") {
-          selector = "@theme"
-          const themeNode = upsertThemeNode(root)
+          selector = "@theme";
+          const themeNode = upsertThemeNode(root);
           Object.entries(vars).forEach(([key, value]) => {
-            const prop = `--${key.replace(/^--/, "")}`
+            const prop = `--${key.replace(/^--/, "")}`;
             const newDecl = postcss.decl({
               prop,
               value,
               raws: { semicolon: true },
-            })
+            });
 
             const existingDecl = themeNode?.nodes?.find(
-              (node): node is postcss.Declaration =>
-                node.type === "decl" && node.prop === prop
-            )
+              (node): node is postcss.Declaration => node.type === "decl" && node.prop === prop
+            );
 
             // Only overwrite if overwriteCssVars is true
             // i.e for registry:theme and registry:style
@@ -324,55 +303,53 @@ function updateCssVarsPluginV4(
             // Keep user defined vars.
             if (options.overwriteCssVars) {
               if (existingDecl) {
-                existingDecl.replaceWith(newDecl)
+                existingDecl.replaceWith(newDecl);
               } else {
-                themeNode?.append(newDecl)
+                themeNode?.append(newDecl);
               }
             } else {
               if (!existingDecl) {
-                themeNode?.append(newDecl)
+                themeNode?.append(newDecl);
               }
             }
-          })
-          return
+          });
+          return;
         }
 
         let ruleNode = root.nodes?.find(
-          (node): node is Rule =>
-            node.type === "rule" && node.selector === selector
-        )
+          (node): node is Rule => node.type === "rule" && node.selector === selector
+        );
 
         if (!ruleNode && Object.keys(vars).length > 0) {
           ruleNode = postcss.rule({
             selector,
             nodes: [],
             raws: { semicolon: true, between: " ", before: "\n" },
-          })
-          root.append(ruleNode)
-          root.insertBefore(ruleNode, postcss.comment({ text: "---break---" }))
+          });
+          root.append(ruleNode);
+          root.insertBefore(ruleNode, postcss.comment({ text: "---break---" }));
         }
 
         Object.entries(vars).forEach(([key, value]) => {
-          let prop = `--${key.replace(/^--/, "")}`
+          let prop = `--${key.replace(/^--/, "")}`;
 
           // Special case for sidebar-background.
           if (prop === "--sidebar-background") {
-            prop = "--sidebar"
+            prop = "--sidebar";
           }
 
           if (isLocalHSLValue(value)) {
-            value = `hsl(${value})`
+            value = `hsl(${value})`;
           }
 
           const newDecl = postcss.decl({
             prop,
             value,
             raws: { semicolon: true },
-          })
+          });
           const existingDecl = ruleNode?.nodes.find(
-            (node): node is postcss.Declaration =>
-              node.type === "decl" && node.prop === prop
-          )
+            (node): node is postcss.Declaration => node.type === "decl" && node.prop === prop
+          );
 
           // Only overwrite if overwriteCssVars is true
           // i.e for registry:theme and registry:style
@@ -380,19 +357,19 @@ function updateCssVarsPluginV4(
           // Keep user defined vars.
           if (options.overwriteCssVars) {
             if (existingDecl) {
-              existingDecl.replaceWith(newDecl)
+              existingDecl.replaceWith(newDecl);
             } else {
-              ruleNode?.append(newDecl)
+              ruleNode?.append(newDecl);
             }
           } else {
             if (!existingDecl) {
-              ruleNode?.append(newDecl)
+              ruleNode?.append(newDecl);
             }
           }
-        })
-      })
+        });
+      });
     },
-  }
+  };
 }
 
 function updateThemePlugin(cssVars: z.infer<typeof registryItemCssVarsSchema>) {
@@ -406,26 +383,23 @@ function updateThemePlugin(cssVars: z.infer<typeof registryItemCssVarsSchema>) {
             Object.keys(cssVars[key as keyof typeof cssVars] || {})
           )
         )
-      )
+      );
 
       if (!variables.length) {
-        return
+        return;
       }
 
-      const themeNode = upsertThemeNode(root)
+      const themeNode = upsertThemeNode(root);
 
       const themeVarNodes = themeNode.nodes?.filter(
-        (node): node is postcss.Declaration =>
-          node.type === "decl" && node.prop.startsWith("--")
-      )
+        (node): node is postcss.Declaration => node.type === "decl" && node.prop.startsWith("--")
+      );
 
       for (const variable of variables) {
-        const value = Object.values(cssVars).find((vars) => vars[variable])?.[
-          variable
-        ]
+        const value = Object.values(cssVars).find((vars) => vars[variable])?.[variable];
 
         if (!value) {
-          continue
+          continue;
         }
 
         if (variable === "radius") {
@@ -437,70 +411,65 @@ function updateThemePlugin(cssVars: z.infer<typeof registryItemCssVarsSchema>) {
             "2xl": "calc(var(--radius) * 1.8)",
             "3xl": "calc(var(--radius) * 2.2)",
             "4xl": "calc(var(--radius) * 2.6)",
-          }
+          };
           for (const [key, value] of Object.entries(radiusVariables)) {
             const cssVarNode = postcss.decl({
               prop: `--radius-${key}`,
               value,
               raws: { semicolon: true },
-            })
+            });
             if (
               themeNode?.nodes?.find(
                 (node): node is postcss.Declaration =>
                   node.type === "decl" && node.prop === cssVarNode.prop
               )
             ) {
-              continue
+              continue;
             }
-            themeNode?.append(cssVarNode)
+            themeNode?.append(cssVarNode);
           }
-          continue
+          continue;
         }
 
         let prop =
           isLocalHSLValue(value) || isColorValue(value)
             ? `--color-${variable.replace(/^--/, "")}`
-            : `--${variable.replace(/^--/, "")}`
+            : `--${variable.replace(/^--/, "")}`;
         if (prop === "--color-sidebar-background") {
-          prop = "--color-sidebar"
+          prop = "--color-sidebar";
         }
 
-        let propValue = `var(--${variable})`
+        let propValue = `var(--${variable})`;
         if (prop === "--color-sidebar") {
-          propValue = "var(--sidebar)"
+          propValue = "var(--sidebar)";
         }
 
         const cssVarNode = postcss.decl({
           prop,
           value: propValue,
           raws: { semicolon: true },
-        })
+        });
         const existingDecl = themeNode?.nodes?.find(
           (node): node is postcss.Declaration =>
             node.type === "decl" && node.prop === cssVarNode.prop
-        )
+        );
         if (!existingDecl) {
           if (themeVarNodes?.length) {
-            themeNode?.insertAfter(
-              themeVarNodes[themeVarNodes.length - 1],
-              cssVarNode
-            )
+            themeNode?.insertAfter(themeVarNodes[themeVarNodes.length - 1], cssVarNode);
           } else {
-            themeNode?.append(cssVarNode)
+            themeNode?.append(cssVarNode);
           }
         }
       }
     },
-  }
+  };
 }
 
 function upsertThemeNode(root: Root): AtRule {
   let themeNode = root.nodes.find(
     (node): node is AtRule =>
-      node.type === "atrule" &&
-      node.name === "theme" &&
-      node.params === "inline"
-  )
+      node.type === "atrule" && node.name === "theme" && node.params === "inline"
+  );
 
   if (!themeNode) {
     themeNode = postcss.atRule({
@@ -508,12 +477,12 @@ function upsertThemeNode(root: Root): AtRule {
       params: "inline",
       nodes: [],
       raws: { semicolon: true, between: " ", before: "\n" },
-    })
-    root.append(themeNode)
-    root.insertBefore(themeNode, postcss.comment({ text: "---break---" }))
+    });
+    root.append(themeNode);
+    root.insertBefore(themeNode, postcss.comment({ text: "---break---" }));
   }
 
-  return themeNode
+  return themeNode;
 }
 
 function addCustomVariant({ params }: { params: string }) {
@@ -521,36 +490,34 @@ function addCustomVariant({ params }: { params: string }) {
     postcssPlugin: "add-custom-variant",
     Once(root: Root) {
       const customVariant = root.nodes.find(
-        (node): node is AtRule =>
-          node.type === "atrule" && node.name === "custom-variant"
-      )
+        (node): node is AtRule => node.type === "atrule" && node.name === "custom-variant"
+      );
 
       if (!customVariant) {
         // Find all import nodes
         const importNodes = root.nodes.filter(
-          (node): node is AtRule =>
-            node.type === "atrule" && node.name === "import"
-        )
+          (node): node is AtRule => node.type === "atrule" && node.name === "import"
+        );
 
         const variantNode = postcss.atRule({
           name: "custom-variant",
           params,
           raws: { semicolon: true, before: "\n" },
-        })
+        });
 
         if (importNodes.length > 0) {
           // Insert after the last import
-          const lastImport = importNodes[importNodes.length - 1]
-          root.insertAfter(lastImport, variantNode)
+          const lastImport = importNodes[importNodes.length - 1];
+          root.insertAfter(lastImport, variantNode);
         } else {
           // If no imports, insert after the first node
-          root.insertAfter(root.nodes[0], variantNode)
+          root.insertAfter(root.nodes[0], variantNode);
         }
 
-        root.insertBefore(variantNode, postcss.comment({ text: "---break---" }))
+        root.insertBefore(variantNode, postcss.comment({ text: "---break---" }));
       }
     },
-  }
+  };
 }
 
 function addCustomImport({ params }: { params: string }) {
@@ -558,47 +525,40 @@ function addCustomImport({ params }: { params: string }) {
     postcssPlugin: "add-custom-import",
     Once(root: Root) {
       const importNodes = root.nodes.filter(
-        (node): node is AtRule =>
-          node.type === "atrule" && node.name === "import"
-      )
+        (node): node is AtRule => node.type === "atrule" && node.name === "import"
+      );
 
       // Find custom variant node (to ensure we insert before it).
       const customVariantNode = root.nodes.find(
-        (node): node is AtRule =>
-          node.type === "atrule" && node.name === "custom-variant"
-      )
+        (node): node is AtRule => node.type === "atrule" && node.name === "custom-variant"
+      );
 
       // Check if our specific import already exists.
-      const hasImport = importNodes.some(
-        (node) => node.params.replace(/["']/g, "") === params
-      )
+      const hasImport = importNodes.some((node) => node.params.replace(/["']/g, "") === params);
 
       if (!hasImport) {
         const importNode = postcss.atRule({
           name: "import",
           params: `"${params}"`,
           raws: { semicolon: true, before: "\n" },
-        })
+        });
 
         if (importNodes.length > 0) {
           // If there are existing imports, add after the last import.
-          const lastImport = importNodes[importNodes.length - 1]
-          root.insertAfter(lastImport, importNode)
+          const lastImport = importNodes[importNodes.length - 1];
+          root.insertAfter(lastImport, importNode);
         } else if (customVariantNode) {
           // If no imports but has custom-variant, insert before it.
-          root.insertBefore(customVariantNode, importNode)
-          root.insertBefore(
-            customVariantNode,
-            postcss.comment({ text: "---break---" })
-          )
+          root.insertBefore(customVariantNode, importNode);
+          root.insertBefore(customVariantNode, postcss.comment({ text: "---break---" }));
         } else {
           // If no imports and no custom-variant, insert at the start.
-          root.prepend(importNode)
-          root.insertAfter(importNode, postcss.comment({ text: "---break---" }))
+          root.prepend(importNode);
+          root.insertAfter(importNode, postcss.comment({ text: "---break---" }));
         }
       }
     },
-  }
+  };
 }
 
 function updateTailwindConfigPlugin(
@@ -608,42 +568,40 @@ function updateTailwindConfigPlugin(
     postcssPlugin: "update-tailwind-config",
     Once(root: Root) {
       if (!tailwindConfig?.plugins) {
-        return
+        return;
       }
 
-      const quoteType = getQuoteType(root)
-      const quote = quoteType === "single" ? "'" : '"'
+      const quoteType = getQuoteType(root);
+      const quote = quoteType === "single" ? "'" : '"';
 
       const pluginNodes = root.nodes.filter(
-        (node): node is AtRule =>
-          node.type === "atrule" && node.name === "plugin"
-      )
+        (node): node is AtRule => node.type === "atrule" && node.name === "plugin"
+      );
 
-      const lastPluginNode =
-        pluginNodes[pluginNodes.length - 1] || root.nodes[0]
+      const lastPluginNode = pluginNodes[pluginNodes.length - 1] || root.nodes[0];
 
       for (const plugin of tailwindConfig.plugins) {
-        const pluginName = plugin.replace(/^require\(["']|["']\)$/g, "")
+        const pluginName = plugin.replace(/^require\(["']|["']\)$/g, "");
 
         // Check if the plugin is already present.
         if (
           pluginNodes.some((node) => {
-            return node.params.replace(/["']/g, "") === pluginName
+            return node.params.replace(/["']/g, "") === pluginName;
           })
         ) {
-          continue
+          continue;
         }
 
         const pluginNode = postcss.atRule({
           name: "plugin",
           params: `${quote}${pluginName}${quote}`,
           raws: { semicolon: true, before: "\n" },
-        })
-        root.insertAfter(lastPluginNode, pluginNode)
-        root.insertBefore(pluginNode, postcss.comment({ text: "---break---" }))
+        });
+        root.insertAfter(lastPluginNode, pluginNode);
+        root.insertBefore(pluginNode, postcss.comment({ text: "---break---" }));
       }
     },
-  }
+  };
 }
 
 function updateTailwindConfigKeyframesPlugin(
@@ -653,42 +611,36 @@ function updateTailwindConfigKeyframesPlugin(
     postcssPlugin: "update-tailwind-config-keyframes",
     Once(root: Root) {
       if (!tailwindConfig?.theme?.extend?.keyframes) {
-        return
+        return;
       }
 
-      const themeNode = upsertThemeNode(root)
+      const themeNode = upsertThemeNode(root);
       const existingKeyFrameNodes = themeNode.nodes?.filter(
-        (node): node is AtRule =>
-          node.type === "atrule" && node.name === "keyframes"
-      )
+        (node): node is AtRule => node.type === "atrule" && node.name === "keyframes"
+      );
 
-      const keyframeValueSchema = z.record(
-        z.string(),
-        z.record(z.string(), z.string())
-      )
+      const keyframeValueSchema = z.record(z.string(), z.record(z.string(), z.string()));
 
       for (const [keyframeName, keyframeValue] of Object.entries(
         tailwindConfig.theme.extend.keyframes
       )) {
         if (typeof keyframeName !== "string") {
-          continue
+          continue;
         }
 
-        const parsedKeyframeValue = keyframeValueSchema.safeParse(keyframeValue)
+        const parsedKeyframeValue = keyframeValueSchema.safeParse(keyframeValue);
 
         if (!parsedKeyframeValue.success) {
-          continue
+          continue;
         }
 
         if (
           existingKeyFrameNodes?.find(
             (node): node is postcss.AtRule =>
-              node.type === "atrule" &&
-              node.name === "keyframes" &&
-              node.params === keyframeName
+              node.type === "atrule" && node.name === "keyframes" && node.params === keyframeName
           )
         ) {
-          continue
+          continue;
         }
 
         const keyframeNode = postcss.atRule({
@@ -696,7 +648,7 @@ function updateTailwindConfigKeyframesPlugin(
           params: keyframeName,
           nodes: [],
           raws: { semicolon: true, between: " ", before: "\n  " },
-        })
+        });
 
         for (const [key, values] of Object.entries(parsedKeyframeValue.data)) {
           const rule = postcss.rule({
@@ -709,18 +661,15 @@ function updateTailwindConfigKeyframesPlugin(
               })
             ),
             raws: { semicolon: true, between: " ", before: "\n    " },
-          })
-          keyframeNode.append(rule)
+          });
+          keyframeNode.append(rule);
         }
 
-        themeNode.append(keyframeNode)
-        themeNode.insertBefore(
-          keyframeNode,
-          postcss.comment({ text: "---break---" })
-        )
+        themeNode.append(keyframeNode);
+        themeNode.insertBefore(keyframeNode, postcss.comment({ text: "---break---" }));
       }
     },
-  }
+  };
 }
 
 function updateTailwindConfigAnimationPlugin(
@@ -730,51 +679,49 @@ function updateTailwindConfigAnimationPlugin(
     postcssPlugin: "update-tailwind-config-animation",
     Once(root: Root) {
       if (!tailwindConfig?.theme?.extend?.animation) {
-        return
+        return;
       }
 
-      const themeNode = upsertThemeNode(root)
+      const themeNode = upsertThemeNode(root);
       const existingAnimationNodes = themeNode.nodes?.filter(
         (node): node is postcss.Declaration =>
           node.type === "decl" && node.prop.startsWith("--animate-")
-      )
+      );
 
       const parsedAnimationValue = z
         .record(z.string(), z.string())
-        .safeParse(tailwindConfig.theme.extend.animation)
+        .safeParse(tailwindConfig.theme.extend.animation);
       if (!parsedAnimationValue.success) {
-        return
+        return;
       }
 
       for (const [key, value] of Object.entries(parsedAnimationValue.data)) {
-        const prop = `--animate-${key}`
+        const prop = `--animate-${key}`;
         if (
-          existingAnimationNodes?.find(
-            (node): node is postcss.Declaration => node.prop === prop
-          )
+          existingAnimationNodes?.find((node): node is postcss.Declaration => node.prop === prop)
         ) {
-          continue
+          continue;
         }
 
         const animationNode = postcss.decl({
           prop,
           value,
           raws: { semicolon: true, between: ": ", before: "\n  " },
-        })
-        themeNode.append(animationNode)
+        });
+        themeNode.append(animationNode);
       }
     },
-  }
+  };
 }
 
 function getQuoteType(root: Root): "single" | "double" {
-  const firstNode = root.nodes[0]
-  const raw = firstNode.toString()
+  const firstNode = root.nodes[0];
+  const raw = firstNode.toString();
 
   if (raw.includes("'")) {
-    return "single"
+    return "single";
   }
-  return "double"
+  return "double";
 }
 
 export function isLocalHSLValue(value: string) {
@@ -784,15 +731,12 @@ export function isLocalHSLValue(value: string) {
     value.startsWith("#") ||
     value.startsWith("oklch")
   ) {
-    return false
+    return false;
   }
 
-  const chunks = value.split(" ")
+  const chunks = value.split(" ");
 
-  return (
-    chunks.length === 3 &&
-    chunks.slice(1, 3).every((chunk) => chunk.includes("%"))
-  )
+  return chunks.length === 3 && chunks.slice(1, 3).every((chunk) => chunk.includes("%"));
 }
 
 export function isColorValue(value: string) {
@@ -802,5 +746,5 @@ export function isColorValue(value: string) {
     value.startsWith("#") ||
     value.startsWith("oklch") ||
     value.includes("--color-")
-  )
+  );
 }

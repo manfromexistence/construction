@@ -1,17 +1,12 @@
-import * as React from "react"
-
-import { cn } from "@/registry/bases/radix/lib/utils"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { cn } from "@/registry/bases/radix/lib/utils";
 
 type NativeSelectProps = Omit<React.ComponentProps<"select">, "size"> & {
-  size?: "sm" | "default"
-}
+  size?: "sm" | "default";
+};
 
-function NativeSelect({
-  className,
-  size = "default",
-  ...props
-}: NativeSelectProps) {
+function NativeSelect({ className, size = "default", ...props }: NativeSelectProps) {
   return (
     <div
       className={cn(
@@ -38,24 +33,15 @@ function NativeSelect({
         data-slot="native-select-icon"
       />
     </div>
-  )
+  );
 }
 
 function NativeSelectOption({ ...props }: React.ComponentProps<"option">) {
-  return <option data-slot="native-select-option" {...props} />
+  return <option data-slot="native-select-option" {...props} />;
 }
 
-function NativeSelectOptGroup({
-  className,
-  ...props
-}: React.ComponentProps<"optgroup">) {
-  return (
-    <optgroup
-      data-slot="native-select-optgroup"
-      className={cn(className)}
-      {...props}
-    />
-  )
+function NativeSelectOptGroup({ className, ...props }: React.ComponentProps<"optgroup">) {
+  return <optgroup data-slot="native-select-optgroup" className={cn(className)} {...props} />;
 }
 
-export { NativeSelect, NativeSelectOptGroup, NativeSelectOption }
+export { NativeSelect, NativeSelectOptGroup, NativeSelectOption };

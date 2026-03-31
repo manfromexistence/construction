@@ -1,11 +1,10 @@
-import React from 'react';
+import type { NodeEntry, TElement } from "@platejs/slate";
+import { selectAtom } from "jotai/utils";
 
-import type { NodeEntry, TElement } from '@platejs/slate';
+import { useStoreAtomValue } from "jotai-x";
+import React from "react";
 
-import { useStoreAtomValue } from 'jotai-x';
-import { selectAtom } from 'jotai/utils';
-
-import { elementStore, useElementStore } from './useElementStore';
+import { elementStore, useElementStore } from "./useElementStore";
 
 type UseElementSelectorOptions<T> = {
   key?: string;
@@ -15,18 +14,10 @@ type UseElementSelectorOptions<T> = {
 export const useElementSelector = <T>(
   selector: <N extends TElement>(state: NodeEntry<N>, prev?: T) => T,
   deps: React.DependencyList,
-  {
-    key,
-    equalityFn = (a: T, b: T) => a === b,
-  }: UseElementSelectorOptions<T> = {}
+  { key, equalityFn = (a: T, b: T) => a === b }: UseElementSelectorOptions<T> = {}
 ): T => {
   const selectorAtom = React.useMemo(
-    () =>
-      selectAtom(
-        elementStore.atom.entry,
-        (entry, prev) => selector(entry, prev),
-        equalityFn
-      ),
+    () => selectAtom(elementStore.atom.entry, (entry, prev) => selector(entry, prev), equalityFn),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     deps
   );

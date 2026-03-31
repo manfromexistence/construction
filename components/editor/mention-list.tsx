@@ -1,6 +1,6 @@
 "use client";
 
-import React, { forwardRef, useEffect, useImperativeHandle, useState, useRef } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
 // Define the structure of the theme item object
@@ -47,7 +47,7 @@ export const MentionList = forwardRef<MentionListRef, MentionListProps>((props, 
     selectItem(selectedIndex);
   };
 
-  useEffect(() => setSelectedIndex(0), [props.items]);
+  useEffect(() => setSelectedIndex(0), []);
 
   // Auto-scroll effect when selectedIndex changes
   useEffect(() => {
@@ -57,7 +57,7 @@ export const MentionList = forwardRef<MentionListRef, MentionListProps>((props, 
         block: "nearest",
       });
     }
-  }, [selectedIndex]);
+  }, []);
 
   useImperativeHandle(ref, () => ({
     onKeyDown: ({ event }) => {

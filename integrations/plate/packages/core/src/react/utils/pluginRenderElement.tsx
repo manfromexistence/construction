@@ -1,29 +1,25 @@
-import React from 'react';
-
-import type { PlateEditor } from '../editor/PlateEditor';
-import type { AnyEditorPlatePlugin } from '../plugin/PlatePlugin';
-
-import { isEditOnly } from '../../internal/plugin/isEditOnlyDisabled';
-import { type PlateElementProps, PlateElement } from '../components';
-import { useReadOnly } from '../slate-react';
-import { useEditorRef, useElement } from '../stores';
-import { ElementProvider } from '../stores/element/useElementStore';
-import { getRenderNodeProps } from './getRenderNodeProps';
+import React from "react";
+import { isEditOnly } from "../../internal/plugin/isEditOnlyDisabled";
+import { PlateElement, type PlateElementProps } from "../components";
+import type { PlateEditor } from "../editor/PlateEditor";
+import type { AnyEditorPlatePlugin } from "../plugin/PlatePlugin";
+import { useReadOnly } from "../slate-react";
+import { useEditorRef, useElement } from "../stores";
+import { ElementProvider } from "../stores/element/useElementStore";
+import { getRenderNodeProps } from "./getRenderNodeProps";
 
 /**
  * Function used to render an element. If the function returns undefined then
  * the next RenderElement function is called. If the function renders a JSX
  * element then that JSX element is rendered.
  */
-export type RenderElement = (
-  props: PlateElementProps
-) => React.ReactElement<any> | undefined;
+export type RenderElement = (props: PlateElementProps) => React.ReactElement<any> | undefined;
 
 function ElementContent({ editor, plugin, ...props }: PlateElementProps) {
   const element = useElement();
   const readOnly = useReadOnly();
 
-  if (isEditOnly(readOnly, plugin, 'render')) return null;
+  if (isEditOnly(readOnly, plugin, "render")) return null;
 
   const { children: _children } = props;
   const Component = plugin.render?.node;
@@ -46,7 +42,7 @@ function ElementContent({ editor, plugin, ...props }: PlateElementProps) {
     // belowNodes can have hooks
     const hoc = withHOC({ ...props, key } as any);
 
-    if (hoc && !isEditOnly(readOnly, plugin, 'render')) {
+    if (hoc && !isEditOnly(readOnly, plugin, "render")) {
       children = hoc({ ...props, children } as any);
     }
   });
@@ -68,7 +64,7 @@ function ElementContent({ editor, plugin, ...props }: PlateElementProps) {
     // aboveNodes can have hooks
     const hoc = withHOC({ ...props, key } as any);
 
-    if (hoc && !isEditOnly(readOnly, plugin, 'render')) {
+    if (hoc && !isEditOnly(readOnly, plugin, "render")) {
       component = hoc({ ...props, children: component } as any);
     }
   });
@@ -85,7 +81,7 @@ export function BelowRootNodes(props: any) {
       {editor.meta.pluginCache.render.belowRootNodes.map((key) => {
         const plugin = editor.getPlugin({ key });
 
-        if (isEditOnly(readOnly, plugin, 'render')) return null;
+        if (isEditOnly(readOnly, plugin, "render")) return null;
 
         const Component = plugin.render.belowRootNodes!;
 
@@ -108,12 +104,7 @@ export const pluginRenderElement = (
     const { element, path } = props;
 
     return (
-      <ElementProvider
-        element={element}
-        entry={[element, path]}
-        path={path}
-        scope={plugin.key}
-      >
+      <ElementProvider element={element} entry={[element, path]} path={path} scope={plugin.key}>
         <ElementContent editor={editor} plugin={plugin} {...(props as any)} />
       </ElementProvider>
     );

@@ -1,14 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Minus, Plus } from "lucide-react"
-import { Bar, BarChart, ResponsiveContainer, XAxis } from "recharts"
+import { Minus, Plus } from "lucide-react";
+import * as React from "react";
+import { Bar, BarChart, ResponsiveContainer, XAxis } from "recharts";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
 import {
   Drawer,
   DrawerClose,
@@ -18,7 +15,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from "@/styles/base-nova/ui-rtl/drawer"
+} from "@/styles/base-nova/ui-rtl/drawer";
 
 const data = [
   {
@@ -60,7 +57,7 @@ const data = [
   {
     goal: 349,
   },
-]
+];
 
 const translations: Translations = {
   en: {
@@ -105,14 +102,14 @@ const translations: Translations = {
       cancel: "בטל",
     },
   },
-}
+};
 
 export function DrawerRtl() {
-  const { dir, locale, language, t } = useTranslation(translations, "ar")
-  const [goal, setGoal] = React.useState(350)
+  const { dir, locale, language, t } = useTranslation(translations, "ar");
+  const [goal, setGoal] = React.useState(350);
 
   function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)))
+    setGoal(Math.max(200, Math.min(400, goal + adjustment)));
   }
 
   return (
@@ -189,5 +186,5 @@ export function DrawerRtl() {
         </div>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }

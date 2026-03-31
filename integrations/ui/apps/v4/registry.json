@@ -471,11 +471,7 @@
     {
       "name": "sidebar",
       "type": "registry:ui",
-      "dependencies": [
-        "@radix-ui/react-slot",
-        "class-variance-authority",
-        "lucide-react"
-      ],
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
       "registryDependencies": [
         "button",
         "separator",
@@ -764,13 +760,7 @@
       "name": "sidebar-01",
       "type": "registry:block",
       "description": "A simple sidebar with navigation grouped by section.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "dropdown-menu"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-01/page.tsx",
@@ -796,13 +786,7 @@
       "name": "sidebar-02",
       "type": "registry:block",
       "description": "A sidebar with collapsible sections.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "dropdown-menu"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-02/page.tsx",
@@ -864,13 +848,7 @@
       "name": "sidebar-05",
       "type": "registry:block",
       "description": "A sidebar with collapsible submenus.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "label",
-        "collapsible"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "collapsible"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-05/page.tsx",
@@ -892,13 +870,7 @@
       "name": "sidebar-06",
       "type": "registry:block",
       "description": "A sidebar with submenus as dropdowns.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "card",
-        "dropdown-menu"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "card", "dropdown-menu"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-06/page.tsx",
@@ -1086,12 +1058,7 @@
       "name": "sidebar-11",
       "type": "registry:block",
       "description": "A sidebar with a collapsible file tree.",
-      "registryDependencies": [
-        "sidebar",
-        "breadcrumb",
-        "separator",
-        "collapsible"
-      ],
+      "registryDependencies": ["sidebar", "breadcrumb", "separator", "collapsible"],
       "files": [
         {
           "path": "registry/new-york-v4/blocks/sidebar-11/page.tsx",
@@ -3697,13 +3664,7 @@
       "name": "form-rhf-demo",
       "type": "registry:example",
       "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
-      "registryDependencies": [
-        "field",
-        "input",
-        "input-group",
-        "button",
-        "card"
-      ],
+      "registryDependencies": ["field", "input", "input-group", "button", "card"],
       "files": [
         {
           "path": "registry/new-york-v4/examples/form-rhf-demo.tsx",
@@ -3787,13 +3748,7 @@
       "name": "form-rhf-array",
       "type": "registry:example",
       "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
-      "registryDependencies": [
-        "field",
-        "input",
-        "input-group",
-        "button",
-        "card"
-      ],
+      "registryDependencies": ["field", "input", "input-group", "button", "card"],
       "files": [
         {
           "path": "registry/new-york-v4/examples/form-rhf-array.tsx",
@@ -3825,13 +3780,7 @@
       "name": "form-rhf-password",
       "type": "registry:example",
       "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
-      "registryDependencies": [
-        "field",
-        "input-group",
-        "progress",
-        "button",
-        "card"
-      ],
+      "registryDependencies": ["field", "input-group", "progress", "button", "card"],
       "files": [
         {
           "path": "registry/new-york-v4/examples/form-rhf-password.tsx",
@@ -3843,13 +3792,7 @@
       "name": "form-tanstack-demo",
       "type": "registry:example",
       "dependencies": ["@tanstack/react-form", "zod"],
-      "registryDependencies": [
-        "field",
-        "input",
-        "input-group",
-        "button",
-        "card"
-      ],
+      "registryDependencies": ["field", "input", "input-group", "button", "card"],
       "files": [
         {
           "path": "registry/new-york-v4/examples/form-tanstack-demo.tsx",
@@ -3933,13 +3876,7 @@
       "name": "form-tanstack-array",
       "type": "registry:example",
       "dependencies": ["@tanstack/react-form", "zod"],
-      "registryDependencies": [
-        "field",
-        "input",
-        "input-group",
-        "button",
-        "card"
-      ],
+      "registryDependencies": ["field", "input", "input-group", "button", "card"],
       "files": [
         {
           "path": "registry/new-york-v4/examples/form-tanstack-array.tsx",
@@ -4014,13 +3951,7 @@
     {
       "name": "dropdown-menu-dialog",
       "type": "registry:example",
-      "registryDependencies": [
-        "dropdown-menu",
-        "dialog",
-        "button",
-        "input",
-        "label"
-      ],
+      "registryDependencies": ["dropdown-menu", "dialog", "button", "input", "label"],
       "files": [
         {
           "path": "registry/new-york-v4/examples/dropdown-menu-dialog.tsx",
@@ -4229,13 +4160,7 @@
     {
       "name": "input-group-custom",
       "type": "registry:example",
-      "registryDependencies": [
-        "input-group",
-        "badge",
-        "progress",
-        "dropdown-menu",
-        "tooltip"
-      ],
+      "registryDependencies": ["input-group", "badge", "progress", "dropdown-menu", "tooltip"],
       "files": [
         {
           "path": "registry/new-york-v4/examples/input-group-custom.tsx",

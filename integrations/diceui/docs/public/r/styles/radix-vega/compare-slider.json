@@ -1,8 +1,6 @@
 {
   "name": "compare-slider",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "@diceui/use-as-ref",
     "@diceui/use-isomorphic-layout-effect",

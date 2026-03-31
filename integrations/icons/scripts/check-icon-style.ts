@@ -20,13 +20,9 @@ const toUpperSnakeCase = (name: string): string =>
     .toUpperCase();
 
 const isExempt = (name: string): boolean =>
-  ICON_COMPONENT_RE.test(name) ||
-  ICON_HANDLE_RE.test(name) ||
-  ICON_PROPS_RE.test(name);
+  ICON_COMPONENT_RE.test(name) || ICON_HANDLE_RE.test(name) || ICON_PROPS_RE.test(name);
 
-const findConstDeclarations = (
-  content: string
-): Array<{ name: string; line: number }> => {
+const findConstDeclarations = (content: string): Array<{ name: string; line: number }> => {
   const results: Array<{ name: string; line: number }> = [];
   const lines = content.split("\n");
 

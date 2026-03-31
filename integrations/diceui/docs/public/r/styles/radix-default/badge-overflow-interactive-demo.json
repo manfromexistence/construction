@@ -1,14 +1,7 @@
 {
   "name": "badge-overflow-interactive-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "badge",
-    "badge-overflow",
-    "button",
-    "input"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["badge", "badge-overflow", "button", "input"],
   "files": [
     {
       "path": "examples/badge-overflow-interactive-demo.tsx",

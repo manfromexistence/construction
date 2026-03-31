@@ -1,22 +1,21 @@
-"use client"
+"use client";
 
-import Script from "next/script"
-import { DiceFaces05Icon } from "@hugeicons/core-free-icons"
-import { HugeiconsIcon } from "@hugeicons/react"
+import { DiceFaces05Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import Script from "next/script";
+import { useRandom } from "@/app/(app)/create/hooks/use-random";
+import { RESET_FORWARD_TYPE } from "@/app/(app)/create/hooks/use-reset";
+import { cn } from "@/lib/utils";
+import { Button } from "@/styles/base-nova/ui/button";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/styles/base-nova/ui/button"
-import { useRandom } from "@/app/(app)/create/hooks/use-random"
-import { RESET_FORWARD_TYPE } from "@/app/(app)/create/hooks/use-reset"
-
-export const RANDOMIZE_FORWARD_TYPE = "randomize-forward"
+export const RANDOMIZE_FORWARD_TYPE = "randomize-forward";
 
 export function RandomButton({
   variant = "outline",
   className,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { randomize } = useRandom()
+  const { randomize } = useRandom();
 
   return (
     <Button
@@ -30,7 +29,7 @@ export function RandomButton({
     >
       <span className="w-full text-center font-medium">Shuffle</span>
     </Button>
-  )
+  );
 }
 
 export function RandomizeScript() {
@@ -69,5 +68,5 @@ export function RandomizeScript() {
           `,
       }}
     />
-  )
+  );
 }

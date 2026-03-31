@@ -1,18 +1,12 @@
-export const TEST_FILE_PATTERNS = [
-  'apps/**/*.spec.{ts,tsx}',
-  'packages/**/*.spec.{ts,tsx}',
-];
+export const TEST_FILE_PATTERNS = ["apps/**/*.spec.{ts,tsx}", "packages/**/*.spec.{ts,tsx}"];
 
-export const TEST_SLOW_FILE_PATTERNS = [
-  'apps/**/*.slow.{ts,tsx}',
-  'packages/**/*.slow.{ts,tsx}',
-];
+export const TEST_SLOW_FILE_PATTERNS = ["apps/**/*.slow.{ts,tsx}", "packages/**/*.slow.{ts,tsx}"];
 
 export const TEST_IGNORE_PATTERNS = [
-  '**/coverage/**',
-  '**/dist/**',
-  '**/node_modules/**',
-  '.next/**',
+  "**/coverage/**",
+  "**/dist/**",
+  "**/node_modules/**",
+  ".next/**",
 ];
 
 const isCI = !!process.env.CI;

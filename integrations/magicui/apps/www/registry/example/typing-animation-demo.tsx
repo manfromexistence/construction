@@ -1,5 +1,5 @@
-import { TypingAnimation } from "@/registry/magicui/typing-animation"
+import { TypingAnimation } from "@/registry/magicui/typing-animation";
 
 export default function Component() {
-  return <TypingAnimation>Hello World! 👋</TypingAnimation>
+  return <TypingAnimation>Hello World! 👋</TypingAnimation>;
 }

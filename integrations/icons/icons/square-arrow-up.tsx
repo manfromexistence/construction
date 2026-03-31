@@ -38,81 +38,80 @@ const SECOND_PATH_VARIANTS: Variants = {
   },
 };
 
-const SquareArrowUpIcon = forwardRef<
-  SquareArrowUpIconHandle,
-  SquareArrowUpIconProps
->(({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
-  const controls = useAnimation();
-  const isControlledRef = useRef(false);
+const SquareArrowUpIcon = forwardRef<SquareArrowUpIconHandle, SquareArrowUpIconProps>(
+  ({ onMouseEnter, onMouseLeave, className, size = 28, ...props }, ref) => {
+    const controls = useAnimation();
+    const isControlledRef = useRef(false);
 
-  useImperativeHandle(ref, () => {
-    isControlledRef.current = true;
-    return {
-      startAnimation: () => controls.start("animate"),
-      stopAnimation: () => controls.start("normal"),
-    };
-  });
+    useImperativeHandle(ref, () => {
+      isControlledRef.current = true;
+      return {
+        startAnimation: () => controls.start("animate"),
+        stopAnimation: () => controls.start("normal"),
+      };
+    });
 
-  const handleMouseEnter = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) onMouseEnter?.(e);
-      else controls.start("animate");
-    },
-    [controls, onMouseEnter]
-  );
+    const handleMouseEnter = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) onMouseEnter?.(e);
+        else controls.start("animate");
+      },
+      [controls, onMouseEnter]
+    );
 
-  const handleMouseLeave = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (isControlledRef.current) onMouseLeave?.(e);
-      else controls.start("normal");
-    },
-    [controls, onMouseLeave]
-  );
+    const handleMouseLeave = useCallback(
+      (e: React.MouseEvent<HTMLDivElement>) => {
+        if (isControlledRef.current) onMouseLeave?.(e);
+        else controls.start("normal");
+      },
+      [controls, onMouseLeave]
+    );
 
-  return (
-    <div
-      className={cn(className)}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      {...props}
-    >
-      <svg
-        fill="none"
-        height={size}
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="2"
-        viewBox="0 0 24 24"
-        width={size}
-        xmlns="http://www.w3.org/2000/svg"
+    return (
+      <div
+        className={cn(className)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        {...props}
       >
-        <motion.rect
-          animate={controls}
-          height="18"
-          initial="normal"
-          rx="2"
-          variants={SQUARE_VARIANTS}
-          width="18"
-          x="3"
-          y="3"
-        />
-        <motion.path
-          animate={controls}
-          d="m16 12-4-4-4 4"
-          initial="normal"
-          variants={PATH_VARIANTS}
-        />
-        <motion.path
-          animate={controls}
-          d="M12 16V8"
-          initial="normal"
-          variants={SECOND_PATH_VARIANTS}
-        />
-      </svg>
-    </div>
-  );
-});
+        <svg
+          fill="none"
+          height={size}
+          stroke="currentColor"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          viewBox="0 0 24 24"
+          width={size}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <motion.rect
+            animate={controls}
+            height="18"
+            initial="normal"
+            rx="2"
+            variants={SQUARE_VARIANTS}
+            width="18"
+            x="3"
+            y="3"
+          />
+          <motion.path
+            animate={controls}
+            d="m16 12-4-4-4 4"
+            initial="normal"
+            variants={PATH_VARIANTS}
+          />
+          <motion.path
+            animate={controls}
+            d="M12 16V8"
+            initial="normal"
+            variants={SECOND_PATH_VARIANTS}
+          />
+        </svg>
+      </div>
+    );
+  }
+);
 
 SquareArrowUpIcon.displayName = "SquareArrowUpIcon";
 

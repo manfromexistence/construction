@@ -1,17 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/base-nova/ui-rtl/field"
-import { Input } from "@/styles/base-nova/ui-rtl/input"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Field, FieldDescription, FieldLabel } from "@/styles/base-nova/ui-rtl/field";
+import { Input } from "@/styles/base-nova/ui-rtl/input";
 
 const translations: Translations = {
   en: {
@@ -38,21 +31,16 @@ const translations: Translations = {
       description: "מפתח ה-API שלך מוצפן ונשמר בצורה מאובטחת.",
     },
   },
-}
+};
 
 export function InputRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Field dir={dir}>
       <FieldLabel htmlFor="input-rtl-api-key">{t.apiKey}</FieldLabel>
-      <Input
-        id="input-rtl-api-key"
-        type="password"
-        placeholder={t.placeholder}
-        dir={dir}
-      />
+      <Input id="input-rtl-api-key" type="password" placeholder={t.placeholder} dir={dir} />
       <FieldDescription>{t.description}</FieldDescription>
     </Field>
-  )
+  );
 }

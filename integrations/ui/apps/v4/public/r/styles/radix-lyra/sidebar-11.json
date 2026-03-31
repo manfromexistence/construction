@@ -3,12 +3,7 @@
   "name": "sidebar-11",
   "title": "Sidebar 11",
   "description": "A sidebar with a collapsible file tree.",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb",
-    "separator",
-    "collapsible"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb", "separator", "collapsible"],
   "files": [
     {
       "path": "registry/radix-lyra/blocks/sidebar-11/page.tsx",
@@ -22,9 +17,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "sidebar",
-    "dashboard"
-  ],
+  "categories": ["sidebar", "dashboard"],
   "type": "registry:block"
 }

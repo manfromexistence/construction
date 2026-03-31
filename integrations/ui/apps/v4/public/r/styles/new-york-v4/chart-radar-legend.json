@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "chart-radar-legend",
-  "registryDependencies": [
-    "card",
-    "chart"
-  ],
+  "registryDependencies": ["card", "chart"],
   "files": [
     {
       "path": "registry/new-york-v4/charts/chart-radar-legend.tsx",
@@ -12,9 +9,6 @@
       "type": "registry:block"
     }
   ],
-  "categories": [
-    "charts",
-    "charts-radar"
-  ],
+  "categories": ["charts", "charts-radar"],
   "type": "registry:block"
 }

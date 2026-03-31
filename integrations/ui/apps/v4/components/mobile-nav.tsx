@@ -1,20 +1,16 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link, { type LinkProps } from "next/link"
-import { usePathname, useRouter } from "next/navigation"
+import Link, { type LinkProps } from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import * as React from "react";
 
-import { PAGES_NEW } from "@/lib/docs"
-import { showMcpDocs } from "@/lib/flags"
-import { getCurrentBase, getPagesFromFolder } from "@/lib/page-tree"
-import { type source } from "@/lib/source"
-import { cn } from "@/lib/utils"
-import { Button } from "@/registry/new-york-v4/ui/button"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/registry/new-york-v4/ui/popover"
+import { PAGES_NEW } from "@/lib/docs";
+import { showMcpDocs } from "@/lib/flags";
+import { getCurrentBase, getPagesFromFolder } from "@/lib/page-tree";
+import { type source } from "@/lib/source";
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/new-york-v4/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/registry/new-york-v4/ui/popover";
 
 const TOP_LEVEL_SECTIONS = [
   { name: "Introduction", href: "/docs" },
@@ -58,20 +54,20 @@ const TOP_LEVEL_SECTIONS = [
     name: "Changelog",
     href: "/docs/changelog",
   },
-]
+];
 
 export function MobileNav({
   tree,
   items,
   className,
 }: {
-  tree: typeof source.pageTree
-  items: { href: string; label: string }[]
-  className?: string
+  tree: typeof source.pageTree;
+  items: { href: string; label: string }[];
+  className?: string;
 }) {
-  const [open, setOpen] = React.useState(false)
-  const pathname = usePathname()
-  const currentBase = getCurrentBase(pathname)
+  const [open, setOpen] = React.useState(false);
+  const pathname = usePathname();
+  const currentBase = getCurrentBase(pathname);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -100,9 +96,7 @@ export function MobileNav({
             </div>
             <span className="sr-only">Toggle Menu</span>
           </div>
-          <span className="flex h-8 items-center text-lg leading-none font-medium">
-            Menu
-          </span>
+          <span className="flex h-8 items-center text-lg leading-none font-medium">Menu</span>
         </Button>
       </PopoverTrigger>
       <PopoverContent
@@ -114,9 +108,7 @@ export function MobileNav({
       >
         <div className="flex flex-col gap-12 overflow-auto px-6 py-6">
           <div className="flex flex-col gap-4">
-            <div className="text-sm font-medium text-muted-foreground">
-              Menu
-            </div>
+            <div className="text-sm font-medium text-muted-foreground">Menu</div>
             <div className="flex flex-col gap-3">
               <MobileLink href="/" onOpenChange={setOpen}>
                 Home
@@ -129,41 +121,34 @@ export function MobileNav({
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <div className="text-sm font-medium text-muted-foreground">
-              Sections
-            </div>
+            <div className="text-sm font-medium text-muted-foreground">Sections</div>
             <div className="flex flex-col gap-3">
               {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
                 if (!showMcpDocs && href.includes("/mcp")) {
-                  return null
+                  return null;
                 }
                 return (
                   <MobileLink key={name} href={href} onOpenChange={setOpen}>
                     {name}
                     {PAGES_NEW.includes(href) && (
-                      <span
-                        className="flex size-2 rounded-full bg-blue-500"
-                        title="New"
-                      />
+                      <span className="flex size-2 rounded-full bg-blue-500" title="New" />
                     )}
                   </MobileLink>
-                )
+                );
               })}
             </div>
           </div>
           <div className="flex flex-col gap-8">
             {tree?.children?.map((group, index) => {
               if (group.type === "folder") {
-                const pages = getPagesFromFolder(group, currentBase)
+                const pages = getPagesFromFolder(group, currentBase);
                 return (
                   <div key={index} className="flex flex-col gap-4">
-                    <div className="text-sm font-medium text-muted-foreground">
-                      {group.name}
-                    </div>
+                    <div className="text-sm font-medium text-muted-foreground">{group.name}</div>
                     <div className="flex flex-col gap-3">
                       {pages.map((item) => {
                         if (!showMcpDocs && item.url.includes("/mcp")) {
-                          return null
+                          return null;
                         }
                         return (
                           <MobileLink
@@ -177,18 +162,18 @@ export function MobileNav({
                               <span className="flex size-2 rounded-full bg-blue-500" />
                             )}
                           </MobileLink>
-                        )
+                        );
                       })}
                     </div>
                   </div>
-                )
+                );
               }
             })}
           </div>
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 function MobileLink({
@@ -198,22 +183,22 @@ function MobileLink({
   children,
   ...props
 }: LinkProps & {
-  onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
-  className?: string
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
 }) {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Link
       href={href}
       onClick={() => {
-        router.push(href.toString())
-        onOpenChange?.(false)
+        router.push(href.toString());
+        onOpenChange?.(false);
       }}
       className={cn("flex items-center gap-2 text-2xl font-medium", className)}
       {...props}
     >
       {children}
     </Link>
-  )
+  );
 }

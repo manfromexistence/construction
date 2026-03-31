@@ -1,6 +1,6 @@
-import { type Editor, type TRange, PathApi, RangeApi, TextApi } from 'platejs';
+import { type Editor, PathApi, RangeApi, TextApi, type TRange } from "platejs";
 
-import type { SelectionRect } from '../types';
+import type { SelectionRect } from "../types";
 
 export const getSelectionRects = (
   editor: Editor,

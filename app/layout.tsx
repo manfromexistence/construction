@@ -1,3 +1,6 @@
+import type { Metadata, Viewport } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import { Suspense } from "react";
 import { AuthDialogWrapper } from "@/components/auth-dialog-wrapper";
 import { DynamicFontLoader } from "@/components/dynamic-font-loader";
 import { GetProDialogWrapper } from "@/components/get-pro-dialog-wrapper";
@@ -8,9 +11,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ChatProvider } from "@/hooks/use-chat-context";
 import { QueryProvider } from "@/lib/query-client";
-import type { Metadata, Viewport } from "next";
-import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { Suspense } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {

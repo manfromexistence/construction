@@ -1,13 +1,7 @@
-import React, {
-  createContext,
-  type ReactNode,
-  useCallback,
-  useContext,
-  useState,
-} from 'react';
-import BoundHotkeysProxyProviderProvider from './BoundHotkeysProxyProvider';
-import deepEqual from './deepEqual';
-import type { Hotkey } from './types';
+import React, { createContext, type ReactNode, useCallback, useContext, useState } from "react";
+import BoundHotkeysProxyProviderProvider from "./BoundHotkeysProxyProvider";
+import deepEqual from "./deepEqual";
+import type { Hotkey } from "./types";
 
 export type HotkeysContextType = {
   activeScopes: string[];
@@ -33,18 +27,13 @@ type Props = {
   initiallyActiveScopes?: string[];
 };
 
-export const HotkeysProvider = ({
-  children,
-  initiallyActiveScopes = ['*'],
-}: Props) => {
-  const [internalActiveScopes, setInternalActiveScopes] = useState(
-    initiallyActiveScopes
-  );
+export const HotkeysProvider = ({ children, initiallyActiveScopes = ["*"] }: Props) => {
+  const [internalActiveScopes, setInternalActiveScopes] = useState(initiallyActiveScopes);
   const [boundHotkeys, setBoundHotkeys] = useState<Hotkey[]>([]);
 
   const enableScope = useCallback((scope: string) => {
     setInternalActiveScopes((prev) => {
-      if (prev.includes('*')) {
+      if (prev.includes("*")) {
         return [scope];
       }
 
@@ -61,7 +50,7 @@ export const HotkeysProvider = ({
       if (prev.includes(scope)) {
         return prev.filter((s) => s !== scope);
       }
-      if (prev.includes('*')) {
+      if (prev.includes("*")) {
         return [scope];
       }
 

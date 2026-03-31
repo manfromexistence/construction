@@ -1,11 +1,7 @@
-import type React from 'react';
+import type React from "react";
 
-import type {
-  AnyPluginConfig,
-  HandlerReturnType,
-  PluginConfig,
-} from '../../lib';
-import type { PlatePluginContext } from './PlatePlugin';
+import type { AnyPluginConfig, HandlerReturnType, PluginConfig } from "../../lib";
+import type { PlatePluginContext } from "./PlatePlugin";
 
 export type DOMHandler<C extends AnyPluginConfig = PluginConfig, EV = {}> = (
   ctx: PlatePluginContext<C> & {

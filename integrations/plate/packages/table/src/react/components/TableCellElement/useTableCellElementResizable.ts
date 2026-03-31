@@ -1,30 +1,15 @@
-import React from 'react';
+import { type ResizeEvent, type ResizeHandle, resizeLengthClampStatic } from "@platejs/resizable";
 
-import type { TTableElement } from 'platejs';
-
-import {
-  type ResizeEvent,
-  type ResizeHandle,
-  resizeLengthClampStatic,
-} from '@platejs/resizable';
-import { KEYS } from 'platejs';
-import { useEditorPlugin, useElement, useElementSelector } from 'platejs/react';
-
-import type { TableCellElementState } from './useTableCellElement';
-
-import {
-  setTableColSize,
-  setTableMarginLeft,
-  setTableRowSize,
-} from '../../../lib';
-import {
-  useOverrideColSize,
-  useOverrideMarginLeft,
-  useOverrideRowSize,
-} from '../../stores';
-import { TablePlugin } from '../../TablePlugin';
-import { useTableColSizes } from '../TableElement/useTableColSizes';
-import { roundCellSizeToStep } from './roundCellSizeToStep';
+import type { TTableElement } from "platejs";
+import { KEYS } from "platejs";
+import { useEditorPlugin, useElement, useElementSelector } from "platejs/react";
+import React from "react";
+import { setTableColSize, setTableMarginLeft, setTableRowSize } from "../../../lib";
+import { useOverrideColSize, useOverrideMarginLeft, useOverrideRowSize } from "../../stores";
+import { TablePlugin } from "../../TablePlugin";
+import { useTableColSizes } from "../TableElement/useTableColSizes";
+import { roundCellSizeToStep } from "./roundCellSizeToStep";
+import type { TableCellElementState } from "./useTableCellElement";
 
 export type TableCellElementResizableOptions = {
   /** Resize by step instead of by pixel. */
@@ -32,7 +17,7 @@ export type TableCellElementResizableOptions = {
   /** Overrides for X and Y axes. */
   stepX?: number;
   stepY?: number;
-} & Pick<TableCellElementState, 'colIndex' | 'colSpan' | 'rowIndex'>;
+} & Pick<TableCellElementState, "colIndex" | "colSpan" | "rowIndex">;
 
 export const useTableCellElementResizable = ({
   colIndex,
@@ -52,16 +37,13 @@ export const useTableCellElementResizable = ({
   const { disableMarginLeft, minColumnWidth = 0 } = getOptions();
 
   const initialWidth = useElementSelector(
-    ([node]) =>
-      colSpan > 1 ? (node as TTableElement).colSizes?.[colIndex] : undefined,
+    ([node]) => (colSpan > 1 ? (node as TTableElement).colSizes?.[colIndex] : undefined),
     [colSpan, colIndex],
     { key: KEYS.table }
   );
-  const marginLeft = useElementSelector(
-    ([node]) => (node as TTableElement).marginLeft ?? 0,
-    [],
-    { key: KEYS.table }
-  );
+  const marginLeft = useElementSelector(([node]) => (node as TTableElement).marginLeft ?? 0, [], {
+    key: KEYS.table,
+  });
 
   const colSizesWithoutOverrides = useTableColSizes({ disableOverrides: true });
   const colSizesWithoutOverridesRef = React.useRef(colSizesWithoutOverrides);
@@ -107,8 +89,7 @@ export const useTableCellElementResizable = ({
     ({ delta, finished, initialSize: currentInitial }: ResizeEvent) => {
       const nextInitial = colSizesWithoutOverridesRef.current[colIndex + 1];
 
-      const complement = (width: number) =>
-        currentInitial + nextInitial - width;
+      const complement = (width: number) => currentInitial + nextInitial - width;
 
       const currentNew = roundCellSizeToStep(
         resizeLengthClampStatic(currentInitial + delta, {
@@ -130,10 +111,7 @@ export const useTableCellElementResizable = ({
 
   const handleResizeBottom = React.useCallback(
     (event: ResizeEvent) => {
-      const newHeight = roundCellSizeToStep(
-        event.initialSize + event.delta,
-        stepY
-      );
+      const newHeight = roundCellSizeToStep(event.initialSize + event.delta, stepY);
 
       if (event.finished) {
         setRowSize(rowIndex, newHeight);
@@ -186,7 +164,7 @@ export const useTableCellElementResizable = ({
     bottomProps: React.useMemo(
       () => ({
         options: {
-          direction: 'bottom',
+          direction: "bottom",
           onResize: handleResizeBottom,
         },
       }),
@@ -196,7 +174,7 @@ export const useTableCellElementResizable = ({
     leftProps: React.useMemo(
       () => ({
         options: {
-          direction: 'left',
+          direction: "left",
           onResize: handleResizeLeft,
         },
       }),
@@ -205,7 +183,7 @@ export const useTableCellElementResizable = ({
     rightProps: React.useMemo(
       () => ({
         options: {
-          direction: 'right',
+          direction: "right",
           initialSize: initialWidth,
           onResize: handleResizeRight,
         },

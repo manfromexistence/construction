@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { getListRoot } from './getListRoot';
+import { getListRoot } from "./getListRoot";
 
 jsxt;
 
@@ -28,7 +28,7 @@ const listRoot = (
 
 const input = (<editor>{listRoot}</editor>) as any;
 
-it('returns the top-most list containing the current selection', () => {
+it("returns the top-most list containing the current selection", () => {
   const editor = createSlateEditor({
     selection: input.selection,
     value: input.children,

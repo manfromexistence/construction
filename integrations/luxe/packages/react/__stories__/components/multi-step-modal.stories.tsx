@@ -1,38 +1,35 @@
-import type { Meta, StoryObj } from '@storybook/react'
-
+import type { Meta, StoryObj } from "@storybook/react";
+import { Button } from "@/components/button";
 import {
   MultiStepModal,
   MultiStepModalContent,
   MultiStepModalTrigger,
-} from '@/components/multi-step-modal'
-
-import { Button } from '@/components/button'
+} from "@/components/multi-step-modal";
 
 const meta: Meta = {
-  title: 'components/MultiStepModal',
+  title: "components/MultiStepModal",
   component: () => {
     const steps = [
       {
-        title: 'Luxe',
+        title: "Luxe",
         description:
-          'A library of components ready for you to copy and paste, designed to illuminate your apps with elegance, sophistication and a unique touch of style.',
+          "A library of components ready for you to copy and paste, designed to illuminate your apps with elegance, sophistication and a unique touch of style.",
       },
       {
-        title: 'How to use?',
+        title: "How to use?",
         description:
-          'Simply click on a component, copy the code and paste it into your project. This will give your app an extra shine.',
+          "Simply click on a component, copy the code and paste it into your project. This will give your app an extra shine.",
       },
       {
-        title: 'Results',
-        description:
-          'Luxe will add extra shine to your application, with smooth components.',
+        title: "Results",
+        description: "Luxe will add extra shine to your application, with smooth components.",
       },
       {
-        title: 'Copy now',
+        title: "Copy now",
         description:
-          'Elevate your project with sophisticated, ready to use components. Illuminate up your app quickly, easily and effortlessly!',
+          "Elevate your project with sophisticated, ready to use components. Illuminate up your app quickly, easily and effortlessly!",
       },
-    ]
+    ];
 
     return (
       <MultiStepModal>
@@ -42,13 +39,13 @@ const meta: Meta = {
 
         <MultiStepModalContent steps={steps} />
       </MultiStepModal>
-    )
+    );
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
+export default meta;
 
-export const Basic: StoryObj = {}
+export const Basic: StoryObj = {};

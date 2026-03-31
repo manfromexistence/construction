@@ -1,10 +1,10 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BaseInlineEquationPlugin } from '../BaseInlineEquationPlugin';
-import { insertInlineEquation } from './insertInlineEquation';
+import { BaseInlineEquationPlugin } from "../BaseInlineEquationPlugin";
+import { insertInlineEquation } from "./insertInlineEquation";
 
-describe('insertInlineEquation', () => {
-  it('uses the selected text as the default tex expression', () => {
+describe("insertInlineEquation", () => {
+  it("uses the selected text as the default tex expression", () => {
     const editor = createSlateEditor({
       plugins: [BaseInlineEquationPlugin],
       selection: {
@@ -13,7 +13,7 @@ describe('insertInlineEquation', () => {
       },
       value: [
         {
-          children: [{ text: 'abc' }],
+          children: [{ text: "abc" }],
           type: KEYS.p,
         },
       ],
@@ -24,24 +24,24 @@ describe('insertInlineEquation', () => {
     expect(editor.children).toMatchObject([
       {
         children: [
-          { text: '' },
+          { text: "" },
           {
-            children: [{ text: '' }],
-            texExpression: 'abc',
+            children: [{ text: "" }],
+            texExpression: "abc",
             type: KEYS.inlineEquation,
           },
-          { text: '' },
+          { text: "" },
         ],
         type: KEYS.p,
       },
     ]);
   });
 
-  it('prefers the provided tex expression and configured node type', () => {
+  it("prefers the provided tex expression and configured node type", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseInlineEquationPlugin.configure({
-          node: { type: 'custom-inline-equation' },
+          node: { type: "custom-inline-equation" },
         }),
       ],
       selection: {
@@ -50,24 +50,24 @@ describe('insertInlineEquation', () => {
       },
       value: [
         {
-          children: [{ text: 'x' }, { text: 'y' }],
+          children: [{ text: "x" }, { text: "y" }],
           type: KEYS.p,
         },
       ],
     });
 
-    insertInlineEquation(editor, 'x^2', { at: [0, 1] });
+    insertInlineEquation(editor, "x^2", { at: [0, 1] });
 
     expect(editor.children).toMatchObject([
       {
         children: [
-          { text: 'x' },
+          { text: "x" },
           {
-            children: [{ text: '' }],
-            texExpression: 'x^2',
-            type: 'custom-inline-equation',
+            children: [{ text: "" }],
+            texExpression: "x^2",
+            type: "custom-inline-equation",
           },
-          { text: 'y' },
+          { text: "y" },
         ],
         type: KEYS.p,
       },

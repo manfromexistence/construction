@@ -1,10 +1,10 @@
-import { PointRef as SlatePointRef, RangeRef as SlateRangeRef } from 'slate';
+import { PointRef as SlatePointRef, RangeRef as SlateRangeRef } from "slate";
 
-import type { TextDirection } from '../types';
-import type { Operation } from './operation';
-import { type Path, PathApi } from './path';
-import type { Point } from './point';
-import type { TRange } from './range';
+import type { TextDirection } from "../types";
+import type { Operation } from "./operation";
+import { type Path, PathApi } from "./path";
+import type { Point } from "./point";
+import type { TRange } from "./range";
 
 /**
  * `PathRef` objects keep a specific path in a document synced over time as new
@@ -12,7 +12,7 @@ import type { TRange } from './range';
  * at any time for the up-to-date path value.
  */
 export type PathRef = {
-  affinity: 'backward' | 'forward' | null;
+  affinity: "backward" | "forward" | null;
   current: Path | null;
   unref: () => Path | null;
 };
@@ -59,7 +59,7 @@ export const PointRefApi: {
  * property at any time for the up-to-date range value.
  */
 export type RangeRef = {
-  affinity: 'backward' | 'forward' | 'inward' | 'outward' | null;
+  affinity: "backward" | "forward" | "inward" | "outward" | null;
   current: TRange | null;
   unref: () => TRange | null;
 };

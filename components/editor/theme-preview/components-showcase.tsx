@@ -1,5 +1,6 @@
-import { ThemeEditorPreviewProps } from "@/types/theme";
-import { Settings, Info, AlertTriangle, Star } from "lucide-react";
+import { AlertTriangle, Info, Settings, Star } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,17 +10,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
   Table,
-  TableHeader,
-  TableRow,
-  TableHead,
   TableBody,
   TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
+import { ThemeEditorPreviewProps } from "@/types/theme";
 
 interface ComponentsShowcaseProps {
   styles: ThemeEditorPreviewProps["styles"];
@@ -35,9 +35,7 @@ const ComponentsShowcase = ({ styles, currentMode }: ComponentsShowcaseProps) =>
     <div className="space-y-6">
       {/* Button showcase */}
       <section className="space-y-3">
-        <h3 className="text-sm font-medium border-b pb-2">
-          Buttons & Interactive Elements
-        </h3>
+        <h3 className="text-sm font-medium border-b pb-2">Buttons & Interactive Elements</h3>
         <div className="space-y-4">
           <div className="flex flex-wrap gap-3">
             <Button variant="default">Primary</Button>
@@ -67,14 +65,12 @@ const ComponentsShowcase = ({ styles, currentMode }: ComponentsShowcaseProps) =>
           <Card>
             <CardHeader>
               <CardTitle>Feature Card</CardTitle>
-              <CardDescription>
-                Card description with muted foreground color
-              </CardDescription>
+              <CardDescription>Card description with muted foreground color</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm">
-                This card demonstrates the card background and foreground colors,
-                with content showing regular text.
+                This card demonstrates the card background and foreground colors, with content
+                showing regular text.
               </p>
             </CardContent>
             <CardFooter className="flex justify-between">
@@ -93,9 +89,7 @@ const ComponentsShowcase = ({ styles, currentMode }: ComponentsShowcaseProps) =>
               }}
             >
               <h4 className="text-sm font-medium mb-2">Popover Container</h4>
-              <p className="text-xs">
-                This container shows popover colors and styling.
-              </p>
+              <p className="text-xs">This container shows popover colors and styling.</p>
             </div>
 
             <div
@@ -106,9 +100,7 @@ const ComponentsShowcase = ({ styles, currentMode }: ComponentsShowcaseProps) =>
               }}
             >
               <h4 className="text-sm font-medium mb-2">Muted Container</h4>
-              <p className="text-xs">
-                Container with muted background and foreground colors.
-              </p>
+              <p className="text-xs">Container with muted background and foreground colors.</p>
             </div>
           </div>
         </div>
@@ -116,9 +108,7 @@ const ComponentsShowcase = ({ styles, currentMode }: ComponentsShowcaseProps) =>
 
       {/* Status Indicators */}
       <section className="space-y-3">
-        <h3 className="text-sm font-medium border-b pb-2">
-          Status Indicators & Alerts
-        </h3>
+        <h3 className="text-sm font-medium border-b pb-2">Status Indicators & Alerts</h3>
         <div className="space-y-4">
           <div className="flex flex-wrap gap-2">
             <Badge>Default Badge</Badge>
@@ -132,17 +122,13 @@ const ComponentsShowcase = ({ styles, currentMode }: ComponentsShowcaseProps) =>
             <Alert>
               <Info className="h-4 w-4" />
               <AlertTitle>Information</AlertTitle>
-              <AlertDescription>
-                Standard alert with default styling.
-              </AlertDescription>
+              <AlertDescription>Standard alert with default styling.</AlertDescription>
             </Alert>
 
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
               <AlertTitle>Error</AlertTitle>
-              <AlertDescription>
-                Destructive alert showcasing error state colors.
-              </AlertDescription>
+              <AlertDescription>Destructive alert showcasing error state colors.</AlertDescription>
             </Alert>
 
             <div
@@ -194,10 +180,7 @@ const ComponentsShowcase = ({ styles, currentMode }: ComponentsShowcaseProps) =>
             <TableRow>
               <TableCell className="font-medium">Sarah Chen</TableCell>
               <TableCell>
-                <Badge
-                  variant="outline"
-                  className="bg-destructive/10 text-destructive"
-                >
+                <Badge variant="outline" className="bg-destructive/10 text-destructive">
                   Inactive
                 </Badge>
               </TableCell>

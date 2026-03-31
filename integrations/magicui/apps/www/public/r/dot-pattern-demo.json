@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Dot Pattern Demo",
   "description": "Example showing a background dot pattern made with SVGs.",
-  "registryDependencies": [
-    "@magicui/dot-pattern"
-  ],
+  "registryDependencies": ["@magicui/dot-pattern"],
   "files": [
     {
       "path": "registry/example/dot-pattern-demo.tsx",

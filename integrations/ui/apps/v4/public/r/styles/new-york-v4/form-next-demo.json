@@ -1,14 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form-next-demo",
-  "registryDependencies": [
-    "field",
-    "input",
-    "textarea",
-    "button",
-    "card",
-    "spinner"
-  ],
+  "registryDependencies": ["field", "input", "textarea", "button", "card", "spinner"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/form-next-demo.tsx",

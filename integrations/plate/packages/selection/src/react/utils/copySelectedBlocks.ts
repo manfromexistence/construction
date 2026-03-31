@@ -1,8 +1,7 @@
-import type { SlateEditor } from 'platejs';
+import copyToClipboard from "copy-to-clipboard";
+import type { SlateEditor } from "platejs";
 
-import copyToClipboard from 'copy-to-clipboard';
-
-import { BlockSelectionPlugin } from '../BlockSelectionPlugin';
+import { BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 export const copySelectedBlocks = (editor: SlateEditor) => {
   const { selectedIds } = editor.getOptions(BlockSelectionPlugin);
@@ -11,14 +10,14 @@ export const copySelectedBlocks = (editor: SlateEditor) => {
     .blockSelection.getNodes({ collapseTableRows: true });
   const selectedFragment = selectedEntries.map(([node]) => node);
 
-  copyToClipboard(' ', {
+  copyToClipboard(" ", {
     onCopy: (dataTransfer) => {
       const data = dataTransfer as DataTransfer;
 
       if (!data) return;
 
-      let textPlain = '';
-      const div = document.createElement('div');
+      let textPlain = "";
+      const div = document.createElement("div");
 
       editor.tf.withoutNormalizing(() => {
         selectedEntries.forEach(([, path]) => {
@@ -45,18 +44,18 @@ export const copySelectedBlocks = (editor: SlateEditor) => {
 
           // get plain text
           if (isEmpty) {
-            textPlain += '\n';
+            textPlain += "\n";
           } else {
-            textPlain += `${data.getData('text/plain')}\n`;
+            textPlain += `${data.getData("text/plain")}\n`;
           }
 
           // get html text
-          const divChild = document.createElement('div');
+          const divChild = document.createElement("div");
           if (isEmpty) {
             // Does not support empty non-paragraph blocks yet
-            divChild.innerHTML = '<p></p>';
+            divChild.innerHTML = "<p></p>";
           } else {
-            divChild.innerHTML = data.getData('text/html');
+            divChild.innerHTML = data.getData("text/html");
           }
 
           div.append(divChild);
@@ -64,18 +63,16 @@ export const copySelectedBlocks = (editor: SlateEditor) => {
 
         // deselect and select back selectedIds
         editor.tf.deselect();
-        editor.setOption(BlockSelectionPlugin, 'selectedIds', selectedIds);
+        editor.setOption(BlockSelectionPlugin, "selectedIds", selectedIds);
       });
 
-      data.setData('text/plain', textPlain);
-      data.setData('text/html', div.innerHTML);
+      data.setData("text/plain", textPlain);
+      data.setData("text/html", div.innerHTML);
 
       // set slate fragment
       const selectedFragmentStr = JSON.stringify(selectedFragment);
-      const encodedFragment = window.btoa(
-        encodeURIComponent(selectedFragmentStr)
-      );
-      data.setData('application/x-slate-fragment', encodedFragment);
+      const encodedFragment = window.btoa(encodeURIComponent(selectedFragmentStr));
+      data.setData("application/x-slate-fragment", encodedFragment);
     },
   });
 };

@@ -57,22 +57,16 @@ global.ResizeObserver = vi.fn(
 
     unobserve = vi.fn();
     disconnect = vi.fn();
-  },
+  }
 ) as typeof ResizeObserver;
 
 describe("VisuallyHiddenInput", () => {
   const mockControl = document.createElement("div");
 
   function renderVisuallyHiddenInput(
-    props: Partial<React.ComponentProps<typeof VisuallyHiddenInput>> = {},
+    props: Partial<React.ComponentProps<typeof VisuallyHiddenInput>> = {}
   ) {
-    return render(
-      <VisuallyHiddenInput
-        data-testid="input"
-        control={mockControl}
-        {...props}
-      />,
-    );
+    return render(<VisuallyHiddenInput data-testid="input" control={mockControl} {...props} />);
   }
 
   describe("hidden input", () => {
@@ -136,7 +130,7 @@ describe("VisuallyHiddenInput", () => {
           type="checkbox"
           checked={false}
           data-testid="input"
-        />,
+        />
       );
       expect(input).not.toBeChecked();
     });
@@ -155,7 +149,7 @@ describe("VisuallyHiddenInput", () => {
             onReset={onReset}
             data-testid="input"
           />
-        </form>,
+        </form>
       );
 
       await waitFor(() => {

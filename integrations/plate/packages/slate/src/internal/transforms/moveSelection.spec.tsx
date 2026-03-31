@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('moveSelection', () => {
-  it('moves a collapsed cursor forward by one character', () => {
+describe("moveSelection", () => {
+  it("moves a collapsed cursor forward by one character", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -34,7 +34,7 @@ describe('moveSelection', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('moves both edges by one word', () => {
+  it("moves both edges by one word", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -46,7 +46,7 @@ describe('moveSelection', () => {
       ) as any
     );
 
-    editor.move({ unit: 'word' });
+    editor.move({ unit: "word" });
 
     const output = (
       <editor>
@@ -60,7 +60,7 @@ describe('moveSelection', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('moves only the anchor when requested', () => {
+  it("moves only the anchor when requested", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -74,7 +74,7 @@ describe('moveSelection', () => {
       ) as any
     );
 
-    editor.move({ distance: 3, edge: 'anchor' });
+    editor.move({ distance: 3, edge: "anchor" });
 
     const output = (
       <editor>
@@ -90,10 +90,10 @@ describe('moveSelection', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('moves a grapheme cluster as one character', () => {
-    const text = 'word👨‍👩‍👧‍👧';
+  it("moves a grapheme cluster as one character", () => {
+    const text = "word👨‍👩‍👧‍👧";
     const editor: any = createEditor({
-      children: [{ type: 'p', children: [{ text }] }] as any,
+      children: [{ type: "p", children: [{ text }] }] as any,
       selection: {
         anchor: { offset: 4, path: [0, 0] },
         focus: { offset: 4, path: [0, 0] },
@@ -108,9 +108,9 @@ describe('moveSelection', () => {
     });
   });
 
-  it('only updates editor.selection and leaves additive selection fields alone', () => {
+  it("only updates editor.selection and leaves additive selection fields alone", () => {
     const editor: any = createEditor({
-      children: [{ type: 'p', children: [{ text: 'word' }] }] as any,
+      children: [{ type: "p", children: [{ text: "word" }] }] as any,
       selection: {
         anchor: { offset: 1, path: [0, 0] },
         focus: { offset: 1, path: [0, 0] },

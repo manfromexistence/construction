@@ -1,12 +1,6 @@
-import {
-  type ElementEntry,
-  type SlateEditor,
-  type TElement,
-  match,
-  PathApi,
-} from 'platejs';
+import { type ElementEntry, match, PathApi, type SlateEditor, type TElement } from "platejs";
 
-import { getListTypes } from '../queries/index';
+import { getListTypes } from "../queries/index";
 
 export type MoveListItemDownOptions = {
   list: ElementEntry;
@@ -37,17 +31,12 @@ export const moveListItemDown = (
     const sublist = (previousNode.children as TElement[]).find((n) =>
       match(n, [], { type: getListTypes(editor) })
     );
-    const newPath = previousPath.concat(
-      sublist ? [1, sublist.children.length] : [1]
-    );
+    const newPath = previousPath.concat(sublist ? [1, sublist.children.length] : [1]);
 
     editor.tf.withoutNormalizing(() => {
       if (!sublist) {
         // Create new sublist
-        editor.tf.wrapNodes<TElement>(
-          { children: [], type: listNode.type },
-          { at: listItemPath }
-        );
+        editor.tf.wrapNodes<TElement>({ children: [], type: listNode.type }, { at: listItemPath });
       }
 
       // Move the current item to the sublist

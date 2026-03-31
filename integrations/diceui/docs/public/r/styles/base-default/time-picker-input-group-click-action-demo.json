@@ -1,9 +1,6 @@
 {
   "name": "time-picker-input-group-click-action-demo",
-  "registryDependencies": [
-    "time-picker",
-    "label"
-  ],
+  "registryDependencies": ["time-picker", "label"],
   "files": [
     {
       "path": "examples/time-picker-input-group-click-action-demo.tsx",

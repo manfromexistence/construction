@@ -4,9 +4,8 @@ export function FeedbacksCard() {
   return (
     <div className="relative flex w-full max-w-lg flex-col gap-10">
       <p className="text-center text-xl font-medium leading-[1.5] text-gradient">
-        “Luxe is an ultra-aesthetic user interface library. I think it's
-        promising when built as an abstract layer on top of your existing design
-        system.”
+        “Luxe is an ultra-aesthetic user interface library. I think it's promising when built as an
+        abstract layer on top of your existing design system.”
       </p>
       <div className="flex items-center justify-center gap-3">
         <Image
@@ -20,9 +19,7 @@ export function FeedbacksCard() {
           <h3 className="font-medium leading-none text-neutral-600 duration-300 dark:text-neutral-300">
             Guilherme Rodz
           </h3>
-          <span className="text-neutral-500 dark:text-neutral-400">
-            Creator of input-otp
-          </span>
+          <span className="text-neutral-500 dark:text-neutral-400">Creator of input-otp</span>
         </div>
       </div>
     </div>

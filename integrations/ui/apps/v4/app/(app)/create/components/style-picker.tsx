@@ -1,9 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { type Style, type StyleName } from "@/registry/config"
-import { LockButton } from "@/app/(app)/create/components/lock-button"
+import * as React from "react";
+import { LockButton } from "@/app/(app)/create/components/lock-button";
 import {
   Picker,
   PickerContent,
@@ -11,21 +9,22 @@ import {
   PickerRadioGroup,
   PickerRadioItem,
   PickerTrigger,
-} from "@/app/(app)/create/components/picker"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
+} from "@/app/(app)/create/components/picker";
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { type Style, type StyleName } from "@/registry/config";
 
 export function StylePicker({
   styles,
   isMobile,
   anchorRef,
 }: {
-  styles: readonly Style[]
-  isMobile: boolean
-  anchorRef: React.RefObject<HTMLDivElement | null>
+  styles: readonly Style[];
+  isMobile: boolean;
+  anchorRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  const [params, setParams] = useDesignSystemSearchParams()
+  const [params, setParams] = useDesignSystemSearchParams();
 
-  const currentStyle = styles.find((style) => style.name === params.style)
+  const currentStyle = styles.find((style) => style.name === params.style);
 
   return (
     <div className="group/picker relative">
@@ -33,9 +32,7 @@ export function StylePicker({
         <PickerTrigger>
           <div className="flex flex-col justify-start text-left">
             <div className="text-xs text-muted-foreground">Style</div>
-            <div className="text-sm font-medium text-foreground">
-              {currentStyle?.title}
-            </div>
+            <div className="text-sm font-medium text-foreground">{currentStyle?.title}</div>
           </div>
           {currentStyle?.icon && (
             <div className="pointer-events-none absolute top-1/2 right-4 flex size-4 -translate-y-1/2 items-center justify-center select-none md:right-2.5">
@@ -53,16 +50,12 @@ export function StylePicker({
           <PickerRadioGroup
             value={currentStyle?.name}
             onValueChange={(value) => {
-              setParams({ style: value as StyleName })
+              setParams({ style: value as StyleName });
             }}
           >
             <PickerGroup>
               {styles.map((style) => (
-                <PickerRadioItem
-                  value={style.name}
-                  key={style.name}
-                  closeOnClick={isMobile}
-                >
+                <PickerRadioItem value={style.name} key={style.name} closeOnClick={isMobile}>
                   {style.title}
                 </PickerRadioItem>
               ))}
@@ -70,10 +63,7 @@ export function StylePicker({
           </PickerRadioGroup>
         </PickerContent>
       </Picker>
-      <LockButton
-        param="style"
-        className="absolute top-1/2 right-8 -translate-y-1/2"
-      />
+      <LockButton param="style" className="absolute top-1/2 right-8 -translate-y-1/2" />
     </div>
-  )
+  );
 }

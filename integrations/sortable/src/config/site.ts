@@ -4,9 +4,7 @@ export const siteConfig = {
   name: "Sortable",
   description: "Sortable built with shadcn/ui, radix ui, and dnd-kit",
   url:
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://sortable.sadmn.com",
+    process.env.NODE_ENV === "development" ? "http://localhost:3000" : "https://sortable.sadmn.com",
   links: {
     github: "https://github.com/sadmann7/sortable",
     docs: "https://github.com/sadmann7/sortable/blob/main/README.md",

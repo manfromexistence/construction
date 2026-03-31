@@ -1,9 +1,9 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from "@testing-library/react";
 
-import { useEffectOnce } from './useEffectOnce';
+import { useEffectOnce } from "./useEffectOnce";
 
-describe('useEffectOnce', () => {
-  it('runs the effect on first mount', () => {
+describe("useEffectOnce", () => {
+  it("runs the effect on first mount", () => {
     let callCount = 0;
     const effect = () => {
       callCount += 1;
@@ -16,34 +16,28 @@ describe('useEffectOnce', () => {
     expect(callCount).toBe(1);
   });
 
-  it('does not rerun the effect when deps stay the same', () => {
+  it("does not rerun the effect when deps stay the same", () => {
     let callCount = 0;
     const effect = () => {
       callCount += 1;
     };
-    const { rerender } = renderHook(
-      ({ value }) => useEffectOnce(effect, [value]),
-      {
-        initialProps: { value: 1 },
-      }
-    );
+    const { rerender } = renderHook(({ value }) => useEffectOnce(effect, [value]), {
+      initialProps: { value: 1 },
+    });
 
     rerender({ value: 1 });
 
     expect(callCount).toBe(1);
   });
 
-  it('reruns the effect when deps change', () => {
+  it("reruns the effect when deps change", () => {
     let callCount = 0;
     const effect = () => {
       callCount += 1;
     };
-    const { rerender } = renderHook(
-      ({ value }) => useEffectOnce(effect, [value]),
-      {
-        initialProps: { value: 1 },
-      }
-    );
+    const { rerender } = renderHook(({ value }) => useEffectOnce(effect, [value]), {
+      initialProps: { value: 1 },
+    });
 
     rerender({ value: 2 });
 

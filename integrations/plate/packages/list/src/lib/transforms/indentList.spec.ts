@@ -1,21 +1,21 @@
-import * as indentModule from '@platejs/indent';
-import { KEYS } from 'platejs';
+import * as indentModule from "@platejs/indent";
+import { KEYS } from "platejs";
 
-import { indentList, indentTodo } from './indentList';
+import { indentList, indentTodo } from "./indentList";
 
-describe('indentList helpers', () => {
+describe("indentList helpers", () => {
   afterEach(() => {
     mock.restore();
   });
 
-  it('configures setIndent for standard lists', () => {
-    const spy = spyOn(indentModule, 'setIndent').mockImplementation(() => {});
+  it("configures setIndent for standard lists", () => {
+    const spy = spyOn(indentModule, "setIndent").mockImplementation(() => {});
     const editor = {} as any;
 
     indentList(editor, {
       at: [0],
       listRestart: 5,
-      listStyleType: 'square',
+      listStyleType: "square",
     });
 
     expect(spy).toHaveBeenCalledTimes(1);
@@ -26,12 +26,12 @@ describe('indentList helpers', () => {
     expect(options.listRestart).toBe(5);
     expect(options.offset).toBe(1);
     expect(options.setNodesProps()).toEqual({
-      [KEYS.listType]: 'square',
+      [KEYS.listType]: "square",
     });
   });
 
-  it('configures setIndent for todo lists with unchecked state', () => {
-    const spy = spyOn(indentModule, 'setIndent').mockImplementation(() => {});
+  it("configures setIndent for todo lists with unchecked state", () => {
+    const spy = spyOn(indentModule, "setIndent").mockImplementation(() => {});
     const editor = {} as any;
 
     indentTodo(editor, {

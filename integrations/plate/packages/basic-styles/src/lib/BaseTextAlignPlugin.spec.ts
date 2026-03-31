@@ -1,9 +1,9 @@
-import { BaseParagraphPlugin, KEYS, createSlateEditor } from 'platejs';
+import { BaseParagraphPlugin, createSlateEditor, KEYS } from "platejs";
 
-import { BaseTextAlignPlugin } from './BaseTextAlignPlugin';
+import { BaseTextAlignPlugin } from "./BaseTextAlignPlugin";
 
-describe('BaseTextAlignPlugin', () => {
-  it('exposes the injected block contract and bound setNodes transform', () => {
+describe("BaseTextAlignPlugin", () => {
+  it("exposes the injected block contract and bound setNodes transform", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseTextAlignPlugin],
     } as any);
@@ -13,15 +13,15 @@ describe('BaseTextAlignPlugin', () => {
     expect(plugin.inject.isBlock).toBe(true);
     expect(plugin.inject.targetPlugins).toEqual([KEYS.p]);
     expect(plugin.inject.nodeProps).toMatchObject({
-      defaultNodeValue: 'start',
-      styleKey: 'textAlign',
-      validNodeValues: ['start', 'left', 'center', 'right', 'end', 'justify'],
+      defaultNodeValue: "start",
+      styleKey: "textAlign",
+      validNodeValues: ["start", "left", "center", "right", "end", "justify"],
     });
-    expect(typeof (editor as any).tf.textAlign?.setNodes).toBe('function');
-    expect(typeof transforms.textAlign.setNodes).toBe('function');
+    expect(typeof (editor as any).tf.textAlign?.setNodes).toBe("function");
+    expect(typeof transforms.textAlign.setNodes).toBe("function");
   });
 
-  it('parses text-align styles through the injected target plugin deserializer', () => {
+  it("parses text-align styles through the injected target plugin deserializer", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseTextAlignPlugin],
     } as any);
@@ -35,13 +35,13 @@ describe('BaseTextAlignPlugin', () => {
 
     parse({
       element: {
-        style: { textAlign: 'center' },
+        style: { textAlign: "center" },
       },
       node,
     } as any);
 
     expect(node).toEqual({
-      [editor.getType(KEYS.textAlign)]: 'center',
+      [editor.getType(KEYS.textAlign)]: "center",
     });
   });
 });

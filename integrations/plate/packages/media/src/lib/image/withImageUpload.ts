@@ -1,12 +1,8 @@
-import {
-  type OverrideEditor,
-  getInjectedPlugins,
-  pipeInsertDataQuery,
-} from 'platejs';
+import { getInjectedPlugins, type OverrideEditor, pipeInsertDataQuery } from "platejs";
 
-import type { ImageConfig } from './BaseImagePlugin';
+import type { ImageConfig } from "./BaseImagePlugin";
 
-import { insertImageFromFiles } from './transforms';
+import { insertImageFromFiles } from "./transforms";
 
 /**
  * Allows for pasting images from clipboard. Not yet: dragging and dropping
@@ -24,7 +20,7 @@ export const withImageUpload: OverrideEditor<ImageConfig> = ({
         return insertData(dataTransfer);
       }
 
-      const mimeType = 'text/plain';
+      const mimeType = "text/plain";
       const text = dataTransfer.getData(mimeType);
       const { files } = dataTransfer;
 

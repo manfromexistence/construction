@@ -1,8 +1,5 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Image from "next/image"
-import Link from "next/link"
 import {
   Check,
   ChevronRight,
@@ -15,36 +12,32 @@ import {
   Smartphone,
   Tablet,
   Terminal,
-} from "lucide-react"
-import { type PanelImperativeHandle } from "react-resizable-panels"
-import {
-  type registryItemFileSchema,
-  type registryItemSchema,
-} from "shadcn/schema"
-import { type z } from "zod"
-
-import { trackEvent } from "@/lib/events"
-import {
-  type createFileTreeForRegistryItemFiles,
-  type FileTree,
-} from "@/lib/registry"
-import { cn } from "@/lib/utils"
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard"
-import { getIconForLanguageExtension } from "@/components/icons"
-import { OpenInV0Button } from "@/components/open-in-v0-button"
-import { type Style } from "@/registry/_legacy-styles"
-import { Button } from "@/registry/new-york-v4/ui/button"
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import * as React from "react";
+import { type PanelImperativeHandle } from "react-resizable-panels";
+import { type registryItemFileSchema, type registryItemSchema } from "shadcn/schema";
+import { type z } from "zod";
+import { getIconForLanguageExtension } from "@/components/icons";
+import { OpenInV0Button } from "@/components/open-in-v0-button";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { trackEvent } from "@/lib/events";
+import { type createFileTreeForRegistryItemFiles, type FileTree } from "@/lib/registry";
+import { cn } from "@/lib/utils";
+import { type Style } from "@/registry/_legacy-styles";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/registry/new-york-v4/ui/collapsible"
+} from "@/registry/new-york-v4/ui/collapsible";
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-} from "@/registry/new-york-v4/ui/resizable"
-import { Separator } from "@/registry/new-york-v4/ui/separator"
+} from "@/registry/new-york-v4/ui/resizable";
+import { Separator } from "@/registry/new-york-v4/ui/separator";
 import {
   Sidebar,
   SidebarGroup,
@@ -55,38 +48,35 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarProvider,
-} from "@/registry/new-york-v4/ui/sidebar"
-import { Tabs, TabsList, TabsTrigger } from "@/registry/new-york-v4/ui/tabs"
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/registry/new-york-v4/ui/toggle-group"
+} from "@/registry/new-york-v4/ui/sidebar";
+import { Tabs, TabsList, TabsTrigger } from "@/registry/new-york-v4/ui/tabs";
+import { ToggleGroup, ToggleGroupItem } from "@/registry/new-york-v4/ui/toggle-group";
 
 type BlockViewerContext = {
-  item: z.infer<typeof registryItemSchema>
-  view: "code" | "preview"
-  setView: (view: "code" | "preview") => void
-  activeFile: string | null
-  setActiveFile: (file: string) => void
-  resizablePanelRef: React.RefObject<PanelImperativeHandle | null> | null
-  tree: ReturnType<typeof createFileTreeForRegistryItemFiles> | null
+  item: z.infer<typeof registryItemSchema>;
+  view: "code" | "preview";
+  setView: (view: "code" | "preview") => void;
+  activeFile: string | null;
+  setActiveFile: (file: string) => void;
+  resizablePanelRef: React.RefObject<PanelImperativeHandle | null> | null;
+  tree: ReturnType<typeof createFileTreeForRegistryItemFiles> | null;
   highlightedFiles:
     | (z.infer<typeof registryItemFileSchema> & {
-        highlightedContent: string
+        highlightedContent: string;
       })[]
-    | null
-  iframeKey?: number
-  setIframeKey?: React.Dispatch<React.SetStateAction<number>>
-}
+    | null;
+  iframeKey?: number;
+  setIframeKey?: React.Dispatch<React.SetStateAction<number>>;
+};
 
-const BlockViewerContext = React.createContext<BlockViewerContext | null>(null)
+const BlockViewerContext = React.createContext<BlockViewerContext | null>(null);
 
 function useBlockViewer() {
-  const context = React.useContext(BlockViewerContext)
+  const context = React.useContext(BlockViewerContext);
   if (!context) {
-    throw new Error("useBlockViewer must be used within a BlockViewerProvider.")
+    throw new Error("useBlockViewer must be used within a BlockViewerProvider.");
   }
-  return context
+  return context;
 }
 
 function BlockViewerProvider({
@@ -95,14 +85,14 @@ function BlockViewerProvider({
   highlightedFiles,
   children,
 }: Pick<BlockViewerContext, "item" | "tree" | "highlightedFiles"> & {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
-  const [view, setView] = React.useState<BlockViewerContext["view"]>("preview")
-  const [activeFile, setActiveFile] = React.useState<
-    BlockViewerContext["activeFile"]
-  >(highlightedFiles?.[0].target ?? null)
-  const resizablePanelRef = React.useRef<PanelImperativeHandle>(null)
-  const [iframeKey, setIframeKey] = React.useState(0)
+  const [view, setView] = React.useState<BlockViewerContext["view"]>("preview");
+  const [activeFile, setActiveFile] = React.useState<BlockViewerContext["activeFile"]>(
+    highlightedFiles?.[0].target ?? null
+  );
+  const resizablePanelRef = React.useRef<PanelImperativeHandle>(null);
+  const [iframeKey, setIframeKey] = React.useState(0);
 
   return (
     <BlockViewerContext.Provider
@@ -132,28 +122,21 @@ function BlockViewerProvider({
         {children}
       </div>
     </BlockViewerContext.Provider>
-  )
+  );
 }
 
-type BlockViewerProps = Pick<
-  BlockViewerContext,
-  "item" | "tree" | "highlightedFiles"
-> & {
-  children: React.ReactNode
-  styleName: Style["name"]
-}
+type BlockViewerProps = Pick<BlockViewerContext, "item" | "tree" | "highlightedFiles"> & {
+  children: React.ReactNode;
+  styleName: Style["name"];
+};
 
 function BlockViewerToolbar({ styleName }: { styleName: Style["name"] }) {
-  const { setView, view, item, resizablePanelRef, setIframeKey } =
-    useBlockViewer()
-  const { copyToClipboard, isCopied } = useCopyToClipboard()
+  const { setView, view, item, resizablePanelRef, setIframeKey } = useBlockViewer();
+  const { copyToClipboard, isCopied } = useCopyToClipboard();
 
   return (
     <div className="hidden w-full items-center gap-2 pl-2 md:pr-6 lg:flex">
-      <Tabs
-        value={view}
-        onValueChange={(value) => setView(value as "preview" | "code")}
-      >
+      <Tabs value={view} onValueChange={(value) => setView(value as "preview" | "code")}>
         <TabsList className="grid h-8! grid-cols-2 items-center rounded-lg p-1 *:data-[slot=tabs-trigger]:h-6 *:data-[slot=tabs-trigger]:rounded-sm *:data-[slot=tabs-trigger]:px-2 *:data-[slot=tabs-trigger]:text-xs">
           <TabsTrigger value="preview">Preview</TabsTrigger>
           <TabsTrigger value="code">Code</TabsTrigger>
@@ -172,9 +155,9 @@ function BlockViewerToolbar({ styleName }: { styleName: Style["name"] }) {
             type="single"
             defaultValue="100%"
             onValueChange={(value) => {
-              setView("preview")
+              setView("preview");
               if (resizablePanelRef?.current) {
-                resizablePanelRef.current.resize(value)
+                resizablePanelRef.current.resize(value);
               }
             }}
             className="gap-1 *:data-[slot=toggle-group-item]:size-6! *:data-[slot=toggle-group-item]:rounded-sm!"
@@ -209,7 +192,7 @@ function BlockViewerToolbar({ styleName }: { styleName: Style["name"] }) {
               title="Refresh Preview"
               onClick={() => {
                 if (setIframeKey) {
-                  setIframeKey((k) => k + 1)
+                  setIframeKey((k) => k + 1);
                 }
               }}
             >
@@ -224,7 +207,7 @@ function BlockViewerToolbar({ styleName }: { styleName: Style["name"] }) {
           className="w-fit gap-1 px-2 shadow-none"
           size="sm"
           onClick={() => {
-            copyToClipboard(`npx shadcn@latest add ${item.name}`)
+            copyToClipboard(`npx shadcn@latest add ${item.name}`);
           }}
         >
           {isCopied ? <Check /> : <Terminal />}
@@ -234,17 +217,17 @@ function BlockViewerToolbar({ styleName }: { styleName: Style["name"] }) {
         <OpenInV0Button name={item.name} />
       </div>
     </div>
-  )
+  );
 }
 
 function BlockViewerIframe({
   className,
   styleName,
 }: {
-  className?: string
-  styleName: Style["name"]
+  className?: string;
+  styleName: Style["name"];
 }) {
-  const { item, iframeKey } = useBlockViewer()
+  const { item, iframeKey } = useBlockViewer();
 
   return (
     <iframe
@@ -252,16 +235,13 @@ function BlockViewerIframe({
       src={`/view/${styleName}/${item.name}`}
       height={item.meta?.iframeHeight ?? 930}
       loading="lazy"
-      className={cn(
-        "relative z-20 no-scrollbar w-full bg-background",
-        className
-      )}
+      className={cn("relative z-20 no-scrollbar w-full bg-background", className)}
     />
-  )
+  );
 }
 
 function BlockViewerView({ styleName }: { styleName: Style["name"] }) {
-  const { resizablePanelRef } = useBlockViewer()
+  const { resizablePanelRef } = useBlockViewer();
 
   return (
     <div className="hidden group-data-[view=code]/block-view-wrapper:hidden md:h-(--height) lg:flex">
@@ -284,21 +264,17 @@ function BlockViewerView({ styleName }: { styleName: Style["name"] }) {
         </ResizablePanelGroup>
       </div>
     </div>
-  )
+  );
 }
 
 function BlockViewerMobile({ children }: { children: React.ReactNode }) {
-  const { item } = useBlockViewer()
+  const { item } = useBlockViewer();
 
   return (
     <div className="flex flex-col gap-2 lg:hidden">
       <div className="flex items-center gap-2 px-2">
-        <div className="line-clamp-1 text-sm font-medium">
-          {item.description}
-        </div>
-        <div className="ml-auto shrink-0 font-mono text-xs text-muted-foreground">
-          {item.name}
-        </div>
+        <div className="line-clamp-1 text-sm font-medium">{item.description}</div>
+        <div className="ml-auto shrink-0 font-mono text-xs text-muted-foreground">{item.name}</div>
       </div>
       {item.meta?.mobile === "component" ? (
         children
@@ -323,21 +299,21 @@ function BlockViewerMobile({ children }: { children: React.ReactNode }) {
         </div>
       )}
     </div>
-  )
+  );
 }
 
 function BlockViewerCode() {
-  const { activeFile, highlightedFiles } = useBlockViewer()
+  const { activeFile, highlightedFiles } = useBlockViewer();
 
   const file = React.useMemo(() => {
-    return highlightedFiles?.find((file) => file.target === activeFile)
-  }, [highlightedFiles, activeFile])
+    return highlightedFiles?.find((file) => file.target === activeFile);
+  }, [highlightedFiles, activeFile]);
 
   if (!file) {
-    return null
+    return null;
   }
 
-  const language = file.path.split(".").pop() ?? "tsx"
+  const language = file.path.split(".").pop() ?? "tsx";
 
   return (
     <div className="mr-[14px] flex overflow-hidden rounded-xl border bg-code text-code-foreground group-data-[view=preview]/block-view-wrapper:hidden md:h-(--height)">
@@ -365,14 +341,14 @@ function BlockViewerCode() {
         />
       </figure>
     </div>
-  )
+  );
 }
 
 export function BlockViewerFileTree() {
-  const { tree } = useBlockViewer()
+  const { tree } = useBlockViewer();
 
   if (!tree) {
-    return null
+    return null;
   }
 
   return (
@@ -392,11 +368,11 @@ export function BlockViewerFileTree() {
         </SidebarGroup>
       </Sidebar>
     </SidebarProvider>
-  )
+  );
 }
 
 function Tree({ item, index }: { item: FileTree; index: number }) {
-  const { activeFile, setActiveFile } = useBlockViewer()
+  const { activeFile, setActiveFile } = useBlockViewer();
 
   if (!item.children) {
     return (
@@ -417,7 +393,7 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
           {item.name}
         </SidebarMenuButton>
       </SidebarMenuItem>
-    )
+    );
   }
 
   return (
@@ -449,21 +425,21 @@ function Tree({ item, index }: { item: FileTree; index: number }) {
         </CollapsibleContent>
       </Collapsible>
     </SidebarMenuItem>
-  )
+  );
 }
 
 function BlockCopyCodeButton() {
-  const { activeFile, item } = useBlockViewer()
-  const { copyToClipboard, isCopied } = useCopyToClipboard()
+  const { activeFile, item } = useBlockViewer();
+  const { copyToClipboard, isCopied } = useCopyToClipboard();
 
   const file = React.useMemo(() => {
-    return item.files?.find((file) => file.target === activeFile)
-  }, [activeFile, item.files])
+    return item.files?.find((file) => file.target === activeFile);
+  }, [activeFile, item.files]);
 
-  const content = file?.content
+  const content = file?.content;
 
   if (!content) {
-    return null
+    return null;
   }
 
   return (
@@ -472,19 +448,19 @@ function BlockCopyCodeButton() {
       size="icon"
       className="size-7"
       onClick={() => {
-        copyToClipboard(content)
+        copyToClipboard(content);
         trackEvent({
           name: "copy_block_code",
           properties: {
             name: item.name,
             file: file.path,
           },
-        })
+        });
       }}
     >
       {isCopied ? <Check /> : <Clipboard />}
     </Button>
-  )
+  );
 }
 
 function BlockViewer({
@@ -496,18 +472,13 @@ function BlockViewer({
   ...props
 }: BlockViewerProps) {
   return (
-    <BlockViewerProvider
-      item={item}
-      tree={tree}
-      highlightedFiles={highlightedFiles}
-      {...props}
-    >
+    <BlockViewerProvider item={item} tree={tree} highlightedFiles={highlightedFiles} {...props}>
       <BlockViewerToolbar styleName={styleName} />
       <BlockViewerView styleName={styleName} />
       <BlockViewerCode />
       <BlockViewerMobile>{children}</BlockViewerMobile>
     </BlockViewerProvider>
-  )
+  );
 }
 
-export { BlockViewer }
+export { BlockViewer };

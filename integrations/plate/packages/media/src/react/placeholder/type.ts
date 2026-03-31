@@ -1,6 +1,6 @@
-import type { KEYS } from 'platejs';
+import type { KEYS } from "platejs";
 
-import type { AllowedFileType } from './internal/mimes';
+import type { AllowedFileType } from "./internal/mimes";
 
 export const UploadErrorCode = {
   INVALID_FILE_TYPE: 400,
@@ -10,8 +10,7 @@ export const UploadErrorCode = {
   TOO_LARGE: 413,
 } as const;
 
-export type UploadErrorCode =
-  (typeof UploadErrorCode)[keyof typeof UploadErrorCode];
+export type UploadErrorCode = (typeof UploadErrorCode)[keyof typeof UploadErrorCode];
 
 export type FileSize = `${PowOf2}${SizeUnit}`;
 
@@ -26,13 +25,9 @@ export type MediaItemConfig = {
   minFileCount?: number;
 };
 
-export type MediaKeys =
-  | typeof KEYS.audio
-  | typeof KEYS.file
-  | typeof KEYS.img
-  | typeof KEYS.video;
+export type MediaKeys = typeof KEYS.audio | typeof KEYS.file | typeof KEYS.img | typeof KEYS.video;
 
-export type SizeUnit = 'B' | 'GB' | 'KB' | 'MB';
+export type SizeUnit = "B" | "GB" | "KB" | "MB";
 
 export type UploadError =
   | {

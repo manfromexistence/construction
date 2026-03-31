@@ -1,16 +1,7 @@
 {
   "name": "rating-form-demo",
-  "dependencies": [
-    "@hookform/resolvers/zod",
-    "react-hook-form",
-    "zod",
-    "sonner"
-  ],
-  "registryDependencies": [
-    "rating",
-    "button",
-    "form"
-  ],
+  "dependencies": ["@hookform/resolvers/zod", "react-hook-form", "zod", "sonner"],
+  "registryDependencies": ["rating", "button", "form"],
   "files": [
     {
       "path": "examples/rating-form-demo.tsx",

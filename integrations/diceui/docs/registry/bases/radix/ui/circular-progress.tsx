@@ -14,15 +14,8 @@ const DEFAULT_MAX = 100;
 
 type ProgressState = "indeterminate" | "complete" | "loading";
 
-function getProgressState(
-  value: number | undefined | null,
-  maxValue: number,
-): ProgressState {
-  return value == null
-    ? "indeterminate"
-    : value === maxValue
-      ? "complete"
-      : "loading";
+function getProgressState(value: number | undefined | null, maxValue: number): ProgressState {
+  return value == null ? "indeterminate" : value === maxValue ? "complete" : "loading";
 }
 
 function getIsValidNumber(value: unknown): value is number {
@@ -33,11 +26,7 @@ function getIsValidMaxNumber(max: unknown): max is number {
   return getIsValidNumber(max) && max > 0;
 }
 
-function getIsValidValueNumber(
-  value: unknown,
-  min: number,
-  max: number,
-): value is number {
+function getIsValidValueNumber(value: unknown, min: number, max: number): value is number {
   return getIsValidNumber(value) && value <= max && value >= min;
 }
 
@@ -46,10 +35,7 @@ function getDefaultValueText(value: number, min: number, max: number): string {
   return `${Math.round(percentage)}%`;
 }
 
-function getInvalidValueError(
-  propValue: string,
-  componentName: string,
-): string {
+function getInvalidValueError(propValue: string, componentName: string): string {
   return `Invalid prop \`value\` of value \`${propValue}\` supplied to \`${componentName}\`. The \`value\` prop must be a number between \`min\` and \`max\` (inclusive), or \`null\`/\`undefined\` for indeterminate progress. The value will be clamped to the valid range.`;
 }
 
@@ -72,15 +58,12 @@ interface CircularProgressContextValue {
   valueTextId?: string;
 }
 
-const CircularProgressContext =
-  React.createContext<CircularProgressContextValue | null>(null);
+const CircularProgressContext = React.createContext<CircularProgressContextValue | null>(null);
 
 function useCircularProgressContext(consumerName: string) {
   const context = React.useContext(CircularProgressContext);
   if (!context) {
-    throw new Error(
-      `\`${consumerName}\` must be used within \`${CIRCULAR_PROGRESS_NAME}\``,
-    );
+    throw new Error(`\`${consumerName}\` must be used within \`${CIRCULAR_PROGRESS_NAME}\``);
   }
   return context;
 }
@@ -123,15 +106,13 @@ function CircularProgress(props: CircularProgressProps) {
 
   if (process.env.NODE_ENV !== "production" && thickness >= size) {
     console.warn(
-      `CircularProgress: thickness (${thickness}) should be less than size (${size}) for proper rendering.`,
+      `CircularProgress: thickness (${thickness}) should be less than size (${size}) for proper rendering.`
     );
   }
 
   if (valueProp !== null && !getIsValidValueNumber(valueProp, min, max)) {
     if (process.env.NODE_ENV !== "production") {
-      console.error(
-        getInvalidValueError(`${valueProp}`, CIRCULAR_PROGRESS_NAME),
-      );
+      console.error(getInvalidValueError(`${valueProp}`, CIRCULAR_PROGRESS_NAME));
     }
   }
 
@@ -143,9 +124,7 @@ function CircularProgress(props: CircularProgressProps) {
         ? min
         : null;
 
-  const valueText = getIsValidNumber(value)
-    ? getValueText(value, min, max)
-    : undefined;
+  const valueText = getIsValidNumber(value) ? getValueText(value, min, max) : undefined;
   const state = getProgressState(value, max);
   const radius = Math.max(0, (size - thickness) / 2);
   const center = size / 2;
@@ -188,7 +167,7 @@ function CircularProgress(props: CircularProgressProps) {
       circumference,
       percentage,
       valueTextId,
-    ],
+    ]
   );
 
   const RootPrimitive = asChild ? SlotPrimitive.Slot : "div";
@@ -209,10 +188,7 @@ function CircularProgress(props: CircularProgressProps) {
         data-min={min}
         data-percentage={percentage}
         {...rootProps}
-        className={cn(
-          "relative inline-flex w-fit items-center justify-center",
-          className,
-        )}
+        className={cn("relative inline-flex w-fit items-center justify-center", className)}
       >
         {children}
         {label && <div id={labelId}>{label}</div>}
@@ -302,7 +278,7 @@ function CircularProgressRange(props: React.ComponentProps<"circle">) {
         "origin-center text-primary transition-all duration-300 ease-in-out",
         context.state === "indeterminate" &&
           "motion-reduce:animate-none motion-safe:[animation:var(--animate-spin-around)]",
-        className,
+        className
       )}
     />
   );
@@ -326,7 +302,7 @@ function CircularProgressValueText(props: CircularProgressValueTextProps) {
       {...valueTextProps}
       className={cn(
         "absolute inset-0 flex items-center justify-center font-medium text-sm",
-        className,
+        className
       )}
     >
       {children ?? context.valueText}

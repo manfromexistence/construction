@@ -1,18 +1,7 @@
-import {
-  type TriggerComboboxPluginOptions,
-  withTriggerCombobox,
-} from '@platejs/combobox';
-import {
-  type PluginConfig,
-  createSlatePlugin,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
+import { type TriggerComboboxPluginOptions, withTriggerCombobox } from "@platejs/combobox";
+import { createSlatePlugin, createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
-export type SlashConfig = PluginConfig<
-  'slash_command',
-  TriggerComboboxPluginOptions
->;
+export type SlashConfig = PluginConfig<"slash_command", TriggerComboboxPluginOptions>;
 
 export const BaseSlashInputPlugin = createSlatePlugin({
   key: KEYS.slashInput,
@@ -24,10 +13,10 @@ export const BaseSlashPlugin = createTSlatePlugin<SlashConfig>({
   key: KEYS.slashCommand,
   editOnly: true,
   options: {
-    trigger: '/',
+    trigger: "/",
     triggerPreviousCharPattern: /^\s?$/,
     createComboboxInput: () => ({
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       type: KEYS.slashInput,
     }),
   },

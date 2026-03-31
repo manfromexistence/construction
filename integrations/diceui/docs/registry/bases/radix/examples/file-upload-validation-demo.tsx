@@ -38,7 +38,7 @@ export default function FileUploadValidationDemo() {
 
       return null;
     },
-    [files],
+    [files]
   );
 
   const onFileReject = React.useCallback((file: File, message: string) => {
@@ -64,9 +64,7 @@ export default function FileUploadValidationDemo() {
             <Upload className="size-6 text-muted-foreground" />
           </div>
           <p className="font-medium text-sm">Drag & drop files here</p>
-          <p className="text-muted-foreground text-xs">
-            Or click to browse (max 2 files)
-          </p>
+          <p className="text-muted-foreground text-xs">Or click to browse (max 2 files)</p>
         </div>
         <FileUploadTrigger asChild>
           <Button variant="outline" size="sm" className="mt-2 w-fit">

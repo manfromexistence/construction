@@ -1,23 +1,19 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
+import * as queryModule from "../queries";
+import { getSuggestionKey } from "../utils";
+import * as deleteFragmentModule from "./deleteFragmentSuggestion";
+import { insertFragmentSuggestion } from "./insertFragmentSuggestion";
 
-import * as deleteFragmentModule from './deleteFragmentSuggestion';
-import * as queryModule from '../queries';
-import { getSuggestionKey } from '../utils';
-import { insertFragmentSuggestion } from './insertFragmentSuggestion';
-
-describe('insertFragmentSuggestion', () => {
-  it('rewrites fragment nodes with the active insert suggestion metadata', () => {
+describe("insertFragmentSuggestion", () => {
+  it("rewrites fragment nodes with the active insert suggestion metadata", () => {
     const deleteFragmentSuggestion = (): undefined => {};
     const deleteFragmentSpy = spyOn(
       deleteFragmentModule,
-      'deleteFragmentSuggestion'
+      "deleteFragmentSuggestion"
     ).mockImplementation(deleteFragmentSuggestion);
-    const findSuggestionPropsSpy = spyOn(
-      queryModule,
-      'findSuggestionProps'
-    ).mockReturnValue({
+    const findSuggestionPropsSpy = spyOn(queryModule, "findSuggestionProps").mockReturnValue({
       createdAt: 42,
-      id: 'suggestion-1',
+      id: "suggestion-1",
     } as any);
     const insertFragment = mock();
     const withoutSuggestions = mock((fn: () => void) => fn());
@@ -27,7 +23,7 @@ describe('insertFragmentSuggestion', () => {
           withoutSuggestions,
         },
       }),
-      getOptions: () => ({ currentUserId: 'user-1' }),
+      getOptions: () => ({ currentUserId: "user-1" }),
       selection: { anchor: { offset: 0, path: [0, 0] } },
       tf: {
         insertFragment,
@@ -37,12 +33,12 @@ describe('insertFragmentSuggestion', () => {
     const fragment = [
       {
         [KEYS.suggestion]: true,
-        [getSuggestionKey('other-user')]: { id: 'other-user' },
-        text: 'text',
+        [getSuggestionKey("other-user")]: { id: "other-user" },
+        text: "text",
       },
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
     ] as any;
 
@@ -50,18 +46,18 @@ describe('insertFragmentSuggestion', () => {
 
     expect(deleteFragmentSpy).toHaveBeenCalledWith(editor);
     expect(fragment[0][KEYS.suggestion]).toBe(true);
-    expect(fragment[0][getSuggestionKey('other-user')]).toBeUndefined();
-    expect(fragment[0][getSuggestionKey('suggestion-1')]).toEqual({
+    expect(fragment[0][getSuggestionKey("other-user")]).toBeUndefined();
+    expect(fragment[0][getSuggestionKey("suggestion-1")]).toEqual({
       createdAt: 42,
-      id: 'suggestion-1',
-      type: 'insert',
-      userId: 'user-1',
+      id: "suggestion-1",
+      type: "insert",
+      userId: "user-1",
     });
     expect(fragment[1][KEYS.suggestion]).toEqual({
       createdAt: 42,
-      id: 'suggestion-1',
-      type: 'insert',
-      userId: 'user-1',
+      id: "suggestion-1",
+      type: "insert",
+      userId: "user-1",
     });
     expect(withoutSuggestions).toHaveBeenCalledTimes(1);
     expect(insertFragment).toHaveBeenCalledWith(fragment);

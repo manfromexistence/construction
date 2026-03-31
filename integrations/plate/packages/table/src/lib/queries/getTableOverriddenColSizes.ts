@@ -1,8 +1,8 @@
-import type { TTableElement } from 'platejs';
+import type { TTableElement } from "platejs";
 
-import type { TableStoreSizeOverrides } from '../types';
+import type { TableStoreSizeOverrides } from "../types";
 
-import { getTableColumnCount } from './index';
+import { getTableColumnCount } from "./index";
 
 /**
  * Returns node.colSizes if it exists, applying overrides, otherwise returns a

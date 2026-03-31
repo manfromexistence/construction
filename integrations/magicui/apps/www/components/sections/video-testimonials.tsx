@@ -1,39 +1,39 @@
-"use client"
+"use client";
 
-import type { SVGProps } from "react"
-import { useState } from "react"
-import Image from "next/image"
-import { motion } from "motion/react"
+import { motion } from "motion/react";
+import Image from "next/image";
+import type { SVGProps } from "react";
+import { useState } from "react";
 
-const YOUTUBE_THUMBNAIL_BASE_URL = "https://img.youtube.com/vi"
+const YOUTUBE_THUMBNAIL_BASE_URL = "https://img.youtube.com/vi";
 const VIDEO_EMBEDS = [
   "https://www.youtube.com/embed/UGm8djxwC5s",
   "https://www.youtube.com/embed/qh3NGpYRG3I",
   "https://www.youtube.com/embed/AkN6xJcnVYs",
   "https://www.youtube.com/embed/hlSu_ldrbQw",
   "https://www.youtube.com/embed/ZYvvTehpA5I",
-] as const
+] as const;
 
 function extractVideoId(url: string) {
   try {
-    const parsed = new URL(url)
-    const pathnameParts = parsed.pathname.split("/")
-    const lastSegment = pathnameParts.at(-1)
+    const parsed = new URL(url);
+    const pathnameParts = parsed.pathname.split("/");
+    const lastSegment = pathnameParts.at(-1);
     if (!lastSegment) {
-      return ""
+      return "";
     }
-    return lastSegment.split("?").at(0) ?? ""
+    return lastSegment.split("?").at(0) ?? "";
   } catch {
-    return ""
+    return "";
   }
 }
 
 function buildEmbedSrc(url: string, shouldAutoplay: boolean) {
   if (!shouldAutoplay) {
-    return url
+    return url;
   }
 
-  return url.includes("?") ? `${url}&autoplay=1` : `${url}?autoplay=1`
+  return url.includes("?") ? `${url}&autoplay=1` : `${url}?autoplay=1`;
 }
 
 function PlayIcon(props: SVGProps<SVGSVGElement>) {
@@ -49,34 +49,31 @@ function PlayIcon(props: SVGProps<SVGSVGElement>) {
       <circle cx="30" cy="30" r="30" opacity="0.85" />
       <polygon points="24,18 44,30 24,42" fill="#fff" />
     </svg>
-  )
+  );
 }
 
 export function VideoTestimonials() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null)
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <section
-      id="video-testimonials"
-      className="container mx-auto py-10 md:py-14"
-    >
+    <section id="video-testimonials" className="container mx-auto py-10 md:py-14">
       <h2 className="text-foreground mb-10 text-center text-3xl leading-[1.2] font-semibold tracking-tighter text-balance md:text-4xl lg:text-5xl">
         Featured on YouTube
       </h2>
       <div className="grid auto-rows-[280px] grid-cols-1 gap-4 md:auto-rows-[300px] md:grid-cols-6 md:gap-6 lg:auto-rows-[320px]">
         {VIDEO_EMBEDS.map((embedUrl, index) => {
-          const videoId = extractVideoId(embedUrl)
-          const isActive = activeIndex === index
+          const videoId = extractVideoId(embedUrl);
+          const isActive = activeIndex === index;
           const thumbnailSrc = videoId
             ? `${YOUTUBE_THUMBNAIL_BASE_URL}/${videoId}/hqdefault.jpg`
-            : undefined
+            : undefined;
 
           const columnClasses =
             index === 0
               ? "md:col-span-4 md:row-span-2"
               : index === 1 || index === 2
                 ? "md:col-span-2 md:row-span-1"
-                : "md:col-span-3 md:row-span-1"
+                : "md:col-span-3 md:row-span-1";
 
           return (
             <motion.button
@@ -85,12 +82,12 @@ export function VideoTestimonials() {
               aria-pressed={isActive}
               aria-label={`Play testimonial ${index + 1}`}
               onClick={() => {
-                setActiveIndex(index)
+                setActiveIndex(index);
               }}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
-                  event.preventDefault()
-                  setActiveIndex(index)
+                  event.preventDefault();
+                  setActiveIndex(index);
                 }
               }}
               className={`group bg-card focus-visible:outline-primary border-border hover:border-border/80 relative cursor-pointer overflow-hidden rounded-xl border transition-[border-color,transform] duration-200 ease-in-out focus-visible:outline focus-visible:outline-offset-2 ${columnClasses}`}
@@ -130,9 +127,9 @@ export function VideoTestimonials() {
                 />
               )}
             </motion.button>
-          )
+          );
         })}
       </div>
     </section>
-  )
+  );
 }

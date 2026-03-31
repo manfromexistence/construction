@@ -1,7 +1,7 @@
-import { type TLinkElement, KEYS } from 'platejs';
-import { useEditorRef, useEditorSelector } from 'platejs/react';
+import { KEYS, type TLinkElement } from "platejs";
+import { useEditorRef, useEditorSelector } from "platejs/react";
 
-import { triggerFloatingLink } from '../index';
+import { triggerFloatingLink } from "../index";
 
 export const useLinkToolbarButtonState = () => {
   const pressed = useEditorSelector(
@@ -18,9 +18,7 @@ export const useLinkToolbarButtonState = () => {
   };
 };
 
-export const useLinkToolbarButton = (
-  state: ReturnType<typeof useLinkToolbarButtonState>
-) => {
+export const useLinkToolbarButton = (state: ReturnType<typeof useLinkToolbarButtonState>) => {
   const editor = useEditorRef();
 
   return {

@@ -1,21 +1,19 @@
-import React from 'react';
+import clsx from "clsx";
+import React from "react";
 
-import clsx from 'clsx';
-
-import type { EditableProps } from '../../lib';
-import type { PlateEditor } from '../editor/PlateEditor';
-import type { AnyEditorPlatePlugin } from '../plugin';
-
-import { PlateText } from '../components/plate-nodes';
-import { useReadOnly } from '../slate-react';
-import { getRenderNodeProps } from './getRenderNodeProps';
-import { type RenderText, pluginRenderText } from './pluginRenderText';
+import type { EditableProps } from "../../lib";
+import { PlateText } from "../components/plate-nodes";
+import type { PlateEditor } from "../editor/PlateEditor";
+import type { AnyEditorPlatePlugin } from "../plugin";
+import { useReadOnly } from "../slate-react";
+import { getRenderNodeProps } from "./getRenderNodeProps";
+import { pluginRenderText, type RenderText } from "./pluginRenderText";
 
 /** @see {@link RenderText} */
 export const pipeRenderText = (
   editor: PlateEditor,
-  renderTextProp?: EditableProps['renderText']
-): EditableProps['renderText'] => {
+  renderTextProp?: EditableProps["renderText"]
+): EditableProps["renderText"] => {
   const renderTexts: RenderText[] = [];
   const textPropsPlugins: AnyEditorPlatePlugin[] = [];
 
@@ -44,15 +42,12 @@ export const pipeRenderText = (
     textPropsPlugins.forEach((plugin) => {
       if (props.text[plugin.node.type ?? plugin.key]) {
         const pluginTextProps =
-          typeof plugin.node.textProps === 'function'
+          typeof plugin.node.textProps === "function"
             ? plugin.node.textProps(props as any)
             : (plugin.node.textProps ?? {});
 
         if (pluginTextProps.className) {
-          pluginTextProps.className = clsx(
-            (props as any).className,
-            pluginTextProps.className
-          );
+          pluginTextProps.className = clsx((props as any).className, pluginTextProps.className);
         }
 
         attributes = {

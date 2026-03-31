@@ -1,20 +1,19 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { insertTable } from './insertTable';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { insertTable } from "./insertTable";
 
 jsxt;
 
-describe('insertTable', () => {
-  describe('when inserting a table', () => {
+describe("insertTable", () => {
+  describe("when inserting a table", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a table at the current selection (disableMerge: $disableMerge)', ({
+    ])("inserts a table at the current selection (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -74,7 +73,7 @@ describe('insertTable', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a table at the specified path (disableMerge: $disableMerge)', ({
+    ])("inserts a table at the specified path (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -127,11 +126,7 @@ describe('insertTable', () => {
         value: input.children,
       });
 
-      insertTable(
-        editor,
-        { colCount: 2, rowCount: 2 },
-        { at: [0], select: true }
-      );
+      insertTable(editor, { colCount: 2, rowCount: 2 }, { at: [0], select: true });
 
       expect(editor.children).toMatchObject(output.children);
       expect(editor.selection).toEqual(output.selection);
@@ -140,7 +135,7 @@ describe('insertTable', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a table after the current table when no path is specified (disableMerge: $disableMerge)', ({
+    ])("inserts a table after the current table when no path is specified (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -212,7 +207,7 @@ describe('insertTable', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('respects the specified path even when inside a table (disableMerge: $disableMerge)', ({
+    ])("respects the specified path even when inside a table (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -279,11 +274,7 @@ describe('insertTable', () => {
         value: input.children,
       });
 
-      insertTable(
-        editor,
-        { colCount: 2, rowCount: 2 },
-        { at: [1], select: true }
-      );
+      insertTable(editor, { colCount: 2, rowCount: 2 }, { at: [1], select: true });
 
       expect(editor.children).toMatchObject(output.children);
       expect(editor.selection).toEqual(output.selection);
@@ -292,7 +283,7 @@ describe('insertTable', () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts a table after the current table when inside a table (disableMerge: $disableMerge)', ({
+    ])("inserts a table after the current table when inside a table (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (

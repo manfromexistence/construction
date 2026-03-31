@@ -1,10 +1,10 @@
-import { getTransientSuggestionKey } from '@platejs/suggestion';
+import { getTransientSuggestionKey } from "@platejs/suggestion";
 
-import { AI_PREVIEW_KEY, beginAIPreview } from './aiStreamSnapshot';
-import { undoAI } from './undoAI';
+import { AI_PREVIEW_KEY, beginAIPreview } from "./aiStreamSnapshot";
+import { undoAI } from "./undoAI";
 
-describe('undoAI', () => {
-  it('does nothing when the latest undo batch is not tagged as ai', () => {
+describe("undoAI", () => {
+  it("does nothing when the latest undo batch is not tagged as ai", () => {
     const editor = {
       api: { some: mock(() => true) },
       history: { redos: { pop: mock(() => {}) }, undos: [{}] },
@@ -17,7 +17,7 @@ describe('undoAI', () => {
     expect(editor.history.redos.pop).not.toHaveBeenCalled();
   });
 
-  it('does nothing when there is no ai content left in the editor', () => {
+  it("does nothing when there is no ai content left in the editor", () => {
     const editor = {
       api: { some: mock(() => false) },
       history: { redos: { pop: mock(() => {}) }, undos: [{ ai: true }] },
@@ -31,10 +31,9 @@ describe('undoAI', () => {
     expect(editor.history.redos.pop).not.toHaveBeenCalled();
   });
 
-  it('undoes the last ai batch when transient ai suggestions still exist', () => {
-    const some = mock(
-      ({ match }: { match: (node: Record<string, boolean>) => boolean }) =>
-        match({ [getTransientSuggestionKey()]: true })
+  it("undoes the last ai batch when transient ai suggestions still exist", () => {
+    const some = mock(({ match }: { match: (node: Record<string, boolean>) => boolean }) =>
+      match({ [getTransientSuggestionKey()]: true })
     );
     const editor = {
       api: { some },
@@ -49,12 +48,12 @@ describe('undoAI', () => {
     expect(editor.history.redos.pop).toHaveBeenCalledTimes(1);
   });
 
-  it('cancels active preview before touching ai history', () => {
+  it("cancels active preview before touching ai history", () => {
     const editor = {
       api: { some: mock(() => true) },
       children: [
-        { children: [{ text: 'start' }], type: 'p' },
-        { children: [{ text: 'untouched' }], type: 'p' },
+        { children: [{ text: "start" }], type: "p" },
+        { children: [{ text: "untouched" }], type: "p" },
       ],
       getPlugin: ({ key }: { key: string }) => ({
         key,
@@ -78,9 +77,7 @@ describe('undoAI', () => {
         }),
         removeNodes: mock((options: any = {}) => {
           if (options.match) {
-            editor.children = editor.children.filter(
-              (node: any) => !options.match(node)
-            );
+            editor.children = editor.children.filter((node: any) => !options.match(node));
 
             return;
           }
@@ -98,23 +95,23 @@ describe('undoAI', () => {
     } as any;
 
     beginAIPreview(editor, {
-      originalBlocks: [{ children: [{ text: 'start' }], type: 'p' }],
+      originalBlocks: [{ children: [{ text: "start" }], type: "p" }],
     });
     editor.children = [
       {
         [AI_PREVIEW_KEY]: true,
-        children: [{ text: 'preview' }],
-        type: 'p',
+        children: [{ text: "preview" }],
+        type: "p",
       },
-      { children: [{ text: '' }], type: 'aiChat' },
-      { children: [{ text: 'untouched' }], type: 'p' },
+      { children: [{ text: "" }], type: "aiChat" },
+      { children: [{ text: "untouched" }], type: "p" },
     ];
 
     undoAI(editor);
 
     expect(editor.children).toEqual([
-      { children: [{ text: 'start' }], type: 'p' },
-      { children: [{ text: 'untouched' }], type: 'p' },
+      { children: [{ text: "start" }], type: "p" },
+      { children: [{ text: "untouched" }], type: "p" },
     ]);
     expect(editor.undo).not.toHaveBeenCalled();
     expect(editor.history.redos.pop).not.toHaveBeenCalled();

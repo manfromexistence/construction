@@ -1,13 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "command",
-  "dependencies": [
-    "cmdk"
-  ],
-  "registryDependencies": [
-    "dialog",
-    "input-group"
-  ],
+  "dependencies": ["cmdk"],
+  "registryDependencies": ["dialog", "input-group"],
   "files": [
     {
       "path": "registry/radix-mira/ui/command.tsx",

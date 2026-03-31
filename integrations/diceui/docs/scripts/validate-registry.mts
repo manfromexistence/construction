@@ -14,10 +14,7 @@ async function main() {
   for (const baseName of BASES) {
     for (const style of STYLES) {
       const styleName = `${baseName}-${style.name}`;
-      const registryFile = path.join(
-        process.cwd(),
-        `public/r/styles/${styleName}/registry.json`,
-      );
+      const registryFile = path.join(process.cwd(), `public/r/styles/${styleName}/registry.json`);
 
       console.log(`🔍 Validating ${styleName}/registry.json...`);
 
@@ -53,7 +50,7 @@ async function main() {
       } catch (error) {
         console.error(
           `❌ Error validating ${styleName}:`,
-          error instanceof Error ? error.message : error,
+          error instanceof Error ? error.message : error
         );
         hasErrors = true;
       }

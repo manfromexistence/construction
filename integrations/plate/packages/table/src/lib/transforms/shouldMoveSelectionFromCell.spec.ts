@@ -1,6 +1,6 @@
-import { shouldMoveSelectionFromCell } from './shouldMoveSelectionFromCell';
+import { shouldMoveSelectionFromCell } from "./shouldMoveSelectionFromCell";
 
-type RectInit = Pick<DOMRect, 'bottom' | 'height' | 'top'>;
+type RectInit = Pick<DOMRect, "bottom" | "height" | "top">;
 
 const createRect = ({ bottom, height, top }: RectInit) =>
   ({
@@ -10,7 +10,7 @@ const createRect = ({ bottom, height, top }: RectInit) =>
   }) as DOMRect;
 
 const createEditor = ({
-  blockRange = { anchor: 'block-start', focus: 'block-end' },
+  blockRange = { anchor: "block-start", focus: "block-end" },
   blockRects = [],
   caretRects = [],
   isEnd = false,
@@ -41,75 +41,63 @@ const createEditor = ({
     },
   }) as any;
 
-describe('shouldMoveSelectionFromCell', () => {
+describe("shouldMoveSelectionFromCell", () => {
   const blockPath = [0, 0, 0, 0];
   const point = { offset: 2, path: [0, 0, 0, 0, 0] };
 
-  it('falls back to block-end checks when the block range is missing', () => {
+  it("falls back to block-end checks when the block range is missing", () => {
     const editor = createEditor({ blockRange: null, isEnd: true });
 
-    expect(
-      shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })
-    ).toBe(true);
+    expect(shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })).toBe(true);
   });
 
-  it('falls back to block-start checks when DOM rects are unavailable', () => {
+  it("falls back to block-start checks when DOM rects are unavailable", () => {
     const editor = createEditor({ isStart: true });
 
-    expect(
-      shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: true })
-    ).toBe(true);
+    expect(shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: true })).toBe(true);
   });
 
-  it('keeps downward movement inside the cell until the caret reaches the last visual line', () => {
+  it("keeps downward movement inside the cell until the caret reaches the last visual line", () => {
     const editor = createEditor({
       blockRects: [createRect({ top: 10, bottom: 20, height: 10 })],
       caretRects: [createRect({ top: 12, bottom: 18, height: 6 })],
       isEnd: true,
     });
 
-    expect(
-      shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })
-    ).toBe(false);
+    expect(shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })).toBe(false);
   });
 
-  it('allows downward movement once the caret reaches the last visual line tolerance', () => {
+  it("allows downward movement once the caret reaches the last visual line tolerance", () => {
     const editor = createEditor({
       blockRects: [createRect({ top: 10, bottom: 20, height: 10 })],
       caretRects: [createRect({ top: 15, bottom: 19, height: 4 })],
       isEnd: false,
     });
 
-    expect(
-      shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })
-    ).toBe(true);
+    expect(shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })).toBe(true);
   });
 
-  it('keeps upward movement inside the cell until the caret reaches the first visual line', () => {
+  it("keeps upward movement inside the cell until the caret reaches the first visual line", () => {
     const editor = createEditor({
       blockRects: [createRect({ top: 10, bottom: 20, height: 10 })],
       caretRects: [createRect({ top: 12, bottom: 16, height: 4 })],
       isStart: true,
     });
 
-    expect(
-      shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: true })
-    ).toBe(false);
+    expect(shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: true })).toBe(false);
   });
 
-  it('allows upward movement once the caret reaches the first visual line tolerance', () => {
+  it("allows upward movement once the caret reaches the first visual line tolerance", () => {
     const editor = createEditor({
       blockRects: [createRect({ top: 10, bottom: 20, height: 10 })],
       caretRects: [createRect({ top: 11, bottom: 15, height: 4 })],
       isStart: false,
     });
 
-    expect(
-      shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: true })
-    ).toBe(true);
+    expect(shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: true })).toBe(true);
   });
 
-  it('ignores zero-height client rects when checking visual boundaries', () => {
+  it("ignores zero-height client rects when checking visual boundaries", () => {
     const editor = createEditor({
       blockRects: [
         createRect({ top: 0, bottom: 0, height: 0 }),
@@ -121,8 +109,6 @@ describe('shouldMoveSelectionFromCell', () => {
       ],
     });
 
-    expect(
-      shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })
-    ).toBe(true);
+    expect(shouldMoveSelectionFromCell(editor, { blockPath, point, reverse: false })).toBe(true);
   });
 });

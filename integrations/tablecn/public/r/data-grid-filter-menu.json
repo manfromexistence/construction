@@ -3,20 +3,8 @@
   "name": "data-grid-filter-menu",
   "title": "Data Grid Filter Menu",
   "description": "A filter menu component for the data grid with drag-and-drop reordering and advanced filtering",
-  "dependencies": [
-    "@radix-ui/react-direction",
-    "@tanstack/react-table",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "badge",
-    "button",
-    "calendar",
-    "command",
-    "input",
-    "popover",
-    "select"
-  ],
+  "dependencies": ["@radix-ui/react-direction", "@tanstack/react-table", "lucide-react"],
+  "registryDependencies": ["badge", "button", "calendar", "command", "input", "popover", "select"],
   "files": [
     {
       "path": "src/components/data-grid/data-grid-filter-menu.tsx",

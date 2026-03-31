@@ -1,17 +1,16 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseLinkPlugin } from './BaseLinkPlugin';
+import { BaseLinkPlugin } from "./BaseLinkPlugin";
 
 jsxt;
 
 const createClipboardData = (text: string) =>
   ({
-    getData: (type: string) => (type === 'text/plain' ? text : ''),
+    getData: (type: string) => (type === "text/plain" ? text : ""),
   }) as any;
 
 const createLinkEditor = (input: SlateEditor, options?: Record<string, any>) =>
@@ -27,9 +26,9 @@ const createLinkEditor = (input: SlateEditor, options?: Record<string, any>) =>
     value: input.children,
   });
 
-describe('withLink', () => {
-  describe('insertData', () => {
-    it('inserts a link when plain url text is pasted into a paragraph', () => {
+describe("withLink", () => {
+  describe("insertData", () => {
+    it("inserts a link when plain url text is pasted into a paragraph", () => {
       const input = (
         <editor>
           <hp>
@@ -40,7 +39,7 @@ describe('withLink', () => {
       ) as any as SlateEditor;
 
       const editor = createLinkEditor(input);
-      editor.tf.insertData(createClipboardData('http://google.com'));
+      editor.tf.insertData(createClipboardData("http://google.com"));
 
       expect(editor.children).toEqual(
         (
@@ -55,7 +54,7 @@ describe('withLink', () => {
       );
     });
 
-    it('keeps the selected text by default when a url is pasted over a selection', () => {
+    it("keeps the selected text by default when a url is pasted over a selection", () => {
       const input = (
         <editor>
           <hp>
@@ -67,7 +66,7 @@ describe('withLink', () => {
       ) as any as SlateEditor;
 
       const editor = createLinkEditor(input);
-      editor.tf.insertData(createClipboardData('https://google.com'));
+      editor.tf.insertData(createClipboardData("https://google.com"));
 
       expect(editor.children).toEqual(
         (
@@ -81,7 +80,7 @@ describe('withLink', () => {
       );
     });
 
-    it('can replace the selected text with the pasted url when configured', () => {
+    it("can replace the selected text with the pasted url when configured", () => {
       const input = (
         <editor>
           <hp>
@@ -95,7 +94,7 @@ describe('withLink', () => {
       const editor = createLinkEditor(input, {
         keepSelectedTextOnPaste: false,
       });
-      editor.tf.insertData(createClipboardData('https://google.com'));
+      editor.tf.insertData(createClipboardData("https://google.com"));
 
       expect(editor.children).toEqual(
         (
@@ -110,8 +109,8 @@ describe('withLink', () => {
     });
   });
 
-  describe('insertText', () => {
-    it('wraps a plain url when the trailing space is inserted', () => {
+  describe("insertText", () => {
+    it("wraps a plain url when the trailing space is inserted", () => {
       const input = (
         <editor>
           <hp>
@@ -122,20 +121,20 @@ describe('withLink', () => {
       ) as any as SlateEditor;
 
       const editor = createLinkEditor(input);
-      editor.tf.insertText(' ');
+      editor.tf.insertText(" ");
 
       expect(editor.children).toEqual(
         (
           <editor>
             <hp>
-              link: <ha url="http://google.com">http://google.com</ha>{' '}
+              link: <ha url="http://google.com">http://google.com</ha>{" "}
             </hp>
           </editor>
         ).children
       );
     });
 
-    it('uses getUrlHref when the visible text is not itself a valid href', () => {
+    it("uses getUrlHref when the visible text is not itself a valid href", () => {
       const input = (
         <editor>
           <hp>
@@ -146,23 +145,23 @@ describe('withLink', () => {
       ) as any as SlateEditor;
 
       const editor = createLinkEditor(input, {
-        getUrlHref: () => 'http://google.com',
+        getUrlHref: () => "http://google.com",
       });
-      editor.tf.insertText(' ');
+      editor.tf.insertText(" ");
 
       expect(editor.children).toEqual(
         (
           <editor>
             <hp>
               <htext />
-              <ha url="http://google.com">google.com</ha>{' '}
+              <ha url="http://google.com">google.com</ha>{" "}
             </hp>
           </editor>
         ).children
       );
     });
 
-    it('does not wrap again when the word before the cursor is already a link', () => {
+    it("does not wrap again when the word before the cursor is already a link", () => {
       const input = (
         <editor>
           <hp>
@@ -173,14 +172,14 @@ describe('withLink', () => {
       ) as any as SlateEditor;
 
       const editor = createLinkEditor(input);
-      editor.tf.insertText(' ');
+      editor.tf.insertText(" ");
 
       expect(editor.children).toEqual(
         (
           <editor>
             <hp>
               <htext />
-              <ha url="http://google.com">http://google.com</ha>{' '}
+              <ha url="http://google.com">http://google.com</ha>{" "}
             </hp>
           </editor>
         ).children
@@ -188,8 +187,8 @@ describe('withLink', () => {
     });
   });
 
-  describe('insertBreak', () => {
-    it('finalizes an autolink before creating the next block', () => {
+  describe("insertBreak", () => {
+    it("finalizes an autolink before creating the next block", () => {
       const input = (
         <editor>
           <hp>
@@ -218,7 +217,7 @@ describe('withLink', () => {
       );
     });
 
-    it('falls back to the normal block split when the selection is expanded', () => {
+    it("falls back to the normal block split when the selection is expanded", () => {
       const input = (
         <editor>
           <hp>
@@ -243,8 +242,8 @@ describe('withLink', () => {
     });
   });
 
-  describe('removeEmpty', () => {
-    it('removes an empty link after its full contents are deleted', () => {
+  describe("removeEmpty", () => {
+    it("removes an empty link after its full contents are deleted", () => {
       const input = (
         <editor>
           <hp>
@@ -270,7 +269,7 @@ describe('withLink', () => {
       );
     });
 
-    it('keeps the link node when it still contains a zero-width space', () => {
+    it("keeps the link node when it still contains a zero-width space", () => {
       const input = (
         <editor>
           <hp>
@@ -285,14 +284,14 @@ describe('withLink', () => {
         anchor: { offset: 0, path: [0, 1, 0] },
         focus: { offset: 9, path: [0, 1, 0] },
       });
-      editor.tf.insertText('\u200B');
+      editor.tf.insertText("\u200B");
       editor.tf.normalize();
 
       expect(editor.children).toEqual(
         (
           <editor>
             <hp>
-              Before <ha url="http://example.com">{'\u200B'}</ha> after
+              Before <ha url="http://example.com">{"\u200B"}</ha> after
             </hp>
           </editor>
         ).children

@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "tooltip-example",
   "title": "Tooltip",
-  "registryDependencies": [
-    "button",
-    "kbd",
-    "tooltip",
-    "example"
-  ],
+  "registryDependencies": ["button", "kbd", "tooltip", "example"],
   "files": [
     {
       "path": "registry/radix-maia/examples/tooltip-example.tsx",

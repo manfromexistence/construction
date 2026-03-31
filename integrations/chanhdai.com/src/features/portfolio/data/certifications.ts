@@ -1,4 +1,4 @@
-import type { Certification } from "../types/certifications"
+import type { Certification } from "../types/certifications";
 
 export const CERTIFICATIONS: Certification[] = [
   {
@@ -7,8 +7,7 @@ export const CERTIFICATIONS: Certification[] = [
     issuerIconName: "google",
     issueDate: "2025-12-09",
     credentialID: "c05d3bad-3be0-4915-b41c-b8384357093a",
-    credentialURL:
-      "https://edu.google.accredible.com/c05d3bad-3be0-4915-b41c-b8384357093a",
+    credentialURL: "https://edu.google.accredible.com/c05d3bad-3be0-4915-b41c-b8384357093a",
   },
   {
     title: "Animations on the Web",
@@ -16,8 +15,7 @@ export const CERTIFICATIONS: Certification[] = [
     issuerIconName: "animationsdev",
     issueDate: "2025-11-03",
     credentialID: "dfb419c8-5ed7-43f2-b60c-446bc50a39b1",
-    credentialURL:
-      "https://animations.dev/certificate/dfb419c8-5ed7-43f2-b60c-446bc50a39b1",
+    credentialURL: "https://animations.dev/certificate/dfb419c8-5ed7-43f2-b60c-446bc50a39b1",
   },
   {
     title: "Certificate of Trademark Registration No. 565092",
@@ -162,4 +160,4 @@ export const CERTIFICATIONS: Certification[] = [
     credentialURL:
       "https://drive.google.com/file/d/1-NHhjKlQbhlcO7bpRue1XzDgDaudOf2N/view?usp=sharing",
   },
-]
+];

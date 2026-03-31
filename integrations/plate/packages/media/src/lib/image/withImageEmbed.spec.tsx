@@ -1,14 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor } from 'platejs';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
 
-import { BaseImagePlugin } from './BaseImagePlugin';
+import { BaseImagePlugin } from "./BaseImagePlugin";
 
 jsxt;
 
-describe('withImageEmbed', () => {
+describe("withImageEmbed", () => {
   const input = createEditor(
     (
       <editor>
@@ -26,14 +25,14 @@ describe('withImageEmbed', () => {
     </editor>
   ) as any;
 
-  it('insert image from the text', () => {
+  it("insert image from the text", () => {
     const editor = createSlateEditor({
       editor: input,
       plugins: [BaseImagePlugin],
     });
 
     const data = {
-      getData: () => 'https://i.imgur.com/removed.png',
+      getData: () => "https://i.imgur.com/removed.png",
     };
     editor.tf.insertData(data as any);
 

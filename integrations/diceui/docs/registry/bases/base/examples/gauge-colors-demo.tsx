@@ -52,7 +52,7 @@ export default function GaugeColorsDemo() {
           const target = themes[idx]?.value ?? 0;
           if (val >= target) return target;
           return val + 1;
-        }),
+        })
       );
     }, 20);
 

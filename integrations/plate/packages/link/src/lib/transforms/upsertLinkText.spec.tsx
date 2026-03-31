@@ -1,16 +1,15 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseLinkPlugin } from '../BaseLinkPlugin';
-import { upsertLinkText } from './upsertLinkText';
+import { BaseLinkPlugin } from "../BaseLinkPlugin";
+import { upsertLinkText } from "./upsertLinkText";
 
 jsxt;
 
-describe('upsertLinkText', () => {
+describe("upsertLinkText", () => {
   const createEditor = (input: SlateEditor) =>
     createSlateEditor({
       plugins: [BaseLinkPlugin],
@@ -18,7 +17,7 @@ describe('upsertLinkText', () => {
       value: input.children,
     });
 
-  it('replaces link children when the text changes and keeps the first leaf marks', () => {
+  it("replaces link children when the text changes and keeps the first leaf marks", () => {
     const input = (
       <editor>
         <hp>
@@ -36,8 +35,8 @@ describe('upsertLinkText', () => {
     const editor = createEditor(input);
 
     upsertLinkText(editor, {
-      text: 'new value',
-      url: 'https://example.com',
+      text: "new value",
+      url: "https://example.com",
     });
 
     expect(editor.children).toEqual(
@@ -55,7 +54,7 @@ describe('upsertLinkText', () => {
     );
   });
 
-  it('does nothing when the requested text matches the current link text', () => {
+  it("does nothing when the requested text matches the current link text", () => {
     const input = (
       <editor>
         <hp>
@@ -70,14 +69,14 @@ describe('upsertLinkText', () => {
     const editor = createEditor(input);
 
     upsertLinkText(editor, {
-      text: 'same',
-      url: 'https://example.com',
+      text: "same",
+      url: "https://example.com",
     });
 
     expect(editor.children).toEqual(input.children);
   });
 
-  it('does nothing when no replacement text is provided', () => {
+  it("does nothing when no replacement text is provided", () => {
     const input = (
       <editor>
         <hp>
@@ -92,7 +91,7 @@ describe('upsertLinkText', () => {
     const editor = createEditor(input);
 
     upsertLinkText(editor, {
-      url: 'https://example.com',
+      url: "https://example.com",
     });
 
     expect(editor.children).toEqual(input.children);

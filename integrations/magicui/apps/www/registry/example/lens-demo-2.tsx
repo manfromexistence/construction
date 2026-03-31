@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,8 +6,8 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Lens } from "@/registry/magicui/lens"
+} from "@/components/ui/card";
+import { Lens } from "@/registry/magicui/lens";
 
 export default function LensDemo() {
   return (
@@ -25,8 +25,7 @@ export default function LensDemo() {
       <CardContent>
         <CardTitle className="text-2xl">Your next camp</CardTitle>
         <CardDescription>
-          See our latest and best camp destinations all across the five
-          continents of the globe.
+          See our latest and best camp destinations all across the five continents of the globe.
         </CardDescription>
       </CardContent>
       <CardFooter className="space-x-4">
@@ -34,5 +33,5 @@ export default function LensDemo() {
         <Button variant="secondary">Another time</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

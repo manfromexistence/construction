@@ -58,10 +58,7 @@ function updateRegistryComponents() {
     .join(",\n");
 
   const updatedContent =
-    content.slice(0, lastComponentIndex + 1) +
-    ",\n" +
-    newComponentsString +
-    ",\n];";
+    content.slice(0, lastComponentIndex + 1) + ",\n" + newComponentsString + ",\n];";
 
   fs.writeFileSync(registryPath, updatedContent);
 

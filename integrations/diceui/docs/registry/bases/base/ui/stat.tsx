@@ -12,7 +12,7 @@ function Stat({ className, ...props }: React.ComponentProps<"div">) {
         "**:data-[slot=stat-label]:col-span-1 **:data-[slot=stat-value]:col-span-1",
         "**:data-[slot=stat-indicator]:col-start-2 **:data-[slot=stat-indicator]:row-span-2 **:data-[slot=stat-indicator]:row-start-1 **:data-[slot=stat-indicator]:self-start",
         "**:data-[slot=stat-description]:col-span-2 **:data-[slot=stat-separator]:col-span-2 **:data-[slot=stat-trend]:col-span-2",
-        className,
+        className
       )}
       {...props}
     />
@@ -43,11 +43,9 @@ const statIndicatorVariants = cva(
       },
       color: {
         default: "bg-muted text-muted-foreground",
-        success:
-          "border-green-500/20 bg-green-500/10 text-green-600 dark:text-green-400",
+        success: "border-green-500/20 bg-green-500/10 text-green-600 dark:text-green-400",
         info: "border-blue-500/20 bg-blue-500/10 text-blue-600 dark:text-blue-400",
-        warning:
-          "border-orange-500/20 bg-orange-500/10 text-orange-600 dark:text-orange-400",
+        warning: "border-orange-500/20 bg-orange-500/10 text-orange-600 dark:text-orange-400",
         error: "border-destructive/20 bg-destructive/10 text-destructive",
       },
     },
@@ -55,7 +53,7 @@ const statIndicatorVariants = cva(
       variant: "default",
       color: "default",
     },
-  },
+  }
 );
 
 interface StatIndicatorProps
@@ -105,7 +103,7 @@ function StatTrend({
           "text-red-600 dark:text-red-400": trend === "down",
           "text-muted-foreground": trend === "neutral" || !trend,
         },
-        className,
+        className
       )}
       {...props}
     />
@@ -126,12 +124,4 @@ function StatDescription({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-export {
-  Stat,
-  StatDescription,
-  StatIndicator,
-  StatLabel,
-  StatSeparator,
-  StatTrend,
-  StatValue,
-};
+export { Stat, StatDescription, StatIndicator, StatLabel, StatSeparator, StatTrend, StatValue };

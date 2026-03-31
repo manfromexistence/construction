@@ -1,14 +1,14 @@
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
-describe('collapseSelection', () => {
+describe("collapseSelection", () => {
   it.each([
-    ['anchor', 1, 3, 1],
-    ['focus', 1, 3, 3],
-    ['start', 3, 1, 1],
-    ['end', 3, 1, 3],
-  ] as const)('collapses to the %s edge', (edge, anchorOffset, focusOffset, expectedOffset) => {
+    ["anchor", 1, 3, 1],
+    ["focus", 1, 3, 3],
+    ["start", 3, 1, 1],
+    ["end", 3, 1, 3],
+  ] as const)("collapses to the %s edge", (edge, anchorOffset, focusOffset, expectedOffset) => {
     const editor: any = createEditor({
-      children: [{ type: 'p', children: [{ text: 'word' }] }] as any,
+      children: [{ type: "p", children: [{ text: "word" }] }] as any,
       selection: {
         anchor: { offset: anchorOffset, path: [0, 0] },
         focus: { offset: focusOffset, path: [0, 0] },

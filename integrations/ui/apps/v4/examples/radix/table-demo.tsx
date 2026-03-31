@@ -7,7 +7,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/styles/radix-nova/ui/table"
+} from "@/styles/radix-nova/ui/table";
 
 const invoices = [
   {
@@ -52,7 +52,7 @@ const invoices = [
     totalAmount: "$300.00",
     paymentMethod: "Credit Card",
   },
-]
+];
 
 export function TableDemo() {
   return (
@@ -83,5 +83,5 @@ export function TableDemo() {
         </TableRow>
       </TableFooter>
     </Table>
-  )
+  );
 }

@@ -93,7 +93,7 @@ export function filterColumns<T extends Table>({
                   const date = new Date(Number(filter.value));
                   date.setHours(23, 59, 59, 999);
                   return date;
-                })(),
+                })()
               )
             : undefined;
 
@@ -107,7 +107,7 @@ export function filterColumns<T extends Table>({
                   const date = new Date(Number(filter.value));
                   date.setHours(23, 59, 59, 999);
                   return date;
-                })(),
+                })()
               )
             : undefined;
 
@@ -121,7 +121,7 @@ export function filterColumns<T extends Table>({
                   const date = new Date(Number(filter.value));
                   date.setHours(0, 0, 0, 0);
                   return date;
-                })(),
+                })()
               )
             : undefined;
 
@@ -135,7 +135,7 @@ export function filterColumns<T extends Table>({
                   const date = new Date(Number(filter.value));
                   date.setHours(0, 0, 0, 0);
                   return date;
-                })(),
+                })()
               )
             : undefined;
 
@@ -153,7 +153,7 @@ export function filterColumns<T extends Table>({
                     const date = new Date(Number(filter.value[0]));
                     date.setHours(0, 0, 0, 0);
                     return date;
-                  })(),
+                  })()
                 )
               : undefined,
             filter.value[1]
@@ -163,9 +163,9 @@ export function filterColumns<T extends Table>({
                     const date = new Date(Number(filter.value[1]));
                     date.setHours(23, 59, 59, 999);
                     return date;
-                  })(),
+                  })()
                 )
-              : undefined,
+              : undefined
           );
         }
 
@@ -175,13 +175,9 @@ export function filterColumns<T extends Table>({
           filter.value.length === 2
         ) {
           const firstValue =
-            filter.value[0] && filter.value[0].trim() !== ""
-              ? Number(filter.value[0])
-              : null;
+            filter.value[0] && filter.value[0].trim() !== "" ? Number(filter.value[0]) : null;
           const secondValue =
-            filter.value[1] && filter.value[1].trim() !== ""
-              ? Number(filter.value[1])
-              : null;
+            filter.value[1] && filter.value[1].trim() !== "" ? Number(filter.value[1]) : null;
 
           if (firstValue === null && secondValue === null) {
             return undefined;
@@ -197,7 +193,7 @@ export function filterColumns<T extends Table>({
 
           return and(
             firstValue !== null ? gte(column, firstValue) : undefined,
-            secondValue !== null ? lte(column, secondValue) : undefined,
+            secondValue !== null ? lte(column, secondValue) : undefined
           );
         }
         return undefined;
@@ -216,21 +212,15 @@ export function filterColumns<T extends Table>({
 
           switch (unit) {
             case "days":
-              startDate = startOfDay(
-                addDays(today, Number.parseInt(amount, 10)),
-              );
+              startDate = startOfDay(addDays(today, Number.parseInt(amount, 10)));
               endDate = endOfDay(startDate);
               break;
             case "weeks":
-              startDate = startOfDay(
-                addDays(today, Number.parseInt(amount, 10) * 7),
-              );
+              startDate = startOfDay(addDays(today, Number.parseInt(amount, 10) * 7));
               endDate = endOfDay(addDays(startDate, 6));
               break;
             case "months":
-              startDate = startOfDay(
-                addDays(today, Number.parseInt(amount, 10) * 30),
-              );
+              startDate = startOfDay(addDays(today, Number.parseInt(amount, 10) * 30));
               endDate = endOfDay(addDays(startDate, 29));
               break;
             default:
@@ -252,16 +242,11 @@ export function filterColumns<T extends Table>({
     }
   });
 
-  const validConditions = conditions.filter(
-    (condition) => condition !== undefined,
-  );
+  const validConditions = conditions.filter((condition) => condition !== undefined);
 
   return validConditions.length > 0 ? joinFn(...validConditions) : undefined;
 }
 
-export function getColumn<T extends Table>(
-  table: T,
-  columnKey: keyof T,
-): AnyColumn {
+export function getColumn<T extends Table>(table: T, columnKey: keyof T): AnyColumn {
   return table[columnKey] as AnyColumn;
 }

@@ -1,11 +1,11 @@
-import * as queryModule from '../queries/getBlocksWithId';
-import { removeBlocksAndFocus } from './removeBlocksAndFocus';
+import * as queryModule from "../queries/getBlocksWithId";
+import { removeBlocksAndFocus } from "./removeBlocksAndFocus";
 
-describe('removeBlocksAndFocus', () => {
-  it('removes the block range and focuses the editor', () => {
-    const getBlocksSpy = spyOn(queryModule, 'getBlocksWithId').mockReturnValue([
-      [{ id: 'a', type: 'p' }, [0]],
-      [{ id: 'b', type: 'p' }, [1]],
+describe("removeBlocksAndFocus", () => {
+  it("removes the block range and focuses the editor", () => {
+    const getBlocksSpy = spyOn(queryModule, "getBlocksWithId").mockReturnValue([
+      [{ id: "a", type: "p" }, [0]],
+      [{ id: "b", type: "p" }, [1]],
     ] as any);
     const removeNodes = mock();
     const focus = mock();

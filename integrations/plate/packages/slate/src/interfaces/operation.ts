@@ -1,8 +1,8 @@
-import { Operation as SlateOperation } from 'slate';
+import { Operation as SlateOperation } from "slate";
 
-import type { Descendant, NodeProps } from './node';
-import type { Path } from './path';
-import type { TRange } from './range';
+import type { Descendant, NodeProps } from "./node";
+import type { Path } from "./path";
+import type { TRange } from "./range";
 
 /**
  * `Operation` objects define the low-level instructions that Slate editors use
@@ -23,9 +23,7 @@ export const OperationApi: {
    */
   inverse: (op: Operation) => Operation;
   /** Check if a value is a `NodeOperation` object. */
-  isNodeOperation: <N extends Descendant>(
-    value: any
-  ) => value is NodeOperation<N>;
+  isNodeOperation: <N extends Descendant>(value: any) => value is NodeOperation<N>;
   /** Check if a value is an `Operation` object. */
   isOperation: <N extends Descendant>(value: any) => value is Operation<N>;
   /** Check if a value is a list of `Operation` objects. */
@@ -40,7 +38,7 @@ export type InsertNodeOperation<N extends Descendant = Descendant> = {
   [key: string]: unknown;
   node: N;
   path: Path;
-  type: 'insert_node';
+  type: "insert_node";
 };
 
 export type InsertTextOperation = {
@@ -48,7 +46,7 @@ export type InsertTextOperation = {
   offset: number;
   path: Path;
   text: string;
-  type: 'insert_text';
+  type: "insert_text";
 };
 
 export type MergeNodeOperation<N extends Descendant = Descendant> = {
@@ -56,14 +54,14 @@ export type MergeNodeOperation<N extends Descendant = Descendant> = {
   path: Path;
   position: number;
   properties: Partial<NodeProps<N>>;
-  type: 'merge_node';
+  type: "merge_node";
 };
 
 export type MoveNodeOperation = {
   [key: string]: unknown;
   newPath: Path;
   path: Path;
-  type: 'move_node';
+  type: "move_node";
 };
 
 export type NodeOperation<N extends Descendant = Descendant> =
@@ -78,7 +76,7 @@ export type RemoveNodeOperation<N extends Descendant = Descendant> = {
   [key: string]: unknown;
   node: N;
   path: Path;
-  type: 'remove_node';
+  type: "remove_node";
 };
 
 export type RemoveTextOperation = {
@@ -86,7 +84,7 @@ export type RemoveTextOperation = {
   offset: number;
   path: Path;
   text: string;
-  type: 'remove_text';
+  type: "remove_text";
 };
 
 export type SelectionOperation = SetSelectionOperation;
@@ -99,7 +97,7 @@ export type SetNodeOperation<
   newProperties: Partial<NodeProps<N1>>;
   path: Path;
   properties: Partial<NodeProps<N2>>;
-  type: 'set_node';
+  type: "set_node";
 };
 
 export type SetSelectionOperation =
@@ -107,19 +105,19 @@ export type SetSelectionOperation =
       [key: string]: unknown;
       newProperties: null;
       properties: TRange;
-      type: 'set_selection';
+      type: "set_selection";
     }
   | {
       [key: string]: unknown;
       newProperties: Partial<TRange>;
       properties: Partial<TRange>;
-      type: 'set_selection';
+      type: "set_selection";
     }
   | {
       [key: string]: unknown;
       newProperties: TRange;
       properties: null;
-      type: 'set_selection';
+      type: "set_selection";
     };
 
 export type SplitNodeOperation<N extends Descendant = Descendant> = {
@@ -127,7 +125,7 @@ export type SplitNodeOperation<N extends Descendant = Descendant> = {
   path: Path;
   position: number;
   properties: Partial<NodeProps<N>>;
-  type: 'split_node';
+  type: "split_node";
 };
 
 export type TextOperation = InsertTextOperation | RemoveTextOperation;

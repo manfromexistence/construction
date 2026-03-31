@@ -1,17 +1,6 @@
-import {
-  CheckIcon,
-  CreditCardIcon,
-  InfoIcon,
-  MailIcon,
-  SearchIcon,
-  StarIcon,
-} from "lucide-react"
+import { CheckIcon, CreditCardIcon, InfoIcon, MailIcon, SearchIcon, StarIcon } from "lucide-react";
 
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/styles/base-nova/ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/styles/base-nova/ui/input-group";
 
 export default function InputGroupIcon() {
   return (
@@ -45,5 +34,5 @@ export default function InputGroupIcon() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

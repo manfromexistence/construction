@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('block', () => {
-  describe('when no options', () => {
+describe("block", () => {
+  describe("when no options", () => {
     const input = createEditor(
       (
         <editor>
@@ -18,14 +18,14 @@ describe('block', () => {
       ) as any
     );
 
-    it('get block at selection', () => {
+    it("get block at selection", () => {
       const res = input.api.block();
 
-      expect(res).toEqual([{ children: [{ text: '1' }], type: 'p' }, [0]]);
+      expect(res).toEqual([{ children: [{ text: "1" }], type: "p" }, [0]]);
     });
   });
 
-  describe('when at option', () => {
+  describe("when at option", () => {
     const input = createEditor(
       (
         <editor>
@@ -39,17 +39,14 @@ describe('block', () => {
       ) as any
     );
 
-    it('get block at path', () => {
+    it("get block at path", () => {
       const res = input.api.block({ at: [1, 0, 0] });
 
-      expect(res).toEqual([
-        { children: [{ text: '2' }], type: 'p' },
-        [1, 0, 0],
-      ]);
+      expect(res).toEqual([{ children: [{ text: "2" }], type: "p" }, [1, 0, 0]]);
     });
   });
 
-  describe('when above option', () => {
+  describe("when above option", () => {
     const input = createEditor(
       (
         <editor>
@@ -64,26 +61,23 @@ describe('block', () => {
       ) as any
     );
 
-    it('get block above selection', () => {
+    it("get block above selection", () => {
       const res = input.api.block({ above: true });
 
-      expect(res).toEqual([
-        { children: [{ text: '1' }], type: 'p' },
-        [0, 0, 0],
-      ]);
+      expect(res).toEqual([{ children: [{ text: "1" }], type: "p" }, [0, 0, 0]]);
     });
 
-    it('get block above path', () => {
+    it("get block above path", () => {
       const res = input.api.block({ above: true, at: [0, 0, 0] });
 
       expect(res).toEqual([
-        { children: [{ children: [{ text: '1' }], type: 'p' }], type: 'li' },
+        { children: [{ children: [{ text: "1" }], type: "p" }], type: "li" },
         [0, 0],
       ]);
     });
   });
 
-  describe('when highest option', () => {
+  describe("when highest option", () => {
     const input = createEditor(
       (
         <editor>
@@ -99,7 +93,7 @@ describe('block', () => {
       ) as any
     );
 
-    it('get highest block at selection', () => {
+    it("get highest block at selection", () => {
       const res = input.api.block({ highest: true });
 
       expect(res).toEqual([
@@ -112,14 +106,14 @@ describe('block', () => {
       ]);
     });
 
-    it('get highest block at path', () => {
+    it("get highest block at path", () => {
       const res = input.api.block({ at: [0, 0, 0], highest: true });
 
       expect(res).toEqual([<hp>first</hp>, [0]]);
     });
   });
 
-  describe('when no block found', () => {
+  describe("when no block found", () => {
     const input = createEditor(
       (
         <editor>
@@ -128,14 +122,14 @@ describe('block', () => {
       ) as any
     );
 
-    it('returns undefined for non-existent path', () => {
+    it("returns undefined for non-existent path", () => {
       const res = input.api.block({ at: [1] });
 
       expect(res).toBeUndefined();
     });
 
-    it('returns undefined for non-matching options', () => {
-      const res = input.api.block({ match: { type: 'non-existent' } });
+    it("returns undefined for non-matching options", () => {
+      const res = input.api.block({ match: { type: "non-existent" } });
 
       expect(res).toBeUndefined();
     });

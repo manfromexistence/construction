@@ -1,16 +1,12 @@
-import { HelpCircle, InfoIcon } from "lucide-react"
+import { HelpCircle, InfoIcon } from "lucide-react";
 
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/base-nova/ui/input-group"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/base-nova/ui/tooltip"
+} from "@/styles/base-nova/ui/input-group";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/base-nova/ui/tooltip";
 
 export default function InputGroupTooltip() {
   return (
@@ -20,13 +16,7 @@ export default function InputGroupTooltip() {
         <InputGroupAddon align="inline-end">
           <Tooltip>
             <TooltipTrigger
-              render={
-                <InputGroupButton
-                  variant="ghost"
-                  aria-label="Info"
-                  size="icon-xs"
-                />
-              }
+              render={<InputGroupButton variant="ghost" aria-label="Info" size="icon-xs" />}
             >
               <InfoIcon />
             </TooltipTrigger>
@@ -41,13 +31,7 @@ export default function InputGroupTooltip() {
         <InputGroupAddon align="inline-end">
           <Tooltip>
             <TooltipTrigger
-              render={
-                <InputGroupButton
-                  variant="ghost"
-                  aria-label="Help"
-                  size="icon-xs"
-                />
-              }
+              render={<InputGroupButton variant="ghost" aria-label="Help" size="icon-xs" />}
             >
               <HelpCircle />
             </TooltipTrigger>
@@ -71,5 +55,5 @@ export default function InputGroupTooltip() {
         </Tooltip>
       </InputGroup>
     </div>
-  )
+  );
 }

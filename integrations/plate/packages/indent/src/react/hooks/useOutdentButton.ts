@@ -1,6 +1,6 @@
-import { useEditorRef } from 'platejs/react';
+import { useEditorRef } from "platejs/react";
 
-import { outdent } from '../../index';
+import { outdent } from "../../index";
 
 export const useOutdentButton = () => {
   const editor = useEditorRef();

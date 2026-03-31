@@ -1,4 +1,4 @@
-import { SearchIcon } from "lucide-react"
+import { SearchIcon } from "lucide-react";
 
 import {
   Empty,
@@ -6,13 +6,9 @@ import {
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
-} from "@/styles/radix-nova/ui/empty"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/styles/radix-nova/ui/input-group"
-import { Kbd } from "@/styles/radix-nova/ui/kbd"
+} from "@/styles/radix-nova/ui/empty";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/styles/radix-nova/ui/input-group";
+import { Kbd } from "@/styles/radix-nova/ui/kbd";
 
 export default function EmptyInputGroup() {
   return (
@@ -20,8 +16,8 @@ export default function EmptyInputGroup() {
       <EmptyHeader>
         <EmptyTitle>404 - Not Found</EmptyTitle>
         <EmptyDescription>
-          The page you&apos;re looking for doesn&apos;t exist. Try searching for
-          what you need below.
+          The page you&apos;re looking for doesn&apos;t exist. Try searching for what you need
+          below.
         </EmptyDescription>
       </EmptyHeader>
       <EmptyContent>
@@ -39,5 +35,5 @@ export default function EmptyInputGroup() {
         </EmptyDescription>
       </EmptyContent>
     </Empty>
-  )
+  );
 }

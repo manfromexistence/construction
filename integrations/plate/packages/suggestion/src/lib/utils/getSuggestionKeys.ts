@@ -1,19 +1,11 @@
-import {
-  type SlateEditor,
-  type TNode,
-  type TText,
-  isDefined,
-  KEYS,
-} from 'platejs';
+import { isDefined, KEYS, type SlateEditor, type TNode, type TText } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getInlineSuggestionData } from './getSuggestionId';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { getInlineSuggestionData } from "./getSuggestionId";
 
-export const getSuggestionKey = (id = '0'): string =>
-  `${KEYS.suggestion}_${id}`;
+export const getSuggestionKey = (id = "0"): string => `${KEYS.suggestion}_${id}`;
 
-export const isSuggestionKey = (key: string) =>
-  key.startsWith(`${KEYS.suggestion}_`);
+export const isSuggestionKey = (key: string) => key.startsWith(`${KEYS.suggestion}_`);
 
 export const getSuggestionKeys = (node: TNode) => {
   const keys: string[] = [];
@@ -33,8 +25,7 @@ export const getSuggestionUserIds = (node: TNode) =>
     .map((key) => (node as any)[key]?.userId)
     .filter(isDefined);
 
-export const getSuggestionUserId = (node: TNode) =>
-  getSuggestionUserIds(node)[0];
+export const getSuggestionUserId = (node: TNode) => getSuggestionUserIds(node)[0];
 
 export const isCurrentUserSuggestion = (editor: SlateEditor, node: TText) => {
   const { currentUserId } = editor.getOptions(BaseSuggestionPlugin);

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from "zod";
 
 export const ManifestSchema = z.object({
   tailwind: z.object({
@@ -8,6 +8,6 @@ export const ManifestSchema = z.object({
     components: z.string(),
     utils: z.string(),
   }),
-})
+});
 
-export type Manifest = z.infer<typeof ManifestSchema>
+export type Manifest = z.infer<typeof ManifestSchema>;

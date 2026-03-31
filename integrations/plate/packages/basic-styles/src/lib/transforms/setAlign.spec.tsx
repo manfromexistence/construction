@@ -1,14 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createEditor, createSlateEditor } from 'platejs';
-
-import { setAlign } from '.';
-import { BaseTextAlignPlugin } from '../BaseTextAlignPlugin';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor, type SlateEditor } from "platejs";
+import { BaseTextAlignPlugin } from "../BaseTextAlignPlugin";
+import { setAlign } from ".";
 
 jsxt;
 
-describe('center', () => {
+describe("center", () => {
   const input = createEditor(
     (
       <editor>
@@ -26,20 +25,20 @@ describe('center', () => {
     </editor>
   ) as any;
 
-  it('align center', () => {
+  it("align center", () => {
     const editor = createSlateEditor({
       plugins: [BaseTextAlignPlugin],
       selection: input.selection,
       value: input.children,
     } as any);
 
-    setAlign(editor, 'center');
+    setAlign(editor, "center");
 
     expect(editor.children).toEqual(output.children);
   });
 });
 
-describe('left', () => {
+describe("left", () => {
   const input = createEditor(
     (
       <editor>
@@ -57,21 +56,21 @@ describe('left', () => {
     </editor>
   ) as any;
 
-  it('remove align prop', () => {
+  it("remove align prop", () => {
     const editor = createSlateEditor({
       plugins: [BaseTextAlignPlugin],
       selection: input.selection,
       value: input.children,
     } as any);
 
-    setAlign(editor, 'start');
+    setAlign(editor, "start");
 
     expect(editor.children).toEqual(output.children);
   });
 });
 
-describe('no-type', () => {
-  describe('when type (h1) is not in types', () => {
+describe("no-type", () => {
+  describe("when type (h1) is not in types", () => {
     const input = (
       <editor>
         <hh1>
@@ -87,14 +86,14 @@ describe('no-type', () => {
       </editor>
     ) as any as SlateEditor;
 
-    it('does not align', () => {
+    it("does not align", () => {
       const editor = createSlateEditor({
         plugins: [BaseTextAlignPlugin],
         selection: input.selection,
         value: input.children,
       } as any);
 
-      setAlign(editor, 'center');
+      setAlign(editor, "center");
 
       expect(editor.children).toEqual(output.children);
     });

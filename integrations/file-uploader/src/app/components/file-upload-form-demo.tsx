@@ -4,8 +4,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CloudUpload, X } from "lucide-react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import * as z from "zod";
-
 import { Button } from "@/components/ui/button";
 import {
   FileUpload,
@@ -26,7 +26,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { toast } from "sonner";
 
 const formSchema = z.object({
   files: z
@@ -56,12 +55,10 @@ export function FileUploadFormDemo() {
           <code>
             {JSON.stringify(
               data.files.map((file) =>
-                file.name.length > 25
-                  ? `${file.name.slice(0, 25)}...`
-                  : file.name,
+                file.name.length > 25 ? `${file.name.slice(0, 25)}...` : file.name
               ),
               null,
-              2,
+              2
             )}
           </code>
         </pre>
@@ -108,11 +105,7 @@ export function FileUploadFormDemo() {
                         <FileUploadItemPreview />
                         <FileUploadItemMetadata />
                         <FileUploadItemDelete asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="size-7"
-                          >
+                          <Button variant="ghost" size="icon" className="size-7">
                             <X />
                             <span className="sr-only">Delete</span>
                           </Button>
@@ -122,9 +115,7 @@ export function FileUploadFormDemo() {
                   </FileUploadList>
                 </FileUpload>
               </FormControl>
-              <FormDescription>
-                Upload up to 2 images up to 5MB each.
-              </FormDescription>
+              <FormDescription>Upload up to 2 images up to 5MB each.</FormDescription>
               <FormMessage />
             </FormItem>
           )}

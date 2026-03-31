@@ -1,13 +1,13 @@
-import { useElement, usePluginOption } from 'platejs/react';
+import { useElement, usePluginOption } from "platejs/react";
 
-import { BlockSelectionPlugin } from '../BlockSelectionPlugin';
+import { BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 export const useBlockSelected = (_id?: string) => {
   const { id } = useElement();
 
   const isBlockSelected = usePluginOption(
     BlockSelectionPlugin,
-    'isSelected',
+    "isSelected",
     _id ?? (id as string)
   );
 

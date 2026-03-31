@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/styles/base-nova/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/styles/base-nova/ui/button";
 
 export function OpenInV0Cta({ className }: React.ComponentProps<"div">) {
   return (
@@ -12,12 +12,9 @@ export function OpenInV0Cta({ className }: React.ComponentProps<"div">) {
       <div className="text-base leading-tight font-semibold text-balance group-hover:underline">
         Deploy your shadcn/ui app on Vercel
       </div>
+      <div className="text-muted-foreground">Trusted by OpenAI, Sonos, Adobe, and more.</div>
       <div className="text-muted-foreground">
-        Trusted by OpenAI, Sonos, Adobe, and more.
-      </div>
-      <div className="text-muted-foreground">
-        Vercel provides tools and infrastructure to deploy apps and features at
-        scale.
+        Vercel provides tools and infrastructure to deploy apps and features at scale.
       </div>
       <Button variant="outline" size="sm" className="mt-2 w-fit">
         Deploy Now
@@ -31,5 +28,5 @@ export function OpenInV0Cta({ className }: React.ComponentProps<"div">) {
         <span className="sr-only">Deploy to Vercel</span>
       </a>
     </div>
-  )
+  );
 }

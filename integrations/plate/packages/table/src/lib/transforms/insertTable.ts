@@ -1,13 +1,13 @@
 import {
   type InsertNodesOptions,
-  type SlateEditor,
-  type TTableElement,
   KEYS,
   PathApi,
-} from 'platejs';
+  type SlateEditor,
+  type TTableElement,
+} from "platejs";
 
-import type { GetEmptyTableNodeOptions } from '../api/getEmptyTableNode';
-import type { TableConfig } from '../BaseTablePlugin';
+import type { GetEmptyTableNodeOptions } from "../api/getEmptyTableNode";
+import type { TableConfig } from "../BaseTablePlugin";
 
 /**
  * Insert table. If selection in table and no 'at' specified, insert after

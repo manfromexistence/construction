@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import { ChevronDownIcon, DotIcon } from "lucide-react"
+import { ChevronDownIcon, DotIcon } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -15,14 +12,14 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/styles/radix-nova/ui-rtl/breadcrumb"
+} from "@/styles/radix-nova/ui-rtl/breadcrumb";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui-rtl/dropdown-menu"
+} from "@/styles/radix-nova/ui-rtl/dropdown-menu";
 
 const translations: Translations = {
   en: {
@@ -58,10 +55,10 @@ const translations: Translations = {
       breadcrumb: "פירורי לחם",
     },
   },
-}
+};
 
 export function BreadcrumbRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
+  const { dir, t, language } = useTranslation(translations, "ar");
 
   return (
     <Breadcrumb dir={dir}>
@@ -82,9 +79,7 @@ export function BreadcrumbRtl() {
                 <ChevronDownIcon className="size-3.5" />
               </button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent
-              data-lang={dir === "rtl" ? language : undefined}
-            >
+            <DropdownMenuContent data-lang={dir === "rtl" ? language : undefined}>
               <DropdownMenuGroup>
                 <DropdownMenuItem>{t.documentation}</DropdownMenuItem>
                 <DropdownMenuItem>{t.themes}</DropdownMenuItem>
@@ -101,5 +96,5 @@ export function BreadcrumbRtl() {
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>
-  )
+  );
 }

@@ -1,9 +1,8 @@
-import React from 'react';
+import { isDefined, type TTagProps } from "platejs";
+import { useEditorRef, useEditorString } from "platejs/react";
+import React from "react";
 
-import { type TTagProps, isDefined } from 'platejs';
-import { useEditorRef, useEditorString } from 'platejs/react';
-
-import { useSelectedItems } from './useSelectedItems';
+import { useSelectedItems } from "./useSelectedItems";
 
 /**
  * - Select first item when search updates and remove text
@@ -25,7 +24,7 @@ export const useSelectEditorCombobox = ({
   React.useEffect(() => {
     if (!open) {
       editor.tf.removeNodes({ at: [], empty: false, text: true });
-      editor.tf.select([], { edge: 'end' });
+      editor.tf.select([], { edge: "end" });
     }
   }, [editor, open]);
 

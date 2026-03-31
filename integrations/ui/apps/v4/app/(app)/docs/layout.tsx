@@ -1,12 +1,8 @@
-import { source } from "@/lib/source"
-import { DocsSidebar } from "@/components/docs-sidebar"
-import { SidebarProvider } from "@/registry/new-york-v4/ui/sidebar"
+import { DocsSidebar } from "@/components/docs-sidebar";
+import { source } from "@/lib/source";
+import { SidebarProvider } from "@/registry/new-york-v4/ui/sidebar";
 
-export default function DocsLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function DocsLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container-wrapper flex flex-1 flex-col px-2">
       <SidebarProvider
@@ -21,5 +17,5 @@ export default function DocsLayout({
         <div className="h-full w-full">{children}</div>
       </SidebarProvider>
     </div>
-  )
+  );
 }

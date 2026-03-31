@@ -1,18 +1,15 @@
-import type { TCalloutElement } from 'platejs';
+import type { TCalloutElement } from "platejs";
 
-import { useEditorReadOnly, useEditorRef, useElement } from 'platejs/react';
+import { useEditorReadOnly, useEditorRef, useElement } from "platejs/react";
 
-import { CALLOUT_STORAGE_KEY } from '../../lib';
+import { CALLOUT_STORAGE_KEY } from "../../lib";
 
 export type UseCalloutEmojiPickerOptions = {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
 };
 
-export const useCalloutEmojiPicker = ({
-  isOpen,
-  setIsOpen,
-}: UseCalloutEmojiPickerOptions) => {
+export const useCalloutEmojiPicker = ({ isOpen, setIsOpen }: UseCalloutEmojiPickerOptions) => {
   const editor = useEditorRef();
   const readOnly = useEditorReadOnly();
   const element = useElement<TCalloutElement>();

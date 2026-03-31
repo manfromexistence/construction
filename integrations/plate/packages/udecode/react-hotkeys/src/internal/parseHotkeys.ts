@@ -1,52 +1,43 @@
-import type { Hotkey, KeyboardModifiers } from './types';
+import type { Hotkey, KeyboardModifiers } from "./types";
 
-const reservedModifierKeywords = new Set([
-  'alt',
-  'control',
-  'ctrl',
-  'meta',
-  'mod',
-  'shift',
-]);
+const reservedModifierKeywords = new Set(["alt", "control", "ctrl", "meta", "mod", "shift"]);
 
 const mappedKeys: Record<string, string> = {
-  AltLeft: 'alt',
-  AltRight: 'alt',
-  ControlLeft: 'ctrl',
-  ControlRight: 'ctrl',
-  down: 'arrowdown',
-  esc: 'escape',
-  left: 'arrowleft',
-  MetaLeft: 'meta',
-  MetaRight: 'meta',
-  OSLeft: 'meta',
-  OSRight: 'meta',
-  return: 'enter',
-  right: 'arrowright',
-  ShiftLeft: 'shift',
-  ShiftRight: 'shift',
-  up: 'arrowup',
+  AltLeft: "alt",
+  AltRight: "alt",
+  ControlLeft: "ctrl",
+  ControlRight: "ctrl",
+  down: "arrowdown",
+  esc: "escape",
+  left: "arrowleft",
+  MetaLeft: "meta",
+  MetaRight: "meta",
+  OSLeft: "meta",
+  OSRight: "meta",
+  return: "enter",
+  right: "arrowright",
+  ShiftLeft: "shift",
+  ShiftRight: "shift",
+  up: "arrowup",
 };
 
 const KEY_PREFIX_REGEX = /key|digit|numpad/;
 
 export function mapKey(key: string): string {
-  return (mappedKeys[key.trim()] || key.trim())
-    .toLowerCase()
-    .replace(KEY_PREFIX_REGEX, '');
+  return (mappedKeys[key.trim()] || key.trim()).toLowerCase().replace(KEY_PREFIX_REGEX, "");
 }
 
 export function isHotkeyModifier(key: string) {
   return reservedModifierKeywords.has(key);
 }
 
-export function parseKeysHookInput(keys: string, delimiter = ','): string[] {
+export function parseKeysHookInput(keys: string, delimiter = ","): string[] {
   return keys.toLowerCase().split(delimiter);
 }
 
 export function parseHotkey(
   hotkey: string,
-  splitKey = '+',
+  splitKey = "+",
   useKey = false,
   description?: string
 ): Hotkey {
@@ -56,11 +47,11 @@ export function parseHotkey(
     .map((k) => mapKey(k));
 
   const modifiers: KeyboardModifiers = {
-    alt: keys.includes('alt'),
-    ctrl: keys.includes('ctrl') || keys.includes('control'),
-    meta: keys.includes('meta'),
-    mod: keys.includes('mod'),
-    shift: keys.includes('shift'),
+    alt: keys.includes("alt"),
+    ctrl: keys.includes("ctrl") || keys.includes("control"),
+    meta: keys.includes("meta"),
+    mod: keys.includes("mod"),
+    shift: keys.includes("shift"),
     useKey,
   };
 

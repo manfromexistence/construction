@@ -1,17 +1,17 @@
-import cloneDeep from 'lodash/cloneDeep.js';
+import cloneDeep from "lodash/cloneDeep.js";
 import {
+  KEYS,
+  NodeApi,
   type OverrideEditor,
   type Path,
   type TElement,
   type TTableCellElement,
   type TTableElement,
   type TTableRowElement,
-  KEYS,
-  NodeApi,
-} from 'platejs';
+} from "platejs";
 
-import { type TableConfig, getTableAbove } from '.';
-import { getTableGridAbove } from './queries/getTableGridAbove';
+import { getTableAbove, type TableConfig } from ".";
+import { getTableGridAbove } from "./queries/getTableGridAbove";
 
 /**
  * If inserting a table, If block above anchor is a table,
@@ -28,9 +28,9 @@ export const withInsertFragmentTable: OverrideEditor<TableConfig> = ({
 }) => ({
   transforms: {
     insertFragment(fragment) {
-      const insertedTable = fragment.find(
-        (n) => (n as TElement).type === type
-      ) as TTableElement | undefined;
+      const insertedTable = fragment.find((n) => (n as TElement).type === type) as
+        | TTableElement
+        | undefined;
 
       if (!insertedTable) {
         const tableEntry = getTableAbove(editor, {
@@ -39,7 +39,7 @@ export const withInsertFragmentTable: OverrideEditor<TableConfig> = ({
 
         if (tableEntry) {
           const cellEntries = getTableGridAbove(editor, {
-            format: 'cell',
+            format: "cell",
           });
 
           if (cellEntries.length > 1) {
@@ -72,7 +72,7 @@ export const withInsertFragmentTable: OverrideEditor<TableConfig> = ({
         if (tableEntry) {
           const [cellEntry] = getTableGridAbove(editor, {
             at: editor.selection?.anchor,
-            format: 'cell',
+            format: "cell",
           });
 
           if (cellEntry) {
@@ -125,9 +125,7 @@ export const withInsertFragmentTable: OverrideEditor<TableConfig> = ({
 
                   initCell = false;
 
-                  const cellChildren = api.table.getCellChildren!(
-                    cell
-                  ) as TTableCellElement[];
+                  const cellChildren = api.table.getCellChildren!(cell) as TTableCellElement[];
 
                   editor.tf.replaceNodes(cloneDeep(cellChildren as any), {
                     at: cellPath,

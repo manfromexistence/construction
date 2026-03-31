@@ -1,10 +1,10 @@
-import { type OverrideEditor, KEYS } from 'platejs';
+import { KEYS, type OverrideEditor } from "platejs";
 
-import type { ListConfig } from './BaseListPlugin';
+import type { ListConfig } from "./BaseListPlugin";
 
-import { getListItemEntry } from './queries/getListItemEntry';
-import { insertListItem } from './transforms/insertListItem';
-import { moveListItemUp } from './transforms/moveListItemUp';
+import { getListItemEntry } from "./queries/getListItemEntry";
+import { insertListItem } from "./transforms/insertListItem";
+import { moveListItemUp } from "./transforms/moveListItemUp";
 
 export const withInsertBreakList: OverrideEditor<ListConfig> = ({
   editor,

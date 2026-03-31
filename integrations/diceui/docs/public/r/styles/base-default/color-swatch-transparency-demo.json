@@ -1,8 +1,6 @@
 {
   "name": "color-swatch-transparency-demo",
-  "registryDependencies": [
-    "color-swatch"
-  ],
+  "registryDependencies": ["color-swatch"],
   "files": [
     {
       "path": "examples/color-swatch-transparency-demo.tsx",

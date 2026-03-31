@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Interactive Hover Button Demo",
   "description": "Example showing an interactive button with hover effects.",
-  "registryDependencies": [
-    "@magicui/interactive-hover-button"
-  ],
+  "registryDependencies": ["@magicui/interactive-hover-button"],
   "files": [
     {
       "path": "registry/example/interactive-hover-button-demo.tsx",

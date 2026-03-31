@@ -1,10 +1,13 @@
+import { JSONContent } from "@tiptap/react";
+import { Check, X } from "lucide-react";
+import { useMemo, useReducer, useState } from "react";
 import { HorizontalScrollArea } from "@/components/horizontal-scroll-area";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { useDocumentDragAndDropIntent } from "@/hooks/use-document-drag-and-drop-intent";
 import { useImageUpload } from "@/hooks/use-image-upload";
 import { imageUploadReducer } from "@/hooks/use-image-upload-reducer";
-import { AI_PROMPT_CHARACTER_LIMIT, MAX_IMAGE_FILES, MAX_IMAGE_FILE_SIZE } from "@/lib/constants";
+import { AI_PROMPT_CHARACTER_LIMIT, MAX_IMAGE_FILE_SIZE, MAX_IMAGE_FILES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { AIPromptData, type ChatMessage } from "@/types/ai";
 import {
@@ -12,9 +15,6 @@ import {
   convertPromptDataToJSONContent,
   isEmptyPromptData,
 } from "@/utils/ai/ai-prompt";
-import { JSONContent } from "@tiptap/react";
-import { Check, X } from "lucide-react";
-import { useMemo, useReducer, useState } from "react";
 import CustomTextarea from "../custom-textarea";
 import { DragAndDropImageUploader } from "./drag-and-drop-image-uploader";
 import { ImageUploader } from "./image-uploader";

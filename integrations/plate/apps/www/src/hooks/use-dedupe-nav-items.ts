@@ -1,13 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo } from "react";
 
-import type { SidebarNavItem } from '@/types/nav';
+import type { SidebarNavItem } from "@/types/nav";
 
 export function useDedupeNavItems(items: SidebarNavItem[]) {
   return useMemo(() => {
-    const dedupeItems = (
-      items: SidebarNavItem[],
-      seen = new Set<string>()
-    ): SidebarNavItem[] =>
+    const dedupeItems = (items: SidebarNavItem[], seen = new Set<string>()): SidebarNavItem[] =>
       items.map((item) => {
         const deduped = { ...item };
 

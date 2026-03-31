@@ -1,7 +1,7 @@
-import type { Editor } from '../interfaces/editor/editor-type';
-import { ElementApi, type Path, PathApi, TextApi } from '../interfaces/index';
-import type { NodeOf, TNode } from '../interfaces/node';
-import { getAt } from './getAt';
+import type { Editor } from "../interfaces/editor/editor-type";
+import { ElementApi, type Path, PathApi, TextApi } from "../interfaces/index";
+import type { NodeOf, TNode } from "../interfaces/node";
+import { getAt } from "./getAt";
 
 export type Predicate<T extends TNode> = PredicateFn<T> | PredicateObj;
 
@@ -19,13 +19,9 @@ function castArray<T>(value: T | T[]): T[] {
  * - Object: every predicate key/value should be in obj.
  * - Function: it should return true.
  */
-export const match = <T extends TNode>(
-  obj: T,
-  path: Path,
-  predicate?: Predicate<T>
-): boolean => {
+export const match = <T extends TNode>(obj: T, path: Path, predicate?: Predicate<T>): boolean => {
   if (!predicate) return true;
-  if (typeof predicate === 'object') {
+  if (typeof predicate === "object") {
     return Object.entries(predicate).every(([key, value]) => {
       const values = castArray<any>(value);
 
@@ -52,9 +48,7 @@ export const getMatch = <E extends Editor>(
   if (empty !== undefined) {
     hasMatch = true;
     matchFn = combineMatch(matchFn, (n) =>
-      TextApi.isText(n)
-        ? n.text.length > 0 === !empty
-        : editor.api.isEmpty(n) === empty
+      TextApi.isText(n) ? n.text.length > 0 === !empty : editor.api.isEmpty(n) === empty
     );
   }
   if (block !== undefined) {
@@ -63,16 +57,13 @@ export const getMatch = <E extends Editor>(
   }
   if (id !== undefined) {
     hasMatch = true;
-    matchFn = combineMatch(
-      matchFn,
-      (n) => (id === true && !!n.id) || n.id === id
-    );
+    matchFn = combineMatch(matchFn, (n) => (id === true && !!n.id) || n.id === id);
   }
   // Handle object predicate matching first
-  if (typeof matchObjOrFn === 'object') {
+  if (typeof matchObjOrFn === "object") {
     hasMatch = true;
     matchFn = combineMatch(matchFn, (n, p) => match(n, p, matchObjOrFn));
-  } else if (typeof matchObjOrFn === 'function') {
+  } else if (typeof matchObjOrFn === "function") {
     hasMatch = true;
     matchFn = combineMatch(matchFn, matchObjOrFn);
   }
@@ -101,10 +92,7 @@ export const getQueryOptions = (
 };
 
 export const combineMatch =
-  <T extends TNode>(
-    match1: PredicateFn<T>,
-    match2?: PredicateFn<T>
-  ): PredicateFn<T> =>
+  <T extends TNode>(match1: PredicateFn<T>, match2?: PredicateFn<T>): PredicateFn<T> =>
   (node: T, path: Path) =>
     match1(node, path) && (!match2 || match2(node, path));
 
@@ -144,9 +132,6 @@ export const combineTransformMatchOptions = <E extends Editor>(
 
     const defaultMatch = getDefaultMatch();
 
-    return (
-      (!match1 || match1(node, path)) &&
-      (!defaultMatch || defaultMatch(node, path))
-    );
+    return (!match1 || match1(node, path)) && (!defaultMatch || defaultMatch(node, path));
   };
 };

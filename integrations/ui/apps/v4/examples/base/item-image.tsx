@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/image";
 
 import {
   Item,
@@ -7,7 +7,7 @@ import {
   ItemGroup,
   ItemMedia,
   ItemTitle,
-} from "@/styles/base-nova/ui/item"
+} from "@/styles/base-nova/ui/item";
 
 const music = [
   {
@@ -28,19 +28,14 @@ const music = [
     album: "Binary Beats",
     duration: "3:30",
   },
-]
+];
 
 export function ItemImage() {
   return (
     <div className="flex w-full max-w-md flex-col gap-6">
       <ItemGroup className="gap-4">
         {music.map((song) => (
-          <Item
-            key={song.title}
-            variant="outline"
-            render={<a href="#" />}
-            role="listitem"
-          >
+          <Item key={song.title} variant="outline" render={<a href="#" />} role="listitem">
             <ItemMedia variant="image">
               <Image
                 src={`https://avatar.vercel.sh/${song.title}`}
@@ -52,8 +47,7 @@ export function ItemImage() {
             </ItemMedia>
             <ItemContent>
               <ItemTitle className="line-clamp-1">
-                {song.title} -{" "}
-                <span className="text-muted-foreground">{song.album}</span>
+                {song.title} - <span className="text-muted-foreground">{song.album}</span>
               </ItemTitle>
               <ItemDescription>{song.artist}</ItemDescription>
             </ItemContent>
@@ -64,5 +58,5 @@ export function ItemImage() {
         ))}
       </ItemGroup>
     </div>
-  )
+  );
 }

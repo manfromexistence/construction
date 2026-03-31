@@ -1,5 +1,5 @@
-import type { Editor, Value } from './editor/editor-type';
-import type { ElementOf } from './element';
+import type { Editor, Value } from "./editor/editor-type";
+import type { ElementOf } from "./element";
 import type {
   AncestorOf,
   ChildOf,
@@ -8,9 +8,9 @@ import type {
   NodeIn,
   NodeOf,
   TNode,
-} from './node';
-import type { Path } from './path';
-import type { TextIn, TextOf } from './text';
+} from "./node";
+import type { Path } from "./path";
+import type { TextIn, TextOf } from "./text";
 
 /** Ancestor entry from a node. */
 export type AncestorEntry<N extends TNode = TNode> = NodeEntry<AncestorOf<N>>;
@@ -19,9 +19,7 @@ export type AncestorEntry<N extends TNode = TNode> = NodeEntry<AncestorOf<N>>;
 export type AncestorEntryOf<E extends Editor> = AncestorEntry<E>;
 
 /** Descendant entry from a node. */
-export type DescendantEntry<N extends TNode = TNode> = NodeEntry<
-  DescendantOf<N>
->;
+export type DescendantEntry<N extends TNode = TNode> = NodeEntry<DescendantOf<N>>;
 
 /** Descendant entry of a value. */
 export type DescendantEntryIn<V extends Value> = NodeEntry<DescendantIn<V>>;

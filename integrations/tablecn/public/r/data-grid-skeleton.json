@@ -4,9 +4,7 @@
   "title": "Data Grid Skeleton",
   "description": "A composable skeleton component for the data grid with toolbar and grid parts",
   "dependencies": [],
-  "registryDependencies": [
-    "skeleton"
-  ],
+  "registryDependencies": ["skeleton"],
   "files": [
     {
       "path": "src/components/data-grid/data-grid-skeleton.tsx",

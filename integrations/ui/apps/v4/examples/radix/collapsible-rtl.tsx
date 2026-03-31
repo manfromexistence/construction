@@ -1,18 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ChevronsUpDown } from "lucide-react"
+import { ChevronsUpDown } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/radix-nova/ui-rtl/collapsible"
+} from "@/styles/radix-nova/ui-rtl/collapsible";
 
 const translations: Translations = {
   en: {
@@ -51,11 +48,11 @@ const translations: Translations = {
       itemsDescription: "2x אוזניות סטודיו",
     },
   },
-}
+};
 
 export function CollapsibleRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
-  const [isOpen, setIsOpen] = React.useState(false)
+  const { dir, t } = useTranslation(translations, "ar");
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <Collapsible
@@ -88,5 +85,5 @@ export function CollapsibleRtl() {
         </div>
       </CollapsibleContent>
     </Collapsible>
-  )
+  );
 }

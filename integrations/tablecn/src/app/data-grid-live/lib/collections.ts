@@ -36,7 +36,7 @@ export const skatersCollection = createCollection(
             createdAt: _createdAt,
             updatedAt: _updatedAt,
             ...data
-          }) => data,
+          }) => data
         );
 
       if (skatersToInsert.length === 0) return;
@@ -56,11 +56,11 @@ export const skatersCollection = createCollection(
       const updates = transaction.mutations
         .filter(
           (
-            m,
+            m
           ): m is typeof m & {
             key: string;
             changes: Partial<SkaterSchema>;
-          } => m?.key != null && m?.changes != null,
+          } => m?.key != null && m?.changes != null
         )
         .map((m) => ({ id: m.key, changes: m.changes }));
 
@@ -78,9 +78,7 @@ export const skatersCollection = createCollection(
       }
     },
     onDelete: async ({ transaction }) => {
-      const ids = transaction.mutations
-        .map((m) => m?.key)
-        .filter((id): id is string => id != null);
+      const ids = transaction.mutations.map((m) => m?.key).filter((id): id is string => id != null);
 
       if (ids.length === 0) return;
 
@@ -95,5 +93,5 @@ export const skatersCollection = createCollection(
         throw new Error("Failed to delete skaters");
       }
     },
-  }),
+  })
 );

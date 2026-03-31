@@ -1,6 +1,6 @@
-import { renderHook } from '@testing-library/react';
-import * as platejsReact from 'platejs/react';
-import * as tableLib from '../../lib';
+import { renderHook } from "@testing-library/react";
+import * as platejsReact from "platejs/react";
+import * as tableLib from "../../lib";
 
 const useEditorPluginMock = mock();
 const useEditorSelectorMock = mock();
@@ -8,25 +8,17 @@ const useReadOnlyMock = mock();
 const getSelectedCellEntriesMock = mock();
 const getSelectedCellsBoundingBoxMock = mock();
 
-mock.module('../TablePlugin', () => ({
-  TablePlugin: { key: 'table' },
+mock.module("../TablePlugin", () => ({
+  TablePlugin: { key: "table" },
 }));
 
-describe('useTableMergeState', () => {
+describe("useTableMergeState", () => {
   beforeEach(() => {
-    spyOn(platejsReact, 'useEditorPlugin').mockImplementation(
-      useEditorPluginMock as any
-    );
-    spyOn(platejsReact, 'useEditorSelector').mockImplementation(
-      useEditorSelectorMock as any
-    );
-    spyOn(platejsReact, 'useReadOnly').mockImplementation(
-      useReadOnlyMock as any
-    );
-    spyOn(tableLib, 'getSelectedCellEntries').mockImplementation(
-      getSelectedCellEntriesMock as any
-    );
-    spyOn(tableLib, 'getSelectedCellsBoundingBox').mockImplementation(
+    spyOn(platejsReact, "useEditorPlugin").mockImplementation(useEditorPluginMock as any);
+    spyOn(platejsReact, "useEditorSelector").mockImplementation(useEditorSelectorMock as any);
+    spyOn(platejsReact, "useReadOnly").mockImplementation(useReadOnlyMock as any);
+    spyOn(tableLib, "getSelectedCellEntries").mockImplementation(getSelectedCellEntriesMock as any);
+    spyOn(tableLib, "getSelectedCellsBoundingBox").mockImplementation(
       getSelectedCellsBoundingBoxMock as any
     );
     useEditorPluginMock.mockReset();
@@ -40,7 +32,7 @@ describe('useTableMergeState', () => {
     mock.restore();
   });
 
-  it('computes merge state for rectangular multi-cell selections and split state for merged cells', async () => {
+  it("computes merge state for rectangular multi-cell selections and split state for merged cells", async () => {
     const { useTableMergeState } = await import(
       `./useTableMergeState?test=${Math.random().toString(36).slice(2)}`
     );

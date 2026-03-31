@@ -1,12 +1,12 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
 import {
   BaseTableCellHeaderPlugin,
   BaseTableCellPlugin,
   BaseTablePlugin,
   BaseTableRowPlugin,
-} from '../lib/BaseTablePlugin';
-import { onKeyDownTable } from './onKeyDownTable';
+} from "../lib/BaseTablePlugin";
+import { onKeyDownTable } from "./onKeyDownTable";
 
 export const TableRowPlugin = toPlatePlugin(BaseTableRowPlugin);
 

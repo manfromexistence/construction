@@ -1,86 +1,60 @@
 "use client";
 
-import { useCommunityThemes } from "@/hooks/themes";
-import { useEditorStore } from "@/store/editor-store";
-import type {
-  CommunityFilterOption,
-  CommunityTimeRange,
-  CommunityTheme,
-} from "@/types/community";
-import {
-  useQueryState,
-  parseAsStringLiteral,
-  parseAsArrayOf,
-  parseAsString,
-} from "nuqs";
-import { useEffect, useRef, useState, useCallback } from "react";
-import { cn } from "@/lib/utils";
+import { Check, ChevronDown, Flame, Info, Loader2, SlidersHorizontal } from "lucide-react";
+import Link from "next/link";
+import { parseAsArrayOf, parseAsString, parseAsStringLiteral, useQueryState } from "nuqs";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Flame, Loader2, Info, SlidersHorizontal, ChevronDown, Check } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useCommunityThemes } from "@/hooks/themes";
+import { cn } from "@/lib/utils";
+import { useEditorStore } from "@/store/editor-store";
+import type { CommunityFilterOption, CommunityTheme, CommunityTimeRange } from "@/types/community";
+import { CommunitySidebarContent } from "./community-sidebar";
 import { CommunityThemeCard } from "./community-theme-card";
 import { CommunityThemePreviewDialog } from "./community-theme-preview-dialog";
-import { CommunitySidebarContent } from "./community-sidebar";
-import { Skeleton } from "@/components/ui/skeleton";
-import Link from "next/link";
 
 const popularOptions: {
   timeRange: CommunityTimeRange;
   label: string;
 }[] = [
-    { timeRange: "all", label: "All Time" },
-    { timeRange: "monthly", label: "This Month" },
-    { timeRange: "weekly", label: "This Week" },
-  ];
+  { timeRange: "all", label: "All Time" },
+  { timeRange: "monthly", label: "This Month" },
+  { timeRange: "weekly", label: "This Week" },
+];
 
 const otherSortOptions: {
   sort: "newest" | "oldest";
   label: string;
 }[] = [
-    { sort: "newest", label: "Newest" },
-    { sort: "oldest", label: "Oldest" },
-  ];
+  { sort: "newest", label: "Newest" },
+  { sort: "oldest", label: "Oldest" },
+];
 
 export function CommunityThemesContent() {
   const [sort, setSort] = useQueryState(
     "sort",
-    parseAsStringLiteral(["popular", "newest", "oldest"] as const).withDefault(
-      "popular"
-    )
+    parseAsStringLiteral(["popular", "newest", "oldest"] as const).withDefault("popular")
   );
   const [filter, setFilter] = useQueryState(
     "filter",
     parseAsStringLiteral(["all", "mine", "liked"] as const).withDefault("all")
   );
-  const [tags, setTags] = useQueryState(
-    "tags",
-    parseAsArrayOf(parseAsString, ",").withDefault([])
-  );
+  const [tags, setTags] = useQueryState("tags", parseAsArrayOf(parseAsString, ",").withDefault([]));
   const [timeRange, setTimeRange] = useQueryState(
     "t",
-    parseAsStringLiteral(["weekly", "monthly", "all"] as const).withDefault(
-      "all"
-    )
+    parseAsStringLiteral(["weekly", "monthly", "all"] as const).withDefault("all")
   );
   const [sheetOpen, setSheetOpen] = useState(false);
   const [previewThemeId, setPreviewThemeId] = useState<string | null>(null);
@@ -109,12 +83,16 @@ export function CommunityThemesContent() {
     [setTags]
   );
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useCommunityThemes(sort, filter, tags, sort === "popular" ? timeRange : "all");
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useCommunityThemes(
+    sort,
+    filter,
+    tags,
+    sort === "popular" ? timeRange : "all"
+  );
 
   const themes = data?.pages.flatMap((page) => page.themes) ?? [];
   const previewTheme = previewThemeId
-    ? themes.find((t) => t.id === previewThemeId) ?? null
+    ? (themes.find((t) => t.id === previewThemeId) ?? null)
     : null;
 
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -151,12 +129,8 @@ export function CommunityThemesContent() {
       <aside className="hidden w-56 shrink-0 border-r lg:block">
         <div className="p-4">
           <Link href="/community" className="block">
-            <h1 className="text-lg font-semibold tracking-tight">
-              Community Themes
-            </h1>
-            <p className="text-muted-foreground mt-1 text-xs">
-              Discover themes by the community
-            </p>
+            <h1 className="text-lg font-semibold tracking-tight">Community Themes</h1>
+            <p className="text-muted-foreground mt-1 text-xs">Discover themes by the community</p>
           </Link>
         </div>
 
@@ -202,11 +176,7 @@ export function CommunityThemesContent() {
 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="gap-1.5"
-                  >
+                  <Button variant="outline" size="sm" className="gap-1.5">
                     {sort === "popular"
                       ? `Popular / ${popularOptions.find((o) => o.timeRange === timeRange)?.label ?? "All Time"}`
                       : sort === "newest"
@@ -218,8 +188,7 @@ export function CommunityThemesContent() {
                 <DropdownMenuContent align="start" className="w-44">
                   <DropdownMenuLabel>Popular</DropdownMenuLabel>
                   {popularOptions.map((option) => {
-                    const isActive =
-                      sort === "popular" && timeRange === option.timeRange;
+                    const isActive = sort === "popular" && timeRange === option.timeRange;
                     return (
                       <DropdownMenuItem
                         key={option.timeRange}
@@ -256,11 +225,7 @@ export function CommunityThemesContent() {
 
             <Popover>
               <PopoverTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-muted-foreground gap-1.5 text-xs"
-                >
+                <Button variant="ghost" size="sm" className="text-muted-foreground gap-1.5 text-xs">
                   <Info className="size-3.5" />
                   <span className="hidden sm:inline">How to publish</span>
                 </Button>
@@ -270,10 +235,8 @@ export function CommunityThemesContent() {
                   <p className="text-sm font-medium">Publish your theme</p>
                   <p className="text-muted-foreground mt-1.5 text-xs leading-relaxed">
                     After saving a theme, click the{" "}
-                    <span className="text-foreground font-medium">
-                      Publish
-                    </span>{" "}
-                    button in the editor to share it.
+                    <span className="text-foreground font-medium">Publish</span> button in the
+                    editor to share it.
                   </p>
                 </div>
                 <Separator />
@@ -296,10 +259,7 @@ export function CommunityThemesContent() {
           {isLoading ? (
             <div className="grid gap-5 grid-cols-[repeat(auto-fill,minmax(280px,1fr))]">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="space-y-0 overflow-hidden rounded-xl border"
-                >
+                <div key={i} className="space-y-0 overflow-hidden rounded-xl border">
                   <Skeleton className="h-36 rounded-none" />
                   <div className="space-y-2 p-3">
                     <Skeleton className="h-4 w-2/3" />

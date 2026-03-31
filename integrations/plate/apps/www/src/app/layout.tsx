@@ -1,18 +1,16 @@
-import React from 'react';
+import type { Metadata, Viewport } from "next";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
+import React from "react";
 
-import type { Metadata, Viewport } from 'next';
+import { GA } from "@/components/analytics/ga";
+import { Providers } from "@/components/context/providers";
+import { TailwindIndicator } from "@/components/tailwind-indicator";
+import { Toaster } from "@/components/ui/sonner";
+import { META_THEME_COLORS, siteConfig } from "@/config/site";
+import { fontMono, fontSans } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 
-import { NuqsAdapter } from 'nuqs/adapters/next/app';
-
-import { GA } from '@/components/analytics/ga';
-import { Providers } from '@/components/context/providers';
-import { TailwindIndicator } from '@/components/tailwind-indicator';
-import { Toaster } from '@/components/ui/sonner';
-import { META_THEME_COLORS, siteConfig } from '@/config/site';
-import { fontMono, fontSans } from '@/lib/fonts';
-import { cn } from '@/lib/utils';
-
-import '@/app/globals.css';
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   authors: [
@@ -24,20 +22,20 @@ export const metadata: Metadata = {
   creator: siteConfig.author,
   description: siteConfig.description,
   icons: {
-    apple: '/apple-touch-icon.png',
-    icon: '/favicon.ico',
-    shortcut: '/favicon-48x48.png',
+    apple: "/apple-touch-icon.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon-48x48.png",
   },
   keywords: [
-    'Plate',
-    'Slate',
-    'editor',
-    'wysiwyg',
-    'Tailwind CSS',
-    'Radix UI',
-    'shadcn/ui',
-    'React',
-    'Next.js',
+    "Plate",
+    "Slate",
+    "editor",
+    "wysiwyg",
+    "Tailwind CSS",
+    "Radix UI",
+    "shadcn/ui",
+    "React",
+    "Next.js",
   ],
   manifest: `${siteConfig.url}/site.webmanifest`,
   metadataBase: new URL(siteConfig.url),
@@ -51,10 +49,10 @@ export const metadata: Metadata = {
         width: 1200,
       },
     ],
-    locale: 'en_US',
+    locale: "en_US",
     siteName: siteConfig.name,
     title: siteConfig.name,
-    type: 'website',
+    type: "website",
     url: siteConfig.url,
   },
   title: {
@@ -62,8 +60,8 @@ export const metadata: Metadata = {
     template: `%s - ${siteConfig.name}`,
   },
   twitter: {
-    card: 'summary_large_image',
-    creator: '@zbeyens',
+    card: "summary_large_image",
+    creator: "@zbeyens",
     description: siteConfig.description,
     images: [siteConfig.ogImage],
     title: siteConfig.name,
@@ -97,8 +95,8 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body
         className={cn(
-          'min-h-svh bg-background font-sans antialiased',
-          '[--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]',
+          "min-h-svh bg-background font-sans antialiased",
+          "[--footer-height:calc(var(--spacing)*14)] [--header-height:calc(var(--spacing)*14)] xl:[--footer-height:calc(var(--spacing)*24)]",
           fontSans.variable,
           fontMono.variable
         )}
@@ -107,9 +105,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <NuqsAdapter>
           <Providers>
             <div vaul-drawer-wrapper="">
-              <div className="relative flex min-h-svh flex-col bg-background">
-                {children}
-              </div>
+              <div className="relative flex min-h-svh flex-col bg-background">{children}</div>
             </div>
           </Providers>
         </NuqsAdapter>

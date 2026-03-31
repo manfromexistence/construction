@@ -21,9 +21,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "marketing",
-    "testimonials"
-  ],
+  "categories": ["marketing", "testimonials"],
   "type": "registry:block"
 }

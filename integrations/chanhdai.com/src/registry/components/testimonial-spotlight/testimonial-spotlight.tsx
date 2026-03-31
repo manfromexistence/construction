@@ -1,55 +1,55 @@
-"use client"
+"use client";
 
-import { useRef, useState } from "react"
+import { useRef, useState } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 type Position = {
-  x: number
-  y: number
-}
+  x: number;
+  y: number;
+};
 
-const SPOTLIGHT_OPACITY = 0.5
+const SPOTLIGHT_OPACITY = 0.5;
 
 export function TestimonialSpotlight({
   children,
   className,
   spotlightColor = "rgba(255,255,255,0.2)",
 }: {
-  children: React.ReactNode
-  className?: string
-  spotlightColor?: `rgba(${number},${number},${number},${number})`
+  children: React.ReactNode;
+  className?: string;
+  spotlightColor?: `rgba(${number},${number},${number},${number})`;
 }) {
-  const itemRef = useRef<HTMLDivElement>(null)
+  const itemRef = useRef<HTMLDivElement>(null);
 
-  const [isFocused, setIsFocused] = useState<boolean>(false)
-  const [opacity, setOpacity] = useState<number>(0)
-  const [position, setPosition] = useState<Position>({ x: 0, y: 0 })
+  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [opacity, setOpacity] = useState<number>(0);
+  const [position, setPosition] = useState<Position>({ x: 0, y: 0 });
 
   const handleFocus = () => {
-    setIsFocused(true)
-    setOpacity(SPOTLIGHT_OPACITY)
-  }
+    setIsFocused(true);
+    setOpacity(SPOTLIGHT_OPACITY);
+  };
 
   const handleBlur = () => {
-    setIsFocused(false)
-    setOpacity(0)
-  }
+    setIsFocused(false);
+    setOpacity(0);
+  };
 
   const handleMouseEnter = () => {
-    setOpacity(SPOTLIGHT_OPACITY)
-  }
+    setOpacity(SPOTLIGHT_OPACITY);
+  };
 
   const handleMouseLeave = () => {
-    setOpacity(0)
-  }
+    setOpacity(0);
+  };
 
   const handleMouseMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    if (!itemRef.current || isFocused) return
+    if (!itemRef.current || isFocused) return;
 
-    const rect = itemRef.current.getBoundingClientRect()
-    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top })
-  }
+    const rect = itemRef.current.getBoundingClientRect();
+    setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+  };
 
   return (
     <div
@@ -73,5 +73,5 @@ export function TestimonialSpotlight({
       />
       {children}
     </div>
-  )
+  );
 }

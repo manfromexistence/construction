@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Meteors Demo",
   "description": "Example showing a meteor shower effect.",
-  "registryDependencies": [
-    "@magicui/meteors"
-  ],
+  "registryDependencies": ["@magicui/meteors"],
   "files": [
     {
       "path": "registry/example/meteors-demo.tsx",

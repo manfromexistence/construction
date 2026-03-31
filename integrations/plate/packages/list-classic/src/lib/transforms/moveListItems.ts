@@ -1,19 +1,19 @@
 import {
   type EditorNodesOptions,
+  KEYS,
   type Path,
+  PathApi,
   type PathRef,
   type SlateEditor,
-  KEYS,
-  PathApi,
-} from 'platejs';
+} from "platejs";
 
-import { isListNested } from '../queries/isListNested';
-import { moveListItemDown } from './moveListItemDown';
-import { moveListItemUp } from './moveListItemUp';
-import { removeFirstListItem } from './removeFirstListItem';
+import { isListNested } from "../queries/isListNested";
+import { moveListItemDown } from "./moveListItemDown";
+import { moveListItemUp } from "./moveListItemUp";
+import { removeFirstListItem } from "./removeFirstListItem";
 
 export type MoveListItemsOptions = {
-  at?: EditorNodesOptions['at'];
+  at?: EditorNodesOptions["at"];
   enableResetOnShiftTab?: boolean;
   increase?: boolean;
 };
@@ -58,9 +58,7 @@ export const moveListItems = (
     }
   });
 
-  const licPathRefsToMove = increase
-    ? highestLicPathRefs
-    : highestLicPathRefs.reverse();
+  const licPathRefsToMove = increase ? highestLicPathRefs : highestLicPathRefs.reverse();
 
   return editor.tf.withoutNormalizing(() => {
     let moved = false;

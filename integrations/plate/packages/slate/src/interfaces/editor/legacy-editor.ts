@@ -1,26 +1,26 @@
-import type { OmitFirst } from '@udecode/utils';
+import type { OmitFirst } from "@udecode/utils";
 import type {
   deleteBackward as deleteBackwardBase,
   deleteForward as deleteForwardBase,
-} from 'slate';
+} from "slate";
 
-import type { EditorApi } from './editor-api';
-import type { EditorTransforms } from './editor-transforms';
-import type { Value } from './editor-type';
+import type { EditorApi } from "./editor-api";
+import type { EditorTransforms } from "./editor-transforms";
+import type { Value } from "./editor-type";
 
 export type LegacyEditorApi<V extends Value = Value> = Pick<
   EditorApi<V>,
-  | 'getDirtyPaths'
-  | 'getFragment'
-  | 'isElementReadOnly'
-  | 'isInline'
-  | 'isSelectable'
-  | 'isVoid'
-  | 'markableVoid'
-  | 'onChange'
-  | 'setNormalizing'
-  | 'shouldMergeNodes'
-  | 'shouldNormalize'
+  | "getDirtyPaths"
+  | "getFragment"
+  | "isElementReadOnly"
+  | "isInline"
+  | "isSelectable"
+  | "isVoid"
+  | "markableVoid"
+  | "onChange"
+  | "setNormalizing"
+  | "shouldMergeNodes"
+  | "shouldNormalize"
 >;
 
 export type LegacyEditorMethods<V extends Value = Value> = LegacyEditorApi<V> &
@@ -33,21 +33,21 @@ export type LegacyEditorTransforms<V extends Value = Value> = {
   deleteForward: OmitFirst<typeof deleteForwardBase>;
 } & Pick<
   EditorTransforms<V>,
-  | 'addMark'
-  | 'apply'
-  | 'delete'
-  | 'deleteFragment'
-  | 'insertBreak'
-  | 'insertFragment'
-  | 'insertNode'
-  | 'insertNodes'
-  | 'insertSoftBreak'
-  | 'insertText'
-  | 'normalizeNode'
-  | 'removeMark'
+  | "addMark"
+  | "apply"
+  | "delete"
+  | "deleteFragment"
+  | "insertBreak"
+  | "insertFragment"
+  | "insertNode"
+  | "insertNodes"
+  | "insertSoftBreak"
+  | "insertText"
+  | "normalizeNode"
+  | "removeMark"
 > &
   Pick<
     EditorTransforms<V>,
-    'insertData' | 'insertFragmentData' | 'insertTextData' | 'setFragmentData'
+    "insertData" | "insertFragmentData" | "insertTextData" | "setFragmentData"
   > &
-  Pick<EditorTransforms<V>, 'writeHistory'>;
+  Pick<EditorTransforms<V>, "writeHistory">;

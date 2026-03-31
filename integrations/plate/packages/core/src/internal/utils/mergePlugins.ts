@@ -1,6 +1,6 @@
-import mergeWith from 'lodash/mergeWith.js';
+import mergeWith from "lodash/mergeWith.js";
 
-import type { SlatePlugin } from '../../lib';
+import type { SlatePlugin } from "../../lib";
 
 export function mergePlugins<T>(basePlugin: T, ...sourcePlugins: any[]): T {
   return mergeWith(
@@ -13,7 +13,7 @@ export function mergePlugins<T>(basePlugin: T, ...sourcePlugins: any[]): T {
         return srcValue;
       }
       // Shallow merge options
-      if (key === 'options') {
+      if (key === "options") {
         return { ...(objValue as any), ...(srcValue as any) };
       }
     }

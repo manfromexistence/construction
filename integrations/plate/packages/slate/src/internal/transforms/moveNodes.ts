@@ -1,4 +1,4 @@
-import { moveNodes as moveNodesBase } from 'slate';
+import { moveNodes as moveNodesBase } from "slate";
 
 import {
   type Editor,
@@ -6,8 +6,8 @@ import {
   NodeApi,
   type TElement,
   type ValueOf,
-} from '../../interfaces';
-import { getQueryOptions } from '../../utils';
+} from "../../interfaces";
+import { getQueryOptions } from "../../utils";
 
 export const moveNodes = <E extends Editor>(
   editor: E,
@@ -28,18 +28,11 @@ export const moveNodes = <E extends Editor>(
 
     if (!editor.api.isBlock(node)) return moved;
 
-    for (
-      let i = (node.children as TElement[]).length - 1;
-      i >= fromIndex;
-      i--
-    ) {
+    for (let i = (node.children as TElement[]).length - 1; i >= fromIndex; i--) {
       const childPath = [...path, i];
       const childNode = NodeApi.get(editor, childPath);
 
-      if (
-        !options.match ||
-        (childNode && options.match(childNode, childPath))
-      ) {
+      if (!options.match || (childNode && options.match(childNode, childPath))) {
         moveNodesBase(editor as any, {
           ...options,
           at: childPath,

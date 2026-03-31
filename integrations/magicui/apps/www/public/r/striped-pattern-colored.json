@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Striped Pattern (Colored)",
   "description": "Example showing a background striped pattern with a colored stroke.",
-  "registryDependencies": [
-    "@magicui/striped-pattern"
-  ],
+  "registryDependencies": ["@magicui/striped-pattern"],
   "files": [
     {
       "path": "registry/example/striped-pattern-colored.tsx",

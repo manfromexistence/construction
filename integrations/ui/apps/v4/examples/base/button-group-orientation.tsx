@@ -1,15 +1,11 @@
-import { MinusIcon, PlusIcon } from "lucide-react"
+import { MinusIcon, PlusIcon } from "lucide-react";
 
-import { Button } from "@/styles/base-nova/ui/button"
-import { ButtonGroup } from "@/styles/base-nova/ui/button-group"
+import { Button } from "@/styles/base-nova/ui/button";
+import { ButtonGroup } from "@/styles/base-nova/ui/button-group";
 
 export default function ButtonGroupOrientation() {
   return (
-    <ButtonGroup
-      orientation="vertical"
-      aria-label="Media controls"
-      className="h-fit"
-    >
+    <ButtonGroup orientation="vertical" aria-label="Media controls" className="h-fit">
       <Button variant="outline" size="icon">
         <PlusIcon />
       </Button>
@@ -17,5 +13,5 @@ export default function ButtonGroupOrientation() {
         <MinusIcon />
       </Button>
     </ButtonGroup>
-  )
+  );
 }

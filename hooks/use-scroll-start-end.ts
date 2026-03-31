@@ -54,7 +54,13 @@ export function useScrollStartEnd({
       ...observerOptions,
       root: containerRef?.current ?? observerOptions.root ?? null,
     };
-  }, [observerOptions.root, observerOptions.threshold, observerOptions.rootMargin]);
+  }, [
+    observerOptions.root,
+    observerOptions.threshold,
+    observerOptions.rootMargin,
+    observerOptions,
+    containerRef?.current,
+  ]);
 
   useEffect(() => {
     const startMarker = scrollStartRef.current;

@@ -1,24 +1,16 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/styles/radix-nova/ui-rtl/card"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/styles/radix-nova/ui-rtl/tabs"
+} from "@/styles/radix-nova/ui-rtl/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/styles/radix-nova/ui-rtl/tabs";
 
 const translations: Translations = {
   en: {
@@ -58,16 +50,13 @@ const translations: Translations = {
         "عرض مقاييسك الرئيسية وأنشطة المشروع الأخيرة. تتبع التقدم عبر جميع مشاريعك النشطة.",
       overviewContent: "لديك ١٢ مشروعًا نشطًا و٣ مهام معلقة.",
       analyticsTitle: "التحليلات",
-      analyticsDesc:
-        "تتبع مقاييس الأداء ومشاركة المستخدمين. راقب الاتجاهات وحدد فرص النمو.",
+      analyticsDesc: "تتبع مقاييس الأداء ومشاركة المستخدمين. راقب الاتجاهات وحدد فرص النمو.",
       analyticsContent: "زادت مشاهدات الصفحة بنسبة ٢٥٪ مقارنة بالشهر الماضي.",
       reportsTitle: "التقارير",
-      reportsDesc:
-        "إنشاء وتنزيل تقاريرك التفصيلية. تصدير البيانات بتنسيقات متعددة للتحليل.",
+      reportsDesc: "إنشاء وتنزيل تقاريرك التفصيلية. تصدير البيانات بتنسيقات متعددة للتحليل.",
       reportsContent: "لديك ٥ تقارير جاهزة ومتاحة للتصدير.",
       settingsTitle: "الإعدادات",
-      settingsDesc:
-        "إدارة تفضيلات حسابك وخياراته. تخصيص تجربتك لتناسب احتياجاتك.",
+      settingsDesc: "إدارة تفضيلات حسابك وخياراته. تخصيص تجربتك لتناسب احتياجاتك.",
       settingsContent: "تكوين الإشعارات والأمان والسمات.",
     },
   },
@@ -83,12 +72,10 @@ const translations: Translations = {
         "הצג את המדדים העיקריים שלך ופעילות הפרויקט האחרונה. עקוב אחר התקדמות בכל הפרויקטים הפעילים שלך.",
       overviewContent: "יש לך 12 פרויקטים פעילים ו-3 משימות ממתינות.",
       analyticsTitle: "אנליטיקה",
-      analyticsDesc:
-        "עקוב אחר ביצועים ומדדי מעורבות משתמשים. עקוב אחר מגמות וזהה הזדמנויות צמיחה.",
+      analyticsDesc: "עקוב אחר ביצועים ומדדי מעורבות משתמשים. עקוב אחר מגמות וזהה הזדמנויות צמיחה.",
       analyticsContent: "צפיות בדף עלו ב-25% בהשוואה לחודש שעבר.",
       reportsTitle: "דוחות",
-      reportsDesc:
-        "צור והורד את הדוחות המפורטים שלך. ייצא נתונים בפורמטים מרובים לניתוח.",
+      reportsDesc: "צור והורד את הדוחות המפורטים שלך. ייצא נתונים בפורמטים מרובים לניתוח.",
       reportsContent: "יש לך 5 דוחות מוכנים וזמינים לייצוא.",
       settingsTitle: "הגדרות",
       settingsDesc:
@@ -96,10 +83,10 @@ const translations: Translations = {
       settingsContent: "הגדר התראות, אבטחה וערכות נושא.",
     },
   },
-}
+};
 
 export function TabsRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Tabs defaultValue="overview" className="w-full max-w-sm" dir={dir}>
@@ -115,9 +102,7 @@ export function TabsRtl() {
             <CardTitle>{t.overviewTitle}</CardTitle>
             <CardDescription>{t.overviewDesc}</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            {t.overviewContent}
-          </CardContent>
+          <CardContent className="text-sm text-muted-foreground">{t.overviewContent}</CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="analytics">
@@ -126,9 +111,7 @@ export function TabsRtl() {
             <CardTitle>{t.analyticsTitle}</CardTitle>
             <CardDescription>{t.analyticsDesc}</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            {t.analyticsContent}
-          </CardContent>
+          <CardContent className="text-sm text-muted-foreground">{t.analyticsContent}</CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="reports">
@@ -137,9 +120,7 @@ export function TabsRtl() {
             <CardTitle>{t.reportsTitle}</CardTitle>
             <CardDescription>{t.reportsDesc}</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            {t.reportsContent}
-          </CardContent>
+          <CardContent className="text-sm text-muted-foreground">{t.reportsContent}</CardContent>
         </Card>
       </TabsContent>
       <TabsContent value="settings">
@@ -148,11 +129,9 @@ export function TabsRtl() {
             <CardTitle>{t.settingsTitle}</CardTitle>
             <CardDescription>{t.settingsDesc}</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground">
-            {t.settingsContent}
-          </CardContent>
+          <CardContent className="text-sm text-muted-foreground">{t.settingsContent}</CardContent>
         </Card>
       </TabsContent>
     </Tabs>
-  )
+  );
 }

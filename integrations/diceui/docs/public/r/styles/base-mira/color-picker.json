@@ -1,8 +1,6 @@
 {
   "name": "color-picker",
-  "dependencies": [
-    "@base-ui/react"
-  ],
+  "dependencies": ["@base-ui/react"],
   "registryDependencies": [
     "button",
     "input",

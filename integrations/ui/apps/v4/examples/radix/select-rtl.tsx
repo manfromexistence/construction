@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Select,
   SelectContent,
@@ -15,7 +12,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@/styles/radix-nova/ui-rtl/select"
+} from "@/styles/radix-nova/ui-rtl/select";
 
 const translations: Translations = {
   en: {
@@ -66,11 +63,11 @@ const translations: Translations = {
       spinach: "תרד",
     },
   },
-}
+};
 
 export function SelectRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
-  const [selectedFruit, setSelectedFruit] = React.useState<string>("")
+  const { dir, t, language } = useTranslation(translations, "ar");
+  const [selectedFruit, setSelectedFruit] = React.useState<string>("");
 
   const fruits = [
     { label: t.apple, value: "apple" },
@@ -78,13 +75,13 @@ export function SelectRtl() {
     { label: t.blueberry, value: "blueberry" },
     { label: t.grapes, value: "grapes" },
     { label: t.pineapple, value: "pineapple" },
-  ]
+  ];
 
   const vegetables = [
     { label: t.carrot, value: "carrot" },
     { label: t.broccoli, value: "broccoli" },
     { label: t.spinach, value: "spinach" },
-  ]
+  ];
 
   return (
     <Select value={selectedFruit} onValueChange={setSelectedFruit}>
@@ -111,5 +108,5 @@ export function SelectRtl() {
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }

@@ -20,13 +20,7 @@ export interface Person {
 
 faker.seed(12345);
 
-export const departments = [
-  "Engineering",
-  "Marketing",
-  "Sales",
-  "HR",
-  "Finance",
-] as const;
+export const departments = ["Engineering", "Marketing", "Sales", "HR", "Finance"] as const;
 
 export const statuses = ["Active", "On Leave", "Remote", "In Office"] as const;
 
@@ -155,15 +149,11 @@ function generatePerson(id: number): Person {
     status: faker.helpers.arrayElement(statuses),
     isActive: faker.datatype.boolean(),
     startDate:
-      faker.date
-        .between({ from: "2018-01-01", to: "2024-01-01" })
-        .toISOString()
-        .split("T")[0] ?? "",
+      faker.date.between({ from: "2018-01-01", to: "2024-01-01" }).toISOString().split("T")[0] ??
+      "",
     skills: faker.helpers.arrayElements(skills, { min: 1, max: 5 }),
     attachments,
   };
 }
 
-export const initialData: Person[] = Array.from({ length: 10000 }, (_, i) =>
-  generatePerson(i + 1),
-);
+export const initialData: Person[] = Array.from({ length: 10000 }, (_, i) => generatePerson(i + 1));

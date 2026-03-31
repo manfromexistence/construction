@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
 import {
   Sidebar,
   SidebarContent,
@@ -13,8 +13,7 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from "@/registry/bases/radix/ui/sidebar"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/radix/ui/sidebar";
 
 // This is sample data.
 const data = {
@@ -155,7 +154,7 @@ const data = {
       ],
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -211,5 +210,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

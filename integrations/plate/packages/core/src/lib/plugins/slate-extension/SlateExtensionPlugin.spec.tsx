@@ -1,28 +1,28 @@
 /** @jsx jsxt */
 
-import { NodeApi } from '@platejs/slate';
-import { jsxt } from '@platejs/test-utils';
+import { NodeApi } from "@platejs/slate";
+import { jsxt } from "@platejs/test-utils";
 
 jsxt;
 
-import { createSlateEditor } from '../../editor';
-import { NodeIdPlugin } from '../node-id/NodeIdPlugin';
-import { SlateExtensionPlugin } from './SlateExtensionPlugin';
+import { createSlateEditor } from "../../editor";
+import { NodeIdPlugin } from "../node-id/NodeIdPlugin";
+import { SlateExtensionPlugin } from "./SlateExtensionPlugin";
 
-describe('SlateExtensionPlugin', () => {
-  describe('redecorate', () => {
-    it('exposes a no-op redecorate method by default', () => {
+describe("SlateExtensionPlugin", () => {
+  describe("redecorate", () => {
+    it("exposes a no-op redecorate method by default", () => {
       const editor = createSlateEditor({
         plugins: [SlateExtensionPlugin],
       });
 
-      expect(typeof editor.api.redecorate).toBe('function');
+      expect(typeof editor.api.redecorate).toBe("function");
       expect(() => editor.api.redecorate()).not.toThrow();
     });
   });
 
-  describe('onNodeChange', () => {
-    it('call onNodeChange callback when a node operation occurs', () => {
+  describe("onNodeChange", () => {
+    it("call onNodeChange callback when a node operation occurs", () => {
       const onNodeChange = mock();
 
       const editor = createSlateEditor({
@@ -37,28 +37,28 @@ describe('SlateExtensionPlugin', () => {
 
       // Insert a node
       editor.tf.insertNode({
-        children: [{ text: 'test' }],
-        type: 'paragraph',
+        children: [{ text: "test" }],
+        type: "paragraph",
       });
 
       expect(onNodeChange).toHaveBeenCalled();
       expect(onNodeChange).toHaveBeenCalledWith({
         editor,
         node: expect.objectContaining({
-          children: [{ text: 'test' }],
-          type: 'paragraph',
+          children: [{ text: "test" }],
+          type: "paragraph",
         }),
         operation: expect.objectContaining({
-          type: 'insert_node',
+          type: "insert_node",
         }),
         prevNode: expect.objectContaining({
-          children: [{ text: 'test' }],
-          type: 'paragraph',
+          children: [{ text: "test" }],
+          type: "paragraph",
         }),
       });
     });
 
-    it('does not call onNodeChange for text operations', () => {
+    it("does not call onNodeChange for text operations", () => {
       const onNodeChange = mock();
 
       const editor = createSlateEditor({
@@ -71,19 +71,19 @@ describe('SlateExtensionPlugin', () => {
         ],
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'paragraph',
+            children: [{ text: "test" }],
+            type: "paragraph",
           },
         ],
       });
 
       // Insert text
-      editor.tf.insertText('hello');
+      editor.tf.insertText("hello");
 
       expect(onNodeChange).not.toHaveBeenCalled();
     });
 
-    it('call onNodeChange for different node operations', () => {
+    it("call onNodeChange for different node operations", () => {
       const onNodeChange = mock();
 
       const editor = createSlateEditor({
@@ -96,8 +96,8 @@ describe('SlateExtensionPlugin', () => {
         ],
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'paragraph',
+            children: [{ text: "test" }],
+            type: "paragraph",
           },
         ],
       });
@@ -108,20 +108,20 @@ describe('SlateExtensionPlugin', () => {
       expect(onNodeChange).toHaveBeenCalledWith({
         editor,
         node: expect.objectContaining({
-          children: [{ text: 'test' }],
-          type: 'paragraph',
+          children: [{ text: "test" }],
+          type: "paragraph",
         }),
         operation: expect.objectContaining({
-          type: 'remove_node',
+          type: "remove_node",
         }),
         prevNode: expect.objectContaining({
-          children: [{ text: 'test' }],
-          type: 'paragraph',
+          children: [{ text: "test" }],
+          type: "paragraph",
         }),
       });
     });
 
-    it('provide different node and prevNode for set_node operations', () => {
+    it("provide different node and prevNode for set_node operations", () => {
       const onNodeChange = mock();
 
       const editor = createSlateEditor({
@@ -134,36 +134,36 @@ describe('SlateExtensionPlugin', () => {
         ],
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'paragraph',
+            children: [{ text: "test" }],
+            type: "paragraph",
           },
         ],
       });
 
       // Set node properties
-      editor.tf.setNodes({ type: 'heading' }, { at: [0] });
+      editor.tf.setNodes({ type: "heading" }, { at: [0] });
 
       expect(onNodeChange).toHaveBeenCalledWith({
         editor,
         node: expect.objectContaining({
-          type: 'heading',
+          type: "heading",
         }),
         operation: expect.objectContaining({
-          type: 'set_node',
+          type: "set_node",
         }),
         prevNode: expect.objectContaining({
-          type: 'paragraph',
+          type: "paragraph",
         }),
       });
     });
   });
 
-  describe('onTextChange', () => {
-    it('call onTextChange callback when a text operation occurs', () => {
+  describe("onTextChange", () => {
+    it("call onTextChange callback when a text operation occurs", () => {
       const onTextChange = mock();
 
       const editor = createSlateEditor({
-        autoSelect: 'end',
+        autoSelect: "end",
         plugins: [
           SlateExtensionPlugin.configure({
             options: {
@@ -173,33 +173,31 @@ describe('SlateExtensionPlugin', () => {
         ],
         value: [
           {
-            children: [{ text: 'hello' }],
-            type: 'paragraph',
+            children: [{ text: "hello" }],
+            type: "paragraph",
           },
         ],
       });
 
       // Insert text
-      editor.tf.insertText(' world');
+      editor.tf.insertText(" world");
 
       expect(onTextChange).toHaveBeenCalled();
       expect(onTextChange).toHaveBeenCalledWith({
         editor,
         node: expect.objectContaining({
-          children: expect.arrayContaining([
-            expect.objectContaining({ text: expect.any(String) }),
-          ]),
-          type: 'paragraph',
+          children: expect.arrayContaining([expect.objectContaining({ text: expect.any(String) })]),
+          type: "paragraph",
         }),
         operation: expect.objectContaining({
-          type: 'insert_text',
+          type: "insert_text",
         }),
-        prevText: 'hello',
-        text: 'hello world',
+        prevText: "hello",
+        text: "hello world",
       });
     });
 
-    it('does not call onTextChange for node operations', () => {
+    it("does not call onTextChange for node operations", () => {
       const onTextChange = mock();
 
       const editor = createSlateEditor({
@@ -212,22 +210,22 @@ describe('SlateExtensionPlugin', () => {
         ],
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'paragraph',
+            children: [{ text: "test" }],
+            type: "paragraph",
           },
         ],
       });
 
       // Insert node
       editor.tf.insertNode({
-        children: [{ text: 'new' }],
-        type: 'paragraph',
+        children: [{ text: "new" }],
+        type: "paragraph",
       });
 
       expect(onTextChange).not.toHaveBeenCalled();
     });
 
-    it('handle remove_text operations', () => {
+    it("handle remove_text operations", () => {
       const onTextChange = mock();
 
       const editor = createSlateEditor({
@@ -250,8 +248,8 @@ describe('SlateExtensionPlugin', () => {
         },
         value: [
           {
-            children: [{ text: 'hello world' }],
-            type: 'paragraph',
+            children: [{ text: "hello world" }],
+            type: "paragraph",
           },
         ],
       });
@@ -261,22 +259,22 @@ describe('SlateExtensionPlugin', () => {
       expect(onTextChange).toHaveBeenCalledWith({
         editor,
         node: expect.objectContaining({
-          type: 'paragraph',
+          type: "paragraph",
         }),
         operation: expect.objectContaining({
-          text: 'd',
-          type: 'remove_text',
+          text: "d",
+          type: "remove_text",
         }),
-        prevText: 'hello world',
-        text: 'hello worl',
+        prevText: "hello world",
+        text: "hello worl",
       });
     });
 
-    it('provide the parent node for text operations', () => {
+    it("provide the parent node for text operations", () => {
       const onTextChange = mock();
 
       const editor = createSlateEditor({
-        autoSelect: 'end',
+        autoSelect: "end",
         plugins: [
           SlateExtensionPlugin.configure({
             options: {
@@ -286,46 +284,46 @@ describe('SlateExtensionPlugin', () => {
         ],
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'heading',
+            children: [{ text: "test" }],
+            type: "heading",
           },
         ],
       });
 
       // Insert text
-      editor.tf.insertText('ing');
+      editor.tf.insertText("ing");
 
       expect(onTextChange).toHaveBeenCalledWith({
         editor,
         node: expect.objectContaining({
-          type: 'heading',
+          type: "heading",
         }),
         operation: expect.objectContaining({
-          type: 'insert_text',
+          type: "insert_text",
         }),
-        prevText: 'test',
-        text: 'testing',
+        prevText: "test",
+        text: "testing",
       });
     });
   });
 
-  describe('performance optimization', () => {
-    it('does not capture state when no handlers are registered', () => {
+  describe("performance optimization", () => {
+    it("does not capture state when no handlers are registered", () => {
       const editor = createSlateEditor({
         plugins: [SlateExtensionPlugin],
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'paragraph',
+            children: [{ text: "test" }],
+            type: "paragraph",
           },
         ],
       });
 
       // Spy on NodeApi.get to ensure it's not called
-      const getSpy = spyOn(NodeApi, 'get');
+      const getSpy = spyOn(NodeApi, "get");
 
       // Insert text (no handlers registered)
-      editor.tf.insertText('hello');
+      editor.tf.insertText("hello");
 
       // NodeApi.get should not be called for state capture
       expect(getSpy).not.toHaveBeenCalled();
@@ -333,11 +331,11 @@ describe('SlateExtensionPlugin', () => {
       getSpy.mockRestore();
     });
 
-    it('capture state when handlers are registered', () => {
+    it("capture state when handlers are registered", () => {
       const onTextChange = mock();
 
       const editor = createSlateEditor({
-        autoSelect: 'end',
+        autoSelect: "end",
         plugins: [
           SlateExtensionPlugin.configure({
             options: {
@@ -347,17 +345,17 @@ describe('SlateExtensionPlugin', () => {
         ],
         value: [
           {
-            children: [{ text: 'test' }],
-            type: 'paragraph',
+            children: [{ text: "test" }],
+            type: "paragraph",
           },
         ],
       });
 
       // Spy on NodeApi.get to ensure it IS called
-      const getSpy = spyOn(NodeApi, 'get');
+      const getSpy = spyOn(NodeApi, "get");
 
       // Insert text (handler is registered)
-      editor.tf.insertText('hello');
+      editor.tf.insertText("hello");
 
       // NodeApi.get should be called for state capture
       expect(getSpy).toHaveBeenCalled();
@@ -369,8 +367,8 @@ describe('SlateExtensionPlugin', () => {
 });
 
 // https://github.com/udecode/editor-protocol/issues/81
-describe('delete marked text at block start', () => {
-  it('removes the mark after deleting backward in marked text at offset 1', () => {
+describe("delete marked text at block start", () => {
+  it("removes the mark after deleting backward in marked text at offset 1", () => {
     const input = (
       <editor>
         <hp>
@@ -396,12 +394,12 @@ describe('delete marked text at block start', () => {
     });
 
     editor.tf.deleteBackward();
-    editor.tf.insertText('a');
+    editor.tf.insertText("a");
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('removes the mark when deleting forward at the start of a marked block', () => {
+  it("removes the mark when deleting forward at the start of a marked block", () => {
     const input = (
       <editor>
         <hp>
@@ -427,12 +425,12 @@ describe('delete marked text at block start', () => {
     });
 
     editor.tf.deleteForward();
-    editor.tf.insertText('a');
+    editor.tf.insertText("a");
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('removes the mark when deleting a fragment at the start of a marked block', () => {
+  it("removes the mark when deleting a fragment at the start of a marked block", () => {
     const input = (
       <editor>
         <hp>
@@ -458,14 +456,14 @@ describe('delete marked text at block start', () => {
     });
 
     editor.tf.deleteBackward();
-    editor.tf.insertText('b');
+    editor.tf.insertText("b");
 
     expect(editor.children).toEqual(output.children);
   });
 });
 
-describe('editor.tf.setValue', () => {
-  it('set the editor value correctly', () => {
+describe("editor.tf.setValue", () => {
+  it("set the editor value correctly", () => {
     const input = (
       <editor>
         <hp>existing content</hp>
@@ -483,12 +481,12 @@ describe('editor.tf.setValue', () => {
       value: input.children,
     });
 
-    editor.tf.setValue('<p>new content</p>');
+    editor.tf.setValue("<p>new content</p>");
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('set empty value when no argument is provided', () => {
+  it("set empty value when no argument is provided", () => {
     const input = (
       <editor>
         <hp>existing content</hp>
@@ -514,22 +512,22 @@ describe('editor.tf.setValue', () => {
   });
 });
 
-describe('editor.tf.resetBlock', () => {
-  it('preserves the configured node id key', () => {
+describe("editor.tf.resetBlock", () => {
+  it("preserves the configured node id key", () => {
     const editor = createSlateEditor({
       plugins: [
         NodeIdPlugin.configure({
           options: {
-            idKey: 'key',
+            idKey: "key",
           },
         }),
       ],
       value: [
         {
-          children: [{ text: 'test' }],
-          foo: 'bar',
-          key: 'keep-me',
-          type: 'h1',
+          children: [{ text: "test" }],
+          foo: "bar",
+          key: "keep-me",
+          type: "h1",
         },
       ],
     });
@@ -537,9 +535,9 @@ describe('editor.tf.resetBlock', () => {
     editor.tf.resetBlock({ at: [0] });
 
     expect(editor.children[0]).toMatchObject({
-      children: [{ text: 'test' }],
-      key: 'keep-me',
-      type: 'p',
+      children: [{ text: "test" }],
+      key: "keep-me",
+      type: "p",
     });
     expect((editor.children[0] as any).foo).toBeUndefined();
   });

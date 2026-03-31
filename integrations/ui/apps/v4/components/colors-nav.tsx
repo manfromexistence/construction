@@ -1,18 +1,15 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { getColors } from "@/lib/colors"
-import { cn } from "@/lib/utils"
-import { ScrollArea, ScrollBar } from "@/registry/new-york-v4/ui/scroll-area"
+import { getColors } from "@/lib/colors";
+import { cn } from "@/lib/utils";
+import { ScrollArea, ScrollBar } from "@/registry/new-york-v4/ui/scroll-area";
 
-export function ColorsNav({
-  className,
-  ...props
-}: React.ComponentProps<"div">) {
-  const pathname = usePathname()
-  const colors = getColors()
+export function ColorsNav({ className, ...props }: React.ComponentProps<"div">) {
+  const pathname = usePathname();
+  const colors = getColors();
 
   return (
     <div className={cn("flex items-center", className)} {...props}>
@@ -23,8 +20,7 @@ export function ColorsNav({
               href={`/colors#${colorPalette.name}`}
               key={colorPalette.name}
               data-active={
-                pathname?.startsWith(colorPalette.name) ||
-                (index === 0 && pathname === "/colors")
+                pathname?.startsWith(colorPalette.name) || (index === 0 && pathname === "/colors")
               }
               className={cn(
                 "flex h-7 items-center justify-center px-4 text-center text-base font-medium text-muted-foreground capitalize transition-colors hover:text-primary data-[active=true]:text-primary"
@@ -37,5 +33,5 @@ export function ColorsNav({
         <ScrollBar orientation="horizontal" className="invisible" />
       </ScrollArea>
     </div>
-  )
+  );
 }

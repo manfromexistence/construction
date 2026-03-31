@@ -1,23 +1,16 @@
-import type {
-  FrequentEmojiStorageProps,
-  IFrequentEmojiStorage,
-} from '../utils';
-
-import { DEFAULT_FREQUENTLY_USED_EMOJI } from '../../lib/constants';
-import { type FrequentEmojis, EmojiCategory } from '../../lib/types';
-import { LocalStorage } from './LocalStorage';
+import { DEFAULT_FREQUENTLY_USED_EMOJI } from "../../lib/constants";
+import { EmojiCategory, type FrequentEmojis } from "../../lib/types";
+import type { FrequentEmojiStorageProps, IFrequentEmojiStorage } from "../utils";
+import { LocalStorage } from "./LocalStorage";
 
 export class FrequentEmojiStorage implements IFrequentEmojiStorage {
   protected key = EmojiCategory.Frequent;
   protected limit = 8;
   protected localStorage;
-  protected prefix = 'emoji';
+  protected prefix = "emoji";
   protected defaultValue = DEFAULT_FREQUENTLY_USED_EMOJI;
 
-  constructor(
-    props: FrequentEmojiStorageProps,
-    defaultValue = DEFAULT_FREQUENTLY_USED_EMOJI
-  ) {
+  constructor(props: FrequentEmojiStorageProps, defaultValue = DEFAULT_FREQUENTLY_USED_EMOJI) {
     this.defaultValue = defaultValue;
     this.limit = props.limit ?? this.limit;
     const key = `${props.prefix ?? this.prefix}:${props.key ?? this.key}`;

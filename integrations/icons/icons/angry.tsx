@@ -134,26 +134,10 @@ const AngryIcon = forwardRef<AngryIconHandle, AngryIconProps>(
             d="M16 16s-1.5-2-4-2-4 2-4 2"
             variants={PATH_VARIANTS_MOUTH}
           />
-          <motion.path
-            animate={controls}
-            d="M7.5 8 10 9"
-            variants={PATH_VARIANTS_LEFT_EYEBROW}
-          />
-          <motion.path
-            animate={controls}
-            d="m14 9 2.5-1"
-            variants={PATH_VARIANTS_RIGHT_EYEBROW}
-          />
-          <motion.path
-            animate={controls}
-            d="M9 10h.01"
-            variants={PATH_VARIANTS_EYE}
-          />
-          <motion.path
-            animate={controls}
-            d="M15 10h.01"
-            variants={PATH_VARIANTS_EYE}
-          />
+          <motion.path animate={controls} d="M7.5 8 10 9" variants={PATH_VARIANTS_LEFT_EYEBROW} />
+          <motion.path animate={controls} d="m14 9 2.5-1" variants={PATH_VARIANTS_RIGHT_EYEBROW} />
+          <motion.path animate={controls} d="M9 10h.01" variants={PATH_VARIANTS_EYE} />
+          <motion.path animate={controls} d="M15 10h.01" variants={PATH_VARIANTS_EYE} />
         </motion.svg>
       </div>
     );

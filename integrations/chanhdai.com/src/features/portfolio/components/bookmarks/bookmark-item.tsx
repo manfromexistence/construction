@@ -1,20 +1,14 @@
-import { format } from "date-fns"
-import { ArrowUpRightIcon, BookmarkIcon } from "lucide-react"
+import { format } from "date-fns";
+import { ArrowUpRightIcon, BookmarkIcon } from "lucide-react";
 
-import { getIcon } from "@/components/icons"
-import { Separator } from "@/components/ui/separator"
-import { UTM_PARAMS } from "@/config/site"
-import type { Bookmark } from "@/features/portfolio/types/bookmarks"
-import { cn } from "@/lib/utils"
-import { addQueryParams } from "@/utils/url"
+import { getIcon } from "@/components/icons";
+import { Separator } from "@/components/ui/separator";
+import { UTM_PARAMS } from "@/config/site";
+import type { Bookmark } from "@/features/portfolio/types/bookmarks";
+import { cn } from "@/lib/utils";
+import { addQueryParams } from "@/utils/url";
 
-export function BookmarkItem({
-  className,
-  bookmark,
-}: {
-  className?: string
-  bookmark: Bookmark
-}) {
+export function BookmarkItem({ className, bookmark }: { className?: string; bookmark: Bookmark }) {
   return (
     <a
       className={cn("flex items-center pr-2 hover:bg-accent-muted", className)}
@@ -33,9 +27,7 @@ export function BookmarkItem({
       </div>
 
       <div className="flex-1 space-y-1 border-l border-dashed border-line p-4 pr-2">
-        <h3 className="leading-snug font-medium text-balance">
-          {bookmark.title}
-        </h3>
+        <h3 className="leading-snug font-medium text-balance">{bookmark.title}</h3>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
           {bookmark.author && (
@@ -65,5 +57,5 @@ export function BookmarkItem({
 
       <ArrowUpRightIcon className="size-4 text-muted-foreground" />
     </a>
-  )
+  );
 }

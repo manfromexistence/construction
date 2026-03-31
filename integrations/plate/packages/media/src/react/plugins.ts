@@ -1,4 +1,4 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
 import {
   BaseAudioPlugin,
@@ -6,7 +6,7 @@ import {
   BaseImagePlugin,
   BaseMediaEmbedPlugin,
   BaseVideoPlugin,
-} from '../lib';
+} from "../lib";
 
 export const ImagePlugin = toPlatePlugin(BaseImagePlugin);
 

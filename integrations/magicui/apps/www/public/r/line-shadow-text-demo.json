@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Line Shadow Text Demo",
   "description": "Example showing a text component with a moving line shadow.",
-  "registryDependencies": [
-    "@magicui/line-shadow-text"
-  ],
+  "registryDependencies": ["@magicui/line-shadow-text"],
   "files": [
     {
       "path": "registry/example/line-shadow-text-demo.tsx",

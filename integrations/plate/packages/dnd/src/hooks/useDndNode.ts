@@ -1,29 +1,22 @@
-import { getEmptyImage, NativeTypes } from 'react-dnd-html5-backend';
+import { type PlateEditor, useEditorRef } from "platejs/react";
 
-import type { ConnectDragSource, DropTargetMonitor } from 'react-dnd';
+import type { ConnectDragSource, DropTargetMonitor } from "react-dnd";
+import { getEmptyImage, NativeTypes } from "react-dnd-html5-backend";
+import { DRAG_ITEM_BLOCK } from "../DndPlugin";
+import type { DragItemNode } from "../types";
+import { canUseDomDnd, noopConnector } from "../utils/dndEnvironment";
+import { type UseDragNodeOptions, useDragNode } from "./useDragNode";
+import { type UseDropNodeOptions, useDropNode } from "./useDropNode";
 
-import { type PlateEditor, useEditorRef } from 'platejs/react';
-
-import type { DragItemNode } from '../types';
-
-import { DRAG_ITEM_BLOCK } from '../DndPlugin';
-import { canUseDomDnd, noopConnector } from '../utils/dndEnvironment';
-import { type UseDragNodeOptions, useDragNode } from './useDragNode';
-import { type UseDropNodeOptions, useDropNode } from './useDropNode';
-
-export type UseDndNodeOptions = Pick<UseDropNodeOptions, 'element'> &
-  Partial<
-    Pick<UseDropNodeOptions, 'canDropNode' | 'multiplePreviewRef' | 'nodeRef'>
-  > &
-  Partial<Pick<UseDragNodeOptions, 'type'>> & {
+export type UseDndNodeOptions = Pick<UseDropNodeOptions, "element"> &
+  Partial<Pick<UseDropNodeOptions, "canDropNode" | "multiplePreviewRef" | "nodeRef">> &
+  Partial<Pick<UseDragNodeOptions, "type">> & {
     /** Options passed to the drag hook. */
-    drag?: Partial<Omit<UseDragNodeOptions, 'type'>>;
+    drag?: Partial<Omit<UseDragNodeOptions, "type">>;
     /** Options passed to the drop hook, excluding element, nodeRef. */
-    drop?: Partial<
-      Omit<UseDropNodeOptions, 'canDropNode' | 'element' | 'nodeRef'>
-    >;
+    drop?: Partial<Omit<UseDropNodeOptions, "canDropNode" | "element" | "nodeRef">>;
     /** Orientation of the drag and drop interaction. */
-    orientation?: 'horizontal' | 'vertical';
+    orientation?: "horizontal" | "vertical";
     preview?: {
       /** Whether to disable the preview. */
       disable?: boolean;
@@ -53,7 +46,7 @@ export const useDndNode = ({
   element,
   multiplePreviewRef,
   nodeRef,
-  orientation = 'vertical',
+  orientation = "vertical",
   preview: previewOptions = {},
   type = DRAG_ITEM_BLOCK,
   onDropHandler,
@@ -75,14 +68,11 @@ export const useDndNode = ({
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [{ isAboutToDrag, isDragging }, dragRef, preview] = useDragNode(
-    editor,
-    {
-      element,
-      type,
-      ...dragOptions,
-    }
-  );
+  const [{ isAboutToDrag, isDragging }, dragRef, preview] = useDragNode(editor, {
+    element,
+    type,
+    ...dragOptions,
+  });
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [{ isOver }, drop] = useDropNode(editor, {

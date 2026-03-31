@@ -1,40 +1,39 @@
 /** @jsx jsxt */
 
-import { HeadingPlugin } from '@platejs/basic-nodes/react';
-import { BoldPlugin } from '@platejs/basic-nodes/react';
-import { LinkPlugin } from '@platejs/link/react';
-import { MediaEmbedPlugin } from '@platejs/media/react';
-import { jsxt } from '@platejs/test-utils';
-import { afterEach, describe, expect, it, spyOn, type Mock } from 'bun:test';
+import { afterEach, describe, expect, it, type Mock, spyOn } from "bun:test";
+import { BoldPlugin, HeadingPlugin } from "@platejs/basic-nodes/react";
+import { LinkPlugin } from "@platejs/link/react";
+import { MediaEmbedPlugin } from "@platejs/media/react";
+import { jsxt } from "@platejs/test-utils";
 
 import {
   createSlateEditor,
   type SlateEditor,
-} from '../../../../../../packages/core/src/lib/editor';
-import { BaseParagraphPlugin } from '../../../../../../packages/core/src/lib/plugins/paragraph';
+} from "../../../../../../packages/core/src/lib/editor";
+import { BaseParagraphPlugin } from "../../../../../../packages/core/src/lib/plugins/paragraph";
 
 jsxt;
 
-describe('when inserting html', () => {
+describe("when inserting html", () => {
   // noinspection CheckTagEmptyBody
   const dataTransfer = {
     constructor: {
-      name: 'DataTransfer',
+      name: "DataTransfer",
     },
     getData: (format: string) =>
-      format === 'text/html' && '<html><body><h1>inserted</h1></body></html>',
+      format === "text/html" && "<html><body><h1>inserted</h1></body></html>",
   } as any;
 
   const makeDataTransfer = (value: string): DataTransfer =>
     ({
       constructor: {
-        name: 'DataTransfer',
+        name: "DataTransfer",
       },
-      getData: (format: string) => format === 'text/html' && value,
+      getData: (format: string) => format === "text/html" && value,
     }) as any;
 
-  describe('when inserting h1 inside p (not empty)', () => {
-    it('inserts heading text into the current paragraph', () => {
+  describe("when inserting h1 inside p (not empty)", () => {
+    it("inserts heading text into the current paragraph", () => {
       const input = (
         <editor>
           <hp>
@@ -67,8 +66,8 @@ describe('when inserting html', () => {
     });
   });
 
-  describe('when inserting h1 inside an empty p', () => {
-    it('set p type to h1 and insert h1 text', () => {
+  describe("when inserting h1 inside an empty p", () => {
+    it("set p type to h1 and insert h1 text", () => {
       const input = (
         <editor>
           <hp>
@@ -100,8 +99,8 @@ describe('when inserting html', () => {
     });
   });
 
-  describe('when inserting a text node surrounded by elements', () => {
-    it('insert the text node surrounded by elements', () => {
+  describe("when inserting a text node surrounded by elements", () => {
+    it("insert the text node surrounded by elements", () => {
       const input = (
         <editor>
           <hp>
@@ -131,7 +130,7 @@ describe('when inserting html', () => {
 
       editor.tf.insertData(
         makeDataTransfer(
-          '<html><body><p>first element</p><p>second element</p>text node in the end</body></html>'
+          "<html><body><p>first element</p><p>second element</p>text node in the end</body></html>"
         )
       );
 
@@ -140,7 +139,7 @@ describe('when inserting html', () => {
   });
 });
 
-describe('when inserting empty html', () => {
+describe("when inserting empty html", () => {
   const input = (
     <editor>
       <hp>
@@ -152,7 +151,7 @@ describe('when inserting empty html', () => {
 
   // noinspection CheckTagEmptyBody
   const dataTransfer = {
-    getData: (format: string) => format === 'text/html' && '<html></html>',
+    getData: (format: string) => format === "text/html" && "<html></html>",
   };
 
   const output = (
@@ -164,7 +163,7 @@ describe('when inserting empty html', () => {
     </editor>
   ) as any;
 
-  it('keeps the editor unchanged', () => {
+  it("keeps the editor unchanged", () => {
     const plugins = [BoldPlugin];
 
     const editor = createSlateEditor({
@@ -179,7 +178,7 @@ describe('when inserting empty html', () => {
   });
 });
 
-describe('when inserting an iframe without src', () => {
+describe("when inserting an iframe without src", () => {
   const input = (
     <editor>
       <hp>
@@ -192,8 +191,7 @@ describe('when inserting an iframe without src', () => {
   // noinspection CheckTagEmptyBody
   const data = {
     getData: (format: string) =>
-      format === 'text/html' &&
-      '<html><body><iframe>inserted</iframe></body></html>',
+      format === "text/html" && "<html><body><iframe>inserted</iframe></body></html>",
   };
 
   const output = (
@@ -205,7 +203,7 @@ describe('when inserting an iframe without src', () => {
     </editor>
   ) as any;
 
-  it('falls back to inserting the iframe text content', () => {
+  it("falls back to inserting the iframe text content", () => {
     const plugins = [MediaEmbedPlugin];
 
     const editor = createSlateEditor({
@@ -220,7 +218,7 @@ describe('when inserting an iframe without src', () => {
   });
 });
 
-describe('when inserting link with href', () => {
+describe("when inserting link with href", () => {
   const input = (
     <editor>
       <hp>
@@ -233,8 +231,7 @@ describe('when inserting link with href', () => {
   // noinspection CheckTagEmptyBody
   const data = {
     getData: (format: string) =>
-      format === 'text/html' &&
-      `<html><body><a href="http://test.com">link</a></body></html>`,
+      format === "text/html" && `<html><body><a href="http://test.com">link</a></body></html>`,
   };
 
   const output = (
@@ -249,7 +246,7 @@ describe('when inserting link with href', () => {
     </editor>
   ) as any;
 
-  it('insert the link with url', () => {
+  it("insert the link with url", () => {
     const plugins = [BaseParagraphPlugin, LinkPlugin];
 
     const editor = createSlateEditor({
@@ -264,7 +261,7 @@ describe('when inserting link with href', () => {
   });
 });
 
-describe('when inserting plain text', () => {
+describe("when inserting plain text", () => {
   const input = (
     <editor>
       <hp>
@@ -275,7 +272,7 @@ describe('when inserting plain text', () => {
   ) as any as SlateEditor;
 
   const data = {
-    getData: (format: string) => (format === 'text/html' ? '' : 'inserted'),
+    getData: (format: string) => (format === "text/html" ? "" : "inserted"),
   };
 
   const output = (
@@ -293,10 +290,8 @@ describe('when inserting plain text', () => {
     jsonParseSpy?.mockRestore();
   });
 
-  it('falls back to the default insertData behavior', () => {
-    jsonParseSpy = spyOn(JSON, 'parse').mockReturnValue(
-      <fragment>inserted</fragment>
-    );
+  it("falls back to the default insertData behavior", () => {
+    jsonParseSpy = spyOn(JSON, "parse").mockReturnValue(<fragment>inserted</fragment>);
 
     const editor = createSlateEditor({
       plugins: [],

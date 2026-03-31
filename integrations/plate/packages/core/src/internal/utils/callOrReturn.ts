@@ -1,6 +1,6 @@
-import type { MaybeReturnType } from '../types';
+import type { MaybeReturnType } from "../types";
 
-import { isFunction } from './isFunction';
+import { isFunction } from "./isFunction";
 
 /**
  * Optionally calls `value` as a function. Otherwise it is returned directly.

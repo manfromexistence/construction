@@ -1,6 +1,6 @@
-import type { History, SlateEditor } from 'platejs';
+import type { History, SlateEditor } from "platejs";
 
-export type AIBatch = History['undos'][number] & { ai?: boolean };
+export type AIBatch = History["undos"][number] & { ai?: boolean };
 
 export const withAIBatch = (
   editor: SlateEditor,

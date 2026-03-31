@@ -1,12 +1,11 @@
+import { HocuspocusProviderWrapper } from "./hocuspocus-provider";
 import type {
   ProviderConstructor,
   ProviderConstructorProps,
   ProviderRegistry,
   YjsProviderType,
-} from './types';
-
-import { HocuspocusProviderWrapper } from './hocuspocus-provider';
-import { WebRTCProviderWrapper } from './webrtc-provider';
+} from "./types";
+import { WebRTCProviderWrapper } from "./webrtc-provider";
 
 // Provider registry for extensibility
 const providerRegistry: ProviderRegistry = {
@@ -15,18 +14,13 @@ const providerRegistry: ProviderRegistry = {
 };
 
 // Register a new provider type
-export const registerProviderType = <T>(
-  type: string,
-  providerClass: ProviderConstructor<T>
-) => {
-  providerRegistry[type as YjsProviderType] =
-    providerClass as ProviderConstructor;
+export const registerProviderType = <T>(type: string, providerClass: ProviderConstructor<T>) => {
+  providerRegistry[type as YjsProviderType] = providerClass as ProviderConstructor;
 };
 
 // Get a provider constructor by type
-export const getProviderClass = (
-  type: YjsProviderType
-): ProviderConstructor | undefined => providerRegistry[type];
+export const getProviderClass = (type: YjsProviderType): ProviderConstructor | undefined =>
+  providerRegistry[type];
 
 // Create a provider instance
 export const createProvider = ({

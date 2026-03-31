@@ -37,11 +37,9 @@ export const useFormInputProps = (options?: InputProps) => {
    * @param e The original event which was provided by the VDOM implement their
    *   own behaviour on this event
    */
-  const handleEnterKeydownCapture = (
-    e: React.KeyboardEvent<HTMLDivElement>
-  ) => {
+  const handleEnterKeydownCapture = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // Prevent the form from submitting
-    if (e.key === 'Enter' || e.keyCode === 13) {
+    if (e.key === "Enter" || e.keyCode === 13) {
       e.preventDefault();
     }
   };
@@ -49,8 +47,7 @@ export const useFormInputProps = (options?: InputProps) => {
   return {
     props: {
       onKeyDownCapture: preventDefaultOnEnterKeydown
-        ? (e: React.KeyboardEvent<HTMLDivElement>) =>
-            handleEnterKeydownCapture(e)
+        ? (e: React.KeyboardEvent<HTMLDivElement>) => handleEnterKeydownCapture(e)
         : undefined,
     },
   };

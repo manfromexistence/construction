@@ -1,37 +1,35 @@
-import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
+import { ArrowUpRightIcon } from "lucide-react";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { MDX } from "@/app/_components/mdx";
+import { getDocs } from "@/lib/mdx";
+import { Breadcrumbs } from "../_components/Breadcrumbs";
+import { Pagination } from "../_components/Pagination";
 
-import { MDX } from '@/app/_components/mdx'
-import { getDocs } from '@/lib/mdx'
-import { Breadcrumbs } from '../_components/Breadcrumbs'
-import { Pagination } from '../_components/Pagination'
-
-import { ArrowUpRightIcon } from 'lucide-react'
-
-const Docs = getDocs().sort((a, b) => a.title.localeCompare(b.title))
+const Docs = getDocs().sort((a, b) => a.title.localeCompare(b.title));
 
 export async function generateStaticParams() {
-  return Docs.map(docs => ({
+  return Docs.map((docs) => ({
     slug: docs.slug,
-  }))
+  }));
 }
 
-export const dynamicParams = false
+export const dynamicParams = false;
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata | undefined> {
-  const { slug } = await params
+  const { slug } = await params;
 
-  const docs = Docs.find(docs => docs.slug === slug)
+  const docs = Docs.find((docs) => docs.slug === slug);
 
   if (!docs) {
-    return
+    return;
   }
 
-  const { title, description, slug: slugDocs } = docs
+  const { title, description, slug: slugDocs } = docs;
 
   return {
     title,
@@ -39,13 +37,13 @@ export async function generateMetadata({
     openGraph: {
       title: `Luxe: ${title}`,
       description,
-      type: 'website',
+      type: "website",
       url: `https://luxeui.com/ui/${slugDocs}`,
       images: [
         {
           width: 1920,
           height: 1080,
-          url: 'https://luxeui.com/open-graphs/og-browse-components.png',
+          url: "https://luxeui.com/open-graphs/og-browse-components.png",
           alt: "Luxe's website cover",
         },
       ],
@@ -53,45 +51,38 @@ export async function generateMetadata({
     twitter: {
       title: `Luxe: ${title}`,
       description,
-      card: 'summary_large_image',
+      card: "summary_large_image",
       images: [
         {
           width: 1920,
           height: 1080,
-          url: 'https://luxeui.com/open-graphs/og-browse-components.png',
+          url: "https://luxeui.com/open-graphs/og-browse-components.png",
           alt: "Luxe's website cover",
         },
       ],
     },
-  }
+  };
 }
 
-export default async function ComponentPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}) {
-  const { slug } = await params
+export default async function ComponentPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
 
-  const docs = Docs.find(docs => docs.slug === slug)
+  const docs = Docs.find((docs) => docs.slug === slug);
 
-  if (!docs) notFound()
+  if (!docs) notFound();
 
-  const currentComponent = Docs.indexOf(docs)
-  const previousComponent = Docs[currentComponent - 1]
-  const nextComponent = Docs[currentComponent + 1]
+  const currentComponent = Docs.indexOf(docs);
+  const previousComponent = Docs[currentComponent - 1];
+  const nextComponent = Docs[currentComponent + 1];
 
-  const { title, description, content, externalDocs, externalApi } = docs
+  const { title, description, content, externalDocs, externalApi } = docs;
 
   return (
     <main className="my-2">
       <div className="space-y-20">
         <div className="space-y-4">
           <Breadcrumbs groupName="Components" currentPage={title} />
-          <h1
-            id="page-title"
-            className="font-semibold text-3xl text-primary tracking-tight"
-          >
+          <h1 id="page-title" className="font-semibold text-3xl text-primary tracking-tight">
             {title}
           </h1>
           <p className="font-normal text-[16px] text-black/80 leading-relaxed dark:text-white/90">
@@ -145,17 +136,17 @@ export default async function ComponentPage({
         <MDX source={content} />
         <Pagination
           back={{
-            href: previousComponent ? `/ui/${previousComponent.slug}` : '',
-            title: previousComponent ? previousComponent.title : '',
+            href: previousComponent ? `/ui/${previousComponent.slug}` : "",
+            title: previousComponent ? previousComponent.title : "",
           }}
           next={{
-            href: nextComponent ? `/ui/${nextComponent.slug}` : '',
-            title: nextComponent ? nextComponent.title : '',
+            href: nextComponent ? `/ui/${nextComponent.slug}` : "",
+            title: nextComponent ? nextComponent.title : "",
           }}
         />
       </div>
     </main>
-  )
+  );
 }
 
 function ArrowIconGlitch() {
@@ -171,5 +162,5 @@ function ArrowIconGlitch() {
         <ArrowUpRightIcon size={10} />
       </span>
     </div>
-  )
+  );
 }

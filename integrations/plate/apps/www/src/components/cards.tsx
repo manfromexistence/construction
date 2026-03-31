@@ -1,5 +1,3 @@
-import type { HTMLAttributes, ReactNode } from 'react';
-
 import {
   BoldIcon,
   CodeIcon,
@@ -13,20 +11,21 @@ import {
   SubscriptIcon,
   SuperscriptIcon,
   UnderlineIcon,
-} from 'lucide-react';
-import Link from 'next/link';
+} from "lucide-react";
+import Link from "next/link";
+import type { HTMLAttributes, ReactNode } from "react";
 
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 // Icon registry for Card components
 const iconRegistry = {
   blockquote: QuoteIcon,
   bold: BoldIcon,
   code: CodeIcon,
-  'code-block': CodeIcon,
+  "code-block": CodeIcon,
   heading: Heading1Icon,
   highlight: HighlighterIcon,
-  'horizontal-rule': MinusIcon,
+  "horizontal-rule": MinusIcon,
   italic: ItalicIcon,
   kbd: KeyboardIcon,
   strikethrough: StrikethroughIcon,
@@ -39,17 +38,14 @@ export function Cards(props: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       {...props}
-      className={cn(
-        '@container not-first:mt-4 grid grid-cols-2 gap-4',
-        props.className
-      )}
+      className={cn("@container not-first:mt-4 grid grid-cols-2 gap-4", props.className)}
     >
       {props.children}
     </div>
   );
 }
 
-export type CardProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
+export type CardProps = Omit<HTMLAttributes<HTMLElement>, "title"> & {
   title: ReactNode;
   description?: ReactNode;
   external?: boolean;
@@ -58,11 +54,11 @@ export type CardProps = Omit<HTMLAttributes<HTMLElement>, 'title'> & {
 };
 
 export function Card({ description, icon, title, ...props }: CardProps) {
-  const E = props.href ? (Link as any) : 'div';
+  const E = props.href ? (Link as any) : "div";
 
   // Resolve icon if it's a string
   let IconComponent: React.ReactNode = null;
-  if (typeof icon === 'string') {
+  if (typeof icon === "string") {
     const IconClass = iconRegistry[icon as keyof typeof iconRegistry];
     IconComponent = IconClass ? <IconClass /> : null;
   } else if (icon) {
@@ -73,8 +69,8 @@ export function Card({ description, icon, title, ...props }: CardProps) {
     <E
       {...props}
       className={cn(
-        '@max-lg:col-span-full block rounded-lg border bg-card p-4 text-card-foreground shadow-md transition-colors',
-        props.href && 'hover:bg-accent/80',
+        "@max-lg:col-span-full block rounded-lg border bg-card p-4 text-card-foreground shadow-md transition-colors",
+        props.href && "hover:bg-accent/80",
         props.className
       )}
       data-card
@@ -85,13 +81,9 @@ export function Card({ description, icon, title, ...props }: CardProps) {
         </div>
       ) : null}
       <h3 className="mb-1 font-medium text-sm">{title}</h3>
-      {description ? (
-        <p className="!my-0 text-muted-foreground text-sm">{description}</p>
-      ) : null}
+      {description ? <p className="!my-0 text-muted-foreground text-sm">{description}</p> : null}
       {props.children ? (
-        <div className="text-muted-foreground text-sm **:leading-normal">
-          {props.children}
-        </div>
+        <div className="text-muted-foreground text-sm **:leading-normal">{props.children}</div>
       ) : null}
     </E>
   );

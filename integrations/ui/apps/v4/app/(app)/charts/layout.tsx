@@ -1,21 +1,21 @@
-import { type Metadata } from "next"
-import Link from "next/link"
+import { type Metadata } from "next";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
-import { ChartsNav } from "@/components/charts-nav"
+import { Announcement } from "@/components/announcement";
+import { ChartsNav } from "@/components/charts-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { PageNav } from "@/components/page-nav"
-import { ThemeSelector } from "@/components/theme-selector"
-import { Button } from "@/registry/new-york-v4/ui/button"
+} from "@/components/page-header";
+import { PageNav } from "@/components/page-nav";
+import { ThemeSelector } from "@/components/theme-selector";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
-const title = "Beautiful Charts & Graphs"
+const title = "Beautiful Charts & Graphs";
 const description =
-  "A collection of ready-to-use chart components built with Recharts. From basic charts to rich data displays, copy and paste into your apps."
+  "A collection of ready-to-use chart components built with Recharts. From basic charts to rich data displays, copy and paste into your apps.";
 
 export const metadata: Metadata = {
   title,
@@ -39,13 +39,9 @@ export const metadata: Metadata = {
       },
     ],
   },
-}
+};
 
-export default function ChartsLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function ChartsLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <PageHeader>
@@ -70,5 +66,5 @@ export default function ChartsLayout({
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -2,10 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "drawer-example",
   "title": "Drawer",
-  "registryDependencies": [
-    "drawer",
-    "example"
-  ],
+  "registryDependencies": ["drawer", "example"],
   "files": [
     {
       "path": "registry/base-vega/examples/drawer-example.tsx",

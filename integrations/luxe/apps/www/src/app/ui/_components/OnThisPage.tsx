@@ -1,9 +1,9 @@
 "use client";
 
-import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { cn } from "@/utils/cn";
 
 type Heading = { id: string; text: string; level: string };
 
@@ -13,27 +13,20 @@ const RETRY_DELAY = 100;
 
 export function OnThisPage() {
   const [headings, setHeadings] = useState<Heading[]>([]);
-  const [visibleHeadings, setVisibleHeadings] = useState<Set<string>>(
-    new Set(),
-  );
+  const [visibleHeadings, setVisibleHeadings] = useState<Set<string>>(new Set());
   const [showPageTitle, setShowPageTitle] = useState(false);
   const [pageTitle, setPageTitle] = useState("");
 
   const pathname = usePathname();
   const pageTitleObserverRef = useRef<IntersectionObserver | null>(null);
   const manualClickRef = useRef<string | null>(null);
-  const manualClickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-    null,
-  );
+  const manualClickTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const retryTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const retryCountRef = useRef(0);
 
   const getHeadings = useCallback(() => {
     return Array.from(document.querySelectorAll("h1, h2, h3"))
-      .filter(
-        (el) =>
-          el.id && !el.closest('[role="dialog"]') && el.id !== PAGE_TITLE_ID,
-      )
+      .filter((el) => el.id && !el.closest('[role="dialog"]') && el.id !== PAGE_TITLE_ID)
       .map((el) => ({
         id: el.id,
         text: el.textContent?.trim() ?? "",
@@ -69,7 +62,7 @@ export function OnThisPage() {
             return next;
           });
         },
-        { root: null, threshold: 0 },
+        { root: null, threshold: 0 }
       );
 
       for (const h of collectedHeadings) {
@@ -104,7 +97,7 @@ export function OnThisPage() {
         (entries) => {
           for (const e of entries) setShowPageTitle(!e.isIntersecting);
         },
-        { threshold: 0 },
+        { threshold: 0 }
       );
       pageTitleObserverRef.current.observe(titleEl);
     }
@@ -121,8 +114,7 @@ export function OnThisPage() {
   }, [getHeadings, pathname]);
 
   function handleScroll(id: string) {
-    manualClickTimeoutRef.current &&
-      clearTimeout(manualClickTimeoutRef.current);
+    manualClickTimeoutRef.current && clearTimeout(manualClickTimeoutRef.current);
     manualClickRef.current = id;
 
     setVisibleHeadings((prev) => new Set(prev).add(id));
@@ -160,7 +152,7 @@ export function OnThisPage() {
               type="button"
               className={cn(
                 "mb-2 text-left font-medium text-sm transition-colors duration-200",
-                "text-foreground hover:text-primary dark:hover:text-primary",
+                "text-foreground hover:text-primary dark:hover:text-primary"
               )}
               initial={{ opacity: 0 }}
               animate={{ opacity: showPageTitle ? 1 : 0 }}
@@ -182,7 +174,7 @@ export function OnThisPage() {
                 visibleHeadings.has(id)
                   ? "text-primary"
                   : "duration-300 ease-in-out hover:text-primary",
-                level === "h3" && "pl-3",
+                level === "h3" && "pl-3"
               )}
             >
               {text}

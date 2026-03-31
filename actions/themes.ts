@@ -1,25 +1,25 @@
 "use server";
 
+import cuid from "cuid";
+import { and, eq, sql } from "drizzle-orm";
+import { headers } from "next/headers";
+import { cache } from "react";
 import { z } from "zod";
 import { db } from "@/db";
-import { theme as themeTable, communityTheme } from "@/db/schema";
-import { eq, and, sql } from "drizzle-orm";
-import cuid from "cuid";
+import { communityTheme, theme as themeTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
-import { themeStylesSchema, type ThemeStyles } from "@/types/theme";
-import { cache } from "react";
-import {
-  UnauthorizedError,
-  ValidationError,
-  ThemeNotFoundError,
-  ErrorCode,
-  actionError,
-  actionSuccess,
-  type ActionResult,
-} from "@/types/errors";
 import { MAX_FREE_THEMES } from "@/lib/constants";
 import { getMyActiveSubscription } from "@/lib/subscription";
+import {
+  type ActionResult,
+  actionError,
+  actionSuccess,
+  ErrorCode,
+  ThemeNotFoundError,
+  UnauthorizedError,
+  ValidationError,
+} from "@/types/errors";
+import { type ThemeStyles, themeStylesSchema } from "@/types/theme";
 
 // Helper to get user ID with better error handling
 async function getCurrentUserId(): Promise<string> {
@@ -35,7 +35,7 @@ async function getCurrentUserId(): Promise<string> {
 }
 
 // Log errors for observability
-function logError(error: Error, context: Record<string, any>) {
+function logError(error: Error, context: Record<string, unknown>) {
   console.error("Theme action error:", error, context);
 
   // TODO: Add server-side error reporting to PostHog or your preferred service
@@ -72,9 +72,7 @@ export async function getThemes() {
         styles: themeTable.styles,
         createdAt: themeTable.createdAt,
         updatedAt: themeTable.updatedAt,
-        isPublished: sql<boolean>`${communityTheme.id} is not null`.as(
-          "is_published"
-        ),
+        isPublished: sql<boolean>`${communityTheme.id} is not null`.as("is_published"),
       })
       .from(themeTable)
       .leftJoin(communityTheme, eq(themeTable.id, communityTheme.themeId))

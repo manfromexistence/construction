@@ -1,4 +1,4 @@
-import namespaces from '../namespaces';
+import namespaces from "../namespaces";
 
 export type DocumentMargins = {
   bottom: number;

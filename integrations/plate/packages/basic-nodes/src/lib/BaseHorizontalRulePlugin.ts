@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS } from "platejs";
 
 export const BaseHorizontalRulePlugin = createSlatePlugin({
   key: KEYS.hr,
@@ -8,11 +8,11 @@ export const BaseHorizontalRulePlugin = createSlatePlugin({
       deserializer: {
         rules: [
           {
-            validNodeName: 'HR',
+            validNodeName: "HR",
           },
         ],
       },
     },
   },
-  render: { as: 'hr' },
+  render: { as: "hr" },
 });

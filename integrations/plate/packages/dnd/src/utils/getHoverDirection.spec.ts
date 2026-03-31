@@ -1,11 +1,11 @@
-import type { TElement } from 'platejs';
-import type { DropTargetMonitor } from 'react-dnd';
+import type { TElement } from "platejs";
+import type { DropTargetMonitor } from "react-dnd";
 
-import type { DragItemNode } from '../types';
+import type { DragItemNode } from "../types";
 
-import { getHoverDirection } from './getHoverDirection';
+import { getHoverDirection } from "./getHoverDirection";
 
-describe('getHoverDirection', () => {
+describe("getHoverDirection", () => {
   const nodeRef = {
     current: {
       getBoundingClientRect: mock(),
@@ -16,14 +16,14 @@ describe('getHoverDirection', () => {
     getClientOffset: mock(),
   } as unknown as DropTargetMonitor;
 
-  const dragElement = { id: 'drag' } as unknown as TElement;
+  const dragElement = { id: "drag" } as unknown as TElement;
   const dragItem: DragItemNode = {
-    id: 'drag',
-    editorId: 'editor',
+    id: "drag",
+    editorId: "editor",
     element: dragElement,
   };
 
-  const hoverElement = { id: 'hover' } as unknown as TElement;
+  const hoverElement = { id: "hover" } as unknown as TElement;
 
   beforeEach(() => {
     // Mocks cleared in afterEach
@@ -41,10 +41,10 @@ describe('getHoverDirection', () => {
       element: hoverElement,
       monitor: mockMonitor,
       nodeRef,
-      orientation: 'vertical',
+      orientation: "vertical",
     });
 
-    expect(direction).toBe('top');
+    expect(direction).toBe("top");
   });
 
   it('returns "bottom" when vertical and mouse is below middle', () => {
@@ -59,10 +59,10 @@ describe('getHoverDirection', () => {
       element: hoverElement,
       monitor: mockMonitor,
       nodeRef,
-      orientation: 'vertical',
+      orientation: "vertical",
     });
 
-    expect(direction).toBe('bottom');
+    expect(direction).toBe("bottom");
   });
 
   it('returns "left" when horizontal and mouse is left of middle', () => {
@@ -77,10 +77,10 @@ describe('getHoverDirection', () => {
       element: hoverElement,
       monitor: mockMonitor,
       nodeRef,
-      orientation: 'horizontal',
+      orientation: "horizontal",
     });
 
-    expect(direction).toBe('left');
+    expect(direction).toBe("left");
   });
 
   it('returns "right" when horizontal and mouse is right of middle', () => {
@@ -95,13 +95,13 @@ describe('getHoverDirection', () => {
       element: hoverElement,
       monitor: mockMonitor,
       nodeRef,
-      orientation: 'horizontal',
+      orientation: "horizontal",
     });
 
-    expect(direction).toBe('right');
+    expect(direction).toBe("right");
   });
 
-  it('returns undefined if dragId === id', () => {
+  it("returns undefined if dragId === id", () => {
     const direction = getHoverDirection({
       dragItem,
       element: dragElement,

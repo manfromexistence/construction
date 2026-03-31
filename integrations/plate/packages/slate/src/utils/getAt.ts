@@ -1,11 +1,8 @@
-import isPlainObject from 'lodash/isPlainObject.js';
+import isPlainObject from "lodash/isPlainObject.js";
 
-import { type Editor, NodeApi, type TNode } from '../interfaces';
+import { type Editor, NodeApi, type TNode } from "../interfaces";
 
-export const getAt = <T>(
-  editor: Editor,
-  at?: T | TNode | null
-): T | undefined => {
+export const getAt = <T>(editor: Editor, at?: T | TNode | null): T | undefined => {
   if (at && isPlainObject(at) && NodeApi.isNode(at)) {
     return editor.api.findPath(at) as any;
   }

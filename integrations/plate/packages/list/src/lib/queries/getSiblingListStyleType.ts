@@ -1,10 +1,10 @@
-import type { ElementOf, NodeEntry, SlateEditor, TElement } from 'platejs';
+import type { ElementOf, NodeEntry, SlateEditor, TElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { ListStyleType } from '../types';
+import type { ListStyleType } from "../types";
 
-import { type GetListSiblingsOptions, getListSiblings } from './index';
+import { type GetListSiblingsOptions, getListSiblings } from "./index";
 
 /**
  * Get the first sibling list style type at the given indent. If none, return
@@ -31,8 +31,6 @@ export const getSiblingListStyleType = <E extends SlateEditor>(
   });
 
   return (
-    siblings.length > 0
-      ? siblings[0][0][KEYS.listType]
-      : entry[0][KEYS.listType]
+    siblings.length > 0 ? siblings[0][0][KEYS.listType] : entry[0][KEYS.listType]
   ) as ListStyleType;
 };

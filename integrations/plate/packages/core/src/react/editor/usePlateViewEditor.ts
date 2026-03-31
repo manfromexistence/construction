@@ -1,10 +1,9 @@
-import React from 'react';
+import type { Value } from "@platejs/slate";
+import React from "react";
 
-import type { Value } from '@platejs/slate';
+import type { AnyPluginConfig } from "../../lib";
 
-import type { AnyPluginConfig } from '../../lib';
-
-import { createStaticEditor } from '../../static/editor/withStatic';
+import { createStaticEditor } from "../../static/editor/withStatic";
 
 /**
  * Creates a memoized static Plate editor for view-only React components.

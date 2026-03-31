@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "signup-05",
   "description": "A simple signup form with social providers.",
-  "registryDependencies": [
-    "button",
-    "input",
-    "label"
-  ],
+  "registryDependencies": ["button", "input", "label"],
   "files": [
     {
       "path": "registry/new-york-v4/blocks/signup-05/page.tsx",
@@ -20,9 +16,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "signup"
-  ],
+  "categories": ["authentication", "signup"],
   "type": "registry:block"
 }

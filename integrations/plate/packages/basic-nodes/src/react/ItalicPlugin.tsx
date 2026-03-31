@@ -1,7 +1,7 @@
-import { Key, toPlatePlugin } from 'platejs/react';
+import { Key, toPlatePlugin } from "platejs/react";
 
-import { BaseItalicPlugin } from '../lib/BaseItalicPlugin';
+import { BaseItalicPlugin } from "../lib/BaseItalicPlugin";
 
 export const ItalicPlugin = toPlatePlugin(BaseItalicPlugin, {
-  shortcuts: { toggle: { keys: [[Key.Mod, 'i']] } },
+  shortcuts: { toggle: { keys: [[Key.Mod, "i"]] } },
 });

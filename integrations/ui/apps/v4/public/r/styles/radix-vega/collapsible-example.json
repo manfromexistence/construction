@@ -2,15 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "collapsible-example",
   "title": "Collapsible",
-  "registryDependencies": [
-    "button",
-    "card",
-    "collapsible",
-    "field",
-    "input",
-    "tabs",
-    "example"
-  ],
+  "registryDependencies": ["button", "card", "collapsible", "field", "input", "tabs", "example"],
   "files": [
     {
       "path": "registry/radix-vega/examples/collapsible-example.tsx",

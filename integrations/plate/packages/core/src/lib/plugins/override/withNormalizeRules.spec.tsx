@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor } from '../../editor';
-import { createSlatePlugin } from '../../plugin/createSlatePlugin';
+import { createSlateEditor } from "../../editor";
+import { createSlatePlugin } from "../../plugin/createSlatePlugin";
 
 jsxt;
 
@@ -56,9 +56,9 @@ const getNormalizedEditor = ({
   return editor;
 };
 
-describe('withNormalizeRules', () => {
-  describe('remove-empty normalization', () => {
-    it('removes an empty inline element during normalization', () => {
+describe("withNormalizeRules", () => {
+  describe("remove-empty normalization", () => {
+    it("removes an empty inline element during normalization", () => {
       const input = (
         <editor>
           <hp>
@@ -82,7 +82,7 @@ describe('withNormalizeRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            key: 'link',
+            key: "link",
             normalizeRules: { removeEmpty: true },
           }),
         ],
@@ -91,7 +91,7 @@ describe('withNormalizeRules', () => {
       expect(editor.children).toEqual(output.children);
     });
 
-    it('keeps an inline element with content during normalization', () => {
+    it("keeps an inline element with content during normalization", () => {
       const input = (
         <editor>
           <hp>
@@ -118,7 +118,7 @@ describe('withNormalizeRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            key: 'link',
+            key: "link",
             normalizeRules: { removeEmpty: true },
           }),
         ],
@@ -128,11 +128,11 @@ describe('withNormalizeRules', () => {
     });
   });
 
-  describe('default normalization behavior', () => {
+  describe("default normalization behavior", () => {
     it.each([
-      ['without normalize rules', undefined],
-      ['with removeEmpty disabled', { removeEmpty: false }],
-    ])('%s keeps an empty inline element intact', (_label, normalizeRules) => {
+      ["without normalize rules", undefined],
+      ["with removeEmpty disabled", { removeEmpty: false }],
+    ])("%s keeps an empty inline element intact", (_label, normalizeRules) => {
       const input = (
         <editor>
           <hp>
@@ -157,10 +157,8 @@ describe('withNormalizeRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            key: 'link',
-            normalizeRules: normalizeRules as
-              | Record<string, unknown>
-              | undefined,
+            key: "link",
+            normalizeRules: normalizeRules as Record<string, unknown> | undefined,
           }),
         ],
       });
@@ -168,7 +166,7 @@ describe('withNormalizeRules', () => {
       expect(editor.children).toEqual(output.children);
     });
 
-    it('keeps an empty inline element when the node only contains htext', () => {
+    it("keeps an empty inline element when the node only contains htext", () => {
       const input = (
         <editor>
           <hp>
@@ -193,15 +191,15 @@ describe('withNormalizeRules', () => {
 
       const editor = getNormalizedEditor({
         input,
-        plugins: [createElementPlugin({ key: 'link' })],
+        plugins: [createElementPlugin({ key: "link" })],
       });
 
       expect(editor.children).toEqual(output.children);
     });
   });
 
-  describe('match overrides', () => {
-    it('uses the matching override instead of the base normalize behavior', () => {
+  describe("match overrides", () => {
+    it("uses the matching override instead of the base normalize behavior", () => {
       const input = (
         <editor>
           <hp>
@@ -225,13 +223,13 @@ describe('withNormalizeRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            key: 'paragraph',
+            key: "paragraph",
           }),
           createElementPlugin({
-            key: 'customOverride',
+            key: "customOverride",
             match: ({ node }) => Boolean(node.customProperty) as any,
             normalizeRules: { removeEmpty: true },
-            type: 'override',
+            type: "override",
           }),
         ],
       });
@@ -239,7 +237,7 @@ describe('withNormalizeRules', () => {
       expect(editor.children).toEqual(output.children);
     });
 
-    it('falls back to the base normalize behavior when the override does not match', () => {
+    it("falls back to the base normalize behavior when the override does not match", () => {
       const input = (
         <editor>
           <hp>
@@ -264,13 +262,13 @@ describe('withNormalizeRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            key: 'paragraph',
+            key: "paragraph",
           }),
           createElementPlugin({
-            key: 'customOverride',
+            key: "customOverride",
             match: ({ node }) => Boolean(node.customProperty) as any,
             normalizeRules: { removeEmpty: true },
-            type: 'override',
+            type: "override",
           }),
         ],
       });
@@ -279,8 +277,8 @@ describe('withNormalizeRules', () => {
     });
   });
 
-  describe('multiple empty elements', () => {
-    it('removes multiple empty elements of the same type', () => {
+  describe("multiple empty elements", () => {
+    it("removes multiple empty elements of the same type", () => {
       const input = (
         <editor>
           <hp>
@@ -307,7 +305,7 @@ describe('withNormalizeRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            key: 'link',
+            key: "link",
             normalizeRules: { removeEmpty: true },
           }),
         ],
@@ -318,8 +316,8 @@ describe('withNormalizeRules', () => {
     });
   });
 
-  describe('nested empty elements', () => {
-    it('removes an empty nested paragraph without removing its parent blockquote', () => {
+  describe("nested empty elements", () => {
+    it("removes an empty nested paragraph without removing its parent blockquote", () => {
       const input = (
         <editor>
           <hp>
@@ -346,10 +344,10 @@ describe('withNormalizeRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            key: 'blockquote',
+            key: "blockquote",
           }),
           createElementPlugin({
-            key: 'paragraph',
+            key: "paragraph",
             normalizeRules: { removeEmpty: true },
           }),
         ],

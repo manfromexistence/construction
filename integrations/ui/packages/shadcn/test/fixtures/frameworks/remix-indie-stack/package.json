@@ -19,11 +19,7 @@
     "typecheck": "tsc && tsc -p cypress",
     "validate": "npm-run-all --parallel \"test -- --run\" lint typecheck test:e2e:run"
   },
-  "eslintIgnore": [
-    "/node_modules",
-    "/build",
-    "/public/build"
-  ],
+  "eslintIgnore": ["/node_modules", "/build", "/public/build"],
   "dependencies": {
     "@prisma/client": "^5.19.1",
     "@remix-run/css-bundle": "^2.12.1",

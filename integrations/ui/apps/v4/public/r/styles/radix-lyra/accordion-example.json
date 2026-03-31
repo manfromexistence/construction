@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "accordion-example",
   "title": "Accordion",
-  "registryDependencies": [
-    "accordion",
-    "button",
-    "card",
-    "example"
-  ],
+  "registryDependencies": ["accordion", "button", "card", "example"],
   "files": [
     {
       "path": "registry/radix-lyra/examples/accordion-example.tsx",

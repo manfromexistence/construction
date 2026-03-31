@@ -1,22 +1,20 @@
-import type React from 'react';
-
 import {
   createPrimitiveComponent,
   useElement,
   usePluginOption,
   useReadOnly,
   useSelected,
-} from 'platejs/react';
+} from "platejs/react";
+import type React from "react";
 
-import { CaptionPlugin } from '../CaptionPlugin';
-import { useCaptionString } from '../hooks/useCaptionString';
+import { CaptionPlugin } from "../CaptionPlugin";
+import { useCaptionString } from "../hooks/useCaptionString";
 
 export type CaptionOptions = {
   readOnly?: boolean;
 };
 
-export interface CaptionProps
-  extends React.ComponentPropsWithoutRef<'figcaption'> {
+export interface CaptionProps extends React.ComponentPropsWithoutRef<"figcaption"> {
   options?: CaptionOptions;
 }
 
@@ -24,11 +22,7 @@ export const useCaptionState = (options: CaptionOptions = {}) => {
   const element = useElement();
   const captionString = useCaptionString();
 
-  const showCaption = usePluginOption(
-    CaptionPlugin,
-    'isVisible',
-    element.id as string
-  );
+  const showCaption = usePluginOption(CaptionPlugin, "isVisible", element.id as string);
 
   const selected = useSelected();
   const _readOnly = useReadOnly();
@@ -48,9 +42,7 @@ export const useCaption = (state: ReturnType<typeof useCaptionState>) => ({
   hidden: state.hidden,
 });
 
-export const Caption = createPrimitiveComponent<'figcaption', CaptionProps>(
-  'figcaption'
-)({
+export const Caption = createPrimitiveComponent<"figcaption", CaptionProps>("figcaption")({
   propsHook: useCaption,
   stateHook: useCaptionState,
 });

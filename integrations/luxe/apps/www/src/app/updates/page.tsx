@@ -1,11 +1,9 @@
-import Link from "next/link";
 import { Metadata } from "next";
-
-import { AnimateEnter } from "../(home)/_components/AnimateEnter";
+import Link from "next/link";
+import { UPDATES } from "@/data/updates";
 import { BlurImage } from "../_components/BlurImage";
 import { Divider } from "../_components/Divider";
-
-import { UPDATES } from "@/data/updates";
+import { AnimateEnter } from "../(home)/_components/AnimateEnter";
 
 export const metadata: Metadata = {
   title: "Updates",
@@ -61,9 +59,7 @@ export default function UpdatesPage() {
               <div className="flex flex-col gap-6 py-3 max-lg:justify-center max-lg:items-center">
                 <div className="group w-fit relative block rounded-full py-1 px-2.5 bg-[#eeeeee] dark:bg-[#161616] dark:shadow-inner dark:shadow-neutral-800/80 border border-neutral-400/20 dark:border-neutral-700/70">
                   <div className="relative z-10 flex items-center justify-between">
-                    <span className="font-medium text-gradient tracking-tight text-sm">
-                      Latest
-                    </span>
+                    <span className="font-medium text-gradient tracking-tight text-sm">Latest</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-6 lg:gap-9 max-lg:items-center max-lg:justify-center max-lg:text-center">
@@ -85,48 +81,32 @@ export default function UpdatesPage() {
                         height={32}
                       />
                     </div>
-                    <span className="text-gradient text-sm font-[460]">
-                      {author}
-                    </span>
+                    <span className="text-gradient text-sm font-[460]">{author}</span>
                   </div>
                   <Divider />
-                  <span className="text-gradient text-sm font-[460]">
-                    {date}
-                  </span>
+                  <span className="text-gradient text-sm font-[460]">{date}</span>
                 </div>
               </div>
             </AnimateEnter>
           </Link>
-        ),
+        )
       )}
       <div className="space-y-7">
         <AnimateEnter delay={0.2}>
-          <h1 className="font-normal text-gradient tracking-tight text-2xl">
-            All Updates
-          </h1>
+          <h1 className="font-normal text-gradient tracking-tight text-2xl">All Updates</h1>
         </AnimateEnter>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {UPDATES.map(
-            (
-              { title, author, author_image, banner, date, description, href },
-              index,
-            ) => (
+            ({ title, author, author_image, banner, date, description, href }, index) => (
               <Link key={title} href={`/updates/${href}`}>
-                <AnimateEnter
-                  delay={0.3 + index * 0.05}
-                  className="flex flex-col gap-4"
-                >
+                <AnimateEnter delay={0.3 + index * 0.05} className="flex flex-col gap-4">
                   <div className="overflow-hidden border border-transparent dark:border-neutral-900 rounded-xl">
                     <BlurImage src={banner} alt="Luxe 2.0" />
                   </div>
                   <div className="flex flex-col gap-6 py-3">
                     <div className="flex flex-col gap-4">
-                      <h1 className="font-normal text-gradient tracking-tight text-2xl">
-                        {title}
-                      </h1>
-                      <span className="text-foreground text-[16px]">
-                        {description}
-                      </span>
+                      <h1 className="font-normal text-gradient tracking-tight text-2xl">{title}</h1>
+                      <span className="text-foreground text-[16px]">{description}</span>
                     </div>
                     <div className="flex items-center gap-4">
                       <div className="flex items-center gap-2.5">
@@ -139,19 +119,15 @@ export default function UpdatesPage() {
                             height={32}
                           />
                         </div>
-                        <span className="text-gradient text-sm font-[460]">
-                          {author}
-                        </span>
+                        <span className="text-gradient text-sm font-[460]">{author}</span>
                       </div>
                       <Divider />
-                      <span className="text-gradient text-sm font-[460]">
-                        {date}
-                      </span>
+                      <span className="text-gradient text-sm font-[460]">{date}</span>
                     </div>
                   </div>
                 </AnimateEnter>
               </Link>
-            ),
+            )
           )}
         </div>
       </div>

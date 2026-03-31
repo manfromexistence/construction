@@ -1,27 +1,27 @@
-import { createSlateEditor, createSlatePlugin } from '../../lib';
-import { getRenderNodeStaticProps } from './getRenderNodeStaticProps';
+import { createSlateEditor, createSlatePlugin } from "../../lib";
+import { getRenderNodeStaticProps } from "./getRenderNodeStaticProps";
 
-describe('getRenderNodeStaticProps', () => {
-  it('merges plugin props, allowed attrs, slate classes, and injected node props', () => {
+describe("getRenderNodeStaticProps", () => {
+  it("merges plugin props, allowed attrs, slate classes, and injected node props", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
+      key: "p",
       node: {
-        dangerouslyAllowAttributes: ['target'],
+        dangerouslyAllowAttributes: ["target"],
         isElement: true,
         props: ({ editor }) => ({
-          'data-has-editor': editor ? 'yes' : 'no',
+          "data-has-editor": editor ? "yes" : "no",
           title: undefined,
         }),
-        type: 'p',
+        type: "p",
       },
     });
     const AlignPlugin = createSlatePlugin({
-      key: 'align',
+      key: "align",
       inject: {
         nodeProps: {
-          nodeKey: 'align',
-          styleKey: 'textAlign',
-          targetPlugins: ['p'],
+          nodeKey: "align",
+          styleKey: "textAlign",
+          targetPlugins: ["p"],
         },
       },
     });
@@ -29,9 +29,9 @@ describe('getRenderNodeStaticProps', () => {
       plugins: [ParagraphPlugin, AlignPlugin],
       value: [
         {
-          align: 'center',
-          children: [{ text: 'hello' }],
-          type: 'p',
+          align: "center",
+          children: [{ text: "hello" }],
+          type: "p",
         },
       ],
     });
@@ -39,9 +39,9 @@ describe('getRenderNodeStaticProps', () => {
 
     const result = getRenderNodeStaticProps({
       attributes: {
-        'data-slate-align': 'center',
-        ignored: 'nope',
-        target: '_blank',
+        "data-slate-align": "center",
+        ignored: "nope",
+        target: "_blank",
       },
       editor,
       node: element,
@@ -49,25 +49,25 @@ describe('getRenderNodeStaticProps', () => {
       props: {
         attributes: {},
         children: null,
-        className: 'user-class',
+        className: "user-class",
         element,
       } as any,
     });
 
     expect(result.attributes).toMatchObject({
-      'data-has-editor': 'yes',
-      'data-slate-align': 'center',
-      style: { textAlign: 'center' },
-      target: '_blank',
+      "data-has-editor": "yes",
+      "data-slate-align": "center",
+      style: { textAlign: "center" },
+      target: "_blank",
     });
     expect(result.attributes?.ignored).toBeUndefined();
     expect(result.attributes?.title).toBeUndefined();
-    expect(result.attributes?.className).toContain('slate-p');
-    expect(result.attributes?.className).toContain('user-class');
-    expect(result.attributes?.className).toContain('slate-align-center');
+    expect(result.attributes?.className).toContain("slate-p");
+    expect(result.attributes?.className).toContain("user-class");
+    expect(result.attributes?.className).toContain("slate-align-center");
   });
 
-  it('falls back to editor context and removes empty top-level style objects', () => {
+  it("falls back to editor context and removes empty top-level style objects", () => {
     const editor = createSlateEditor();
 
     const result = getRenderNodeStaticProps({
@@ -76,7 +76,7 @@ describe('getRenderNodeStaticProps', () => {
         attributes: {},
         children: null,
         style: {},
-        text: { text: 'hello' },
+        text: { text: "hello" },
       } as any,
     });
 

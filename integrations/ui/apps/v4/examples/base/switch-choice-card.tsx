@@ -5,8 +5,8 @@ import {
   FieldGroup,
   FieldLabel,
   FieldTitle,
-} from "@/styles/base-nova/ui/field"
-import { Switch } from "@/styles/base-nova/ui/switch"
+} from "@/styles/base-nova/ui/field";
+import { Switch } from "@/styles/base-nova/ui/switch";
 
 export function SwitchChoiceCard() {
   return (
@@ -16,8 +16,7 @@ export function SwitchChoiceCard() {
           <FieldContent>
             <FieldTitle>Share across devices</FieldTitle>
             <FieldDescription>
-              Focus is shared across devices, and turns off when you leave the
-              app.
+              Focus is shared across devices, and turns off when you leave the app.
             </FieldDescription>
           </FieldContent>
           <Switch id="switch-share" />
@@ -35,5 +34,5 @@ export function SwitchChoiceCard() {
         </Field>
       </FieldLabel>
     </FieldGroup>
-  )
+  );
 }

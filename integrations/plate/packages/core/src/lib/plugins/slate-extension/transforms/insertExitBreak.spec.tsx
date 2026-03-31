@@ -1,16 +1,16 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor } from '../../../editor';
-import { createSlatePlugin } from '../../../plugin/createSlatePlugin';
-import { insertExitBreak } from './insertExitBreak';
+import { createSlateEditor } from "../../../editor";
+import { createSlatePlugin } from "../../../plugin/createSlatePlugin";
+import { insertExitBreak } from "./insertExitBreak";
 
 jsxt;
 
-describe('exitBreak', () => {
-  describe('basic functionality', () => {
-    it('exit break when no isExitable logic applies', () => {
+describe("exitBreak", () => {
+  describe("basic functionality", () => {
+    it("exit break when no isExitable logic applies", () => {
       const input = (
         <editor>
           <hp>
@@ -40,7 +40,7 @@ describe('exitBreak', () => {
       expect(result).toBe(true);
     });
 
-    it('exit break with reverse option', () => {
+    it("exit break with reverse option", () => {
       const input = (
         <editor>
           <hp>
@@ -71,8 +71,8 @@ describe('exitBreak', () => {
     });
   });
 
-  describe('isStrictSiblings behavior', () => {
-    it('exit from codeblock when cursor is in codeline', () => {
+  describe("isStrictSiblings behavior", () => {
+    it("exit from codeblock when cursor is in codeline", () => {
       const input = (
         <editor>
           <element type="codeblock">
@@ -98,16 +98,16 @@ describe('exitBreak', () => {
       const editor = createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'codeblock',
+            key: "codeblock",
             node: {
               isElement: true,
               isStrictSiblings: false,
-              type: 'codeblock',
+              type: "codeblock",
             },
           }),
           createSlatePlugin({
-            key: 'codeline',
-            node: { isElement: true, isStrictSiblings: true, type: 'codeline' },
+            key: "codeline",
+            node: { isElement: true, isStrictSiblings: true, type: "codeline" },
           }),
         ],
         selection: input.selection,
@@ -120,7 +120,7 @@ describe('exitBreak', () => {
       expect(result).toBe(true);
     });
 
-    it('exit from table when cursor is in td', () => {
+    it("exit from table when cursor is in td", () => {
       const input = (
         <editor>
           <element type="table">
@@ -150,16 +150,16 @@ describe('exitBreak', () => {
       const editor = createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'table',
-            node: { isElement: true, isStrictSiblings: false, type: 'table' },
+            key: "table",
+            node: { isElement: true, isStrictSiblings: false, type: "table" },
           }),
           createSlatePlugin({
-            key: 'tr',
-            node: { isElement: true, isStrictSiblings: true, type: 'tr' },
+            key: "tr",
+            node: { isElement: true, isStrictSiblings: true, type: "tr" },
           }),
           createSlatePlugin({
-            key: 'td',
-            node: { isElement: true, isStrictSiblings: true, type: 'td' },
+            key: "td",
+            node: { isElement: true, isStrictSiblings: true, type: "td" },
           }),
         ],
         selection: input.selection,
@@ -172,7 +172,7 @@ describe('exitBreak', () => {
       expect(result).toBe(true);
     });
 
-    it('handle nested column structure: exit from codeblock within column', () => {
+    it("handle nested column structure: exit from codeblock within column", () => {
       const input = (
         <editor>
           <element type="column_group">
@@ -206,28 +206,28 @@ describe('exitBreak', () => {
       const editor = createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'column_group',
+            key: "column_group",
             node: {
               isElement: true,
               isStrictSiblings: false,
-              type: 'column_group',
+              type: "column_group",
             },
           }),
           createSlatePlugin({
-            key: 'column',
-            node: { isElement: true, isStrictSiblings: false, type: 'column' },
+            key: "column",
+            node: { isElement: true, isStrictSiblings: false, type: "column" },
           }),
           createSlatePlugin({
-            key: 'codeblock',
+            key: "codeblock",
             node: {
               isElement: true,
               isStrictSiblings: false,
-              type: 'codeblock',
+              type: "codeblock",
             },
           }),
           createSlatePlugin({
-            key: 'codeline',
-            node: { isElement: true, isStrictSiblings: true, type: 'codeline' },
+            key: "codeline",
+            node: { isElement: true, isStrictSiblings: true, type: "codeline" },
           }),
         ],
         selection: input.selection,
@@ -240,7 +240,7 @@ describe('exitBreak', () => {
       expect(result).toBe(true);
     });
 
-    it('exit from column to after column_group with level parameter', () => {
+    it("exit from column to after column_group with level parameter", () => {
       const input = (
         <editor>
           <element type="column_group">
@@ -270,16 +270,16 @@ describe('exitBreak', () => {
       const editor = createSlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'column_group',
+            key: "column_group",
             node: {
               isElement: true,
               isStrictSiblings: false,
-              type: 'column_group',
+              type: "column_group",
             },
           }),
           createSlatePlugin({
-            key: 'column',
-            node: { isElement: true, isStrictSiblings: true, type: 'column' },
+            key: "column",
+            node: { isElement: true, isStrictSiblings: true, type: "column" },
           }),
         ],
         selection: input.selection,
@@ -293,8 +293,8 @@ describe('exitBreak', () => {
     });
   });
 
-  describe('edge cases', () => {
-    it('returns early if no selection', () => {
+  describe("edge cases", () => {
+    it("returns early if no selection", () => {
       const input = (
         <editor>
           <hp>test</hp>
@@ -312,7 +312,7 @@ describe('exitBreak', () => {
       expect(result).toBe(undefined);
     });
 
-    it('use fallback logic when no non-exitable ancestor found', () => {
+    it("use fallback logic when no non-exitable ancestor found", () => {
       const input = (
         <editor>
           <hp>

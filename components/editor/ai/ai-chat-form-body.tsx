@@ -1,10 +1,10 @@
 "use client";
 
+import { JSONContent } from "@tiptap/react";
+import dynamic from "next/dynamic";
 import { HorizontalScrollArea } from "@/components/horizontal-scroll-area";
 import { AI_PROMPT_CHARACTER_LIMIT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { JSONContent } from "@tiptap/react";
-import dynamic from "next/dynamic";
 import { DragAndDropImageUploader } from "./drag-and-drop-image-uploader";
 import { UploadedImagePreview } from "./uploaded-image-preview";
 

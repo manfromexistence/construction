@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Combobox,
   ComboboxChip,
@@ -17,8 +14,8 @@ import {
   ComboboxList,
   ComboboxValue,
   useComboboxAnchor,
-} from "@/styles/radix-nova/ui-rtl/combobox"
-import { Field, FieldLabel } from "@/styles/radix-nova/ui-rtl/field"
+} from "@/styles/radix-nova/ui-rtl/combobox";
+import { Field, FieldLabel } from "@/styles/radix-nova/ui-rtl/field";
 
 const categories = [
   "technology",
@@ -27,7 +24,7 @@ const categories = [
   "marketing",
   "education",
   "health",
-] as const
+] as const;
 
 const translations: Translations = {
   en: {
@@ -72,11 +69,11 @@ const translations: Translations = {
       health: "בריאות",
     },
   },
-}
+};
 
 export function ComboboxRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
-  const anchor = useComboboxAnchor()
+  const { dir, t, language } = useTranslation(translations, "ar");
+  const anchor = useComboboxAnchor();
 
   const categoryLabels: Record<string, string> = {
     technology: t.technology,
@@ -85,7 +82,7 @@ export function ComboboxRtl() {
     marketing: t.marketing,
     education: t.education,
     health: t.health,
-  }
+  };
 
   return (
     <Field className="mx-auto w-full max-w-xs">
@@ -95,29 +92,21 @@ export function ComboboxRtl() {
         autoHighlight
         items={categories}
         defaultValue={[categories[0]]}
-        itemToStringValue={(item: (typeof categories)[number]) =>
-          categoryLabels[item] || item
-        }
+        itemToStringValue={(item: (typeof categories)[number]) => categoryLabels[item] || item}
       >
         <ComboboxChips ref={anchor}>
           <ComboboxValue>
             {(values) => (
               <React.Fragment>
                 {values.map((value: string) => (
-                  <ComboboxChip key={value}>
-                    {categoryLabels[value] || value}
-                  </ComboboxChip>
+                  <ComboboxChip key={value}>{categoryLabels[value] || value}</ComboboxChip>
                 ))}
                 <ComboboxChipsInput placeholder={t.placeholder} />
               </React.Fragment>
             )}
           </ComboboxValue>
         </ComboboxChips>
-        <ComboboxContent
-          anchor={anchor}
-          dir={dir}
-          data-lang={dir === "rtl" ? language : undefined}
-        >
+        <ComboboxContent anchor={anchor} dir={dir} data-lang={dir === "rtl" ? language : undefined}>
           <ComboboxEmpty>{t.empty}</ComboboxEmpty>
           <ComboboxList>
             {(item) => (
@@ -129,5 +118,5 @@ export function ComboboxRtl() {
         </ComboboxContent>
       </Combobox>
     </Field>
-  )
+  );
 }

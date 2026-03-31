@@ -1,8 +1,4 @@
-'use client';
-
-import * as React from 'react';
-
-import type { Value } from 'platejs';
+"use client";
 
 import {
   BlockquotePlugin,
@@ -12,32 +8,35 @@ import {
   H3Plugin,
   ItalicPlugin,
   UnderlinePlugin,
-} from '@platejs/basic-nodes/react';
-import { Plate, usePlateEditor } from 'platejs/react';
+} from "@platejs/basic-nodes/react";
 
-import { BlockquoteElement } from '@/registry/ui/blockquote-node';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
-import { FixedToolbar } from '@/registry/ui/fixed-toolbar';
-import { H1Element, H2Element, H3Element } from '@/registry/ui/heading-node';
-import { MarkToolbarButton } from '@/registry/ui/mark-toolbar-button';
-import { ToolbarButton } from '@/registry/ui/toolbar';
+import type { Value } from "platejs";
+import { Plate, usePlateEditor } from "platejs/react";
+import * as React from "react";
+
+import { BlockquoteElement } from "@/registry/ui/blockquote-node";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
+import { FixedToolbar } from "@/registry/ui/fixed-toolbar";
+import { H1Element, H2Element, H3Element } from "@/registry/ui/heading-node";
+import { MarkToolbarButton } from "@/registry/ui/mark-toolbar-button";
+import { ToolbarButton } from "@/registry/ui/toolbar";
 
 const initialValue: Value = [
   {
-    children: [{ text: 'Title' }],
-    type: 'h3',
+    children: [{ text: "Title" }],
+    type: "h3",
   },
   {
-    children: [{ text: 'This is a quote.' }],
-    type: 'blockquote',
+    children: [{ text: "This is a quote." }],
+    type: "blockquote",
   },
   {
     children: [
-      { text: 'With some ' },
-      { bold: true, text: 'bold' },
-      { text: ' text for emphasis!' },
+      { text: "With some " },
+      { bold: true, text: "bold" },
+      { text: " text for emphasis!" },
     ],
-    type: 'p',
+    type: "p",
   },
 ];
 
@@ -54,7 +53,7 @@ export default function MyEditorPage() {
     ],
     value: () => {
       const savedValue = localStorage.getItem(
-        `nextjs-plate-value-demo-${new Date().toISOString().split('T')[0]}`
+        `nextjs-plate-value-demo-${new Date().toISOString().split("T")[0]}`
       );
 
       return savedValue ? JSON.parse(savedValue) : initialValue;
@@ -65,7 +64,7 @@ export default function MyEditorPage() {
     <Plate
       onChange={({ value }) => {
         localStorage.setItem(
-          `nextjs-plate-value-demo-${new Date().toISOString().split('T')[0]}`,
+          `nextjs-plate-value-demo-${new Date().toISOString().split("T")[0]}`,
           JSON.stringify(value)
         );
       }}
@@ -76,9 +75,7 @@ export default function MyEditorPage() {
         <ToolbarButton onClick={() => editor.tf.h2.toggle()}>H2</ToolbarButton>
         <ToolbarButton onClick={() => editor.tf.h3.toggle()}>H3</ToolbarButton>
 
-        <ToolbarButton onClick={() => editor.tf.blockquote.toggle()}>
-          Quote
-        </ToolbarButton>
+        <ToolbarButton onClick={() => editor.tf.blockquote.toggle()}>Quote</ToolbarButton>
 
         <MarkToolbarButton nodeType="bold" tooltip="Bold (⌘+B)">
           B

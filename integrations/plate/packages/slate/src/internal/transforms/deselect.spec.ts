@@ -1,24 +1,21 @@
-import { createEditor } from '../../create-editor';
-import { deselectDOM } from '../dom-editor/deselectDOM';
-import { deselect } from './deselect';
+import { createEditor } from "../../create-editor";
+import { deselectDOM } from "../dom-editor/deselectDOM";
+import { deselect } from "./deselect";
 
-describe('deselect', () => {
+describe("deselect", () => {
   const editor = createEditor();
   let slateDeselectSpy: ReturnType<typeof spyOn>;
   let domEditorDeselectSpy: ReturnType<typeof spyOn>;
 
   beforeEach(async () => {
-    const slate = await import('slate');
-    const slateDom = await import('slate-dom');
+    const slate = await import("slate");
+    const slateDom = await import("slate-dom");
 
-    slateDeselectSpy = spyOn(slate, 'deselect').mockImplementation(
-      mock() as unknown as (editor: import('slate').BaseEditor) => void
+    slateDeselectSpy = spyOn(slate, "deselect").mockImplementation(
+      mock() as unknown as (editor: import("slate").BaseEditor) => void
     );
-    domEditorDeselectSpy = spyOn(
-      slateDom.DOMEditor,
-      'deselect'
-    ).mockImplementation(
-      mock() as unknown as (editor: import('slate-dom').DOMEditor) => void
+    domEditorDeselectSpy = spyOn(slateDom.DOMEditor, "deselect").mockImplementation(
+      mock() as unknown as (editor: import("slate-dom").DOMEditor) => void
     );
   });
 
@@ -27,16 +24,16 @@ describe('deselect', () => {
     domEditorDeselectSpy?.mockRestore();
   });
 
-  describe('deselect()', () => {
-    it('call slate deselect with editor', () => {
+  describe("deselect()", () => {
+    it("call slate deselect with editor", () => {
       deselect(editor);
 
       expect(slateDeselectSpy).toHaveBeenCalledTimes(1);
     });
   });
 
-  describe('deselectDOM()', () => {
-    it('call DOMEditor.deselect with editor', () => {
+  describe("deselectDOM()", () => {
+    it("call DOMEditor.deselect with editor", () => {
       deselectDOM(editor);
 
       expect(domEditorDeselectSpy).toHaveBeenCalledTimes(1);

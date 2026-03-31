@@ -1,20 +1,16 @@
-import React from 'react';
-
-import type { TRange, UnknownObject } from 'platejs';
-
+import type { TRange, UnknownObject } from "platejs";
 import {
   useEditorContainerRef,
   useEditorRef,
   useIsomorphicLayoutEffect,
   usePluginOption,
-} from 'platejs/react';
-
-import type { CursorOverlayState, CursorState, SelectionRect } from '../types';
-
-import { CursorOverlayPlugin } from '../CursorOverlayPlugin';
-import { getCursorOverlayState } from '../queries/getCursorOverlayState';
-import { getSelectionRects } from '../queries/getSelectionRects';
-import { useRefreshOnResize } from './useRefreshOnResize';
+} from "platejs/react";
+import React from "react";
+import { CursorOverlayPlugin } from "../CursorOverlayPlugin";
+import { getCursorOverlayState } from "../queries/getCursorOverlayState";
+import { getSelectionRects } from "../queries/getSelectionRects";
+import type { CursorOverlayState, CursorState, SelectionRect } from "../types";
+import { useRefreshOnResize } from "./useRefreshOnResize";
 
 export type UseCursorOverlayOptions = {
   /**
@@ -31,9 +27,7 @@ export type UseCursorOverlayOptions = {
   refreshOnResize?: boolean;
 };
 
-export const FROZEN_EMPTY_ARRAY = Object.freeze(
-  []
-) as unknown as SelectionRect[];
+export const FROZEN_EMPTY_ARRAY = Object.freeze([]) as unknown as SelectionRect[];
 
 export const useCursorOverlay = <TCursorData extends UnknownObject>({
   minSelectionWidth = 1,
@@ -45,18 +39,14 @@ export const useCursorOverlay = <TCursorData extends UnknownObject>({
   const editor = useEditorRef();
   const containerRef = useEditorContainerRef();
 
-  const cursorStates = usePluginOption(
-    CursorOverlayPlugin,
-    'cursors'
-  ) as Record<string, CursorState<TCursorData>>;
+  const cursorStates = usePluginOption(CursorOverlayPlugin, "cursors") as Record<
+    string,
+    CursorState<TCursorData>
+  >;
 
-  const selectionRectCache = React.useRef<WeakMap<TRange, SelectionRect[]>>(
-    new WeakMap()
-  );
+  const selectionRectCache = React.useRef<WeakMap<TRange, SelectionRect[]>>(new WeakMap());
 
-  const [selectionRects, setSelectionRects] = React.useState<
-    Record<string, SelectionRect[]>
-  >({});
+  const [selectionRects, setSelectionRects] = React.useState<Record<string, SelectionRect[]>>({});
 
   const updateSelectionRects = React.useCallback(() => {
     // We have a container ref but the ref is null => container
@@ -77,11 +67,7 @@ export const useCursorOverlay = <TCursorData extends UnknownObject>({
     let selectionRectsChanged =
       Object.keys(selectionRects).length !== Object.keys(cursorStates).length;
 
-    const getCachedSelectionRects = ({
-      cursor,
-    }: {
-      cursor: CursorState<TCursorData>;
-    }) => {
+    const getCachedSelectionRects = ({ cursor }: { cursor: CursorState<TCursorData> }) => {
       const range = cursor.selection;
 
       if (!range) {
@@ -94,21 +80,19 @@ export const useCursorOverlay = <TCursorData extends UnknownObject>({
         return cached;
       }
 
-      const rects = getSelectionRects(editor, { range, xOffset, yOffset }).map(
-        (rect) => {
-          // Handle collapsed selection (cursor) positioning
-          if (rect.width < minSelectionWidth) {
-            return {
-              ...rect,
-              // Adjust left position to account for minimum width
-              left: rect.left - (minSelectionWidth - rect.width) / 2,
-              width: minSelectionWidth,
-            };
-          }
-
-          return rect;
+      const rects = getSelectionRects(editor, { range, xOffset, yOffset }).map((rect) => {
+        // Handle collapsed selection (cursor) positioning
+        if (rect.width < minSelectionWidth) {
+          return {
+            ...rect,
+            // Adjust left position to account for minimum width
+            left: rect.left - (minSelectionWidth - rect.width) / 2,
+            width: minSelectionWidth,
+          };
         }
-      );
+
+        return rect;
+      });
 
       selectionRectsChanged = true;
       selectionRectCache.current.set(range, rects);

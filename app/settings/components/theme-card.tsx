@@ -1,16 +1,21 @@
 "use client";
 
-import { Theme } from "@/types/theme";
-import { Badge } from "@/components/ui/badge";
-import { Card } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
-} from "@/components/ui/dropdown-menu";
+  Copy,
+  Edit,
+  ExternalLink,
+  Globe,
+  GlobeLock,
+  Loader2,
+  MoreVertical,
+  Tag,
+  Trash2,
+  Zap,
+} from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { TagSelector } from "@/components/tag-selector";
+import { ThemePreview } from "@/components/theme-preview";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -21,6 +26,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -29,31 +37,23 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { TagSelector } from "@/components/tag-selector";
 import {
-  MoreVertical,
-  Trash2,
-  Edit,
-  Loader2,
-  Zap,
-  ExternalLink,
-  Copy,
-  Globe,
-  GlobeLock,
-  Tag,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { useEditorStore } from "@/store/editor-store";
-import { useDeleteTheme } from "@/hooks/themes";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "@/components/ui/use-toast";
 import {
+  useDeleteTheme,
   usePublishTheme,
   useUnpublishTheme,
   useUpdateCommunityThemeTags,
 } from "@/hooks/themes";
-import Link from "next/link";
-import { toast } from "@/components/ui/use-toast";
-import { ThemePreview } from "@/components/theme-preview";
+import { cn } from "@/lib/utils";
+import { useEditorStore } from "@/store/editor-store";
+import { Theme } from "@/types/theme";
 
 interface ThemeCardProps {
   theme: Theme;
@@ -61,11 +61,7 @@ interface ThemeCardProps {
   className?: string;
 }
 
-export function ThemeCard({
-  theme,
-  isPublished = false,
-  className,
-}: ThemeCardProps) {
+export function ThemeCard({ theme, isPublished = false, className }: ThemeCardProps) {
   const { themeState, setThemeState } = useEditorStore();
   const deleteThemeMutation = useDeleteTheme();
   const publishMutation = usePublishTheme();
@@ -160,14 +156,9 @@ export function ThemeCard({
         <div className="flex items-center gap-2">
           <div>
             <div className="flex items-center gap-2">
-              <h3 className={cn("text-foreground text-sm font-medium")}>
-                {theme.name}
-              </h3>
+              <h3 className={cn("text-foreground text-sm font-medium")}>{theme.name}</h3>
               {isPublished && (
-                <Badge
-                  variant="secondary"
-                  className="text-[10px] px-1.5 py-0"
-                >
+                <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
                   Published
                 </Badge>
               )}
@@ -211,10 +202,7 @@ export function ThemeCard({
             <DropdownMenuSeparator className="mx-2" />
             {isPublished ? (
               <>
-                <DropdownMenuItem
-                  onClick={handleEditTags}
-                  className="gap-2"
-                >
+                <DropdownMenuItem onClick={handleEditTags} className="gap-2">
                   <Tag className="h-4 w-4" />
                   Edit Tags
                 </DropdownMenuItem>
@@ -269,10 +257,8 @@ export function ThemeCard({
               Are you sure you want to delete your {theme.name} theme?
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              theme.
-              {isPublished &&
-                " It will also be removed from the community."}
+              This action cannot be undone. This will permanently delete your theme.
+              {isPublished && " It will also be removed from the community."}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -298,12 +284,10 @@ export function ThemeCard({
       <Dialog open={showPublishDialog} onOpenChange={setShowPublishDialog}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>
-              Publish &quot;{theme.name}&quot; to the community?
-            </DialogTitle>
+            <DialogTitle>Publish &quot;{theme.name}&quot; to the community?</DialogTitle>
             <DialogDescription>
-              Your theme will be publicly visible on the community page. You can
-              unpublish it at any time.
+              Your theme will be publicly visible on the community page. You can unpublish it at any
+              time.
             </DialogDescription>
           </DialogHeader>
           <TagSelector
@@ -312,16 +296,10 @@ export function ThemeCard({
             disabled={publishMutation.isPending}
           />
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowPublishDialog(false)}
-            >
+            <Button variant="outline" onClick={() => setShowPublishDialog(false)}>
               Cancel
             </Button>
-            <Button
-              onClick={handleConfirmPublish}
-              disabled={publishMutation.isPending}
-            >
+            <Button onClick={handleConfirmPublish} disabled={publishMutation.isPending}>
               {publishMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -339,9 +317,7 @@ export function ThemeCard({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Edit Tags</DialogTitle>
-            <DialogDescription>
-              Update the tags for &quot;{theme.name}&quot;.
-            </DialogDescription>
+            <DialogDescription>Update the tags for &quot;{theme.name}&quot;.</DialogDescription>
           </DialogHeader>
           <TagSelector
             selectedTags={selectedTags}
@@ -349,16 +325,10 @@ export function ThemeCard({
             disabled={updateTagsMutation.isPending}
           />
           <DialogFooter>
-            <Button
-              variant="outline"
-              onClick={() => setShowEditTagsDialog(false)}
-            >
+            <Button variant="outline" onClick={() => setShowEditTagsDialog(false)}>
               Cancel
             </Button>
-            <Button
-              onClick={handleConfirmEditTags}
-              disabled={updateTagsMutation.isPending}
-            >
+            <Button onClick={handleConfirmEditTags} disabled={updateTagsMutation.isPending}>
               {updateTagsMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

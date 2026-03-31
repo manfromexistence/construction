@@ -1,12 +1,12 @@
 import {
+  ElementApi,
   type ElementOf,
+  KEYS,
   type NodeEntry,
   type SlateEditor,
   type TElement,
   type TLocation,
-  ElementApi,
-  KEYS,
-} from 'platejs';
+} from "platejs";
 
 /** If at (default = selection) is in ul>li>p, return li and ul node entries. */
 export const getCodeLineEntry = <N extends ElementOf<E>, E extends SlateEditor>(
@@ -36,10 +36,7 @@ export const getCodeLineEntry = <N extends ElementOf<E>, E extends SlateEditor>(
 
     const [codeLineNode, codeLinePath] = codeLine;
 
-    if (
-      ElementApi.isElement(codeLineNode) &&
-      codeLineNode.type !== editor.getType(KEYS.codeLine)
-    )
+    if (ElementApi.isElement(codeLineNode) && codeLineNode.type !== editor.getType(KEYS.codeLine))
       return;
 
     const codeBlock = editor.api.parent<N>(codeLinePath);

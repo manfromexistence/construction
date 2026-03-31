@@ -1,8 +1,8 @@
-import { UTM_PARAMS } from "@/config/site"
-import { cn } from "@/lib/utils"
-import { addQueryParams } from "@/utils/url"
+import { UTM_PARAMS } from "@/config/site";
+import { cn } from "@/lib/utils";
+import { addQueryParams } from "@/utils/url";
 
-import type { Sponsor } from "../types"
+import type { Sponsor } from "../types";
 
 export function SponsorItem({ item }: { item: Sponsor }) {
   return (
@@ -19,5 +19,5 @@ export function SponsorItem({ item }: { item: Sponsor }) {
     >
       <item.logo className="w-full max-w-80" aria-label={`${item.name} logo`} />
     </a>
-  )
+  );
 }

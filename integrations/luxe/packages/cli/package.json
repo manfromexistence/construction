@@ -3,19 +3,9 @@
   "description": "Add components to your app instantly with Luxe CLI.",
   "version": "1.0.9",
   "type": "module",
-  "keywords": [
-    "components",
-    "ui",
-    "radix-ui",
-    "luxe",
-    "motion",
-    "tailwind"
-  ],
+  "keywords": ["components", "ui", "radix-ui", "luxe", "motion", "tailwind"],
   "bin": "./dist/index.js",
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "files": ["dist", "README.md"],
   "types": "./dist/index.d.ts",
   "scripts": {
     "dev": "tsup && NODE_ENV=development node dist/index.js",

@@ -1,28 +1,21 @@
 import {
   Accordion,
+  AccordionContent,
   AccordionItem,
   AccordionTrigger,
-  AccordionContent,
 } from "@/app/_components/ui/accordion";
 
 export function AccordionExample() {
   return (
-    <Accordion
-      className="max-w-[400px] mx-auto w-full"
-      type="single"
-      collapsible
-    >
+    <Accordion className="max-w-[400px] mx-auto w-full" type="single" collapsible>
       <AccordionItem value="item-1">
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>
-          Yes. It adheres to the WAI-ARIA design pattern.
-        </AccordionContent>
+        <AccordionContent>Yes. It adheres to the WAI-ARIA design pattern.</AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
         <AccordionTrigger>Is it unstyled?</AccordionTrigger>
         <AccordionContent>
-          Yes. It's unstyled by default, giving you freedom over the look and
-          feel.
+          Yes. It's unstyled by default, giving you freedom over the look and feel.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-3">

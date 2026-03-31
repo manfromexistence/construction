@@ -1,10 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { CheckIcon } from "lucide-react";
 
 import { AnimatePresence, motion } from "motion/react";
-
-import { CheckIcon } from "lucide-react";
+import { useState } from "react";
 
 import { TextMorph } from "@/app/_components/TextMorph";
 

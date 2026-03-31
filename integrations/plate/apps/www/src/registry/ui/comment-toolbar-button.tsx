@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { MessageSquareTextIcon } from "lucide-react";
+import { useEditorRef } from "platejs/react";
+import * as React from "react";
 
-import { MessageSquareTextIcon } from 'lucide-react';
-import { useEditorRef } from 'platejs/react';
+import { commentPlugin } from "@/registry/components/editor/plugins/comment-kit";
 
-import { commentPlugin } from '@/registry/components/editor/plugins/comment-kit';
-
-import { ToolbarButton } from './toolbar';
+import { ToolbarButton } from "./toolbar";
 
 export function CommentToolbarButton() {
   const editor = useEditorRef();

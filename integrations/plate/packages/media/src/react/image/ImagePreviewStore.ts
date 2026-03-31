@@ -1,4 +1,4 @@
-import { createZustandStore } from 'platejs/react';
+import { createZustandStore } from "platejs/react";
 
 export type PreviewItem = {
   url: string;
@@ -17,21 +17,21 @@ export const ImagePreviewStore = createZustandStore(
   },
   {
     mutative: true,
-    name: 'imagePreview',
+    name: "imagePreview",
   }
 )
   .extendActions(({ set }) => ({
     close: () => {
-      set('currentPreview', null);
-      set('previewList', []);
-      set('openEditorId', null);
-      set('scale', 1);
-      set('translate', { x: 0, y: 0 });
-      set('isEditingScale', false);
+      set("currentPreview", null);
+      set("previewList", []);
+      set("openEditorId", null);
+      set("scale", 1);
+      set("translate", { x: 0, y: 0 });
+      set("isEditingScale", false);
     },
   }))
   .extendSelectors(({ get }) => ({
-    isOpen: (editorId: string) => get('openEditorId') === editorId,
+    isOpen: (editorId: string) => get("openEditorId") === editorId,
   }));
 
 export const { useValue: useImagePreviewValue } = ImagePreviewStore as any;

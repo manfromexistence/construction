@@ -1,17 +1,17 @@
-import { serializeHtml } from 'platejs/static';
+import { serializeHtml } from "platejs/static";
 
-import { createStaticEditor } from './create-static-editor';
+import { createStaticEditor } from "./create-static-editor";
 
-describe('core static serializeHtml attributes', () => {
-  it('applies element, text, and leaf props to the output', async () => {
+describe("core static serializeHtml attributes", () => {
+  it("applies element, text, and leaf props to the output", async () => {
     const editor = createStaticEditor(
       [
         {
           children: [
-            { bold: true, italic: true, text: 'Right Aligned Heading' },
-            { italic: true, text: 'Right Aligned Heading' },
+            { bold: true, italic: true, text: "Right Aligned Heading" },
+            { italic: true, text: "Right Aligned Heading" },
           ],
-          type: 'p',
+          type: "p",
         },
       ],
       {
@@ -21,13 +21,13 @@ describe('core static serializeHtml attributes', () => {
               node: {
                 isDecoration: false,
                 props: {
-                  'data-slate-test': true,
+                  "data-slate-test": true,
                 },
                 textProps: {
-                  'data-slate-test': 'text',
+                  "data-slate-test": "text",
                 },
                 leafProps: {
-                  'data-slate-test': 'leaf',
+                  "data-slate-test": "leaf",
                 },
               },
             },

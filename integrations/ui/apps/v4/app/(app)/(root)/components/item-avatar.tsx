@@ -1,11 +1,7 @@
-import { Plus } from "lucide-react"
+import { Plus } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/registry/new-york-v4/ui/avatar"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/new-york-v4/ui/avatar";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Item,
   ItemActions,
@@ -13,7 +9,7 @@ import {
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from "@/registry/new-york-v4/ui/item"
+} from "@/registry/new-york-v4/ui/item";
 
 export function ItemAvatar() {
   return (
@@ -30,12 +26,7 @@ export function ItemAvatar() {
           <ItemDescription>Last seen 5 months ago</ItemDescription>
         </ItemContent>
         <ItemActions>
-          <Button
-            size="icon-sm"
-            variant="outline"
-            className="rounded-full"
-            aria-label="Invite"
-          >
+          <Button size="icon-sm" variant="outline" className="rounded-full" aria-label="Invite">
             <Plus />
           </Button>
         </ItemActions>
@@ -48,17 +39,11 @@ export function ItemAvatar() {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <Avatar className="hidden sm:flex">
-              <AvatarImage
-                src="https://github.com/maxleiter.png"
-                alt="@maxleiter"
-              />
+              <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
               <AvatarFallback>LR</AvatarFallback>
             </Avatar>
             <Avatar>
-              <AvatarImage
-                src="https://github.com/evilrabbit.png"
-                alt="@evilrabbit"
-              />
+              <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
               <AvatarFallback>ER</AvatarFallback>
             </Avatar>
           </div>
@@ -74,5 +59,5 @@ export function ItemAvatar() {
         </ItemActions>
       </Item>
     </div>
-  )
+  );
 }

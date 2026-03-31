@@ -1,11 +1,7 @@
-import type {
-  TTableCellElement,
-  TTableElement,
-  TTableRowElement,
-} from 'platejs';
+import type { TTableCellElement, TTableElement, TTableRowElement } from "platejs";
 
-import { getColSpan } from '../queries';
-import { getRowSpan } from '../queries/getRowSpan';
+import { getColSpan } from "../queries";
+import { getRowSpan } from "../queries/getRowSpan";
 
 const allEqual = (arr: number[]) => arr.every((val) => val === arr[0]);
 

@@ -101,17 +101,9 @@ const CloudSnowIcon = forwardRef<CloudSnowIconHandle, CloudSnowIconProps>(
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
-          <motion.g
-            animate={controls}
-            initial="normal"
-            variants={SNOWFLAKE_VARIANTS}
-          >
+          <motion.g animate={controls} initial="normal" variants={SNOWFLAKE_VARIANTS}>
             {SNOWFLAKE_PATH.map((path) => (
-              <motion.path
-                d={path.d}
-                key={path.id}
-                variants={SNOWFLAKE_CHILD_VARIANTS}
-              />
+              <motion.path d={path.d} key={path.id} variants={SNOWFLAKE_CHILD_VARIANTS} />
             ))}
           </motion.g>
         </svg>

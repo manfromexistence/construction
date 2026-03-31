@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export const useMediaControllerState = () => {
   const [alignOpen, setAlignOpen] = React.useState(false);

@@ -1,13 +1,7 @@
-import { type TPlaceholderElement, KEYS } from 'platejs';
-import {
-  useEditorRef,
-  useElement,
-  useFocused,
-  useReadOnly,
-  useSelected,
-} from 'platejs/react';
+import { KEYS, type TPlaceholderElement } from "platejs";
+import { useEditorRef, useElement, useFocused, useReadOnly, useSelected } from "platejs/react";
 
-import { usePlaceholderSet, usePlaceholderValue } from '../placeholderStore';
+import { usePlaceholderSet, usePlaceholderValue } from "../placeholderStore";
 
 export const usePlaceholderElementState = (): any => {
   const element = useElement();
@@ -16,10 +10,10 @@ export const usePlaceholderElementState = (): any => {
   const readOnly = useReadOnly();
   const selected = useSelected();
 
-  const progresses = usePlaceholderValue('progresses');
-  const isUploading = usePlaceholderValue('isUploading');
-  const updatedFiles = usePlaceholderValue('updatedFiles');
-  const setSize = usePlaceholderSet('size');
+  const progresses = usePlaceholderValue("progresses");
+  const isUploading = usePlaceholderValue("isUploading");
+  const updatedFiles = usePlaceholderValue("updatedFiles");
+  const setSize = usePlaceholderSet("size");
 
   const { mediaType } = useElement<TPlaceholderElement>(KEYS.placeholder);
 

@@ -20,20 +20,20 @@ export type PostLoginActionType =
   | "CHECKOUT"
   | "LIKE_THEME";
 
-export interface PostLoginActionPayload<T = any> {
+export interface PostLoginActionPayload<T = unknown> {
   type: PostLoginActionType;
   data?: T;
 }
 
 export type StoredPostLoginAction = PostLoginActionPayload | null;
 
-type PostLoginHandler<T = any> = (data?: T) => void | Promise<void>;
+type PostLoginHandler<T = unknown> = (data?: T) => void | Promise<void>;
 
 const handlers: Map<PostLoginActionType, PostLoginHandler> = new Map();
 const readyActions: Set<PostLoginActionType> = new Set();
 let pendingAction: StoredPostLoginAction = null;
 
-export function usePostLoginAction<T = any>(
+export function usePostLoginAction<T = unknown>(
   actionType: PostLoginActionType,
   handler: PostLoginHandler<T>
 ) {

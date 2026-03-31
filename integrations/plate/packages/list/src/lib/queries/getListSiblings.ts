@@ -1,39 +1,21 @@
-import type {
-  Editor,
-  ElementEntryOf,
-  ElementOf,
-  NodeEntry,
-  TElement,
-} from 'platejs';
+import type { Editor, ElementEntryOf, ElementOf, NodeEntry, TElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
+import { getNextList } from "./getNextList";
+import { getPreviousList } from "./getPreviousList";
+import type { GetSiblingListOptions } from "./getSiblingList";
 
-import type { GetSiblingListOptions } from './getSiblingList';
-
-import { getNextList } from './getNextList';
-import { getPreviousList } from './getPreviousList';
-
-export interface GetListSiblingsOptions<
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
-> extends Partial<GetSiblingListOptions<N, E>> {
+export interface GetListSiblingsOptions<N extends ElementOf<E>, E extends Editor = Editor>
+  extends Partial<GetSiblingListOptions<N, E>> {
   current?: boolean;
   next?: boolean;
   previous?: boolean;
 }
 
-export const getListSiblings = <
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
->(
+export const getListSiblings = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,
   entry: ElementEntryOf<E>,
-  {
-    current = true,
-    next = true,
-    previous = true,
-    ...options
-  }: GetListSiblingsOptions<N, E> = {}
+  { current = true, next = true, previous = true, ...options }: GetListSiblingsOptions<N, E> = {}
 ) => {
   const siblings: NodeEntry[] = [];
 

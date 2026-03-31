@@ -1,9 +1,4 @@
-import {
-  Field,
-  FieldDescription,
-  FieldGroup,
-  FieldLabel,
-} from "@/styles/base-nova/ui/field"
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
@@ -11,7 +6,7 @@ import {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea,
-} from "@/styles/base-nova/ui/input-group"
+} from "@/styles/base-nova/ui/input-group";
 
 export function InputGroupBlockEnd() {
   return (
@@ -29,10 +24,7 @@ export function InputGroupBlockEnd() {
       <Field>
         <FieldLabel htmlFor="block-end-textarea">Textarea</FieldLabel>
         <InputGroup>
-          <InputGroupTextarea
-            id="block-end-textarea"
-            placeholder="Write a comment..."
-          />
+          <InputGroupTextarea id="block-end-textarea" placeholder="Write a comment..." />
           <InputGroupAddon align="block-end">
             <InputGroupText>0/280</InputGroupText>
             <InputGroupButton variant="default" size="sm" className="ml-auto">
@@ -40,10 +32,8 @@ export function InputGroupBlockEnd() {
             </InputGroupButton>
           </InputGroupAddon>
         </InputGroup>
-        <FieldDescription>
-          Footer positioned below the textarea.
-        </FieldDescription>
+        <FieldDescription>Footer positioned below the textarea.</FieldDescription>
       </Field>
     </FieldGroup>
-  )
+  );
 }

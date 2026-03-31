@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Tweet Card",
   "description": "A card that displays a tweet with the author's name, handle, and profile picture.",
-  "dependencies": [
-    "react-tweet"
-  ],
+  "dependencies": ["react-tweet"],
   "files": [
     {
       "path": "registry/magicui/tweet-card.tsx",

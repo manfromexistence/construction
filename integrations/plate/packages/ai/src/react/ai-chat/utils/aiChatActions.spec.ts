@@ -1,21 +1,21 @@
-import { afterAll, beforeEach, describe, expect, it, mock } from 'bun:test';
+import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test";
 
 const deserializeMdMock = mock();
 const diffToSuggestionsMock = mock();
 const acceptSuggestionMock = mock();
 const rejectSuggestionMock = mock();
 const getSuggestionKeyMock = mock((id: string) => `key:${id}`);
-const getTransientSuggestionKeyMock = mock(() => '__transient');
+const getTransientSuggestionKeyMock = mock(() => "__transient");
 const getEditorPluginMock = mock();
 const useEditorPluginMock = mock();
 const usePluginOptionMock = mock();
 
-mock.module('@platejs/markdown', () => ({
-  MarkdownPlugin: { key: 'markdown' },
+mock.module("@platejs/markdown", () => ({
+  MarkdownPlugin: { key: "markdown" },
   deserializeMd: deserializeMdMock,
 }));
 
-mock.module('./applyAISuggestions', () => ({
+mock.module("./applyAISuggestions", () => ({
   withTransient: (nodes: any[]) =>
     nodes.map((node) => ({
       ...node,
@@ -24,7 +24,7 @@ mock.module('./applyAISuggestions', () => ({
   withoutSuggestionAndComments: (nodes: any[]) => nodes,
 }));
 
-mock.module('@platejs/suggestion', () => ({
+mock.module("@platejs/suggestion", () => ({
   SkipSuggestionDeletes: (_editor: any, node: any) => node,
   acceptSuggestion: acceptSuggestionMock,
   diffToSuggestions: diffToSuggestionsMock,
@@ -33,13 +33,13 @@ mock.module('@platejs/suggestion', () => ({
   rejectSuggestion: rejectSuggestionMock,
 }));
 
-mock.module('@platejs/suggestion/react', () => ({
-  SuggestionPlugin: { key: 'suggestion' },
+mock.module("@platejs/suggestion/react", () => ({
+  SuggestionPlugin: { key: "suggestion" },
 }));
 
-mock.module('platejs/react', async () => {
+mock.module("platejs/react", async () => {
   const actual = await import(
-    new URL('../../../../../plate/dist/react/index.js', import.meta.url).href
+    new URL("../../../../../plate/dist/react/index.js", import.meta.url).href
   );
   const getEditorPlugin = actual.getEditorPlugin as any;
   const useEditorPlugin = actual.useEditorPlugin as any;
@@ -57,19 +57,16 @@ mock.module('platejs/react', async () => {
 });
 
 const loadApplyTableCellSuggestion = async () =>
-  import(
-    `./applyTableCellSuggestion?test=${Math.random().toString(36).slice(2)}`
-  );
+  import(`./applyTableCellSuggestion?test=${Math.random().toString(36).slice(2)}`);
 const loadAccept = async () =>
   import(`./acceptAISuggestions?test=${Math.random().toString(36).slice(2)}`);
 const loadReject = async () =>
   import(`./rejectAISuggestions?test=${Math.random().toString(36).slice(2)}`);
-const loadReset = async () =>
-  import(`./resetAIChat?test=${Math.random().toString(36).slice(2)}`);
+const loadReset = async () => import(`./resetAIChat?test=${Math.random().toString(36).slice(2)}`);
 const loadNested = async () =>
   import(`./nestedContainerUtils?test=${Math.random().toString(36).slice(2)}`);
 
-describe('ai chat action utils', () => {
+describe("ai chat action utils", () => {
   beforeEach(() => {
     deserializeMdMock.mockReset();
     diffToSuggestionsMock.mockReset();
@@ -78,7 +75,7 @@ describe('ai chat action utils', () => {
     getSuggestionKeyMock.mockReset();
     getSuggestionKeyMock.mockImplementation((id: string) => `key:${id}`);
     getTransientSuggestionKeyMock.mockReset();
-    getTransientSuggestionKeyMock.mockReturnValue('__transient');
+    getTransientSuggestionKeyMock.mockReturnValue("__transient");
     getEditorPluginMock.mockReset();
   });
 
@@ -86,45 +83,39 @@ describe('ai chat action utils', () => {
     mock.restore();
   });
 
-  it('diffs a table cell update and replaces only the cell children', async () => {
+  it("diffs a table cell update and replaces only the cell children", async () => {
     const { applyTableCellSuggestion } = await loadApplyTableCellSuggestion();
     const replaceNodes = mock();
 
-    deserializeMdMock.mockReturnValue([{ text: 'ai' }]);
-    diffToSuggestionsMock.mockReturnValue([{ text: 'ai' }]);
+    deserializeMdMock.mockReturnValue([{ text: "ai" }]);
+    diffToSuggestionsMock.mockReturnValue([{ text: "ai" }]);
 
     const editor = {
       api: {
-        node: () => [
-          { children: [{ text: 'old' }], id: 'cell-1', type: 'td' },
-          [0, 0, 0],
-        ],
+        node: () => [{ children: [{ text: "old" }], id: "cell-1", type: "td" }, [0, 0, 0]],
       },
       tf: {
         replaceNodes,
       },
     } as any;
 
-    applyTableCellSuggestion(editor, { content: 'ai', id: 'cell-1' });
+    applyTableCellSuggestion(editor, { content: "ai", id: "cell-1" });
 
-    expect(replaceNodes).toHaveBeenCalledWith(
-      [{ __transient: true, text: 'ai' }],
-      {
-        at: [0, 0, 0],
-        children: true,
-      }
-    );
+    expect(replaceNodes).toHaveBeenCalledWith([{ __transient: true, text: "ai" }], {
+      at: [0, 0, 0],
+      children: true,
+    });
   });
 
-  it('accepts transient suggestions and clears transient marks', async () => {
+  it("accepts transient suggestions and clears transient marks", async () => {
     const { acceptAISuggestions } = await loadAccept();
     const unsetNodes = mock();
     const suggestionNode = {
       suggestion: {
-        createdAt: '2024-01-01T00:00:00.000Z',
-        id: 's1',
-        type: 'insert',
-        userId: 'u1',
+        createdAt: "2024-01-01T00:00:00.000Z",
+        id: "s1",
+        type: "insert",
+        userId: "u1",
       },
     };
     const editor = {
@@ -140,27 +131,24 @@ describe('ai chat action utils', () => {
     acceptAISuggestions(editor);
 
     expect(acceptSuggestionMock).toHaveBeenCalledWith(editor, {
-      createdAt: new Date('2024-01-01T00:00:00.000Z'),
-      keyId: 'key:s1',
-      suggestionId: 's1',
-      type: 'insert',
-      userId: 'u1',
+      createdAt: new Date("2024-01-01T00:00:00.000Z"),
+      keyId: "key:s1",
+      suggestionId: "s1",
+      type: "insert",
+      userId: "u1",
     });
-    expect(unsetNodes).toHaveBeenCalledWith(
-      ['__transient'],
-      expect.any(Object)
-    );
+    expect(unsetNodes).toHaveBeenCalledWith(["__transient"], expect.any(Object));
   });
 
-  it('rejects transient suggestions and clears transient marks', async () => {
+  it("rejects transient suggestions and clears transient marks", async () => {
     const { rejectAISuggestions } = await loadReject();
     const unsetNodes = mock();
     const suggestionNode = {
       suggestion: {
-        createdAt: '2024-01-01T00:00:00.000Z',
-        id: 's1',
-        type: 'remove',
-        userId: 'u1',
+        createdAt: "2024-01-01T00:00:00.000Z",
+        id: "s1",
+        type: "remove",
+        userId: "u1",
       },
     };
     const editor = {
@@ -176,19 +164,16 @@ describe('ai chat action utils', () => {
     rejectAISuggestions(editor);
 
     expect(rejectSuggestionMock).toHaveBeenCalledWith(editor, {
-      createdAt: new Date('2024-01-01T00:00:00.000Z'),
-      keyId: 'key:s1',
-      suggestionId: 's1',
-      type: 'remove',
-      userId: 'u1',
+      createdAt: new Date("2024-01-01T00:00:00.000Z"),
+      keyId: "key:s1",
+      suggestionId: "s1",
+      type: "remove",
+      userId: "u1",
     });
-    expect(unsetNodes).toHaveBeenCalledWith(
-      ['__transient'],
-      expect.any(Object)
-    );
+    expect(unsetNodes).toHaveBeenCalledWith(["__transient"], expect.any(Object));
   });
 
-  it('stops chat, clears messages, resets options, and optionally undoes', async () => {
+  it("stops chat, clears messages, resets options, and optionally undoes", async () => {
     const { resetAIChat } = await loadReset();
     const setMessages = mock();
     const stop = mock();
@@ -202,7 +187,7 @@ describe('ai chat action utils', () => {
       },
       getOptions: () => ({
         chat: {
-          messages: [{ id: 'm1' }],
+          messages: [{ id: "m1" }],
           setMessages,
         },
       }),
@@ -222,14 +207,14 @@ describe('ai chat action utils', () => {
     expect(setOptions).toHaveBeenCalledWith({
       _replaceIds: [],
       chatNodes: [],
-      mode: 'insert',
+      mode: "insert",
       toolName: null,
     });
     expect(undo).toHaveBeenCalled();
     expect(discardPreview).not.toHaveBeenCalled();
   });
 
-  it('discards preview bookkeeping instead of undoing when requested', async () => {
+  it("discards preview bookkeeping instead of undoing when requested", async () => {
     const { resetAIChat } = await loadReset();
     const stop = mock();
     const setOptions = mock();
@@ -262,20 +247,20 @@ describe('ai chat action utils', () => {
     expect(discardPreview).toHaveBeenCalled();
   });
 
-  it('detects single-cell tables and extracts their cell children', async () => {
+  it("detects single-cell tables and extracts their cell children", async () => {
     const { getTableCellChildren, isSingleCellTable } = await loadNested();
     const table = {
       children: [
         {
-          children: [{ children: [{ text: 'x' }], type: 'td' }],
-          type: 'tr',
+          children: [{ children: [{ text: "x" }], type: "td" }],
+          type: "tr",
         },
       ],
-      type: 'table',
+      type: "table",
     } as any;
 
     expect(isSingleCellTable([table])).toBe(true);
-    expect(getTableCellChildren(table)).toEqual([{ text: 'x' }]);
-    expect(isSingleCellTable([{ type: 'p' } as any])).toBe(false);
+    expect(getTableCellChildren(table)).toEqual([{ text: "x" }]);
+    expect(isSingleCellTable([{ type: "p" } as any])).toBe(false);
   });
 });

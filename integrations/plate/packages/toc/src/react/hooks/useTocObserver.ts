@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 type UseTocObserver = {
   activeId: string;
@@ -6,11 +6,7 @@ type UseTocObserver = {
   tocRef: React.RefObject<HTMLElement | null>;
 };
 
-export const useTocObserver = ({
-  activeId,
-  isObserve,
-  tocRef,
-}: UseTocObserver) => {
+export const useTocObserver = ({ activeId, isObserve, tocRef }: UseTocObserver) => {
   const [visible, setVisible] = React.useState<boolean>(true);
   const [offset, setOffset] = React.useState<number>(0);
 
@@ -48,7 +44,7 @@ export const useTocObserver = ({
       root,
     });
 
-    const element = root?.querySelectorAll('#toc_item_active')[0];
+    const element = root?.querySelectorAll("#toc_item_active")[0];
 
     if (element) observer.observe(element);
 

@@ -1,10 +1,10 @@
-import { getVoid } from 'slate';
+import { getVoid } from "slate";
 
-import type { EditorVoidOptions, ElementOf } from '../../interfaces';
-import type { Editor } from '../../interfaces/editor/editor-type';
-import type { NodeEntry } from '../../interfaces/node-entry';
+import type { EditorVoidOptions, ElementOf } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor/editor-type";
+import type { NodeEntry } from "../../interfaces/node-entry";
 
-import { getAt } from '../../utils';
+import { getAt } from "../../utils";
 
 export const getVoidNode = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,

@@ -7,7 +7,7 @@ import {
   copyBlockMarksToSpanChild,
   postCleanHtml,
   preCleanHtml,
-} from 'platejs';
+} from "platejs";
 
 import {
   cleanDocxBrComments,
@@ -18,13 +18,10 @@ import {
   cleanDocxQuotes,
   cleanDocxSpans,
   isDocxContent,
-} from './utils/index';
+} from "./utils/index";
 
 export const cleanDocx = (html: string, rtf: string): string => {
-  const document = new DOMParser().parseFromString(
-    preCleanHtml(html),
-    'text/html'
-  );
+  const document = new DOMParser().parseFromString(preCleanHtml(html), "text/html");
   const { body } = document;
 
   if (!rtf && !isDocxContent(body)) {
@@ -46,8 +43,8 @@ export const cleanDocx = (html: string, rtf: string): string => {
   copyBlockMarksToSpanChild(body);
 
   // Prevent deserializeHtml from collapsing whitespace
-  const preformattedWrapper = document.createElement('div');
-  preformattedWrapper.style.whiteSpace = 'pre-wrap';
+  const preformattedWrapper = document.createElement("div");
+  preformattedWrapper.style.whiteSpace = "pre-wrap";
   preformattedWrapper.innerHTML = body.innerHTML;
 
   return postCleanHtml(preformattedWrapper.outerHTML);

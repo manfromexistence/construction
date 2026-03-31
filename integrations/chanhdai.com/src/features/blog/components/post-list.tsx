@@ -1,6 +1,6 @@
-import type { Doc } from "@/features/doc/types/document"
+import type { Doc } from "@/features/doc/types/document";
 
-import { PostItem } from "./post-item"
+import { PostItem } from "./post-item";
 
 export function PostList({ posts }: { posts: Doc[] }) {
   return (
@@ -12,11 +12,7 @@ export function PostList({ posts }: { posts: Doc[] }) {
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {posts.map((post, index) => (
-          <PostItem
-            key={post.slug}
-            post={post}
-            shouldPreloadImage={index <= 4}
-          />
+          <PostItem key={post.slug} post={post} shouldPreloadImage={index <= 4} />
         ))}
 
         {posts.length === 0 && (
@@ -26,5 +22,5 @@ export function PostList({ posts }: { posts: Doc[] }) {
         )}
       </div>
     </div>
-  )
+  );
 }

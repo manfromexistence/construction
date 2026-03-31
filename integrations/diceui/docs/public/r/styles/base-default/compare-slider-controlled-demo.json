@@ -1,14 +1,7 @@
 {
   "name": "compare-slider-controlled-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "compare-slider",
-    "button",
-    "label",
-    "slider"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["compare-slider", "button", "label", "slider"],
   "files": [
     {
       "path": "examples/compare-slider-controlled-demo.tsx",

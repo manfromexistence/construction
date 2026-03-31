@@ -1,15 +1,15 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Switch } from '@/components/switch'
+import { Switch } from "@/components/switch";
 
 const meta: Meta = {
-  title: 'components/Switch',
+  title: "components/Switch",
   component: Switch,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
+export default meta;
 
-export const Basic: StoryObj = {}
+export const Basic: StoryObj = {};

@@ -1,20 +1,15 @@
-"use client"
+"use client";
 
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldLabel,
-} from "@/registry/new-york-v4/ui/field"
-import { Switch } from "@/registry/new-york-v4/ui/switch"
+} from "@/registry/new-york-v4/ui/card";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "@/registry/new-york-v4/ui/field";
+import { Switch } from "@/registry/new-york-v4/ui/switch";
 
 export function CardsCookieSettings() {
   return (
@@ -28,8 +23,7 @@ export function CardsCookieSettings() {
           <FieldContent>
             <FieldLabel htmlFor="necessary">Strictly Necessary</FieldLabel>
             <FieldDescription>
-              These cookies are essential in order to use the website and use
-              its features.
+              These cookies are essential in order to use the website and use its features.
             </FieldDescription>
           </FieldContent>
           <Switch id="necessary" defaultChecked aria-label="Necessary" />
@@ -39,5 +33,5 @@ export function CardsCookieSettings() {
         </Field>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,15 +1,9 @@
-import type { SlateEditor } from '../../../editor';
+import type { SlateEditor } from "../../../editor";
 
-import { type AnyEditorPlugin, getEditorPlugin } from '../../../plugin';
-import { isSlateLeaf, isSlatePluginNode } from '../../../utils';
+import { type AnyEditorPlugin, getEditorPlugin } from "../../../plugin";
+import { isSlateLeaf, isSlatePluginNode } from "../../../utils";
 
-const getDefaultNodeProps = ({
-  element,
-  type,
-}: {
-  element: HTMLElement;
-  type: string;
-}) => {
+const getDefaultNodeProps = ({ element, type }: { element: HTMLElement; type: string }) => {
   if (!isSlatePluginNode(element, type) && !isSlateLeaf(element)) return;
 
   const dataAttributes: Record<string, any> = {};
@@ -17,10 +11,10 @@ const getDefaultNodeProps = ({
   // Get all data-slate-* attributes from dataset
   Object.entries(element.dataset).forEach(([key, value]) => {
     if (
-      key.startsWith('slate') &&
+      key.startsWith("slate") &&
       value &&
       // Ignore slate default attributes
-      !['slateInline', 'slateLeaf', 'slateNode', 'slateVoid'].includes(key)
+      !["slateInline", "slateLeaf", "slateNode", "slateVoid"].includes(key)
     ) {
       // Remove 'slate' prefix and convert to camelCase
       const attributeKey = key.slice(5).charAt(0).toLowerCase() + key.slice(6);
@@ -31,8 +25,8 @@ const getDefaultNodeProps = ({
 
       let parsedValue: any = value;
 
-      if (value === 'true') parsedValue = true;
-      else if (value === 'false') parsedValue = false;
+      if (value === "true") parsedValue = true;
+      else if (value === "false") parsedValue = false;
       else if (!Number.isNaN(Number(value))) parsedValue = Number(value);
 
       dataAttributes[attributeKey] = parsedValue;

@@ -1,7 +1,7 @@
-import { isDefined } from '@udecode/utils';
+import { isDefined } from "@udecode/utils";
 
-import { Hotkeys, SlateExtensionPlugin } from '../../lib';
-import { toPlatePlugin } from '../plugin';
+import { Hotkeys, SlateExtensionPlugin } from "../../lib";
+import { toPlatePlugin } from "../plugin";
 
 export const SlateReactExtensionPlugin = toPlatePlugin(SlateExtensionPlugin, {
   handlers: {
@@ -21,10 +21,7 @@ export const SlateReactExtensionPlugin = toPlatePlugin(SlateExtensionPlugin, {
           event.preventDefault();
           event.stopPropagation();
         }
-      } else if (
-        Hotkeys.isTab(editor, event) ||
-        Hotkeys.isUntab(editor, event)
-      ) {
+      } else if (Hotkeys.isTab(editor, event) || Hotkeys.isUntab(editor, event)) {
         if (editor.tf.tab({ reverse: Hotkeys.isUntab(editor, event) })) {
           event.preventDefault();
           event.stopPropagation();
@@ -44,9 +41,9 @@ export const SlateReactExtensionPlugin = toPlatePlugin(SlateExtensionPlugin, {
   .extendEditorApi(({ editor }) => ({
     redecorate: () => {
       editor.api.debug.warn(
-        'The method editor.api.redecorate() has not been overridden. ' +
-          'This may cause unexpected behavior. Please ensure that all required editor methods are properly defined.',
-        'OVERRIDE_MISSING'
+        "The method editor.api.redecorate() has not been overridden. " +
+          "This may cause unexpected behavior. Please ensure that all required editor methods are properly defined.",
+        "OVERRIDE_MISSING"
       );
     },
   }))
@@ -57,7 +54,7 @@ export const SlateReactExtensionPlugin = toPlatePlugin(SlateExtensionPlugin, {
       reset(options);
 
       if (isFocused) {
-        editor.tf.focus({ edge: 'startEditor' });
+        editor.tf.focus({ edge: "startEditor" });
       }
     },
   }))
@@ -65,7 +62,7 @@ export const SlateReactExtensionPlugin = toPlatePlugin(SlateExtensionPlugin, {
     transforms: {
       normalizeNode(entry, options) {
         if (isDefined(entry[0]._memo)) {
-          editor.tf.unsetNodes('_memo', { at: entry[1] });
+          editor.tf.unsetNodes("_memo", { at: entry[1] });
 
           return;
         }

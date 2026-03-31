@@ -2,9 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "empty-image",
   "type": "registry:example",
-  "registryDependencies": [
-    "empty"
-  ],
+  "registryDependencies": ["empty"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/empty-image.tsx",

@@ -1,12 +1,12 @@
-import type { Descendant } from '@platejs/slate';
+import type { Descendant } from "@platejs/slate";
 
-import type { SlateEditor } from '../../../editor';
-import type { WithRequiredKey } from '../../../plugin';
+import type { SlateEditor } from "../../../editor";
+import type { WithRequiredKey } from "../../../plugin";
 
-import { normalizeDescendantsToDocumentFragment } from '../../../utils/normalizeDescendantsToDocumentFragment';
-import { collapseWhiteSpace } from './collapse-white-space';
-import { deserializeHtmlElement } from './deserializeHtmlElement';
-import { htmlStringToDOMNode } from './htmlStringToDOMNode';
+import { normalizeDescendantsToDocumentFragment } from "../../../utils/normalizeDescendantsToDocumentFragment";
+import { collapseWhiteSpace } from "./collapse-white-space";
+import { deserializeHtmlElement } from "./deserializeHtmlElement";
+import { htmlStringToDOMNode } from "./htmlStringToDOMNode";
 
 /** Deserialize HTML element to a valid document fragment. */
 export const deserializeHtml = (
@@ -22,7 +22,7 @@ export const deserializeHtml = (
   }
 ): Descendant[] => {
   // for serializer
-  if (typeof element === 'string') {
+  if (typeof element === "string") {
     element = htmlStringToDOMNode(element);
   }
 

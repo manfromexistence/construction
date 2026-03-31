@@ -1,4 +1,4 @@
-import EditorSelectForm from '@/registry/examples/select-editor-demo';
+import EditorSelectForm from "@/registry/examples/select-editor-demo";
 
 export default function Page() {
   return (

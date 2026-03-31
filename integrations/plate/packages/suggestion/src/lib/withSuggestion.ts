@@ -1,25 +1,22 @@
 import {
-  type OverrideEditor,
-  type TSuggestionElement,
   ElementApi,
   KEYS,
   nanoid,
+  type OverrideEditor,
   TextApi,
-} from 'platejs';
+  type TSuggestionElement,
+} from "platejs";
 
-import {
-  type BaseSuggestionConfig,
-  BaseSuggestionPlugin,
-} from './BaseSuggestionPlugin';
-import { findSuggestionProps } from './queries';
-import { addMarkSuggestion } from './transforms/addMarkSuggestion';
-import { deleteFragmentSuggestion } from './transforms/deleteFragmentSuggestion';
-import { deleteSuggestion } from './transforms/deleteSuggestion';
-import { insertFragmentSuggestion } from './transforms/insertFragmentSuggestion';
-import { insertTextSuggestion } from './transforms/insertTextSuggestion';
-import { removeMarkSuggestion } from './transforms/removeMarkSuggestion';
-import { removeNodesSuggestion } from './transforms/removeNodesSuggestion';
-import { getInlineSuggestionData, getSuggestionKeyId } from './utils/index';
+import { type BaseSuggestionConfig, BaseSuggestionPlugin } from "./BaseSuggestionPlugin";
+import { findSuggestionProps } from "./queries";
+import { addMarkSuggestion } from "./transforms/addMarkSuggestion";
+import { deleteFragmentSuggestion } from "./transforms/deleteFragmentSuggestion";
+import { deleteSuggestion } from "./transforms/deleteSuggestion";
+import { insertFragmentSuggestion } from "./transforms/insertFragmentSuggestion";
+import { insertTextSuggestion } from "./transforms/insertTextSuggestion";
+import { removeMarkSuggestion } from "./transforms/removeMarkSuggestion";
+import { removeNodesSuggestion } from "./transforms/removeNodesSuggestion";
+import { getInlineSuggestionData, getSuggestionKeyId } from "./utils/index";
 
 export const withSuggestion: OverrideEditor<BaseSuggestionConfig> = ({
   api,
@@ -121,12 +118,12 @@ export const withSuggestion: OverrideEditor<BaseSuggestionConfig> = ({
         const [node, path] = editor.api.above()!;
 
         if (path.length > 1 || node.type !== editor.getType(KEYS.p)) {
-          return insertTextSuggestion(editor, '\n');
+          return insertTextSuggestion(editor, "\n");
         }
 
         const { id, createdAt } = findSuggestionProps(editor, {
           at: editor.selection!,
-          type: 'insert',
+          type: "insert",
         });
 
         insertBreak();
@@ -138,7 +135,7 @@ export const withSuggestion: OverrideEditor<BaseSuggestionConfig> = ({
                 id,
                 createdAt,
                 isLineBreak: true,
-                type: 'insert',
+                type: "insert",
                 userId: editor.getOptions(BaseSuggestionPlugin).currentUserId!,
               },
             },
@@ -167,7 +164,7 @@ export const withSuggestion: OverrideEditor<BaseSuggestionConfig> = ({
         const nodesArray = Array.isArray(nodes) ? nodes : [nodes];
 
         // TODO: options
-        if (nodesArray.some((n) => n.type === 'slash_input')) {
+        if (nodesArray.some((n) => n.type === "slash_input")) {
           api.suggestion.withoutSuggestions(() => {
             insertNodes(nodes, options);
           });
@@ -180,7 +177,7 @@ export const withSuggestion: OverrideEditor<BaseSuggestionConfig> = ({
           [KEYS.suggestion]: {
             id: nanoid(),
             createdAt: Date.now(),
-            type: 'insert',
+            type: "insert",
             userId: editor.getOptions(BaseSuggestionPlugin).currentUserId!,
           },
         }));
@@ -212,27 +209,22 @@ export const withSuggestion: OverrideEditor<BaseSuggestionConfig> = ({
         const [node, path] = entry;
 
         const inlineSuggestion =
-          (ElementApi.isElement(node) && editor.api.isInline(node)) ||
-          TextApi.isText(node);
+          (ElementApi.isElement(node) && editor.api.isInline(node)) || TextApi.isText(node);
 
         if (
           node[KEYS.suggestion] && // Unset suggestion when there is no suggestion id
           inlineSuggestion &&
           !getSuggestionKeyId(node)
         ) {
-          editor.tf.unsetNodes([KEYS.suggestion, 'suggestionData'], {
+          editor.tf.unsetNodes([KEYS.suggestion, "suggestionData"], {
             at: path,
           });
 
           return;
         }
         // Unset suggestion when there is no suggestion user id
-        if (
-          node[KEYS.suggestion] &&
-          inlineSuggestion &&
-          !getInlineSuggestionData(node)?.userId
-        ) {
-          if (getInlineSuggestionData(node)?.type === 'remove') {
+        if (node[KEYS.suggestion] && inlineSuggestion && !getInlineSuggestionData(node)?.userId) {
+          if (getInlineSuggestionData(node)?.type === "remove") {
             // Unset deletions
             editor.tf.unsetNodes([KEYS.suggestion, getSuggestionKeyId(node)!], {
               at: path,
@@ -260,7 +252,7 @@ export const withSuggestion: OverrideEditor<BaseSuggestionConfig> = ({
       if (getOptions().isSuggesting) {
         const nodes = [...editor.api.nodes(options)];
 
-        if (nodes.some(([n]) => n.type === 'slash_input')) {
+        if (nodes.some(([n]) => n.type === "slash_input")) {
           api.suggestion.withoutSuggestions(() => {
             removeNodes(options);
           });

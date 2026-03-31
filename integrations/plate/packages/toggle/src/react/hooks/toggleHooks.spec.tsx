@@ -1,6 +1,6 @@
-import { renderHook } from '@testing-library/react';
-import * as actualPlatejs from 'platejs';
-import * as actualPlatejsReact from 'platejs/react';
+import { renderHook } from "@testing-library/react";
+import * as actualPlatejs from "platejs";
+import * as actualPlatejsReact from "platejs/react";
 
 const useEditorPluginMock = mock();
 const useEditorRefMock = mock();
@@ -9,24 +9,24 @@ const usePluginOptionMock = mock();
 const someToggleMock = mock();
 const openNextTogglesMock = mock();
 
-mock.module('../../lib', () => ({
-  BaseTogglePlugin: { key: 'baseToggle' },
+mock.module("../../lib", () => ({
+  BaseTogglePlugin: { key: "baseToggle" },
   someToggle: someToggleMock,
 }));
 
-mock.module('../transforms', () => ({
+mock.module("../transforms", () => ({
   openNextToggles: openNextTogglesMock,
 }));
 
-mock.module('platejs', () => ({
+mock.module("platejs", () => ({
   ...actualPlatejs,
   KEYS: {
     ...actualPlatejs.KEYS,
-    toggle: 'toggle',
+    toggle: "toggle",
   },
 }));
 
-mock.module('platejs/react', () => ({
+mock.module("platejs/react", () => ({
   ...actualPlatejsReact,
   useEditorPlugin: useEditorPluginMock,
   useEditorRef: useEditorRefMock,
@@ -34,7 +34,7 @@ mock.module('platejs/react', () => ({
   usePluginOption: usePluginOptionMock,
 }));
 
-describe('toggle hooks', () => {
+describe("toggle hooks", () => {
   beforeEach(() => {
     useEditorPluginMock.mockReset();
     useEditorRefMock.mockReset();
@@ -48,11 +48,10 @@ describe('toggle hooks', () => {
     mock.restore();
   });
 
-  it('builds toolbar button props that open toggles and toggle the block', async () => {
-    const { useToggleToolbarButton, useToggleToolbarButtonState } =
-      await import(
-        `./useToggleToolbarButton?test=${Math.random().toString(36).slice(2)}`
-      );
+  it("builds toolbar button props that open toggles and toggle the block", async () => {
+    const { useToggleToolbarButton, useToggleToolbarButtonState } = await import(
+      `./useToggleToolbarButton?test=${Math.random().toString(36).slice(2)}`
+    );
     const toggleBlock = mock();
     const collapse = mock();
     const focus = mock();
@@ -74,18 +73,18 @@ describe('toggle hooks', () => {
 
     expect(result.current.props.pressed).toBe(true);
     expect(openNextTogglesMock).toHaveBeenCalledWith(editor);
-    expect(toggleBlock).toHaveBeenCalledWith('toggle');
+    expect(toggleBlock).toHaveBeenCalledWith("toggle");
     expect(collapse).toHaveBeenCalled();
     expect(focus).toHaveBeenCalled();
   });
 
-  it('builds toggle button state from open ids and toggles the clicked id', async () => {
+  it("builds toggle button state from open ids and toggles the clicked id", async () => {
     const { useToggleButton, useToggleButtonState } = await import(
       `./useToggleButton?test=${Math.random().toString(36).slice(2)}`
     );
     const toggleIds = mock();
 
-    usePluginOptionMock.mockReturnValue(new Set(['t1']));
+    usePluginOptionMock.mockReturnValue(new Set(["t1"]));
     useEditorPluginMock.mockReturnValue({
       api: {
         toggle: { toggleIds },
@@ -93,7 +92,7 @@ describe('toggle hooks', () => {
     });
 
     const { result } = renderHook(() => {
-      const state = useToggleButtonState('t1');
+      const state = useToggleButtonState("t1");
 
       return useToggleButton(state);
     });
@@ -101,6 +100,6 @@ describe('toggle hooks', () => {
     result.current.buttonProps.onClick({ preventDefault: mock() } as any);
 
     expect(result.current.open).toBe(true);
-    expect(toggleIds).toHaveBeenCalledWith(['t1']);
+    expect(toggleIds).toHaveBeenCalledWith(["t1"]);
   });
 });

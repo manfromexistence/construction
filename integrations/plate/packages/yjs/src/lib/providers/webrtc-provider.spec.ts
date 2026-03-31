@@ -1,6 +1,6 @@
-import * as Y from 'yjs';
+import * as Y from "yjs";
 
-import { mockFn } from '../__tests__/mockFn';
+import { mockFn } from "../__tests__/mockFn";
 
 type WebrtcHarnessOptions = {
   connectError?: Error;
@@ -44,12 +44,12 @@ const createWebrtcHarness = async ({
         throw constructorError;
       }
 
-      this.awareness = options.awareness ?? { provider: 'awareness' };
+      this.awareness = options.awareness ?? { provider: "awareness" };
       instances.push(this);
     }
 
     emitStatus(connected: boolean) {
-      this.events.get('status')?.({ connected });
+      this.events.get("status")?.({ connected });
     }
 
     on(event: string, handler: (payload: any) => void) {
@@ -57,11 +57,11 @@ const createWebrtcHarness = async ({
     }
   }
 
-  mock.module('y-webrtc', () => ({
+  mock.module("y-webrtc", () => ({
     WebrtcProvider: FakeWebrtcProvider,
   }));
 
-  const module = await import('./webrtc-provider');
+  const module = await import("./webrtc-provider");
 
   return {
     WebRTCProviderWrapper: module.WebRTCProviderWrapper,
@@ -70,46 +70,45 @@ const createWebrtcHarness = async ({
   };
 };
 
-describe('WebRTCProviderWrapper', () => {
+describe("WebRTCProviderWrapper", () => {
   beforeEach(() => {
-    spyOn(console, 'warn').mockImplementation(() => {});
+    spyOn(console, "warn").mockImplementation(() => {});
   });
 
   afterEach(() => {
     mock.restore();
   });
 
-  it('passes the provided document through to y-webrtc', async () => {
-    const { WebRTCProviderWrapper, constructorCalls } =
-      await createWebrtcHarness();
-    const doc = new Y.Doc({ guid: 'doc-1' });
-    const awareness = { id: 'awareness-1' } as any;
+  it("passes the provided document through to y-webrtc", async () => {
+    const { WebRTCProviderWrapper, constructorCalls } = await createWebrtcHarness();
+    const doc = new Y.Doc({ guid: "doc-1" });
+    const awareness = { id: "awareness-1" } as any;
     const wrapper = new WebRTCProviderWrapper({
       awareness,
       doc,
-      options: { roomName: 'room-1' },
+      options: { roomName: "room-1" },
     });
 
     expect(constructorCalls).toHaveLength(1);
     expect(constructorCalls[0]).toMatchObject({
       doc,
       options: { awareness },
-      roomName: 'room-1',
+      roomName: "room-1",
     });
     expect(wrapper.document).toBe(doc);
     expect(wrapper.awareness).toBe(awareness);
   });
 
-  it('creates a document when one is not provided', async () => {
+  it("creates a document when one is not provided", async () => {
     const { WebRTCProviderWrapper } = await createWebrtcHarness();
     const wrapper = new WebRTCProviderWrapper({
-      options: { roomName: 'room-1' },
+      options: { roomName: "room-1" },
     });
 
     expect(wrapper.document).toBeInstanceOf(Y.Doc);
   });
 
-  it('tracks status changes and only emits real transitions', async () => {
+  it("tracks status changes and only emits real transitions", async () => {
     const onConnect = mockFn(() => {});
     const onDisconnect = mockFn(() => {});
     const onSyncChange = mockFn((_: boolean) => {});
@@ -118,7 +117,7 @@ describe('WebRTCProviderWrapper', () => {
       onConnect,
       onDisconnect,
       onSyncChange,
-      options: { roomName: 'room-1' },
+      options: { roomName: "room-1" },
     });
     const instance = instances[0];
 
@@ -141,14 +140,14 @@ describe('WebRTCProviderWrapper', () => {
     expect(onSyncChange).toHaveBeenLastCalledWith(false);
   });
 
-  it('clears sync state on disconnect and destroy without throwing', async () => {
+  it("clears sync state on disconnect and destroy without throwing", async () => {
     const onSyncChange = mockFn((_: boolean) => {});
     const { WebRTCProviderWrapper, instances } = await createWebrtcHarness({
-      destroyError: new Error('destroy failed'),
+      destroyError: new Error("destroy failed"),
     });
     const wrapper = new WebRTCProviderWrapper({
       onSyncChange,
-      options: { roomName: 'room-1' },
+      options: { roomName: "room-1" },
     });
     const instance = instances[0];
 
@@ -164,31 +163,29 @@ describe('WebRTCProviderWrapper', () => {
     expect(instance.destroy).toHaveBeenCalledTimes(1);
   });
 
-  it('surfaces constructor failures and swallows provider method failures', async () => {
+  it("surfaces constructor failures and swallows provider method failures", async () => {
     const onError = mockFn((_: Error) => {});
-    const { WebRTCProviderWrapper: FailingWrapper } = await createWebrtcHarness(
-      {
-        constructorError: new Error('ctor failed'),
-      }
-    );
+    const { WebRTCProviderWrapper: FailingWrapper } = await createWebrtcHarness({
+      constructorError: new Error("ctor failed"),
+    });
     const failed = new FailingWrapper({
       onError,
-      options: { roomName: 'room-1' },
+      options: { roomName: "room-1" },
     });
 
     expect(onError).toHaveBeenCalledTimes(1);
-    expect((onError.mock.calls[0] as any[])[0].message).toBe('ctor failed');
+    expect((onError.mock.calls[0] as any[])[0].message).toBe("ctor failed");
     expect(() => failed.connect()).not.toThrow();
     expect(() => failed.disconnect()).not.toThrow();
     expect(() => failed.destroy()).not.toThrow();
 
     const { WebRTCProviderWrapper, instances } = await createWebrtcHarness({
-      connectError: new Error('connect failed'),
-      destroyError: new Error('destroy failed'),
-      disconnectError: new Error('disconnect failed'),
+      connectError: new Error("connect failed"),
+      destroyError: new Error("destroy failed"),
+      disconnectError: new Error("disconnect failed"),
     });
     const wrapper = new WebRTCProviderWrapper({
-      options: { roomName: 'room-2' },
+      options: { roomName: "room-2" },
     });
     const instance = instances[0];
 

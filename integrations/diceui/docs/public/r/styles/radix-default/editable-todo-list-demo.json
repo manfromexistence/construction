@@ -1,10 +1,6 @@
 {
   "name": "editable-todo-list-demo",
-  "registryDependencies": [
-    "button",
-    "checkbox",
-    "editable"
-  ],
+  "registryDependencies": ["button", "checkbox", "editable"],
   "files": [
     {
       "path": "examples/editable-todo-list-demo.tsx",

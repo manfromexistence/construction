@@ -1,5 +1,5 @@
-import { Card, CardContent } from "@/styles/radix-nova/ui/card"
-import { Checkbox } from "@/styles/radix-nova/ui/checkbox"
+import { Card, CardContent } from "@/styles/radix-nova/ui/card";
+import { Checkbox } from "@/styles/radix-nova/ui/checkbox";
 import {
   Field,
   FieldDescription,
@@ -8,7 +8,7 @@ import {
   FieldLegend,
   FieldSet,
   FieldTitle,
-} from "@/styles/radix-nova/ui/field"
+} from "@/styles/radix-nova/ui/field";
 
 const options = [
   {
@@ -28,7 +28,7 @@ const options = [
     label: "Other",
     value: "other",
   },
-]
+];
 
 export function FieldHear() {
   return (
@@ -43,11 +43,7 @@ export function FieldHear() {
               </FieldDescription>
               <FieldGroup className="flex flex-row flex-wrap gap-2 [--radius:9999rem]">
                 {options.map((option) => (
-                  <FieldLabel
-                    htmlFor={option.value}
-                    key={option.value}
-                    className="w-fit!"
-                  >
+                  <FieldLabel htmlFor={option.value} key={option.value} className="w-fit!">
                     <Field
                       orientation="horizontal"
                       className="gap-1.5 overflow-hidden px-3! py-1.5! transition-all duration-100 ease-linear group-has-data-[state=checked]/field-label:px-2!"
@@ -68,5 +64,5 @@ export function FieldHear() {
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }

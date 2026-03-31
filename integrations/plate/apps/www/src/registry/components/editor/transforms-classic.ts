@@ -1,39 +1,28 @@
-'use client';
+"use client";
 
-import type { PlateEditor } from 'platejs/react';
-
-import { insertCallout } from '@platejs/callout';
-import { insertCodeBlock, toggleCodeBlock } from '@platejs/code-block';
-import { insertDate } from '@platejs/date';
-import { insertColumnGroup, toggleColumnGroup } from '@platejs/layout';
-import { triggerFloatingLink } from '@platejs/link/react';
-import { toggleList } from '@platejs/list-classic';
-import { insertEquation, insertInlineEquation } from '@platejs/math';
+import { insertCallout } from "@platejs/callout";
+import { insertCodeBlock, toggleCodeBlock } from "@platejs/code-block";
+import { insertDate } from "@platejs/date";
+import { insertColumnGroup, toggleColumnGroup } from "@platejs/layout";
+import { triggerFloatingLink } from "@platejs/link/react";
+import { toggleList } from "@platejs/list-classic";
+import { insertEquation, insertInlineEquation } from "@platejs/math";
 import {
   insertAudioPlaceholder,
   insertFilePlaceholder,
   insertMedia,
   insertVideoPlaceholder,
-} from '@platejs/media';
-import { SuggestionPlugin } from '@platejs/suggestion/react';
-import { TablePlugin } from '@platejs/table/react';
-import { insertToc } from '@platejs/toc';
-import {
-  type NodeEntry,
-  type Path,
-  type TElement,
-  KEYS,
-  PathApi,
-} from 'platejs';
+} from "@platejs/media";
+import { SuggestionPlugin } from "@platejs/suggestion/react";
+import { TablePlugin } from "@platejs/table/react";
+import { insertToc } from "@platejs/toc";
+import { KEYS, type NodeEntry, type Path, PathApi, type TElement } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-const ACTION_THREE_COLUMNS = 'action_three_columns';
+const ACTION_THREE_COLUMNS = "action_three_columns";
 
-const insertBlockMap: Record<
-  string,
-  (editor: PlateEditor, type: string) => void
-> = {
-  [ACTION_THREE_COLUMNS]: (editor) =>
-    insertColumnGroup(editor, { columns: 3, select: true }),
+const insertBlockMap: Record<string, (editor: PlateEditor, type: string) => void> = {
+  [ACTION_THREE_COLUMNS]: (editor) => insertColumnGroup(editor, { columns: 3, select: true }),
   [KEYS.audio]: (editor) => insertAudioPlaceholder(editor, { select: true }),
   [KEYS.callout]: (editor) => insertCallout(editor, { select: true }),
   [KEYS.codeBlock]: (editor) => insertCodeBlock(editor, { select: true }),
@@ -49,19 +38,14 @@ const insertBlockMap: Record<
       select: true,
       type: KEYS.mediaEmbed,
     }),
-  [KEYS.table]: (editor) =>
-    editor.getTransforms(TablePlugin).insert.table({}, { select: true }),
+  [KEYS.table]: (editor) => editor.getTransforms(TablePlugin).insert.table({}, { select: true }),
   [KEYS.toc]: (editor) => insertToc(editor, { select: true }),
   [KEYS.video]: (editor) => insertVideoPlaceholder(editor, { select: true }),
 };
 
-const insertInlineMap: Record<
-  string,
-  (editor: PlateEditor, type: string) => void
-> = {
+const insertInlineMap: Record<string, (editor: PlateEditor, type: string) => void> = {
   [KEYS.date]: (editor) => insertDate(editor, { select: true }),
-  [KEYS.inlineEquation]: (editor) =>
-    insertInlineEquation(editor, '', { select: true }),
+  [KEYS.inlineEquation]: (editor) => insertInlineEquation(editor, "", { select: true }),
   [KEYS.link]: (editor) => triggerFloatingLink(editor, { focused: true }),
 };
 
@@ -92,24 +76,15 @@ export const insertInlineElement = (editor: PlateEditor, type: string) => {
   }
 };
 
-const setBlockMap: Record<string, (editor: PlateEditor, type: string) => void> =
-  {
-    [ACTION_THREE_COLUMNS]: (editor) =>
-      toggleColumnGroup(editor, { columns: 3 }),
-    [KEYS.codeBlock]: (editor) => toggleCodeBlock(editor),
-    [KEYS.olClassic]: (editor) =>
-      toggleList(editor, { type: editor.getType(KEYS.olClassic) }),
-    [KEYS.taskList]: (editor) =>
-      toggleList(editor, { type: editor.getType(KEYS.taskList) }),
-    [KEYS.ulClassic]: (editor) =>
-      toggleList(editor, { type: editor.getType(KEYS.ulClassic) }),
-  };
+const setBlockMap: Record<string, (editor: PlateEditor, type: string) => void> = {
+  [ACTION_THREE_COLUMNS]: (editor) => toggleColumnGroup(editor, { columns: 3 }),
+  [KEYS.codeBlock]: (editor) => toggleCodeBlock(editor),
+  [KEYS.olClassic]: (editor) => toggleList(editor, { type: editor.getType(KEYS.olClassic) }),
+  [KEYS.taskList]: (editor) => toggleList(editor, { type: editor.getType(KEYS.taskList) }),
+  [KEYS.ulClassic]: (editor) => toggleList(editor, { type: editor.getType(KEYS.ulClassic) }),
+};
 
-export const setBlockType = (
-  editor: PlateEditor,
-  type: string,
-  { at }: { at?: Path } = {}
-) => {
+export const setBlockType = (editor: PlateEditor, type: string, { at }: { at?: Path } = {}) => {
   editor.tf.withoutNormalizing(() => {
     const setEntry = (entry: NodeEntry<TElement>) => {
       const [node, path] = entry;
@@ -132,7 +107,7 @@ export const setBlockType = (
       }
     }
 
-    const entries = editor.api.blocks({ mode: 'lowest' });
+    const entries = editor.api.blocks({ mode: "lowest" });
 
     entries.forEach((entry) => {
       setEntry(entry);

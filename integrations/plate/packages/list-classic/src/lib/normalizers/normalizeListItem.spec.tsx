@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createSlateEditor, NodeApi } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, NodeApi, type SlateEditor } from "platejs";
 
-import { BaseListPlugin } from '../BaseListPlugin';
+import { BaseListPlugin } from "../BaseListPlugin";
 
 jsxt;
 
-describe('clean up list items', () => {
-  it('move children up from sublis if their parent has no lic', () => {
+describe("clean up list items", () => {
+  it("move children up from sublis if their parent has no lic", () => {
     const input = (
       <editor>
         <hul>

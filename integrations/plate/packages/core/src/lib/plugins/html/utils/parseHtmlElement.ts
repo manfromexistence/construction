@@ -1,4 +1,4 @@
-import { parseHtmlDocument } from './parseHtmlDocument';
+import { parseHtmlDocument } from "./parseHtmlDocument";
 
 export const parseHtmlElement = (html: string) => {
   const { body } = parseHtmlDocument(html);

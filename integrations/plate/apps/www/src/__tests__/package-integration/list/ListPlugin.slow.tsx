@@ -1,36 +1,37 @@
 /** @jsx jsxt */
 
-import { BasicBlocksPlugin } from '@platejs/basic-nodes/react';
-import { HorizontalRulePlugin } from '@platejs/basic-nodes/react';
-import { BasicMarksPlugin } from '@platejs/basic-nodes/react';
-import { TextAlignPlugin } from '@platejs/basic-styles/react';
-import { LineHeightPlugin } from '@platejs/basic-styles/react';
-import { DocxPlugin } from '@platejs/docx';
-import { IndentPlugin } from '@platejs/indent/react';
-import { JuicePlugin } from '@platejs/juice';
-import { LinkPlugin } from '@platejs/link/react';
-import { ImagePlugin } from '@platejs/media/react';
-import { TablePlugin } from '@platejs/table/react';
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import {
+  BasicBlocksPlugin,
+  BasicMarksPlugin,
+  HorizontalRulePlugin,
+} from "@platejs/basic-nodes/react";
+import { LineHeightPlugin, TextAlignPlugin } from "@platejs/basic-styles/react";
+import { DocxPlugin } from "@platejs/docx";
+import { IndentPlugin } from "@platejs/indent/react";
+import { JuicePlugin } from "@platejs/juice";
+import { LinkPlugin } from "@platejs/link/react";
+import { ImagePlugin } from "@platejs/media/react";
+import { TablePlugin } from "@platejs/table/react";
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { BaseListPlugin } from '../../../../../../packages/list/src/lib/BaseListPlugin';
+import { BaseListPlugin } from "../../../../../../packages/list/src/lib/BaseListPlugin";
 
 jsxt;
 
 const injectConfig = {
   inject: {
-    targetPlugins: ['p', 'h1', 'h2', 'h3'],
+    targetPlugins: ["p", "h1", "h2", "h3"],
   },
 };
 
 const createClipboardData = (html: string, rtf?: string): DataTransfer =>
   ({
-    getData: (format: string) => (format === 'text/html' ? html : rtf),
+    getData: (format: string) => (format === "text/html" ? html : rtf),
   }) as any;
 
-describe('when insertData disc and decimal from gdocs', () => {
-  it('handle Google Docs nested lists', () => {
+describe("when insertData disc and decimal from gdocs", () => {
+  it("handle Google Docs nested lists", () => {
     const e = (
       <editor>
         <hp>
@@ -68,59 +69,59 @@ describe('when insertData disc and decimal from gdocs', () => {
       {
         children: [
           {
-            text: 'A',
+            text: "A",
           },
         ],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
         children: [
           {
-            text: 'B',
+            text: "B",
           },
         ],
         indent: 2,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
         children: [
           {
-            text: 'A',
+            text: "A",
           },
         ],
         indent: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
         children: [
           {
-            text: 'B',
+            text: "B",
           },
         ],
         indent: 2,
-        listStyleType: 'lower-alpha',
-        type: 'p',
+        listStyleType: "lower-alpha",
+        type: "p",
       },
       {
         children: [
           {
-            text: 'c',
+            text: "c",
           },
         ],
         indent: 4,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
     ]);
   });
 });
 
-describe('when insertData with nested ul inside li', () => {
-  it('handle li with nested ul correctly', () => {
+describe("when insertData with nested ul inside li", () => {
+  it("handle li with nested ul correctly", () => {
     const e = (
       <editor>
         <hp>
@@ -169,43 +170,43 @@ describe('when insertData with nested ul inside li', () => {
       {
         children: [
           {
-            text: 'Item 1 ', // Note: trailing space from HTML
+            text: "Item 1 ", // Note: trailing space from HTML
           },
         ],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
         children: [
           {
-            text: 'Item 1.1 ', // Note: trailing space from HTML
+            text: "Item 1.1 ", // Note: trailing space from HTML
           },
         ],
         indent: 2,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
         children: [
           {
-            text: 'Item 1.1.1',
+            text: "Item 1.1.1",
           },
         ],
         indent: 3,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
         children: [
           {
-            text: 'Item 2',
+            text: "Item 2",
           },
         ],
         indent: 1,
         listStart: 2, // Second item in the list
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ]);
   });

@@ -1,8 +1,6 @@
 {
   "name": "circular-progress-demo",
-  "registryDependencies": [
-    "circular-progress"
-  ],
+  "registryDependencies": ["circular-progress"],
   "files": [
     {
       "path": "examples/circular-progress-demo.tsx",

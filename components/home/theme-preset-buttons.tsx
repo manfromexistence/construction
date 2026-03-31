@@ -1,12 +1,18 @@
 "use client";
 
-import { AnimationOptions, AnimationPlaybackControls, motion, TargetAndTransition, useAnimate } from "motion/react";
-import { Button } from "@/components/ui/button";
-import { getPresetThemeStyles } from "@/utils/theme-preset-helper";
-import { cn } from "@/lib/utils";
-import { colorFormatter } from "@/utils/color-converter";
-import { ThemeEditorState } from "@/types/editor";
+import {
+  AnimationOptions,
+  AnimationPlaybackControls,
+  motion,
+  TargetAndTransition,
+  useAnimate,
+} from "motion/react";
 import { useEffect, useMemo, useRef } from "react";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ThemeEditorState } from "@/types/editor";
+import { colorFormatter } from "@/utils/color-converter";
+import { getPresetThemeStyles } from "@/utils/theme-preset-helper";
 
 // ColorBox component remains internal to ThemePresetButtons
 const ColorBox = ({ color, radius }: { color: string; radius: string }) => {
@@ -57,9 +63,7 @@ export function ThemePresetButtons({
       const numPresetsInRow = rowPresets.length;
       if (numPresetsInRow === 0) return null;
 
-      const duplicatedRowPresets = Array(duplicationFactor)
-        .fill(rowPresets)
-        .flat();
+      const duplicatedRowPresets = Array(duplicationFactor).fill(rowPresets).flat();
       const totalWidth = numPresetsInRow * (buttonWidthPx + gapPx);
       const duration = numPresetsInRow * baseDurationPerItem;
 
@@ -79,10 +83,8 @@ export function ThemePresetButtons({
       };
     };
 
-    return Array.from({ length: numRows }, (_, i) =>
-      createRowProps(i)
-    ).filter(Boolean);
-  }, [presetsToShow, numRows, buttonWidthPx, gapPx, duplicationFactor, baseDurationPerItem]);
+    return Array.from({ length: numRows }, (_, i) => createRowProps(i)).filter(Boolean);
+  }, [presetsToShow]);
 
   // Avoid rendering if no presets
   if (numUniquePresets === 0) {
@@ -106,11 +108,7 @@ export function ThemePresetButtons({
       }}
     >
       {rowsData.map((rowData) => (
-        <AnimatedRow
-          key={rowData!.key}
-          target={rowData!.animate}
-          options={rowData!.transition}
-        >
+        <AnimatedRow key={rowData!.key} target={rowData!.animate} options={rowData!.transition}>
           {/* Inner div necessary for spacing when using justify-content */}
           <div className="flex flex-shrink-0" style={{ gap: `${gapPx}px` }}>
             {rowData!.presets.map((presetName, index) => {

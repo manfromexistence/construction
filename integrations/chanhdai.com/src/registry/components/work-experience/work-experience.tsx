@@ -1,86 +1,79 @@
-"use client"
+"use client";
 
-import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react"
-import { type ComponentProps, useCallback, useRef } from "react"
-import ReactMarkdown from "react-markdown"
+import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react";
+import { type ComponentProps, useCallback, useRef } from "react";
+import ReactMarkdown from "react-markdown";
 
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
-import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
-import type { ChevronsUpDownIconHandle } from "@/registry/components/chevrons-up-down-icon"
-import { ChevronsUpDownIcon } from "@/registry/components/chevrons-up-down-icon"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import type { ChevronsUpDownIconHandle } from "@/registry/components/chevrons-up-down-icon";
+import { ChevronsUpDownIcon } from "@/registry/components/chevrons-up-down-icon";
 
 export type ExperiencePositionItemType = {
   /** Unique identifier for the position */
-  id: string
+  id: string;
   /** The job title or position name */
-  title: string
+  title: string;
   /**
    * Employment period of the position.
    * Use "MM.YYYY" or "YYYY" format. Omit `end` for current roles.
    */
   employmentPeriod: {
     /** Start date (e.g., "10.2022" or "2020"). */
-    start: string
+    start: string;
     /** End date; leave undefined for "Present". */
-    end?: string
-  }
+    end?: string;
+  };
   /** The type of employment (e.g., "Full-time", "Part-time", "Contract") */
-  employmentType?: string
+  employmentType?: string;
   /** A brief description of the position or responsibilities */
-  description?: string
+  description?: string;
   /** An icon representing the position */
-  icon?: React.ReactElement
+  icon?: React.ReactElement;
   /** A list of skills associated with the position */
-  skills?: string[]
+  skills?: string[];
   /** Indicates if the position details are expanded in the UI */
-  isExpanded?: boolean
-}
+  isExpanded?: boolean;
+};
 
 export type ExperienceItemType = {
   /** Unique identifier for the experience item */
-  id: string
+  id: string;
   /** Name of the company where the experience was gained */
-  companyName: string
+  companyName: string;
   /** URL or path to the company's logo image */
-  companyLogo?: string
+  companyLogo?: string;
   /** URL to the company's website. */
-  companyWebsite?: string
+  companyWebsite?: string;
   /**
    * List of positions held at the company
    * @fumadocsHref #experiencepositionitemtype
    * */
-  positions: ExperiencePositionItemType[]
+  positions: ExperiencePositionItemType[];
   /** Indicates if this is the user's current employer */
-  isCurrentEmployer?: boolean
-}
+  isCurrentEmployer?: boolean;
+};
 
 export type WorkExperienceProps = {
-  className?: string
+  className?: string;
   /** @fumadocsHref #experienceitemtype */
-  experiences: ExperienceItemType[]
-}
+  experiences: ExperienceItemType[];
+};
 
-export function WorkExperience({
-  className,
-  experiences,
-}: WorkExperienceProps) {
+export function WorkExperience({ className, experiences }: WorkExperienceProps) {
   return (
     <div className={cn("bg-background px-4 text-foreground", className)}>
       {experiences.map((experience) => (
         <ExperienceItem key={experience.id} experience={experience} />
       ))}
     </div>
-  )
+  );
 }
 
 export type ExperienceItemProps = {
-  experience: ExperienceItemType
-}
+  experience: ExperienceItemType;
+};
 
 export function ExperienceItem({ experience }: ExperienceItemProps) {
   return (
@@ -129,31 +122,29 @@ export function ExperienceItem({ experience }: ExperienceItemProps) {
         ))}
       </div>
     </div>
-  )
+  );
 }
 
 export type ExperiencePositionItemProps = {
-  position: ExperiencePositionItemType
-}
+  position: ExperiencePositionItemType;
+};
 
-export function ExperiencePositionItem({
-  position,
-}: ExperiencePositionItemProps) {
-  const chevronsIconRef = useRef<ChevronsUpDownIconHandle>(null)
+export function ExperiencePositionItem({ position }: ExperiencePositionItemProps) {
+  const chevronsIconRef = useRef<ChevronsUpDownIconHandle>(null);
 
   const handleOpenChange = useCallback((open: boolean) => {
-    const controls = chevronsIconRef.current
-    if (!controls) return
+    const controls = chevronsIconRef.current;
+    if (!controls) return;
 
     if (open) {
-      controls.startAnimation()
+      controls.startAnimation();
     } else {
-      controls.stopAnimation()
+      controls.stopAnimation();
     }
-  }, [])
+  }, []);
 
-  const { start, end } = position.employmentPeriod
-  const isOngoing = !end
+  const { start, end } = position.employmentPeriod;
+  const isOngoing = !end;
 
   return (
     <Collapsible
@@ -243,7 +234,7 @@ export function ExperiencePositionItem({
         )}
       </div>
     </Collapsible>
-  )
+  );
 }
 
 function Prose({ className, ...props }: ComponentProps<"div">) {
@@ -255,7 +246,7 @@ function Prose({ className, ...props }: ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function Skill({ className, ...props }: ComponentProps<"span">) {
@@ -267,5 +258,5 @@ function Skill({ className, ...props }: ComponentProps<"span">) {
       )}
       {...props}
     />
-  )
+  );
 }

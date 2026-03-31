@@ -1,18 +1,10 @@
-import { ArrowUpRightIcon } from "lucide-react"
+import { ArrowUpRightIcon } from "lucide-react";
 
-import {
-  Marquee,
-  MarqueeContent,
-  MarqueeFade,
-  MarqueeItem,
-} from "@/components/kibo-ui/marquee"
-import { Button } from "@/components/ui/button"
-import { Panel } from "@/features/portfolio/components/panel"
-import {
-  TESTIMONIALS_1,
-  TESTIMONIALS_2,
-} from "@/features/portfolio/data/testimonials"
-import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials"
+import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/components/kibo-ui/marquee";
+import { Button } from "@/components/ui/button";
+import { Panel } from "@/features/portfolio/components/panel";
+import { TESTIMONIALS_1, TESTIMONIALS_2 } from "@/features/portfolio/data/testimonials";
+import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials";
 import {
   Testimonial,
   TestimonialAuthor,
@@ -22,17 +14,17 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-} from "@/registry/components/testimonial"
-import { TestimonialSpotlight } from "@/registry/components/testimonial-spotlight"
+} from "@/registry/components/testimonial";
+import { TestimonialSpotlight } from "@/registry/components/testimonial-spotlight";
 
 function compareFn(a: TestimonialType, b: TestimonialType) {
-  return a.date.localeCompare(b.date, undefined, { numeric: true })
+  return a.date.localeCompare(b.date, undefined, { numeric: true });
 }
 
 const FEATURED_TESTIMONIALS = [
   ...TESTIMONIALS_1.filter((item) => item.isFeatured),
   ...TESTIMONIALS_2.filter((item) => item.isFeatured),
-].sort(compareFn)
+].sort(compareFn);
 
 export function Testimonials() {
   return (
@@ -44,13 +36,7 @@ export function Testimonials() {
 
       <div className="grid gap-2 px-2 sm:grid-cols-2">
         {FEATURED_TESTIMONIALS.map((item) => (
-          <a
-            key={item.url}
-            className="flex"
-            href={item.url}
-            target="_blank"
-            rel="noopener"
-          >
+          <a key={item.url} className="flex" href={item.url} target="_blank" rel="noopener">
             <TestimonialSpotlight className="flex-1 bg-accent-muted">
               <TestimonialItem {...item} />
             </TestimonialSpotlight>
@@ -79,15 +65,15 @@ export function Testimonials() {
         </Button>
       </div>
     </Panel>
-  )
+  );
 }
 
 function TestimonialList({
   data,
   direction,
 }: {
-  data: TestimonialType[]
-  direction?: "right" | "left"
+  data: TestimonialType[];
+  direction?: "right" | "left";
 }) {
   return (
     <Marquee>
@@ -116,15 +102,10 @@ function TestimonialList({
           ))}
       </MarqueeContent>
     </Marquee>
-  )
+  );
 }
 
-function TestimonialItem({
-  authorAvatar,
-  authorName,
-  authorTagline,
-  quote,
-}: TestimonialType) {
+function TestimonialItem({ authorAvatar, authorName, authorTagline, quote }: TestimonialType) {
   return (
     <Testimonial>
       <TestimonialQuote className="min-h-14">
@@ -141,5 +122,5 @@ function TestimonialItem({
         <TestimonialAuthorTagline>{authorTagline}</TestimonialAuthorTagline>
       </TestimonialAuthor>
     </Testimonial>
-  )
+  );
 }

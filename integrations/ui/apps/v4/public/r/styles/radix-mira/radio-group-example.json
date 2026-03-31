@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "radio-group-example",
   "title": "Radio Group",
-  "registryDependencies": [
-    "field",
-    "radio-group",
-    "example"
-  ],
+  "registryDependencies": ["field", "radio-group", "example"],
   "files": [
     {
       "path": "registry/radix-mira/examples/radio-group-example.tsx",

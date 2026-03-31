@@ -1,4 +1,4 @@
-import type { Editor, ResetOptions } from '../../interfaces';
+import type { Editor, ResetOptions } from "../../interfaces";
 
 export const reset = (editor: Editor, options: ResetOptions = {}) => {
   editor.tf.replaceNodes(editor.api.create.value(), {

@@ -1,18 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createSlateEditor } from 'platejs';
-
-import type { TabbableEntry } from './types';
-
-import {
-  type FindTabDestinationOptions,
-  findTabDestination,
-} from './findTabDestination';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
+import { type FindTabDestinationOptions, findTabDestination } from "./findTabDestination";
+import type { TabbableEntry } from "./types";
 
 jsxt;
 
-describe('findTabDestination', () => {
+describe("findTabDestination", () => {
   const e = (
     <editor>
       <hp>Line 1</hp>
@@ -38,16 +33,16 @@ describe('findTabDestination', () => {
 
   const voidPath1 = [1];
   const voidSlateNode1 = (editor.children[1] as any)!;
-  const voidDOMNode1 = document.createElement('div') as HTMLElement;
+  const voidDOMNode1 = document.createElement("div") as HTMLElement;
 
   const voidPath2 = [4];
   const voidSlateNode2 = (editor.children[4] as any)!;
-  const voidDOMNode2a = document.createElement('div') as HTMLElement;
-  const voidDOMNode2b = document.createElement('div') as HTMLElement;
+  const voidDOMNode2a = document.createElement("div") as HTMLElement;
+  const voidDOMNode2b = document.createElement("div") as HTMLElement;
 
   const voidPath3 = [5];
   const voidSlateNode3 = (editor.children[5] as any)!;
-  const voidDOMNode3 = document.createElement('div') as HTMLElement;
+  const voidDOMNode3 = document.createElement("div") as HTMLElement;
 
   const tabbableEntries = [
     { domNode: voidDOMNode1, path: voidPath1, slateNode: voidSlateNode1 },
@@ -58,17 +53,17 @@ describe('findTabDestination', () => {
 
   const defaultOptions = {
     activeTabbableEntry: tabbableEntries[1],
-    direction: 'forward',
+    direction: "forward",
     tabbableEntries,
   } as FindTabDestinationOptions;
 
-  describe('when first of multiple tabbables with the same path is active', () => {
+  describe("when first of multiple tabbables with the same path is active", () => {
     const activeOverride = {} as any;
 
-    describe('when direction is forward', () => {
+    describe("when direction is forward", () => {
       const directionOverride = {} as any;
 
-      it('returns the next tabbable with the same path', () => {
+      it("returns the next tabbable with the same path", () => {
         const tabDestination = findTabDestination(editor, {
           ...defaultOptions,
           ...activeOverride,
@@ -77,15 +72,15 @@ describe('findTabDestination', () => {
 
         expect(tabDestination).toEqual({
           domNode: voidDOMNode2b,
-          type: 'dom-node',
+          type: "dom-node",
         });
       });
     });
 
-    describe('when direction is backward', () => {
-      const directionOverride = { direction: 'backward' } as any;
+    describe("when direction is backward", () => {
+      const directionOverride = { direction: "backward" } as any;
 
-      it('returns the path of the tabbable', () => {
+      it("returns the path of the tabbable", () => {
         const tabDestination = findTabDestination(editor, {
           ...defaultOptions,
           ...activeOverride,
@@ -94,19 +89,19 @@ describe('findTabDestination', () => {
 
         expect(tabDestination).toEqual({
           path: voidPath2.concat(0),
-          type: 'path',
+          type: "path",
         });
       });
     });
   });
 
-  describe('when last of multiple tabbables with the same path is active', () => {
+  describe("when last of multiple tabbables with the same path is active", () => {
     const activeOverride = { activeTabbableEntry: tabbableEntries[2] } as any;
 
-    describe('when direction is forward', () => {
+    describe("when direction is forward", () => {
       const directionOverride = {} as any;
 
-      it('returns the path after that of the tabbable', () => {
+      it("returns the path after that of the tabbable", () => {
         const tabDestination = findTabDestination(editor, {
           ...defaultOptions,
           ...activeOverride,
@@ -115,15 +110,15 @@ describe('findTabDestination', () => {
 
         expect(tabDestination).toEqual({
           path: [5, 0],
-          type: 'path',
+          type: "path",
         });
       });
     });
 
-    describe('when direction is backward', () => {
-      const directionOverride = { direction: 'backward' } as any;
+    describe("when direction is backward", () => {
+      const directionOverride = { direction: "backward" } as any;
 
-      it('returns the previous tabbable with the same path', () => {
+      it("returns the previous tabbable with the same path", () => {
         const tabDestination = findTabDestination(editor, {
           ...defaultOptions,
           ...activeOverride,
@@ -132,16 +127,16 @@ describe('findTabDestination', () => {
 
         expect(tabDestination).toEqual({
           domNode: voidDOMNode2a,
-          type: 'dom-node',
+          type: "dom-node",
         });
       });
     });
   });
 
-  describe('when no tabbable is active', () => {
+  describe("when no tabbable is active", () => {
     const activeOverride = { activeTabbableEntry: null } as any;
 
-    describe('when selection is between two tabbables', () => {
+    describe("when selection is between two tabbables", () => {
       const editorWithSelection = {
         ...editor,
         selection: {
@@ -150,10 +145,10 @@ describe('findTabDestination', () => {
         },
       } as SlateEditor;
 
-      describe('when direction is forward', () => {
+      describe("when direction is forward", () => {
         const directionOverride = {} as any;
 
-        it('returns the next tabbable', () => {
+        it("returns the next tabbable", () => {
           const tabDestination = findTabDestination(editorWithSelection, {
             ...defaultOptions,
             ...activeOverride,
@@ -162,15 +157,15 @@ describe('findTabDestination', () => {
 
           expect(tabDestination).toEqual({
             domNode: voidDOMNode2a,
-            type: 'dom-node',
+            type: "dom-node",
           });
         });
       });
 
-      describe('when direction is backward', () => {
-        const directionOverride = { direction: 'backward' } as any;
+      describe("when direction is backward", () => {
+        const directionOverride = { direction: "backward" } as any;
 
-        it('returns the previous tabbable', () => {
+        it("returns the previous tabbable", () => {
           const tabDestination = findTabDestination(editorWithSelection, {
             ...defaultOptions,
             ...activeOverride,
@@ -179,13 +174,13 @@ describe('findTabDestination', () => {
 
           expect(tabDestination).toEqual({
             domNode: voidDOMNode1,
-            type: 'dom-node',
+            type: "dom-node",
           });
         });
       });
     });
 
-    describe('when selection is before the first tabbable', () => {
+    describe("when selection is before the first tabbable", () => {
       const editorWithSelection = {
         ...editor,
         selection: {
@@ -194,10 +189,10 @@ describe('findTabDestination', () => {
         },
       } as SlateEditor;
 
-      describe('when direction is backward', () => {
-        const directionOverride = { direction: 'backward' } as any;
+      describe("when direction is backward", () => {
+        const directionOverride = { direction: "backward" } as any;
 
-        it('returns null', () => {
+        it("returns null", () => {
           const tabDestination = findTabDestination(editorWithSelection, {
             ...defaultOptions,
             ...activeOverride,
@@ -209,7 +204,7 @@ describe('findTabDestination', () => {
       });
     });
 
-    describe('when selection is after the last tabbable', () => {
+    describe("when selection is after the last tabbable", () => {
       const editorWithSelection = {
         ...editor,
         selection: {
@@ -218,10 +213,10 @@ describe('findTabDestination', () => {
         },
       } as SlateEditor;
 
-      describe('when direction is forward', () => {
+      describe("when direction is forward", () => {
         const directionOverride = {} as any;
 
-        it('returns null', () => {
+        it("returns null", () => {
           const tabDestination = findTabDestination(editorWithSelection, {
             ...defaultOptions,
             ...activeOverride,

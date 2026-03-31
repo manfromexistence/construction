@@ -1,6 +1,6 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseColumnItemPlugin, BaseColumnPlugin } from '../lib';
+import { BaseColumnItemPlugin, BaseColumnPlugin } from "../lib";
 
 export const ColumnItemPlugin = toPlatePlugin(BaseColumnItemPlugin);
 

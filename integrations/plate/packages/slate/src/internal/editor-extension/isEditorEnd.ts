@@ -1,4 +1,4 @@
-import { type Editor, PathApi } from '../../interfaces/index';
+import { type Editor, PathApi } from "../../interfaces/index";
 
 export const isEditorEnd = (editor: Editor) => {
   if (editor.selection) {

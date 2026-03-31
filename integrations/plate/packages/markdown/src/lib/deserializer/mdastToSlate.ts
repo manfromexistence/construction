@@ -1,27 +1,21 @@
-import type { Root } from 'mdast';
+import type { Root } from "mdast";
 
-import { type Descendant, getPluginKey, KEYS } from 'platejs';
+import { type Descendant, getPluginKey, KEYS } from "platejs";
 
-import type { MdRoot } from '../mdast';
-import type { DeserializeMdOptions } from './deserializeMd';
+import type { MdRoot } from "../mdast";
+import { convertNodesDeserialize } from "./convertNodesDeserialize";
+import type { DeserializeMdOptions } from "./deserializeMd";
 
-import { convertNodesDeserialize } from './convertNodesDeserialize';
+export const mdastToSlate = (node: Root, options: DeserializeMdOptions): Descendant[] =>
+  buildSlateRoot(node, options);
 
-export const mdastToSlate = (
-  node: Root,
-  options: DeserializeMdOptions
-): Descendant[] => buildSlateRoot(node, options);
-
-const buildSlateRoot = (
-  root: MdRoot,
-  options: DeserializeMdOptions
-): Descendant[] => {
+const buildSlateRoot = (root: MdRoot, options: DeserializeMdOptions): Descendant[] => {
   if (!options.splitLineBreaks) {
     root.children = root.children.map((child) => {
-      if (child.type === 'html' && child.value === '<br />') {
+      if (child.type === "html" && child.value === "<br />") {
         return {
-          children: [{ type: 'text', value: '\n' }],
-          type: 'paragraph',
+          children: [{ type: "text", value: "\n" }],
+          type: "paragraph",
         };
       }
       return child;
@@ -37,10 +31,8 @@ const buildSlateRoot = (
     if (count > 0) {
       results.push(
         ...Array.from({ length: count }).map(() => ({
-          children: [{ text: '' }],
-          type: options.editor
-            ? (getPluginKey(options.editor, KEYS.p) ?? KEYS.p)
-            : KEYS.p,
+          children: [{ text: "" }],
+          type: options.editor ? (getPluginKey(options.editor, KEYS.p) ?? KEYS.p) : KEYS.p,
         }))
       );
     }
@@ -59,8 +51,7 @@ const buildSlateRoot = (
       results.push(...transformValue);
 
       if (isLastChild) {
-        const emptyLinesAfter =
-          root.position!.end.line - child.position.end.line - 1;
+        const emptyLinesAfter = root.position!.end.line - child.position.end.line - 1;
         addEmptyParagraphs(emptyLinesAfter);
       }
 

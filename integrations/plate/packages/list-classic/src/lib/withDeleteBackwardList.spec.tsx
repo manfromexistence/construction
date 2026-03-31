@@ -1,16 +1,15 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseListPlugin } from './BaseListPlugin';
+import { BaseListPlugin } from "./BaseListPlugin";
 
 jsxt;
 
-describe('li > lic * 2 with selection at second child start', () => {
-  it('merge the children', () => {
+describe("li > lic * 2 with selection at second child start", () => {
+  it("merge the children", () => {
     const input = (
       <editor>
         <hul>
@@ -47,8 +46,8 @@ describe('li > lic * 2 with selection at second child start', () => {
   });
 });
 
-describe('li with selection at start', () => {
-  it('remove the list item', () => {
+describe("li with selection at start", () => {
+  it("remove the list item", () => {
     const input = (
       <editor>
         <hul>
@@ -88,8 +87,8 @@ describe('li with selection at start', () => {
   });
 });
 
-describe('list + sublist where second item has multiple children', () => {
-  it('merge all text into first sublist item', () => {
+describe("list + sublist where second item has multiple children", () => {
+  it("merge all text into first sublist item", () => {
     const input = (
       <editor>
         <hul>

@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import {
-  Example,
-  ExampleWrapper,
-} from "@/registry/bases/radix/components/example"
-import { Button } from "@/registry/bases/radix/ui/button"
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { Example, ExampleWrapper } from "@/registry/bases/radix/components/example";
+import { Button } from "@/registry/bases/radix/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,24 +11,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/registry/bases/radix/ui/dialog"
-import {
-  Field,
-  FieldDescription,
-  FieldError,
-  FieldLabel,
-} from "@/registry/bases/radix/ui/field"
-import { Input } from "@/registry/bases/radix/ui/input"
-import {
-  Item,
-  ItemContent,
-  ItemDescription,
-  ItemTitle,
-} from "@/registry/bases/radix/ui/item"
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/registry/bases/radix/ui/native-select"
+} from "@/registry/bases/radix/ui/dialog";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/registry/bases/radix/ui/field";
+import { Input } from "@/registry/bases/radix/ui/input";
+import { Item, ItemContent, ItemDescription, ItemTitle } from "@/registry/bases/radix/ui/item";
+import { NativeSelect, NativeSelectOption } from "@/registry/bases/radix/ui/native-select";
 import {
   Select,
   SelectContent,
@@ -41,8 +25,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
-} from "@/registry/bases/radix/ui/select"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/radix/ui/select";
 
 export default function SelectExample() {
   return (
@@ -61,7 +44,7 @@ export default function SelectExample() {
       <SelectDisabled />
       <SelectInDialog />
     </ExampleWrapper>
-  )
+  );
 }
 
 function SelectBasic() {
@@ -84,7 +67,7 @@ function SelectBasic() {
         </SelectContent>
       </Select>
     </Example>
-  )
+  );
 }
 
 function SelectWithIcons() {
@@ -197,7 +180,7 @@ function SelectWithIcons() {
         </Select>
       </div>
     </Example>
-  )
+  );
 }
 
 function SelectWithGroups() {
@@ -224,7 +207,7 @@ function SelectWithGroups() {
         </SelectContent>
       </Select>
     </Example>
-  )
+  );
 }
 
 function SelectLargeList() {
@@ -245,7 +228,7 @@ function SelectLargeList() {
         </SelectContent>
       </Select>
     </Example>
-  )
+  );
 }
 
 function SelectSizes() {
@@ -278,7 +261,7 @@ function SelectSizes() {
         </Select>
       </div>
     </Example>
-  )
+  );
 }
 
 function SelectWithButton() {
@@ -319,7 +302,7 @@ function SelectWithButton() {
         </div>
       </div>
     </Example>
-  )
+  );
 }
 
 function SelectItemAligned() {
@@ -342,7 +325,7 @@ function SelectItemAligned() {
         </SelectContent>
       </Select>
     </Example>
-  )
+  );
 }
 
 function SelectWithField() {
@@ -364,12 +347,10 @@ function SelectWithField() {
             </SelectGroup>
           </SelectContent>
         </Select>
-        <FieldDescription>
-          Choose your favorite fruit from the list.
-        </FieldDescription>
+        <FieldDescription>Choose your favorite fruit from the list.</FieldDescription>
       </Field>
     </Example>
-  )
+  );
 }
 
 function SelectInvalid() {
@@ -410,7 +391,7 @@ function SelectInvalid() {
         </Field>
       </div>
     </Example>
-  )
+  );
 }
 
 function SelectInline() {
@@ -438,7 +419,7 @@ function SelectInline() {
         </NativeSelect>
       </div>
     </Example>
-  )
+  );
 }
 
 function SelectDisabled() {
@@ -461,7 +442,7 @@ function SelectDisabled() {
         </SelectContent>
       </Select>
     </Example>
-  )
+  );
 }
 
 const plans = [
@@ -477,20 +458,18 @@ const plans = [
     name: "Enterprise",
     description: "Advanced features for large organizations.",
   },
-]
+];
 
 function SelectPlan() {
-  const [plan, setPlan] = React.useState<string>(plans[0].name)
+  const [plan, setPlan] = React.useState<string>(plans[0].name);
 
-  const selectedPlan = plans.find((p) => p.name === plan)
+  const selectedPlan = plans.find((p) => p.name === plan);
 
   return (
     <Example title="Subscription Plan">
       <Select value={plan} onValueChange={setPlan}>
         <SelectTrigger className="h-auto! w-72">
-          <SelectValue>
-            {selectedPlan && <SelectPlanItem plan={selectedPlan} />}
-          </SelectValue>
+          <SelectValue>{selectedPlan && <SelectPlanItem plan={selectedPlan} />}</SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
@@ -503,7 +482,7 @@ function SelectPlan() {
         </SelectContent>
       </Select>
     </Example>
-  )
+  );
 }
 
 function SelectPlanItem({ plan }: { plan: (typeof plans)[number] }) {
@@ -511,12 +490,10 @@ function SelectPlanItem({ plan }: { plan: (typeof plans)[number] }) {
     <Item size="xs" className="w-full p-0">
       <ItemContent className="gap-0">
         <ItemTitle>{plan.name}</ItemTitle>
-        <ItemDescription className="text-xs">
-          {plan.description}
-        </ItemDescription>
+        <ItemDescription className="text-xs">{plan.description}</ItemDescription>
       </ItemContent>
     </Item>
-  )
+  );
 }
 
 function SelectInDialog() {
@@ -529,9 +506,7 @@ function SelectInDialog() {
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Select Example</DialogTitle>
-            <DialogDescription>
-              Use the select below to choose a fruit.
-            </DialogDescription>
+            <DialogDescription>Use the select below to choose a fruit.</DialogDescription>
           </DialogHeader>
           <Select>
             <SelectTrigger>
@@ -550,5 +525,5 @@ function SelectInDialog() {
         </DialogContent>
       </Dialog>
     </Example>
-  )
+  );
 }

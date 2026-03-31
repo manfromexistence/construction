@@ -1,28 +1,19 @@
-import path from "path"
-import { buildUrlAndHeadersForRegistryItem } from "@/src/registry/builder"
-import { configWithDefaults } from "@/src/registry/config"
-import {
-  BASE_COLORS,
-  BUILTIN_REGISTRIES,
-  REGISTRY_URL,
-} from "@/src/registry/constants"
-import {
-  clearRegistryContext,
-  setRegistryHeaders,
-} from "@/src/registry/context"
+import path from "path";
+import { z } from "zod";
+import { buildUrlAndHeadersForRegistryItem } from "@/src/registry/builder";
+import { configWithDefaults } from "@/src/registry/config";
+import { BASE_COLORS, BUILTIN_REGISTRIES, REGISTRY_URL } from "@/src/registry/constants";
+import { clearRegistryContext, setRegistryHeaders } from "@/src/registry/context";
 import {
   ConfigParseError,
   RegistriesIndexParseError,
   RegistryInvalidNamespaceError,
   RegistryNotFoundError,
   RegistryParseError,
-} from "@/src/registry/errors"
-import { fetchRegistry } from "@/src/registry/fetcher"
-import {
-  fetchRegistryItems,
-  resolveRegistryTree,
-} from "@/src/registry/resolver"
-import { isUrl } from "@/src/registry/utils"
+} from "@/src/registry/errors";
+import { fetchRegistry } from "@/src/registry/fetcher";
+import { fetchRegistryItems, resolveRegistryTree } from "@/src/registry/resolver";
+import { isUrl } from "@/src/registry/utils";
 import {
   configJsonSchema,
   iconsSchema,
@@ -34,109 +25,105 @@ import {
   registryItemSchema,
   registrySchema,
   stylesSchema,
-} from "@/src/schema"
-import { Config, explorer } from "@/src/utils/get-config"
-import { handleError } from "@/src/utils/handle-error"
-import { logger } from "@/src/utils/logger"
-import { z } from "zod"
+} from "@/src/schema";
+import { Config, explorer } from "@/src/utils/get-config";
+import { handleError } from "@/src/utils/handle-error";
+import { logger } from "@/src/utils/logger";
 
 export async function getRegistry(
   name: string,
   options?: {
-    config?: Partial<Config>
-    useCache?: boolean
+    config?: Partial<Config>;
+    useCache?: boolean;
   }
 ) {
-  const { config, useCache } = options || {}
+  const { config, useCache } = options || {};
 
   if (isUrl(name)) {
-    const [result] = await fetchRegistry([name], { useCache })
+    const [result] = await fetchRegistry([name], { useCache });
     try {
-      return registrySchema.parse(result)
+      return registrySchema.parse(result);
     } catch (error) {
-      throw new RegistryParseError(name, error)
+      throw new RegistryParseError(name, error);
     }
   }
 
   if (!name.startsWith("@")) {
-    throw new RegistryInvalidNamespaceError(name)
+    throw new RegistryInvalidNamespaceError(name);
   }
 
-  let registryName = name
+  let registryName = name;
   if (!registryName.endsWith("/registry")) {
-    registryName = `${registryName}/registry`
+    registryName = `${registryName}/registry`;
   }
 
   const urlAndHeaders = buildUrlAndHeadersForRegistryItem(
     registryName as `@${string}`,
     configWithDefaults(config)
-  )
+  );
 
   if (!urlAndHeaders?.url) {
-    throw new RegistryNotFoundError(registryName)
+    throw new RegistryNotFoundError(registryName);
   }
 
   if (urlAndHeaders.headers && Object.keys(urlAndHeaders.headers).length > 0) {
     setRegistryHeaders({
       [urlAndHeaders.url]: urlAndHeaders.headers,
-    })
+    });
   }
 
-  const [result] = await fetchRegistry([urlAndHeaders.url], { useCache })
+  const [result] = await fetchRegistry([urlAndHeaders.url], { useCache });
 
   try {
-    return registrySchema.parse(result)
+    return registrySchema.parse(result);
   } catch (error) {
-    throw new RegistryParseError(registryName, error)
+    throw new RegistryParseError(registryName, error);
   }
 }
 
 export async function getRegistryItems(
   items: string[],
   options?: {
-    config?: Partial<Config>
-    useCache?: boolean
+    config?: Partial<Config>;
+    useCache?: boolean;
   }
 ) {
-  const { config, useCache = false } = options || {}
+  const { config, useCache = false } = options || {};
 
-  clearRegistryContext()
+  clearRegistryContext();
 
-  return fetchRegistryItems(items, configWithDefaults(config), { useCache })
+  return fetchRegistryItems(items, configWithDefaults(config), { useCache });
 }
 
 export async function resolveRegistryItems(
   items: string[],
   options?: {
-    config?: Partial<Config>
-    useCache?: boolean
+    config?: Partial<Config>;
+    useCache?: boolean;
   }
 ) {
-  const { config, useCache = false } = options || {}
+  const { config, useCache = false } = options || {};
 
-  clearRegistryContext()
-  return resolveRegistryTree(items, configWithDefaults(config), { useCache })
+  clearRegistryContext();
+  return resolveRegistryTree(items, configWithDefaults(config), { useCache });
 }
 
-export async function getRegistriesConfig(
-  cwd: string,
-  options?: { useCache?: boolean }
-) {
-  const { useCache = true } = options || {}
+export async function getRegistriesConfig(cwd: string, options?: { useCache?: boolean }) {
+  const { useCache = true } = options || {};
 
   // Clear cache if requested
   if (!useCache) {
-    explorer.clearCaches()
+    explorer.clearCaches();
   }
 
-  const configResult = await explorer.search(cwd)
+  const configResult = await explorer.search(cwd);
 
   if (!configResult) {
     // Do not throw an error if the config is missing.
     // We still have access to the built-in registries.
     return {
       registries: BUILTIN_REGISTRIES,
-    }
+    };
   }
 
   // Parse just the registries field from the config
@@ -144,10 +131,10 @@ export async function getRegistriesConfig(
     .object({
       registries: registryConfigSchema.optional(),
     })
-    .safeParse(configResult.config)
+    .safeParse(configResult.config);
 
   if (!registriesConfig.success) {
-    throw new ConfigParseError(cwd, registriesConfig.error)
+    throw new ConfigParseError(cwd, registriesConfig.error);
   }
 
   // Merge built-in registries with user registries
@@ -156,100 +143,93 @@ export async function getRegistriesConfig(
       ...BUILTIN_REGISTRIES,
       ...(registriesConfig.data.registries || {}),
     },
-  }
+  };
 }
 
 export async function getShadcnRegistryIndex() {
   try {
-    const [result] = await fetchRegistry(["index.json"])
+    const [result] = await fetchRegistry(["index.json"]);
 
-    return registryIndexSchema.parse(result)
+    return registryIndexSchema.parse(result);
   } catch (error) {
-    logger.error("\n")
-    handleError(error)
+    logger.error("\n");
+    handleError(error);
   }
 }
 
 export async function getRegistryStyles() {
   try {
-    const [result] = await fetchRegistry(["styles/index.json"])
+    const [result] = await fetchRegistry(["styles/index.json"]);
 
-    return stylesSchema.parse(result)
+    return stylesSchema.parse(result);
   } catch (error) {
-    logger.error("\n")
-    handleError(error)
-    return []
+    logger.error("\n");
+    handleError(error);
+    return [];
   }
 }
 
 export async function getRegistryIcons() {
   try {
-    const [result] = await fetchRegistry(["icons/index.json"])
-    return iconsSchema.parse(result)
+    const [result] = await fetchRegistry(["icons/index.json"]);
+    return iconsSchema.parse(result);
   } catch (error) {
-    handleError(error)
-    return {}
+    handleError(error);
+    return {};
   }
 }
 
 export async function getRegistryBaseColors() {
-  return BASE_COLORS
+  return BASE_COLORS;
 }
 
 export async function getRegistryBaseColor(baseColor: string) {
   try {
-    const [result] = await fetchRegistry([`colors/${baseColor}.json`])
+    const [result] = await fetchRegistry([`colors/${baseColor}.json`]);
 
-    return registryBaseColorSchema.parse(result)
+    return registryBaseColorSchema.parse(result);
   } catch (error) {
-    handleError(error)
+    handleError(error);
   }
 }
 
 /**
  * @deprecated This function is deprecated and will be removed in a future version.
  */
-export async function resolveTree(
-  index: z.infer<typeof registryIndexSchema>,
-  names: string[]
-) {
-  const tree: z.infer<typeof registryIndexSchema> = []
+export async function resolveTree(index: z.infer<typeof registryIndexSchema>, names: string[]) {
+  const tree: z.infer<typeof registryIndexSchema> = [];
 
   for (const name of names) {
-    const entry = index.find((entry) => entry.name === name)
+    const entry = index.find((entry) => entry.name === name);
 
     if (!entry) {
-      continue
+      continue;
     }
 
-    tree.push(entry)
+    tree.push(entry);
 
     if (entry.registryDependencies) {
-      const dependencies = await resolveTree(index, entry.registryDependencies)
-      tree.push(...dependencies)
+      const dependencies = await resolveTree(index, entry.registryDependencies);
+      tree.push(...dependencies);
     }
   }
 
   return tree.filter(
-    (component, index, self) =>
-      self.findIndex((c) => c.name === component.name) === index
-  )
+    (component, index, self) => self.findIndex((c) => c.name === component.name) === index
+  );
 }
 
 /**
  * @deprecated This function is deprecated and will be removed in a future version.
  */
-export async function fetchTree(
-  style: string,
-  tree: z.infer<typeof registryIndexSchema>
-) {
+export async function fetchTree(style: string, tree: z.infer<typeof registryIndexSchema>) {
   try {
-    const paths = tree.map((item) => `styles/${style}/${item.name}.json`)
-    const results = await fetchRegistry(paths)
-    return results.map((result) => registryItemSchema.parse(result))
+    const paths = tree.map((item) => `styles/${style}/${item.name}.json`);
+    const results = await fetchRegistry(paths);
+    return results.map((result) => registryItemSchema.parse(result));
   } catch (error) {
-    handleError(error)
-    return []
+    handleError(error);
+    return [];
   }
 }
 
@@ -262,22 +242,19 @@ export async function getItemTargetPath(
   override?: string
 ) {
   if (override) {
-    return override
+    return override;
   }
 
   if (item.type === "registry:ui") {
-    return config.resolvedPaths.ui ?? config.resolvedPaths.components
+    return config.resolvedPaths.ui ?? config.resolvedPaths.components;
   }
 
-  const [parent, type] = item.type?.split(":") ?? []
+  const [parent, type] = item.type?.split(":") ?? [];
   if (!(parent in config.resolvedPaths)) {
-    return null
+    return null;
   }
 
-  return path.join(
-    config.resolvedPaths[parent as keyof typeof config.resolvedPaths],
-    type
-  )
+  return path.join(config.resolvedPaths[parent as keyof typeof config.resolvedPaths], type);
 }
 
 // Fetch registries with new schema (array of objects with name, homepage, url, featured).
@@ -285,21 +262,21 @@ export async function getRegistries(options?: { useCache?: boolean }) {
   options = {
     useCache: true,
     ...options,
-  }
+  };
 
-  const url = `${REGISTRY_URL}/registries.json`
+  const url = `${REGISTRY_URL}/registries.json`;
   const [data] = await fetchRegistry([url], {
     useCache: options.useCache,
-  })
+  });
 
   try {
-    return registriesSchema.parse(data)
+    return registriesSchema.parse(data);
   } catch (error) {
     if (error instanceof z.ZodError) {
-      throw new RegistriesIndexParseError(error)
+      throw new RegistriesIndexParseError(error);
     }
 
-    throw error
+    throw error;
   }
 }
 
@@ -308,36 +285,29 @@ export async function getRegistries(options?: { useCache?: boolean }) {
  */
 export async function getRegistriesIndex(options?: { useCache?: boolean }) {
   // Fetch new format and transform to old Record<string, string> for backward compatibility.
-  const registries = await getRegistries(options)
-  if (!registries) return null
+  const registries = await getRegistries(options);
+  if (!registries) return null;
   return Object.fromEntries(registries.map((r) => [r.name, r.url])) as z.infer<
     typeof registriesIndexSchema
-  >
+  >;
 }
 
 export async function getPresets(options?: { useCache?: boolean }) {
   options = {
     useCache: true,
     ...options,
-  }
+  };
 
-  const url = `${REGISTRY_URL}/config.json`
+  const url = `${REGISTRY_URL}/config.json`;
   const [data] = await fetchRegistry([url], {
     useCache: options.useCache,
-  })
+  });
 
-  const result = configJsonSchema.parse(data)
-  return result.presets
+  const result = configJsonSchema.parse(data);
+  return result.presets;
 }
 
-export async function getPreset(
-  name: string,
-  options?: { useCache?: boolean }
-) {
-  const presets = await getPresets(options)
-  return (
-    presets.find(
-      (preset) => preset.name.toLowerCase() === name.toLowerCase()
-    ) ?? null
-  )
+export async function getPreset(name: string, options?: { useCache?: boolean }) {
+  const presets = await getPresets(options);
+  return presets.find((preset) => preset.name.toLowerCase() === name.toLowerCase()) ?? null;
 }

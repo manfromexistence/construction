@@ -1,12 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { type SlateEditor, getPluginByType } from '../lib';
-import { SlateElement } from './components/slate-nodes';
-import {
-  type SlateRenderElement,
-  pluginRenderElementStatic,
-} from './pluginRenderElementStatic';
-import { getRenderNodeStaticProps } from './utils';
+import { getPluginByType, type SlateEditor } from "../lib";
+import { SlateElement } from "./components/slate-nodes";
+import { pluginRenderElementStatic, type SlateRenderElement } from "./pluginRenderElementStatic";
+import { getRenderNodeStaticProps } from "./utils";
 
 export const pipeRenderElementStatic = (
   editor: SlateEditor,

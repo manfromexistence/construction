@@ -1,14 +1,14 @@
 export const getChunkTrimmed = (
   chunk: string,
   {
-    direction = 'right',
+    direction = "right",
   }: {
-    direction?: 'left' | 'right';
+    direction?: "left" | "right";
   } = {}
 ) => {
-  const str = direction === 'right' ? chunk.trimEnd() : chunk.trimStart();
+  const str = direction === "right" ? chunk.trimEnd() : chunk.trimStart();
 
-  if (direction === 'right') {
+  if (direction === "right") {
     return chunk.slice(str.length);
   }
   return chunk.slice(0, chunk.length - str.length);
@@ -17,8 +17,8 @@ export const getChunkTrimmed = (
 export function isCompleteCodeBlock(str: string) {
   const trimmed = str.trim();
 
-  const startsWithCodeBlock = trimmed.startsWith('```');
-  const endsWithCodeBlock = trimmed.endsWith('```');
+  const startsWithCodeBlock = trimmed.startsWith("```");
+  const endsWithCodeBlock = trimmed.endsWith("```");
 
   return startsWithCodeBlock && endsWithCodeBlock;
 }
@@ -26,8 +26,8 @@ export function isCompleteCodeBlock(str: string) {
 export function isCompleteMath(str: string) {
   const trimmed = str.trim();
 
-  const startsWithMath = trimmed.startsWith('$$');
-  const endsWithMath = trimmed.endsWith('$$');
+  const startsWithMath = trimmed.startsWith("$$");
+  const endsWithMath = trimmed.endsWith("$$");
 
   return startsWithMath && endsWithMath;
 }

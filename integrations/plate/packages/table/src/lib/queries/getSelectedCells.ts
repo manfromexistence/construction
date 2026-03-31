@@ -1,11 +1,11 @@
-import type { ElementEntry, SlateEditor, TElement } from 'platejs';
+import type { ElementEntry, SlateEditor, TElement } from "platejs";
 
-import { getTableGridAbove } from './getTableGridAbove';
+import { getTableGridAbove } from "./getTableGridAbove";
 
 type SelectionQueryCache = {
   cellEntries?: ElementEntry[];
-  children: SlateEditor['children'];
-  selection: SlateEditor['selection'];
+  children: SlateEditor["children"];
+  selection: SlateEditor["selection"];
   selectedCellIds?: string[] | null;
   selectedCells?: TElement[] | null;
   selectedTableIds?: string[] | null;
@@ -19,11 +19,7 @@ const getSelectionQueryCache = (editor: SlateEditor) => {
   const { children } = editor;
   const cachedValue = selectionQueryCache.get(editor);
 
-  if (
-    cachedValue &&
-    cachedValue.children === children &&
-    cachedValue.selection === selection
-  ) {
+  if (cachedValue && cachedValue.children === children && cachedValue.selection === selection) {
     return cachedValue;
   }
 
@@ -40,11 +36,11 @@ const getSelectionQueryCache = (editor: SlateEditor) => {
 export const getSelectedCellEntries = (editor: SlateEditor): ElementEntry[] => {
   const cache = getSelectionQueryCache(editor);
 
-  if ('cellEntries' in cache) {
+  if ("cellEntries" in cache) {
     return cache.cellEntries ?? [];
   }
 
-  const cellEntries = getTableGridAbove(editor, { format: 'cell' });
+  const cellEntries = getTableGridAbove(editor, { format: "cell" });
   const nextValue = cellEntries.length > 1 ? cellEntries : [];
 
   cache.cellEntries = nextValue;
@@ -55,7 +51,7 @@ export const getSelectedCellEntries = (editor: SlateEditor): ElementEntry[] => {
 export const getSelectedCells = (editor: SlateEditor): TElement[] | null => {
   const cache = getSelectionQueryCache(editor);
 
-  if ('selectedCells' in cache) {
+  if ("selectedCells" in cache) {
     return cache.selectedCells ?? null;
   }
 
@@ -77,7 +73,7 @@ export const getSelectedCells = (editor: SlateEditor): TElement[] | null => {
 export const getSelectedCellIds = (editor: SlateEditor): string[] | null => {
   const cache = getSelectionQueryCache(editor);
 
-  if ('selectedCellIds' in cache) {
+  if ("selectedCellIds" in cache) {
     return cache.selectedCellIds ?? null;
   }
 
@@ -95,7 +91,7 @@ export const getSelectedCellIds = (editor: SlateEditor): string[] | null => {
 export const getSelectedTableIds = (editor: SlateEditor): string[] | null => {
   const cache = getSelectionQueryCache(editor);
 
-  if ('selectedTableIds' in cache) {
+  if ("selectedTableIds" in cache) {
     return cache.selectedTableIds ?? null;
   }
 
@@ -121,15 +117,13 @@ export const getSelectedTableIds = (editor: SlateEditor): string[] | null => {
 export const getSelectedCell = (editor: SlateEditor, id?: string | null) => {
   if (!id) return null;
 
-  return (
-    getSelectedCellEntries(editor).find(([cell]) => cell.id === id)?.[0] ?? null
-  );
+  return getSelectedCellEntries(editor).find(([cell]) => cell.id === id)?.[0] ?? null;
 };
 
 export const getSelectedTables = (editor: SlateEditor): TElement[] | null => {
   const cache = getSelectionQueryCache(editor);
 
-  if ('selectedTables' in cache) {
+  if ("selectedTables" in cache) {
     return cache.selectedTables ?? null;
   }
 
@@ -141,9 +135,7 @@ export const getSelectedTables = (editor: SlateEditor): TElement[] | null => {
     return null;
   }
 
-  const nextValue = getTableGridAbove(editor, { format: 'table' }).map(
-    ([table]) => table
-  );
+  const nextValue = getTableGridAbove(editor, { format: "table" }).map(([table]) => table);
 
   cache.selectedTables = nextValue;
 
@@ -153,5 +145,4 @@ export const getSelectedTables = (editor: SlateEditor): TElement[] | null => {
 export const isCellSelected = (editor: SlateEditor, id?: string | null) =>
   !!getSelectedCell(editor, id);
 
-export const isSelectingCell = (editor: SlateEditor) =>
-  getSelectedCellEntries(editor).length > 0;
+export const isSelectingCell = (editor: SlateEditor) => getSelectedCellEntries(editor).length > 0;

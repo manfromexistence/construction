@@ -1,8 +1,8 @@
-import { type Config } from "@/src/utils/get-config"
-import { transformLegacyIcons } from "@/src/utils/transformers/transform-legacy-icons"
-import { describe, expect, test, vi } from "vitest"
+import { describe, expect, test, vi } from "vitest";
+import { type Config } from "@/src/utils/get-config";
+import { transformLegacyIcons } from "@/src/utils/transformers/transform-legacy-icons";
 
-import { transform } from "../transformers"
+import { transform } from "../transformers";
 
 const testConfig: Config = {
   style: "new-york",
@@ -28,7 +28,7 @@ const testConfig: Config = {
     tailwindConfig: "tailwind.config.ts",
     tailwindCss: "tailwind.css",
   },
-}
+};
 
 vi.mock("@/src/registry/api", () => ({
   getRegistryIcons: () => ({
@@ -45,7 +45,7 @@ vi.mock("@/src/registry/api", () => ({
       radix: "ChevronLeftIcon",
     },
   }),
-}))
+}));
 
 describe("transformIcons", () => {
   test("transforms radix icons", async () => {
@@ -75,8 +75,8 @@ return <div><Check /></div>
       return <div><CheckIcon /></div>
       }
         "
-    `)
-  })
+    `);
+  });
 
   test("does not transform lucide icons", async () => {
     expect(
@@ -105,8 +105,8 @@ export function Component() {
       return <div><Check /></div>
     }
         "
-    `)
-  })
+    `);
+  });
 
   test("preserves semicolon", async () => {
     expect(
@@ -135,6 +135,6 @@ export function Component() {
         return <div><ChevronDownIcon /></div>
       }
           "
-    `)
-  })
-})
+    `);
+  });
+});

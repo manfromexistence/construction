@@ -1,60 +1,52 @@
-import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
+import { getTableOfContents } from "fumadocs-core/content/toc";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { BlogPosting as PageSchema, WithContext } from "schema-dts";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
-import { InlineTOC } from "@/components/inline-toc"
-import { MDX } from "@/components/mdx"
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { Prose } from "@/components/ui/typography"
-import { SITE_INFO, X_USERNAME } from "@/config/site"
-import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts"
-import { LLMCopyButtonWithViewOptions } from "@/features/blog/components/post-page-actions"
-import { PostShareMenu } from "@/features/blog/components/post-share-menu"
-import {
-  findNeighbour,
-  getAllDocs,
-  getDocBySlug,
-} from "@/features/doc/data/documents"
-import type { Doc } from "@/features/doc/types/document"
-import { USER } from "@/features/portfolio/data/user"
-import { cn } from "@/lib/utils"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/base/ui/tooltip";
+import { InlineTOC } from "@/components/inline-toc";
+import { MDX } from "@/components/mdx";
+import { Button } from "@/components/ui/button";
+import { Kbd } from "@/components/ui/kbd";
+import { Prose } from "@/components/ui/typography";
+import { SITE_INFO, X_USERNAME } from "@/config/site";
+import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts";
+import { LLMCopyButtonWithViewOptions } from "@/features/blog/components/post-page-actions";
+import { PostShareMenu } from "@/features/blog/components/post-share-menu";
+import { findNeighbour, getAllDocs, getDocBySlug } from "@/features/doc/data/documents";
+import type { Doc } from "@/features/doc/types/document";
+import { USER } from "@/features/portfolio/data/user";
+import { cn } from "@/lib/utils";
 
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const docs = getAllDocs()
-  return docs.map((doc) => ({ slug: doc.slug }))
+  const docs = getAllDocs();
+  return docs.map((doc) => ({ slug: doc.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const slug = (await params).slug
-  const doc = getDocBySlug(slug)
+  const slug = (await params).slug;
+  const doc = getDocBySlug(slug);
 
   if (!doc) {
-    return notFound()
+    return notFound();
   }
 
-  const { title, description, image, createdAt, updatedAt } = doc.metadata
+  const { title, description, image, createdAt, updatedAt } = doc.metadata;
 
-  const postUrl = getDocUrl(doc)
+  const postUrl = getDocUrl(doc);
   const ogImage =
     image ||
-    `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+    `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {
     title,
@@ -80,7 +72,7 @@ export async function generateMetadata({
       creator: X_USERNAME,
       images: [ogImage],
     },
-  }
+  };
 }
 
 function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
@@ -101,27 +93,27 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
       identifier: USER.username,
       image: USER.avatar,
     },
-  }
+  };
 }
 
 export default async function Page({
   params,
 }: {
   params: Promise<{
-    slug: string
-  }>
+    slug: string;
+  }>;
 }) {
-  const slug = (await params).slug
-  const doc = getDocBySlug(slug)
+  const slug = (await params).slug;
+  const doc = getDocBySlug(slug);
 
   if (!doc) {
-    notFound()
+    notFound();
   }
 
-  const toc = getTableOfContents(doc.content)
+  const toc = getTableOfContents(doc.content);
 
-  const allDocs = getAllDocs()
-  const { previous, next } = findNeighbour(allDocs, slug)
+  const allDocs = getAllDocs();
+  const { previous, next } = findNeighbour(allDocs, slug);
 
   return (
     <>
@@ -159,12 +151,7 @@ export default async function Page({
             <Tooltip>
               <TooltipTrigger
                 render={
-                  <Button
-                    className="size-7 border-none"
-                    variant="secondary"
-                    size="icon-sm"
-                    asChild
-                  >
+                  <Button className="size-7 border-none" variant="secondary" size="icon-sm" asChild>
                     <Link href={`/blog/${previous.slug}`}>
                       <ArrowLeftIcon />
                       <span className="sr-only">Previous</span>
@@ -187,12 +174,7 @@ export default async function Page({
             <Tooltip>
               <TooltipTrigger
                 render={
-                  <Button
-                    className="size-7 border-none"
-                    variant="secondary"
-                    size="icon-sm"
-                    asChild
-                  >
+                  <Button className="size-7 border-none" variant="secondary" size="icon-sm" asChild>
                     <Link href={`/blog/${next.slug}`}>
                       <span className="sr-only">Next</span>
                       <ArrowRightIcon />
@@ -239,10 +221,10 @@ export default async function Page({
 
       <div className="screen-line-top h-4 w-full" />
     </>
-  )
+  );
 }
 
 function getDocUrl(doc: Doc) {
-  const isComponent = doc.metadata.category === "components"
-  return isComponent ? `/components/${doc.slug}` : `/blog/${doc.slug}`
+  const isComponent = doc.metadata.category === "components";
+  return isComponent ? `/components/${doc.slug}` : `/blog/${doc.slug}`;
 }

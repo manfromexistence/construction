@@ -1,17 +1,14 @@
-import { useEditorRef, useEditorSelector } from 'platejs/react';
+import { useEditorRef, useEditorSelector } from "platejs/react";
 
-import { ListStyleType, toggleList } from '../../index';
-import { someTodoList } from '../../lib/queries/someTodoList';
+import { ListStyleType, toggleList } from "../../index";
+import { someTodoList } from "../../lib/queries/someTodoList";
 
 export const useIndentTodoToolBarButtonState = ({
   nodeType = ListStyleType.Disc,
 }: {
   nodeType?: string;
 } = {}) => {
-  const pressed = useEditorSelector(
-    (editor) => someTodoList(editor),
-    [nodeType]
-  );
+  const pressed = useEditorSelector((editor) => someTodoList(editor), [nodeType]);
 
   return {
     nodeType,

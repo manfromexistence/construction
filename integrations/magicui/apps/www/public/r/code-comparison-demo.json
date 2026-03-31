@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Code Comparison Demo",
   "description": "Example showing a component which compares two code snippets.",
-  "registryDependencies": [
-    "@magicui/code-comparison"
-  ],
+  "registryDependencies": ["@magicui/code-comparison"],
   "files": [
     {
       "path": "registry/example/code-comparison-demo.tsx",

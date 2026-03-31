@@ -1,32 +1,31 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Script from "next/script"
-import { useTheme } from "next-themes"
+import Script from "next/script";
+import { useTheme } from "next-themes";
+import * as React from "react";
+import { useMetaColor } from "@/hooks/use-meta-color";
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
-import { cn } from "@/lib/utils"
-import { useMetaColor } from "@/hooks/use-meta-color"
-import { Button } from "@/registry/new-york-v4/ui/button"
-
-export const DARK_MODE_FORWARD_TYPE = "dark-mode-forward"
+export const DARK_MODE_FORWARD_TYPE = "dark-mode-forward";
 
 export function ModeSwitcher({
   variant = "ghost",
   className,
 }: {
-  variant?: React.ComponentProps<typeof Button>["variant"]
-  className?: React.ComponentProps<typeof Button>["className"]
+  variant?: React.ComponentProps<typeof Button>["variant"];
+  className?: React.ComponentProps<typeof Button>["className"];
 }) {
-  const { setTheme, resolvedTheme } = useTheme()
-  const { setMetaColor, metaColor } = useMetaColor()
+  const { setTheme, resolvedTheme } = useTheme();
+  const { setMetaColor, metaColor } = useMetaColor();
 
   React.useEffect(() => {
-    setMetaColor(metaColor)
-  }, [metaColor, setMetaColor])
+    setMetaColor(metaColor);
+  }, [metaColor, setMetaColor]);
 
   const toggleTheme = React.useCallback(() => {
-    setTheme(resolvedTheme === "dark" ? "light" : "dark")
-  }, [resolvedTheme, setTheme])
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [resolvedTheme, setTheme]);
 
   return (
     <Button
@@ -56,7 +55,7 @@ export function ModeSwitcher({
       </svg>
       <span className="sr-only">Toggle theme</span>
     </Button>
-  )
+  );
 }
 
 export function DarkModeScript() {
@@ -93,5 +92,5 @@ export function DarkModeScript() {
           `,
       }}
     />
-  )
+  );
 }

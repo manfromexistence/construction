@@ -1,19 +1,13 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import Link from "next/link";
 
-import type { TTagElement } from 'platejs';
-import type { PlateElementProps } from 'platejs/react';
+import type { TTagElement } from "platejs";
+import type { PlateElementProps } from "platejs/react";
+import { PlateElement, useFocused, useReadOnly, useSelected } from "platejs/react";
+import * as React from "react";
 
-import Link from 'next/link';
-import {
-  PlateElement,
-  useFocused,
-  useReadOnly,
-  useSelected,
-} from 'platejs/react';
-
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 export function TagElement(props: PlateElementProps<TTagElement>) {
   const { element } = props;
@@ -24,10 +18,10 @@ export function TagElement(props: PlateElementProps<TTagElement>) {
   const badge = (
     <div
       className={cn(
-        'shrink-0 break-normal rounded-full border px-2.5 align-middle font-semibold text-sm transition-colors focus:outline-none',
-        'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/60',
-        selected && focused && 'ring-2 ring-ring ring-offset-0',
-        'flex items-center gap-1.5'
+        "shrink-0 break-normal rounded-full border px-2.5 align-middle font-semibold text-sm transition-colors focus:outline-none",
+        "border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/60",
+        selected && focused && "ring-2 ring-ring ring-offset-0",
+        "flex items-center gap-1.5"
       )}
     >
       {element.value as string}
@@ -35,11 +29,7 @@ export function TagElement(props: PlateElementProps<TTagElement>) {
   );
 
   const content =
-    readOnly && element.url ? (
-      <Link href={element.url as string}>{badge}</Link>
-    ) : (
-      badge
-    );
+    readOnly && element.url ? <Link href={element.url as string}>{badge}</Link> : badge;
 
   return (
     <PlateElement

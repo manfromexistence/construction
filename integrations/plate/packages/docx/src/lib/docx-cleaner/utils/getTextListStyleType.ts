@@ -8,22 +8,22 @@ export const getTextListStyleType = (text: string): string | undefined => {
   const trimmedText = text.trimStart();
 
   if (DECIMAL_PATTERN.exec(trimmedText)?.[0]) {
-    if (trimmedText.startsWith('0')) {
-      return 'decimal-leading-zero';
+    if (trimmedText.startsWith("0")) {
+      return "decimal-leading-zero";
     }
 
-    return 'decimal';
+    return "decimal";
   }
   if (LOWER_ROMAN_PATTERN.exec(trimmedText)?.[0]) {
-    return 'lower-roman';
+    return "lower-roman";
   }
   if (LOWER_ALPHA_PATTERN.exec(trimmedText)?.[0]) {
-    return 'lower-alpha';
+    return "lower-alpha";
   }
   if (UPPER_ROMAN_PATTERN.exec(trimmedText)?.[0]) {
-    return 'upper-roman';
+    return "upper-roman";
   }
   if (UPPER_ALPHA_PATTERN.exec(trimmedText)?.[0]) {
-    return 'upper-alpha';
+    return "upper-alpha";
   }
 };

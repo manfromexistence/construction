@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { Plate, usePlateEditor } from 'platejs/react';
+import { Plate, usePlateEditor } from "platejs/react";
 
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 export default function EditorDisabled() {
   const editor = usePlateEditor();

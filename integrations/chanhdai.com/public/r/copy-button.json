@@ -4,13 +4,8 @@
   "title": "Copy Button",
   "author": "ncdai <dai@chanhdai.com>",
   "description": "Copy text to clipboard with visual feedback and animation.",
-  "dependencies": [
-    "lucide-react",
-    "motion"
-  ],
-  "registryDependencies": [
-    "button"
-  ],
+  "dependencies": ["lucide-react", "motion"],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "src/registry/components/copy-button/copy-button.tsx",

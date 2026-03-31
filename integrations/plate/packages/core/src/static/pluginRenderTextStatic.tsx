@@ -1,21 +1,15 @@
-import React from 'react';
+import clsx from "clsx";
+import React from "react";
 
-import clsx from 'clsx';
+import type { RenderTextProps, SlateEditor, SlatePlugin } from "..";
 
-import type { RenderTextProps, SlateEditor, SlatePlugin } from '..';
+import { SlateText } from "./components";
+import { getNodeDataAttributes } from "./utils/getNodeDataAttributes";
+import { getRenderNodeStaticProps } from "./utils/getRenderNodeStaticProps";
 
-import { SlateText } from './components';
-import { getNodeDataAttributes } from './utils/getNodeDataAttributes';
-import { getRenderNodeStaticProps } from './utils/getRenderNodeStaticProps';
+export type SlateRenderText = (props: RenderTextProps) => React.ReactElement<any> | undefined;
 
-export type SlateRenderText = (
-  props: RenderTextProps
-) => React.ReactElement<any> | undefined;
-
-export const pluginRenderTextStatic = (
-  editor: SlateEditor,
-  plugin: SlatePlugin
-): SlateRenderText =>
+export const pluginRenderTextStatic = (editor: SlateEditor, plugin: SlatePlugin): SlateRenderText =>
   function render(nodeProps) {
     const { children, text } = nodeProps;
 
@@ -81,15 +75,12 @@ export const pipeRenderTextStatic = (
     textPropsPlugins.forEach((plugin) => {
       if (props.text[plugin.node.type ?? plugin.key]) {
         const pluginTextProps =
-          typeof plugin.node.textProps === 'function'
+          typeof plugin.node.textProps === "function"
             ? plugin.node.textProps(props as any)
             : (plugin.node.textProps ?? {});
 
         if (pluginTextProps.className) {
-          pluginTextProps.className = clsx(
-            (props as any).className,
-            pluginTextProps.className
-          );
+          pluginTextProps.className = clsx((props as any).className, pluginTextProps.className);
         }
 
         attributes = {

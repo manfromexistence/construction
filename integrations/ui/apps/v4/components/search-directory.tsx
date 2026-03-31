@@ -1,22 +1,22 @@
-import * as React from "react"
-import { Search, X } from "lucide-react"
+import { Search, X } from "lucide-react";
+import * as React from "react";
 
-import { useSearchRegistry } from "@/hooks/use-search-registry"
-import { Field } from "@/registry/new-york-v4/ui/field"
+import { useSearchRegistry } from "@/hooks/use-search-registry";
+import { Field } from "@/registry/new-york-v4/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/registry/new-york-v4/ui/input-group"
+} from "@/registry/new-york-v4/ui/input-group";
 
 export const SearchDirectory = () => {
-  const { query, registries, setQuery } = useSearchRegistry()
+  const { query, registries, setQuery } = useSearchRegistry();
 
   const onQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setQuery(value)
-  }
+    const value = e.target.value;
+    setQuery(value);
+  };
 
   return (
     <Field>
@@ -24,15 +24,10 @@ export const SearchDirectory = () => {
         <InputGroupAddon>
           <Search />
         </InputGroupAddon>
-        <InputGroupInput
-          placeholder="Search"
-          value={query}
-          onChange={onQueryChange}
-        />
+        <InputGroupInput placeholder="Search" value={query} onChange={onQueryChange} />
         <InputGroupAddon align="inline-end">
           <span className="text-muted-foreground tabular-nums sm:text-xs">
-            {registries.length}{" "}
-            {registries.length === 1 ? "registry" : "registries"}
+            {registries.length} {registries.length === 1 ? "registry" : "registries"}
           </span>
         </InputGroupAddon>
         <InputGroupAddon
@@ -51,5 +46,5 @@ export const SearchDirectory = () => {
         </InputGroupAddon>
       </InputGroup>
     </Field>
-  )
-}
+  );
+};

@@ -1,9 +1,9 @@
-import { RssIcon } from "lucide-react"
+import { RssIcon } from "lucide-react";
 
-import { Icons } from "@/components/icons"
-import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand"
-import { SITE_INFO, SOURCE_CODE_GITHUB_URL } from "@/config/site"
-import { cn } from "@/lib/utils"
+import { Icons } from "@/components/icons";
+import { SiteFooterInteractiveLogotype } from "@/components/site-footer-brand";
+import { SITE_INFO, SOURCE_CODE_GITHUB_URL } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 export function SiteFooter() {
   return (
@@ -98,10 +98,7 @@ export function SiteFooter() {
 
             <a
               className="flex text-muted-foreground transition-[color] hover:text-foreground"
-              href={
-                process.env.NEXT_PUBLIC_DMCA_URL ||
-                "https://www.dmca.com/ProtectionPro.aspx"
-              }
+              href={process.env.NEXT_PUBLIC_DMCA_URL || "https://www.dmca.com/ProtectionPro.aspx"}
               target="_blank"
               rel="noopener"
             >
@@ -118,9 +115,9 @@ export function SiteFooter() {
         <div className="flex h-16 sm:h-2" />
       </div>
     </footer>
-  )
+  );
 }
 
 function Separator({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("flex h-11 w-px bg-line", className)} {...props} />
+  return <div className={cn("flex h-11 w-px bg-line", className)} {...props} />;
 }

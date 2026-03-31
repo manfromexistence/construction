@@ -1,5 +1,8 @@
 "use client";
 
+import { formatHex, parse } from "culori";
+import { Check, LayoutGrid, List } from "lucide-react";
+import { useCallback } from "react";
 import TailwindCSS from "@/components/icons/tailwind-css";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
@@ -16,9 +19,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { ColorSelectorTab, usePreferencesStore } from "@/store/preferences-store";
 import { TAILWIND_PALETTE } from "@/utils/registry/tailwind-colors";
-import { Check, LayoutGrid, List } from "lucide-react";
-import { useCallback } from "react";
-import { formatHex, parse } from "culori";
 import { Separator } from "../ui/separator";
 
 type ColorSelectorPopoverProps = {
@@ -43,7 +43,7 @@ export function ColorSelectorPopover({ currentColor, onChange }: ColorSelectorPo
     [setColorSelectorTab]
   );
 
-  const toHex = (c: string) => formatHex(parse(c));
+  const toHex = useCallback((c: string) => formatHex(parse(c)), []);
   const isColorSelected = useCallback(
     (color: string) => {
       try {
@@ -52,7 +52,7 @@ export function ColorSelectorPopover({ currentColor, onChange }: ColorSelectorPo
         return currentColor === color;
       }
     },
-    [currentColor]
+    [currentColor, toHex]
   );
 
   return (

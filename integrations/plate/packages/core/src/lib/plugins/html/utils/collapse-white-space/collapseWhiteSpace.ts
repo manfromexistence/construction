@@ -1,6 +1,5 @@
-import type { CollapseWhiteSpaceState } from './types';
-
-import { collapseWhiteSpaceElement } from './collapseWhiteSpaceElement';
+import { collapseWhiteSpaceElement } from "./collapseWhiteSpaceElement";
+import type { CollapseWhiteSpaceState } from "./types";
 
 // Entrypoint
 export const collapseWhiteSpace = (element: HTMLElement) => {
@@ -9,7 +8,7 @@ export const collapseWhiteSpace = (element: HTMLElement) => {
   // Mutable state object
   const state: CollapseWhiteSpaceState = {
     inlineFormattingContext: null,
-    whiteSpaceRule: 'normal',
+    whiteSpaceRule: "normal",
   };
 
   collapseWhiteSpaceElement(clonedElement, state);

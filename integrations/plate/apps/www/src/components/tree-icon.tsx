@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils';
+import { cn } from "@/lib/utils";
 
 type TreeIconProps = {
   isFirst: boolean;
@@ -9,10 +9,7 @@ type TreeIconProps = {
 export function TreeIcon({ className, isFirst, isLast }: TreeIconProps) {
   return (
     <svg
-      className={cn(
-        'aspect-1/2 w-5 fill-none stroke-slate-300 dark:stroke-slate-600',
-        className
-      )}
+      className={cn("aspect-1/2 w-5 fill-none stroke-slate-300 dark:stroke-slate-600", className)}
       aria-hidden="true"
       strokeLinecap="round"
       strokeLinejoin="round"

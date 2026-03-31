@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   FrameIcon,
@@ -7,14 +7,14 @@ import {
   MoreHorizontalIcon,
   PieChartIcon,
   SendIcon,
-} from "lucide-react"
+} from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
+} from "@/styles/radix-nova/ui/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -26,7 +26,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-} from "@/styles/radix-nova/ui/sidebar"
+} from "@/styles/radix-nova/ui/sidebar";
 
 const projects = [
   {
@@ -54,7 +54,7 @@ const projects = [
     url: "#",
     icon: SendIcon,
   },
-]
+];
 
 export default function AppSidebar() {
   return (
@@ -100,5 +100,5 @@ export default function AppSidebar() {
         </SidebarContent>
       </Sidebar>
     </SidebarProvider>
-  )
+  );
 }

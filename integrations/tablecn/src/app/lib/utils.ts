@@ -22,9 +22,7 @@ export function generateRandomTask(input?: Partial<Task>): Task {
   return {
     id: generateId("task"),
     code: `TASK-${customAlphabet("0123456789", 4)()}`,
-    title: faker.hacker
-      .phrase()
-      .replace(/^./, (letter) => letter.toUpperCase()),
+    title: faker.hacker.phrase().replace(/^./, (letter) => letter.toUpperCase()),
     estimatedHours: faker.number.int({ min: 1, max: 24 }),
     status: faker.helpers.shuffle(tasks.status.enumValues)[0] ?? "todo",
     label: faker.helpers.shuffle(tasks.label.enumValues)[0] ?? "bug",
@@ -104,25 +102,21 @@ export function generateRandomSkater(input?: Partial<Skater>): Skater {
 
   const trickCount = faker.number.int({ min: 0, max: 8 });
   const tricks =
-    trickCount > 0
-      ? faker.helpers.arrayElements([...availableTricks], trickCount)
-      : null;
+    trickCount > 0 ? faker.helpers.arrayElements([...availableTricks], trickCount) : null;
 
   const hasMedia = faker.datatype.boolean({ probability: 0.3 });
   const media = hasMedia
-    ? faker.helpers
-        .arrayElements(sampleMedia, { min: 1, max: 2 })
-        .map((file, index) => ({
-          id: `media-${generateId("media")}-${index}`,
-          name: file.name,
-          size:
-            faker.number.int({
-              min: file.sizeRange[0],
-              max: file.sizeRange[1],
-            }) * 1024,
-          type: file.type,
-          url: `https://example.com/media/${file.name}`,
-        }))
+    ? faker.helpers.arrayElements(sampleMedia, { min: 1, max: 2 }).map((file, index) => ({
+        id: `media-${generateId("media")}-${index}`,
+        name: file.name,
+        size:
+          faker.number.int({
+            min: file.sizeRange[0],
+            max: file.sizeRange[1],
+          }) * 1024,
+        type: file.type,
+        url: `https://example.com/media/${file.name}`,
+      }))
     : null;
 
   return {

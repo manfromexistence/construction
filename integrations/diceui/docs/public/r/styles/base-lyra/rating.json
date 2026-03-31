@@ -1,9 +1,6 @@
 {
   "name": "rating",
-  "dependencies": [
-    "@base-ui/react",
-    "lucide-react"
-  ],
+  "dependencies": ["@base-ui/react", "lucide-react"],
   "registryDependencies": [
     "direction",
     "visually-hidden-input",

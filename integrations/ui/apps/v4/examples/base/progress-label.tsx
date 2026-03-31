@@ -1,8 +1,4 @@
-import {
-  Progress,
-  ProgressLabel,
-  ProgressValue,
-} from "@/styles/base-nova/ui/progress"
+import { Progress, ProgressLabel, ProgressValue } from "@/styles/base-nova/ui/progress";
 
 export function ProgressWithLabel() {
   return (
@@ -10,5 +6,5 @@ export function ProgressWithLabel() {
       <ProgressLabel>Upload progress</ProgressLabel>
       <ProgressValue />
     </Progress>
-  )
+  );
 }

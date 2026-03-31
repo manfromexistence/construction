@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
+import { useRef } from "react";
 
-import { Confetti, type ConfettiRef } from "@/registry/magicui/confetti"
+import { Confetti, type ConfettiRef } from "@/registry/magicui/confetti";
 
 export default function ConfettiDemo() {
-  const confettiRef = useRef<ConfettiRef>(null)
+  const confettiRef = useRef<ConfettiRef>(null);
 
   return (
     <div className="bg-background relative flex h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-lg border">
@@ -17,9 +17,9 @@ export default function ConfettiDemo() {
         ref={confettiRef}
         className="absolute top-0 left-0 z-0 size-full"
         onMouseEnter={() => {
-          confettiRef.current?.fire({})
+          confettiRef.current?.fire({});
         }}
       />
     </div>
-  )
+  );
 }

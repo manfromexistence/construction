@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Text Reveal Demo",
   "description": "Example showing text that fades in on scroll.",
-  "registryDependencies": [
-    "@magicui/text-reveal"
-  ],
+  "registryDependencies": ["@magicui/text-reveal"],
   "files": [
     {
       "path": "registry/example/text-reveal-demo.tsx",

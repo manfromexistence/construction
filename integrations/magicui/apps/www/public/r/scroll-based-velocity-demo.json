@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Scroll Based Velocity Demo",
   "description": "Example showing text speed changes based on scroll velocity.",
-  "registryDependencies": [
-    "@magicui/scroll-based-velocity"
-  ],
+  "registryDependencies": ["@magicui/scroll-based-velocity"],
   "files": [
     {
       "path": "registry/example/scroll-based-velocity-demo.tsx",

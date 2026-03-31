@@ -30,8 +30,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 
 import { deleteTasks } from "../lib/actions";
 
-interface DeleteTasksDialogProps
-  extends React.ComponentPropsWithoutRef<typeof Dialog> {
+interface DeleteTasksDialogProps extends React.ComponentPropsWithoutRef<typeof Dialog> {
   tasks: Row<Task>["original"][];
   showTrigger?: boolean;
   onSuccess?: () => void;
@@ -94,10 +93,7 @@ export function DeleteTasksDialog({
               disabled={isDeletePending}
             >
               {isDeletePending && (
-                <Loader
-                  className="mr-2 size-4 animate-spin"
-                  aria-hidden="true"
-                />
+                <Loader className="mr-2 size-4 animate-spin" aria-hidden="true" />
               )}
               Delete
             </Button>
@@ -136,9 +132,7 @@ export function DeleteTasksDialog({
             onClick={onDelete}
             disabled={isDeletePending}
           >
-            {isDeletePending && (
-              <Loader className="mr-2 size-4 animate-spin" aria-hidden="true" />
-            )}
+            {isDeletePending && <Loader className="mr-2 size-4 animate-spin" aria-hidden="true" />}
             Delete
           </Button>
         </DrawerFooter>

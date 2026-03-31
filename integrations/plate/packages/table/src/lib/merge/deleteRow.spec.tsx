@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { deleteTableMergeRow } from './deleteRow';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { deleteTableMergeRow } from "./deleteRow";
 
 jsxt;
 
@@ -17,8 +16,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('deleteTableMergeRow', () => {
-  it('moves row-spanning cells into the next remaining row', () => {
+describe("deleteTableMergeRow", () => {
+  it("moves row-spanning cells into the next remaining row", () => {
     const input = (
       <editor>
         <htable>
@@ -59,34 +58,34 @@ describe('deleteTableMergeRow', () => {
         children: [
           {
             children: [
-              { children: [{ children: [{ text: '21' }] }], type: 'td' },
+              { children: [{ children: [{ text: "21" }] }], type: "td" },
               {
-                children: [{ children: [{ text: '12' }] }],
+                children: [{ children: [{ text: "12" }] }],
                 rowSpan: 1,
-                type: 'td',
+                type: "td",
               },
             ],
-            type: 'tr',
+            type: "tr",
           },
           {
             children: [
-              { children: [{ children: [{ text: '31' }] }], type: 'td' },
-              { children: [{ children: [{ text: '32' }] }], type: 'td' },
+              { children: [{ children: [{ text: "31" }] }], type: "td" },
+              { children: [{ children: [{ text: "32" }] }], type: "td" },
             ],
-            type: 'tr',
+            type: "tr",
           },
         ],
-        type: 'table',
+        type: "table",
       },
     ]);
   });
 
-  it('shrinks rowSpan on cells that started before the deleted row', () => {
+  it("shrinks rowSpan on cells that started before the deleted row", () => {
     const input = (
       <editor>
         <htable>
           <htr>
-            <htd attributes={{ rowspan: '2' }} rowSpan={2}>
+            <htd attributes={{ rowspan: "2" }} rowSpan={2}>
               <hp>11</hp>
             </htd>
             <htd>
@@ -123,29 +122,29 @@ describe('deleteTableMergeRow', () => {
           {
             children: [
               {
-                attributes: { rowspan: '1' },
-                children: [{ children: [{ text: '11' }] }],
+                attributes: { rowspan: "1" },
+                children: [{ children: [{ text: "11" }] }],
                 rowSpan: 1,
-                type: 'td',
+                type: "td",
               },
-              { children: [{ children: [{ text: '12' }] }], type: 'td' },
+              { children: [{ children: [{ text: "12" }] }], type: "td" },
             ],
-            type: 'tr',
+            type: "tr",
           },
           {
             children: [
-              { children: [{ children: [{ text: '31' }] }], type: 'td' },
-              { children: [{ children: [{ text: '32' }] }], type: 'td' },
+              { children: [{ children: [{ text: "31" }] }], type: "td" },
+              { children: [{ children: [{ text: "32" }] }], type: "td" },
             ],
-            type: 'tr',
+            type: "tr",
           },
         ],
-        type: 'table',
+        type: "table",
       },
     ]);
   });
 
-  it('inserts moved row-span cells before the next matching column and updates rowspan attributes', () => {
+  it("inserts moved row-span cells before the next matching column and updates rowspan attributes", () => {
     const input = (
       <editor>
         <htable>
@@ -167,7 +166,7 @@ describe('deleteTableMergeRow', () => {
                 <cursor />
               </hp>
             </htd>
-            <htd attributes={{ rowspan: '2' }} rowSpan={2}>
+            <htd attributes={{ rowspan: "2" }} rowSpan={2}>
               <hp>11</hp>
             </htd>
             <htd>
@@ -195,32 +194,32 @@ describe('deleteTableMergeRow', () => {
         children: [
           {
             children: [
-              { children: [{ children: [{ text: '00' }] }], type: 'td' },
-              { children: [{ children: [{ text: '01' }] }], type: 'td' },
-              { children: [{ children: [{ text: '02' }] }], type: 'td' },
+              { children: [{ children: [{ text: "00" }] }], type: "td" },
+              { children: [{ children: [{ text: "01" }] }], type: "td" },
+              { children: [{ children: [{ text: "02" }] }], type: "td" },
             ],
-            type: 'tr',
+            type: "tr",
           },
           {
             children: [
-              { children: [{ children: [{ text: '20' }] }], type: 'td' },
+              { children: [{ children: [{ text: "20" }] }], type: "td" },
               {
-                attributes: { rowspan: '1' },
-                children: [{ children: [{ text: '11' }] }],
+                attributes: { rowspan: "1" },
+                children: [{ children: [{ text: "11" }] }],
                 rowSpan: 1,
-                type: 'td',
+                type: "td",
               },
-              { children: [{ children: [{ text: '22' }] }], type: 'td' },
+              { children: [{ children: [{ text: "22" }] }], type: "td" },
             ],
-            type: 'tr',
+            type: "tr",
           },
         ],
-        type: 'table',
+        type: "table",
       },
     ]);
   });
 
-  it('removes the whole table when the only row is deleted', () => {
+  it("removes the whole table when the only row is deleted", () => {
     const input = (
       <editor>
         <htable>

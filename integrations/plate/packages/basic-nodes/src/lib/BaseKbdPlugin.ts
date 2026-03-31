@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS } from "platejs";
 
 /** Enables support for code formatting */
 export const BaseKbdPlugin = createSlatePlugin({
@@ -7,12 +7,12 @@ export const BaseKbdPlugin = createSlatePlugin({
   parsers: {
     html: {
       deserializer: {
-        rules: [{ validNodeName: ['KBD'] }],
+        rules: [{ validNodeName: ["KBD"] }],
       },
     },
   },
-  render: { as: 'kbd' },
-  rules: { selection: { affinity: 'hard' } },
+  render: { as: "kbd" },
+  rules: { selection: { affinity: "hard" } },
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
     editor.tf.toggleMark(type);

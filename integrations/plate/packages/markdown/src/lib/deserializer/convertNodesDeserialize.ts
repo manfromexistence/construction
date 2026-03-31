@@ -1,12 +1,11 @@
-import type { Descendant } from 'platejs';
+import type { Descendant } from "platejs";
 
-import type { MdRootContent } from '../mdast';
-import type { MdDecoration } from '../types';
-import type { DeserializeMdOptions } from './deserializeMd';
-
-import { mdastToPlate } from '../types';
-import { customMdxDeserialize } from './utils';
-import { getDeserializerByKey } from './utils/getDeserializerByKey';
+import type { MdRootContent } from "../mdast";
+import type { MdDecoration } from "../types";
+import { mdastToPlate } from "../types";
+import type { DeserializeMdOptions } from "./deserializeMd";
+import { customMdxDeserialize } from "./utils";
+import { getDeserializerByKey } from "./utils/getDeserializerByKey";
 
 export const convertNodesDeserialize = (
   nodes: MdRootContent[],
@@ -28,10 +27,7 @@ export const buildSlateNode = (
   options: DeserializeMdOptions
 ): Descendant[] => {
   /** Handle custom mdx nodes */
-  if (
-    mdastNode.type === 'mdxJsxTextElement' ||
-    mdastNode.type === 'mdxJsxFlowElement'
-  ) {
+  if (mdastNode.type === "mdxJsxTextElement" || mdastNode.type === "mdxJsxFlowElement") {
     const result = customMdxDeserialize(mdastNode, deco, options);
     return Array.isArray(result) ? result : [result];
   }
@@ -47,10 +43,7 @@ export const buildSlateNode = (
   return [];
 };
 
-const shouldIncludeNode = (
-  node: MdRootContent,
-  options: DeserializeMdOptions
-): boolean => {
+const shouldIncludeNode = (node: MdRootContent, options: DeserializeMdOptions): boolean => {
   const { allowedNodes, allowNode, disallowedNodes } = options;
 
   if (!node.type) return true;
@@ -58,13 +51,8 @@ const shouldIncludeNode = (
   const type = mdastToPlate(options.editor!, node.type);
 
   // First check allowedNodes/disallowedNodes
-  if (
-    allowedNodes &&
-    disallowedNodes &&
-    allowedNodes.length > 0 &&
-    disallowedNodes.length > 0
-  ) {
-    throw new Error('Cannot combine allowedNodes with disallowedNodes');
+  if (allowedNodes && disallowedNodes && allowedNodes.length > 0 && disallowedNodes.length > 0) {
+    throw new Error("Cannot combine allowedNodes with disallowedNodes");
   }
 
   if (allowedNodes) {

@@ -1,9 +1,6 @@
 {
   "name": "rating-controlled-demo",
-  "registryDependencies": [
-    "rating",
-    "button"
-  ],
+  "registryDependencies": ["rating", "button"],
   "files": [
     {
       "path": "examples/rating-controlled-demo.tsx",

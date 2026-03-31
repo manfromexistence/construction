@@ -1,1 +1,1 @@
-export * from "./type-table"
+export * from "./type-table";

@@ -1,14 +1,14 @@
-import { promises as fs } from "fs"
-import path from "path"
-import { ExamplesIndex } from "@/examples/__index__"
-import { LRUCache } from "lru-cache"
-import { registryItemSchema, type registryItemFileSchema } from "shadcn/schema"
-import { type z } from "zod"
+import { promises as fs } from "fs";
+import { LRUCache } from "lru-cache";
+import path from "path";
+import { type registryItemFileSchema, registryItemSchema } from "shadcn/schema";
+import { type z } from "zod";
+import { ExamplesIndex } from "@/examples/__index__";
 
-import { readFileFromRoot } from "@/lib/read-file"
-import { Index as StylesIndex } from "@/registry/__index__"
-import { BASES } from "@/registry/bases"
-import { Index as BasesIndex } from "@/registry/bases/__index__"
+import { readFileFromRoot } from "@/lib/read-file";
+import { Index as StylesIndex } from "@/registry/__index__";
+import { BASES } from "@/registry/bases";
+import { Index as BasesIndex } from "@/registry/bases/__index__";
 
 // LRU cache for cross-request caching of registry items.
 // File reads are I/O-bound, so caching improves dev server performance.
@@ -16,67 +16,67 @@ import { Index as BasesIndex } from "@/registry/bases/__index__"
 const registryCache = new LRUCache<string, any>({
   max: 500,
   ttl: 1000 * 60 * 5, // 5 minutes (shorter for dev to pick up changes).
-})
+});
 
 function getBaseForStyle(styleName: string) {
   for (const base of BASES) {
     if (styleName.startsWith(`${base.name}-`)) {
-      return base.name
+      return base.name;
     }
   }
-  return null
+  return null;
 }
 
 function getDemoIndexKey(styleName: string) {
   if (ExamplesIndex[styleName]) {
-    return styleName
+    return styleName;
   }
 
-  const base = getBaseForStyle(styleName)
+  const base = getBaseForStyle(styleName);
   if (base && ExamplesIndex[base]) {
-    return base
+    return base;
   }
 
-  return styleName
+  return styleName;
 }
 
 function getBaseIndex(styleName: string) {
-  const base = getBaseForStyle(styleName)
-  return base ? BasesIndex[base] : null
+  const base = getBaseForStyle(styleName);
+  return base ? BasesIndex[base] : null;
 }
 
 function getStyleIndex(styleName: string) {
-  return StylesIndex[styleName] ?? null
+  return StylesIndex[styleName] ?? null;
 }
 
 function getMergedIndexForStyle(styleName: string) {
-  const styleIndex = getStyleIndex(styleName)
-  const baseIndex = getBaseIndex(styleName)
+  const styleIndex = getStyleIndex(styleName);
+  const baseIndex = getBaseIndex(styleName);
 
   if (styleIndex && baseIndex) {
-    return { ...baseIndex, ...styleIndex }
+    return { ...baseIndex, ...styleIndex };
   }
 
-  return styleIndex ?? baseIndex
+  return styleIndex ?? baseIndex;
 }
 
 function getRegistryEntry(name: string, styleName: string) {
-  return getStyleIndex(styleName)?.[name] ?? getBaseIndex(styleName)?.[name]
+  return getStyleIndex(styleName)?.[name] ?? getBaseIndex(styleName)?.[name];
 }
 
 export function getDemoComponent(name: string, styleName: string) {
-  const key = getDemoIndexKey(styleName)
-  return ExamplesIndex[key]?.[name]?.component
+  const key = getDemoIndexKey(styleName);
+  return ExamplesIndex[key]?.[name]?.component;
 }
 
 export async function getDemoItem(name: string, styleName: string) {
-  const key = getDemoIndexKey(styleName)
-  const demo = ExamplesIndex[key]?.[name]
+  const key = getDemoIndexKey(styleName);
+  const demo = ExamplesIndex[key]?.[name];
   if (!demo) {
-    return null
+    return null;
   }
 
-  const content = await readFileFromRoot(demo.filePath)
+  const content = await readFileFromRoot(demo.filePath);
 
   return {
     name: demo.name,
@@ -88,165 +88,163 @@ export async function getDemoItem(name: string, styleName: string) {
         type: "registry:internal" as const,
       },
     ],
-  }
+  };
 }
 
 export function getRegistryComponent(name: string, styleName: string) {
-  const demoComponent = getDemoComponent(name, styleName)
+  const demoComponent = getDemoComponent(name, styleName);
   if (demoComponent) {
-    return demoComponent
+    return demoComponent;
   }
 
-  return getRegistryEntry(name, styleName)?.component
+  return getRegistryEntry(name, styleName)?.component;
 }
 
 export async function getRegistryItems(
   styleName: string,
   filter?: (item: z.infer<typeof registryItemSchema>) => boolean
 ) {
-  const styleIndex = getMergedIndexForStyle(styleName)
+  const styleIndex = getMergedIndexForStyle(styleName);
 
   if (!styleIndex) {
-    return []
+    return [];
   }
 
-  const entries = Object.values(styleIndex)
+  const entries = Object.values(styleIndex);
 
-  const filteredEntries = filter ? entries.filter(filter) : entries
+  const filteredEntries = filter ? entries.filter(filter) : entries;
 
   return await Promise.all(
     filteredEntries.map(async (entry) => {
-      const item = await getRegistryItem(entry.name, styleName)
-      return item
+      const item = await getRegistryItem(entry.name, styleName);
+      return item;
     })
-  ).then((results) => results.filter(Boolean))
+  ).then((results) => results.filter(Boolean));
 }
 
 export async function getRegistryItem(name: string, styleName: string) {
-  const cacheKey = `${styleName}:${name}`
+  const cacheKey = `${styleName}:${name}`;
 
   // Check cache first.
   if (registryCache.has(cacheKey)) {
-    return registryCache.get(cacheKey)
+    return registryCache.get(cacheKey);
   }
 
-  const item = getRegistryEntry(name, styleName)
+  const item = getRegistryEntry(name, styleName);
 
   if (!item) {
-    registryCache.set(cacheKey, null)
-    return null
+    registryCache.set(cacheKey, null);
+    return null;
   }
 
   const normalizedItem = {
     ...item,
-    files: item.files.map((file: unknown) =>
-      typeof file === "string" ? { path: file } : file
-    ),
-  }
+    files: item.files.map((file: unknown) => (typeof file === "string" ? { path: file } : file)),
+  };
 
   // Convert all file paths to object.
   // TODO: remove when we migrate to new registry.
   // Fail early before doing expensive file operations.
-  const result = registryItemSchema.safeParse(normalizedItem)
+  const result = registryItemSchema.safeParse(normalizedItem);
   if (!result.success) {
-    registryCache.set(cacheKey, null)
-    return null
+    registryCache.set(cacheKey, null);
+    return null;
   }
 
   // Read all files in parallel.
   let files: typeof result.data.files = await Promise.all(
     item.files.map(async (file: z.infer<typeof registryItemFileSchema>) => {
-      const content = await getFileContent(file)
-      const relativePath = path.relative(process.cwd(), file.path)
+      const content = await getFileContent(file);
+      const relativePath = path.relative(process.cwd(), file.path);
 
       return {
         ...file,
         path: relativePath,
         content,
-      }
+      };
     })
-  )
+  );
 
   // Fix file paths.
-  files = fixFilePaths(files)
+  files = fixFilePaths(files);
 
   const parsed = registryItemSchema.safeParse({
     ...result.data,
     files,
-  })
+  });
 
   if (!parsed.success) {
-    console.error(parsed.error.message)
-    registryCache.set(cacheKey, null)
-    return null
+    console.error(parsed.error.message);
+    registryCache.set(cacheKey, null);
+    return null;
   }
 
   // Cache the result.
-  registryCache.set(cacheKey, parsed.data)
+  registryCache.set(cacheKey, parsed.data);
 
-  return parsed.data
+  return parsed.data;
 }
 
 async function getFileContent(file: z.infer<typeof registryItemFileSchema>) {
-  let code = await fs.readFile(file.path, "utf-8")
+  let code = await fs.readFile(file.path, "utf-8");
 
   // Some registry items uses default export.
   // We want to use named export instead.
   if (file.type !== "registry:page") {
-    code = code.replaceAll("export default", "export")
+    code = code.replaceAll("export default", "export");
   }
 
   // Fix imports.
-  code = fixImport(code)
+  code = fixImport(code);
 
-  return code
+  return code;
 }
 
 function getFileTarget(file: z.infer<typeof registryItemFileSchema>) {
-  let target = file.target
+  let target = file.target;
 
   if (!target || target === "") {
-    const fileName = file.path.split("/").pop()
+    const fileName = file.path.split("/").pop();
     if (
       file.type === "registry:block" ||
       file.type === "registry:component" ||
       file.type === "registry:example"
     ) {
-      target = `components/${fileName}`
+      target = `components/${fileName}`;
     }
 
     if (file.type === "registry:ui") {
-      target = `components/ui/${fileName}`
+      target = `components/ui/${fileName}`;
     }
 
     if (file.type === "registry:hook") {
-      target = `hooks/${fileName}`
+      target = `hooks/${fileName}`;
     }
 
     if (file.type === "registry:lib") {
-      target = `lib/${fileName}`
+      target = `lib/${fileName}`;
     }
   }
 
-  return target ?? ""
+  return target ?? "";
 }
 
 function fixFilePaths(files: z.infer<typeof registryItemSchema>["files"]) {
   if (!files) {
-    return []
+    return [];
   }
 
   // Resolve all paths relative to the first file's directory.
-  const firstFilePath = files[0].path
-  const firstFilePathDir = path.dirname(firstFilePath)
+  const firstFilePath = files[0].path;
+  const firstFilePathDir = path.dirname(firstFilePath);
 
   return files.map((file) => {
     return {
       ...file,
       path: path.relative(firstFilePathDir, file.path),
       target: getFileTarget(file),
-    }
-  })
+    };
+  });
 }
 
 export function fixImport(content: string) {
@@ -254,79 +252,72 @@ export function fixImport(content: string) {
     /@\/styles\/([\w-]+)\/(ui-rtl|ui)\/([\w-]+)/g,
     (match, _styleName, type, component) => {
       if (type === "ui" || type === "ui-rtl") {
-        return `@/components/ui/${component}`
+        return `@/components/ui/${component}`;
       }
 
-      return match
+      return match;
     }
-  )
+  );
 
-  const regex = /@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib))\/([\w-]+)/g
+  const regex = /@\/(.+?)\/((?:.*?\/)?(?:components|ui|hooks|lib))\/([\w-]+)/g;
 
-  const replacement = (
-    match: string,
-    path: string,
-    type: string,
-    component: string
-  ) => {
+  const replacement = (match: string, path: string, type: string, component: string) => {
     if (type.endsWith("components")) {
-      return `@/components/${component}`
+      return `@/components/${component}`;
     } else if (type.endsWith("ui")) {
-      return `@/components/ui/${component}`
+      return `@/components/ui/${component}`;
     } else if (type.endsWith("hooks")) {
-      return `@/hooks/${component}`
+      return `@/hooks/${component}`;
     } else if (type.endsWith("lib")) {
-      return `@/lib/${component}`
+      return `@/lib/${component}`;
     }
 
-    return match
-  }
+    return match;
+  };
 
-  return content.replace(regex, replacement)
+  return content.replace(regex, replacement);
 }
 
 export type FileTree = {
-  name: string
-  path?: string
-  children?: FileTree[]
-}
+  name: string;
+  path?: string;
+  children?: FileTree[];
+};
 
 export function createFileTreeForRegistryItemFiles(
   files: Array<{ path: string; target?: string }>
 ) {
-  const root: FileTree[] = []
+  const root: FileTree[] = [];
 
   for (const file of files) {
-    const path = file.target ?? file.path
-    const parts = path.split("/")
-    let currentLevel = root
+    const path = file.target ?? file.path;
+    const parts = path.split("/");
+    let currentLevel = root;
 
     for (let i = 0; i < parts.length; i++) {
-      const part = parts[i]
-      const isFile = i === parts.length - 1
-      const existingNode = currentLevel.find((node) => node.name === part)
+      const part = parts[i];
+      const isFile = i === parts.length - 1;
+      const existingNode = currentLevel.find((node) => node.name === part);
 
       if (existingNode) {
         if (isFile) {
           // Update existing file node with full path
-          existingNode.path = path
+          existingNode.path = path;
         } else {
           // Move to next level in the tree
-          currentLevel = existingNode.children!
+          currentLevel = existingNode.children!;
         }
       } else {
-        const newNode: FileTree = isFile
-          ? { name: part, path }
-          : { name: part, children: [] }
+        const newNode: FileTree = isFile ? { name: part, path } : { name: part, children: [] };
 
-        currentLevel.push(newNode)
+        currentLevel.push(newNode);
 
         if (!isFile) {
-          currentLevel = newNode.children!
+          currentLevel = newNode.children!;
         }
       }
     }
   }
 
-  return root
+  return root;
 }

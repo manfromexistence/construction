@@ -1,14 +1,9 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSeparator,
-  InputOTPSlot,
-} from '@/components/input-otp'
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/input-otp";
 
 const meta: Meta = {
-  title: 'components/InputOTP',
+  title: "components/InputOTP",
   component: () => (
     <InputOTP maxLength={6}>
       <InputOTPGroup>
@@ -25,10 +20,10 @@ const meta: Meta = {
     </InputOTP>
   ),
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
+export default meta;
 
-export const Basic: StoryObj = {}
+export const Basic: StoryObj = {};

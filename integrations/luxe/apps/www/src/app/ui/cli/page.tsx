@@ -1,14 +1,10 @@
+import { ArrowUpRightIcon } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-import { ArrowUpRightIcon } from "lucide-react";
-
+import { MDX } from "@/app/_components/mdx";
+import { getDocs } from "@/lib/mdx";
 import { Breadcrumbs } from "../_components/Breadcrumbs";
 import { Pagination } from "../_components/Pagination";
-
-import { MDX } from "@/app/_components/mdx";
-
-import { getDocs } from "@/lib/mdx";
 
 export const metadata: Metadata = {
   title: "CLI",
@@ -61,9 +57,7 @@ export default async function CLIPage() {
         <Breadcrumbs groupName="Get Started" currentPage="CLI" />
         <div className="space-y-4">
           <div className="space-y-3.5">
-            <h1 className="text-3xl font-semibold tracking-tight text-primary">
-              {title}
-            </h1>
+            <h1 className="text-3xl font-semibold tracking-tight text-primary">{title}</h1>
             <p className="max-w-xl text-[16px] font-normal leading-relaxed text-black/80 dark:text-white/90">
               {description}
             </p>

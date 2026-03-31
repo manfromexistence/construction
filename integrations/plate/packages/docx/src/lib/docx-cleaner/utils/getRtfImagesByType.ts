@@ -1,19 +1,15 @@
-import type { RtfImage } from '../types';
+import type { RtfImage } from "../types";
 
-import { getRtfImageHex } from './getRtfImageHex';
-import { getRtfImageMimeType } from './getRtfImageMimeType';
-import { getRtfImageSpid } from './getRtfImageSpid';
+import { getRtfImageHex } from "./getRtfImageHex";
+import { getRtfImageMimeType } from "./getRtfImageMimeType";
+import { getRtfImageSpid } from "./getRtfImageSpid";
 
-export const getRtfImagesByType = (
-  rtf: string,
-  spidPrefix: string,
-  type: string
-): RtfImage[] => {
+export const getRtfImagesByType = (rtf: string, spidPrefix: string, type: string): RtfImage[] => {
   const escapedType = type.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
   const [, ...images] = rtf.split(new RegExp(`${escapedType}(?![a-zA-Z])`));
 
   return images.reduce<RtfImage[]>((rtfImages, image) => {
-    const [, imageData = ''] = image.split('shplid');
+    const [, imageData = ""] = image.split("shplid");
     const spid = getRtfImageSpid(imageData, spidPrefix);
     const mimeType = getRtfImageMimeType(imageData);
     const hex = getRtfImageHex(imageData);

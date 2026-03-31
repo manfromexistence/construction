@@ -1,9 +1,6 @@
 {
   "name": "tour",
-  "dependencies": [
-    "@floating-ui/react-dom",
-    "radix-ui"
-  ],
+  "dependencies": ["@floating-ui/react-dom", "radix-ui"],
   "registryDependencies": [
     "@diceui/use-as-ref",
     "@diceui/use-isomorphic-layout-effect",

@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "File Tree Demo",
   "description": "Example showing a component that displays folder and file structure.",
-  "registryDependencies": [
-    "@magicui/file-tree"
-  ],
+  "registryDependencies": ["@magicui/file-tree"],
   "files": [
     {
       "path": "registry/example/file-tree-demo.tsx",

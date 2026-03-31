@@ -1,24 +1,24 @@
-import { getHtmlDocument } from '@platejs/test-utils';
-import { createSlateEditor, KEYS } from 'platejs';
+import { getHtmlDocument } from "@platejs/test-utils";
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BaseLinkPlugin } from './BaseLinkPlugin';
+import { BaseLinkPlugin } from "./BaseLinkPlugin";
 
-describe('BaseLinkPlugin', () => {
+describe("BaseLinkPlugin", () => {
   const createEditor = () =>
     createSlateEditor({
       plugins: [BaseLinkPlugin],
     } as any);
 
-  it('parses valid anchor elements into link nodes with a default target', () => {
+  it("parses valid anchor elements into link nodes with a default target", () => {
     const editor = createEditor();
     const plugin = editor.getPlugin(BaseLinkPlugin);
     const element = getHtmlDocument(
       '<html><body><a href="https://example.com">Link</a></body></html>'
-    ).querySelector('a')!;
+    ).querySelector("a")!;
     const parse = plugin.parsers.html?.deserializer?.parse;
 
     if (!parse) {
-      throw new Error('Missing html link deserializer');
+      throw new Error("Missing html link deserializer");
     }
 
     const parsed = parse({
@@ -28,25 +28,25 @@ describe('BaseLinkPlugin', () => {
     } as any);
 
     expect(parsed).toEqual({
-      target: '_blank',
+      target: "_blank",
       type: editor.getType(KEYS.link),
-      url: 'https://example.com',
+      url: "https://example.com",
     });
   });
 
-  it('rejects anchors with missing or invalid href values', () => {
+  it("rejects anchors with missing or invalid href values", () => {
     const editor = createEditor();
     const plugin = editor.getPlugin(BaseLinkPlugin);
-    const missingHref = getHtmlDocument(
-      '<html><body><a>No href</a></body></html>'
-    ).querySelector('a')!;
+    const missingHref = getHtmlDocument("<html><body><a>No href</a></body></html>").querySelector(
+      "a"
+    )!;
     const invalidHref = getHtmlDocument(
       '<html><body><a href="javascript:alert(1)">Bad</a></body></html>'
-    ).querySelector('a')!;
+    ).querySelector("a")!;
     const parse = plugin.parsers.html?.deserializer?.parse;
 
     if (!parse) {
-      throw new Error('Missing html link deserializer');
+      throw new Error("Missing html link deserializer");
     }
 
     expect(

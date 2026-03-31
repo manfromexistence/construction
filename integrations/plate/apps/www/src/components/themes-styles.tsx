@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useConfig } from '@/hooks/use-config';
-import { useThemesConfig } from '@/hooks/use-themes-config';
-import { useMounted } from '@/registry/hooks/use-mounted';
+import { useConfig } from "@/hooks/use-config";
+import { useThemesConfig } from "@/hooks/use-themes-config";
+import { useMounted } from "@/registry/hooks/use-mounted";
 
 export function ThemesStyle() {
   const [config] = useConfig();
@@ -20,7 +20,7 @@ export function ThemesStyle() {
 [data-chart] {
   ${Object.entries(themesConfig.activeTheme.light)
     .map(([key, value]) => `${key}: hsl(${value});`)
-    .join('\n')}
+    .join("\n")}
   --radius: ${config.radius}rem;
 }
 
@@ -28,7 +28,7 @@ export function ThemesStyle() {
 .dark [data-chart] {
   ${Object.entries(themesConfig.activeTheme.dark)
     .map(([key, value]) => `${key}: hsl(${value});`)
-    .join('\n')}
+    .join("\n")}
   --radius: ${config.radius}rem;
 }
   `}

@@ -1,11 +1,6 @@
 {
   "name": "media-player",
-  "dependencies": [
-    "@base-ui/react",
-    "media-chrome",
-    "react-dom",
-    "lucide-react"
-  ],
+  "dependencies": ["@base-ui/react", "media-chrome", "react-dom", "lucide-react"],
   "registryDependencies": [
     "badge",
     "button",

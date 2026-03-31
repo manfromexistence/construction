@@ -1,11 +1,7 @@
 {
   "name": "segmented-input",
-  "dependencies": [
-    "radix-ui"
-  ],
-  "registryDependencies": [
-    "input"
-  ],
+  "dependencies": ["radix-ui"],
+  "registryDependencies": ["input"],
   "files": [
     {
       "path": "ui/segmented-input.tsx",

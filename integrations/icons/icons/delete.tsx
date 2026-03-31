@@ -81,11 +81,7 @@ const DeleteIcon = forwardRef<DeleteIconHandle, DeleteIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.g
-            animate={controls}
-            transition={SPRING_TRANSITION}
-            variants={LID_VARIANTS}
-          >
+          <motion.g animate={controls} transition={SPRING_TRANSITION} variants={LID_VARIANTS}>
             <path d="M3 6h18" />
             <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
           </motion.g>

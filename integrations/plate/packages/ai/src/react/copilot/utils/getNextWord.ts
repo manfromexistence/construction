@@ -12,12 +12,12 @@ const nonCjkMatchRegex =
   /^(\s*\S+?)(?=[\s\u1100-\u11FF\u3040-\u30FF\u3400-\u4DBF\u4E00-\u9FFF\uAC00-\uD7AF\uF900-\uFAFF]|$)/;
 
 export const getNextWord: GetNextWord = ({ text }) => {
-  if (!text) return { firstWord: '', remainingText: '' };
+  if (!text) return { firstWord: "", remainingText: "" };
 
   // Check if the first non-space character is a CJK character
   const nonSpaceMatch = nonSpaceRegex.exec(text);
 
-  if (!nonSpaceMatch) return { firstWord: '', remainingText: '' };
+  if (!nonSpaceMatch) return { firstWord: "", remainingText: "" };
 
   const firstNonSpaceChar = nonSpaceMatch[1];
 
@@ -40,11 +40,11 @@ export const getNextWord: GetNextWord = ({ text }) => {
     const match = cjkMatchRegex.exec(text);
 
     if (match) {
-      const [, spaces = '', char = '', punctuation = ''] = match;
+      const [, spaces = "", char = "", punctuation = ""] = match;
       firstWord = spaces + char + punctuation;
       remainingText = text.slice(firstWord.length);
     } else {
-      firstWord = '';
+      firstWord = "";
       remainingText = text;
     }
   } else {
@@ -56,7 +56,7 @@ export const getNextWord: GetNextWord = ({ text }) => {
       remainingText = text.slice(firstWord.length);
     } else {
       firstWord = text;
-      remainingText = '';
+      remainingText = "";
     }
   }
 

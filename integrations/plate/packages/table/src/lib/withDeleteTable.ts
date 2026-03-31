@@ -1,7 +1,7 @@
-import { type OverrideEditor, type SlateEditor, PointApi } from 'platejs';
+import { type OverrideEditor, PointApi, type SlateEditor } from "platejs";
 
-import { type TableConfig, getCellTypes } from '.';
-import { getTableGridAbove } from './queries/getTableGridAbove';
+import { getCellTypes, type TableConfig } from ".";
+import { getTableGridAbove } from "./queries/getTableGridAbove";
 
 /**
  * Return true if:
@@ -16,7 +16,7 @@ export const preventDeleteTableCell = (
     unit,
   }: {
     reverse?: boolean;
-    unit?: 'block' | 'character' | 'line' | 'word';
+    unit?: "block" | "character" | "line" | "word";
   }
 ) => {
   const { selection } = editor;
@@ -30,9 +30,7 @@ export const preventDeleteTableCell = (
     if (cellEntry) {
       // Prevent deleting cell at the start or end of a cell
       const [, cellPath] = cellEntry;
-      const start = reverse
-        ? editor.api.end(cellPath)
-        : editor.api.start(cellPath);
+      const start = reverse ? editor.api.end(cellPath) : editor.api.start(cellPath);
 
       if (selection && PointApi.equals(selection.anchor, start!)) {
         return true;
@@ -63,7 +61,7 @@ export const withDeleteTable: OverrideEditor<TableConfig> = ({
   transforms: {
     deleteFragment(direction) {
       if (editor.api.isAt({ block: true, match: (n) => n.type === type })) {
-        const cellEntries = getTableGridAbove(editor, { format: 'cell' });
+        const cellEntries = getTableGridAbove(editor, { format: "cell" });
 
         if (cellEntries.length > 1) {
           editor.tf.withoutNormalizing(() => {

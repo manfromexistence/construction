@@ -1,8 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { BASES } from "@/registry/config"
+import * as React from "react";
 import {
   Picker,
   PickerContent,
@@ -10,34 +8,35 @@ import {
   PickerRadioGroup,
   PickerRadioItem,
   PickerTrigger,
-} from "@/app/(app)/create/components/picker"
-import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params"
+} from "@/app/(app)/create/components/picker";
+import { useDesignSystemSearchParams } from "@/app/(app)/create/lib/search-params";
+import { BASES } from "@/registry/config";
 
 export function BasePicker({
   isMobile,
   anchorRef,
 }: {
-  isMobile: boolean
-  anchorRef: React.RefObject<HTMLDivElement | null>
+  isMobile: boolean;
+  anchorRef: React.RefObject<HTMLDivElement | null>;
 }) {
-  const [params, setParams] = useDesignSystemSearchParams()
+  const [params, setParams] = useDesignSystemSearchParams();
 
   const currentBase = React.useMemo(
     () => BASES.find((base) => base.name === params.base),
     [params.base]
-  )
+  );
 
   const handleValueChange = React.useCallback(
     (value: string) => {
-      const newBase = BASES.find((base) => base.name === value)
+      const newBase = BASES.find((base) => base.name === value);
       if (!newBase) {
-        return
+        return;
       }
 
-      setParams({ base: newBase.name })
+      setParams({ base: newBase.name });
     },
     [setParams]
-  )
+  );
 
   return (
     <div className="group/picker relative">
@@ -45,9 +44,7 @@ export function BasePicker({
         <PickerTrigger>
           <div className="flex flex-col justify-start text-left">
             <div className="text-xs text-muted-foreground">Base</div>
-            <div className="text-sm font-medium text-foreground">
-              {currentBase?.title}
-            </div>
+            <div className="text-sm font-medium text-foreground">{currentBase?.title}</div>
           </div>
           {currentBase?.meta?.logo && (
             <div
@@ -63,17 +60,10 @@ export function BasePicker({
           side={isMobile ? "top" : "right"}
           align={isMobile ? "center" : "start"}
         >
-          <PickerRadioGroup
-            value={currentBase?.name}
-            onValueChange={handleValueChange}
-          >
+          <PickerRadioGroup value={currentBase?.name} onValueChange={handleValueChange}>
             <PickerGroup>
               {BASES.map((base) => (
-                <PickerRadioItem
-                  key={base.name}
-                  value={base.name}
-                  closeOnClick={isMobile}
-                >
+                <PickerRadioItem key={base.name} value={base.name} closeOnClick={isMobile}>
                   {base.title}
                 </PickerRadioItem>
               ))}
@@ -82,5 +72,5 @@ export function BasePicker({
         </PickerContent>
       </Picker>
     </div>
-  )
+  );
 }

@@ -1,13 +1,13 @@
-import type { SlateEditor, TElement } from 'platejs';
+import type { SlateEditor, TElement } from "platejs";
 
 export type CancelComboboxInputCause =
-  | 'arrowLeft'
-  | 'arrowRight'
-  | 'backspace'
-  | 'blur'
-  | 'deselect'
-  | 'escape'
-  | 'manual';
+  | "arrowLeft"
+  | "arrowRight"
+  | "backspace"
+  | "blur"
+  | "deselect"
+  | "escape"
+  | "manual";
 
 export type ComboboxInputCursorState = {
   atEnd: boolean;

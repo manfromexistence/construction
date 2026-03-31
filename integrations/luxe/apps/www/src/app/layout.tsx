@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { fontSans, fontMono } from "@/utils/fonts";
+import { fontMono, fontSans } from "@/utils/fonts";
 
 import "@/styles/globals.css";
 
@@ -63,8 +63,7 @@ export const metadata: Metadata = {
     locale: "en",
     siteName: "Luxe",
     title: "Luxe",
-    description:
-      "Copy and paste components ready to use. Practical. Customizable.",
+    description: "Copy and paste components ready to use. Practical. Customizable.",
     type: "website",
     url: "https://luxeui.com",
   },
@@ -80,8 +79,7 @@ export const metadata: Metadata = {
     ],
     card: "summary_large_image",
     title: "Luxe: Illuminate your apps.",
-    description:
-      "Copy and paste components ready to use. Practical. Customizable.",
+    description: "Copy and paste components ready to use. Practical. Customizable.",
     site: "@guhrodrrigues",
     creator: "Gustavo Rodrigues",
   },
@@ -98,7 +96,7 @@ export default function RootLayout({
         className={cn(
           "overflow-x-hidden bg-background font-sans text-foreground antialiased outline-none",
           fontSans.variable,
-          fontMono.variable,
+          fontMono.variable
         )}
       >
         <ThemeProvider

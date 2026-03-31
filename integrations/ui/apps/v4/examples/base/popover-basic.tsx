@@ -1,4 +1,4 @@
-import { Button } from "@/styles/base-nova/ui/button"
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   Popover,
   PopoverContent,
@@ -6,7 +6,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@/styles/base-nova/ui/popover"
+} from "@/styles/base-nova/ui/popover";
 
 export function PopoverBasic() {
   return (
@@ -18,12 +18,10 @@ export function PopoverBasic() {
         <PopoverContent align="start">
           <PopoverHeader>
             <PopoverTitle>Dimensions</PopoverTitle>
-            <PopoverDescription>
-              Set the dimensions for the layer.
-            </PopoverDescription>
+            <PopoverDescription>Set the dimensions for the layer.</PopoverDescription>
           </PopoverHeader>
         </PopoverContent>
       </Popover>
     </>
-  )
+  );
 }

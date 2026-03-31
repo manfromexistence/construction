@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { ArrowRightIcon } from "lucide-react";
+import * as React from "react";
 
-import { ArrowRightIcon } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { useLocale } from "@/hooks/useLocale";
 
-import { Button } from '@/components/ui/button';
-import { useLocale } from '@/hooks/useLocale';
 const i18n = {
   cn: {
-    description: 'MCP, AI, 上传, 以及更多',
+    description: "MCP, AI, 上传, 以及更多",
   },
   en: {
-    description: 'MCP, AI, Upload, and more',
+    description: "MCP, AI, Upload, and more",
   },
 };
 
@@ -24,7 +24,7 @@ export function AnnouncementButton() {
       variant="link"
       className="group !px-0.5 mb-2 inline-flex h-5 flex-wrap items-center gap-0 rounded-lg font-medium text-sm hover:no-underline"
       onClick={() => {
-        window.open('https://pro.platejs.org', '_blank');
+        window.open("https://pro.platejs.org", "_blank");
       }}
     >
       {/* <SparklesIcon />

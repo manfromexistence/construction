@@ -1,4 +1,4 @@
-import React, { type DependencyList } from 'react';
+import React, { type DependencyList } from "react";
 
 /**
  * Create a stable version of a function that can be used in dependency arrays

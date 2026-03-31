@@ -1,4 +1,4 @@
-import { afterAll, beforeEach, describe, expect, it, mock } from 'bun:test';
+import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test";
 
 let intersectionCallback: IntersectionObserverCallback | null = null;
 const observeMock = mock();
@@ -12,7 +12,7 @@ class IntersectionObserverMock {
   observe = observeMock;
 }
 
-describe('observeCategories', () => {
+describe("observeCategories", () => {
   beforeEach(() => {
     intersectionCallback = null;
     observeMock.mockReset();
@@ -25,16 +25,16 @@ describe('observeCategories', () => {
     (globalThis as any).IntersectionObserver = originalIntersectionObserver;
   });
 
-  it('observes section roots and reports the first visible category', async () => {
+  it("observes section roots and reports the first visible category", async () => {
     const { observeCategories } = await import(
       `./EmojiObserver?test=${Math.random().toString(36).slice(2)}`
     );
     const setFocusedAndVisibleSections = mock();
-    const section = document.createElement('div');
-    section.dataset.id = 'frequent';
+    const section = document.createElement("div");
+    section.dataset.id = "frequent";
 
     observeCategories({
-      ancestorRef: { current: document.createElement('div') } as any,
+      ancestorRef: { current: document.createElement("div") } as any,
       emojiLibrary: {
         getGrid: () => ({
           sections: () => [{ root: { current: section } }],
@@ -55,8 +55,8 @@ describe('observeCategories', () => {
 
     expect(observeMock).toHaveBeenCalledWith(section);
     expect(setFocusedAndVisibleSections).toHaveBeenCalledWith(
-      new Map([['frequent', true]]),
-      'frequent'
+      new Map([["frequent", true]]),
+      "frequent"
     );
   });
 });

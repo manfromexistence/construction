@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -6,10 +6,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { ShineBorder } from "@/registry/magicui/shine-border"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ShineBorder } from "@/registry/magicui/shine-border";
 
 export default function ShineBorderDemo() {
   return (
@@ -17,9 +17,7 @@ export default function ShineBorderDemo() {
       <ShineBorder shineColor={["#A07CFE", "#FE8FB5", "#FFBE7B"]} />
       <CardHeader>
         <CardTitle>Login</CardTitle>
-        <CardDescription>
-          Enter your credentials to access your account
-        </CardDescription>
+        <CardDescription>Enter your credentials to access your account</CardDescription>
       </CardHeader>
       <CardContent>
         <form>
@@ -39,5 +37,5 @@ export default function ShineBorderDemo() {
         <Button className="w-full">Sign In</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

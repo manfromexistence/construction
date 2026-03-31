@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor } from "platejs";
 
-import { moveListItemsToList } from './moveListItemsToList';
+import { moveListItemsToList } from "./moveListItemsToList";
 
 jsxt;
 
@@ -53,14 +53,14 @@ const output = (
   </editor>
 ) as any;
 
-it('moves sublist items into the target list', () => {
+it("moves sublist items into the target list", () => {
   const editor = createSlateEditor({
     selection: input.selection,
     value: input.children,
   });
 
-  const fromListItem = editor.api.node({ id: '2', at: [] }) as any;
-  const toList = editor.api.node({ id: '1', at: [] }) as any;
+  const fromListItem = editor.api.node({ id: "2", at: [] }) as any;
+  const toList = editor.api.node({ id: "1", at: [] }) as any;
 
   if (fromListItem && toList) {
     moveListItemsToList(editor, { fromListItem, toList });

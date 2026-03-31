@@ -1,13 +1,10 @@
-import { getRegistryItems, searchRegistries } from "@/src/registry"
-import { RegistryError } from "@/src/registry/errors"
-import { Server } from "@modelcontextprotocol/sdk/server/index.js"
-import {
-  CallToolRequestSchema,
-  ListToolsRequestSchema,
-} from "@modelcontextprotocol/sdk/types.js"
-import dedent from "dedent"
-import { z } from "zod"
-import { zodToJsonSchema } from "zod-to-json-schema"
+import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
+import dedent from "dedent";
+import { z } from "zod";
+import { zodToJsonSchema } from "zod-to-json-schema";
+import { getRegistryItems, searchRegistries } from "@/src/registry";
+import { RegistryError } from "@/src/registry/errors";
 
 import {
   formatItemExamples,
@@ -15,7 +12,7 @@ import {
   formatSearchResultsWithPagination,
   getMcpConfig,
   npxShadcn,
-} from "./utils"
+} from "./utils";
 
 export const server = new Server(
   {
@@ -28,7 +25,7 @@ export const server = new Server(
       tools: {},
     },
   }
-)
+);
 
 server.setRequestHandler(ListToolsRequestSchema, async () => {
   return {
@@ -47,17 +44,9 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           z.object({
             registries: z
               .array(z.string())
-              .describe(
-                "Array of registry names to search (e.g., ['@shadcn', '@acme'])"
-              ),
-            limit: z
-              .number()
-              .optional()
-              .describe("Maximum number of items to return"),
-            offset: z
-              .number()
-              .optional()
-              .describe("Number of items to skip for pagination"),
+              .describe("Array of registry names to search (e.g., ['@shadcn', '@acme'])"),
+            limit: z.number().optional().describe("Maximum number of items to return"),
+            offset: z.number().optional().describe("Number of items to skip for pagination"),
           })
         ),
       },
@@ -69,22 +58,14 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           z.object({
             registries: z
               .array(z.string())
-              .describe(
-                "Array of registry names to search (e.g., ['@shadcn', '@acme'])"
-              ),
+              .describe("Array of registry names to search (e.g., ['@shadcn', '@acme'])"),
             query: z
               .string()
               .describe(
                 "Search query string for fuzzy matching against item names and descriptions"
               ),
-            limit: z
-              .number()
-              .optional()
-              .describe("Maximum number of items to return"),
-            offset: z
-              .number()
-              .optional()
-              .describe("Number of items to skip for pagination"),
+            limit: z.number().optional().describe("Maximum number of items to return"),
+            offset: z.number().optional().describe("Number of items to skip for pagination"),
           })
         ),
       },
@@ -110,9 +91,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
           z.object({
             registries: z
               .array(z.string())
-              .describe(
-                "Array of registry names to search (e.g., ['@shadcn', '@acme'])"
-              ),
+              .describe("Array of registry names to search (e.g., ['@shadcn', '@acme'])"),
             query: z
               .string()
               .describe(
@@ -142,18 +121,18 @@ server.setRequestHandler(ListToolsRequestSchema, async () => {
         inputSchema: zodToJsonSchema(z.object({})),
       },
     ],
-  }
-})
+  };
+});
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
   try {
     if (!request.params.arguments) {
-      throw new Error("No tool arguments provided.")
+      throw new Error("No tool arguments provided.");
     }
 
     switch (request.params.name) {
       case "get_project_registries": {
-        const config = await getMcpConfig(process.cwd())
+        const config = await getMcpConfig(process.cwd());
 
         if (!config?.registries) {
           return {
@@ -167,7 +146,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 2. Or manually create components.json with a registries section`,
               },
             ],
-          }
+          };
         }
 
         return {
@@ -183,15 +162,13 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 You can view the items in a registry by running:
                 \`${await npxShadcn("view @name-of-registry")}\`
 
-                For example: \`${await npxShadcn(
-                  "view @shadcn"
-                )}\` or \`${await npxShadcn(
+                For example: \`${await npxShadcn("view @shadcn")}\` or \`${await npxShadcn(
                   "view @shadcn @acme"
                 )}\` to view multiple registries.
                 `,
             },
           ],
-        }
+        };
       }
 
       case "search_items_in_registries": {
@@ -200,16 +177,16 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           query: z.string(),
           limit: z.number().optional(),
           offset: z.number().optional(),
-        })
+        });
 
-        const args = inputSchema.parse(request.params.arguments)
+        const args = inputSchema.parse(request.params.arguments);
         const results = await searchRegistries(args.registries, {
           query: args.query,
           limit: args.limit,
           offset: args.offset,
           config: await getMcpConfig(process.cwd()),
           useCache: false,
-        })
+        });
 
         if (results.items.length === 0) {
           return {
@@ -223,7 +200,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 )}, Try searching with a different query or registry.`,
               },
             ],
-          }
+          };
         }
 
         return {
@@ -236,7 +213,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               }),
             },
           ],
-        }
+        };
       }
 
       case "list_items_in_registries": {
@@ -245,27 +222,25 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           limit: z.number().optional(),
           offset: z.number().optional(),
           cwd: z.string().optional(),
-        })
+        });
 
-        const args = inputSchema.parse(request.params.arguments)
+        const args = inputSchema.parse(request.params.arguments);
         const results = await searchRegistries(args.registries, {
           limit: args.limit,
           offset: args.offset,
           config: await getMcpConfig(process.cwd()),
           useCache: false,
-        })
+        });
 
         if (results.items.length === 0) {
           return {
             content: [
               {
                 type: "text",
-                text: dedent`No items found in registries ${args.registries.join(
-                  ", "
-                )}.`,
+                text: dedent`No items found in registries ${args.registries.join(", ")}.`,
               },
             ],
-          }
+          };
         }
 
         return {
@@ -277,19 +252,19 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               }),
             },
           ],
-        }
+        };
       }
 
       case "view_items_in_registries": {
         const inputSchema = z.object({
           items: z.array(z.string()),
-        })
+        });
 
-        const args = inputSchema.parse(request.params.arguments)
+        const args = inputSchema.parse(request.params.arguments);
         const registryItems = await getRegistryItems(args.items, {
           config: await getMcpConfig(process.cwd()),
           useCache: false,
-        })
+        });
 
         if (registryItems?.length === 0) {
           return {
@@ -301,10 +276,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 Make sure the item names are correct and include the registry prefix (e.g., @shadcn/button).`,
               },
             ],
-          }
+          };
         }
 
-        const formattedItems = formatRegistryItems(registryItems)
+        const formattedItems = formatRegistryItems(registryItems);
 
         return {
           content: [
@@ -315,23 +290,23 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               ${formattedItems.join("\n\n---\n\n")}`,
             },
           ],
-        }
+        };
       }
 
       case "get_item_examples_from_registries": {
         const inputSchema = z.object({
           query: z.string(),
           registries: z.array(z.string()),
-        })
+        });
 
-        const args = inputSchema.parse(request.params.arguments)
-        const config = await getMcpConfig()
+        const args = inputSchema.parse(request.params.arguments);
+        const config = await getMcpConfig();
 
         const results = await searchRegistries(args.registries, {
           query: args.query,
           config,
           useCache: false,
-        })
+        });
 
         if (results.items.length === 0) {
           return {
@@ -350,14 +325,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 2. View the main component with view_items_in_registries for inline usage documentation`,
               },
             ],
-          }
+          };
         }
 
-        const itemNames = results.items.map((item) => item.addCommandArgument)
+        const itemNames = results.items.map((item) => item.addCommandArgument);
         const fullItems = await getRegistryItems(itemNames, {
           config,
           useCache: false,
-        })
+        });
 
         return {
           content: [
@@ -366,7 +341,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               text: formatItemExamples(fullItems, args.query),
             },
           ],
-        }
+        };
       }
 
       case "get_add_command_for_items": {
@@ -374,7 +349,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           .object({
             items: z.array(z.string()),
           })
-          .parse(request.params.arguments)
+          .parse(request.params.arguments);
 
         return {
           content: [
@@ -383,7 +358,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               text: await npxShadcn(`add ${args.items.join(" ")}`),
             },
           ],
-        }
+        };
       }
 
       case "get_audit_checklist": {
@@ -404,11 +379,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               `,
             },
           ],
-        }
+        };
       }
 
       default:
-        throw new Error(`Tool ${request.params.name} not found`)
+        throw new Error(`Tool ${request.params.name} not found`);
     }
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -417,25 +392,23 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           {
             type: "text",
             text: dedent`Invalid input parameters:
-              ${error.errors
-                .map((e) => `- ${e.path.join(".")}: ${e.message}`)
-                .join("\n")}
+              ${error.errors.map((e) => `- ${e.path.join(".")}: ${e.message}`).join("\n")}
               `,
           },
         ],
         isError: true,
-      }
+      };
     }
 
     if (error instanceof RegistryError) {
-      let errorMessage = error.message
+      let errorMessage = error.message;
 
       if (error.suggestion) {
-        errorMessage += `\n\n💡 ${error.suggestion}`
+        errorMessage += `\n\n💡 ${error.suggestion}`;
       }
 
       if (error.context) {
-        errorMessage += `\n\nContext: ${JSON.stringify(error.context, null, 2)}`
+        errorMessage += `\n\nContext: ${JSON.stringify(error.context, null, 2)}`;
       }
 
       return {
@@ -446,10 +419,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           },
         ],
         isError: true,
-      }
+      };
     }
 
-    const errorMessage = error instanceof Error ? error.message : String(error)
+    const errorMessage = error instanceof Error ? error.message : String(error);
     return {
       content: [
         {
@@ -458,6 +431,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         },
       ],
       isError: true,
-    }
+    };
   }
-})
+});

@@ -1,65 +1,53 @@
-import React from 'react';
+import type { TMediaElement, WithRequiredKey } from "platejs";
+import { createPrimitiveComponent, useEditorRef, useElement, useHotkeys } from "platejs/react";
+import React from "react";
 
-import type { TMediaElement, WithRequiredKey } from 'platejs';
+import { FloatingMediaStore } from "./FloatingMediaStore";
+import { submitFloatingMedia } from "./submitFloatingMedia";
 
-import {
-  createPrimitiveComponent,
-  useEditorRef,
-  useElement,
-  useHotkeys,
-} from 'platejs/react';
-
-import { FloatingMediaStore } from './FloatingMediaStore';
-import { submitFloatingMedia } from './submitFloatingMedia';
-
-export const useFloatingMediaUrlInputState = ({
-  plugin,
-}: {
-  plugin: WithRequiredKey;
-}) => {
+export const useFloatingMediaUrlInputState = ({ plugin }: { plugin: WithRequiredKey }) => {
   const editor = useEditorRef();
   const element = useElement<TMediaElement>();
 
   useHotkeys(
-    'enter',
+    "enter",
     (e) => {
       if (submitFloatingMedia(editor, { element, plugin })) {
         e.preventDefault();
       }
     },
     {
-      enableOnFormTags: ['INPUT'],
+      enableOnFormTags: ["INPUT"],
     },
     []
   );
 
   useHotkeys(
-    'escape',
+    "escape",
     () => {
-      if (FloatingMediaStore.get('isEditing')) {
+      if (FloatingMediaStore.get("isEditing")) {
         FloatingMediaStore.actions.reset();
         editor.tf.focus({ at: editor.selection! });
       }
     },
     {
       enableOnContentEditable: true,
-      enableOnFormTags: ['INPUT'],
+      enableOnFormTags: ["INPUT"],
     },
     []
   );
 
   return {
-    defaultValue: FloatingMediaStore.get('url'),
+    defaultValue: FloatingMediaStore.get("url"),
   };
 };
 
 export const useFloatingMediaUrlInput = ({
   defaultValue,
 }: ReturnType<typeof useFloatingMediaUrlInputState>) => {
-  const onChange: React.ChangeEventHandler<HTMLInputElement> =
-    React.useCallback((e) => {
-      FloatingMediaStore.set('url', e.target.value);
-    }, []);
+  const onChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback((e) => {
+    FloatingMediaStore.set("url", e.target.value);
+  }, []);
 
   return {
     props: {
@@ -70,7 +58,7 @@ export const useFloatingMediaUrlInput = ({
   };
 };
 
-export const FloatingMediaUrlInput = createPrimitiveComponent('input')({
+export const FloatingMediaUrlInput = createPrimitiveComponent("input")({
   propsHook: useFloatingMediaUrlInput,
   stateHook: useFloatingMediaUrlInputState,
 });

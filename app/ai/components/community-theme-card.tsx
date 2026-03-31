@@ -1,12 +1,12 @@
 "use client";
 
+import { Moon, MoreVertical, Sun } from "lucide-react";
 import Logo from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useEditorStore } from "@/store/editor-store";
 import { Theme, ThemePreset } from "@/types/theme";
-import { Moon, MoreVertical, Sun } from "lucide-react";
 
 // This is repeating from `dashboard/components/theme-card.tsx`
 type SwatchDefinition = {

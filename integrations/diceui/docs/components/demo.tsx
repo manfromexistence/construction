@@ -9,14 +9,12 @@ export function Demo({ children, className, ...props }: DemoProps) {
       data-slot="demo"
       className={cn(
         "mx-auto grid w-full max-w-3xl grid-cols-1 place-items-center gap-4",
-        className,
+        className
       )}
       {...props}
     >
       {Array.isArray(children) ? (
-        children.map((child, index) => (
-          <DemoItem key={child.key ?? index}>{child}</DemoItem>
-        ))
+        children.map((child, index) => <DemoItem key={child.key ?? index}>{child}</DemoItem>)
       ) : (
         <DemoItem>{children}</DemoItem>
       )}
@@ -32,7 +30,7 @@ function DemoItem({ className, ...props }: DemoItemProps) {
       data-slot="demo-item"
       className={cn(
         "grid min-h-[calc(100svh-10rem)] w-full grid-cols-1 place-items-center",
-        className,
+        className
       )}
       {...props}
     />

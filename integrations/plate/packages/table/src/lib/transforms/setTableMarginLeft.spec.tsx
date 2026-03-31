@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { setTableMarginLeft } from './setTableMarginLeft';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { setTableMarginLeft } from "./setTableMarginLeft";
 
 jsxt;
 
@@ -17,8 +16,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('setTableMarginLeft', () => {
-  it('sets the margin on the matched table node', () => {
+describe("setTableMarginLeft", () => {
+  it("sets the margin on the matched table node", () => {
     const input = (
       <editor>
         <htable>
@@ -45,13 +44,10 @@ describe('setTableMarginLeft', () => {
 
     setTableMarginLeft(editor, { marginLeft: 48 }, { at: [1] });
 
-    expect(editor.children).toMatchObject([
-      { type: 'table' },
-      { marginLeft: 48, type: 'table' },
-    ]);
+    expect(editor.children).toMatchObject([{ type: "table" }, { marginLeft: 48, type: "table" }]);
   });
 
-  it('does nothing when no table matches the requested location', () => {
+  it("does nothing when no table matches the requested location", () => {
     const input = (
       <editor>
         <hp>

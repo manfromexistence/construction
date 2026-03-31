@@ -1,8 +1,7 @@
-import type { SlateEditor } from 'platejs';
+import { getTransientSuggestionKey } from "@platejs/suggestion";
+import type { SlateEditor } from "platejs";
 
-import { getTransientSuggestionKey } from '@platejs/suggestion';
-
-import { cancelAIPreview, hasAIPreview } from './aiStreamSnapshot';
+import { cancelAIPreview, hasAIPreview } from "./aiStreamSnapshot";
 
 export const undoAI = (editor: SlateEditor) => {
   if (hasAIPreview(editor) && cancelAIPreview(editor)) return;

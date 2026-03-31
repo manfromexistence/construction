@@ -1,4 +1,4 @@
-import type { Project } from "../types/projects"
+import type { Project } from "../types/projects";
 
 export const PROJECTS: Project[] = [
   {
@@ -45,8 +45,7 @@ export const PROJECTS: Project[] = [
       "shadcn registry",
       "Vercel",
     ],
-    description:
-      "A minimal, pixel-perfect dev portfolio, shadcn registry, and blog.",
+    description: "A minimal, pixel-perfect dev portfolio, shadcn registry, and blog.",
     logo: "https://assets.chanhdai.com/images/project-logos/chanhdaidotcom.svg",
   },
   {
@@ -76,13 +75,7 @@ export const PROJECTS: Project[] = [
       start: "01.2022",
     },
     link: "https://zadark.com",
-    skills: [
-      "Pet Project",
-      "Open Source",
-      "Browser Extension",
-      "CLI",
-      "Docusaurus 3",
-    ],
+    skills: ["Pet Project", "Open Source", "Browser Extension", "CLI", "Docusaurus 3"],
     description: `ZaDark adds Dark Mode, anti-peeking, customizable fonts, backgrounds, and more to Zalo Web and PC.
 - Earned 10M+ VND in net sales from a paid Safari Extension*
 - 80k+ downloads on SourceForge* (awarded Community Leader badge by SourceForge)
@@ -101,14 +94,7 @@ export const PROJECTS: Project[] = [
       end: "07.2023",
     },
     link: "https://github.com/ncdai/qabox",
-    skills: [
-      "University Project",
-      "PHP",
-      "MySQL",
-      "MVC",
-      "Docker",
-      "Docker Compose",
-    ],
+    skills: ["University Project", "PHP", "MySQL", "MVC", "Docker", "Docker Compose"],
     description:
       "- Course: Distributed Applications — FIT@HCMUS\n- Project Score: 10/10\n- Source Code: https://github.com/ncdai/qabox",
   },
@@ -120,14 +106,7 @@ export const PROJECTS: Project[] = [
       end: "07.2023",
     },
     link: "https://github.com/ncdai/taskbox",
-    skills: [
-      "University Project",
-      "PHP",
-      "MySQL",
-      "MVC",
-      "Docker",
-      "Docker Compose",
-    ],
+    skills: ["University Project", "PHP", "MySQL", "MVC", "Docker", "Docker Compose"],
     description:
       "- Course: Distributed Applications — FIT@HCMUS\n- Project Score: 10/10\n- Source Code: https://github.com/ncdai/taskbox",
   },
@@ -225,16 +204,10 @@ export const PROJECTS: Project[] = [
       end: "12.2017",
     },
     link: "https://www.youtube.com/watch?v=OYgugvjqU4A",
-    skills: [
-      "National Competition",
-      "Creative Software",
-      "PHP",
-      "Laravel 4",
-      "MySQL",
-    ],
+    skills: ["National Competition", "Creative Software", "PHP", "Laravel 4", "MySQL"],
     description: `Study English is a free, mobile-friendly website for high school English learning, offering vocabulary, quizzes, listening practice, and more.
 - Consolation Prize — National Youth and Children's Creativity Contest 2016
 - 1st Prize — Can Tho City Youth and Children's Creativity Contest 2016
 - Consolation Prize — Can Tho City Young Informatics Contest 2016`,
   },
-]
+];

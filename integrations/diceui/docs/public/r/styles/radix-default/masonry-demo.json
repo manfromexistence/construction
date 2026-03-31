@@ -1,8 +1,6 @@
 {
   "name": "masonry-demo",
-  "registryDependencies": [
-    "masonry"
-  ],
+  "registryDependencies": ["masonry"],
   "files": [
     {
       "path": "examples/masonry-demo.tsx",

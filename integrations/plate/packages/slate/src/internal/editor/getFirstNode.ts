@@ -1,10 +1,10 @@
-import { first } from 'slate';
+import { first } from "slate";
 
-import type { DescendantOf, NodeEntry } from '../../interfaces';
-import type { Editor } from '../../interfaces/editor/editor-type';
-import type { At } from '../../types';
+import type { DescendantOf, NodeEntry } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor/editor-type";
+import type { At } from "../../types";
 
-import { getAt } from '../../utils';
+import { getAt } from "../../utils";
 
 export const getFirstNode = <N extends DescendantOf<E>, E extends Editor>(
   editor: E,

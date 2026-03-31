@@ -21,8 +21,7 @@ import { updateTask } from "../lib/actions";
 import { type UpdateTaskSchema, updateTaskSchema } from "../lib/validations";
 import { TaskForm } from "./task-form";
 
-interface UpdateTaskSheetProps
-  extends React.ComponentPropsWithRef<typeof Sheet> {
+interface UpdateTaskSheetProps extends React.ComponentPropsWithRef<typeof Sheet> {
   task: Task | null;
 }
 
@@ -64,9 +63,7 @@ export function UpdateTaskSheet({ task, ...props }: UpdateTaskSheetProps) {
       <SheetContent className="flex flex-col gap-6 sm:max-w-md">
         <SheetHeader className="text-left">
           <SheetTitle>Update task</SheetTitle>
-          <SheetDescription>
-            Update the task details and save the changes
-          </SheetDescription>
+          <SheetDescription>Update the task details and save the changes</SheetDescription>
         </SheetHeader>
         <TaskForm<UpdateTaskSchema> form={form} onSubmit={onSubmit}>
           <SheetFooter className="gap-2 pt-2 sm:space-x-0">
@@ -76,12 +73,7 @@ export function UpdateTaskSheet({ task, ...props }: UpdateTaskSheetProps) {
               </Button>
             </SheetClose>
             <Button disabled={isPending}>
-              {isPending && (
-                <Loader
-                  className="mr-2 size-4 animate-spin"
-                  aria-hidden="true"
-                />
-              )}
+              {isPending && <Loader className="mr-2 size-4 animate-spin" aria-hidden="true" />}
               Save
             </Button>
           </SheetFooter>

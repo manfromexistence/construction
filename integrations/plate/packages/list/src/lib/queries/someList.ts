@@ -1,6 +1,6 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const someList = (editor: SlateEditor, type: string[] | string) =>
   !!editor.selection &&

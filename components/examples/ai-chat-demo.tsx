@@ -1,12 +1,12 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import Message from "@/components/editor/ai/message";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "@/types/ai";
 import { ThemeStyles } from "@/types/theme";
 import { defaultPresets } from "@/utils/theme-presets";
-import { useEffect, useRef } from "react";
 
 export function AIChatDemo({
   disabled = true,

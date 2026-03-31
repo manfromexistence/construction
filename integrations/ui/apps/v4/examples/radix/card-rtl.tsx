@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
 import {
   Card,
   CardAction,
@@ -15,9 +12,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/styles/radix-nova/ui-rtl/card"
-import { Input } from "@/styles/radix-nova/ui-rtl/input"
-import { Label } from "@/styles/radix-nova/ui-rtl/label"
+} from "@/styles/radix-nova/ui-rtl/card";
+import { Input } from "@/styles/radix-nova/ui-rtl/input";
+import { Label } from "@/styles/radix-nova/ui-rtl/label";
 
 const translations: Translations = {
   en: {
@@ -62,10 +59,10 @@ const translations: Translations = {
       loginWithGoogle: "התחבר עם Google",
     },
   },
-}
+};
 
 export function CardRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Card className="w-full max-w-sm" dir={dir}>
@@ -81,12 +78,7 @@ export function CardRtl() {
           <div className="flex flex-col gap-6">
             <div className="grid gap-2">
               <Label htmlFor="email-rtl">{t.email}</Label>
-              <Input
-                id="email-rtl"
-                type="email"
-                placeholder={t.emailPlaceholder}
-                required
-              />
+              <Input id="email-rtl" type="email" placeholder={t.emailPlaceholder} required />
             </div>
             <div className="grid gap-2">
               <div className="flex items-center">
@@ -112,5 +104,5 @@ export function CardRtl() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

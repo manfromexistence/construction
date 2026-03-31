@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/correctness/useJsxKeyInIterable: biome */
-import React from 'react';
+import React from "react";
 
 /**
  * Wrap a component into multiple providers. If there are any props that you

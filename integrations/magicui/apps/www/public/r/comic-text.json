@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Comic Text",
   "description": "Comic text animation",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/comic-text.tsx",

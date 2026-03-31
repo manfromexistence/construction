@@ -1,13 +1,13 @@
-import type { SlateEditor, TElement, TTableCellElement } from 'platejs';
+import type { SlateEditor, TElement, TTableCellElement } from "platejs";
 
-import type { BorderDirection } from '../types';
+import type { BorderDirection } from "../types";
 
-import { getCellIndices, getCellTypes } from '../utils';
-import { getColSpan } from './getColSpan';
-import { getLeftTableCell } from './getLeftTableCell';
-import { getRowSpan } from './getRowSpan';
-import { getSelectedCellsBoundingBox } from './getSelectedCellsBoundingBox';
-import { getTopTableCell } from './getTopTableCell';
+import { getCellIndices, getCellTypes } from "../utils";
+import { getColSpan } from "./getColSpan";
+import { getLeftTableCell } from "./getLeftTableCell";
+import { getRowSpan } from "./getRowSpan";
+import { getSelectedCellsBoundingBox } from "./getSelectedCellsBoundingBox";
+import { getTopTableCell } from "./getTopTableCell";
 
 export type GetSelectedCellsBordersOptions = {
   select?: {
@@ -65,10 +65,7 @@ export const getSelectedCellsBorders = (
   const cellElements = cells.map((cell) => cell as TTableCellElement);
 
   // Get bounding box once
-  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(
-    editor,
-    cellElements
-  );
+  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(editor, cellElements);
 
   // Track border states
   let hasAnyBorder = false;
@@ -94,8 +91,7 @@ export const getSelectedCellsBorders = (
     if (select.none && !hasAnyBorder) {
       // Check own borders
       if (isFirstRow && (cell.borders?.top?.size ?? 1) > 0) hasAnyBorder = true;
-      if (isFirstCell && (cell.borders?.left?.size ?? 1) > 0)
-        hasAnyBorder = true;
+      if (isFirstCell && (cell.borders?.left?.size ?? 1) > 0) hasAnyBorder = true;
       if ((cell.borders?.bottom?.size ?? 1) > 0) hasAnyBorder = true;
       if ((cell.borders?.right?.size ?? 1) > 0) hasAnyBorder = true;
       // Check adjacent cells if still no border found
@@ -103,20 +99,14 @@ export const getSelectedCellsBorders = (
         if (!isFirstRow) {
           const cellAboveEntry = getTopTableCell(editor, { at: cellPath });
 
-          if (
-            cellAboveEntry &&
-            (cellAboveEntry[0].borders?.bottom?.size ?? 1) > 0
-          ) {
+          if (cellAboveEntry && (cellAboveEntry[0].borders?.bottom?.size ?? 1) > 0) {
             hasAnyBorder = true;
           }
         }
         if (!isFirstCell) {
           const prevCellEntry = getLeftTableCell(editor, { at: cellPath });
 
-          if (
-            prevCellEntry &&
-            (prevCellEntry[0].borders?.right?.size ?? 1) > 0
-          ) {
+          if (prevCellEntry && (prevCellEntry[0].borders?.right?.size ?? 1) > 0) {
             hasAnyBorder = true;
           }
         }
@@ -205,9 +195,7 @@ export const getSelectedCellsBorders = (
   }
 
   return {
-    ...(select.side
-      ? borderStates
-      : { bottom: true, left: true, right: true, top: true }),
+    ...(select.side ? borderStates : { bottom: true, left: true, right: true, top: true }),
     none: select.none ? !hasAnyBorder : false,
     outer: select.outer ? allOuterBordersSet : true,
   };
@@ -269,10 +257,7 @@ export function isSelectedCellBordersOuter(
   editor: SlateEditor,
   cells: TTableCellElement[]
 ): boolean {
-  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(
-    editor,
-    cells
-  );
+  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(editor, cells);
 
   // For each cell, figure out which edges are relevant on the bounding rect
   // and confirm they are all size=1
@@ -285,8 +270,7 @@ export function isSelectedCellBordersOuter(
       for (let cc = col; cc < col + cSpan; cc++) {
         // If on top boundary => must have top=1, etc.
         if (rr === minRow && (cell.borders?.top?.size ?? 1) < 1) return false;
-        if (rr === maxRow && (cell.borders?.bottom?.size ?? 1) < 1)
-          return false;
+        if (rr === maxRow && (cell.borders?.bottom?.size ?? 1) < 1) return false;
         if (cc === minCol && (cell.borders?.left?.size ?? 1) < 1) return false;
         if (cc === maxCol && (cell.borders?.right?.size ?? 1) < 1) return false;
       }
@@ -306,10 +290,7 @@ export function isSelectedCellBorder(
   cells: TTableCellElement[],
   side: BorderDirection
 ): boolean {
-  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(
-    editor,
-    cells
-  );
+  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(editor, cells);
 
   return cells.every((cell) => {
     const { col, row } = getCellIndices(editor, cell);
@@ -321,7 +302,7 @@ export function isSelectedCellBorder(
 
     for (let rr = row; rr < row + rSpan; rr++) {
       for (let cc = col; cc < col + cSpan; cc++) {
-        if (side === 'top' && rr === minRow) {
+        if (side === "top" && rr === minRow) {
           const isFirstRow = row === 0;
 
           if (isFirstRow) {
@@ -336,10 +317,10 @@ export function isSelectedCellBorder(
 
           return (cellAboveNode.borders?.bottom?.size ?? 1) >= 1;
         }
-        if (side === 'bottom' && rr === maxRow) {
+        if (side === "bottom" && rr === maxRow) {
           return (cell.borders?.bottom?.size ?? 1) >= 1;
         }
-        if (side === 'left' && cc === minCol) {
+        if (side === "left" && cc === minCol) {
           const isFirstCell = col === 0;
 
           if (isFirstCell) {
@@ -354,7 +335,7 @@ export function isSelectedCellBorder(
 
           return (prevCellNode.borders?.right?.size ?? 1) >= 1;
         }
-        if (side === 'right' && cc === maxCol) {
+        if (side === "right" && cc === maxCol) {
           return (cell.borders?.right?.size ?? 1) >= 1;
         }
       }

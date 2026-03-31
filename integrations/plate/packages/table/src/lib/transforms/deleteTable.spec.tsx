@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { deleteTable } from './deleteTable';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { deleteTable } from "./deleteTable";
 
 jsxt;
 
@@ -17,8 +16,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('deleteTable', () => {
-  it('removes the current table and keeps surrounding blocks', () => {
+describe("deleteTable", () => {
+  it("removes the current table and keeps surrounding blocks", () => {
     const input = (
       <editor>
         <hp>before</hp>
@@ -41,12 +40,12 @@ describe('deleteTable', () => {
     deleteTable(editor);
 
     expect(editor.children).toMatchObject([
-      { children: [{ text: 'before' }], type: 'p' },
-      { children: [{ text: 'after' }], type: 'p' },
+      { children: [{ text: "before" }], type: "p" },
+      { children: [{ text: "after" }], type: "p" },
     ]);
   });
 
-  it('does nothing when the selection is outside a table', () => {
+  it("does nothing when the selection is outside a table", () => {
     const input = (
       <editor>
         <hp>

@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -9,8 +9,8 @@ export const blockSelectionValue: any = (
     <hh2>Block Selection</hh2>
     <hp>
       <htext>
-        Block selection allows you to select multiple blocks at once.You can
-        initiate a selection by clicking and dragging from the editor padding.
+        Block selection allows you to select multiple blocks at once.You can initiate a selection by
+        clicking and dragging from the editor padding.
       </htext>
     </hp>
     <hp>Key features of block selection:</hp>
@@ -18,8 +18,8 @@ export const blockSelectionValue: any = (
       <htext>Select multiple blocks.</htext>
     </hp>
     <hp indent={1} listStyleType="disc">
-      Keep pressing Shift to keep the previous selection. That way, you can
-      select non-contiguous blocks.
+      Keep pressing Shift to keep the previous selection. That way, you can select non-contiguous
+      blocks.
     </hp>
     <hp indent={1} listStyleType="disc">
       <htext>Perform bulk actions on selected blocks</htext>

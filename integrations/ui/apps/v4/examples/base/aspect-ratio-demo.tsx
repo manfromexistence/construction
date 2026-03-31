@@ -1,6 +1,6 @@
-import Image from "next/image"
+import Image from "next/image";
 
-import { AspectRatio } from "@/styles/base-nova/ui/aspect-ratio"
+import { AspectRatio } from "@/styles/base-nova/ui/aspect-ratio";
 
 export default function AspectRatioDemo() {
   return (
@@ -12,5 +12,5 @@ export default function AspectRatioDemo() {
         className="rounded-lg object-cover grayscale dark:brightness-20"
       />
     </AspectRatio>
-  )
+  );
 }

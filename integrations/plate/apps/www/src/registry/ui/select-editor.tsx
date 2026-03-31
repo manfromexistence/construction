@@ -1,34 +1,24 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-
-import { isEqualTags } from '@platejs/tag';
+import { isEqualTags } from "@platejs/tag";
 import {
   MultiSelectPlugin,
   TagPlugin,
   useSelectableItems,
   useSelectEditorCombobox,
-} from '@platejs/tag/react';
-import { Command as CommandPrimitive, useCommandActions } from '@udecode/cmdk';
-import { Fzf } from 'fzf';
-import { PlusIcon } from 'lucide-react';
-import { isHotkey, KEYS } from 'platejs';
-import {
-  Plate,
-  useEditorContainerRef,
-  useEditorRef,
-  usePlateEditor,
-} from 'platejs/react';
+} from "@platejs/tag/react";
+import { Command as CommandPrimitive, useCommandActions } from "@udecode/cmdk";
+import { Fzf } from "fzf";
+import { PlusIcon } from "lucide-react";
+import { isHotkey, KEYS } from "platejs";
+import { Plate, useEditorContainerRef, useEditorRef, usePlateEditor } from "platejs/react";
+import * as React from "react";
 
-import {
-  Popover,
-  PopoverAnchor,
-  PopoverContent,
-} from '@/components/ui/popover';
-import { cn } from '@/lib/utils';
+import { Popover, PopoverAnchor, PopoverContent } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 
-import { Editor, EditorContainer } from './editor';
-import { TagElement } from './tag-node';
+import { Editor, EditorContainer } from "./editor";
+import { TagElement } from "./tag-node";
 
 export type SelectItem = {
   value: string;
@@ -44,15 +34,13 @@ type SelectEditorContextValue = {
   onValueChange?: (items: SelectItem[]) => void;
 };
 
-const SelectEditorContext = React.createContext<
-  SelectEditorContextValue | undefined
->(undefined);
+const SelectEditorContext = React.createContext<SelectEditorContextValue | undefined>(undefined);
 
 const useSelectEditorContext = () => {
   const context = React.useContext(SelectEditorContext);
 
   if (!context) {
-    throw new Error('useSelectEditor must be used within SelectEditor');
+    throw new Error("useSelectEditor must be used within SelectEditor");
   }
 
   return context;
@@ -95,11 +83,7 @@ export function SelectEditor({
   );
 }
 
-export function SelectEditorContent({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export function SelectEditorContent({ children }: { children: React.ReactNode }) {
   const { value } = useSelectEditorContext();
   const { setSearch } = useCommandActions();
 
@@ -152,12 +136,12 @@ export const SelectEditorInput = ({
         selectFirstItem();
       }}
       onKeyDown={(e) => {
-        if (isHotkey('enter', e)) {
+        if (isHotkey("enter", e)) {
           e.preventDefault();
           selectCurrentItem();
           editor.tf.removeNodes({ at: [], empty: false, text: true });
         }
-        if (isHotkey('escape', e) || isHotkey('mod+enter', e)) {
+        if (isHotkey("escape", e) || isHotkey("mod+enter", e)) {
           e.preventDefault();
           e.currentTarget.blur();
         }
@@ -229,15 +213,15 @@ export function SelectEditorCombobox() {
 const createEditorValue = (value?: SelectItem[]) => [
   {
     children: [
-      { text: '' },
+      { text: "" },
       ...(value?.flatMap((item) => [
         {
-          children: [{ text: '' }],
+          children: [{ text: "" }],
           type: KEYS.tag,
           ...item,
         },
         {
-          text: '',
+          text: "",
         },
       ]) ?? []),
     ],
@@ -249,7 +233,7 @@ const fzfFilter = (value: string, search: string): boolean => {
   if (!search) return true;
 
   const fzf = new Fzf([value], {
-    casing: 'case-insensitive',
+    casing: "case-insensitive",
     selector: (v: string) => v,
   });
 
@@ -260,14 +244,11 @@ const fzfFilter = (value: string, search: string): boolean => {
  * You could replace this with import from '@/components/ui/command' + replace
  * 'cmdk' import with '@udecode/cmdk'
  */
-function Command({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive>) {
+function Command({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) {
   return (
     <CommandPrimitive
       className={cn(
-        'flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground',
+        "flex h-full w-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",
         className
       )}
       data-slot="command"
@@ -276,16 +257,10 @@ function Command({
   );
 }
 
-function CommandList({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.List>) {
+function CommandList({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.List>) {
   return (
     <CommandPrimitive.List
-      className={cn(
-        'max-h-[300px] scroll-py-1 overflow-y-auto overflow-x-hidden',
-        className
-      )}
+      className={cn("max-h-[300px] scroll-py-1 overflow-y-auto overflow-x-hidden", className)}
       data-slot="command-list"
       {...props}
     />
@@ -299,7 +274,7 @@ function CommandGroup({
   return (
     <CommandPrimitive.Group
       className={cn(
-        'overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-xs',
+        "overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:text-xs",
         className
       )}
       data-slot="command-group"
@@ -308,10 +283,7 @@ function CommandGroup({
   );
 }
 
-function CommandItem({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Item>) {
+function CommandItem({ className, ...props }: React.ComponentProps<typeof CommandPrimitive.Item>) {
   return (
     <CommandPrimitive.Item
       className={cn(

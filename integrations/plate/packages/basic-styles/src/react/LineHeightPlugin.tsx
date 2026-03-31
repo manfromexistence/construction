@@ -1,5 +1,5 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseLineHeightPlugin } from '../lib';
+import { BaseLineHeightPlugin } from "../lib";
 
 export const LineHeightPlugin = toPlatePlugin(BaseLineHeightPlugin);

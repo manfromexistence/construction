@@ -1,12 +1,12 @@
-import { IconCheck, IconInfoCircle, IconPlus } from "@tabler/icons-react"
-import { ArrowUpIcon, Search } from "lucide-react"
+import { IconCheck, IconInfoCircle, IconPlus } from "@tabler/icons-react";
+import { ArrowUpIcon, Search } from "lucide-react";
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
+} from "@/styles/radix-nova/ui/dropdown-menu";
 import {
   InputGroup,
   InputGroupAddon,
@@ -14,13 +14,9 @@ import {
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea,
-} from "@/styles/radix-nova/ui/input-group"
-import { Separator } from "@/styles/radix-nova/ui/separator"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/radix-nova/ui/tooltip"
+} from "@/styles/radix-nova/ui/input-group";
+import { Separator } from "@/styles/radix-nova/ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/radix-nova/ui/tooltip";
 
 export function InputGroupDemo() {
   return (
@@ -40,11 +36,7 @@ export function InputGroupDemo() {
         <InputGroupAddon align="inline-end">
           <Tooltip>
             <TooltipTrigger asChild>
-              <InputGroupButton
-                className="rounded-full"
-                size="icon-xs"
-                aria-label="Info"
-              >
+              <InputGroupButton className="rounded-full" size="icon-xs" aria-label="Info">
                 <IconInfoCircle />
               </InputGroupButton>
             </TooltipTrigger>
@@ -75,11 +67,7 @@ export function InputGroupDemo() {
           </DropdownMenu>
           <InputGroupText className="ml-auto">52% used</InputGroupText>
           <Separator orientation="vertical" className="h-4!" />
-          <InputGroupButton
-            variant="default"
-            className="rounded-full"
-            size="icon-xs"
-          >
+          <InputGroupButton variant="default" className="rounded-full" size="icon-xs">
             <ArrowUpIcon />
             <span className="sr-only">Send</span>
           </InputGroupButton>
@@ -94,5 +82,5 @@ export function InputGroupDemo() {
         </InputGroupAddon>
       </InputGroup>
     </div>
-  )
+  );
 }

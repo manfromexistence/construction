@@ -1,11 +1,7 @@
 {
   "name": "combobox-custom-filter-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "combobox"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["combobox"],
   "files": [
     {
       "path": "examples/combobox-custom-filter-demo.tsx",

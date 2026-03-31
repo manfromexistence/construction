@@ -1,8 +1,8 @@
-import { SPACE } from 'platejs';
+import { SPACE } from "platejs";
 
 export const getRtfImageHex = (imageData: string): string | null => {
-  const [, bliptagData = ''] = imageData.split('bliptag');
-  const bracketSplit = bliptagData.split('}');
+  const [, bliptagData = ""] = imageData.split("bliptag");
+  const bracketSplit = bliptagData.split("}");
 
   if (bracketSplit.length < 2) {
     return null;
@@ -10,8 +10,8 @@ export const getRtfImageHex = (imageData: string): string | null => {
 
   const [beforeBracket, afterBracket] = bracketSplit;
 
-  if (bracketSplit.length > 2 && beforeBracket.includes('blipuid')) {
-    return afterBracket.split(SPACE).join('');
+  if (bracketSplit.length > 2 && beforeBracket.includes("blipuid")) {
+    return afterBracket.split(SPACE).join("");
   }
 
   const spaceSplit = beforeBracket.split(SPACE);
@@ -20,5 +20,5 @@ export const getRtfImageHex = (imageData: string): string | null => {
     return null;
   }
 
-  return spaceSplit.slice(1).join('');
+  return spaceSplit.slice(1).join("");
 };

@@ -1,4 +1,4 @@
-import { Field, FieldError, FieldLabel } from "@/styles/base-nova/ui/field"
+import { Field, FieldError, FieldLabel } from "@/styles/base-nova/ui/field";
 import {
   Select,
   SelectContent,
@@ -6,14 +6,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/base-nova/ui/select"
+} from "@/styles/base-nova/ui/select";
 
 const items = [
   { label: "Select a fruit", value: null },
   { label: "Apple", value: "apple" },
   { label: "Banana", value: "banana" },
   { label: "Blueberry", value: "blueberry" },
-]
+];
 
 export function SelectInvalid() {
   return (
@@ -35,5 +35,5 @@ export function SelectInvalid() {
       </Select>
       <FieldError>Please select a fruit.</FieldError>
     </Field>
-  )
+  );
 }

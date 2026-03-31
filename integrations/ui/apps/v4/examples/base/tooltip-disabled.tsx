@@ -1,9 +1,5 @@
-import { Button } from "@/styles/base-nova/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/base-nova/ui/tooltip"
+import { Button } from "@/styles/base-nova/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/base-nova/ui/tooltip";
 
 export function TooltipDisabled() {
   return (
@@ -19,5 +15,5 @@ export function TooltipDisabled() {
         </TooltipContent>
       </Tooltip>
     </>
-  )
+  );
 }

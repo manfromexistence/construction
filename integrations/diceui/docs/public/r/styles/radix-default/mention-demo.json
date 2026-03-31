@@ -1,9 +1,6 @@
 {
   "name": "mention-demo",
-  "dependencies": [
-    "@diceui/mention",
-    "lucide-react"
-  ],
+  "dependencies": ["@diceui/mention", "lucide-react"],
   "files": [
     {
       "path": "examples/mention-demo.tsx",

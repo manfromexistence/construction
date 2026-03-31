@@ -1,15 +1,8 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/radix-nova/ui-rtl/tooltip"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/radix-nova/ui-rtl/tooltip";
 
 const translations: Translations = {
   en: {
@@ -42,12 +35,12 @@ const translations: Translations = {
       right: "ימין",
     },
   },
-}
+};
 
-const sides = ["left", "top", "bottom", "right"] as const
+const sides = ["left", "top", "bottom", "right"] as const;
 
 export function TooltipRtl() {
-  const { t } = useTranslation(translations, "ar")
+  const { t } = useTranslation(translations, "ar");
 
   return (
     <div className="flex flex-wrap gap-2">
@@ -62,5 +55,5 @@ export function TooltipRtl() {
         </Tooltip>
       ))}
     </div>
-  )
+  );
 }

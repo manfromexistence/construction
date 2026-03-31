@@ -1,15 +1,7 @@
 {
   "name": "media-player-error-demo",
-  "dependencies": [
-    "lucide-react",
-    "media-chrome"
-  ],
-  "registryDependencies": [
-    "button",
-    "media-player",
-    "slider",
-    "tooltip"
-  ],
+  "dependencies": ["lucide-react", "media-chrome"],
+  "registryDependencies": ["button", "media-player", "slider", "tooltip"],
   "files": [
     {
       "path": "examples/media-player-error-demo.tsx",

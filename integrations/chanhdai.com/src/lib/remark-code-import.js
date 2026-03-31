@@ -8,13 +8,7 @@ import path from "node:path";
 import stripIndent from "strip-indent";
 import { visit } from "unist-util-visit";
 
-function extractLines(
-  content,
-  fromLine,
-  hasDash,
-  toLine,
-  preserveTrailingNewline = false
-) {
+function extractLines(content, fromLine, hasDash, toLine, preserveTrailingNewline = false) {
   const lines = content.split(EOL);
   const start = fromLine || 1;
 
@@ -57,10 +51,9 @@ export function remarkCodeImport(options = {}) {
         continue;
       }
 
-      const res =
-        /^file=(?<path>.+?)(?:(?:#(?:L(?<from>\d+)(?<dash>-)?)?)(?:L(?<to>\d+))?)?$/.exec(
-          fileMeta
-        );
+      const res = /^file=(?<path>.+?)(?:(?:#(?:L(?<from>\d+)(?<dash>-)?)?)(?:L(?<to>\d+))?)?$/.exec(
+        fileMeta
+      );
 
       if (!res || !res.groups || !res.groups.path) {
         throw new Error(`Unable to parse file path ${fileMeta}`);
@@ -68,17 +61,13 @@ export function remarkCodeImport(options = {}) {
 
       const filePath = res.groups.path;
 
-      const fromLine = res.groups.from
-        ? parseInt(res.groups.from, 10)
-        : undefined;
+      const fromLine = res.groups.from ? parseInt(res.groups.from, 10) : undefined;
 
       const hasDash = !!res.groups.dash || fromLine === undefined;
 
       const toLine = res.groups.to ? parseInt(res.groups.to, 10) : undefined;
 
-      const normalizedFilePath = filePath
-        .replace(/^@/, rootDir)
-        .replace(/\\ /g, " ");
+      const normalizedFilePath = filePath.replace(/^@/, rootDir).replace(/\\ /g, " ");
 
       const fileAbsPath = path.resolve(file.dirname, normalizedFilePath);
 

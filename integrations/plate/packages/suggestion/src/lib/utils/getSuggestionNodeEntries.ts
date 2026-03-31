@@ -1,12 +1,12 @@
 import {
+  combineMatchOptions,
   type EditorNodesOptions,
   type SlateEditor,
   type TSuggestionText,
   type ValueOf,
-  combineMatchOptions,
-} from 'platejs';
+} from "platejs";
 
-import { getSuggestionKey } from './getSuggestionKeys';
+import { getSuggestionKey } from "./getSuggestionKeys";
 
 export const getSuggestionNodeEntries = <E extends SlateEditor>(
   editor: E,

@@ -1,14 +1,13 @@
+import { Button } from "@/app/_components/ui/button";
 import {
   Dialog,
-  DialogTrigger,
+  DialogClose,
   DialogContent,
-  DialogTitle,
   DialogDescription,
   DialogFooter,
-  DialogClose,
+  DialogTitle,
+  DialogTrigger,
 } from "@/app/_components/ui/dialog";
-
-import { Button } from "@/app/_components/ui/button";
 import { Input } from "@/app/_components/ui/input";
 
 export function DialogExample() {
@@ -21,9 +20,7 @@ export function DialogExample() {
         <DialogTitle asChild>
           <span className="block">Change Username</span>
         </DialogTitle>
-        <DialogDescription>
-          Make changes to your username here.
-        </DialogDescription>
+        <DialogDescription>Make changes to your username here.</DialogDescription>
         <div className="mb-[15px] flex items-center gap-4 px-6 py-4">
           <Input placeholder="@guhrodrrigues" className="w-full" />
         </div>

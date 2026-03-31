@@ -1,6 +1,6 @@
-import type { SlateEditor, TElement, TTableCellElement } from 'platejs';
+import type { SlateEditor, TElement, TTableCellElement } from "platejs";
 
-import { getCellTypes } from '../utils/getCellType';
+import { getCellTypes } from "../utils/getCellType";
 
 export const setCellBackground = (
   editor: SlateEditor,

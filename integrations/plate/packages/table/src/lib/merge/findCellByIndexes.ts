@@ -1,7 +1,7 @@
-import type { SlateEditor, TTableCellElement, TTableElement } from 'platejs';
+import type { SlateEditor, TTableCellElement, TTableElement } from "platejs";
 
-import { getCellIndices } from '../utils/getCellIndices';
-import { getCellIndicesWithSpans } from './getCellIndicesWithSpans';
+import { getCellIndices } from "../utils/getCellIndices";
+import { getCellIndicesWithSpans } from "./getCellIndicesWithSpans";
 
 export const findCellByIndexes = (
   editor: SlateEditor,
@@ -9,18 +9,13 @@ export const findCellByIndexes = (
   searchRowIndex: number,
   searchColIndex: number
 ) => {
-  const allCells = table.children.flatMap(
-    (current) => current.children
-  ) as TTableCellElement[];
+  const allCells = table.children.flatMap((current) => current.children) as TTableCellElement[];
 
   const foundCell = allCells.find((cellNode) => {
     const indices = getCellIndices(editor, cellNode);
 
     const { col: _startColIndex, row: _startRowIndex } = indices;
-    const { col: _endColIndex, row: _endRowIndex } = getCellIndicesWithSpans(
-      indices,
-      cellNode
-    );
+    const { col: _endColIndex, row: _endRowIndex } = getCellIndicesWithSpans(indices, cellNode);
 
     if (
       searchColIndex >= _startColIndex &&

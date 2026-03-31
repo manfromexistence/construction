@@ -4,24 +4,24 @@
  */
 
 import {
-  type Descendant,
-  type Operation,
-  type TText,
   createEditor,
+  type Descendant,
   KEYS,
+  type Operation,
   PathApi,
   TextApi,
-} from 'platejs';
+  type TText,
+} from "platejs";
 
-import type { ComputeDiffOptions } from '../../lib/computeDiff';
+import type { ComputeDiffOptions } from "../../lib/computeDiff";
 
-import { computeDiff } from '../../lib/computeDiff';
-import { dmp } from '../utils/dmp';
-import { getProperties } from '../utils/get-properties';
-import { InlineNodeCharMap } from '../utils/inline-node-char-map';
-import { isEqual } from '../utils/is-equal';
-import { unusedCharGenerator } from '../utils/unused-char-generator';
-import { withChangeTracking } from '../utils/with-change-tracking';
+import { computeDiff } from "../../lib/computeDiff";
+import { dmp } from "../utils/dmp";
+import { getProperties } from "../utils/get-properties";
+import { InlineNodeCharMap } from "../utils/inline-node-char-map";
+import { isEqual } from "../utils/is-equal";
+import { unusedCharGenerator } from "../utils/unused-char-generator";
+import { withChangeTracking } from "../utils/with-change-tracking";
 
 // Main function to transform an array of text nodes into another array of text nodes
 export function transformDiffTexts(
@@ -30,9 +30,8 @@ export function transformDiffTexts(
   options: ComputeDiffOptions
 ): Descendant[] {
   // Validate input - both arrays must have at least one node
-  if (nodes.length === 0) throw new Error('must have at least one nodes');
-  if (nextNodes.length === 0)
-    throw new Error('must have at least one nextNodes');
+  if (nodes.length === 0) throw new Error("must have at least one nodes");
+  if (nextNodes.length === 0) throw new Error("must have at least one nextNodes");
 
   // Special handling for single inline elements that might be related
   if (
@@ -48,11 +47,7 @@ export function transformDiffTexts(
     const nextElement = nextNodes[0] as any;
 
     // If they have the same type and properties (except children), diff their children
-    if (
-      element.type === nextElement.type &&
-      element.children &&
-      nextElement.children
-    ) {
+    if (element.type === nextElement.type && element.children && nextElement.children) {
       // Check if they're equal except for children
       const { children: _1, ...elementProps } = element;
       const { children: _2, ...nextElementProps } = nextElement;
@@ -63,11 +58,7 @@ export function transformDiffTexts(
         })
       ) {
         // Recursively diff the children
-        const diffedChildren = computeDiff(
-          element.children,
-          nextElement.children,
-          options
-        );
+        const diffedChildren = computeDiff(element.children, nextElement.children, options);
 
         return [
           {
@@ -88,7 +79,7 @@ export function transformDiffTexts(
       .concat(nextNodes)
       .filter(TextApi.isText)
       .map((n) => n.text)
-      .join(''),
+      .join(""),
   });
 
   /**
@@ -96,12 +87,8 @@ export function transformDiffTexts(
    * have a length of 1 to keep the offsets consistent. `lineBreakChar` itself
    * may have any length.
    */
-  const insertedLineBreakProxyChar = hasLineBreakChar
-    ? charGenerator.next().value
-    : undefined;
-  const deletedLineBreakProxyChar = hasLineBreakChar
-    ? charGenerator.next().value
-    : undefined;
+  const insertedLineBreakProxyChar = hasLineBreakChar ? charGenerator.next().value : undefined;
+  const deletedLineBreakProxyChar = hasLineBreakChar ? charGenerator.next().value : undefined;
 
   const inlineNodeCharMap = new InlineNodeCharMap({
     charGenerator,
@@ -125,7 +112,7 @@ export function transformDiffTexts(
           path: [0, 1],
           position: 0, // Required by type; not actually used here
           properties: {}, // Required by type; not actually used here
-          type: 'merge_node',
+          type: "merge_node",
         });
         // Update the node's text with the merged text (for splitTextNodes)
         node = { ...node, text: node.text + texts[i].text };
@@ -192,10 +179,8 @@ function slateTextDiff(
         operations.push({
           offset,
           text:
-            deletedLineBreakChar === undefined
-              ? text
-              : text.replaceAll('\n', deletedLineBreakChar),
-          type: 'remove_text',
+            deletedLineBreakChar === undefined ? text : text.replaceAll("\n", deletedLineBreakChar),
+          type: "remove_text",
         });
 
         break;
@@ -213,8 +198,8 @@ function slateTextDiff(
           text:
             insertedLineBreakChar === undefined
               ? text
-              : text.replaceAll('\n', insertedLineBreakChar),
-          type: 'insert_text',
+              : text.replaceAll("\n", insertedLineBreakChar),
+          type: "insert_text",
         });
         // Move the offset forward by the length of the inserted text
         offset += text.length;
@@ -240,24 +225,20 @@ via a combination of remove_text/insert_text as above and split_node
 operations.
 */
 // Function to split a single text node into multiple nodes based on the desired target state
-function splitTextNodes(
-  node: TText,
-  split: TText[],
-  options: LineBreakCharsOptions
-): Operation[] {
+function splitTextNodes(node: TText, split: TText[], options: LineBreakCharsOptions): Operation[] {
   if (split.length === 0) {
     // If there are no target nodes, simply remove the original node
     return [
       {
         node,
         path: [0, 0],
-        type: 'remove_node',
+        type: "remove_node",
       },
     ];
   }
 
   // Start with the concatenated text of the target state
-  let splitText = '';
+  let splitText = "";
 
   for (const { text } of split) {
     splitText += text;
@@ -285,7 +266,7 @@ function splitTextNodes(
       newProperties,
       path: [0, 0],
       properties: getProperties(node),
-      type: 'set_node',
+      type: "set_node",
     });
   }
 
@@ -309,7 +290,7 @@ function splitTextNodes(
       path: splitPath,
       position: part.text.length,
       properties: newProps,
-      type: 'split_node',
+      type: "split_node",
     });
 
     splitPath = PathApi.next(splitPath);
@@ -342,5 +323,5 @@ function getKeysLength(obj: object | null | undefined): number {
 type Op = {
   offset: number;
   text: string;
-  type: 'insert_text' | 'remove_text';
+  type: "insert_text" | "remove_text";
 };

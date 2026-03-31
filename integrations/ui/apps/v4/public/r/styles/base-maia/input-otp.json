@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input-otp",
-  "dependencies": [
-    "input-otp"
-  ],
+  "dependencies": ["input-otp"],
   "files": [
     {
       "path": "registry/base-maia/ui/input-otp.tsx",

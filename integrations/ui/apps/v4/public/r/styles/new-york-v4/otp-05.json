@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "otp-05",
   "description": "A simple OTP form with social providers.",
-  "registryDependencies": [
-    "button",
-    "input-otp",
-    "label",
-    "field"
-  ],
+  "registryDependencies": ["button", "input-otp", "label", "field"],
   "files": [
     {
       "path": "registry/new-york-v4/blocks/otp-05/page.tsx",
@@ -21,9 +16,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "otp"
-  ],
+  "categories": ["authentication", "otp"],
   "type": "registry:block"
 }

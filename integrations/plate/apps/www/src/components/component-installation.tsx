@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 
-import type { RegistryItem } from 'shadcn/registry';
+import type { RegistryItem } from "shadcn/registry";
 
-import { BlockCode } from '@/components/block-viewer';
-import { ComponentPreviewPro } from '@/components/component-preview-pro';
-import { siteConfig } from '@/config/site';
-import { getRegistryTitle } from '@/lib/registry-utils';
+import { BlockCode } from "@/components/block-viewer";
+import { ComponentPreviewPro } from "@/components/component-preview-pro";
+import { siteConfig } from "@/config/site";
+import { getRegistryTitle } from "@/lib/registry-utils";
 
-import { CodeBlock } from './codeblock';
-import { ComponentPreview } from './component-preview';
-import { H2, H3, Step, Steps } from './typography';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { CodeBlock } from "./codeblock";
+import { ComponentPreview } from "./component-preview";
+import { H2, H3, Step, Steps } from "./typography";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 type ComponentInstallationProps = {
   __dependencies__?: string;
@@ -32,28 +32,26 @@ type ComponentInstallationProps = {
 };
 
 export function ComponentInstallation({
-  __dependencies__: __registryDependencies__ = '[]',
-  __highlightedFiles__: __highlightedFilesProp__ = '[]',
-  __item__: __itemProp__ = '[]',
-  __previewDependencies__ = '[]',
-  __previewFiles__ = '[]',
-  __tree__: __treeProp__ = '[]',
+  __dependencies__: __registryDependencies__ = "[]",
+  __highlightedFiles__: __highlightedFilesProp__ = "[]",
+  __item__: __itemProp__ = "[]",
+  __previewDependencies__ = "[]",
+  __previewFiles__ = "[]",
+  __tree__: __treeProp__ = "[]",
   examples,
   inline,
   name,
   usage,
   ...props
 }: ComponentInstallationProps) {
-  const dependencies =
-    props.dependencies ?? JSON.parse(__registryDependencies__) ?? [];
+  const dependencies = props.dependencies ?? JSON.parse(__registryDependencies__) ?? [];
 
   // Let React Compiler optimize these - no manual memoization needed
   const item = props.item ?? JSON.parse(__itemProp__);
-  const highlightedFiles =
-    props.highlightedFiles ?? JSON.parse(__highlightedFilesProp__);
+  const highlightedFiles = props.highlightedFiles ?? JSON.parse(__highlightedFilesProp__);
   const tree = props.tree ?? JSON.parse(__treeProp__);
 
-  const dependenciesString = dependencies.join(' ');
+  const dependenciesString = dependencies.join(" ");
 
   return (
     <div className="mt-4 mb-12">
@@ -119,7 +117,7 @@ export function ComponentInstallation({
 
           <div className="mb-12">
             {examples.map((example) => {
-              const isPro = example.name.endsWith('-pro');
+              const isPro = example.name.endsWith("-pro");
 
               if (isPro) {
                 return (
@@ -127,7 +125,7 @@ export function ComponentInstallation({
                     <H3>Plate Plus</H3>
 
                     <ComponentPreviewPro
-                      id={example.name.replace('-pro', '')}
+                      id={example.name.replace("-pro", "")}
                       description={example.description}
                     />
                   </React.Fragment>
@@ -136,7 +134,7 @@ export function ComponentInstallation({
 
               return (
                 <ComponentPreview
-                  id={example.name.replace('-demo', '')}
+                  id={example.name.replace("-demo", "")}
                   name={example.name}
                   key={example.name}
                   dependencies={example.dependencies}

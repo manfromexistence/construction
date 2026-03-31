@@ -1,18 +1,18 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsx;
 
-describe('getMarks', () => {
-  it('returns marks at a collapsed text selection', () => {
+describe("getMarks", () => {
+  it("returns marks at a collapsed text selection", () => {
     const editor = createEditor({
       children: [
         {
-          children: [{ text: 'plain' }, { bold: true, text: 'text' }],
-          type: 'p',
+          children: [{ text: "plain" }, { bold: true, text: "text" }],
+          type: "p",
         },
       ] as any,
       selection: {
@@ -24,16 +24,16 @@ describe('getMarks', () => {
     expect(editor.api.marks()).toEqual({ bold: true });
   });
 
-  it('returns the common marks across an expanded selection', () => {
+  it("returns the common marks across an expanded selection", () => {
     const editor = createEditor({
       children: [
         {
           children: [
-            { text: 'plain' },
-            { bold: true, text: 'bold' },
-            { bold: true, italic: true, text: 'mixed' },
+            { text: "plain" },
+            { bold: true, text: "bold" },
+            { bold: true, italic: true, text: "mixed" },
           ],
-          type: 'p',
+          type: "p",
         },
       ] as any,
       selection: {
@@ -45,20 +45,20 @@ describe('getMarks', () => {
     expect(editor.api.marks()).toEqual({ bold: true });
   });
 
-  it('returns marks from a collapsed markable void', () => {
+  it("returns marks from a collapsed markable void", () => {
     const editor = createEditor({
       children: [
         {
           children: [
-            { text: 'word' },
+            { text: "word" },
             {
-              children: [{ bold: true, text: '' }],
+              children: [{ bold: true, text: "" }],
               markable: true,
-              type: 'tag',
+              type: "tag",
             },
-            { text: '' },
+            { text: "" },
           ],
-          type: 'p',
+          type: "p",
         },
       ] as any,
       selection: {
@@ -67,9 +67,8 @@ describe('getMarks', () => {
       },
     }) as any;
 
-    editor.isVoid = (element: any) => element.type === 'tag';
-    editor.markableVoid = (element: any) =>
-      element.type === 'tag' && element.markable;
+    editor.isVoid = (element: any) => element.type === "tag";
+    editor.markableVoid = (element: any) => element.type === "tag" && element.markable;
 
     expect(editor.api.marks()).toEqual({ bold: true });
   });

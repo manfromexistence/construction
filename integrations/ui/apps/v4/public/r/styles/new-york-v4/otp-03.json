@@ -2,13 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "otp-03",
   "description": "An OTP page with a muted background color.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input-otp",
-    "label",
-    "field"
-  ],
+  "registryDependencies": ["button", "card", "input-otp", "label", "field"],
   "files": [
     {
       "path": "registry/new-york-v4/blocks/otp-03/page.tsx",
@@ -22,9 +16,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "otp"
-  ],
+  "categories": ["authentication", "otp"],
   "type": "registry:block"
 }

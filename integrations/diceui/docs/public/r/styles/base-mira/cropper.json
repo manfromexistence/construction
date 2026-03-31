@@ -1,11 +1,6 @@
 {
   "name": "cropper",
-  "dependencies": [
-    "@base-ui/react",
-    "react-dom",
-    "lucide-react",
-    "class-variance-authority"
-  ],
+  "dependencies": ["@base-ui/react", "react-dom", "lucide-react", "class-variance-authority"],
   "registryDependencies": [
     "compose-refs",
     "@diceui/use-as-ref",

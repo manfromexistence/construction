@@ -1,9 +1,9 @@
-import { edges } from 'slate';
+import { edges } from "slate";
 
-import type { Editor } from '../../interfaces/editor/editor-type';
-import type { At } from '../../types';
+import type { Editor } from "../../interfaces/editor/editor-type";
+import type { At } from "../../types";
 
-import { getAt } from '../../utils/getAt';
+import { getAt } from "../../utils/getAt";
 
 export const getEdgePoints = (editor: Editor, at: At) => {
   try {

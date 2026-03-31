@@ -1,7 +1,7 @@
-import { BaseTablePlugin, type TableConfig } from '../BaseTablePlugin';
+import { BaseTablePlugin, type TableConfig } from "../BaseTablePlugin";
 
 export const getTestTablePlugins = (
-  options?: Partial<TableConfig['options']>,
+  options?: Partial<TableConfig["options"]>,
   override?: (plugin: typeof BaseTablePlugin) => any
 ) => {
   let tablePlugin = BaseTablePlugin.configure({

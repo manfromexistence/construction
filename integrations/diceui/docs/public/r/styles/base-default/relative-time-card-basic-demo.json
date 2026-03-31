@@ -1,8 +1,6 @@
 {
   "name": "relative-time-card-basic-demo",
-  "registryDependencies": [
-    "relative-time-card"
-  ],
+  "registryDependencies": ["relative-time-card"],
   "files": [
     {
       "path": "examples/relative-time-card-basic-demo.tsx",

@@ -1,6 +1,6 @@
 import React from "react";
-import { SliderWithInput } from "./slider-with-input";
 import ColorPicker from "./color-picker";
+import { SliderWithInput } from "./slider-with-input";
 
 interface ShadowControlProps {
   shadowColor: string;

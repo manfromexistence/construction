@@ -87,14 +87,7 @@ const GitCommitHorizontalIcon = forwardRef<
         width={size}
         xmlns="http://www.w3.org/2000/svg"
       >
-        <motion.circle
-          animate={controls}
-          custom={1}
-          cx="12"
-          cy="12"
-          r="3"
-          variants={VARIANTS}
-        />
+        <motion.circle animate={controls} custom={1} cx="12" cy="12" r="3" variants={VARIANTS} />
         <motion.line
           animate={controls}
           custom={0}

@@ -1,7 +1,7 @@
-import { Key, toPlatePlugin } from 'platejs/react';
+import { Key, toPlatePlugin } from "platejs/react";
 
-import { BaseUnderlinePlugin } from '../lib/BaseUnderlinePlugin';
+import { BaseUnderlinePlugin } from "../lib/BaseUnderlinePlugin";
 
 export const UnderlinePlugin = toPlatePlugin(BaseUnderlinePlugin, {
-  shortcuts: { toggle: { keys: [[Key.Mod, 'u']] } },
+  shortcuts: { toggle: { keys: [[Key.Mod, "u"]] } },
 });

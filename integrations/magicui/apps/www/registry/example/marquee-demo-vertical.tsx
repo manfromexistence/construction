@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils"
-import { Marquee } from "@/registry/magicui/marquee"
+import { cn } from "@/lib/utils";
+import { Marquee } from "@/registry/magicui/marquee";
 
 const reviews = [
   {
@@ -20,10 +20,10 @@ const reviews = [
     body: "I'm at a loss for words. This is amazing. I love it.",
     img: "https://avatar.vercel.sh/john",
   },
-]
+];
 
-const firstRow = reviews.slice(0, reviews.length / 2)
-const secondRow = reviews.slice(reviews.length / 2)
+const firstRow = reviews.slice(0, reviews.length / 2);
+const secondRow = reviews.slice(reviews.length / 2);
 
 const ReviewCard = ({
   img,
@@ -31,10 +31,10 @@ const ReviewCard = ({
   username,
   body,
 }: {
-  img: string
-  name: string
-  username: string
-  body: string
+  img: string;
+  name: string;
+  username: string;
+  body: string;
 }) => {
   return (
     <figure
@@ -49,16 +49,14 @@ const ReviewCard = ({
       <div className="flex flex-row items-center gap-2">
         <img className="rounded-full" width="32" height="32" alt="" src={img} />
         <div className="flex flex-col">
-          <figcaption className="text-sm font-medium dark:text-white">
-            {name}
-          </figcaption>
+          <figcaption className="text-sm font-medium dark:text-white">{name}</figcaption>
           <p className="text-xs font-medium dark:text-white/40">{username}</p>
         </div>
       </div>
       <blockquote className="mt-2 text-sm">{body}</blockquote>
     </figure>
-  )
-}
+  );
+};
 
 export default function MarqueeDemoVertical() {
   return (
@@ -76,5 +74,5 @@ export default function MarqueeDemoVertical() {
       <div className="from-background pointer-events-none absolute inset-x-0 top-0 h-1/4 bg-linear-to-b"></div>
       <div className="from-background pointer-events-none absolute inset-x-0 bottom-0 h-1/4 bg-gradient-to-t"></div>
     </div>
-  )
+  );
 }

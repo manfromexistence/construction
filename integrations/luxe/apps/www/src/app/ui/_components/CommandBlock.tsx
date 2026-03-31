@@ -1,13 +1,11 @@
 "use client";
 
 import { useMemo } from "react";
-
+import { usePackageManager } from "@/hooks/use-package-manager";
 import { cn } from "@/utils/cn";
 
-import { usePackageManager } from "@/hooks/use-package-manager";
-
 import { CopyCode } from "./CopyCode";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "./Tabs";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./Tabs";
 
 type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
 
@@ -40,7 +38,7 @@ export function CommandBlock({
     <div
       className={cn(
         "relative overflow-hidden rounded-xl border border-neutral-300/50 bg-neutral-200/30 dark:border-neutral-800/60 dark:bg-neutral-900/40",
-        className,
+        className
       )}
     >
       <Tabs
@@ -51,12 +49,7 @@ export function CommandBlock({
         <div className="flex items-center justify-between border-b border-neutral-300/50 bg-neutral-200/30 pr-2.5 dark:border-neutral-800/60 dark:bg-neutral-900/30">
           <TabsList className="bg-transparent h-10 pl-4">
             {Object.entries(tabs).map(([key, _]) => (
-              <TabsTrigger
-                key={key}
-                value={key}
-                className="font-mono"
-                isIndicator
-              >
+              <TabsTrigger key={key} value={key} className="font-mono" isIndicator>
                 {key}
               </TabsTrigger>
             ))}

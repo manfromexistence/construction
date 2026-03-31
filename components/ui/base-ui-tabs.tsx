@@ -1,5 +1,5 @@
-import * as React from "react";
 import { Tabs as TabsPrimitive } from "@base-ui-components/react/tabs";
+import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const Tabs = TabsPrimitive.Root;
@@ -64,4 +64,4 @@ const TabsContent = React.forwardRef<
 ));
 TabsContent.displayName = TabsPrimitive.Panel.displayName;
 
-export { Tabs, TabsList, TabsTrigger, TabsContent, TabsIndicator };
+export { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger };

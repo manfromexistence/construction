@@ -1,38 +1,26 @@
 /* eslint-disable turbo/no-undeclared-env-vars */
-import { promises as fs } from "fs"
-import { tmpdir } from "os"
-import path from "path"
-import { http, HttpResponse } from "msw"
-import { setupServer } from "msw/node"
-import {
-  afterAll,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  test,
-  vi,
-} from "vitest"
+import { promises as fs } from "fs";
+import { HttpResponse, http } from "msw";
+import { setupServer } from "msw/node";
+import { tmpdir } from "os";
+import path from "path";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, test, vi } from "vitest";
 
-import { createRegistryServer } from "../../../tests/src/utils/registry"
-import { setRegistryHeaders } from "./context"
-import {
-  resolveRegistryItemsFromRegistries,
-  resolveRegistryTree,
-} from "./resolver"
+import { createRegistryServer } from "../../../tests/src/utils/registry";
+import { setRegistryHeaders } from "./context";
+import { resolveRegistryItemsFromRegistries, resolveRegistryTree } from "./resolver";
 
 vi.mock("./context", () => ({
   setRegistryHeaders: vi.fn(),
   clearRegistryContext: vi.fn(),
   getRegistryHeadersFromContext: vi.fn(() => ({})),
-}))
+}));
 
 vi.mock("@/src/utils/handle-error", () => ({
   handleError: vi.fn((error) => {
-    console.error("Test error:", error)
+    console.error("Test error:", error);
   }),
-}))
+}));
 
 vi.mock("@/src/utils/logger", () => ({
   logger: {
@@ -40,65 +28,65 @@ vi.mock("@/src/utils/logger", () => ({
     break: vi.fn(),
     log: vi.fn(),
   },
-}))
+}));
 
 // Note: Individual tests will create their own MSW servers using createRegistryServer
 
 describe("resolveRegistryItemsFromRegistries", () => {
   beforeEach(() => {
-    vi.clearAllMocks()
-  })
+    vi.clearAllMocks();
+  });
 
   it("should return empty array for empty input", () => {
     const result = resolveRegistryItemsFromRegistries([], {
       registries: {},
-    } as any)
-    expect(result).toEqual([])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    } as any);
+    expect(result).toEqual([]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should return empty array for empty input with no registries", () => {
     const result = resolveRegistryItemsFromRegistries([], {
       registries: {},
-    } as any)
-    expect(result).toEqual([])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    } as any);
+    expect(result).toEqual([]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should resolve non-registry items through @shadcn registry", () => {
-    const items = ["button", "card", "dialog"]
-    const config = { registries: {} } as any
+    const items = ["button", "card", "dialog"];
+    const config = { registries: {} } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
     // Non-prefixed items are resolved through the built-in @shadcn registry
     expect(result).toEqual([
       "https://ui.shadcn.com/r/styles/{style}/button.json",
       "https://ui.shadcn.com/r/styles/{style}/card.json",
       "https://ui.shadcn.com/r/styles/{style}/dialog.json",
-    ])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    ]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should resolve registry items with string config", () => {
-    const items = ["@v0/button", "@v0/card"]
+    const items = ["@v0/button", "@v0/card"];
     const config = {
       registries: {
         "@v0": "https://v0.dev/chat/b/{name}/json",
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
     expect(result).toEqual([
       "https://v0.dev/chat/b/button/json",
       "https://v0.dev/chat/b/card/json",
-    ])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    ]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should resolve registry items with object config and headers", () => {
-    const items = ["@private/button", "@private/card"]
+    const items = ["@private/button", "@private/card"];
     const config = {
       registries: {
         "@private": {
@@ -108,14 +96,11 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual([
-      "https://api.com/button.json",
-      "https://api.com/card.json",
-    ])
+    expect(result).toEqual(["https://api.com/button.json", "https://api.com/card.json"]);
     expect(setRegistryHeaders).toHaveBeenCalledWith({
       "https://api.com/button.json": {
         Authorization: "Bearer token123",
@@ -123,11 +108,11 @@ describe("resolveRegistryItemsFromRegistries", () => {
       "https://api.com/card.json": {
         Authorization: "Bearer token123",
       },
-    })
-  })
+    });
+  });
 
   it("should handle mixed registry and non-registry items", () => {
-    const items = ["button", "@v0/card", "dialog", "@private/table"]
+    const items = ["button", "@v0/card", "dialog", "@private/table"];
     const config = {
       registries: {
         "@v0": "https://v0.dev/chat/b/{name}/json",
@@ -138,9 +123,9 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
     // Non-registry items (button, dialog) are resolved through the built-in @shadcn registry
     expect(result).toEqual([
@@ -148,19 +133,19 @@ describe("resolveRegistryItemsFromRegistries", () => {
       "https://v0.dev/chat/b/card/json",
       "https://ui.shadcn.com/r/styles/{style}/dialog.json",
       "https://api.com/table.json",
-    ])
+    ]);
     expect(setRegistryHeaders).toHaveBeenCalledWith({
       "https://api.com/table.json": {
         "X-API-Key": "secret123",
       },
-    })
-  })
+    });
+  });
 
   it("should handle environment variables in config", () => {
-    process.env.API_TOKEN = "abc123"
-    process.env.API_URL = "https://api.com"
+    process.env.API_TOKEN = "abc123";
+    process.env.API_URL = "https://api.com";
 
-    const items = ["@env/button"]
+    const items = ["@env/button"];
     const config = {
       registries: {
         "@env": {
@@ -170,80 +155,76 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual(["https://api.com/button.json"])
+    expect(result).toEqual(["https://api.com/button.json"]);
     expect(setRegistryHeaders).toHaveBeenCalledWith({
       "https://api.com/button.json": {
         Authorization: "Bearer abc123",
       },
-    })
+    });
 
-    delete process.env.API_TOKEN
-    delete process.env.API_URL
-  })
+    delete process.env.API_TOKEN;
+    delete process.env.API_URL;
+  });
 
   it("should handle complex item paths", () => {
-    const items = ["@acme/ui/button", "@acme/components/card"]
+    const items = ["@acme/ui/button", "@acme/components/card"];
     const config = {
       registries: {
         "@acme": "https://api.com/{name}.json",
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
     expect(result).toEqual([
       "https://api.com/ui/button.json",
       "https://api.com/components/card.json",
-    ])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    ]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should handle URLs and local files unchanged", () => {
-    const items = [
-      "https://example.com/button.json",
-      "./local/component.json",
-      "@v0/card",
-    ]
+    const items = ["https://example.com/button.json", "./local/component.json", "@v0/card"];
     const config = {
       registries: {
         "@v0": "https://v0.dev/chat/b/{name}/json",
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
     expect(result).toEqual([
       "https://example.com/button.json",
       "./local/component.json",
       "https://v0.dev/chat/b/card/json",
-    ])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    ]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should throw error for unknown registry", () => {
-    const items = ["@unknown/button"]
-    const config = { registries: {} } as any
+    const items = ["@unknown/button"];
+    const config = { registries: {} } as any;
 
     expect(() => {
-      resolveRegistryItemsFromRegistries(items, config)
-    }).toThrow('Unknown registry "@unknown"')
-  })
+      resolveRegistryItemsFromRegistries(items, config);
+    }).toThrow('Unknown registry "@unknown"');
+  });
 
   it("should handle multiple unknown registries", () => {
-    const items = ["@unknown1/button", "@unknown2/card"]
-    const config = { registries: {} } as any
+    const items = ["@unknown1/button", "@unknown2/card"];
+    const config = { registries: {} } as any;
 
     expect(() => {
-      resolveRegistryItemsFromRegistries(items, config)
-    }).toThrow('Unknown registry "@unknown1"')
-  })
+      resolveRegistryItemsFromRegistries(items, config);
+    }).toThrow('Unknown registry "@unknown1"');
+  });
 
   it("should handle empty headers correctly", () => {
-    const items = ["@empty/button"]
+    const items = ["@empty/button"];
     const config = {
       registries: {
         "@empty": {
@@ -251,18 +232,18 @@ describe("resolveRegistryItemsFromRegistries", () => {
           headers: {},
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual(["https://api.com/button.json"])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    expect(result).toEqual(["https://api.com/button.json"]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should handle headers with environment variables that expand to empty", () => {
-    process.env.EMPTY_TOKEN = "some-value"
+    process.env.EMPTY_TOKEN = "some-value";
 
-    const items = ["@empty/button"]
+    const items = ["@empty/button"];
     const config = {
       registries: {
         "@empty": {
@@ -272,24 +253,24 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual(["https://api.com/button.json"])
+    expect(result).toEqual(["https://api.com/button.json"]);
     expect(setRegistryHeaders).toHaveBeenCalledWith({
       "https://api.com/button.json": {
         Authorization: "Bearer some-value",
       },
-    })
+    });
 
-    delete process.env.EMPTY_TOKEN
-  })
+    delete process.env.EMPTY_TOKEN;
+  });
 
   it("should handle headers with mixed static and environment variables", () => {
-    process.env.API_TOKEN = "secret123"
+    process.env.API_TOKEN = "secret123";
 
-    const items = ["@mixed/button"]
+    const items = ["@mixed/button"];
     const config = {
       registries: {
         "@mixed": {
@@ -301,24 +282,24 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual(["https://api.com/button.json"])
+    expect(result).toEqual(["https://api.com/button.json"]);
     expect(setRegistryHeaders).toHaveBeenCalledWith({
       "https://api.com/button.json": {
         "Content-Type": "application/json",
         Authorization: "Bearer secret123",
         "X-Custom": "static-value",
       },
-    })
+    });
 
-    delete process.env.API_TOKEN
-  })
+    delete process.env.API_TOKEN;
+  });
 
   it("should handle query parameters in URL config", () => {
-    const items = ["@params/button"]
+    const items = ["@params/button"];
     const config = {
       registries: {
         "@params": {
@@ -329,20 +310,18 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual([
-      "https://api.com/button.json?version=1.0&format=json",
-    ])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
+    expect(result).toEqual(["https://api.com/button.json?version=1.0&format=json"]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
 
   it("should handle query parameters with environment variables", () => {
-    process.env.API_VERSION = "2.0"
+    process.env.API_VERSION = "2.0";
 
-    const items = ["@params/button"]
+    const items = ["@params/button"];
     const config = {
       registries: {
         "@params": {
@@ -353,20 +332,18 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual([
-      "https://api.com/button.json?version=2.0&format=json",
-    ])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
+    expect(result).toEqual(["https://api.com/button.json?version=2.0&format=json"]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
 
-    delete process.env.API_VERSION
-  })
+    delete process.env.API_VERSION;
+  });
 
   it("should handle existing query parameters in URL", () => {
-    const items = ["@existing/button"]
+    const items = ["@existing/button"];
     const config = {
       registries: {
         "@existing": {
@@ -376,20 +353,18 @@ describe("resolveRegistryItemsFromRegistries", () => {
           },
         },
       },
-    } as any
+    } as any;
 
-    const result = resolveRegistryItemsFromRegistries(items, config)
+    const result = resolveRegistryItemsFromRegistries(items, config);
 
-    expect(result).toEqual([
-      "https://api.com/button.json?existing=true&version=1.0",
-    ])
-    expect(setRegistryHeaders).toHaveBeenCalledWith({})
-  })
-})
+    expect(result).toEqual(["https://api.com/button.json?existing=true&version=1.0"]);
+    expect(setRegistryHeaders).toHaveBeenCalledWith({});
+  });
+});
 
 describe("resolveRegistryItems with URL dependencies", () => {
   it("should resolve URL dependencies from local files", async () => {
-    const dependencyUrl = "https://example.com/dependency.json"
+    const dependencyUrl = "https://example.com/dependency.json";
 
     // Create a mock server for the URL dependency
     const mockServer = setupServer(
@@ -404,14 +379,14 @@ describe("resolveRegistryItems with URL dependencies", () => {
               type: "registry:ui",
             },
           ],
-        })
+        });
       })
-    )
+    );
 
-    mockServer.listen({ onUnhandledRequest: "bypass" })
+    mockServer.listen({ onUnhandledRequest: "bypass" });
 
-    const tempDir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-test-"))
-    const tempFile = path.join(tempDir, "component-with-url-deps.json")
+    const tempDir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-test-"));
+    const tempFile = path.join(tempDir, "component-with-url-deps.json");
 
     const componentData = {
       name: "component-with-url-deps",
@@ -424,9 +399,9 @@ describe("resolveRegistryItems with URL dependencies", () => {
           type: "registry:ui",
         },
       ],
-    }
+    };
 
-    await fs.writeFile(tempFile, JSON.stringify(componentData, null, 2))
+    await fs.writeFile(tempFile, JSON.stringify(componentData, null, 2));
 
     try {
       const mockConfig = {
@@ -442,27 +417,27 @@ describe("resolveRegistryItems with URL dependencies", () => {
           hooks: "./hooks",
           ui: "./components/ui",
         },
-      } as any
+      } as any;
 
-      const result = await resolveRegistryTree([tempFile], mockConfig)
+      const result = await resolveRegistryTree([tempFile], mockConfig);
 
-      expect(result).toBeDefined()
-      expect(result?.files).toBeDefined()
+      expect(result).toBeDefined();
+      expect(result?.files).toBeDefined();
       // Should contain files from both the main component and its URL dependency
-      const filePaths = result?.files?.map((f: any) => f.path) ?? []
-      expect(filePaths).toContain("ui/component-with-url-deps.tsx")
-      expect(filePaths).toContain("ui/url-dependency.tsx")
+      const filePaths = result?.files?.map((f: any) => f.path) ?? [];
+      expect(filePaths).toContain("ui/component-with-url-deps.tsx");
+      expect(filePaths).toContain("ui/url-dependency.tsx");
     } finally {
       // Clean up
-      await fs.unlink(tempFile)
-      await fs.rmdir(tempDir)
-      mockServer.close()
+      await fs.unlink(tempFile);
+      await fs.rmdir(tempDir);
+      mockServer.close();
     }
-  })
+  });
 
   it("should resolve namespace syntax in registryDependencies", async () => {
     // Mock a namespace registry endpoint
-    const namespaceUrl = "https://custom-registry.com/custom-component.json"
+    const namespaceUrl = "https://custom-registry.com/custom-component.json";
 
     const mockServer = setupServer(
       http.get(namespaceUrl, () => {
@@ -476,14 +451,14 @@ describe("resolveRegistryItems with URL dependencies", () => {
               type: "registry:ui",
             },
           ],
-        })
+        });
       })
-    )
+    );
 
-    mockServer.listen({ onUnhandledRequest: "bypass" })
+    mockServer.listen({ onUnhandledRequest: "bypass" });
 
-    const tempDir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-test-"))
-    const tempFile = path.join(tempDir, "component-with-namespace-deps.json")
+    const tempDir = await fs.mkdtemp(path.join(tmpdir(), "shadcn-test-"));
+    const tempFile = path.join(tempDir, "component-with-namespace-deps.json");
 
     const componentData = {
       name: "component-with-namespace-deps",
@@ -496,9 +471,9 @@ describe("resolveRegistryItems with URL dependencies", () => {
           type: "registry:ui",
         },
       ],
-    }
+    };
 
-    await fs.writeFile(tempFile, JSON.stringify(componentData, null, 2))
+    await fs.writeFile(tempFile, JSON.stringify(componentData, null, 2));
 
     try {
       const mockConfig = {
@@ -519,33 +494,29 @@ describe("resolveRegistryItems with URL dependencies", () => {
             url: "https://custom-registry.com/{name}.json",
           },
         },
-      } as any
+      } as any;
 
-      const result = await resolveRegistryTree([tempFile], mockConfig)
+      const result = await resolveRegistryTree([tempFile], mockConfig);
 
-      expect(result).toBeDefined()
-      expect(result?.files).toBeDefined()
+      expect(result).toBeDefined();
+      expect(result?.files).toBeDefined();
 
-      expect(result?.files?.length).toBe(2)
-      expect(
-        result?.files?.some((f) => f.path === "ui/custom-component.tsx")
-      ).toBe(true)
-      expect(
-        result?.files?.some(
-          (f) => f.path === "ui/component-with-namespace-deps.tsx"
-        )
-      ).toBe(true)
+      expect(result?.files?.length).toBe(2);
+      expect(result?.files?.some((f) => f.path === "ui/custom-component.tsx")).toBe(true);
+      expect(result?.files?.some((f) => f.path === "ui/component-with-namespace-deps.tsx")).toBe(
+        true
+      );
     } finally {
       // Clean up
-      await fs.unlink(tempFile)
-      await fs.rmdir(tempDir)
-      mockServer.close()
+      await fs.unlink(tempFile);
+      await fs.rmdir(tempDir);
+      mockServer.close();
     }
-  })
-})
+  });
+});
 
 describe("resolveRegistryTree - dependency ordering", () => {
-  let customRegistry: Awaited<ReturnType<typeof createRegistryServer>>
+  let customRegistry: Awaited<ReturnType<typeof createRegistryServer>>;
 
   beforeAll(async () => {
     // Create a custom registry server for testing dependency ordering
@@ -572,8 +543,7 @@ describe("resolveRegistryTree - dependency ordering", () => {
           files: [
             {
               path: "components/ui/extended.tsx",
-              content:
-                "export const Extended = () => <div>Extended Component</div>",
+              content: "export const Extended = () => <div>Extended Component</div>",
               type: "registry:ui",
             },
           ],
@@ -584,9 +554,7 @@ describe("resolveRegistryTree - dependency ordering", () => {
         {
           name: "deep-component",
           type: "registry:ui",
-          registryDependencies: [
-            "http://localhost:4447/r/extended-component.json",
-          ],
+          registryDependencies: ["http://localhost:4447/r/extended-component.json"],
           files: [
             {
               path: "components/ui/deep.tsx",
@@ -622,113 +590,104 @@ describe("resolveRegistryTree - dependency ordering", () => {
         },
       ],
       { port: 4447 }
-    )
+    );
 
-    await customRegistry.start()
-  })
+    await customRegistry.start();
+  });
 
   afterAll(async () => {
-    await customRegistry.stop()
-  })
+    await customRegistry.stop();
+  });
 
   test("should order dependencies before items that depend on them", async () => {
-    const result = await resolveRegistryTree(
-      ["http://localhost:4447/r/extended-component.json"],
-      {
-        style: "default",
-        rsc: false,
-        tsx: false,
-        aliases: {
-          components: "./components",
-          utils: "./lib/utils",
-          ui: "./components/ui",
-        },
-        tailwind: {
-          baseColor: "neutral",
-          css: "globals.css",
-          cssVariables: false,
-        },
-        resolvedPaths: {
-          cwd: process.cwd(),
-          tailwindConfig: "./tailwind.config.js",
-          tailwindCss: "./globals.css",
-          utils: "./lib/utils",
-          components: "./components",
-          lib: "./lib",
-          hooks: "./hooks",
-          ui: "./components/ui",
-        },
-      }
-    )
+    const result = await resolveRegistryTree(["http://localhost:4447/r/extended-component.json"], {
+      style: "default",
+      rsc: false,
+      tsx: false,
+      aliases: {
+        components: "./components",
+        utils: "./lib/utils",
+        ui: "./components/ui",
+      },
+      tailwind: {
+        baseColor: "neutral",
+        css: "globals.css",
+        cssVariables: false,
+      },
+      resolvedPaths: {
+        cwd: process.cwd(),
+        tailwindConfig: "./tailwind.config.js",
+        tailwindCss: "./globals.css",
+        utils: "./lib/utils",
+        components: "./components",
+        lib: "./lib",
+        hooks: "./hooks",
+        ui: "./components/ui",
+      },
+    });
 
-    expect(result).toBeTruthy()
-    expect(result?.files).toHaveLength(2)
+    expect(result).toBeTruthy();
+    expect(result?.files).toHaveLength(2);
 
     // Base component should come first.
     expect(result?.files?.[0]).toMatchObject({
       path: "components/ui/base.tsx",
       content: expect.stringContaining("Base Component"),
-    })
+    });
 
     // Extended component should come second.
     expect(result?.files?.[1]).toMatchObject({
       path: "components/ui/extended.tsx",
       content: expect.stringContaining("Extended Component"),
-    })
+    });
 
     expect(result?.cssVars?.light).toMatchObject({
       base: "#111111",
       extended: "#222222",
-    })
-  })
+    });
+  });
 
   test("should handle complex dependency chains", async () => {
-    const result = await resolveRegistryTree(
-      ["http://localhost:4447/r/deep-component.json"],
-      {
-        style: "new-york",
-        rsc: false,
-        tsx: false,
-        aliases: {
-          components: "./components",
-          utils: "./lib/utils",
-          ui: "./components/ui",
-        },
-        tailwind: {
-          baseColor: "neutral",
-          css: "globals.css",
-          cssVariables: false,
-        },
-        resolvedPaths: {
-          cwd: process.cwd(),
-          tailwindConfig: "./tailwind.config.js",
-          tailwindCss: "./globals.css",
-          utils: "./lib/utils",
-          components: "./components",
-          lib: "./lib",
-          hooks: "./hooks",
-          ui: "./components/ui",
-        },
-      }
-    )
+    const result = await resolveRegistryTree(["http://localhost:4447/r/deep-component.json"], {
+      style: "new-york",
+      rsc: false,
+      tsx: false,
+      aliases: {
+        components: "./components",
+        utils: "./lib/utils",
+        ui: "./components/ui",
+      },
+      tailwind: {
+        baseColor: "neutral",
+        css: "globals.css",
+        cssVariables: false,
+      },
+      resolvedPaths: {
+        cwd: process.cwd(),
+        tailwindConfig: "./tailwind.config.js",
+        tailwindCss: "./globals.css",
+        utils: "./lib/utils",
+        components: "./components",
+        lib: "./lib",
+        hooks: "./hooks",
+        ui: "./components/ui",
+      },
+    });
 
-    expect(result).toBeTruthy()
-    expect(result?.files).toHaveLength(3)
+    expect(result).toBeTruthy();
+    expect(result?.files).toHaveLength(3);
 
     // Order should be: base -> extended -> deep.
-    expect(result?.files?.[0].content).toContain("Base Component")
-    expect(result?.files?.[1].content).toContain("Extended Component")
-    expect(result?.files?.[2].content).toContain("Deep Component")
-  })
+    expect(result?.files?.[0].content).toContain("Base Component");
+    expect(result?.files?.[1].content).toContain("Extended Component");
+    expect(result?.files?.[2].content).toContain("Deep Component");
+  });
 
   test("should handle circular dependencies gracefully", async () => {
-    const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const result = await resolveRegistryTree(
-      [
-        "http://localhost:4447/r/circular-a.json",
-        "http://localhost:4447/r/circular-b.json",
-      ],
+      ["http://localhost:4447/r/circular-a.json", "http://localhost:4447/r/circular-b.json"],
       {
         style: "new-york",
         rsc: false,
@@ -754,28 +713,24 @@ describe("resolveRegistryTree - dependency ordering", () => {
           ui: "./components/ui",
         },
       }
-    )
+    );
 
-    expect(result).toBeTruthy()
+    expect(result).toBeTruthy();
 
     // With circular dependencies, we might get duplicates in the files array
     // but we should have at least one of each circular item
-    const hasCircularA = result?.files?.some(
-      (f) => f.path === "components/ui/circular-a.tsx"
-    )
-    const hasCircularB = result?.files?.some(
-      (f) => f.path === "components/ui/circular-b.tsx"
-    )
-    expect(hasCircularA).toBe(true)
-    expect(hasCircularB).toBe(true)
+    const hasCircularA = result?.files?.some((f) => f.path === "components/ui/circular-a.tsx");
+    const hasCircularB = result?.files?.some((f) => f.path === "components/ui/circular-b.tsx");
+    expect(hasCircularA).toBe(true);
+    expect(hasCircularB).toBe(true);
 
     // Should have logged a warning about circular dependency
     // expect(consoleSpy).toHaveBeenCalledWith(
     //   "Circular dependency detected in registry items"
     // )
 
-    consoleSpy.mockRestore()
-  })
+    consoleSpy.mockRestore();
+  });
 
   test("should handle exact duplicate URLs by including only once", async () => {
     const result = await resolveRegistryTree(
@@ -808,11 +763,11 @@ describe("resolveRegistryTree - dependency ordering", () => {
           ui: "./components/ui",
         },
       }
-    )
+    );
 
-    expect(result?.files).toHaveLength(1)
-    expect(result?.files?.[0].path).toBe("components/ui/base.tsx")
-  })
+    expect(result?.files).toHaveLength(1);
+    expect(result?.files?.[0].path).toBe("components/ui/base.tsx");
+  });
 
   test("should handle items with same name from different registries", async () => {
     const secondRegistry = await createRegistryServer(
@@ -823,8 +778,7 @@ describe("resolveRegistryTree - dependency ordering", () => {
           files: [
             {
               path: "components/ui/base-alt.tsx",
-              content:
-                "export const BaseAlt = () => <div>Alternative Base Component</div>",
+              content: "export const BaseAlt = () => <div>Alternative Base Component</div>",
               type: "registry:ui",
             },
           ],
@@ -834,11 +788,11 @@ describe("resolveRegistryTree - dependency ordering", () => {
         },
       ],
       { port: 4448 }
-    )
+    );
 
-    await secondRegistry.start()
+    await secondRegistry.start();
 
-    const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {})
+    const consoleSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
     const result = await resolveRegistryTree(
       [
@@ -870,58 +824,52 @@ describe("resolveRegistryTree - dependency ordering", () => {
           ui: "./components/ui",
         },
       }
-    )
+    );
 
-    expect(result?.files).toHaveLength(2)
+    expect(result?.files).toHaveLength(2);
 
-    const filePaths = result?.files?.map((f) => f.path).sort()
-    expect(filePaths).toEqual([
-      "components/ui/base-alt.tsx",
-      "components/ui/base.tsx",
-    ])
+    const filePaths = result?.files?.map((f) => f.path).sort();
+    expect(filePaths).toEqual(["components/ui/base-alt.tsx", "components/ui/base.tsx"]);
 
-    expect(result?.cssVars?.light).toHaveProperty("base", "#111111")
-    expect(result?.cssVars?.light).toHaveProperty("altBase", "#999999")
+    expect(result?.cssVars?.light).toHaveProperty("base", "#111111");
+    expect(result?.cssVars?.light).toHaveProperty("altBase", "#999999");
 
-    consoleSpy.mockRestore()
-    await secondRegistry.stop()
-  })
+    consoleSpy.mockRestore();
+    await secondRegistry.stop();
+  });
 
   test("should correctly resolve dependencies when multiple items have same dependency name", async () => {
-    const result = await resolveRegistryTree(
-      ["http://localhost:4447/r/extended-component.json"],
-      {
-        style: "new-york",
-        rsc: false,
-        tsx: false,
-        aliases: {
-          components: "./components",
-          utils: "./lib/utils",
-          ui: "./components/ui",
-        },
-        tailwind: {
-          baseColor: "neutral",
-          css: "globals.css",
-          cssVariables: false,
-        },
-        resolvedPaths: {
-          cwd: process.cwd(),
-          tailwindConfig: "./tailwind.config.js",
-          tailwindCss: "./globals.css",
-          utils: "./lib/utils",
-          components: "./components",
-          lib: "./lib",
-          hooks: "./hooks",
-          ui: "./components/ui",
-        },
-      }
-    )
+    const result = await resolveRegistryTree(["http://localhost:4447/r/extended-component.json"], {
+      style: "new-york",
+      rsc: false,
+      tsx: false,
+      aliases: {
+        components: "./components",
+        utils: "./lib/utils",
+        ui: "./components/ui",
+      },
+      tailwind: {
+        baseColor: "neutral",
+        css: "globals.css",
+        cssVariables: false,
+      },
+      resolvedPaths: {
+        cwd: process.cwd(),
+        tailwindConfig: "./tailwind.config.js",
+        tailwindCss: "./globals.css",
+        utils: "./lib/utils",
+        components: "./components",
+        lib: "./lib",
+        hooks: "./hooks",
+        ui: "./components/ui",
+      },
+    });
 
-    expect(result?.files).toHaveLength(2)
-    expect(result?.files?.[0].path).toBe("components/ui/base.tsx")
-    expect(result?.files?.[1].path).toBe("components/ui/extended.tsx")
-  })
-})
+    expect(result?.files).toHaveLength(2);
+    expect(result?.files?.[0].path).toBe("components/ui/base.tsx");
+    expect(result?.files?.[1].path).toBe("components/ui/extended.tsx");
+  });
+});
 
 describe("resolveRegistryTree - potential target conflicts", async () => {
   const exampleRegistry = await createRegistryServer(
@@ -1000,7 +948,7 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
       },
     ],
     { port: 4449 }
-  )
+  );
 
   const sharedConfig = {
     style: "default",
@@ -1027,15 +975,15 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
       hooks: "./hooks",
       ui: "./components/ui",
     },
-  }
+  };
 
   beforeAll(async () => {
-    await exampleRegistry.start()
-  })
+    await exampleRegistry.start();
+  });
 
   afterAll(async () => {
-    await exampleRegistry.stop()
-  })
+    await exampleRegistry.stop();
+  });
 
   test("should deduplicate files with same resolved target (last wins) and preserve order", async () => {
     expect(
@@ -1073,7 +1021,7 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
+    `);
 
     expect(
       await resolveRegistryTree(
@@ -1110,8 +1058,8 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
-  })
+    `);
+  });
 
   test("should handle explicit target overrides", async () => {
     expect(
@@ -1150,15 +1098,12 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
-  })
+    `);
+  });
 
   test("should preserve files with different types even if paths are similar", async () => {
     expect(
-      await resolveRegistryTree(
-        ["http://localhost:4449/r/lib-and-ui-conflict.json"],
-        sharedConfig
-      )
+      await resolveRegistryTree(["http://localhost:4449/r/lib-and-ui-conflict.json"], sharedConfig)
     ).toMatchInlineSnapshot(`
       {
         "css": {},
@@ -1181,8 +1126,8 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
-  })
+    `);
+  });
 
   test("should handle complex nested paths and deduplicate correctly", async () => {
     // Create a custom registry with nested paths.
@@ -1199,8 +1144,7 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
             },
             {
               path: "ui/forms/button.tsx",
-              content:
-                "export const FormButton = () => <button>Submit A</button>",
+              content: "export const FormButton = () => <button>Submit A</button>",
               type: "registry:ui",
             },
           ],
@@ -1211,8 +1155,7 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
           files: [
             {
               path: "ui/forms/button.tsx",
-              content:
-                "export const FormButton = () => <button>Submit B</button>",
+              content: "export const FormButton = () => <button>Submit B</button>",
               type: "registry:ui",
             },
             {
@@ -1224,16 +1167,13 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         },
       ],
       { port: 4450 }
-    )
+    );
 
-    await nestedRegistry.start()
+    await nestedRegistry.start();
 
     expect(
       await resolveRegistryTree(
-        [
-          "http://localhost:4450/r/nested-a.json",
-          "http://localhost:4450/r/nested-b.json",
-        ],
+        ["http://localhost:4450/r/nested-a.json", "http://localhost:4450/r/nested-b.json"],
         sharedConfig
       )
     ).toMatchInlineSnapshot(`
@@ -1263,10 +1203,10 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
+    `);
 
-    await nestedRegistry.stop()
-  })
+    await nestedRegistry.stop();
+  });
 
   test("should deduplicate files with same resolved path", async () => {
     const multiUtilsRegistry = await createRegistryServer(
@@ -1305,16 +1245,13 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         },
       ],
       { port: 4451 }
-    )
+    );
 
-    await multiUtilsRegistry.start()
+    await multiUtilsRegistry.start();
 
     expect(
       await resolveRegistryTree(
-        [
-          "http://localhost:4451/r/utils-set-a.json",
-          "http://localhost:4451/r/utils-set-b.json",
-        ],
+        ["http://localhost:4451/r/utils-set-a.json", "http://localhost:4451/r/utils-set-b.json"],
         sharedConfig
       )
     ).toMatchInlineSnapshot(`
@@ -1339,10 +1276,10 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
+    `);
 
-    await multiUtilsRegistry.stop()
-  })
+    await multiUtilsRegistry.stop();
+  });
 
   test("should handle registry dependencies with file conflicts", async () => {
     const dependencyRegistry = await createRegistryServer(
@@ -1365,23 +1302,19 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
           files: [
             {
               path: "ui/button.tsx",
-              content:
-                "export const ExtendedButton = () => <button>Extended</button>",
+              content: "export const ExtendedButton = () => <button>Extended</button>",
               type: "registry:ui",
             },
           ],
         },
       ],
       { port: 4452 }
-    )
+    );
 
-    await dependencyRegistry.start()
+    await dependencyRegistry.start();
 
     expect(
-      await resolveRegistryTree(
-        ["http://localhost:4452/r/extended-button.json"],
-        sharedConfig
-      )
+      await resolveRegistryTree(["http://localhost:4452/r/extended-button.json"], sharedConfig)
     ).toMatchInlineSnapshot(`
       {
         "css": {},
@@ -1399,11 +1332,11 @@ describe("resolveRegistryTree - potential target conflicts", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
+    `);
 
-    await dependencyRegistry.stop()
-  })
-})
+    await dependencyRegistry.stop();
+  });
+});
 
 describe("resolveRegistryTree - cross-registry dependencies", async () => {
   const firstRegistry = await createRegistryServer(
@@ -1432,7 +1365,7 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
       },
     ],
     { port: 4453 }
-  )
+  );
 
   const secondRegistry = await createRegistryServer(
     [
@@ -1454,15 +1387,14 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
         files: [
           {
             path: "blocks/block-02.tsx",
-            content:
-              "export const Block02 = () => <div>Block 02 with Login</div>",
+            content: "export const Block02 = () => <div>Block 02 with Login</div>",
             type: "registry:block",
           },
         ],
       },
     ],
     { port: 4454 }
-  )
+  );
 
   const thirdRegistry = await createRegistryServer(
     [
@@ -1472,8 +1404,7 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
         files: [
           {
             path: "components/login-form.tsx",
-            content:
-              "export const LoginForm = () => <form>Login Form 01</form>",
+            content: "export const LoginForm = () => <form>Login Form 01</form>",
             type: "registry:component",
           },
         ],
@@ -1484,15 +1415,14 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
         files: [
           {
             path: "components/login-form.tsx",
-            content:
-              "export const LoginForm = () => <form>Login Form 02</form>",
+            content: "export const LoginForm = () => <form>Login Form 02</form>",
             type: "registry:component",
           },
         ],
       },
     ],
     { port: 4455 }
-  )
+  );
 
   const fourthRegistry = await createRegistryServer(
     [
@@ -1503,21 +1433,21 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
       },
     ],
     { port: 4456 }
-  )
+  );
 
   beforeAll(async () => {
-    await firstRegistry.start()
-    await secondRegistry.start()
-    await thirdRegistry.start()
-    await fourthRegistry.start()
-  })
+    await firstRegistry.start();
+    await secondRegistry.start();
+    await thirdRegistry.start();
+    await fourthRegistry.start();
+  });
 
   afterAll(async () => {
-    await firstRegistry.stop()
-    await secondRegistry.stop()
-    await thirdRegistry.stop()
-    await fourthRegistry.stop()
-  })
+    await firstRegistry.stop();
+    await secondRegistry.stop();
+    await thirdRegistry.stop();
+    await fourthRegistry.stop();
+  });
 
   test("should resolve cross-registry dependencies correctly", async () => {
     const config = {
@@ -1552,12 +1482,9 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
         hooks: "./hooks",
         ui: "./components/ui",
       },
-    }
+    };
 
-    const result = await resolveRegistryTree(
-      ["@one/login-01", "@two/block-02"],
-      config
-    )
+    const result = await resolveRegistryTree(["@one/login-01", "@two/block-02"], config);
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -1586,8 +1513,8 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
-  })
+    `);
+  });
 
   test("should deduplicate shared dependencies across registry items", async () => {
     const config = {
@@ -1618,12 +1545,9 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
         hooks: "./hooks",
         ui: "./components/ui",
       },
-    }
+    };
 
-    const result = await resolveRegistryTree(
-      ["@three/login-01", "@four/app-01"],
-      config
-    )
+    const result = await resolveRegistryTree(["@three/login-01", "@four/app-01"], config);
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -1642,9 +1566,9 @@ describe("resolveRegistryTree - cross-registry dependencies", async () => {
         "fonts": undefined,
         "tailwind": {},
       }
-    `)
-  })
-})
+    `);
+  });
+});
 
 describe("resolveRegistryTree - comprehensive cross-registry tests", async () => {
   // Create registries with all possible fields
@@ -1721,7 +1645,7 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
       },
     ],
     { port: 4457 }
-  )
+  );
 
   const blockRegistry = await createRegistryServer(
     [
@@ -1768,7 +1692,7 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
       },
     ],
     { port: 4458 }
-  )
+  );
 
   const libRegistry = await createRegistryServer(
     [
@@ -1805,19 +1729,19 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
       },
     ],
     { port: 4459 }
-  )
+  );
 
   beforeAll(async () => {
-    await uiRegistry.start()
-    await blockRegistry.start()
-    await libRegistry.start()
-  })
+    await uiRegistry.start();
+    await blockRegistry.start();
+    await libRegistry.start();
+  });
 
   afterAll(async () => {
-    await uiRegistry.stop()
-    await blockRegistry.stop()
-    await libRegistry.stop()
-  })
+    await uiRegistry.stop();
+    await blockRegistry.stop();
+    await libRegistry.stop();
+  });
 
   test("should merge all properties from cross-registry dependencies", async () => {
     const config = {
@@ -1849,9 +1773,9 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
         hooks: "./hooks",
         ui: "./components/ui",
       },
-    }
+    };
 
-    const result = await resolveRegistryTree(["@block/dashboard-01"], config)
+    const result = await resolveRegistryTree(["@block/dashboard-01"], config);
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -1957,8 +1881,8 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
           },
         },
       }
-    `)
-  })
+    `);
+  });
 
   test("should handle multiple cross-registry items with overlapping dependencies", async () => {
     const config = {
@@ -1989,12 +1913,9 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
         hooks: "./hooks",
         ui: "./components/ui",
       },
-    }
+    };
 
-    const result = await resolveRegistryTree(
-      ["@ui/dialog", "@lib/api-client"],
-      config
-    )
+    const result = await resolveRegistryTree(["@ui/dialog", "@lib/api-client"], config);
 
     expect(result).toMatchInlineSnapshot(`
       {
@@ -2084,8 +2005,8 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
           },
         },
       }
-    `)
-  })
+    `);
+  });
 
   test("should properly deduplicate shared registry dependencies", async () => {
     const config = {
@@ -2116,24 +2037,17 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
         hooks: "./hooks",
         ui: "./components/ui",
       },
-    }
+    };
 
-    const result = await resolveRegistryTree(
-      ["@ui/dialog", "@lib/api-client"],
-      config
-    )
+    const result = await resolveRegistryTree(["@ui/dialog", "@lib/api-client"], config);
 
     // Verify that chart-utils appears only once in the files.
-    const chartUtilsFiles = result?.files?.filter(
-      (f) => f.path === "lib/chart-utils.ts"
-    )
-    expect(chartUtilsFiles).toHaveLength(1)
+    const chartUtilsFiles = result?.files?.filter((f) => f.path === "lib/chart-utils.ts");
+    expect(chartUtilsFiles).toHaveLength(1);
 
     // Verify that theme-provider appears only once.
-    const themeProviderFiles = result?.files?.filter(
-      (f) => f.path === "ui/theme-provider.tsx"
-    )
-    expect(themeProviderFiles).toHaveLength(1)
+    const themeProviderFiles = result?.files?.filter((f) => f.path === "ui/theme-provider.tsx");
+    expect(themeProviderFiles).toHaveLength(1);
 
     // Verify dependencies are merged without duplicates.
     expect(result?.dependencies).toEqual([
@@ -2142,9 +2056,9 @@ describe("resolveRegistryTree - comprehensive cross-registry tests", async () =>
       "clsx",
       "@radix-ui/react-dialog",
       "axios",
-    ])
-  })
-})
+    ]);
+  });
+});
 
 describe("resolveRegistryTree - last wins behavior", async () => {
   // Create registries with overlapping properties to test last-wins
@@ -2244,15 +2158,15 @@ describe("resolveRegistryTree - last wins behavior", async () => {
       },
     ],
     { port: 4460 }
-  )
+  );
 
   beforeAll(async () => {
-    await overrideRegistry.start()
-  })
+    await overrideRegistry.start();
+  });
 
   afterAll(async () => {
-    await overrideRegistry.stop()
-  })
+    await overrideRegistry.stop();
+  });
 
   test("should apply last-wins for overlapping CSS properties", async () => {
     const config = {
@@ -2282,19 +2196,16 @@ describe("resolveRegistryTree - last wins behavior", async () => {
         hooks: "./hooks",
         ui: "./components/ui",
       },
-    }
+    };
 
-    const result = await resolveRegistryTree(
-      ["@override/final-component"],
-      config
-    )
+    const result = await resolveRegistryTree(["@override/final-component"], config);
 
     // Check files - should only have the final version
-    expect(result?.files).toHaveLength(1)
+    expect(result?.files).toHaveLength(1);
     expect(result?.files?.[0]).toMatchObject({
       path: "ui/component.tsx",
       content: "export const Component = () => <div>Final</div>",
-    })
+    });
 
     // Check CSS - properties should be merged with later values overriding
     expect(result?.css).toMatchInlineSnapshot(`
@@ -2305,7 +2216,7 @@ describe("resolveRegistryTree - last wins behavior", async () => {
           "padding": "2rem",
         },
       }
-    `)
+    `);
 
     // Check cssVars - later values should override earlier ones
     expect(result?.cssVars).toMatchInlineSnapshot(`
@@ -2320,7 +2231,7 @@ describe("resolveRegistryTree - last wins behavior", async () => {
           "--primary": "#0066cc",
         },
       }
-    `)
+    `);
 
     // Check envVars - later values should override
     expect(result?.envVars).toMatchInlineSnapshot(`
@@ -2329,10 +2240,10 @@ describe("resolveRegistryTree - last wins behavior", async () => {
         "APP_NAME": "Final App",
         "DEBUG": "true",
       }
-    `)
+    `);
 
     // Check dependencies - all should be included
-    expect(result?.dependencies).toEqual(["react", "clsx", "react-dom"])
+    expect(result?.dependencies).toEqual(["react", "clsx", "react-dom"]);
 
     // Check docs - all should be concatenated
     expect(result?.docs).toMatchInlineSnapshot(`
@@ -2340,8 +2251,8 @@ describe("resolveRegistryTree - last wins behavior", async () => {
       Override component documentation
       Final component documentation
       "
-    `)
-  })
+    `);
+  });
 
   test("should handle multiple items where last wins", async () => {
     const config = {
@@ -2371,33 +2282,33 @@ describe("resolveRegistryTree - last wins behavior", async () => {
         hooks: "./hooks",
         ui: "./components/ui",
       },
-    }
+    };
 
     // Request multiple items that have the same file path
     const result = await resolveRegistryTree(
       ["@override/base-component", "@override/override-component"],
       config
-    )
+    );
 
     // Files should deduplicate with last one winning
-    expect(result?.files).toHaveLength(1)
+    expect(result?.files).toHaveLength(1);
     expect(result?.files?.[0]).toMatchObject({
       path: "ui/component.tsx",
       content: "export const Component = () => <div>Override</div>", // Override wins
-    })
+    });
 
     // CSS should merge with override winning for same properties
     expect(result?.css?.[".component"]).toMatchObject({
       padding: "2rem", // Override wins
       margin: "0.5rem", // From base (not overridden)
       border: "1px solid", // From override (new property)
-    })
+    });
 
     // cssVars should merge with override winning
     expect(result?.cssVars?.light).toMatchObject({
       "--background": "#f0f0f0", // Override wins
       "--foreground": "#000000", // From base (not overridden)
       "--primary": "#0066cc", // From override (new property)
-    })
-  })
-})
+    });
+  });
+});

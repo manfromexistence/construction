@@ -1,9 +1,9 @@
-import { renderHook } from '@testing-library/react';
-import * as platejsReact from 'platejs/react';
+import { renderHook } from "@testing-library/react";
+import * as platejsReact from "platejs/react";
 
-import { useCalloutEmojiPicker } from './useCalloutEmojiPicker';
+import { useCalloutEmojiPicker } from "./useCalloutEmojiPicker";
 
-describe('useCalloutEmojiPicker', () => {
+describe("useCalloutEmojiPicker", () => {
   let useEditorReadOnlySpy: ReturnType<typeof spyOn>;
   let useEditorRefSpy: ReturnType<typeof spyOn>;
   let useElementSpy: ReturnType<typeof spyOn>;
@@ -11,15 +11,12 @@ describe('useCalloutEmojiPicker', () => {
   beforeEach(() => {
     localStorage.clear();
 
-    useEditorReadOnlySpy = spyOn(
-      platejsReact,
-      'useEditorReadOnly'
-    ).mockReturnValue(false);
-    useEditorRefSpy = spyOn(platejsReact, 'useEditorRef').mockReturnValue({
+    useEditorReadOnlySpy = spyOn(platejsReact, "useEditorReadOnly").mockReturnValue(false);
+    useEditorRefSpy = spyOn(platejsReact, "useEditorRef").mockReturnValue({
       tf: { setNodes: mock() },
     } as any);
-    useElementSpy = spyOn(platejsReact, 'useElement').mockReturnValue({
-      id: 'callout-1',
+    useElementSpy = spyOn(platejsReact, "useElement").mockReturnValue({
+      id: "callout-1",
     } as any);
   });
 
@@ -29,7 +26,7 @@ describe('useCalloutEmojiPicker', () => {
     useElementSpy?.mockRestore();
   });
 
-  it('updates the element icon, stores it, and closes the picker when editable', () => {
+  it("updates the element icon, stores it, and closes the picker when editable", () => {
     const setNodes = mock();
     const setIsOpenMock = mock();
     const setIsOpen = (isOpen: boolean) => (setIsOpenMock as any)(isOpen);
@@ -38,19 +35,14 @@ describe('useCalloutEmojiPicker', () => {
       tf: { setNodes },
     } as any);
 
-    const { result } = renderHook(() =>
-      useCalloutEmojiPicker({ isOpen: true, setIsOpen })
-    );
+    const { result } = renderHook(() => useCalloutEmojiPicker({ isOpen: true, setIsOpen }));
 
     result.current.props.onSelectEmoji({
-      skins: [{ native: '🔥' }],
+      skins: [{ native: "🔥" }],
     });
 
-    expect(setNodes).toHaveBeenCalledWith(
-      { icon: '🔥' },
-      { at: { id: 'callout-1' } }
-    );
-    expect(localStorage.getItem('plate-storage-callout')).toBe('🔥');
+    expect(setNodes).toHaveBeenCalledWith({ icon: "🔥" }, { at: { id: "callout-1" } });
+    expect(localStorage.getItem("plate-storage-callout")).toBe("🔥");
     expect(setIsOpenMock).toHaveBeenCalledWith(false);
   });
 });

@@ -4,12 +4,8 @@
   "title": "Team 01",
   "author": "ncdai <dai@chanhdai.com>",
   "description": "A team section with glowing cards.",
-  "dependencies": [
-    "dialkit"
-  ],
-  "registryDependencies": [
-    "https://chanhdai.com/r/glow-card-grid.json"
-  ],
+  "dependencies": ["dialkit"],
+  "registryDependencies": ["https://chanhdai.com/r/glow-card-grid.json"],
   "files": [
     {
       "path": "src/registry/blocks/team-01/team-01.tsx",
@@ -17,9 +13,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "content",
-    "team"
-  ],
+  "categories": ["content", "team"],
   "type": "registry:block"
 }

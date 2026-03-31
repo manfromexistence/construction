@@ -14,13 +14,7 @@ type Props = {
 
 const ICON_MAP = new Map(ICON_LIST.map((item) => [item.name, item.icon]));
 
-const IconItem = ({
-  icon,
-  Icon,
-}: {
-  icon: Icon;
-  Icon: React.ElementType | undefined;
-}) => {
+const IconItem = ({ icon, Icon }: { icon: Icon; Icon: React.ElementType | undefined }) => {
   const animationRef = useRef<{
     startAnimation: () => void;
     stopAnimation: () => void;
@@ -89,11 +83,7 @@ const IconsList = ({ icons }: Props) => {
           </div>
         )}
         {filteredIcons.map((icon) => (
-          <IconItem
-            Icon={ICON_MAP.get(icon.name) ?? undefined}
-            icon={icon}
-            key={icon.name}
-          />
+          <IconItem Icon={ICON_MAP.get(icon.name) ?? undefined} icon={icon} key={icon.name} />
         ))}
       </div>
     </div>

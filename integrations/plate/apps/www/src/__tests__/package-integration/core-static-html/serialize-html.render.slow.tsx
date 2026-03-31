@@ -1,16 +1,15 @@
-import React from 'react';
+import { createSlateEditor, createTSlatePlugin } from "platejs";
+import { serializeHtml } from "platejs/static";
+import React from "react";
 
-import { createSlateEditor, createTSlatePlugin } from 'platejs';
-import { serializeHtml } from 'platejs/static';
+import { BaseEditorKit } from "@/registry/components/editor/editor-base-kit";
 
-import { BaseEditorKit } from '@/registry/components/editor/editor-base-kit';
+import { createStaticEditor } from "./create-static-editor";
 
-import { createStaticEditor } from './create-static-editor';
-
-describe('core static serializeHtml custom render hooks', () => {
-  it('renders belowNodes output around children', async () => {
+describe("core static serializeHtml custom render hooks", () => {
+  it("renders belowNodes output around children", async () => {
     const renderBelowPlugin = createTSlatePlugin({
-      key: 'test-list',
+      key: "test-list",
       render: {
         belowNodes: (_injectProps: any) =>
           function Component({ children }: { children: React.ReactNode }) {
@@ -27,8 +26,8 @@ describe('core static serializeHtml custom render hooks', () => {
       plugins: [...BaseEditorKit, renderBelowPlugin],
       value: [
         {
-          children: [{ text: 'test render below' }],
-          type: 'p',
+          children: [{ text: "test render below" }],
+          type: "p",
         },
       ],
     });
@@ -40,23 +39,23 @@ describe('core static serializeHtml custom render hooks', () => {
     });
 
     expect(html).toContain(
-      '<ul><li><span><span><span>test render below</span></span></span></li></ul>'
+      "<ul><li><span><span><span>test render below</span></span></span></li></ul>"
     );
   });
 
-  it('preserves literal percent signs', async () => {
+  it("preserves literal percent signs", async () => {
     const editor = createStaticEditor([
       {
         children: [
           {
-            text: 'None encoded string 100%',
+            text: "None encoded string 100%",
           },
         ],
-        type: 'p',
+        type: "p",
       },
       {
-        children: [{ text: 'Encoded string 100%25' }],
-        type: 'p',
+        children: [{ text: "Encoded string 100%25" }],
+        type: "p",
       },
     ]);
 
@@ -65,28 +64,20 @@ describe('core static serializeHtml custom render hooks', () => {
       stripClassNames: true,
     });
 
-    expect(html).toContain(
-      '<span data-slate-string="true">None encoded string 100%</span>'
-    );
-    expect(html).toContain(
-      '<span data-slate-string="true">Encoded string 100%25</span>'
-    );
+    expect(html).toContain('<span data-slate-string="true">None encoded string 100%</span>');
+    expect(html).toContain('<span data-slate-string="true">Encoded string 100%25</span>');
   });
 
-  it('applies both node and leaf renderers', async () => {
+  it("applies both node and leaf renderers", async () => {
     const testPlugin = createTSlatePlugin({
-      key: 'test',
+      key: "test",
       node: {
         isDecoration: false,
         isLeaf: true,
       },
       render: {
-        node: ({ children }) => (
-          <span data-slate-test="node-wrapper">{children}</span>
-        ),
-        leaf: ({ children }) => (
-          <span data-slate-test="leaf-wrapper">{children}</span>
-        ),
+        node: ({ children }) => <span data-slate-test="node-wrapper">{children}</span>,
+        leaf: ({ children }) => <span data-slate-test="leaf-wrapper">{children}</span>,
       },
     });
 
@@ -97,10 +88,10 @@ describe('core static serializeHtml custom render hooks', () => {
           children: [
             {
               test: true,
-              text: 'test content',
+              text: "test content",
             },
           ],
-          type: 'p',
+          type: "p",
         },
       ],
     });
@@ -115,9 +106,9 @@ describe('core static serializeHtml custom render hooks', () => {
     );
   });
 
-  it('applies a component renderer to decoration leaves', async () => {
+  it("applies a component renderer to decoration leaves", async () => {
     const testPlugin = createTSlatePlugin({
-      key: 'test',
+      key: "test",
       node: {
         isDecoration: true,
         isLeaf: true,
@@ -135,10 +126,10 @@ describe('core static serializeHtml custom render hooks', () => {
           children: [
             {
               test: true,
-              text: 'test content',
+              text: "test content",
             },
           ],
-          type: 'p',
+          type: "p",
         },
       ],
     });
@@ -153,9 +144,9 @@ describe('core static serializeHtml custom render hooks', () => {
     );
   });
 
-  it('applies a component renderer to non-decoration leaves', async () => {
+  it("applies a component renderer to non-decoration leaves", async () => {
     const testPlugin = createTSlatePlugin({
-      key: 'test',
+      key: "test",
       node: {
         isDecoration: false,
         isLeaf: true,
@@ -173,10 +164,10 @@ describe('core static serializeHtml custom render hooks', () => {
           children: [
             {
               test: true,
-              text: 'test content',
+              text: "test content",
             },
           ],
-          type: 'p',
+          type: "p",
         },
       ],
     });

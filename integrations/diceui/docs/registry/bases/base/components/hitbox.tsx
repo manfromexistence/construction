@@ -50,7 +50,7 @@ const hitboxVariants = cva(
       radius: "none",
       debug: false,
     },
-  },
+  }
 );
 
 interface HitboxProps
@@ -60,16 +60,7 @@ interface HitboxProps
 }
 
 function Hitbox(props: HitboxProps) {
-  const {
-    className,
-    style,
-    size,
-    position,
-    radius,
-    debug = false,
-    render,
-    ...hitboxProps
-  } = props;
+  const { className, style, size, position, radius, debug = false, render, ...hitboxProps } = props;
 
   const isDynamicSize = size && !sizes.includes(size);
 
@@ -83,7 +74,7 @@ function Hitbox(props: HitboxProps) {
           radius,
           debug,
         }),
-        className,
+        className
       ),
       style: {
         ...(isDynamicSize && { "--size": size }),

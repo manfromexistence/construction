@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Ripple Demo",
   "description": "Example showing an animated ripple effect.",
-  "registryDependencies": [
-    "@magicui/ripple"
-  ],
+  "registryDependencies": ["@magicui/ripple"],
   "files": [
     {
       "path": "registry/example/ripple-demo.tsx",

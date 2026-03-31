@@ -1,14 +1,14 @@
-import { Icons } from '@/app/_components/Icons'
+import { Icons } from "@/app/_components/Icons";
 
 export const INSTALLATION = [
   {
-    slug: 'next',
+    slug: "next",
     icon: <Icons.nextjs color="var(--primary)" />,
-    name: 'Next.js',
+    name: "Next.js",
   },
   {
-    slug: 'vite',
+    slug: "vite",
     icon: <Icons.vite color="var(--primary)" />,
-    name: 'Vite',
+    name: "Vite",
   },
-]
+];

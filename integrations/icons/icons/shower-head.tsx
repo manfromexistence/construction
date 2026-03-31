@@ -105,17 +105,9 @@ const ShowerHeadIcon = forwardRef<ShowerHeadIconHandle, ShowerHeadIconProps>(
           <path d="m4 4 2.5 2.5" />
           <path d="M13.5 6.5a4.95 4.95 0 0 0-7 7" />
           <path d="M15 5 5 15" />
-          <motion.g
-            animate={controls}
-            initial="normal"
-            variants={DROP_VARIANTS}
-          >
+          <motion.g animate={controls} initial="normal" variants={DROP_VARIANTS}>
             {DROP_PATH.map((path) => (
-              <motion.path
-                d={path.d}
-                key={path.id}
-                variants={DROP_CHILD_VARIANTS}
-              />
+              <motion.path d={path.d} key={path.id} variants={DROP_CHILD_VARIANTS} />
             ))}
           </motion.g>
         </svg>

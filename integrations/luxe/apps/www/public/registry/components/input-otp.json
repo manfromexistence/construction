@@ -1,8 +1,6 @@
 {
   "name": "input-otp",
-  "externalDependencies": [
-    "input-otp"
-  ],
+  "externalDependencies": ["input-otp"],
   "internalDependencies": [],
   "file": {
     "name": "input-otp.tsx",

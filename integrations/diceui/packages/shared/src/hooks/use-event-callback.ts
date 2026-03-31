@@ -24,7 +24,7 @@ type AnyFunction = (...args: unknown[]) => unknown;
  * ```
  */
 function useEventCallback<E, T extends AnyFunction>(
-  callback: (event: E, ...args: Parameters<T>) => ReturnType<T>,
+  callback: (event: E, ...args: Parameters<T>) => ReturnType<T>
 ): (event: E, ...args: Parameters<T>) => ReturnType<T> {
   const callbackRef = React.useRef(callback);
 

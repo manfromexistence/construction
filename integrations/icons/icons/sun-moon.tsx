@@ -100,11 +100,7 @@ const SunMoonIcon = forwardRef<SunMoonIconHandle, SunMoonIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.g
-            animate={sunControls}
-            initial="normal"
-            variants={SUN_VARIANTS}
-          >
+          <motion.g animate={sunControls} initial="normal" variants={SUN_VARIANTS}>
             <path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4" />
           </motion.g>
           {[

@@ -1,21 +1,15 @@
-"use client"
+"use client";
 
-import React from "react"
-import Link from "next/link"
-import { CalendarIcon, HomeIcon, MailIcon, PencilIcon } from "lucide-react"
+import { CalendarIcon, HomeIcon, MailIcon, PencilIcon } from "lucide-react";
+import Link from "next/link";
+import React from "react";
+import { buttonVariants } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { Dock, DockIcon } from "@/registry/magicui/dock";
 
-import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
-import { Separator } from "@/components/ui/separator"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Dock, DockIcon } from "@/registry/magicui/dock"
-
-export type IconProps = React.HTMLAttributes<SVGElement>
+export type IconProps = React.HTMLAttributes<SVGElement>;
 
 const Icons = {
   calendar: (props: IconProps) => <CalendarIcon {...props} />,
@@ -59,7 +53,7 @@ const Icons = {
       ></path>
     </svg>
   ),
-}
+};
 
 const DATA = {
   navbar: [
@@ -90,7 +84,7 @@ const DATA = {
       },
     },
   },
-}
+};
 
 export default function DockDemo() {
   return (
@@ -146,5 +140,5 @@ export default function DockDemo() {
         </Dock>
       </TooltipProvider>
     </div>
-  )
+  );
 }

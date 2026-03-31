@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Confetti Random Direction",
   "description": "Example showing confetti with random directions.",
-  "registryDependencies": [
-    "@magicui/confetti"
-  ],
+  "registryDependencies": ["@magicui/confetti"],
   "files": [
     {
       "path": "registry/example/confetti-random-direction.tsx",

@@ -1,12 +1,12 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('isText', () => {
+describe("isText", () => {
   const editor = createEditor(
     (
       <editor>
@@ -15,15 +15,15 @@ describe('isText', () => {
     ) as any
   );
 
-  describe('when element path', () => {
-    it('returns false', () => {
+  describe("when element path", () => {
+    it("returns false", () => {
       const path = [0];
       expect(editor.api.isText(path)).toBe(false);
     });
   });
 
-  describe('when text path', () => {
-    it('returns true', () => {
+  describe("when text path", () => {
+    it("returns true", () => {
       const path = [0, 0];
       expect(editor.api.isText(path)).toBe(true);
     });

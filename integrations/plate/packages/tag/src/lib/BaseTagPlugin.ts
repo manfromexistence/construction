@@ -1,4 +1,4 @@
-import { type TTagProps, createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS, type TTagProps } from "platejs";
 
 export const BaseTagPlugin = createSlatePlugin({
   key: KEYS.tag,
@@ -13,11 +13,11 @@ export const BaseTagPlugin = createSlatePlugin({
       editor.tf.insertNodes(
         [
           {
-            children: [{ text: '' }],
+            children: [{ text: "" }],
             type,
             ...props,
           },
-          { text: '' },
+          { text: "" },
         ],
         options
       );

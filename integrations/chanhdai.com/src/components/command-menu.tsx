@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { useRouter } from "@bprogress/next/app"
-import { useCommandState } from "cmdk"
+import { useRouter } from "@bprogress/next/app";
+import { useCommandState } from "cmdk";
 import {
   AwardIcon,
   BookmarkIcon,
@@ -19,11 +19,11 @@ import {
   TextInitialIcon,
   TriangleDashedIcon,
   TypeIcon,
-} from "lucide-react"
-import { useTheme } from "next-themes"
-import React, { useCallback, useEffect, useMemo, useState } from "react"
-import { useHotkeys } from "react-hotkeys-hook"
-import { toast } from "sonner"
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
+import { toast } from "sonner";
 
 import {
   CommandDialog,
@@ -33,30 +33,30 @@ import {
   CommandItem,
   CommandList,
   CommandShortcut,
-} from "@/components/ui/command"
-import type { DocPreview } from "@/features/doc/types/document"
-import { SOCIAL_LINKS } from "@/features/portfolio/data/social-links"
-import { useDuckFollowerVisibility } from "@/hooks/use-duck-follower-visibility"
-import { trackEvent } from "@/lib/events"
-import { copyToClipboardWithEvent } from "@/utils/copy"
+} from "@/components/ui/command";
+import type { DocPreview } from "@/features/doc/types/document";
+import { SOCIAL_LINKS } from "@/features/portfolio/data/social-links";
+import { useDuckFollowerVisibility } from "@/hooks/use-duck-follower-visibility";
+import { trackEvent } from "@/lib/events";
+import { copyToClipboardWithEvent } from "@/utils/copy";
 
-import { ChanhDaiMark, getMarkSVG } from "./chanhdai-mark"
-import { getWordmarkSVG } from "./chanhdai-wordmark"
-import { ComponentIcon, Icons } from "./icons"
-import { Button } from "./ui/button"
-import { Kbd, KbdGroup } from "./ui/kbd"
-import { Separator } from "./ui/separator"
+import { ChanhDaiMark, getMarkSVG } from "./chanhdai-mark";
+import { getWordmarkSVG } from "./chanhdai-wordmark";
+import { ComponentIcon, Icons } from "./icons";
+import { Button } from "./ui/button";
+import { Kbd, KbdGroup } from "./ui/kbd";
+import { Separator } from "./ui/separator";
 
 type CommandLinkItem = {
-  title: string
-  href: string
+  title: string;
+  href: string;
 
-  icon?: React.ReactElement
-  iconImage?: string
-  shortcut?: string
-  keywords?: string[]
-  openInNewTab?: boolean
-}
+  icon?: React.ReactElement;
+  iconImage?: string;
+  shortcut?: string;
+  keywords?: string[];
+  openInNewTab?: boolean;
+};
 
 const MENU_LINKS: CommandLinkItem[] = [
   {
@@ -95,7 +95,7 @@ const MENU_LINKS: CommandLinkItem[] = [
     icon: <Icons.bookHeart />,
     shortcut: "GW",
   },
-]
+];
 
 const PORTFOLIO_LINKS: CommandLinkItem[] = [
   {
@@ -138,14 +138,14 @@ const PORTFOLIO_LINKS: CommandLinkItem[] = [
     href: "/vcard",
     icon: <DownloadIcon />,
   },
-]
+];
 
 const SOCIAL_LINK_ITEMS: CommandLinkItem[] = SOCIAL_LINKS.map((item) => ({
   title: item.title,
   href: item.href,
   iconImage: item.icon,
   openInNewTab: true,
-}))
+}));
 
 const OTHER_LINK_ITEMS: CommandLinkItem[] = [
   {
@@ -160,34 +160,34 @@ const OTHER_LINK_ITEMS: CommandLinkItem[] = [
     icon: <RssIcon />,
     openInNewTab: true,
   },
-]
+];
 
 type BlockItem = {
-  name: string
-  description: string
-}
+  name: string;
+  description: string;
+};
 
 export function CommandMenu({
   docs,
   blocks,
   enabledHotkeys = false,
 }: {
-  docs: DocPreview[]
-  blocks: BlockItem[]
-  enabledHotkeys?: boolean
+  docs: DocPreview[];
+  blocks: BlockItem[];
+  enabledHotkeys?: boolean;
 }) {
-  const router = useRouter()
+  const router = useRouter();
 
-  const { setTheme, resolvedTheme } = useTheme()
+  const { setTheme, resolvedTheme } = useTheme();
 
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
-  const [, setIsDuckFollowerVisible] = useDuckFollowerVisibility()
+  const [, setIsDuckFollowerVisible] = useDuckFollowerVisibility();
 
   useHotkeys(
     "mod+k, slash",
     (e) => {
-      e.preventDefault()
+      e.preventDefault();
 
       setOpen((open) => {
         if (!open) {
@@ -197,17 +197,17 @@ export function CommandMenu({
               method: "keyboard",
               key: e.key === "/" ? "/" : e.metaKey ? "cmd+k" : "ctrl+k",
             },
-          })
+          });
         }
-        return !open
-      })
+        return !open;
+      });
     },
     { enabled: enabledHotkeys }
-  )
+  );
 
   const handleOpenLink = useCallback(
     (href: string, openInNewTab = false) => {
-      setOpen(false)
+      setOpen(false);
 
       trackEvent({
         name: "command_menu_action",
@@ -216,32 +216,32 @@ export function CommandMenu({
           href: href,
           open_in_new_tab: openInNewTab,
         },
-      })
+      });
 
       if (openInNewTab) {
-        window.open(href, "_blank", "noopener")
+        window.open(href, "_blank", "noopener");
       } else {
-        router.push(href)
+        router.push(href);
       }
     },
     [router]
-  )
+  );
 
   const handleCopyText = useCallback((text: string, message: string) => {
-    setOpen(false)
+    setOpen(false);
     copyToClipboardWithEvent(text, {
       name: "command_menu_action",
       properties: {
         action: "copy",
         text: text,
       },
-    })
-    toast.success(message)
-  }, [])
+    });
+    toast.success(message);
+  }, []);
 
   const createThemeHandler = useCallback(
     (theme: "light" | "dark" | "system") => () => {
-      setOpen(false)
+      setOpen(false);
 
       trackEvent({
         name: "command_menu_action",
@@ -249,24 +249,24 @@ export function CommandMenu({
           action: "change_theme",
           theme: theme,
         },
-      })
+      });
 
-      setTheme(theme)
+      setTheme(theme);
     },
     [setTheme]
-  )
+  );
 
   const handleToggleDuckFollower = useCallback(() => {
-    setOpen(false)
-    setIsDuckFollowerVisible((isVisible) => !isVisible)
+    setOpen(false);
+    setIsDuckFollowerVisible((isVisible) => !isVisible);
 
     trackEvent({
       name: "command_menu_action",
       properties: {
         action: "toggle_duck_follower",
       },
-    })
-  }, [setIsDuckFollowerVisible])
+    });
+  }, [setIsDuckFollowerVisible]);
 
   const { componentLinks, blogLinks } = useMemo(
     () => ({
@@ -278,12 +278,10 @@ export function CommandMenu({
           })
         )
         .map(docToCommandLinkItem),
-      blogLinks: docs
-        .filter((doc) => doc.category !== "components")
-        .map(docToCommandLinkItem),
+      blogLinks: docs.filter((doc) => doc.category !== "components").map(docToCommandLinkItem),
     }),
     [docs]
-  )
+  );
 
   const blockLinks = useMemo(
     () =>
@@ -293,19 +291,19 @@ export function CommandMenu({
         keywords: ["block"],
       })),
     [blocks]
-  )
+  );
 
   return (
     <>
       <CommandMenuTrigger
         onClick={() => {
-          setOpen(true)
+          setOpen(true);
           trackEvent({
             name: "open_command_menu",
             properties: {
               method: "click",
             },
-          })
+          });
         }}
       />
 
@@ -315,11 +313,7 @@ export function CommandMenu({
         <CommandList className="min-h-80 supports-timeline-scroll:scroll-fade-effect-y">
           <CommandEmpty>No results found.</CommandEmpty>
 
-          <CommandLinkGroup
-            heading="Menu"
-            links={MENU_LINKS}
-            onLinkSelect={handleOpenLink}
-          />
+          <CommandLinkGroup heading="Menu" links={MENU_LINKS} onLinkSelect={handleOpenLink} />
 
           <CommandLinkGroup
             heading="Portfolio"
@@ -360,7 +354,7 @@ export function CommandMenu({
                 handleCopyText(
                   getMarkSVG(resolvedTheme === "light" ? "#000" : "#fff"),
                   "Mark as SVG copied"
-                )
+                );
               }}
             >
               <ChanhDaiMark />
@@ -372,16 +366,14 @@ export function CommandMenu({
                 handleCopyText(
                   getWordmarkSVG(resolvedTheme === "light" ? "#000" : "#fff"),
                   "Logotype as SVG copied"
-                )
+                );
               }}
             >
               <TypeIcon />
               Copy Logotype as SVG
             </CommandItem>
 
-            <CommandItem
-              onSelect={() => handleOpenLink("/blog/chanhdai-brand")}
-            >
+            <CommandItem onSelect={() => handleOpenLink("/blog/chanhdai-brand")}>
               <TriangleDashedIcon />
               Brand Guidelines
             </CommandItem>
@@ -395,24 +387,15 @@ export function CommandMenu({
           </CommandGroup>
 
           <CommandGroup heading="Theme">
-            <CommandItem
-              keywords={["theme"]}
-              onSelect={createThemeHandler("light")}
-            >
+            <CommandItem keywords={["theme"]} onSelect={createThemeHandler("light")}>
               <SunMediumIcon />
               Light
             </CommandItem>
-            <CommandItem
-              keywords={["theme"]}
-              onSelect={createThemeHandler("dark")}
-            >
+            <CommandItem keywords={["theme"]} onSelect={createThemeHandler("dark")}>
               <MoonStarIcon />
               Dark
             </CommandItem>
-            <CommandItem
-              keywords={["theme"]}
-              onSelect={createThemeHandler("system")}
-            >
+            <CommandItem keywords={["theme"]} onSelect={createThemeHandler("system")}>
               <Icons.contrast />
               Auto
             </CommandItem>
@@ -435,7 +418,7 @@ export function CommandMenu({
         <CommandMenuFooter />
       </CommandDialog>
     </>
-  )
+  );
 }
 
 function CommandMenuTrigger({ ...props }: React.ComponentProps<typeof Button>) {
@@ -461,11 +444,11 @@ function CommandMenuTrigger({ ...props }: React.ComponentProps<typeof Button>) {
         <Kbd className="w-5 min-w-5">K</Kbd>
       </KbdGroup>
     </Button>
-  )
+  );
 }
 
 function CommandMenuInput() {
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState("");
 
   useEffect(() => {
     if (searchValue.length >= 2) {
@@ -476,12 +459,12 @@ function CommandMenuInput() {
             query: searchValue,
             query_length: searchValue.length,
           },
-        })
-      }, 500)
+        });
+      }, 500);
 
-      return () => clearTimeout(timeoutId)
+      return () => clearTimeout(timeoutId);
     }
-  }, [searchValue])
+  }, [searchValue]);
 
   return (
     <CommandInput
@@ -489,7 +472,7 @@ function CommandMenuInput() {
       value={searchValue}
       onValueChange={setSearchValue}
     />
-  )
+  );
 }
 
 function CommandLinkGroup({
@@ -498,15 +481,15 @@ function CommandLinkGroup({
   fallbackIcon,
   onLinkSelect,
 }: {
-  heading: string
-  links: CommandLinkItem[]
-  fallbackIcon?: React.ReactElement
-  onLinkSelect: (href: string, openInNewTab?: boolean) => void
+  heading: string;
+  links: CommandLinkItem[];
+  fallbackIcon?: React.ReactElement;
+  onLinkSelect: (href: string, openInNewTab?: boolean) => void;
 }) {
   return (
     <CommandGroup heading={heading}>
       {links.map((link) => {
-        const icon = link?.icon ?? fallbackIcon ?? <React.Fragment />
+        const icon = link?.icon ?? fallbackIcon ?? <React.Fragment />;
 
         return (
           <CommandItem
@@ -532,61 +515,61 @@ function CommandLinkGroup({
               </CommandShortcut>
             )}
           </CommandItem>
-        )
+        );
       })}
     </CommandGroup>
-  )
+  );
 }
 
-type CommandKind = "command" | "page" | "link"
+type CommandKind = "command" | "page" | "link";
 
 type CommandMetaMap = Map<
   string,
   {
-    commandKind: CommandKind
+    commandKind: CommandKind;
   }
->
+>;
 
 function buildCommandMetaMap() {
-  const commandMetaMap: CommandMetaMap = new Map()
+  const commandMetaMap: CommandMetaMap = new Map();
 
-  commandMetaMap.set("Download vCard", { commandKind: "command" })
+  commandMetaMap.set("Download vCard", { commandKind: "command" });
 
-  commandMetaMap.set("Light", { commandKind: "command" })
-  commandMetaMap.set("Dark", { commandKind: "command" })
-  commandMetaMap.set("Auto", { commandKind: "command" })
+  commandMetaMap.set("Light", { commandKind: "command" });
+  commandMetaMap.set("Dark", { commandKind: "command" });
+  commandMetaMap.set("Auto", { commandKind: "command" });
 
   commandMetaMap.set("Copy Mark as SVG", {
     commandKind: "command",
-  })
+  });
   commandMetaMap.set("Copy Logotype as SVG", {
     commandKind: "command",
-  })
+  });
   commandMetaMap.set("Download Brand Assets", {
     commandKind: "command",
-  })
+  });
 
   SOCIAL_LINK_ITEMS.forEach((item) => {
     commandMetaMap.set(item.title, {
       commandKind: "link",
-    })
-  })
+    });
+  });
 
-  return commandMetaMap
+  return commandMetaMap;
 }
 
-const COMMAND_META_MAP = buildCommandMetaMap()
+const COMMAND_META_MAP = buildCommandMetaMap();
 
 const ENTER_ACTION_LABELS: Record<CommandKind, string> = {
   command: "Run Command",
   page: "Go to Page",
   link: "Open Link",
-}
+};
 
 function CommandMenuFooter() {
   const selectedCommandKind = useCommandState(
     (state) => COMMAND_META_MAP.get(state.value)?.commandKind ?? "page"
-  )
+  );
 
   return (
     <>
@@ -609,16 +592,16 @@ function CommandMenuFooter() {
         </div>
       </div>
     </>
-  )
+  );
 }
 
 function docToCommandLinkItem(doc: DocPreview): CommandLinkItem {
-  const isComponent = doc.category === "components"
+  const isComponent = doc.category === "components";
 
   return {
     title: doc.title,
     href: isComponent ? `/components/${doc.slug}` : `/blog/${doc.slug}`,
     keywords: isComponent ? ["component"] : undefined,
     icon: isComponent ? <ComponentIcon variant={doc.slug} /> : undefined,
-  }
+  };
 }

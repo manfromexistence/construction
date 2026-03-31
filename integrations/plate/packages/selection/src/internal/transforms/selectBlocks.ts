@@ -1,11 +1,9 @@
-import type { Path, SlateEditor, TIdElement, TNode } from 'platejs';
+import type { Path, SlateEditor, TIdElement, TNode } from "platejs";
 
-import { BlockSelectionPlugin } from '../../react';
+import { BlockSelectionPlugin } from "../../react";
 
 export const selectBlocks = (editor: SlateEditor, at: Path | TNode) => {
-  const blockSelection = editor
-    .getApi(BlockSelectionPlugin)
-    .blockSelection.getNodes();
+  const blockSelection = editor.getApi(BlockSelectionPlugin).blockSelection.getNodes();
 
   const entry = editor.api.node<TIdElement>(at);
 
@@ -17,7 +15,7 @@ export const selectBlocks = (editor: SlateEditor, at: Path | TNode) => {
     blockSelection.length > 0
       ? blockSelection
       : editor.api.blocks({
-          mode: 'lowest',
+          mode: "lowest",
           match: (_, p) => p.length === path.length,
         });
   const ids = selectedBlocks.map((block) => block[0].id as string);

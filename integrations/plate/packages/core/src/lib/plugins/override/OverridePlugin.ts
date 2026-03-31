@@ -1,10 +1,10 @@
-import { type OverrideEditor, getPluginByType } from '../../plugin';
-import { createSlatePlugin } from '../../plugin/createSlatePlugin';
-import { BaseParagraphPlugin } from '../paragraph';
-import { withBreakRules } from './withBreakRules';
-import { withDeleteRules } from './withDeleteRules';
-import { withMergeRules } from './withMergeRules';
-import { withNormalizeRules } from './withNormalizeRules';
+import { getPluginByType, type OverrideEditor } from "../../plugin";
+import { createSlatePlugin } from "../../plugin/createSlatePlugin";
+import { BaseParagraphPlugin } from "../paragraph";
+import { withBreakRules } from "./withBreakRules";
+import { withDeleteRules } from "./withDeleteRules";
+import { withMergeRules } from "./withMergeRules";
+import { withNormalizeRules } from "./withNormalizeRules";
 
 /**
  * Merge and register all the inline types and void types from the plugins and
@@ -20,7 +20,7 @@ export const withOverrides: OverrideEditor = ({
     api: {
       create: {
         block: (node) => ({
-          children: [{ text: '' }],
+          children: [{ text: "" }],
           type: editor.getType(BaseParagraphPlugin.key),
           ...node,
         }),
@@ -31,8 +31,7 @@ export const withOverrides: OverrideEditor = ({
           : isInline(element);
       },
       isSelectable(element) {
-        return getPluginByType(editor, element.type as string)?.node
-          .isSelectable === false
+        return getPluginByType(editor, element.type as string)?.node.isSelectable === false
           ? false
           : isSelectable(element);
       },
@@ -42,8 +41,7 @@ export const withOverrides: OverrideEditor = ({
           : isVoid(element);
       },
       markableVoid(element) {
-        return getPluginByType(editor, element.type as string)?.node
-          .isMarkableVoid
+        return getPluginByType(editor, element.type as string)?.node.isMarkableVoid
           ? true
           : markableVoid(element);
       },
@@ -53,7 +51,7 @@ export const withOverrides: OverrideEditor = ({
 
 /** Override the editor api and transforms based on the plugins. */
 export const OverridePlugin = createSlatePlugin({
-  key: 'override',
+  key: "override",
 })
   .overrideEditor(withOverrides)
   .overrideEditor(withBreakRules)

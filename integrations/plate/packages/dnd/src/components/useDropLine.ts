@@ -1,16 +1,14 @@
-import { useElement, usePluginOptions } from 'platejs/react';
-
-import type { DropLineDirection } from '../types';
-
-import { DndPlugin } from '../DndPlugin';
+import { useElement, usePluginOptions } from "platejs/react";
+import { DndPlugin } from "../DndPlugin";
+import type { DropLineDirection } from "../types";
 
 export const useDropLine = ({
   id: idProp,
-  orientation = 'vertical',
+  orientation = "vertical",
 }: {
   /** The id of the element to show the dropline for. */
   id?: string;
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: "horizontal" | "vertical";
 } = {}): {
   dropLine?: DropLineDirection;
 } => {
@@ -23,19 +21,19 @@ export const useDropLine = ({
       if (dropTarget.id !== id) return null;
 
       return dropTarget.line;
-    }) ?? '';
+    }) ?? "";
 
   if (orientation) {
-    const isHorizontalDropLine = dropLine === 'left' || dropLine === 'right';
-    const isVerticalDropLine = dropLine === 'top' || dropLine === 'bottom';
+    const isHorizontalDropLine = dropLine === "left" || dropLine === "right";
+    const isVerticalDropLine = dropLine === "top" || dropLine === "bottom";
 
     // If the orientation is vertical but we got a horizontal dropline, clear it.
     if (
-      (orientation === 'vertical' && isHorizontalDropLine) ||
-      (orientation === 'horizontal' && isVerticalDropLine)
+      (orientation === "vertical" && isHorizontalDropLine) ||
+      (orientation === "horizontal" && isVerticalDropLine)
     ) {
       return {
-        dropLine: '',
+        dropLine: "",
       };
     }
   }

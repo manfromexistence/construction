@@ -35,14 +35,11 @@ export function TasksTableActionBar({ table }: TasksTableActionBarProps) {
         table.toggleAllRowsSelected(false);
       }
     },
-    [table],
+    [table]
   );
 
   const onTaskUpdate = React.useCallback(
-    (
-      field: "status" | "priority",
-      value: Task["status"] | Task["priority"],
-    ) => {
+    (field: "status" | "priority", value: Task["status"] | Task["priority"]) => {
       async function update() {
         const { error } = await updateTasks({
           ids: rows.map((row) => row.original.id),
@@ -57,7 +54,7 @@ export function TasksTableActionBar({ table }: TasksTableActionBarProps) {
       }
       update();
     },
-    [rows],
+    [rows]
   );
 
   const onTaskExport = React.useCallback(() => {

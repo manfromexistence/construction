@@ -5,7 +5,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/radix-nova/ui/select"
+} from "@/styles/radix-nova/ui/select";
 
 export function SelectDisabled() {
   return (
@@ -25,5 +25,5 @@ export function SelectDisabled() {
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }

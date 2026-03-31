@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import { GlobeIcon } from "lucide-react"
+import { GlobeIcon } from "lucide-react";
 
 import {
   Combobox,
@@ -12,8 +12,8 @@ import {
   ComboboxItem,
   ComboboxLabel,
   ComboboxList,
-} from "@/styles/radix-nova/ui/combobox"
-import { InputGroupAddon } from "@/styles/radix-nova/ui/input-group"
+} from "@/styles/radix-nova/ui/combobox";
+import { InputGroupAddon } from "@/styles/radix-nova/ui/input-group";
 
 const timezones = [
   {
@@ -49,7 +49,7 @@ const timezones = [
       "(GMT+9) Seoul",
     ],
   },
-] as const
+] as const;
 
 export function ComboxboxInputGroup() {
   return (
@@ -77,5 +77,5 @@ export function ComboxboxInputGroup() {
         </ComboboxList>
       </ComboboxContent>
     </Combobox>
-  )
+  );
 }

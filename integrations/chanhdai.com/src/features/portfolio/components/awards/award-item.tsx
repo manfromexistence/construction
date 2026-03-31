@@ -1,33 +1,17 @@
-import { format } from "date-fns"
-import { AwardIcon, FileCheckIcon } from "lucide-react"
+import { format } from "date-fns";
+import { AwardIcon, FileCheckIcon } from "lucide-react";
 
-import {
-  Collapsible,
-  CollapsibleChevronsIcon,
-} from "@/components/base/collapsible-animated"
-import {
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/base/ui/collapsible"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
-import { Markdown } from "@/components/markdown"
-import { Separator } from "@/components/ui/separator"
-import { ProseMono } from "@/components/ui/typography"
+import { Collapsible, CollapsibleChevronsIcon } from "@/components/base/collapsible-animated";
+import { CollapsibleContent, CollapsibleTrigger } from "@/components/base/ui/collapsible";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/base/ui/tooltip";
+import { Markdown } from "@/components/markdown";
+import { Separator } from "@/components/ui/separator";
+import { ProseMono } from "@/components/ui/typography";
 
-import type { Award } from "../../types/awards"
+import type { Award } from "../../types/awards";
 
-export function AwardItem({
-  className,
-  award,
-}: {
-  className?: string
-  award: Award
-}) {
-  const canExpand = !!award.description
+export function AwardItem({ className, award }: { className?: string; award: Award }) {
+  const canExpand = !!award.description;
 
   return (
     <Collapsible className={className} disabled={!canExpand}>
@@ -39,9 +23,7 @@ export function AwardItem({
         <div className="flex-1 border-l border-dashed border-line">
           <CollapsibleTrigger className="flex w-full items-center gap-2 p-4 pr-2 text-left">
             <div className="flex-1">
-              <h3 className="mb-1 leading-snug font-medium text-balance">
-                {award.title}
-              </h3>
+              <h3 className="mb-1 leading-snug font-medium text-balance">{award.title}</h3>
 
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
                 <dl>
@@ -113,5 +95,5 @@ export function AwardItem({
         </CollapsibleContent>
       )}
     </Collapsible>
-  )
+  );
 }

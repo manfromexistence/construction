@@ -1,10 +1,9 @@
-import type { Descendant } from '@platejs/slate';
+import type { Descendant } from "@platejs/slate";
 
-import type { SlateEditor } from '../../lib/editor';
-import type { ParserOptions } from '../../lib/plugin/BasePlugin';
-import type { AnyEditorPlugin } from '../../lib/plugin/SlatePlugin';
-
-import { getEditorPlugin } from '../../lib/plugin';
+import type { SlateEditor } from "../../lib/editor";
+import { getEditorPlugin } from "../../lib/plugin";
+import type { ParserOptions } from "../../lib/plugin/BasePlugin";
+import type { AnyEditorPlugin } from "../../lib/plugin/SlatePlugin";
 
 /** Pipe preInsert then insertFragment. */
 export const pipeInsertFragment = (

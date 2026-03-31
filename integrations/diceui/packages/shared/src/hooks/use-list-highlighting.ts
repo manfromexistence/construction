@@ -4,9 +4,7 @@ import type { CollectionItem } from "./use-collection";
 
 interface UseListHighlightingOptions<TElement extends HTMLElement, TData = {}> {
   highlightedItem: CollectionItem<TElement, TData> | null;
-  onHighlightedItemChange: (
-    item: CollectionItem<TElement, TData> | null,
-  ) => void;
+  onHighlightedItemChange: (item: CollectionItem<TElement, TData> | null) => void;
   getItems: () => CollectionItem<TElement, TData>[];
   getIsItemSelected: (item: CollectionItem<TElement, TData>) => boolean;
   loop?: boolean;
@@ -26,7 +24,7 @@ function useListHighlighting<TElement extends HTMLElement, TData = {}>({
       if (items.length === 0) return;
 
       const currentIndex = items.findIndex(
-        (item) => item.ref.current === highlightedItem?.ref.current,
+        (item) => item.ref.current === highlightedItem?.ref.current
       );
 
       let nextIndex: number;
@@ -35,8 +33,7 @@ function useListHighlighting<TElement extends HTMLElement, TData = {}>({
       switch (direction) {
         case "next": {
           nextIndex = currentIndex + 1;
-          nextIndex =
-            nextIndex > lastIndex ? (loop ? 0 : lastIndex) : nextIndex;
+          nextIndex = nextIndex > lastIndex ? (loop ? 0 : lastIndex) : nextIndex;
           break;
         }
         case "prev": {
@@ -63,13 +60,7 @@ function useListHighlighting<TElement extends HTMLElement, TData = {}>({
         onHighlightedItemChange(nextItem);
       }
     },
-    [
-      getItems,
-      getIsItemSelected,
-      highlightedItem,
-      onHighlightedItemChange,
-      loop,
-    ],
+    [getItems, getIsItemSelected, highlightedItem, onHighlightedItemChange, loop]
   );
 
   return { onHighlightMove };

@@ -1,5 +1,5 @@
-import { AnimatedThemeToggler } from "@/registry/magicui/animated-theme-toggler"
+import { AnimatedThemeToggler } from "@/registry/magicui/animated-theme-toggler";
 
 export default function AnimatedThemeTogglerDemo() {
-  return <AnimatedThemeToggler />
+  return <AnimatedThemeToggler />;
 }

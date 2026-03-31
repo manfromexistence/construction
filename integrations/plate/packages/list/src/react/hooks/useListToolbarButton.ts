@@ -1,17 +1,14 @@
-import { useEditorRef, useEditorSelector } from 'platejs/react';
+import { useEditorRef, useEditorSelector } from "platejs/react";
 
-import { ListStyleType, toggleList } from '../../index';
-import { someList } from '../../lib/queries/someList';
+import { ListStyleType, toggleList } from "../../index";
+import { someList } from "../../lib/queries/someList";
 
 export const useListToolbarButtonState = ({
   nodeType = ListStyleType.Disc,
 }: {
   nodeType?: string;
 } = {}) => {
-  const pressed = useEditorSelector(
-    (editor) => someList(editor, nodeType),
-    [nodeType]
-  );
+  const pressed = useEditorSelector((editor) => someList(editor, nodeType), [nodeType]);
 
   return {
     nodeType,

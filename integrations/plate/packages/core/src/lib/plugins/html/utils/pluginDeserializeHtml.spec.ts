@@ -1,30 +1,30 @@
-import { createSlateEditor, createSlatePlugin } from '../../../index';
-import { parseHtmlElement } from './parseHtmlElement';
-import { pluginDeserializeHtml } from './pluginDeserializeHtml';
+import { createSlateEditor, createSlatePlugin } from "../../../index";
+import { parseHtmlElement } from "./parseHtmlElement";
+import { pluginDeserializeHtml } from "./pluginDeserializeHtml";
 
-describe('pluginDeserializeHtml', () => {
-  it('adds static rules and merges parsed, injected, data, and allowed attribute props', () => {
+describe("pluginDeserializeHtml", () => {
+  it("adds static rules and merges parsed, injected, data, and allowed attribute props", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
-            attributeNames: ['data-id'],
-            parse: () => ({ type: 'p' }),
+            attributeNames: ["data-id"],
+            parse: () => ({ type: "p" }),
           },
         },
       },
     });
     const AlignPlugin = createSlatePlugin({
-      key: 'align',
+      key: "align",
       inject: {
         plugins: {
           p: {
             parsers: {
               html: {
                 deserializer: {
-                  parse: () => ({ align: 'center' }),
+                  parse: () => ({ align: "center" }),
                 },
               },
             },
@@ -35,38 +35,32 @@ describe('pluginDeserializeHtml', () => {
     const editor = createSlateEditor({
       plugins: [ParagraphPlugin, AlignPlugin],
     });
-    const element = parseHtmlElement(
-      '<p class="slate-p" data-slate-level="3" data-id="abc"></p>'
-    );
+    const element = parseHtmlElement('<p class="slate-p" data-slate-level="3" data-id="abc"></p>');
 
-    const result = pluginDeserializeHtml(
-      editor,
-      editor.getPlugin(ParagraphPlugin),
-      {
-        element,
-      }
-    );
+    const result = pluginDeserializeHtml(editor, editor.getPlugin(ParagraphPlugin), {
+      element,
+    });
 
     expect(result?.rules?.[0]).toEqual({
-      validClassName: 'slate-p',
-      validNodeName: '*',
+      validClassName: "slate-p",
+      validNodeName: "*",
     });
     expect(result?.node).toEqual({
-      align: 'center',
-      attributes: { 'data-id': 'abc' },
+      align: "center",
+      attributes: { "data-id": "abc" },
       level: 3,
-      type: 'p',
+      type: "p",
     });
   });
 
-  it('skips parser output for existing slate nodes and keeps only data-node props', () => {
+  it("skips parser output for existing slate nodes and keeps only data-node props", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
-            parse: () => ({ type: 'p' }),
+            parse: () => ({ type: "p" }),
           },
         },
       },
@@ -87,24 +81,24 @@ describe('pluginDeserializeHtml', () => {
     });
   });
 
-  it('rejects styles that only restate the injected default node value', () => {
+  it("rejects styles that only restate the injected default node value", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
+      key: "p",
       inject: {
         nodeProps: {
-          defaultNodeValue: '1.5',
+          defaultNodeValue: "1.5",
         },
       },
-      node: { isElement: true, type: 'p' },
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
-            parse: () => ({ type: 'p' }),
+            parse: () => ({ type: "p" }),
             rules: [
               {
-                validClassName: 'slate-p',
-                validNodeName: 'P',
-                validStyle: { lineHeight: '*' },
+                validClassName: "slate-p",
+                validNodeName: "P",
+                validStyle: { lineHeight: "*" },
               },
             ],
           },
@@ -114,9 +108,7 @@ describe('pluginDeserializeHtml', () => {
     const editor = createSlateEditor({
       plugins: [ParagraphPlugin],
     });
-    const element = parseHtmlElement(
-      '<p class="slate-p" style="line-height: 1.5"></p>'
-    );
+    const element = parseHtmlElement('<p class="slate-p" style="line-height: 1.5"></p>');
 
     expect(
       pluginDeserializeHtml(editor, editor.getPlugin(ParagraphPlugin), {
@@ -125,14 +117,14 @@ describe('pluginDeserializeHtml', () => {
     ).toBeUndefined();
   });
 
-  it('falls back to a boolean leaf mark when parse is omitted', () => {
+  it("falls back to a boolean leaf mark when parse is omitted", () => {
     const BoldPlugin = createSlatePlugin({
-      key: 'bold',
+      key: "bold",
       node: { isLeaf: true },
       parsers: {
         html: {
           deserializer: {
-            rules: [{ validNodeName: 'STRONG' }],
+            rules: [{ validNodeName: "STRONG" }],
           },
         },
       },
@@ -152,15 +144,15 @@ describe('pluginDeserializeHtml', () => {
     });
   });
 
-  it('matches string attribute rules and stores allowed attributes', () => {
+  it("matches string attribute rules and stores allowed attributes", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
-            attributeNames: ['data-kind'],
-            rules: [{ validAttribute: 'data-kind', validNodeName: 'P' }],
+            attributeNames: ["data-kind"],
+            rules: [{ validAttribute: "data-kind", validNodeName: "P" }],
           },
         },
       },
@@ -168,28 +160,26 @@ describe('pluginDeserializeHtml', () => {
     const editor = createSlateEditor({
       plugins: [ParagraphPlugin],
     });
-    const element = parseHtmlElement(
-      '<p class="slate-p" data-kind="todo"></p>'
-    );
+    const element = parseHtmlElement('<p class="slate-p" data-kind="todo"></p>');
 
     expect(
       pluginDeserializeHtml(editor, editor.getPlugin(ParagraphPlugin), {
         element,
       })?.node
     ).toEqual({
-      attributes: { 'data-kind': 'todo' },
-      type: 'p',
+      attributes: { "data-kind": "todo" },
+      type: "p",
     });
   });
 
-  it('rejects string attribute rules when the required attribute is missing', () => {
+  it("rejects string attribute rules when the required attribute is missing", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
-            rules: [{ validAttribute: 'data-kind', validNodeName: 'P' }],
+            rules: [{ validAttribute: "data-kind", validNodeName: "P" }],
           },
         },
       },
@@ -200,22 +190,22 @@ describe('pluginDeserializeHtml', () => {
 
     expect(
       pluginDeserializeHtml(editor, editor.getPlugin(ParagraphPlugin), {
-        element: parseHtmlElement('<p></p>'),
+        element: parseHtmlElement("<p></p>"),
       })
     ).toBeUndefined();
   });
 
-  it('rejects object attribute rules when the element value does not match', () => {
+  it("rejects object attribute rules when the element value does not match", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
             rules: [
               {
-                validAttribute: { 'data-kind': 'todo' },
-                validNodeName: 'P',
+                validAttribute: { "data-kind": "todo" },
+                validNodeName: "P",
               },
             ],
           },
@@ -234,15 +224,15 @@ describe('pluginDeserializeHtml', () => {
     ).toBeUndefined();
   });
 
-  it('returns undefined when the deserializer query rejects the element', () => {
+  it("returns undefined when the deserializer query rejects the element", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
             query: () => false,
-            rules: [{ validNodeName: 'P' }],
+            rules: [{ validNodeName: "P" }],
           },
         },
       },
@@ -258,13 +248,13 @@ describe('pluginDeserializeHtml', () => {
     ).toBeUndefined();
   });
 
-  it('returns undefined when parse is omitted for a non-element, non-leaf plugin', () => {
+  it("returns undefined when parse is omitted for a non-element, non-leaf plugin", () => {
     const UnknownPlugin = createSlatePlugin({
-      key: 'unknown',
+      key: "unknown",
       parsers: {
         html: {
           deserializer: {
-            rules: [{ validNodeName: 'DIV' }],
+            rules: [{ validNodeName: "DIV" }],
           },
         },
       },
@@ -280,18 +270,18 @@ describe('pluginDeserializeHtml', () => {
     ).toBeUndefined();
   });
 
-  it('matches valid style arrays and falls back to the element type when parse is omitted', () => {
+  it("matches valid style arrays and falls back to the element type when parse is omitted", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
             rules: [
               {
-                validNodeName: 'P',
+                validNodeName: "P",
                 validStyle: {
-                  textAlign: ['center', 'right'],
+                  textAlign: ["center", "right"],
                 },
               },
             ],
@@ -305,27 +295,25 @@ describe('pluginDeserializeHtml', () => {
 
     expect(
       pluginDeserializeHtml(editor, editor.getPlugin(ParagraphPlugin), {
-        element: parseHtmlElement(
-          '<p class="slate-p" style="text-align: center"></p>'
-        ),
+        element: parseHtmlElement('<p class="slate-p" style="text-align: center"></p>'),
       })?.node
     ).toEqual({
-      type: 'p',
+      type: "p",
     });
   });
 
-  it('matches object attribute rules when the attribute value is in the allowed list', () => {
+  it("matches object attribute rules when the attribute value is in the allowed list", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
-            attributeNames: ['data-kind'],
+            attributeNames: ["data-kind"],
             rules: [
               {
-                validAttribute: { 'data-kind': ['todo', 'done'] },
-                validNodeName: 'P',
+                validAttribute: { "data-kind": ["todo", "done"] },
+                validNodeName: "P",
               },
             ],
           },
@@ -341,8 +329,8 @@ describe('pluginDeserializeHtml', () => {
         element: parseHtmlElement('<p class="slate-p" data-kind="done"></p>'),
       })?.node
     ).toEqual({
-      attributes: { 'data-kind': 'done' },
-      type: 'p',
+      attributes: { "data-kind": "done" },
+      type: "p",
     });
   });
 });

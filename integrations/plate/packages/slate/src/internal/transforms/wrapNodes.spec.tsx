@@ -1,8 +1,8 @@
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
-describe('wrapNodes', () => {
-  describe('when children is true', () => {
-    it('wrap the children into a p', () => {
+describe("wrapNodes", () => {
+  describe("when children is true", () => {
+    it("wrap the children into a p", () => {
       const initialValue = [
         {
           children: [
@@ -11,24 +11,24 @@ describe('wrapNodes', () => {
                 {
                   children: [
                     {
-                      text: 'a',
+                      text: "a",
                     },
                     {
                       bold: true,
-                      text: 'b',
+                      text: "b",
                     },
                     {
                       italic: true,
-                      text: 'c',
+                      text: "c",
                     },
                   ] as any,
-                  type: 'td',
+                  type: "td",
                 },
               ],
-              type: 'tr',
+              type: "tr",
             },
           ],
-          type: 'table',
+          type: "table",
         },
       ];
 
@@ -42,27 +42,27 @@ describe('wrapNodes', () => {
                     {
                       children: [
                         {
-                          text: 'a',
+                          text: "a",
                         },
                         {
                           bold: true,
-                          text: 'b',
+                          text: "b",
                         },
                         {
                           italic: true,
-                          text: 'c',
+                          text: "c",
                         },
                       ],
-                      type: 'p',
+                      type: "p",
                     },
                   ],
-                  type: 'td',
+                  type: "td",
                 },
               ],
-              type: 'tr',
+              type: "tr",
             },
           ],
-          type: 'table',
+          type: "table",
         },
       ];
 
@@ -72,7 +72,7 @@ describe('wrapNodes', () => {
       editor.tf.wrapNodes(
         {
           children: [],
-          type: 'p',
+          type: "p",
         },
         {
           at: [0, 0, 0],
@@ -84,12 +84,12 @@ describe('wrapNodes', () => {
     });
   });
 
-  describe('when children is false or undefined', () => {
-    it('wrap the node normally', () => {
+  describe("when children is false or undefined", () => {
+    it("wrap the node normally", () => {
       const initialValue = [
         {
-          children: [{ text: 'test' }],
-          type: 'paragraph',
+          children: [{ text: "test" }],
+          type: "paragraph",
         },
       ];
 
@@ -97,11 +97,11 @@ describe('wrapNodes', () => {
         {
           children: [
             {
-              children: [{ text: 'test' }],
-              type: 'blockquote',
+              children: [{ text: "test" }],
+              type: "blockquote",
             },
           ],
-          type: 'paragraph',
+          type: "paragraph",
         },
       ];
 
@@ -111,7 +111,7 @@ describe('wrapNodes', () => {
       editor.tf.wrapNodes(
         {
           children: [],
-          type: 'blockquote',
+          type: "blockquote",
         },
         {
           at: [0, 0],

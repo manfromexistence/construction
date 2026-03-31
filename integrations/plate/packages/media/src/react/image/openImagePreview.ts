@@ -1,8 +1,8 @@
-import type { SlateEditor, TMediaElement } from 'platejs';
+import type { SlateEditor, TMediaElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { type PreviewItem, ImagePreviewStore } from './ImagePreviewStore';
+import { ImagePreviewStore, type PreviewItem } from "./ImagePreviewStore";
 
 const getUrlList = (editor: SlateEditor) => {
   const enties = editor.api.nodes({
@@ -16,14 +16,11 @@ const getUrlList = (editor: SlateEditor) => {
   })) as unknown as PreviewItem[];
 };
 
-export const openImagePreview = (
-  editor: SlateEditor,
-  element: TMediaElement
-) => {
+export const openImagePreview = (editor: SlateEditor, element: TMediaElement) => {
   const { id, url } = element;
   const urlList = getUrlList(editor);
   // document.documentElement.style.overflowY = 'hidden';
-  ImagePreviewStore.set('openEditorId', editor.id);
-  ImagePreviewStore.set('currentPreview', { id, url });
-  ImagePreviewStore.set('previewList', urlList);
+  ImagePreviewStore.set("openEditorId", editor.id);
+  ImagePreviewStore.set("currentPreview", { id, url });
+  ImagePreviewStore.set("previewList", urlList);
 };

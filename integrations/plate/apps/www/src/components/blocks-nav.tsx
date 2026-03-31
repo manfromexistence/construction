@@ -1,14 +1,12 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 // Not yet used
-const registryCategories = [
-  { hidden: false, name: 'Editors', slug: 'editors' },
-];
+const registryCategories = [{ hidden: false, name: "Editors", slug: "editors" }];
 
 export function BlocksNav() {
   const pathname = usePathname();
@@ -17,8 +15,8 @@ export function BlocksNav() {
       <ScrollArea className="max-w-none">
         <div className="flex items-center">
           <BlocksNavLink
-            category={{ hidden: false, name: 'Featured', slug: '' }}
-            isActive={pathname === '/blocks'}
+            category={{ hidden: false, name: "Featured", slug: "" }}
+            isActive={pathname === "/blocks"}
           />
           {registryCategories.map((category) => (
             <BlocksNavLink

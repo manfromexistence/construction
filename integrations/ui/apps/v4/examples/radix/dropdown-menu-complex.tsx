@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
   BellIcon,
   CreditCardIcon,
@@ -27,9 +26,10 @@ import {
   ShieldIcon,
   SunIcon,
   UserIcon,
-} from "lucide-react"
+} from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -46,15 +46,15 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui/dropdown-menu"
+} from "@/styles/radix-nova/ui/dropdown-menu";
 
 export function DropdownMenuComplex() {
   const [notifications, setNotifications] = React.useState({
     email: true,
     sms: false,
     push: true,
-  })
-  const [theme, setTheme] = React.useState("light")
+  });
+  const [theme, setTheme] = React.useState("light");
 
   return (
     <DropdownMenu>
@@ -162,10 +162,7 @@ export function DropdownMenuComplex() {
               <DropdownMenuSubContent>
                 <DropdownMenuGroup>
                   <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                  <DropdownMenuRadioGroup
-                    value={theme}
-                    onValueChange={setTheme}
-                  >
+                  <DropdownMenuRadioGroup value={theme} onValueChange={setTheme}>
                     <DropdownMenuRadioItem value="light">
                       <SunIcon />
                       Light
@@ -221,9 +218,7 @@ export function DropdownMenuComplex() {
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent>
                         <DropdownMenuGroup>
-                          <DropdownMenuLabel>
-                            Notification Types
-                          </DropdownMenuLabel>
+                          <DropdownMenuLabel>Notification Types</DropdownMenuLabel>
                           <DropdownMenuCheckboxItem
                             checked={notifications.push}
                             onCheckedChange={(checked) =>
@@ -285,5 +280,5 @@ export function DropdownMenuComplex() {
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

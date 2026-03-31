@@ -1,10 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import { useCommunityTagCounts } from "@/hooks/themes";
-import { useSessionGuard } from "@/hooks/use-guards";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useCommunityTagCounts } from "@/hooks/themes";
+import { useSessionGuard } from "@/hooks/use-guards";
+import { cn } from "@/lib/utils";
 import type { CommunityFilterOption } from "@/types/community";
 
 interface CommunitySidebarProps {
@@ -26,8 +26,7 @@ export function CommunitySidebarContent({
   onFilterChange,
   onTagToggle,
 }: CommunitySidebarProps) {
-  const { data: tagCounts = [], isLoading: isLoadingTags } =
-    useCommunityTagCounts();
+  const { data: tagCounts = [], isLoading: isLoadingTags } = useCommunityTagCounts();
   const { checkValidSession } = useSessionGuard();
 
   const handleFilterClick = (value: CommunityFilterOption) => {
@@ -84,9 +83,7 @@ export function CommunitySidebarContent({
               <span
                 className={cn(
                   "text-xs tabular-nums",
-                  selectedTags.includes(tag)
-                    ? "text-foreground/70"
-                    : "text-muted-foreground/60"
+                  selectedTags.includes(tag) ? "text-foreground/70" : "text-muted-foreground/60"
                 )}
               >
                 {count}

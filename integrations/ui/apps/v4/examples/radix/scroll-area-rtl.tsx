@@ -1,17 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { ScrollArea } from "@/styles/radix-nova/ui-rtl/scroll-area"
-import { Separator } from "@/styles/radix-nova/ui-rtl/separator"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { ScrollArea } from "@/styles/radix-nova/ui-rtl/scroll-area";
+import { Separator } from "@/styles/radix-nova/ui-rtl/separator";
 
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-)
+const tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
 
 const translations: Translations = {
   en: {
@@ -32,10 +27,10 @@ const translations: Translations = {
       tags: "תגיות",
     },
   },
-}
+};
 
 export function ScrollAreaRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <ScrollArea className="h-72 w-48 rounded-md border" dir={dir}>
@@ -49,5 +44,5 @@ export function ScrollAreaRtl() {
         ))}
       </div>
     </ScrollArea>
-  )
+  );
 }

@@ -1,7 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-
-import { type TEquationElement, isHotkey } from 'platejs';
-import { useEditorRef, useElement } from 'platejs/react';
+import { isHotkey, type TEquationElement } from "platejs";
+import { useEditorRef, useElement } from "platejs/react";
+import React, { useEffect, useRef } from "react";
 
 export const useEquationInput = ({
   isInline,
@@ -15,9 +14,7 @@ export const useEquationInput = ({
   const editor = useEditorRef();
   const element = useElement<TEquationElement>();
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [expressionInput, setExpressionInput] = React.useState<string>(
-    element.texExpression
-  );
+  const [expressionInput, setExpressionInput] = React.useState<string>(element.texExpression);
 
   const initialExpressionRef = useRef<string>(element.texExpression);
 
@@ -41,7 +38,7 @@ export const useEquationInput = ({
     const setExpression = () => {
       editor.tf.setNodes<TEquationElement>(
         {
-          texExpression: expressionInput || '',
+          texExpression: expressionInput || "",
         },
         { at: element }
       );
@@ -83,23 +80,18 @@ export const useEquationInput = ({
         setExpressionInput(e.target.value);
       },
       onKeyDown: (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (isHotkey('enter')(e)) {
+        if (isHotkey("enter")(e)) {
           e.preventDefault();
           onSubmit();
-        } else if (isHotkey('escape')(e)) {
+        } else if (isHotkey("escape")(e)) {
           e.preventDefault();
           onDismiss();
         }
         if (isInline) {
-          const { selectionEnd, selectionStart, value } =
-            e.target as HTMLInputElement;
+          const { selectionEnd, selectionStart, value } = e.target as HTMLInputElement;
 
           // at the left edge
-          if (
-            selectionStart === 0 &&
-            selectionEnd === 0 &&
-            isHotkey('ArrowLeft')(e)
-          ) {
+          if (selectionStart === 0 && selectionEnd === 0 && isHotkey("ArrowLeft")(e)) {
             e.preventDefault();
             editor.tf.select(element, {
               focus: true,
@@ -110,7 +102,7 @@ export const useEquationInput = ({
           if (
             selectionEnd === value.length &&
             selectionStart === value.length &&
-            isHotkey('ArrowRight')(e)
+            isHotkey("ArrowRight")(e)
           ) {
             e.preventDefault();
             editor.tf.select(element, {

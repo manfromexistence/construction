@@ -1,24 +1,13 @@
-import type { PlateEditor } from 'platejs/react';
+import { getPluginType, KEYS, NodeApi, type Path, PathApi, type SlateEditor } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import {
-  type Path,
-  type SlateEditor,
-  getPluginType,
-  KEYS,
-  NodeApi,
-  PathApi,
-} from 'platejs';
-
-import {
-  AI_PREVIEW_KEY,
-  hasAIPreview,
-} from '../../../lib/transforms/aiStreamSnapshot';
-import { AIChatPlugin } from '../AIChatPlugin';
-import { streamDeserializeInlineMd } from './streamDeserializeInlineMd';
-import { streamDeserializeMd } from './streamDeserializeMd';
-import { streamSerializeMd } from './streamSerializeMd';
-import { isSameNode } from './utils/isSameNode';
-import { nodesWithProps } from './utils/nodesWithProps';
+import { AI_PREVIEW_KEY, hasAIPreview } from "../../../lib/transforms/aiStreamSnapshot";
+import { AIChatPlugin } from "../AIChatPlugin";
+import { streamDeserializeInlineMd } from "./streamDeserializeInlineMd";
+import { streamDeserializeMd } from "./streamDeserializeMd";
+import { streamSerializeMd } from "./streamSerializeMd";
+import { isSameNode } from "./utils/isSameNode";
+import { nodesWithProps } from "./utils/nodesWithProps";
 
 export type SteamInsertChunkOptions = {
   elementProps?: any;
@@ -82,37 +71,29 @@ export function streamInsertChunk(
     }
 
     if (blocks.length > 0) {
-      editor.tf.insertNodes(
-        nodesWithProps(editor, [blocks[0]], insertOptions),
-        {
-          at: path,
-          nextBlock: !startInEmptyParagraph,
-          select: true,
-        }
-      );
+      editor.tf.insertNodes(nodesWithProps(editor, [blocks[0]], insertOptions), {
+        at: path,
+        nextBlock: !startInEmptyParagraph,
+        select: true,
+      });
 
-      editor.setOption(AIChatPlugin, '_blockPath', getCurrentBlockPath(editor));
-      editor.setOption(AIChatPlugin, '_blockChunks', chunk);
+      editor.setOption(AIChatPlugin, "_blockPath", getCurrentBlockPath(editor));
+      editor.setOption(AIChatPlugin, "_blockChunks", chunk);
 
       if (blocks.length > 1) {
         const nextBlocks = blocks.slice(1);
 
         const nextPath = getCurrentBlockPath(editor);
 
-        editor.tf.insertNodes(
-          nodesWithProps(editor, nextBlocks, insertOptions),
-          {
-            at: nextPath,
-            nextBlock: true,
-            select: true,
-          }
-        );
+        editor.tf.insertNodes(nodesWithProps(editor, nextBlocks, insertOptions), {
+          at: nextPath,
+          nextBlock: true,
+          select: true,
+        });
 
-        const lastBlock = editor.api.node(
-          getNextPath(nextPath, nextBlocks.length)
-        )!;
+        const lastBlock = editor.api.node(getNextPath(nextPath, nextBlocks.length))!;
 
-        editor.setOption(AIChatPlugin, '_blockPath', lastBlock[1]);
+        editor.setOption(AIChatPlugin, "_blockPath", lastBlock[1]);
 
         const lastBlockChunks = streamSerializeMd(
           editor,
@@ -122,7 +103,7 @@ export function streamInsertChunk(
           chunk
         );
 
-        editor.setOption(AIChatPlugin, '_blockChunks', lastBlockChunks);
+        editor.setOption(AIChatPlugin, "_blockChunks", lastBlockChunks);
       }
     }
   } else {
@@ -142,9 +123,7 @@ export function streamInsertChunk(
     // console.log('🚀 ~ Streaming ~ tempBlocks:', JSON.stringify(tempBlocks));
 
     if (tempBlocks.length === 0) {
-      return console.warn(
-        `unsupport md nodes: ${JSON.stringify(tempBlockChunks)}`
-      );
+      return console.warn(`unsupport md nodes: ${JSON.stringify(tempBlockChunks)}`);
     }
 
     if (tempBlocks.length === 1) {
@@ -155,13 +134,10 @@ export function streamInsertChunk(
         const chunkNodes = streamDeserializeInlineMd(editor as any, chunk);
 
         // Deserialize the chunk and add it to the end of the current block
-        editor.tf.insertNodes(
-          nodesWithProps(editor, chunkNodes, insertOptions),
-          {
-            at: editor.api.end(_blockPath),
-            select: true,
-          }
-        );
+        editor.tf.insertNodes(nodesWithProps(editor, chunkNodes, insertOptions), {
+          at: editor.api.end(_blockPath),
+          select: true,
+        });
 
         const updatedBlock = editor.api.node(_blockPath)!;
         const serializedBlock = streamSerializeMd(
@@ -175,19 +151,13 @@ export function streamInsertChunk(
         const blockText = NodeApi.string(tempBlocks[0]);
 
         // Verify if the editor content matches the chunk
-        if (
-          serializedBlock === tempBlockChunks &&
-          blockText === serializedBlock
-        ) {
-          editor.setOption(AIChatPlugin, '_blockChunks', tempBlockChunks);
+        if (serializedBlock === tempBlockChunks && blockText === serializedBlock) {
+          editor.setOption(AIChatPlugin, "_blockChunks", tempBlockChunks);
         } else {
-          editor.tf.replaceNodes(
-            nodesWithProps(editor, [tempBlocks[0]], insertOptions),
-            {
-              at: _blockPath,
-              select: true,
-            }
-          );
+          editor.tf.replaceNodes(nodesWithProps(editor, [tempBlocks[0]], insertOptions), {
+            at: _blockPath,
+            select: true,
+          });
 
           const serializedBlock = streamSerializeMd(
             editor,
@@ -199,7 +169,7 @@ export function streamInsertChunk(
 
           editor.setOption(
             AIChatPlugin,
-            '_blockChunks',
+            "_blockChunks",
             // one block includes multiple children
             tempBlocks[0].type === getPluginType(editor, KEYS.codeBlock) ||
               tempBlocks[0].type === getPluginType(editor, KEYS.table) ||
@@ -217,37 +187,28 @@ export function streamInsertChunk(
           tempBlockChunks
         );
 
-        editor.tf.replaceNodes(
-          nodesWithProps(editor, [tempBlocks[0]], insertOptions),
-          {
-            at: _blockPath,
-            select: true,
-          }
-        );
-
-        editor.setOption(AIChatPlugin, '_blockChunks', serializedBlock);
-      }
-    } else {
-      editor.tf.replaceNodes(
-        nodesWithProps(editor, [tempBlocks[0]], insertOptions),
-        {
+        editor.tf.replaceNodes(nodesWithProps(editor, [tempBlocks[0]], insertOptions), {
           at: _blockPath,
           select: true,
-        }
-      );
+        });
+
+        editor.setOption(AIChatPlugin, "_blockChunks", serializedBlock);
+      }
+    } else {
+      editor.tf.replaceNodes(nodesWithProps(editor, [tempBlocks[0]], insertOptions), {
+        at: _blockPath,
+        select: true,
+      });
 
       if (tempBlocks.length > 1) {
         const newEndBlockPath = getNextPath(_blockPath, tempBlocks.length - 1);
 
-        editor.tf.insertNodes(
-          nodesWithProps(editor, tempBlocks.slice(1), insertOptions),
-          {
-            at: PathApi.next(_blockPath),
-            select: true,
-          }
-        );
+        editor.tf.insertNodes(nodesWithProps(editor, tempBlocks.slice(1), insertOptions), {
+          at: PathApi.next(_blockPath),
+          select: true,
+        });
 
-        editor.setOption(AIChatPlugin, '_blockPath', newEndBlockPath);
+        editor.setOption(AIChatPlugin, "_blockPath", newEndBlockPath);
 
         const endBlock = editor.api.node(newEndBlockPath)![0];
 
@@ -259,7 +220,7 @@ export function streamInsertChunk(
           tempBlockChunks
         );
 
-        editor.setOption(AIChatPlugin, '_blockChunks', serializedBlock);
+        editor.setOption(AIChatPlugin, "_blockChunks", serializedBlock);
       }
     }
   }
@@ -267,9 +228,7 @@ export function streamInsertChunk(
 
 export const getCurrentBlockPath = (editor: SlateEditor) => {
   const getAnchorPreviousPath = (editor: SlateEditor): Path | undefined => {
-    const anchorNode = editor
-      .getApi(AIChatPlugin)
-      .aiChat.node({ anchor: true });
+    const anchorNode = editor.getApi(AIChatPlugin).aiChat.node({ anchor: true });
 
     if (anchorNode) {
       return PathApi.previous(anchorNode[1])!;

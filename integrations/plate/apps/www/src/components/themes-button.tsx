@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { Paintbrush } from "lucide-react";
+import { createZustandStore } from "platejs/react";
+import * as React from "react";
 
-import { Paintbrush } from 'lucide-react';
-import { createZustandStore } from 'platejs/react';
+import { Button } from "@/components/ui/button";
+import { THEME_LIST } from "@/lib/themes";
 
-import { Button } from '@/components/ui/button';
-import { THEME_LIST } from '@/lib/themes';
-
-import { ThemesSwitcher } from './themes-selector-mini';
+import { ThemesSwitcher } from "./themes-selector-mini";
 
 export const SettingsStore = createZustandStore(
   {
     open: false,
   },
   {
-    name: 'settings',
+    name: "settings",
   }
 );
 
@@ -34,7 +33,7 @@ export function ThemesButton() {
         variant="outline"
         className="hidden h-9 md:flex"
         onClick={() => {
-          SettingsStore.set('open', true);
+          SettingsStore.set("open", true);
         }}
       >
         <Paintbrush />

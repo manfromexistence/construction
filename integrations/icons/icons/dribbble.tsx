@@ -99,13 +99,7 @@ const DribbbleIcon = forwardRef<DribbbleIconHandle, DribbbleIconProps>(
           path3Controls.start("animate");
         }
       },
-      [
-        circleControls,
-        onMouseEnter,
-        path1Controls,
-        path2Controls,
-        path3Controls,
-      ]
+      [circleControls, onMouseEnter, path1Controls, path2Controls, path3Controls]
     );
 
     const handleMouseLeave = useCallback(
@@ -119,13 +113,7 @@ const DribbbleIcon = forwardRef<DribbbleIconHandle, DribbbleIconProps>(
           path3Controls.start("normal");
         }
       },
-      [
-        circleControls,
-        path1Controls,
-        path2Controls,
-        path3Controls,
-        onMouseLeave,
-      ]
+      [circleControls, path1Controls, path2Controls, path3Controls, onMouseLeave]
     );
 
     return (

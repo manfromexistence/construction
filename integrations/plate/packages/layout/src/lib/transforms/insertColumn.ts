@@ -1,10 +1,10 @@
-import type { InsertNodesOptions, SlateEditor, TColumnElement } from 'platejs';
+import type { InsertNodesOptions, SlateEditor, TColumnElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const insertColumn = (
   editor: SlateEditor,
-  { width = '33%', ...options }: { width?: string } & InsertNodesOptions = {}
+  { width = "33%", ...options }: { width?: string } & InsertNodesOptions = {}
 ) => {
   editor.tf.insertNodes<TColumnElement>(
     {

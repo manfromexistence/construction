@@ -1,28 +1,18 @@
-import { BriefcaseBusinessIcon, CodeXmlIcon, LightbulbIcon } from "lucide-react"
+import { BriefcaseBusinessIcon, CodeXmlIcon, LightbulbIcon } from "lucide-react";
 
-import { UTM_PARAMS } from "@/config/site"
-import { addQueryParams } from "@/utils/url"
+import { UTM_PARAMS } from "@/config/site";
+import { addQueryParams } from "@/utils/url";
 
-import {
-  IntroItem,
-  IntroItemContent,
-  IntroItemIcon,
-  IntroItemLink,
-} from "./intro-item"
+import { IntroItem, IntroItemContent, IntroItemIcon, IntroItemLink } from "./intro-item";
 
 type JobItemProps = {
-  title: string
-  company: string
-  website: string
-  experienceId?: string
-}
+  title: string;
+  company: string;
+  website: string;
+  experienceId?: string;
+};
 
-export function JobItem({
-  title,
-  company,
-  website,
-  experienceId,
-}: JobItemProps) {
+export function JobItem({ title, company, website, experienceId }: JobItemProps) {
   return (
     <IntroItem>
       <IntroItemIcon>{getJobIcon(title)}</IntroItemIcon>
@@ -45,17 +35,17 @@ export function JobItem({
         </IntroItemLink>
       </IntroItemContent>
     </IntroItem>
-  )
+  );
 }
 
 function getJobIcon(title: string) {
   if (/(developer|engineer)/i.test(title)) {
-    return <CodeXmlIcon />
+    return <CodeXmlIcon />;
   }
 
   if (/(founder|co-founder)/i.test(title)) {
-    return <LightbulbIcon />
+    return <LightbulbIcon />;
   }
 
-  return <BriefcaseBusinessIcon />
+  return <BriefcaseBusinessIcon />;
 }

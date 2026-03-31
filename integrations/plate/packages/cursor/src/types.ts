@@ -1,6 +1,5 @@
-import type React from 'react';
-
-import type { TRange, UnknownObject } from 'platejs';
+import type { TRange, UnknownObject } from "platejs";
+import type React from "react";
 
 export type CaretPosition = {
   height: number;

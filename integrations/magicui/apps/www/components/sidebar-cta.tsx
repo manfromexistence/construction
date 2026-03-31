@@ -1,15 +1,14 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { CheckIcon, ChevronRight } from "lucide-react"
-
-import { trackEvent } from "@/lib/events"
-import { Button } from "@/components/ui/button"
-import { PingDot } from "@/components/ping-dot"
-import { AnimatedShinyText } from "@/registry/magicui/animated-shiny-text"
-import { AuroraText } from "@/registry/magicui/aurora-text"
-import { LineShadowText } from "@/registry/magicui/line-shadow-text"
-import { TextAnimate } from "@/registry/magicui/text-animate"
+import { CheckIcon, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { PingDot } from "@/components/ping-dot";
+import { Button } from "@/components/ui/button";
+import { trackEvent } from "@/lib/events";
+import { AnimatedShinyText } from "@/registry/magicui/animated-shiny-text";
+import { AuroraText } from "@/registry/magicui/aurora-text";
+import { LineShadowText } from "@/registry/magicui/line-shadow-text";
+import { TextAnimate } from "@/registry/magicui/text-animate";
 
 export function ProCTA() {
   return (
@@ -23,35 +22,19 @@ export function ProCTA() {
 
       <div className="space-y-3">
         <p className="text-foreground text-2xl leading-tight font-bold">
-          Ship{" "}
-          <LineShadowText className="font-bold tracking-tighter italic">
-            Faster
-          </LineShadowText>{" "}
+          Ship <LineShadowText className="font-bold tracking-tighter italic">Faster</LineShadowText>{" "}
           with{" "}
           <AuroraText
-            colors={[
-              "#FF66CC",
-              "#FFDC18",
-              "#41FFD7",
-              "#38bdf8",
-              "#8338EC",
-              "#F72585",
-              "#3A86FF",
-            ]}
+            colors={["#FF66CC", "#FFDC18", "#41FFD7", "#38bdf8", "#8338EC", "#F72585", "#3A86FF"]}
           >
             Magic UI Pro
           </AuroraText>
         </p>
         <p className="text-muted-foreground text-sm leading-relaxed font-medium">
           Stop building from scratch. <br /> Get{" "}
-          <span className="text-foreground font-semibold">
-            8 production-ready templates
-          </span>{" "}
-          and{" "}
-          <span className="text-foreground font-semibold">
-            50+ premium components
-          </span>{" "}
-          that your users will love.
+          <span className="text-foreground font-semibold">8 production-ready templates</span> and{" "}
+          <span className="text-foreground font-semibold">50+ premium components</span> that your
+          users will love.
         </p>
       </div>
 
@@ -79,9 +62,7 @@ export function ProCTA() {
       <div className="space-y-4 pt-2">
         <div className="flex items-baseline justify-center gap-2">
           <span className="text-foreground text-3xl font-bold">$199</span>
-          <span className="text-muted-foreground text-sm font-medium">
-            once
-          </span>
+          <span className="text-muted-foreground text-sm font-medium">once</span>
         </div>
 
         <Button
@@ -107,7 +88,7 @@ export function ProCTA() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 export function ProductHuntCTA() {
@@ -135,9 +116,9 @@ export function ProductHuntCTA() {
         className="w-full overflow-hidden rounded-xl shadow-2xl"
       />
     </Link>
-  )
+  );
 }
 
 export function SidebarCTA() {
-  return <ProCTA />
+  return <ProCTA />;
 }

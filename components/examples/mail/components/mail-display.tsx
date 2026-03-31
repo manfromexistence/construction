@@ -1,7 +1,4 @@
-import { addDays } from "date-fns";
-import { addHours } from "date-fns";
-import { format } from "date-fns";
-import { nextSaturday } from "date-fns";
+import { addDays, addHours, format, nextSaturday } from "date-fns";
 import {
   Archive,
   ArchiveX,
@@ -12,19 +9,22 @@ import {
   ReplyAll,
   Trash2,
 } from "lucide-react";
-
-import { DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
+import { Mail } from "@/components/examples/mail/data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { DropdownMenu, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail } from "@/components/examples/mail/data";
-import { useState } from "react";
 
 interface MailDisplayProps {
   mail: Mail | null;
@@ -45,10 +45,10 @@ export function MailDisplay({ mail }: MailDisplayProps) {
             <ArchiveX className="h-4 w-4" />
             <span className="sr-only">Move to junk</span>
           </Button>
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            disabled={!mail} 
+          <Button
+            variant="ghost"
+            size="icon"
+            disabled={!mail}
             title="Move to trash"
             className="text-destructive hover:text-destructive focus-visible:text-destructive"
           >

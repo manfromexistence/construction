@@ -1,8 +1,6 @@
 {
   "name": "scroller-horizontal-demo",
-  "registryDependencies": [
-    "scroller"
-  ],
+  "registryDependencies": ["scroller"],
   "files": [
     {
       "path": "examples/scroller-horizontal-demo.tsx",

@@ -1,9 +1,8 @@
-import React from 'react';
+import { NodeApi } from "platejs";
+import { useEditorRef, useEditorSelector } from "platejs/react";
+import React from "react";
 
-import { NodeApi } from 'platejs';
-import { useEditorRef, useEditorSelector } from 'platejs/react';
-
-import { getHeadingList } from '../../internal/getHeadingList';
+import { getHeadingList } from "../../internal/getHeadingList";
 
 type UseContentObserver = {
   editorContentRef: React.RefObject<HTMLElement | null>;
@@ -20,14 +19,12 @@ export const useContentObserver = ({
   rootMargin,
   status,
 }: UseContentObserver) => {
-  const headingElementsRef = React.useRef<
-    Record<string, IntersectionObserverEntry>
-  >({});
+  const headingElementsRef = React.useRef<Record<string, IntersectionObserverEntry>>({});
 
   const editor = useEditorRef();
   const headingList = useEditorSelector(getHeadingList, []);
 
-  const [activeId, setActiveId] = React.useState('');
+  const [activeId, setActiveId] = React.useState("");
 
   React.useEffect(() => {
     // ✅ Access ref inside effect, not during render
@@ -78,15 +75,7 @@ export const useContentObserver = ({
     return () => {
       observer.disconnect();
     };
-  }, [
-    headingList,
-    isObserve,
-    editor,
-    editorContentRef,
-    isScroll,
-    rootMargin,
-    status,
-  ]);
+  }, [headingList, isObserve, editor, editorContentRef, isScroll, rootMargin, status]);
 
   return { activeId };
 };

@@ -13,13 +13,7 @@ type Props = {
 
 const ICON_MAP = new Map(ICON_LIST.map((item) => [item.name, item.icon]));
 
-const SimilarIconItem = ({
-  icon,
-  Icon,
-}: {
-  icon: Icon;
-  Icon: React.ElementType | undefined;
-}) => {
+const SimilarIconItem = ({ icon, Icon }: { icon: Icon; Icon: React.ElementType | undefined }) => {
   const animationRef = useRef<{
     startAnimation: () => void;
     stopAnimation: () => void;
@@ -56,9 +50,7 @@ const SimilarIcons = ({ currentIcon }: Props) => {
 
     const scored = ICON_LIST.filter((icon) => icon.name !== currentIcon.name)
       .map((icon) => {
-        const sharedKeywords = icon.keywords.filter((kw) =>
-          currentKeywords.has(kw)
-        ).length;
+        const sharedKeywords = icon.keywords.filter((kw) => currentKeywords.has(kw)).length;
         return { icon, score: sharedKeywords };
       })
       .filter((item) => item.score > 0)

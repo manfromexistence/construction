@@ -1,9 +1,5 @@
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+import { Field, FieldDescription, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 
 export function InputFile() {
   return (
@@ -12,5 +8,5 @@ export function InputFile() {
       <Input id="picture" type="file" />
       <FieldDescription>Select a picture to upload.</FieldDescription>
     </Field>
-  )
+  );
 }

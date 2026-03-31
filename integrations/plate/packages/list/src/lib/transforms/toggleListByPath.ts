@@ -1,4 +1,4 @@
-import { type NodeEntry, type SlateEditor, KEYS } from 'platejs';
+import { KEYS, type NodeEntry, type SlateEditor } from "platejs";
 
 export const toggleListByPath = (
   editor: SlateEditor,
@@ -19,10 +19,7 @@ export const toggleListByPath = (
   );
 };
 
-export const toggleListByPathUnSet = (
-  editor: SlateEditor,
-  [, path]: NodeEntry
-) =>
+export const toggleListByPathUnSet = (editor: SlateEditor, [, path]: NodeEntry) =>
   editor.tf.unsetNodes([KEYS.listType, KEYS.indent, KEYS.listChecked], {
     at: path,
   });

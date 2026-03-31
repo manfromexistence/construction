@@ -1,10 +1,9 @@
+import { Button } from "@/app/_components/ui/button";
 import {
   MultiStepModal,
   MultiStepModalContent,
   MultiStepModalTrigger,
 } from "@/app/_components/ui/multi-step-modal";
-
-import { Button } from "@/app/_components/ui/button";
 
 export function MultiStepModalExample() {
   const steps = [
@@ -15,13 +14,11 @@ export function MultiStepModalExample() {
     },
     {
       title: "How to use?",
-      description:
-        "Simply click on a component, copy the code and paste it into your project.",
+      description: "Simply click on a component, copy the code and paste it into your project.",
     },
     {
       title: "Results",
-      description:
-        "Luxe will add extra shine to your application, with smooth components.",
+      description: "Luxe will add extra shine to your application, with smooth components.",
     },
     {
       title: "Copy now",

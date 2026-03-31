@@ -1,10 +1,6 @@
-import type {
-  InsertNodesOptions,
-  SlateEditor,
-  TEquationElement,
-} from 'platejs';
+import type { InsertNodesOptions, SlateEditor, TEquationElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const insertInlineEquation = (
   editor: SlateEditor,
@@ -13,7 +9,7 @@ export const insertInlineEquation = (
 ) => {
   editor.tf.insertNodes<TEquationElement>(
     {
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       texExpression: texExpression ?? editor.api.string(editor.selection),
       type: editor.getType(KEYS.inlineEquation),
     },

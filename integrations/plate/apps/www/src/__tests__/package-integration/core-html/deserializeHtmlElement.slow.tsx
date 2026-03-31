@@ -1,19 +1,19 @@
 /** @jsx jsxt */
 
-import { BoldPlugin } from '@platejs/basic-nodes/react';
-import { LinkPlugin } from '@platejs/link/react';
-import { ImagePlugin } from '@platejs/media/react';
-import { TablePlugin } from '@platejs/table/react';
-import { getHtmlDocument, jsxt } from '@platejs/test-utils';
+import { BoldPlugin } from "@platejs/basic-nodes/react";
+import { LinkPlugin } from "@platejs/link/react";
+import { ImagePlugin } from "@platejs/media/react";
+import { TablePlugin } from "@platejs/table/react";
+import { getHtmlDocument, jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor } from '../../../../../../packages/core/src/lib/editor';
-import { createSlatePlugin } from '../../../../../../packages/core/src/lib/plugin';
-import { BaseParagraphPlugin } from '../../../../../../packages/core/src/lib/plugins/paragraph';
-import { deserializeHtmlElement } from '../../../../../../packages/core/src/lib/plugins/html/utils/deserializeHtmlElement';
+import { createSlateEditor } from "../../../../../../packages/core/src/lib/editor";
+import { createSlatePlugin } from "../../../../../../packages/core/src/lib/plugin";
+import { deserializeHtmlElement } from "../../../../../../packages/core/src/lib/plugins/html/utils/deserializeHtmlElement";
+import { BaseParagraphPlugin } from "../../../../../../packages/core/src/lib/plugins/paragraph";
 
 jsxt;
 
-describe('when element has class and attribute, and plugin has deserialize type, getNode and className', () => {
+describe("when element has class and attribute, and plugin has deserialize type, getNode and className", () => {
   const html = '<html><body><div class="poll" data-id="456" /></body></html>';
   const element = getHtmlDocument(html).body;
 
@@ -25,27 +25,27 @@ describe('when element has class and attribute, and plugin has deserialize type,
     </editor>
   ) as any;
 
-  it('parses the custom node type and attributes', () => {
+  it("parses the custom node type and attributes", () => {
     expect(
       deserializeHtmlElement(
         createSlateEditor({
           plugins: [
             createSlatePlugin({
-              key: 'a',
-              node: { type: 'poll' },
+              key: "a",
+              node: { type: "poll" },
               parsers: {
                 html: {
                   deserializer: {
                     isElement: true,
                     rules: [
                       {
-                        validClassName: 'poll',
+                        validClassName: "poll",
                       },
                     ],
                     withoutChildren: true,
                     parse: ({ element }) => ({
                       id: element.dataset.id,
-                      type: 'poll',
+                      type: "poll",
                     }),
                   },
                 },
@@ -59,7 +59,7 @@ describe('when element has class and attribute, and plugin has deserialize type,
   });
 });
 
-describe('when plugin has deserialize attributeNames', () => {
+describe("when plugin has deserialize attributeNames", () => {
   const html =
     '<html><body><table><tbody><tr><th colspan="2" bgcolor="#CCC">header</th></tr><tr><td>cell 1</td><td>cell 2</td></tr></tbody></table></body></html>';
   const element = getHtmlDocument(html).body;
@@ -68,7 +68,7 @@ describe('when plugin has deserialize attributeNames', () => {
     <editor>
       <htable>
         <htr>
-          <hth attributes={{ colspan: '2' }}>header</hth>
+          <hth attributes={{ colspan: "2" }}>header</hth>
         </htr>
         <htr>
           <htd>cell 1</htd>
@@ -78,7 +78,7 @@ describe('when plugin has deserialize attributeNames', () => {
     </editor>
   ) as any;
 
-  it('stores allowed DOM attributes on the node', () => {
+  it("stores allowed DOM attributes on the node", () => {
     expect(
       deserializeHtmlElement(
         createSlateEditor({
@@ -90,9 +90,8 @@ describe('when plugin has deserialize attributeNames', () => {
   });
 });
 
-describe('when element has a comment node', () => {
-  const html =
-    '<html><body>test<!-- You will not be able to see this text. --></body></html>';
+describe("when element has a comment node", () => {
+  const html = "<html><body>test<!-- You will not be able to see this text. --></body></html>";
   const element = getHtmlDocument(html).body;
 
   const output = (
@@ -101,7 +100,7 @@ describe('when element has a comment node', () => {
     </editor>
   ) as any;
 
-  it('ignore the comment node', () => {
+  it("ignore the comment node", () => {
     expect(
       deserializeHtmlElement(
         createSlateEditor({
@@ -113,8 +112,8 @@ describe('when element has a comment node', () => {
   });
 });
 
-describe('when element has pre without child', () => {
-  const html = '<html><body>test<pre /></body></html>';
+describe("when element has pre without child", () => {
+  const html = "<html><body>test<pre /></body></html>";
   const element = getHtmlDocument(html).body;
 
   const output = (
@@ -123,15 +122,13 @@ describe('when element has pre without child', () => {
     </editor>
   ) as any;
 
-  it('ignores empty pre tags', () => {
-    expect(deserializeHtmlElement(createSlateEditor(), element)).toEqual(
-      output.children
-    );
+  it("ignores empty pre tags", () => {
+    expect(deserializeHtmlElement(createSlateEditor(), element)).toEqual(output.children);
   });
 });
 
-describe('when there is no plugins', () => {
-  const html = '<html><body><h1>test</h1></body></html>';
+describe("when there is no plugins", () => {
+  const html = "<html><body><h1>test</h1></body></html>";
   const element = getHtmlDocument(html).body;
 
   const output = (
@@ -140,7 +137,7 @@ describe('when there is no plugins', () => {
     </editor>
   ) as any;
 
-  it('does not deserialize the tags without plugins', () => {
+  it("does not deserialize the tags without plugins", () => {
     expect(
       deserializeHtmlElement(
         createSlateEditor({
@@ -152,7 +149,7 @@ describe('when there is no plugins', () => {
   });
 });
 
-describe('when plugin has deserializer.attributeNames', () => {
+describe("when plugin has deserializer.attributeNames", () => {
   const html = `<html><body><img alt="removed" src="https://i.imgur.com/removed.png" /></body></html>`;
 
   const editor = createSlateEditor({
@@ -161,7 +158,7 @@ describe('when plugin has deserializer.attributeNames', () => {
         parsers: {
           html: {
             deserializer: {
-              attributeNames: ['alt'],
+              attributeNames: ["alt"],
             },
           },
         },
@@ -173,21 +170,18 @@ describe('when plugin has deserializer.attributeNames', () => {
 
   const output = (
     <editor>
-      <himg
-        attributes={{ alt: 'removed' }}
-        url="https://i.imgur.com/removed.png"
-      >
+      <himg attributes={{ alt: "removed" }} url="https://i.imgur.com/removed.png">
         <htext />
       </himg>
     </editor>
   ) as any;
 
-  it('copies configured attributes onto the node', () => {
+  it("copies configured attributes onto the node", () => {
     expect(deserializeHtmlElement(editor, element)).toEqual(output.children);
   });
 });
 
-describe('when plugin has deserializer.parse', () => {
+describe("when plugin has deserializer.parse", () => {
   const html = `<html><body><p><a href="http://google.com" target="_blank">a</a></p></body></html>`;
 
   const editor = createSlateEditor({
@@ -198,9 +192,9 @@ describe('when plugin has deserializer.parse', () => {
           html: {
             deserializer: {
               parse: ({ element }) => ({
-                opener: element.getAttribute('target') === '_blank',
-                type: 'a',
-                url: element.getAttribute('href'),
+                opener: element.getAttribute("target") === "_blank",
+                type: "a",
+                url: element.getAttribute("href"),
               }),
             },
           },
@@ -221,13 +215,13 @@ describe('when plugin has deserializer.parse', () => {
     </editor>
   ) as any;
 
-  it('uses the custom parse function result', () => {
+  it("uses the custom parse function result", () => {
     expect(deserializeHtmlElement(editor, element)).toEqual(output.children);
   });
 });
 
-describe('when plugin has deserializer.rules.validNodeName', () => {
-  const html = '<html><body><p><b>strong</b></p></body></html>';
+describe("when plugin has deserializer.rules.validNodeName", () => {
+  const html = "<html><body><p><b>strong</b></p></body></html>";
 
   const editor = createSlateEditor({
     plugins: [
@@ -236,7 +230,7 @@ describe('when plugin has deserializer.rules.validNodeName', () => {
         parsers: {
           html: {
             deserializer: {
-              rules: [{ validNodeName: ['B'] }],
+              rules: [{ validNodeName: ["B"] }],
             },
           },
         },
@@ -254,7 +248,7 @@ describe('when plugin has deserializer.rules.validNodeName', () => {
     </editor>
   ) as any;
 
-  it('respects validNodeName rules for marks', () => {
+  it("respects validNodeName rules for marks", () => {
     expect(deserializeHtmlElement(editor, element)).toEqual(output.children);
   });
 });

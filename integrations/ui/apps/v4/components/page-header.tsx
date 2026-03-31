@@ -1,10 +1,6 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
-function PageHeader({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"section">) {
+function PageHeader({ className, children, ...props }: React.ComponentProps<"section">) {
   return (
     <section className={cn("border-grid", className)} {...props}>
       <div className="container-wrapper">
@@ -13,13 +9,10 @@ function PageHeader({
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-function PageHeaderHeading({
-  className,
-  ...props
-}: React.ComponentProps<"h1">) {
+function PageHeaderHeading({ className, ...props }: React.ComponentProps<"h1">) {
   return (
     <h1
       className={cn(
@@ -28,22 +21,16 @@ function PageHeaderHeading({
       )}
       {...props}
     />
-  )
+  );
 }
 
-function PageHeaderDescription({
-  className,
-  ...props
-}: React.ComponentProps<"p">) {
+function PageHeaderDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
-      className={cn(
-        "max-w-4xl text-base text-balance text-foreground sm:text-lg",
-        className
-      )}
+      className={cn("max-w-4xl text-base text-balance text-foreground sm:text-lg", className)}
       {...props}
     />
-  )
+  );
 }
 
 function PageActions({ className, ...props }: React.ComponentProps<"div">) {
@@ -55,7 +42,7 @@ function PageActions({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
-export { PageActions, PageHeader, PageHeaderDescription, PageHeaderHeading }
+export { PageActions, PageHeader, PageHeaderDescription, PageHeaderHeading };

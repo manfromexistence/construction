@@ -1,27 +1,20 @@
-import { createSlateEditor, getEditorPlugin } from 'platejs';
+import { createSlateEditor, getEditorPlugin } from "platejs";
+import { decorateFindReplace } from "./decorateFindReplace";
+import { FindReplacePlugin } from "./FindReplacePlugin";
 
-import { FindReplacePlugin } from './FindReplacePlugin';
-import { decorateFindReplace } from './decorateFindReplace';
-
-const decorate = ({
-  children,
-  search,
-}: {
-  children: Record<string, unknown>[];
-  search: string;
-}) =>
+const decorate = ({ children, search }: { children: Record<string, unknown>[]; search: string }) =>
   decorateFindReplace({
-    entry: [{ children, type: 'p' }, [0]],
+    entry: [{ children, type: "p" }, [0]],
     getOptions: () => ({ search }),
     type: FindReplacePlugin.key,
   } as any);
 
-describe('decorateFindReplace', () => {
-  it('returns no ranges when the search term is empty', () => {
-    expect(decorate({ children: [{ text: '' }], search: '' })).toEqual([]);
+describe("decorateFindReplace", () => {
+  it("returns no ranges when the search term is empty", () => {
+    expect(decorate({ children: [{ text: "" }], search: "" })).toEqual([]);
   });
 
-  it('matches text case-insensitively in a single text node', () => {
+  it("matches text case-insensitively in a single text node", () => {
     const expected = [
       {
         [FindReplacePlugin.key]: true,
@@ -33,16 +26,14 @@ describe('decorateFindReplace', () => {
           offset: 4,
           path: [0, 0],
         },
-        search: 'Test',
+        search: "Test",
       },
     ];
 
-    expect(decorate({ children: [{ text: 'test' }], search: 'Test' })).toEqual(
-      expected
-    );
+    expect(decorate({ children: [{ text: "test" }], search: "Test" })).toEqual(expected);
   });
 
-  it('splits one match across adjacent text nodes', () => {
+  it("splits one match across adjacent text nodes", () => {
     const expected = [
       {
         [FindReplacePlugin.key]: true,
@@ -54,7 +45,7 @@ describe('decorateFindReplace', () => {
           offset: 3,
           path: [0, 0],
         },
-        search: 'tes',
+        search: "tes",
       },
       {
         [FindReplacePlugin.key]: true,
@@ -66,19 +57,19 @@ describe('decorateFindReplace', () => {
           offset: 1,
           path: [0, 1],
         },
-        search: 't',
+        search: "t",
       },
     ];
 
     expect(
       decorate({
-        children: [{ text: 'tes' }, { bold: true, text: 't' }],
-        search: 'test',
+        children: [{ text: "tes" }, { bold: true, text: "t" }],
+        search: "test",
       })
     ).toEqual(expected);
   });
 
-  it('returns ranges for multiple matches across text nodes', () => {
+  it("returns ranges for multiple matches across text nodes", () => {
     const expected = [
       {
         [FindReplacePlugin.key]: true,
@@ -90,7 +81,7 @@ describe('decorateFindReplace', () => {
           offset: 3,
           path: [0, 0],
         },
-        search: 'tes',
+        search: "tes",
       },
       {
         [FindReplacePlugin.key]: true,
@@ -102,7 +93,7 @@ describe('decorateFindReplace', () => {
           offset: 1,
           path: [0, 1],
         },
-        search: 't',
+        search: "t",
       },
       {
         [FindReplacePlugin.key]: true,
@@ -114,7 +105,7 @@ describe('decorateFindReplace', () => {
           offset: 11,
           path: [0, 1],
         },
-        search: 'test',
+        search: "test",
       },
       {
         [FindReplacePlugin.key]: true,
@@ -126,7 +117,7 @@ describe('decorateFindReplace', () => {
           offset: 18,
           path: [0, 1],
         },
-        search: 't',
+        search: "t",
       },
       {
         [FindReplacePlugin.key]: true,
@@ -138,30 +129,26 @@ describe('decorateFindReplace', () => {
           offset: 3,
           path: [0, 2],
         },
-        search: 'est',
+        search: "est",
       },
     ];
 
     expect(
       decorate({
-        children: [
-          { text: 'tes' },
-          { bold: true, text: 'ts and tests and t' },
-          { text: 'ests' },
-        ],
-        search: 'test',
+        children: [{ text: "tes" }, { bold: true, text: "ts and tests and t" }, { text: "ests" }],
+        search: "test",
       })
     ).toEqual(expected);
   });
 
-  it('is wired into FindReplacePlugin.decorate', () => {
+  it("is wired into FindReplacePlugin.decorate", () => {
     const editor = createSlateEditor({
       plugins: [FindReplacePlugin],
     } as any);
 
     const plugin = editor.getPlugin(FindReplacePlugin);
 
-    editor.setOption(FindReplacePlugin, 'search', 'test');
+    editor.setOption(FindReplacePlugin, "search", "test");
 
     const expected = [
       {
@@ -174,14 +161,14 @@ describe('decorateFindReplace', () => {
           offset: 4,
           path: [0, 0],
         },
-        search: 'test',
+        search: "test",
       },
     ];
 
     expect(
       plugin.decorate?.({
         ...getEditorPlugin(editor, plugin),
-        entry: [{ children: [{ text: 'test' }], type: 'p' }, [0]],
+        entry: [{ children: [{ text: "test" }], type: "p" }, [0]],
       })
     ).toEqual(expected);
   });

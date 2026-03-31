@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Word Rotate",
   "description": "A vertical rotation of words",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/word-rotate.tsx",

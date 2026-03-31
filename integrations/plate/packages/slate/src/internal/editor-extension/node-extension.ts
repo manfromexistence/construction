@@ -1,6 +1,6 @@
-import { isEditor } from 'slate';
+import { isEditor } from "slate";
 
-import { NodeApi } from '../../interfaces';
+import { NodeApi } from "../../interfaces";
 
 export const NodeExtension = {
   *children(root, path, options = {}) {
@@ -54,7 +54,4 @@ export const NodeExtension = {
 
     return lastChild as any;
   },
-} as Pick<
-  typeof NodeApi,
-  'children' | 'firstChild' | 'firstText' | 'isLastChild' | 'lastChild'
->;
+} as Pick<typeof NodeApi, "children" | "firstChild" | "firstText" | "isLastChild" | "lastChild">;

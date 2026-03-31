@@ -1,11 +1,10 @@
-import React, { Suspense } from 'react';
+import type { Metadata } from "next";
+import React, { Suspense } from "react";
 
-import type { Metadata } from 'next';
+import { NavItemsGrid } from "@/app/(app)/docs/[[...slug]]/nav-items-grid";
 
-import { NavItemsGrid } from '@/app/(app)/docs/[[...slug]]/nav-items-grid';
-
-const title = 'Examples';
-const description = 'Browse all Plate examples.';
+const title = "Examples";
+const description = "Browse all Plate examples.";
 
 export const metadata: Metadata = {
   description,
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
   },
   title,
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     images: [
       {
         url: `/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`,

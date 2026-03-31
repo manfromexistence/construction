@@ -1,11 +1,7 @@
-import { ElementApi, type NodeEntry, TextApi } from '../../interfaces';
-import type { Editor } from '../../interfaces/editor/editor-type';
+import { ElementApi, type NodeEntry, TextApi } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor/editor-type";
 
-export const shouldMergeNodes = (
-  editor: Editor,
-  prevNodeEntry: NodeEntry,
-  _: NodeEntry
-) => {
+export const shouldMergeNodes = (editor: Editor, prevNodeEntry: NodeEntry, _: NodeEntry) => {
   const [prevNode, prevPath] = prevNodeEntry;
 
   // If the target node that we're merging with is empty, remove it instead
@@ -16,7 +12,7 @@ export const shouldMergeNodes = (
 
   if (
     (ElementApi.isElement(prevNode) && editor.api.isEmpty(prevNode)) ||
-    (TextApi.isText(prevNode) && prevNode.text === '' && prevPath.at(-1) !== 0)
+    (TextApi.isText(prevNode) && prevNode.text === "" && prevPath.at(-1) !== 0)
   ) {
     editor.tf.removeNodes({ at: prevPath });
     return false;

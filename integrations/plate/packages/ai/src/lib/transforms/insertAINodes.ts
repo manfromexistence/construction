@@ -1,4 +1,4 @@
-import type { Descendant, Path, SlateEditor } from 'platejs';
+import type { Descendant, Path, SlateEditor } from "platejs";
 
 export const insertAINodes = (
   editor: SlateEditor,
@@ -21,6 +21,6 @@ export const insertAINodes = (
       at: editor.api.end(target || editor.selection!.focus.path),
       select: true,
     });
-    editor.tf.collapse({ edge: 'end' });
+    editor.tf.collapse({ edge: "end" });
   });
 };

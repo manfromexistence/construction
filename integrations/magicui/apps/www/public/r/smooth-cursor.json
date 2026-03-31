@@ -3,9 +3,7 @@
   "name": "smooth-cursor",
   "type": "registry:ui",
   "description": "A customizable, physics-based smooth cursor animation component with spring animations and rotation effects",
-  "dependencies": [
-    "framer-motion"
-  ],
+  "dependencies": ["framer-motion"],
   "files": [
     {
       "path": "registry/magicui/smooth-cursor.tsx",

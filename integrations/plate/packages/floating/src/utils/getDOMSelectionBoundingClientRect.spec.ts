@@ -1,33 +1,27 @@
-import { getDefaultBoundingClientRect } from '../createVirtualElement';
-import { makeClientRect } from './makeClientRect';
-import { getDOMSelectionBoundingClientRect } from './getDOMSelectionBoundingClientRect';
+import { getDefaultBoundingClientRect } from "../createVirtualElement";
+import { getDOMSelectionBoundingClientRect } from "./getDOMSelectionBoundingClientRect";
+import { makeClientRect } from "./makeClientRect";
 
-describe('getDOMSelectionBoundingClientRect', () => {
-  it('returns the default rect when there is no DOM selection', () => {
-    const getSelectionSpy = spyOn(window, 'getSelection').mockReturnValue(
-      null as any
-    );
+describe("getDOMSelectionBoundingClientRect", () => {
+  it("returns the default rect when there is no DOM selection", () => {
+    const getSelectionSpy = spyOn(window, "getSelection").mockReturnValue(null as any);
 
-    expect(getDOMSelectionBoundingClientRect()).toEqual(
-      getDefaultBoundingClientRect()
-    );
+    expect(getDOMSelectionBoundingClientRect()).toEqual(getDefaultBoundingClientRect());
 
     getSelectionSpy.mockRestore();
   });
 
-  it('returns the default rect when there are no ranges', () => {
-    const getSelectionSpy = spyOn(window, 'getSelection').mockReturnValue({
+  it("returns the default rect when there are no ranges", () => {
+    const getSelectionSpy = spyOn(window, "getSelection").mockReturnValue({
       rangeCount: 0,
     } as any);
 
-    expect(getDOMSelectionBoundingClientRect()).toEqual(
-      getDefaultBoundingClientRect()
-    );
+    expect(getDOMSelectionBoundingClientRect()).toEqual(getDefaultBoundingClientRect());
 
     getSelectionSpy.mockRestore();
   });
 
-  it('returns the first DOM selection range rect', () => {
+  it("returns the first DOM selection range rect", () => {
     const rect = makeClientRect({
       bottom: 18,
       left: 4,
@@ -35,7 +29,7 @@ describe('getDOMSelectionBoundingClientRect', () => {
       top: 2,
     });
 
-    const getSelectionSpy = spyOn(window, 'getSelection').mockReturnValue({
+    const getSelectionSpy = spyOn(window, "getSelection").mockReturnValue({
       getRangeAt: () => ({
         getBoundingClientRect: () => rect,
       }),

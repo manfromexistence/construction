@@ -1,14 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { IconFolderCode } from "@tabler/icons-react"
-import { ArrowUpRightIcon } from "lucide-react"
+import { IconFolderCode } from "@tabler/icons-react";
+import { ArrowUpRightIcon } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
 import {
   Empty,
   EmptyContent,
@@ -16,7 +13,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@/styles/base-nova/ui-rtl/empty"
+} from "@/styles/base-nova/ui-rtl/empty";
 
 const translations: Translations = {
   en: {
@@ -44,17 +41,16 @@ const translations: Translations = {
     dir: "rtl",
     values: {
       title: "אין פרויקטים עדיין",
-      description:
-        "עדיין לא יצרת פרויקטים. התחל על ידי יצירת הפרויקט הראשון שלך.",
+      description: "עדיין לא יצרת פרויקטים. התחל על ידי יצירת הפרויקט הראשון שלך.",
       createProject: "צור פרויקט",
       importProject: "ייבא פרויקט",
       learnMore: "למד עוד",
     },
   },
-}
+};
 
 export function EmptyRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Empty dir={dir}>
@@ -76,9 +72,8 @@ export function EmptyRtl() {
         size="sm"
         nativeButton={false}
       >
-        {t.learnMore}{" "}
-        <ArrowUpRightIcon className="rtl:rotate-270" data-icon="inline-end" />
+        {t.learnMore} <ArrowUpRightIcon className="rtl:rotate-270" data-icon="inline-end" />
       </Button>
     </Empty>
-  )
+  );
 }

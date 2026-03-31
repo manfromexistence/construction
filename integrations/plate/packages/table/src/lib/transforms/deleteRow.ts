@@ -1,11 +1,11 @@
-import type { SlateEditor, TTableElement } from 'platejs';
+import type { SlateEditor, TTableElement } from "platejs";
 
-import { getEditorPlugin, KEYS } from 'platejs';
+import { getEditorPlugin, KEYS } from "platejs";
 
-import type { TableConfig } from '..';
+import type { TableConfig } from "..";
 
-import { deleteRowWhenExpanded } from '../merge';
-import { deleteTableMergeRow } from '../merge/deleteRow';
+import { deleteRowWhenExpanded } from "../merge";
+import { deleteTableMergeRow } from "../merge/deleteRow";
 
 export const deleteRow = (editor: SlateEditor) => {
   const { getOptions, type } = getEditorPlugin<TableConfig>(editor, {
@@ -26,8 +26,7 @@ export const deleteRow = (editor: SlateEditor) => {
     });
 
     if (!currentTableItem) return;
-    if (editor.api.isExpanded())
-      return deleteRowWhenExpanded(editor, currentTableItem);
+    if (editor.api.isExpanded()) return deleteRowWhenExpanded(editor, currentTableItem);
 
     const currentRowItem = editor.api.above({
       match: { type: editor.getType(KEYS.tr) },

@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import { useHotkeys } from "@udecode/react-hotkeys";
+import { isDefined } from "@udecode/utils";
+import React, { useEffect } from "react";
 
-import { useHotkeys } from '@udecode/react-hotkeys';
-import { isDefined } from '@udecode/utils';
+import type { Shortcut } from "../plugin";
 
-import type { Shortcut } from '../plugin';
-
-import { useEditorRef } from '../stores';
+import { useEditorRef } from "../stores";
 
 export function EditorHotkeysEffect({
   id,
@@ -18,26 +17,20 @@ export function EditorHotkeysEffect({
 
   return (
     <>
-      {Object.entries(editor.meta.shortcuts).map(
-        ([hotkeyString, hotkeyConfig]) => {
-          if (
-            !hotkeyConfig ||
-            !isDefined(hotkeyConfig.keys) ||
-            !hotkeyConfig.handler
-          ) {
-            return null;
-          }
-
-          return (
-            <HotkeyEffect
-              id={id}
-              key={hotkeyString}
-              editableRef={editableRef}
-              hotkeyConfig={hotkeyConfig}
-            />
-          );
+      {Object.entries(editor.meta.shortcuts).map(([hotkeyString, hotkeyConfig]) => {
+        if (!hotkeyConfig || !isDefined(hotkeyConfig.keys) || !hotkeyConfig.handler) {
+          return null;
         }
-      )}
+
+        return (
+          <HotkeyEffect
+            id={id}
+            key={hotkeyString}
+            editableRef={editableRef}
+            hotkeyConfig={hotkeyConfig}
+          />
+        );
+      })}
     </>
   );
 }

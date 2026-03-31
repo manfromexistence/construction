@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { BaseListPlugin } from './BaseListPlugin';
+import { BaseListPlugin } from "./BaseListPlugin";
 
 jsxt;
 
@@ -16,7 +16,7 @@ output:
 1. E1
   1. |E2
 */
-it('indent single list item (start of item)', () => {
+it("indent single list item (start of item)", () => {
   const input = (
     <editor>
       <hul>
@@ -70,7 +70,7 @@ output:
 1. E1
   1. E2|
 */
-it('indent single list item (end of item)', () => {
+it("indent single list item (end of item)", () => {
   const input = (
     <editor>
       <hul>
@@ -126,7 +126,7 @@ output:
   1. |E2
   2. E3|
 */
-it('indent multiple list items (start/end)', () => {
+it("indent multiple list items (start/end)", () => {
   const input = (
     <editor>
       <hul>
@@ -194,7 +194,7 @@ output:
 2. |E2
 3. E3|
 */
-it('un-indent multiple list items (start/end)', () => {
+it("un-indent multiple list items (start/end)", () => {
   const input = (
     <editor>
       <hul>
@@ -264,7 +264,7 @@ output:
 3. E3
 |
 */
-it('un-indent multiple list items (start/out)', () => {
+it("un-indent multiple list items (start/out)", () => {
   const input = (
     <editor>
       <hul>
@@ -321,7 +321,7 @@ it('un-indent multiple list items (start/out)', () => {
   expect(editor.children).toEqual(output.children);
 });
 
-it('unhang before indentation', () => {
+it("unhang before indentation", () => {
   const input = (
     <editor>
       <hul>
@@ -384,7 +384,7 @@ it('unhang before indentation', () => {
   expect(editor.children).toEqual(output.children);
 });
 
-it('does not not adjust selection length when unhanging ranges', () => {
+it("does not not adjust selection length when unhanging ranges", () => {
   const input = (
     <editor>
       <hp>
@@ -410,7 +410,7 @@ it('does not not adjust selection length when unhanging ranges', () => {
   expect(editor.selection).toEqual(selectionBefore);
 });
 
-it('convert top-level list item into body upon unindent if enableResetOnShiftTab is true', () => {
+it("convert top-level list item into body upon unindent if enableResetOnShiftTab is true", () => {
   const input = (
     <editor>
       <hul>
@@ -449,9 +449,7 @@ it('convert top-level list item into body upon unindent if enableResetOnShiftTab
   ) as any;
 
   const editor = createSlateEditor({
-    plugins: [
-      BaseListPlugin.configure({ options: { enableResetOnShiftTab: true } }),
-    ],
+    plugins: [BaseListPlugin.configure({ options: { enableResetOnShiftTab: true } })],
     selection: input.selection,
     value: input.children,
   });
@@ -460,7 +458,7 @@ it('convert top-level list item into body upon unindent if enableResetOnShiftTab
   expect(editor.children).toEqual(output.children);
 });
 
-it('convert top-level (first) list item into body upon unindent if enableResetOnShiftTab is true', () => {
+it("convert top-level (first) list item into body upon unindent if enableResetOnShiftTab is true", () => {
   const input = (
     <editor>
       <hul>
@@ -497,9 +495,7 @@ it('convert top-level (first) list item into body upon unindent if enableResetOn
   ) as any;
 
   const editor = createSlateEditor({
-    plugins: [
-      BaseListPlugin.configure({ options: { enableResetOnShiftTab: true } }),
-    ],
+    plugins: [BaseListPlugin.configure({ options: { enableResetOnShiftTab: true } })],
     selection: input.selection,
     value: input.children,
   });
@@ -508,7 +504,7 @@ it('convert top-level (first) list item into body upon unindent if enableResetOn
   expect(editor.children).toEqual(output.children);
 });
 
-it('convert top-level (last) list item into body upon unindent if enableResetOnShiftTab is true', () => {
+it("convert top-level (last) list item into body upon unindent if enableResetOnShiftTab is true", () => {
   const input = (
     <editor>
       <hul>
@@ -545,9 +541,7 @@ it('convert top-level (last) list item into body upon unindent if enableResetOnS
   ) as any;
 
   const editor = createSlateEditor({
-    plugins: [
-      BaseListPlugin.configure({ options: { enableResetOnShiftTab: true } }),
-    ],
+    plugins: [BaseListPlugin.configure({ options: { enableResetOnShiftTab: true } })],
     selection: input.selection,
     value: input.children,
   });
@@ -556,7 +550,7 @@ it('convert top-level (last) list item into body upon unindent if enableResetOnS
   expect(editor.children).toEqual(output.children);
 });
 
-it('does not convert top-level list item into body upon unindent if enableResetOnShiftTab is false', () => {
+it("does not convert top-level list item into body upon unindent if enableResetOnShiftTab is false", () => {
   const input = (
     <editor>
       <hul>

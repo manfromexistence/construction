@@ -2,13 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "empty-example",
   "title": "Empty",
-  "registryDependencies": [
-    "button",
-    "empty",
-    "input-group",
-    "kbd",
-    "example"
-  ],
+  "registryDependencies": ["button", "empty", "input-group", "kbd", "example"],
   "files": [
     {
       "path": "registry/base-lyra/examples/empty-example.tsx",

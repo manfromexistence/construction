@@ -1,23 +1,14 @@
-import {
-  afterAll,
-  afterEach,
-  beforeAll,
-  beforeEach,
-  describe,
-  expect,
-  it,
-  mock,
-} from 'bun:test';
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it, mock } from "bun:test";
 
 const scrollIntoViewIfNeeded = mock();
 
-mock.module('scroll-into-view-if-needed', () => ({
+mock.module("scroll-into-view-if-needed", () => ({
   default: scrollIntoViewIfNeeded,
 }));
 
-const { scrollIntoView } = await import('./scrollIntoView');
+const { scrollIntoView } = await import("./scrollIntoView");
 
-describe('scrollIntoView', () => {
+describe("scrollIntoView", () => {
   const originalRequestAnimationFrame = globalThis.requestAnimationFrame;
   const originalSetTimeout = globalThis.setTimeout;
 
@@ -28,7 +19,7 @@ describe('scrollIntoView', () => {
       return 1;
     }) as typeof requestAnimationFrame;
     globalThis.setTimeout = ((cb: TimerHandler) => {
-      if (typeof cb === 'function') cb();
+      if (typeof cb === "function") cb();
 
       return 1 as any;
     }) as typeof setTimeout;
@@ -47,7 +38,7 @@ describe('scrollIntoView', () => {
     globalThis.setTimeout = originalSetTimeout;
   });
 
-  it('converts a point target into a DOM range and scrolls with custom options', () => {
+  it("converts a point target into a DOM range and scrolls with custom options", () => {
     const leafEl: any = {};
     const domRange = {
       getBoundingClientRect: () => ({
@@ -65,7 +56,7 @@ describe('scrollIntoView', () => {
         toDOMRange: mock(() => domRange),
       },
     } as any;
-    const options = { block: 'nearest', scrollMode: 'if-needed' } as any;
+    const options = { block: "nearest", scrollMode: "if-needed" } as any;
 
     scrollIntoView(editor, { offset: 2, path: [0, 0] }, options);
 
@@ -77,7 +68,7 @@ describe('scrollIntoView', () => {
     expect(leafEl.getBoundingClientRect).toBeUndefined();
   });
 
-  it('returns early when the point cannot be converted to a DOM range', () => {
+  it("returns early when the point cannot be converted to a DOM range", () => {
     const editor = {
       api: {
         toDOMRange: mock(() => {}),
@@ -90,7 +81,7 @@ describe('scrollIntoView', () => {
     expect(scrollIntoViewIfNeeded).not.toHaveBeenCalled();
   });
 
-  it('accepts an existing DOM range target and uses default options', () => {
+  it("accepts an existing DOM range target and uses default options", () => {
     const leafEl: any = {};
     const domRange = {
       getBoundingClientRect: () => ({
@@ -113,7 +104,7 @@ describe('scrollIntoView', () => {
 
     expect(editor.api.toDOMRange).not.toHaveBeenCalled();
     expect(scrollIntoViewIfNeeded).toHaveBeenCalledWith(leafEl, {
-      scrollMode: 'if-needed',
+      scrollMode: "if-needed",
     });
     expect(leafEl.getBoundingClientRect).toBeUndefined();
   });

@@ -1,17 +1,16 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { BaseIndentPlugin } from "@platejs/indent";
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { BaseIndentPlugin } from '@platejs/indent';
-import { jsxt } from '@platejs/test-utils';
-
-import { BaseListPlugin } from '../BaseListPlugin';
+import { BaseListPlugin } from "../BaseListPlugin";
 
 jsxt;
 
-describe('normalizeList', () => {
-  describe('when listStyleType without indent', () => {
-    it('remove listStyleType and listStart props', async () => {
+describe("normalizeList", () => {
+  describe("when listStyleType without indent", () => {
+    it("remove listStyleType and listStart props", async () => {
       const input = (
         <editor>
           <hp listStart={1} listStyleType="disc">

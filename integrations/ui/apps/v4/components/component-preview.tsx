@@ -1,9 +1,8 @@
-import * as React from "react"
-import Image from "next/image"
-
-import { getRegistryComponent } from "@/lib/registry"
-import { ComponentPreviewTabs } from "@/components/component-preview-tabs"
-import { ComponentSource } from "@/components/component-source"
+import Image from "next/image";
+import * as React from "react";
+import { ComponentPreviewTabs } from "@/components/component-preview-tabs";
+import { ComponentSource } from "@/components/component-source";
+import { getRegistryComponent } from "@/lib/registry";
 
 export function ComponentPreview({
   name,
@@ -18,16 +17,16 @@ export function ComponentPreview({
   caption,
   ...props
 }: React.ComponentProps<"div"> & {
-  name: string
-  styleName?: string
-  align?: "center" | "start" | "end"
-  description?: string
-  hideCode?: boolean
-  type?: "block" | "component" | "example"
-  chromeLessOnMobile?: boolean
-  previewClassName?: string
-  direction?: "ltr" | "rtl"
-  caption?: string
+  name: string;
+  styleName?: string;
+  align?: "center" | "start" | "end";
+  description?: string;
+  hideCode?: boolean;
+  type?: "block" | "component" | "example";
+  chromeLessOnMobile?: boolean;
+  previewClassName?: string;
+  direction?: "ltr" | "rtl";
+  caption?: string;
 }) {
   if (type === "block") {
     const content = (
@@ -50,23 +49,21 @@ export function ComponentPreview({
           <iframe src={`/view/${styleName}/${name}`} className="size-full" />
         </div>
       </div>
-    )
+    );
 
     if (caption) {
       return (
         <figure className="flex flex-col gap-4">
           {content}
-          <figcaption className="text-center text-sm text-muted-foreground">
-            {caption}
-          </figcaption>
+          <figcaption className="text-center text-sm text-muted-foreground">{caption}</figcaption>
         </figure>
-      )
+      );
     }
 
-    return content
+    return content;
   }
 
-  const Component = getRegistryComponent(name, styleName)
+  const Component = getRegistryComponent(name, styleName);
 
   if (!Component) {
     return (
@@ -77,7 +74,7 @@ export function ComponentPreview({
         </code>{" "}
         not found in registry.
       </p>
-    )
+    );
   }
 
   const content = (
@@ -87,41 +84,27 @@ export function ComponentPreview({
       align={align}
       hideCode={hideCode}
       component={React.createElement(Component)}
-      source={
-        <ComponentSource
-          name={name}
-          collapsible={false}
-          styleName={styleName}
-        />
-      }
+      source={<ComponentSource name={name} collapsible={false} styleName={styleName} />}
       sourcePreview={
-        <ComponentSource
-          name={name}
-          collapsible={false}
-          styleName={styleName}
-          maxLines={3}
-        />
+        <ComponentSource name={name} collapsible={false} styleName={styleName} maxLines={3} />
       }
       chromeLessOnMobile={chromeLessOnMobile}
       direction={direction}
       styleName={styleName}
       {...props}
     />
-  )
+  );
 
   if (caption) {
     return (
-      <figure
-        data-hide-code={hideCode}
-        className="flex flex-col data-[hide-code=true]:gap-4"
-      >
+      <figure data-hide-code={hideCode} className="flex flex-col data-[hide-code=true]:gap-4">
         {content}
         <figcaption className="-mt-8 text-center text-sm text-muted-foreground data-[hide-code=true]:mt-0">
           {caption}
         </figcaption>
       </figure>
-    )
+    );
   }
 
-  return content
+  return content;
 }

@@ -1,5 +1,5 @@
-import type { SlateEditor } from '../editor';
-import type { AnyEditorPlugin, SlatePlugins } from '../plugin/SlatePlugin';
+import type { SlateEditor } from "../editor";
+import type { AnyEditorPlugin, SlatePlugins } from "../plugin/SlatePlugin";
 
 /**
  * Get all plugins having a defined `inject.plugins[plugin.key]`. It includes

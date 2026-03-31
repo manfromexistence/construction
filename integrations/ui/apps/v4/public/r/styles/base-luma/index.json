@@ -1,18 +1,9 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "index",
-  "dependencies": [
-    "class-variance-authority",
-    "lucide-react",
-    "@base-ui/react"
-  ],
-  "devDependencies": [
-    "tw-animate-css",
-    "shadcn"
-  ],
-  "registryDependencies": [
-    "utils"
-  ],
+  "dependencies": ["class-variance-authority", "lucide-react", "@base-ui/react"],
+  "devDependencies": ["tw-animate-css", "shadcn"],
+  "registryDependencies": ["utils"],
   "files": [],
   "cssVars": {},
   "css": {

@@ -3,13 +3,7 @@
   "name": "login-03",
   "title": "Login 03",
   "description": "A login page with a muted background color.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input",
-    "label",
-    "field"
-  ],
+  "registryDependencies": ["button", "card", "input", "label", "field"],
   "files": [
     {
       "path": "registry/radix-mira/blocks/login-03/page.tsx",
@@ -23,9 +17,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "login"
-  ],
+  "categories": ["authentication", "login"],
   "type": "registry:block"
 }

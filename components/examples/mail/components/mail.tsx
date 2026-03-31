@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
   AlertCircle,
   Archive,
@@ -12,19 +11,19 @@ import {
   Trash2,
   Users2,
 } from "lucide-react";
-
-import { cn } from "@/lib/utils";
-import { Input } from "@/components/ui/input";
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import * as React from "react";
 import { AccountSwitcher } from "@/components/examples/mail/components/account-switcher";
 import { MailDisplay } from "@/components/examples/mail/components/mail-display";
 import { MailList } from "@/components/examples/mail/components/mail-list";
 import { Nav } from "@/components/examples/mail/components/nav";
 import { type Mail } from "@/components/examples/mail/data";
 import { useMail } from "@/components/examples/mail/use-mail";
+import { Input } from "@/components/ui/input";
+import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
+import { Separator } from "@/components/ui/separator";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 interface MailProps {
   accounts: {
@@ -71,10 +70,7 @@ export function Mail({
           className={cn(isCollapsed && "min-w-[50px] transition-all duration-300 ease-in-out")}
         >
           <div
-            className={cn(
-              "flex items-center justify-center px-2 py-1.5",
-              isCollapsed && "px-0"
-            )}
+            className={cn("flex items-center justify-center px-2 py-1.5", isCollapsed && "px-0")}
           >
             <AccountSwitcher isCollapsed={isCollapsed} accounts={accounts} />
           </div>

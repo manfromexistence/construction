@@ -1,10 +1,6 @@
 {
   "name": "phone-input",
-  "dependencies": [
-    "@base-ui/react",
-    "react-dom",
-    "lucide-react"
-  ],
+  "dependencies": ["@base-ui/react", "react-dom", "lucide-react"],
   "registryDependencies": [
     "popover",
     "compose-refs",

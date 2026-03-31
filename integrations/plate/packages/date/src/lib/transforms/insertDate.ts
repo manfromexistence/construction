@@ -1,6 +1,6 @@
-import type { InsertNodesOptions, SlateEditor, TDateElement } from 'platejs';
+import type { InsertNodesOptions, SlateEditor, TDateElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const insertDate = (
   editor: SlateEditor,
@@ -9,13 +9,13 @@ export const insertDate = (
   editor.tf.insertNodes<TDateElement | { text: string }>(
     [
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         date: date ?? new Date().toDateString(),
         type: editor.getType(KEYS.date),
       },
       // FIXME: for not losing the editor focus
       {
-        text: ' ',
+        text: " ",
       },
     ],
     options as any

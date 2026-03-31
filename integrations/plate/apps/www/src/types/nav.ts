@@ -1,4 +1,4 @@
-import type { DocIcons } from '@/config/docs-icons';
+import type { DocIcons } from "@/config/docs-icons";
 
 export interface MainNavItem extends NavItem {}
 

@@ -1,18 +1,10 @@
-import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react"
+import { BoldIcon, ItalicIcon, UnderlineIcon } from "lucide-react";
 
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/base-nova/ui/toggle-group"
+import { ToggleGroup, ToggleGroupItem } from "@/styles/base-nova/ui/toggle-group";
 
 export function ToggleGroupVertical() {
   return (
-    <ToggleGroup
-      multiple
-      orientation="vertical"
-      spacing={1}
-      defaultValue={["bold", "italic"]}
-    >
+    <ToggleGroup multiple orientation="vertical" spacing={1} defaultValue={["bold", "italic"]}>
       <ToggleGroupItem value="bold" aria-label="Toggle bold">
         <BoldIcon />
       </ToggleGroupItem>
@@ -23,5 +15,5 @@ export function ToggleGroupVertical() {
         <UnderlineIcon />
       </ToggleGroupItem>
     </ToggleGroup>
-  )
+  );
 }

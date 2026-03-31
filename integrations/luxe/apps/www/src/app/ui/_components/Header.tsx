@@ -1,20 +1,16 @@
 "use client";
 
+import { AnimatePresence } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
 import { useEffect, useState } from "react";
-
 import { useMediaQuery } from "usehooks-ts";
 
-import { AnimatePresence } from "motion/react";
-
 import { Icons } from "@/app/_components/Icons";
-import { ToggleTheme } from "./ToggleTheme";
+import { cn } from "@/utils/cn";
 import { CommandMenu } from "./cmdk";
 import { MobileMenu } from "./MobileMenu";
-
-import { cn } from "@/utils/cn";
+import { ToggleTheme } from "./ToggleTheme";
 
 const ITEMS = [
   {

@@ -1,12 +1,12 @@
-import { createSlatePlugin } from '../plugin';
-import { createSlateEditor } from './withSlate';
+import { createSlatePlugin } from "../plugin";
+import { createSlateEditor } from "./withSlate";
 
-describe('getApi method', () => {
-  it('returns correctly typed plugin API', () => {
+describe("getApi method", () => {
+  it("returns correctly typed plugin API", () => {
     const TestPlugin = createSlatePlugin({
-      key: 'test',
+      key: "test",
     }).extendEditorApi(() => ({
-      testMethod: () => 'test',
+      testMethod: () => "test",
       testNumber: () => 42,
     }));
 
@@ -21,15 +21,15 @@ describe('getApi method', () => {
     expect(testApi.testNumber).toBeDefined();
 
     // Functionality checking
-    expect(testApi.testMethod()).toBe('test');
+    expect(testApi.testMethod()).toBe("test");
     expect(testApi.testNumber()).toBe(42);
   });
 
-  it('work with generic', () => {
+  it("work with generic", () => {
     const Plugin1 = createSlatePlugin({
-      key: 'plugin1',
+      key: "plugin1",
     }).extendEditorApi(() => ({
-      method1: () => 'plugin1',
+      method1: () => "plugin1",
     }));
 
     const editor = createSlateEditor({
@@ -38,14 +38,14 @@ describe('getApi method', () => {
 
     const api1 = editor.getApi<typeof Plugin1>();
 
-    expect(api1.method1()).toBe('plugin1');
+    expect(api1.method1()).toBe("plugin1");
   });
 
-  describe('getPlugin method', () => {
-    it('returns correctly typed plugin', () => {
+  describe("getPlugin method", () => {
+    it("returns correctly typed plugin", () => {
       const TestPlugin = createSlatePlugin({
-        key: 'test',
-        options: { testOption: 'value' },
+        key: "test",
+        options: { testOption: "value" },
       });
 
       const editor = createSlateEditor({
@@ -54,30 +54,30 @@ describe('getApi method', () => {
 
       const plugin = editor.getPlugin(TestPlugin);
 
-      expect(plugin.key).toBe('test');
-      expect(plugin.options.testOption).toBe('value');
+      expect(plugin.key).toBe("test");
+      expect(plugin.options.testOption).toBe("value");
     });
 
-    it('work with generic', () => {
+    it("work with generic", () => {
       const Plugin1 = createSlatePlugin({
-        key: 'plugin1',
-        options: { option1: 'value1' },
+        key: "plugin1",
+        options: { option1: "value1" },
       });
 
       const editor = createSlateEditor({
         plugins: [Plugin1],
       });
 
-      const plugin1 = editor.getPlugin<typeof Plugin1>({ key: 'plugin1' });
-      expect(plugin1.options.option1).toBe('value1');
+      const plugin1 = editor.getPlugin<typeof Plugin1>({ key: "plugin1" });
+      expect(plugin1.options.option1).toBe("value1");
     });
   });
 
-  describe('getOptions method', () => {
-    it('returns correctly typed plugin options', () => {
+  describe("getOptions method", () => {
+    it("returns correctly typed plugin options", () => {
       const TestPlugin = createSlatePlugin({
-        key: 'test',
-        options: { testOption: 'value' },
+        key: "test",
+        options: { testOption: "value" },
       });
 
       const editor = createSlateEditor({
@@ -86,13 +86,13 @@ describe('getApi method', () => {
 
       const options = editor.getOptions(TestPlugin);
 
-      expect(options.testOption).toBe('value');
+      expect(options.testOption).toBe("value");
     });
 
-    it('work with generic', () => {
+    it("work with generic", () => {
       const Plugin1 = createSlatePlugin({
-        key: 'plugin1',
-        options: { option1: 'value1' },
+        key: "plugin1",
+        options: { option1: "value1" },
       });
 
       const editor = createSlateEditor({
@@ -100,9 +100,9 @@ describe('getApi method', () => {
       });
 
       const options1 = editor.getOptions<typeof Plugin1>({
-        key: 'plugin1',
+        key: "plugin1",
       });
-      expect(options1.option1).toBe('value1');
+      expect(options1.option1).toBe("value1");
     });
   });
 });

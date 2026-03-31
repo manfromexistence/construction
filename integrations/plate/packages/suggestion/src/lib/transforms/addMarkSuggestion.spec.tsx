@@ -1,23 +1,22 @@
 /** @jsx jsxt */
 
-import type { SlateEditor, TUpdateSuggestionData } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor, TUpdateSuggestionData } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getInlineSuggestionData } from '../utils';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { getInlineSuggestionData } from "../utils";
 
 jsxt;
 
 const suggestionPlugin = BaseSuggestionPlugin.configure({
   options: {
-    currentUserId: 'testId',
+    currentUserId: "testId",
   },
 });
 
-describe('addMarkSuggestion', () => {
-  it('add mark with suggestion data', () => {
+describe("addMarkSuggestion", () => {
+  it("add mark with suggestion data", () => {
     const input = (
       <editor>
         <hp>
@@ -34,8 +33,8 @@ describe('addMarkSuggestion', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
-    editor.tf.addMark('bold', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
+    editor.tf.addMark("bold", true);
 
     const data = getInlineSuggestionData(
       editor.children[0].children[0] as any
@@ -44,20 +43,20 @@ describe('addMarkSuggestion', () => {
     expect(editor.children[0].children[0].bold).toBe(true);
     expect(editor.children[0].children[0][BaseSuggestionPlugin.key]).toBe(true);
     expect(data).toBeDefined();
-    expect(data?.type).toBe('update');
-    expect(data?.userId).toBe('testId');
+    expect(data?.type).toBe("update");
+    expect(data?.userId).toBe("testId");
     expect(data?.newProperties).toEqual({ bold: true });
-    expect(typeof data?.createdAt).toBe('number');
-    expect(typeof data?.id).toBe('string');
+    expect(typeof data?.createdAt).toBe("number");
+    expect(typeof data?.id).toBe("string");
   });
 
-  it('add new suggestion mark while preserving existing suggestion mark', () => {
+  it("add new suggestion mark while preserving existing suggestion mark", () => {
     const existingData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
       newProperties: { bold: true },
-      type: 'update' as const,
-      userId: 'testId',
+      type: "update" as const,
+      userId: "testId",
     };
 
     const input = (
@@ -79,29 +78,27 @@ describe('addMarkSuggestion', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
-    editor.tf.addMark('italic', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
+    editor.tf.addMark("italic", true);
 
     const dataList = editor
       .getApi(BaseSuggestionPlugin)
-      .suggestion.dataList(
-        editor.children[0].children[1] as any
-      ) as TUpdateSuggestionData[];
+      .suggestion.dataList(editor.children[0].children[1] as any) as TUpdateSuggestionData[];
 
     expect(dataList).toHaveLength(2);
     expect(dataList[0]).toEqual(existingData);
-    expect(dataList[1].type).toBe('update');
+    expect(dataList[1].type).toBe("update");
     expect(dataList[1].newProperties).toEqual({ italic: true });
     expect(dataList[1].id !== existingData.id).toBeTruthy();
     // expect(dataList[1].createdAt !== existingData.createdAt).toBeTruthy();
   });
 
-  it('skips nodes already marked by a non-update suggestion', () => {
+  it("skips nodes already marked by a non-update suggestion", () => {
     const existingData = {
       createdAt: Date.now(),
-      id: '1',
-      type: 'insert',
-      userId: 'testId',
+      id: "1",
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -122,14 +119,14 @@ describe('addMarkSuggestion', () => {
       value: input.children,
     });
 
-    editor.setOption(BaseSuggestionPlugin, 'isSuggesting', true);
-    editor.tf.addMark('bold', true);
+    editor.setOption(BaseSuggestionPlugin, "isSuggesting", true);
+    editor.tf.addMark("bold", true);
 
     const node = editor.children[0].children[0] as any;
 
     expect(node.bold).toBeUndefined();
-    expect(
-      editor.getApi(BaseSuggestionPlugin).suggestion.dataList(node)
-    ).toEqual([existingData] as any);
+    expect(editor.getApi(BaseSuggestionPlugin).suggestion.dataList(node)).toEqual([
+      existingData,
+    ] as any);
   });
 });

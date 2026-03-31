@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "uploadthing",
   "type": "registry:hook",
-  "dependencies": [
-    "uploadthing@7.7.4",
-    "@uploadthing/react@7.3.3",
-    "sonner",
-    "zod"
-  ],
+  "dependencies": ["uploadthing@7.7.4", "@uploadthing/react@7.3.3", "sonner", "zod"],
   "files": [
     {
       "path": "src/registry/hooks/use-upload-file.ts",

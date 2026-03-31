@@ -1,15 +1,14 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
 export const editableVoidsValue: any = (
   <fragment>
     <hp>
-      In addition to nodes that contain editable text, you can insert void
-      nodes, which can also contain editable elements, inputs, or an entire
-      other Slate editor.
+      In addition to nodes that contain editable text, you can insert void nodes, which can also
+      contain editable elements, inputs, or an entire other Slate editor.
     </hp>
     <element type="editable-void">
       <htext />

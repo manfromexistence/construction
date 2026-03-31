@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "context-menu-example",
   "title": "Context Menu",
-  "registryDependencies": [
-    "button",
-    "context-menu",
-    "dialog",
-    "example"
-  ],
+  "registryDependencies": ["button", "context-menu", "dialog", "example"],
   "files": [
     {
       "path": "registry/radix-vega/examples/context-menu-example.tsx",

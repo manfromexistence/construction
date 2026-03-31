@@ -1,9 +1,7 @@
-import { type SlateEditor, getEditorPlugin, KEYS } from 'platejs';
-
-import type { BlockSelectionConfig } from '../../BlockSelectionPlugin';
-
-import { querySelectorSelectable } from '../../../lib';
-import { extractSelectableIds } from '../../../lib/extractSelectableIds';
+import { getEditorPlugin, KEYS, type SlateEditor } from "platejs";
+import { querySelectorSelectable } from "../../../lib";
+import { extractSelectableIds } from "../../../lib/extractSelectableIds";
+import type { BlockSelectionConfig } from "../../BlockSelectionPlugin";
 
 export const setSelectedIds = (
   editor: SlateEditor,
@@ -18,13 +16,12 @@ export const setSelectedIds = (
     ids?: string[];
   }
 ) => {
-  const { getOptions, setOption } = getEditorPlugin<BlockSelectionConfig>(
-    editor,
-    { key: KEYS.blockSelection }
-  );
+  const { getOptions, setOption } = getEditorPlugin<BlockSelectionConfig>(editor, {
+    key: KEYS.blockSelection,
+  });
 
   if (ids) {
-    setOption('selectedIds', new Set(ids));
+    setOption("selectedIds", new Set(ids));
   }
   if (added || removed) {
     const { selectedIds: prev } = getOptions();
@@ -45,10 +42,10 @@ export const setSelectedIds = (
       }
     }
 
-    setOption('selectedIds', next);
+    setOption("selectedIds", next);
   }
 
-  setOption('isSelecting', true);
+  setOption("isSelecting", true);
 };
 
 export const addSelectedRow = (
@@ -56,10 +53,9 @@ export const addSelectedRow = (
   id: string,
   options: { clear?: boolean; delay?: number } = {}
 ) => {
-  const { api, getOptions, setOption } = getEditorPlugin<BlockSelectionConfig>(
-    editor,
-    { key: KEYS.blockSelection }
-  );
+  const { api, getOptions, setOption } = getEditorPlugin<BlockSelectionConfig>(editor, {
+    key: KEYS.blockSelection,
+  });
 
   const { clear = true, delay } = options;
 
@@ -67,7 +63,7 @@ export const addSelectedRow = (
 
   if (!element) return;
   if (!getOptions().selectedIds!.has(id) && clear) {
-    setOption('selectedIds', new Set());
+    setOption("selectedIds", new Set());
   }
 
   api.blockSelection.setSelectedIds({

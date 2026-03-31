@@ -4,12 +4,8 @@
   "type": "registry:example",
   "title": "Orbiting Circles Demo",
   "description": "Example showing circles moving in orbital paths.",
-  "dependencies": [
-    "@radix-ui/react-icons"
-  ],
-  "registryDependencies": [
-    "@magicui/orbiting-circles"
-  ],
+  "dependencies": ["@radix-ui/react-icons"],
+  "registryDependencies": ["@magicui/orbiting-circles"],
   "files": [
     {
       "path": "registry/example/orbiting-circles-demo.tsx",

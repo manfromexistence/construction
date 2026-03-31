@@ -1,6 +1,6 @@
-import { ShieldAlertIcon } from "lucide-react"
+import { ShieldAlertIcon } from "lucide-react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Item,
   ItemActions,
@@ -8,7 +8,7 @@ import {
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from "@/styles/radix-nova/ui/item"
+} from "@/styles/radix-nova/ui/item";
 
 export function ItemIcon() {
   return (
@@ -19,9 +19,7 @@ export function ItemIcon() {
         </ItemMedia>
         <ItemContent>
           <ItemTitle>Security Alert</ItemTitle>
-          <ItemDescription>
-            New login detected from unknown device.
-          </ItemDescription>
+          <ItemDescription>New login detected from unknown device.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button size="sm" variant="outline">
@@ -30,5 +28,5 @@ export function ItemIcon() {
         </ItemActions>
       </Item>
     </div>
-  )
+  );
 }

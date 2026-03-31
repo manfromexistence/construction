@@ -1,7 +1,7 @@
+import { Redo, Undo } from "lucide-react";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { useEditorStore } from "@/store/editor-store";
-import { Redo, Undo } from "lucide-react";
 
 interface UndoRedoButtonsProps extends React.ComponentProps<typeof Button> {}
 

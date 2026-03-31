@@ -1,6 +1,6 @@
-import { ArrowUpIcon } from "lucide-react"
+import { ArrowUpIcon } from "lucide-react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 
 export default function ButtonRounded() {
   return (
@@ -9,5 +9,5 @@ export default function ButtonRounded() {
         <ArrowUpIcon />
       </Button>
     </div>
-  )
+  );
 }

@@ -1,10 +1,9 @@
-import React from 'react';
-
-import throttle from 'lodash/throttle.js';
-import raf from 'raf';
+import throttle from "lodash/throttle.js";
+import raf from "raf";
+import React from "react";
 
 const getCoords = (e: any) => {
-  if (e.type === 'touchmove') {
+  if (e.type === "touchmove") {
     return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
   }
 
@@ -12,7 +11,7 @@ const getCoords = (e: any) => {
 };
 
 export type ScrollAreaProps = {
-  placement: 'bottom' | 'top';
+  placement: "bottom" | "top";
   containerRef?: React.RefObject<any>;
   enabled?: boolean;
   height?: number;
@@ -37,22 +36,22 @@ export function ScrollArea({
   const scaleYRef = React.useRef(0);
   const frameRef = React.useRef<number | null>(null);
 
-  const direction = placement === 'top' ? -1 : 1;
+  const direction = placement === "top" ? -1 : 1;
 
   // Drag a fixed, invisible box of custom height at the top, and bottom
   // of the window. Make sure to show it only when dragging something.
   const style: React.CSSProperties = {
     height,
     opacity: 0,
-    position: 'fixed',
-    width: '100%',
+    position: "fixed",
+    width: "100%",
     zIndex,
     ...scrollAreaProps?.style,
   };
 
-  if (placement === 'top') {
+  if (placement === "top") {
     style.top = 0;
-  } else if (placement === 'bottom') {
+  } else if (placement === "bottom") {
     style.bottom = 0;
   }
 
@@ -94,9 +93,7 @@ export function ScrollArea({
   // Update scaleY every 100ms or so
   // and start scrolling if necessary
   // ✅ Store throttled function in ref - initialized in useEffect, refs accessed in event handlers are OK
-  const updateScrollingRef = React.useRef<((e: any) => void) | undefined>(
-    undefined
-  );
+  const updateScrollingRef = React.useRef<((e: any) => void) | undefined>(undefined);
 
   React.useEffect(() => {
     // Recreate throttled function when dependencies change

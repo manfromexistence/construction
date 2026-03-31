@@ -1,24 +1,24 @@
-import { type Metadata } from "next"
-import Link from "next/link"
+import { type Metadata } from "next";
+import Link from "next/link";
 
-import { Announcement } from "@/components/announcement"
-import { ExamplesNav } from "@/components/examples-nav"
+import { Announcement } from "@/components/announcement";
+import { ExamplesNav } from "@/components/examples-nav";
 import {
   PageActions,
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
-} from "@/components/page-header"
-import { PageNav } from "@/components/page-nav"
-import { ThemeSelector } from "@/components/theme-selector"
-import { Button } from "@/registry/new-york-v4/ui/button"
+} from "@/components/page-header";
+import { PageNav } from "@/components/page-nav";
+import { ThemeSelector } from "@/components/theme-selector";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
-export const dynamic = "force-static"
-export const revalidate = false
+export const dynamic = "force-static";
+export const revalidate = false;
 
-const title = "The Foundation for your Design System"
+const title = "The Foundation for your Design System";
 const description =
-  "A set of beautifully designed components that you can customize, extend, and build on. Start here then make it your own. Open Source. Open Code."
+  "A set of beautifully designed components that you can customize, extend, and build on. Start here then make it your own. Open Source. Open Code.";
 
 export const metadata: Metadata = {
   title,
@@ -42,13 +42,9 @@ export const metadata: Metadata = {
       },
     ],
   },
-}
+};
 
-export default function ExamplesLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function ExamplesLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <PageHeader>
@@ -76,5 +72,5 @@ export default function ExamplesLayout({
         </div>
       </div>
     </>
-  )
+  );
 }

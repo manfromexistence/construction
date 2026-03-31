@@ -1,15 +1,14 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
-import { X_USERNAME } from "@/config/site"
-import { cn } from "@/lib/utils"
+import { X_USERNAME } from "@/config/site";
+import { cn } from "@/lib/utils";
 
-import { BlocksNav } from "./blocks-nav"
+import { BlocksNav } from "./blocks-nav";
 
-const title = "Blocks"
-const description =
-  "A collection of beautifully designed, production-ready blocks."
+const title = "Blocks";
+const description = "A collection of beautifully designed, production-ready blocks.";
 
-const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
 export const metadata: Metadata = {
   title,
@@ -33,13 +32,9 @@ export const metadata: Metadata = {
     creator: X_USERNAME,
     images: [ogImage],
   },
-}
+};
 
-export default function BlocksLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function BlocksLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <div
@@ -51,15 +46,11 @@ export default function BlocksLayout({
       />
 
       <div className="screen-line-bottom px-4">
-        <h1 className="text-3xl leading-none font-semibold tracking-tight">
-          {title}
-        </h1>
+        <h1 className="text-3xl leading-none font-semibold tracking-tight">{title}</h1>
       </div>
 
       <div className="screen-line-bottom p-4">
-        <p className="font-mono text-sm text-balance text-muted-foreground">
-          {description}
-        </p>
+        <p className="font-mono text-sm text-balance text-muted-foreground">{description}</p>
       </div>
 
       <div className="no-scrollbar max-w-full overflow-x-auto scroll-fade-effect-x p-4 whitespace-nowrap">
@@ -77,5 +68,5 @@ export default function BlocksLayout({
 
       {children}
     </>
-  )
+  );
 }

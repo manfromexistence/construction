@@ -1,59 +1,54 @@
 /* eslint-disable react-hooks/static-components */
-import * as React from "react"
-import { type Metadata } from "next"
-import { notFound } from "next/navigation"
 
-import { siteConfig } from "@/lib/config"
-import {
-  getDemoItem,
-  getRegistryComponent,
-  getRegistryItem,
-} from "@/lib/registry"
-import { absoluteUrl } from "@/lib/utils"
-import { getStyle, legacyStyles, type Style } from "@/registry/_legacy-styles"
+import { type Metadata } from "next";
+import { notFound } from "next/navigation";
+import * as React from "react";
 
-import "@/app/legacy-themes.css"
+import { siteConfig } from "@/lib/config";
+import { getDemoItem, getRegistryComponent, getRegistryItem } from "@/lib/registry";
+import { absoluteUrl } from "@/lib/utils";
+import { getStyle, legacyStyles, type Style } from "@/registry/_legacy-styles";
 
-import { ComponentPreview } from "./component-preview"
+import "@/app/legacy-themes.css";
 
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+import { ComponentPreview } from "./component-preview";
 
-const getCachedRegistryItem = React.cache(
-  async (name: string, styleName: Style["name"]) => {
-    // Try registry item first, then fallback to demo item (for examples).
-    const item = await getRegistryItem(name, styleName)
-    if (item) {
-      return item
-    }
-    return await getDemoItem(name, styleName)
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
+
+const getCachedRegistryItem = React.cache(async (name: string, styleName: Style["name"]) => {
+  // Try registry item first, then fallback to demo item (for examples).
+  const item = await getRegistryItem(name, styleName);
+  if (item) {
+    return item;
   }
-)
+  return await getDemoItem(name, styleName);
+});
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{
-    style: string
-    name: string
-  }>
+    style: string;
+    name: string;
+  }>;
 }): Promise<Metadata> {
-  const { style: styleName, name } = await params
-  const style = getStyle(styleName)
+  const { style: styleName, name } = await params;
+  const style = getStyle(styleName);
 
   if (!style) {
-    return {}
+    return {};
   }
 
-  const item = await getCachedRegistryItem(name, style.name)
+  const item = await getCachedRegistryItem(name, style.name);
 
   if (!item) {
-    return {}
+    return {};
   }
 
-  const title = item.name
-  const description = item.description
+  const title = item.name;
+  const description = item.description;
 
   return {
     title: item.name,
@@ -79,30 +74,30 @@ export async function generateMetadata({
       images: [siteConfig.ogImage],
       creator: "@shadcn",
     },
-  }
+  };
 }
 
 export async function generateStaticParams() {
-  const { Index } = await import("@/registry/__index__")
+  const { Index } = await import("@/registry/__index__");
   // const { Index: BasesIndex } = await import("@/registry/bases/__index__")
-  const { ExamplesIndex } = await import("@/examples/__index__")
-  const params: Array<{ style: string; name: string }> = []
+  const { ExamplesIndex } = await import("@/examples/__index__");
+  const params: Array<{ style: string; name: string }> = [];
 
   for (const style of legacyStyles) {
     // Check if this is a base-prefixed style (e.g., base-nova, radix-nova).
-    const baseMatch = style.name.match(/^(base|radix)-/)
+    const baseMatch = style.name.match(/^(base|radix)-/);
     if (baseMatch) {
-      const baseName = baseMatch[1]
+      const baseName = baseMatch[1];
 
       // Add examples from ExamplesIndex.
-      const examples = ExamplesIndex[baseName]
+      const examples = ExamplesIndex[baseName];
       if (examples) {
         for (const exampleName of Object.keys(examples)) {
           if (exampleName.startsWith("sidebar-")) {
             params.push({
               style: style.name,
               name: exampleName,
-            })
+            });
           }
         }
       }
@@ -128,61 +123,58 @@ export async function generateStaticParams() {
       //   }
       // }
 
-      continue
+      continue;
     }
 
     // Handle legacy styles (e.g., new-york-v4).
     if (!Index[style.name]) {
-      continue
+      continue;
     }
 
-    const styleIndex = Index[style.name]
+    const styleIndex = Index[style.name];
     for (const itemName in styleIndex) {
-      const item = styleIndex[itemName]
+      const item = styleIndex[itemName];
       if (
-        [
-          "registry:block",
-          "registry:component",
-          "registry:example",
-          "registry:internal",
-        ].includes(item.type)
+        ["registry:block", "registry:component", "registry:example", "registry:internal"].includes(
+          item.type
+        )
       ) {
         params.push({
           style: style.name,
           name: item.name,
-        })
+        });
       }
     }
   }
 
-  return params
+  return params;
 }
 
 export default async function BlockPage({
   params,
 }: {
   params: Promise<{
-    style: string
-    name: string
-  }>
+    style: string;
+    name: string;
+  }>;
 }) {
-  const { style: styleName, name } = await params
-  const style = getStyle(styleName)
+  const { style: styleName, name } = await params;
+  const style = getStyle(styleName);
 
   if (!style) {
-    return notFound()
+    return notFound();
   }
 
-  const item = await getCachedRegistryItem(name, style.name)
-  const Component = getRegistryComponent(name, style.name)
+  const item = await getCachedRegistryItem(name, style.name);
+  const Component = getRegistryComponent(name, style.name);
 
   if (!item || !Component) {
-    return notFound()
+    return notFound();
   }
 
   return (
     <ComponentPreview>
       <Component />
     </ComponentPreview>
-  )
+  );
 }

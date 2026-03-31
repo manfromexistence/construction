@@ -101,7 +101,5 @@
       "target": ""
     }
   ],
-  "categories": [
-    "dashboard"
-  ]
+  "categories": ["dashboard"]
 }

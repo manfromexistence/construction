@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Blur Fade",
   "description": "Blur fade in and out animation. Used to smoothly fade in and out content.",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/blur-fade.tsx",

@@ -1,15 +1,14 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-
-import { useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
+import * as React from "react";
 
 type Project = {
   blocks: string[];
 };
 
-const projectAtom = atomWithStorage<Project>('project', {
+const projectAtom = atomWithStorage<Project>("project", {
   blocks: [],
 });
 

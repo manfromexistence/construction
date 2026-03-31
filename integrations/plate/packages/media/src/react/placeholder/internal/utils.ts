@@ -1,15 +1,13 @@
-import { type FileExtension, type MimeType, mimes } from './mimes';
+import { type FileExtension, type MimeType, mimes } from "./mimes";
 
 /** Lookup the MIME type for a file path/extension. */
 export function lookup(path: string): MimeType | false {
-  if (!path || typeof path !== 'string') {
+  if (!path || typeof path !== "string") {
     return false;
   }
 
   // get the extension ("ext" or ".ext" or full path)
-  const extension = extname(`x.${path}`)
-    .toLowerCase()
-    .slice(1) as FileExtension;
+  const extension = extname(`x.${path}`).toLowerCase().slice(1) as FileExtension;
 
   if (!extension) {
     return false;
@@ -47,7 +45,7 @@ function populateMaps(
 
   inittedMaps = true;
   // source preference (least -> most)
-  const preference = ['nginx', 'apache', undefined, 'iana'];
+  const preference = ["nginx", "apache", undefined, "iana"];
 
   (Object.keys(mimeTypes) as MimeType[]).forEach((type) => {
     const mime = mimeTypes[type];
@@ -68,9 +66,8 @@ function populateMaps(
         const to = preference.indexOf(mime.source);
 
         if (
-          types[extension] !== 'application/octet-stream' &&
-          (from > to ||
-            (from === to && types[extension].startsWith('application/')))
+          types[extension] !== "application/octet-stream" &&
+          (from > to || (from === to && types[extension].startsWith("application/")))
         ) {
           // skip the remapping
           continue;
@@ -84,7 +81,7 @@ function populateMaps(
 }
 
 function extname(path: string) {
-  const index = path.lastIndexOf('.');
+  const index = path.lastIndexOf(".");
 
-  return index === -1 ? '' : path.slice(Math.max(0, index));
+  return index === -1 ? "" : path.slice(Math.max(0, index));
 }

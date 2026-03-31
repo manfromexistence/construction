@@ -4,11 +4,7 @@
   "type": "registry:example",
   "title": "Border Beam Demo",
   "description": "Example showing an animated border beam effect.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "@magicui/border-beam"
-  ],
+  "registryDependencies": ["button", "card", "@magicui/border-beam"],
   "files": [
     {
       "path": "registry/example/border-beam-demo-2.tsx",

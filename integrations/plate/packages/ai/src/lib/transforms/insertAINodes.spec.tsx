@@ -1,13 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import {
-  BaseParagraphPlugin,
-  type SlateEditor,
-  createSlateEditor,
-} from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { BaseParagraphPlugin, createSlateEditor, type SlateEditor } from "platejs";
 
-import { insertAINodes } from './insertAINodes';
+import { insertAINodes } from "./insertAINodes";
 
 jsxt;
 
@@ -18,21 +14,21 @@ const createEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('insertAINodes', () => {
-  it('does nothing without a selection or explicit target', () => {
+describe("insertAINodes", () => {
+  it("does nothing without a selection or explicit target", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin],
-      value: [{ type: 'p', children: [{ text: 'one' }] }],
+      value: [{ type: "p", children: [{ text: "one" }] }],
     });
     const before = JSON.parse(JSON.stringify(editor.children));
 
-    insertAINodes(editor, [{ text: ' AI' }]);
+    insertAINodes(editor, [{ text: " AI" }]);
 
     expect(editor.children).toEqual(before);
     expect(editor.selection).toBeNull();
   });
 
-  it('clones inserted nodes with ai metadata and collapses at the end', () => {
+  it("clones inserted nodes with ai metadata and collapses at the end", () => {
     const input = (
       <editor>
         <hp>
@@ -43,12 +39,12 @@ describe('insertAINodes', () => {
     ) as any as SlateEditor;
     const editor = createEditor(input);
 
-    insertAINodes(editor, [{ text: ' AI' }]);
+    insertAINodes(editor, [{ text: " AI" }]);
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'one' }, { ai: true, text: ' AI' }],
-        type: 'p',
+        children: [{ text: "one" }, { ai: true, text: " AI" }],
+        type: "p",
       },
     ]);
     expect(editor.selection).toEqual({
@@ -57,7 +53,7 @@ describe('insertAINodes', () => {
     });
   });
 
-  it('uses the explicit target instead of the current selection', () => {
+  it("uses the explicit target instead of the current selection", () => {
     const input = (
       <editor>
         <hp>first</hp>
@@ -69,16 +65,16 @@ describe('insertAINodes', () => {
     ) as any as SlateEditor;
     const editor = createEditor(input);
 
-    insertAINodes(editor, [{ text: ' AI' }], { target: [0, 0] });
+    insertAINodes(editor, [{ text: " AI" }], { target: [0, 0] });
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'first' }, { ai: true, text: ' AI' }],
-        type: 'p',
+        children: [{ text: "first" }, { ai: true, text: " AI" }],
+        type: "p",
       },
       {
-        children: [{ text: 'second' }],
-        type: 'p',
+        children: [{ text: "second" }],
+        type: "p",
       },
     ]);
     expect(editor.selection).toEqual({

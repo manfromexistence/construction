@@ -1,16 +1,10 @@
-import React from 'react';
+import type { Nullable } from "platejs";
+import { createAtomStore, createPrimitiveComponent, useReadOnly } from "platejs/react";
+import React from "react";
 
-import type { Nullable } from 'platejs';
+import type { ResizeDirection, ResizeEvent } from "../types";
 
-import {
-  createAtomStore,
-  createPrimitiveComponent,
-  useReadOnly,
-} from 'platejs/react';
-
-import type { ResizeDirection, ResizeEvent } from '../types';
-
-import { isTouchEvent } from '../utils';
+import { isTouchEvent } from "../utils";
 
 export type ResizeHandleStoreState = {
   onResize: (event: ResizeEvent) => void;
@@ -26,7 +20,7 @@ export const {
   useResizeHandleStore,
   useResizeHandleValue,
 } = createAtomStore(initialState as ResizeHandleStoreState, {
-  name: 'resizeHandle',
+  name: "resizeHandle",
   suppressWarnings: true,
 }) as any;
 
@@ -41,7 +35,7 @@ export type ResizeHandleOptions = {
 };
 
 export const useResizeHandleState = ({
-  direction = 'left',
+  direction = "left",
   initialSize: _initialSize,
   onHover,
   onHoverEnd,
@@ -50,7 +44,7 @@ export const useResizeHandleState = ({
   onTouchStart,
 }: ResizeHandleOptions) => {
   const readOnly = useReadOnly();
-  const onResizeStore = useResizeHandleValue('onResize');
+  const onResizeStore = useResizeHandleValue("onResize");
   const onResize = onResizeProp ?? onResizeStore;
 
   const [isResizing, setIsResizing] = React.useState(false);
@@ -58,15 +52,12 @@ export const useResizeHandleState = ({
   const [initialSizeState, setInitialSize] = React.useState(0);
   const initialSize = _initialSize ?? initialSizeState;
 
-  const isHorizontal = direction === 'left' || direction === 'right';
+  const isHorizontal = direction === "left" || direction === "right";
 
   React.useEffect(() => {
     if (!isResizing) return;
 
-    const sendResizeEvent = (
-      event: MouseEvent | TouchEvent,
-      finished: boolean
-    ) => {
+    const sendResizeEvent = (event: MouseEvent | TouchEvent, finished: boolean) => {
       const { clientX, clientY } = isTouchEvent(event)
         ? event.touches[0] || event.changedTouches[0]
         : event;
@@ -81,8 +72,7 @@ export const useResizeHandleState = ({
       });
     };
 
-    const handleMouseMove = (event: MouseEvent | TouchEvent) =>
-      sendResizeEvent(event, false);
+    const handleMouseMove = (event: MouseEvent | TouchEvent) => sendResizeEvent(event, false);
 
     const handleMouseUp = (event: MouseEvent | TouchEvent) => {
       setIsResizing(false);
@@ -90,26 +80,18 @@ export const useResizeHandleState = ({
       sendResizeEvent(event, true);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('touchmove', handleMouseMove);
-    window.addEventListener('touchend', handleMouseUp);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("touchmove", handleMouseMove);
+    window.addEventListener("touchend", handleMouseUp);
 
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('touchmove', handleMouseMove);
-      window.removeEventListener('touchend', handleMouseUp);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.removeEventListener("touchmove", handleMouseMove);
+      window.removeEventListener("touchend", handleMouseUp);
     };
-  }, [
-    isResizing,
-    initialPosition,
-    initialSize,
-    onResize,
-    isHorizontal,
-    onHoverEnd,
-    direction,
-  ]);
+  }, [isResizing, initialPosition, initialSize, onResize, isHorizontal, onHoverEnd, direction]);
 
   return {
     direction,
@@ -189,13 +171,11 @@ export const useResizeHandle = ({
 };
 
 export const ResizeHandle = createPrimitiveComponent<
-  'div',
-  Omit<React.HTMLAttributes<HTMLDivElement>, 'onResize'>
->('div')({
+  "div",
+  Omit<React.HTMLAttributes<HTMLDivElement>, "onResize">
+>("div")({
   propsHook: useResizeHandle,
   stateHook: useResizeHandleState,
 });
 
-export type ResizeHandleProps = React.ComponentPropsWithRef<
-  typeof ResizeHandle
->;
+export type ResizeHandleProps = React.ComponentPropsWithRef<typeof ResizeHandle>;

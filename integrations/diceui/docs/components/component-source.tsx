@@ -9,7 +9,7 @@ function deriveTitle(
   name: string | undefined,
   src: string | undefined,
   explicit: string | undefined,
-  registryPath: string | undefined,
+  registryPath: string | undefined
 ): string | undefined {
   if (explicit) return explicit;
   if (registryPath) return registryPath;

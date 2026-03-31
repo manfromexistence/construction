@@ -1,12 +1,9 @@
-import type { Emoji } from '@emoji-mart/data';
-import type { SlateEditor } from 'platejs';
+import type { Emoji } from "@emoji-mart/data";
+import type { SlateEditor } from "platejs";
 
-import { BaseEmojiPlugin } from '../BaseEmojiPlugin';
+import { BaseEmojiPlugin } from "../BaseEmojiPlugin";
 
-export const insertEmoji = <TEmoji extends Emoji = Emoji>(
-  editor: SlateEditor,
-  emoji: TEmoji
-) => {
+export const insertEmoji = <TEmoji extends Emoji = Emoji>(editor: SlateEditor, emoji: TEmoji) => {
   const { createEmojiNode } = editor.getOptions(BaseEmojiPlugin);
 
   const emojiNode = createEmojiNode!(emoji);

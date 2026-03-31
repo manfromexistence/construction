@@ -1,9 +1,4 @@
-import {
-  Marquee,
-  MarqueeContent,
-  MarqueeFade,
-  MarqueeItem,
-} from "@/components/kibo-ui/marquee"
+import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/components/kibo-ui/marquee";
 import {
   Testimonial,
   TestimonialAuthor,
@@ -13,7 +8,7 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-} from "@/registry/components/testimonial"
+} from "@/registry/components/testimonial";
 
 export default function TestimonialsMarqueeDemo2() {
   return (
@@ -25,10 +20,7 @@ export default function TestimonialsMarqueeDemo2() {
 
           <MarqueeContent direction={index % 2 === 1 ? "right" : "left"}>
             {list.map((item) => (
-              <MarqueeItem
-                key={item.url}
-                className="mx-0 h-full w-xs border-r border-line"
-              >
+              <MarqueeItem key={item.url} className="mx-0 h-full w-xs border-r border-line">
                 <a
                   className="block h-full transition-[background-color] ease-out hover:bg-accent/20"
                   href={item.url}
@@ -46,13 +38,9 @@ export default function TestimonialsMarqueeDemo2() {
                         <TestimonialAvatarRing />
                       </TestimonialAvatar>
 
-                      <TestimonialAuthorName>
-                        {item.authorName}
-                      </TestimonialAuthorName>
+                      <TestimonialAuthorName>{item.authorName}</TestimonialAuthorName>
 
-                      <TestimonialAuthorTagline>
-                        {item.authorTagline}
-                      </TestimonialAuthorTagline>
+                      <TestimonialAuthorTagline>{item.authorTagline}</TestimonialAuthorTagline>
                     </TestimonialAuthor>
                   </Testimonial>
                 </a>
@@ -62,7 +50,7 @@ export default function TestimonialsMarqueeDemo2() {
         </Marquee>
       ))}
     </div>
-  )
+  );
 }
 
 const TESTIMONIALS_1 = [
@@ -71,16 +59,14 @@ const TESTIMONIALS_1 = [
     authorName: "Guillermo Rauch",
     authorTagline: "CEO @Vercel",
     url: "https://x.com/rauchg/status/1978913158514237669",
-    quote:
-      "awesome. Love the components, especially slide-to-unlock. Great job",
+    quote: "awesome. Love the components, especially slide-to-unlock. Great job",
   },
   {
     authorAvatar: "https://unavatar.io/x/orcdev",
     authorName: "OrcDev",
     authorTagline: "Creator of 8bitcn.com",
     url: "https://x.com/orcdev/status/1980378575170859446",
-    quote:
-      "Seriously, this is one of the best portfolio templates I've ever seen.",
+    quote: "Seriously, this is one of the best portfolio templates I've ever seen.",
   },
   {
     authorAvatar: "https://unavatar.io/x/iamsahaj_xyz",
@@ -109,18 +95,16 @@ const TESTIMONIALS_1 = [
     authorName: "Jean P.D. Meijer",
     authorTagline: "Building analog.now",
     url: "https://x.com/initjean/status/1948159885960438151",
-    quote:
-      "congrats you deserve it! react wheel picker is so smooth, its insane",
+    quote: "congrats you deserve it! react wheel picker is so smooth, its insane",
   },
   {
     authorAvatar: "https://unavatar.io/x/GithubProjects",
     authorName: "GitHub Projects Community",
     authorTagline: "UNOFFICIAL, but followed by @github",
     url: "https://x.com/GithubProjects/status/1931034244337271044",
-    quote:
-      "Everything you'd want in a picker, minus the styling headaches. Awesome job!",
+    quote: "Everything you'd want in a picker, minus the styling headaches. Awesome job!",
   },
-]
+];
 
 export const TESTIMONIALS_2 = [
   {
@@ -165,4 +149,4 @@ export const TESTIMONIALS_2 = [
     url: "https://x.com/zaidmukaddam/status/1984599685974409374",
     quote: "super clean",
   },
-]
+];

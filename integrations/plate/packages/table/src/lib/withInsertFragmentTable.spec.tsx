@@ -1,19 +1,19 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, type TElement, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor, type TElement } from "platejs";
 
-import { getTestTablePlugins } from './__tests__/getTestTablePlugins';
+import { getTestTablePlugins } from "./__tests__/getTestTablePlugins";
 
 jsxt;
 
-describe('withInsertFragmentTable', () => {
+describe("withInsertFragmentTable", () => {
   // https://github.com/udecode/editor-protocol/issues/13
-  describe('when inserting table 2x1 into cell 11', () => {
+  describe("when inserting table 2x1 into cell 11", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('replaces the first table column with the inserted column (disableMerge: $disableMerge)', ({
+    ])("replaces the first table column with the inserted column (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -96,11 +96,11 @@ describe('withInsertFragmentTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/14
-  describe('when inserting table 1x2 into cell 11', () => {
+  describe("when inserting table 1x2 into cell 11", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('replaces the first table row with the inserted row (disableMerge: $disableMerge)', ({
+    ])("replaces the first table row with the inserted row (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -179,13 +179,11 @@ describe('withInsertFragmentTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/24
-  describe('Insert a table when selecting table cells', () => {
+  describe("Insert a table when selecting table cells", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('replace these cells (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("replace these cells (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -272,8 +270,8 @@ describe('withInsertFragmentTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/20
-  describe('when inserting table 2x1 into cell 12', () => {
-    it('replaces the second table column with the inserted column', () => {
+  describe("when inserting table 2x1 into cell 12", () => {
+    it("replaces the second table column with the inserted column", () => {
       const input = (
         <editor>
           <htable>
@@ -360,18 +358,18 @@ describe('withInsertFragmentTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/32
-  describe('when insert table 2x2 into cell 22', () => {
+  describe("when insert table 2x2 into cell 22", () => {
     const cases = [
       {
-        name: 'default',
+        name: "default",
         options: {},
       },
       {
-        name: 'with disableMerge: true',
+        name: "with disableMerge: true",
         options: { disableMerge: true },
       },
       {
-        name: 'with disableMerge: false',
+        name: "with disableMerge: false",
         options: { disableMerge: false },
       },
     ];
@@ -481,9 +479,9 @@ describe('withInsertFragmentTable', () => {
           plugin.extendEditorApi(() => ({
             create: {
               tableCell: () => ({
-                children: [{ text: '' }],
+                children: [{ text: "" }],
                 custom: true,
-                type: 'td',
+                type: "td",
               }),
             },
           }))
@@ -504,8 +502,8 @@ describe('withInsertFragmentTable', () => {
     });
   });
 
-  describe('when insert table 2x2 into cell 22 with disableExpandOnInsert', () => {
-    it('does not expand the table', () => {
+  describe("when insert table 2x2 into cell 22 with disableExpandOnInsert", () => {
+    it("does not expand the table", () => {
       const input = (
         <editor>
           <htable>
@@ -600,8 +598,8 @@ describe('withInsertFragmentTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/63
-  describe('when inserting table cells with multiple p', () => {
-    it('paste', () => {
+  describe("when inserting table cells with multiple p", () => {
+    it("paste", () => {
       const input = (
         <editor>
           <htable>
@@ -667,11 +665,11 @@ describe('withInsertFragmentTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/64
-  describe('when inserting blocks inside a table', () => {
+  describe("when inserting blocks inside a table", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('inserts the blocks without removing the cells (disableMerge: $disableMerge)', ({
+    ])("inserts the blocks without removing the cells (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (

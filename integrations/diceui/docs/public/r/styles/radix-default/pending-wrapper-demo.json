@@ -1,9 +1,6 @@
 {
   "name": "pending-wrapper-demo",
-  "registryDependencies": [
-    "pending",
-    "button"
-  ],
+  "registryDependencies": ["pending", "button"],
   "files": [
     {
       "path": "examples/pending-wrapper-demo.tsx",

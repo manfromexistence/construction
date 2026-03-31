@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Interactive Grid Pattern Demo 2",
   "description": "Second example showing an interactive grid pattern background.",
-  "registryDependencies": [
-    "@magicui/interactive-grid-pattern"
-  ],
+  "registryDependencies": ["@magicui/interactive-grid-pattern"],
   "files": [
     {
       "path": "registry/example/interactive-grid-pattern-demo-2.tsx",

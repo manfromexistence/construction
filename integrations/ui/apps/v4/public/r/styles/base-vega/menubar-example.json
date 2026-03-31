@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "menubar-example",
   "title": "Menubar",
-  "registryDependencies": [
-    "button",
-    "dialog",
-    "menubar",
-    "example"
-  ],
+  "registryDependencies": ["button", "dialog", "menubar", "example"],
   "files": [
     {
       "path": "registry/base-vega/examples/menubar-example.tsx",

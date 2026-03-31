@@ -1,17 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleDashedIcon,
-} from "lucide-react"
+import { CircleAlertIcon, CircleCheckIcon, CircleDashedIcon } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,7 +13,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/styles/base-nova/ui-rtl/navigation-menu"
+} from "@/styles/base-nova/ui-rtl/navigation-menu";
 
 const translations: Translations = {
   en: {
@@ -38,8 +31,7 @@ const translations: Translations = {
       alertDialogDesc:
         "A modal dialog that interrupts the user with important content and expects a response.",
       hoverCard: "Hover Card",
-      hoverCardDesc:
-        "For sighted users to preview content available behind a link.",
+      hoverCardDesc: "For sighted users to preview content available behind a link.",
       progress: "Progress",
       progressDesc:
         "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
@@ -63,8 +55,7 @@ const translations: Translations = {
     values: {
       gettingStarted: "البدء",
       introduction: "مقدمة",
-      introductionDesc:
-        "مكونات قابلة لإعادة الاستخدام مبنية باستخدام Tailwind CSS.",
+      introductionDesc: "مكونات قابلة لإعادة الاستخدام مبنية باستخدام Tailwind CSS.",
       installation: "التثبيت",
       installationDesc: "كيفية تثبيت التبعيات وتنظيم تطبيقك.",
       typography: "الطباعة",
@@ -75,8 +66,7 @@ const translations: Translations = {
       hoverCard: "بطاقة التحويم",
       hoverCardDesc: "للمستخدمين المبصرين لمعاينة المحتوى المتاح خلف الرابط.",
       progress: "التقدم",
-      progressDesc:
-        "يعرض مؤشرًا يوضح تقدم إتمام المهمة، عادةً يتم عرضه كشريط تقدم.",
+      progressDesc: "يعرض مؤشرًا يوضح تقدم إتمام المهمة، عادةً يتم عرضه كشريط تقدم.",
       scrollArea: "منطقة التمرير",
       scrollAreaDesc: "يفصل المحتوى بصريًا أو دلاليًا.",
       tabs: "التبويبات",
@@ -106,16 +96,13 @@ const translations: Translations = {
       alertDialog: "דיאלוג התראה",
       alertDialogDesc: "דיאלוג מודאלי שמפריע למשתמש עם תוכן חשוב ומצפה לתגובה.",
       hoverCard: "כרטיס ריחוף",
-      hoverCardDesc:
-        "למשתמשים רואים כדי להציג תצוגה מקדימה של תוכן זמין מאחורי קישור.",
+      hoverCardDesc: "למשתמשים רואים כדי להציג תצוגה מקדימה של תוכן זמין מאחורי קישור.",
       progress: "התקדמות",
-      progressDesc:
-        "מציג אינדיקטור המציג את התקדמות ההשלמה של משימה, בדרך כלל מוצג כסרגל התקדמות.",
+      progressDesc: "מציג אינדיקטור המציג את התקדמות ההשלמה של משימה, בדרך כלל מוצג כסרגל התקדמות.",
       scrollArea: "אזור גלילה",
       scrollAreaDesc: "מפריד תוכן חזותית או סמנטית.",
       tabs: "כרטיסיות",
-      tabsDesc:
-        "קבוצה של חלקי תוכן מרובדים—המכונים לוחות כרטיסיות—המוצגים אחד בכל פעם.",
+      tabsDesc: "קבוצה של חלקי תוכן מרובדים—המכונים לוחות כרטיסיות—המוצגים אחד בכל פעם.",
       tooltip: "טולטיפ",
       tooltipDesc:
         "חלון קופץ המציג מידע הקשור לאלמנט כאשר האלמנט מקבל מיקוד מקלדת או כאשר העכבר מרחף מעליו.",
@@ -126,7 +113,7 @@ const translations: Translations = {
       docs: "תיעוד",
     },
   },
-}
+};
 
 const components = [
   {
@@ -159,20 +146,17 @@ const components = [
     descriptionKey: "tooltipDesc" as const,
     href: "/docs/primitives/tooltip",
   },
-] as const
+] as const;
 
 export function NavigationMenuRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
+  const { dir, t, language } = useTranslation(translations, "ar");
 
   return (
     <NavigationMenu dir={dir} align={dir === "rtl" ? "end" : "start"}>
       <NavigationMenuList>
         <NavigationMenuItem>
           <NavigationMenuTrigger>{t.gettingStarted}</NavigationMenuTrigger>
-          <NavigationMenuContent
-            dir={dir}
-            data-lang={dir === "rtl" ? language : undefined}
-          >
+          <NavigationMenuContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
             <ul className="w-96">
               <ListItem href="/docs" title={t.introduction}>
                 {t.introductionDesc}
@@ -188,10 +172,7 @@ export function NavigationMenuRtl() {
         </NavigationMenuItem>
         <NavigationMenuItem className="hidden md:flex">
           <NavigationMenuTrigger>{t.components}</NavigationMenuTrigger>
-          <NavigationMenuContent
-            dir={dir}
-            data-lang={dir === "rtl" ? language : undefined}
-          >
+          <NavigationMenuContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
                 <ListItem
@@ -207,32 +188,23 @@ export function NavigationMenuRtl() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuTrigger>{t.withIcon}</NavigationMenuTrigger>
-          <NavigationMenuContent
-            dir={dir}
-            data-lang={dir === "rtl" ? language : undefined}
-          >
+          <NavigationMenuContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
             <ul className="grid w-[200px]">
               <li>
                 <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2" />
-                  }
+                  render={<Link href="#" className="flex-row items-center gap-2" />}
                 >
                   <CircleAlertIcon />
                   {t.backlog}
                 </NavigationMenuLink>
                 <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2" />
-                  }
+                  render={<Link href="#" className="flex-row items-center gap-2" />}
                 >
                   <CircleDashedIcon />
                   {t.toDo}
                 </NavigationMenuLink>
                 <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2" />
-                  }
+                  render={<Link href="#" className="flex-row items-center gap-2" />}
                 >
                   <CircleCheckIcon />
                   {t.done}
@@ -252,7 +224,7 @@ export function NavigationMenuRtl() {
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  )
+  );
 }
 
 function ListItem({
@@ -270,5 +242,5 @@ function ListItem({
         </div>
       </NavigationMenuLink>
     </li>
-  )
+  );
 }

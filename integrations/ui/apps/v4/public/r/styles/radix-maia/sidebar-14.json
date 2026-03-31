@@ -3,10 +3,7 @@
   "name": "sidebar-14",
   "title": "Sidebar 14",
   "description": "A sidebar on the right.",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb"],
   "files": [
     {
       "path": "registry/radix-maia/blocks/sidebar-14/page.tsx",
@@ -20,9 +17,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "sidebar",
-    "dashboard"
-  ],
+  "categories": ["sidebar", "dashboard"],
   "type": "registry:block"
 }

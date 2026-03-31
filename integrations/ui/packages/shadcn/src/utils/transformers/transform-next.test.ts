@@ -1,9 +1,9 @@
-import { FRAMEWORKS } from "@/src/utils/frameworks"
-import { type Config } from "@/src/utils/get-config"
-import { transformNext } from "@/src/utils/transformers/transform-next"
-import { describe, expect, test, vi } from "vitest"
+import { describe, expect, test, vi } from "vitest";
+import { FRAMEWORKS } from "@/src/utils/frameworks";
+import { type Config } from "@/src/utils/get-config";
+import { transformNext } from "@/src/utils/transformers/transform-next";
 
-import { transform } from "../transformers"
+import { transform } from "../transformers";
 
 const testConfig: Config = {
   style: "new-york",
@@ -29,16 +29,16 @@ const testConfig: Config = {
     tailwindConfig: "tailwind.config.ts",
     tailwindCss: "tailwind.css",
   },
-}
+};
 
 vi.mock("@/src/utils/get-project-info", () => ({
   getProjectInfo: vi.fn(),
-}))
+}));
 
 describe("transformNext", () => {
   describe("Next.js 16+ transformations", () => {
     test("should transform function declaration export", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "16.0.0",
@@ -49,7 +49,7 @@ describe("transformNext", () => {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       expect(
         await transform(
@@ -70,11 +70,11 @@ export function middleware(request: Request) {
         export function proxy(request: Request) {
           return NextResponse.next()
         }"
-      `)
-    })
+      `);
+    });
 
     test("should transform async function declaration", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "16.1.0",
@@ -85,7 +85,7 @@ export function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       expect(
         await transform(
@@ -106,11 +106,11 @@ export async function middleware(request: Request) {
         export async function proxy(request: Request) {
           return NextResponse.next()
         }"
-      `)
-    })
+      `);
+    });
 
     test("should transform const arrow function export", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "16.0.0",
@@ -121,7 +121,7 @@ export async function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       expect(
         await transform(
@@ -142,11 +142,11 @@ export const middleware = (request: Request) => {
         export const proxy = (request: Request) => {
           return NextResponse.next()
         }"
-      `)
-    })
+      `);
+    });
 
     test("should transform named export with alias", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "16.0.0",
@@ -157,7 +157,7 @@ export const middleware = (request: Request) => {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       expect(
         await transform(
@@ -182,13 +182,13 @@ export { handler as middleware }`,
         }
 
         export { handler as proxy }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("Next.js < 16 or unknown versions (no transformation)", () => {
     test("should not transform for Next.js 15", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "15.0.0",
@@ -199,13 +199,13 @@ export { handler as middleware }`,
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       const input = `import { NextResponse } from "next/server"
 
 export function middleware(request: Request) {
   return NextResponse.next()
-}`
+}`;
 
       expect(
         await transform(
@@ -216,11 +216,11 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext for Next.js 15
         )
-      ).toBe(input)
-    })
+      ).toBe(input);
+    });
 
     test("should not transform when frameworkVersion is null", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: null,
@@ -231,13 +231,13 @@ export function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       const input = `import { NextResponse } from "next/server"
 
 export function middleware(request: Request) {
   return NextResponse.next()
-}`
+}`;
 
       expect(
         await transform(
@@ -248,11 +248,11 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext when frameworkVersion is null
         )
-      ).toBe(input)
-    })
+      ).toBe(input);
+    });
 
     test("should not transform for canary tag (unknown version)", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "canary",
@@ -263,13 +263,13 @@ export function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       const input = `import { NextResponse } from "next/server"
 
 export function middleware(request: Request) {
   return NextResponse.next()
-}`
+}`;
 
       expect(
         await transform(
@@ -280,11 +280,11 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext for canary tag
         )
-      ).toBe(input)
-    })
+      ).toBe(input);
+    });
 
     test("should not transform for latest tag (unknown version)", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "latest",
@@ -295,13 +295,13 @@ export function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       const input = `import { NextResponse } from "next/server"
 
 export function middleware(request: Request) {
   return NextResponse.next()
-}`
+}`;
 
       expect(
         await transform(
@@ -312,13 +312,13 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext for latest tag
         )
-      ).toBe(input)
-    })
-  })
+      ).toBe(input);
+    });
+  });
 
   describe("Non-middleware files", () => {
     test("should not transform non-middleware files", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "16.0.0",
@@ -329,11 +329,11 @@ export function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       const input = `export function middleware() {
   return "not a middleware file"
-}`
+}`;
 
       expect(
         await transform(
@@ -344,11 +344,11 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext for non-middleware files
         )
-      ).toBe(input)
-    })
+      ).toBe(input);
+    });
 
     test("should not transform nested middleware files", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["next-app"],
         frameworkVersion: "16.0.0",
@@ -359,11 +359,11 @@ export function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       const input = `export function middleware() {
   return "nested middleware"
-}`
+}`;
 
       // Nested middleware files should not be transformed
       expect(
@@ -375,7 +375,7 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext for nested middleware files
         )
-      ).toBe(input)
+      ).toBe(input);
 
       expect(
         await transform(
@@ -386,13 +386,13 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext for nested middleware files
         )
-      ).toBe(input)
-    })
-  })
+      ).toBe(input);
+    });
+  });
 
   describe("Non-Next.js projects", () => {
     test("should not transform for Vite projects", async () => {
-      const { getProjectInfo } = await import("@/src/utils/get-project-info")
+      const { getProjectInfo } = await import("@/src/utils/get-project-info");
       vi.mocked(getProjectInfo).mockResolvedValue({
         framework: FRAMEWORKS["vite"],
         frameworkVersion: null,
@@ -403,11 +403,11 @@ export function middleware(request: Request) {
         tailwindCssFile: null,
         tailwindVersion: "v4",
         aliasPrefix: "@",
-      })
+      });
 
       const input = `export function middleware() {
   return "some middleware"
-}`
+}`;
 
       expect(
         await transform(
@@ -418,7 +418,7 @@ export function middleware(request: Request) {
           },
           [] // Don't include transformNext for non-Next.js projects
         )
-      ).toBe(input)
-    })
-  })
-})
+      ).toBe(input);
+    });
+  });
+});

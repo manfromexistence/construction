@@ -4,8 +4,7 @@ import { useComboboxContext } from "./combobox-root";
 
 const EMPTY_NAME = "ComboboxEmpty";
 
-interface ComboboxEmptyProps
-  extends React.ComponentPropsWithoutRef<typeof Primitive.div> {
+interface ComboboxEmptyProps extends React.ComponentPropsWithoutRef<typeof Primitive.div> {
   /**
    * Whether to render the empty state even when search filtering is active.
    *
@@ -34,7 +33,7 @@ const ComboboxEmpty = React.forwardRef<HTMLDivElement, ComboboxEmptyProps>(
         ref={forwardedRef}
       />
     );
-  },
+  }
 );
 
 ComboboxEmpty.displayName = EMPTY_NAME;

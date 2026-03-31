@@ -1,15 +1,15 @@
 import {
   type ElementEntry,
+  KEYS,
+  NodeApi,
   type SlateEditor,
   type TElement,
   type TRange,
   type TTableElement,
-  KEYS,
-  NodeApi,
-} from 'platejs';
+} from "platejs";
 
-import { type TableConfig, BaseTablePlugin } from '../../lib/BaseTablePlugin';
-import { getTableMergeGridByRange } from '../merge/getTableGridByRange';
+import { BaseTablePlugin, type TableConfig } from "../../lib/BaseTablePlugin";
+import { getTableMergeGridByRange } from "../merge/getTableGridByRange";
 
 export type GetTableGridByRangeOptions = {
   at: TRange;
@@ -20,13 +20,13 @@ export type GetTableGridByRangeOptions = {
    * - Table element
    * - Array of cells
    */
-  format?: 'cell' | 'table';
+  format?: "cell" | "table";
 };
 
 /** Get sub table between 2 cell paths. */
 export const getTableGridByRange = (
   editor: SlateEditor,
-  { at, format = 'table' }: GetTableGridByRangeOptions
+  { at, format = "table" }: GetTableGridByRangeOptions
 ): ElementEntry[] => {
   const { api } = editor.getPlugin<TableConfig>({ key: KEYS.table });
   const { disableMerge } = editor.getOptions(BaseTablePlugin);
@@ -71,8 +71,7 @@ export const getTableGridByRange = (
 
     if (!cell) break;
 
-    const rows = table.children[rowIndex - startRowIndex]
-      .children as TElement[];
+    const rows = table.children[rowIndex - startRowIndex].children as TElement[];
 
     rows[colIndex - startColIndex] = cell;
 
@@ -88,7 +87,7 @@ export const getTableGridByRange = (
     }
   }
 
-  if (format === 'cell') {
+  if (format === "cell") {
     return cellEntries;
   }
 

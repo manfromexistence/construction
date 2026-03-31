@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "empty-outline",
-  "registryDependencies": [
-    "empty",
-    "button"
-  ],
+  "registryDependencies": ["empty", "button"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/empty-outline.tsx",

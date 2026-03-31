@@ -1,11 +1,6 @@
-import {
-  type SlateEditor,
-  type TLinkElement,
-  getEditorPlugin,
-  KEYS,
-} from 'platejs';
+import { getEditorPlugin, KEYS, type SlateEditor, type TLinkElement } from "platejs";
 
-import { LinkPlugin } from '../LinkPlugin';
+import { LinkPlugin } from "../LinkPlugin";
 
 export const triggerFloatingLinkEdit = (editor: SlateEditor) => {
   const { setOption } = getEditorPlugin(editor, LinkPlugin);
@@ -20,15 +15,15 @@ export const triggerFloatingLinkEdit = (editor: SlateEditor) => {
 
   let text = editor.api.string(path);
 
-  setOption('url', link.url);
-  setOption('newTab', link.target === '_blank');
+  setOption("url", link.url);
+  setOption("newTab", link.target === "_blank");
 
   if (text === link.url) {
-    text = '';
+    text = "";
   }
 
-  setOption('text', text);
-  setOption('isEditing', true);
+  setOption("text", text);
+  setOption("isEditing", true);
 
   return true;
 };

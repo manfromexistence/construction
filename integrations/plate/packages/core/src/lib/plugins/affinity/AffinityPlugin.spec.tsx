@@ -1,17 +1,12 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from '../../editor';
+import { BaseBoldPlugin, BaseCodePlugin, BaseItalicPlugin } from "@platejs/basic-nodes";
+import { BaseLinkPlugin } from "@platejs/link";
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "../../editor";
 
-import {
-  BaseBoldPlugin,
-  BaseCodePlugin,
-  BaseItalicPlugin,
-} from '@platejs/basic-nodes';
-import { BaseLinkPlugin } from '@platejs/link';
-import { jsxt } from '@platejs/test-utils';
-
-import { createSlateEditor } from '../../editor';
-import { AffinityPlugin } from './AffinityPlugin';
+import { createSlateEditor } from "../../editor";
+import { AffinityPlugin } from "./AffinityPlugin";
 
 jsxt;
 
@@ -37,10 +32,10 @@ type PlateEditor = SlateEditor;
  * Without affinity, the preceding mark/element is always applied regardless of
  * direction.
  */
-describe('AffinityPlugin', () => {
-  describe('applyClearOnEdge', () => {
-    describe('Early returns', () => {
-      it('returns early when no clearOnEdge marks are configured', () => {
+describe("AffinityPlugin", () => {
+  describe("applyClearOnEdge", () => {
+    describe("Early returns", () => {
+      it("returns early when no clearOnEdge marks are configured", () => {
         const input = (
           <editor>
             <hp>
@@ -70,12 +65,12 @@ describe('AffinityPlugin', () => {
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('returns early when selection is expanded', () => {
+      it("returns early when selection is expanded", () => {
         const input = (
           <editor>
             <hp>
@@ -103,19 +98,19 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('returns early when cursor is not at end of text node', () => {
+      it("returns early when cursor is not at end of text node", () => {
         const input = (
           <editor>
             <hp>
@@ -142,19 +137,19 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('returns early when current text node has no clearOnEdge marks', () => {
+      it("returns early when current text node has no clearOnEdge marks", () => {
         const input = (
           <editor>
             <hp>
@@ -180,21 +175,21 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
-    describe('Mark clearing behavior', () => {
-      it('clear marks when next text node does not have the same mark', () => {
+    describe("Mark clearing behavior", () => {
+      it("clear marks when next text node does not have the same mark", () => {
         const input = (
           <editor>
             <hp>
@@ -220,19 +215,19 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('does not clear marks when next text node has the same mark', () => {
+      it("does not clear marks when next text node has the same mark", () => {
         const input = (
           <editor>
             <hp>
@@ -257,19 +252,19 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('clear marks when at end of document', () => {
+      it("clear marks when at end of document", () => {
         const input = (
           <editor>
             <hp>
@@ -294,19 +289,19 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('clear marks when at end of block', () => {
+      it("clear marks when at end of block", () => {
         const input = (
           <editor>
             <hp>
@@ -337,19 +332,19 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('handle multiple marks correctly', () => {
+      it("handle multiple marks correctly", () => {
         const input = (
           <editor>
             <hp>
@@ -377,7 +372,7 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
             BaseItalicPlugin.configure({
               rules: { selection: {} } as any,
@@ -387,12 +382,12 @@ describe('AffinityPlugin', () => {
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('preserve marks that exist on both current and next text node', () => {
+      it("preserve marks that exist on both current and next text node", () => {
         const input = (
           <editor>
             <hp>
@@ -420,26 +415,26 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
             BaseItalicPlugin.configure({
-              rules: { selection: { affinity: 'outward' } } as any,
+              rules: { selection: { affinity: "outward" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
   });
 
-  describe('Mark affinity', () => {
-    describe('Cursor movement from left to right', () => {
-      it('apply forward affinity when moving right at mark boundary', () => {
+  describe("Mark affinity", () => {
+    describe("Cursor movement from left to right", () => {
+      it("apply forward affinity when moving right at mark boundary", () => {
         const input = (
           <editor>
             <hp>
@@ -467,20 +462,20 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'directional' } } as any,
+              rules: { selection: { affinity: "directional" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, unit: 'character' });
-        editor.tf.insertText('1');
+        editor.tf.move({ distance: 1, unit: "character" });
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('apply forward affinity when moving right at mark boundary and insert text when cross block', () => {
+      it("apply forward affinity when moving right at mark boundary and insert text when cross block", () => {
         const input = (
           <editor>
             <hp>
@@ -510,20 +505,20 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'directional' } } as any,
+              rules: { selection: { affinity: "directional" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, unit: 'character' });
-        editor.tf.insertText('1');
+        editor.tf.move({ distance: 1, unit: "character" });
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('apply forward affinity when moving left at mark boundary and insert text when cross block', () => {
+      it("apply forward affinity when moving left at mark boundary and insert text when cross block", () => {
         const input = (
           <editor>
             <hp>
@@ -554,22 +549,22 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'directional' } } as any,
+              rules: { selection: { affinity: "directional" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, reverse: true, unit: 'character' });
-        editor.tf.insertText('1');
+        editor.tf.move({ distance: 1, reverse: true, unit: "character" });
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
-    describe('Cursor movement from right to left', () => {
-      it('apply backward affinity when moving left at mark boundary', () => {
+    describe("Cursor movement from right to left", () => {
+      it("apply backward affinity when moving left at mark boundary", () => {
         const input = (
           <editor>
             <hp>
@@ -598,22 +593,22 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'directional' } } as any,
+              rules: { selection: { affinity: "directional" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, reverse: true, unit: 'character' });
-        editor.tf.insertText('1');
+        editor.tf.move({ distance: 1, reverse: true, unit: "character" });
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
-    describe('deleteBackward', () => {
-      it('set backward affinity when deleting to mark', () => {
+    describe("deleteBackward", () => {
+      it("set backward affinity when deleting to mark", () => {
         const input = (
           <editor>
             <hp>
@@ -639,21 +634,21 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'directional' } } as any,
+              rules: { selection: { affinity: "directional" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.deleteBackward('character');
+        editor.tf.deleteBackward("character");
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('set forward affinity when deleting to mark boundary', () => {
+      it("set forward affinity when deleting to mark boundary", () => {
         const input = (
           <editor>
             <hp>
@@ -682,35 +677,35 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseBoldPlugin.configure({
-              rules: { selection: { affinity: 'directional' } } as any,
+              rules: { selection: { affinity: "directional" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.deleteBackward('character');
+        editor.tf.deleteBackward("character");
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
   });
 
-  describe('Element affinity', () => {
-    describe('Cursor movement from left to right', () => {
-      it('apply forward affinity when moving right at element boundary', () => {
+  describe("Element affinity", () => {
+    describe("Cursor movement from left to right", () => {
+      it("apply forward affinity when moving right at element boundary", () => {
         const input = (
           <editor>
             <hp>
-              Add{' '}
+              Add{" "}
               <ha target="_blank" url="https://en.wikipedia.org/wiki/Hypertext">
                 hyperlink
                 <cursor />s
-              </ha>{' '}
-              within your text to reference external sources or provide
-              additional information using the Link plugin.
+              </ha>{" "}
+              within your text to reference external sources or provide additional information using
+              the Link plugin.
             </hp>
           </editor>
         ) as any as PlateEditor;
@@ -718,12 +713,12 @@ describe('AffinityPlugin', () => {
         const output = (
           <editor>
             <hp>
-              Add{' '}
+              Add{" "}
               <ha target="_blank" url="https://en.wikipedia.org/wiki/Hypertext">
                 hyperlinks1
-              </ha>{' '}
-              within your text to reference external sources or provide
-              additional information using the Link plugin.
+              </ha>{" "}
+              within your text to reference external sources or provide additional information using
+              the Link plugin.
             </hp>
           </editor>
         ) as any as PlateEditor;
@@ -734,26 +729,26 @@ describe('AffinityPlugin', () => {
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, unit: 'character' });
-        editor.tf.insertText('1');
+        editor.tf.move({ distance: 1, unit: "character" });
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
-    describe('Cursor movement from right to left', () => {
-      it('apply backward affinity when moving left at element boundary', () => {
+    describe("Cursor movement from right to left", () => {
+      it("apply backward affinity when moving left at element boundary", () => {
         const input = (
           <editor>
             <hp>
-              Add{' '}
+              Add{" "}
               <ha target="_blank" url="https://en.wikipedia.org/wiki/Hypertext">
                 hyperlink
               </ha>
               w
               <cursor />
-              ithin your text to reference external sources or provide
-              additional information using the Link plugin.
+              ithin your text to reference external sources or provide additional information using
+              the Link plugin.
             </hp>
           </editor>
         ) as any as PlateEditor;
@@ -761,12 +756,12 @@ describe('AffinityPlugin', () => {
         const output = (
           <editor>
             <hp>
-              Add{' '}
+              Add{" "}
               <ha target="_blank" url="https://en.wikipedia.org/wiki/Hypertext">
                 hyperlink
               </ha>
-              1within your text to reference external sources or provide
-              additional information using the Link plugin.
+              1within your text to reference external sources or provide additional information
+              using the Link plugin.
             </hp>
           </editor>
         ) as any as PlateEditor;
@@ -777,15 +772,15 @@ describe('AffinityPlugin', () => {
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, reverse: true, unit: 'character' });
-        editor.tf.insertText('1');
+        editor.tf.move({ distance: 1, reverse: true, unit: "character" });
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
 
-    describe('deleteBackward', () => {
-      it('set backward affinity when deleting to mark', () => {
+    describe("deleteBackward", () => {
+      it("set backward affinity when deleting to mark", () => {
         const input = (
           <editor>
             <hp>
@@ -815,21 +810,21 @@ describe('AffinityPlugin', () => {
           plugins: [
             AffinityPlugin,
             BaseLinkPlugin.configure({
-              rules: { selection: { affinity: 'directional' } } as any,
+              rules: { selection: { affinity: "directional" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.deleteBackward('character');
+        editor.tf.deleteBackward("character");
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('set forward affinity when deleting to mark boundary', () => {
+      it("set forward affinity when deleting to mark boundary", () => {
         const input = (
           <editor>
             <hp>
@@ -864,18 +859,18 @@ describe('AffinityPlugin', () => {
           value: input.children,
         });
 
-        editor.tf.deleteBackward('character');
+        editor.tf.deleteBackward("character");
 
-        editor.tf.insertText('1');
+        editor.tf.insertText("1");
 
         expect(editor.children).toEqual(output.children);
       });
     });
   });
 
-  describe('Hard edge movement', () => {
-    describe('when moving around hard edge marks', () => {
-      it('use offset movement when moving right at hard edge boundary', () => {
+  describe("Hard edge movement", () => {
+    describe("when moving around hard edge marks", () => {
+      it("use offset movement when moving right at hard edge boundary", () => {
         const input = (
           <editor>
             <hp>
@@ -905,21 +900,21 @@ describe('AffinityPlugin', () => {
         const editor = createSlateEditor({
           plugins: [
             BaseCodePlugin.configure({
-              rules: { selection: { affinity: 'hard' } } as any,
+              rules: { selection: { affinity: "hard" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, unit: 'character' });
-        editor.tf.insertText('x');
+        editor.tf.move({ distance: 1, unit: "character" });
+        editor.tf.insertText("x");
 
         expect(editor.children).toEqual(output.children);
         expect(editor.selection).toEqual(output.selection);
       });
 
-      it('use offset movement when moving left at hard edge boundary', () => {
+      it("use offset movement when moving left at hard edge boundary", () => {
         const input = (
           <editor>
             <hp>
@@ -949,21 +944,21 @@ describe('AffinityPlugin', () => {
         const editor = createSlateEditor({
           plugins: [
             BaseCodePlugin.configure({
-              rules: { selection: { affinity: 'hard' } } as any,
+              rules: { selection: { affinity: "hard" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, reverse: true, unit: 'character' });
-        editor.tf.insertText('x');
+        editor.tf.move({ distance: 1, reverse: true, unit: "character" });
+        editor.tf.insertText("x");
 
         expect(editor.children).toEqual(output.children);
         expect(editor.selection).toEqual(output.selection);
       });
 
-      it('move block start', () => {
+      it("move block start", () => {
         const input = (
           <editor>
             <hp>1</hp>
@@ -997,7 +992,7 @@ describe('AffinityPlugin', () => {
         const editor = createSlateEditor({
           plugins: [
             BaseCodePlugin.configure({
-              rules: { selection: { affinity: 'hard' } } as any,
+              rules: { selection: { affinity: "hard" } } as any,
             }),
           ],
           selection: input.selection,
@@ -1005,15 +1000,15 @@ describe('AffinityPlugin', () => {
         });
 
         // Move left at the start should just change affinity
-        editor.tf.move({ distance: 1, reverse: true, unit: 'character' });
+        editor.tf.move({ distance: 1, reverse: true, unit: "character" });
 
         // Insert text should now go outside the code mark
-        editor.tf.insertText('x');
+        editor.tf.insertText("x");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('move block end', () => {
+      it("move block end", () => {
         const input = (
           <editor>
             <hp>
@@ -1041,7 +1036,7 @@ describe('AffinityPlugin', () => {
         const editor = createSlateEditor({
           plugins: [
             BaseCodePlugin.configure({
-              rules: { selection: { affinity: 'hard' } } as any,
+              rules: { selection: { affinity: "hard" } } as any,
             }),
           ],
           selection: input.selection,
@@ -1049,17 +1044,17 @@ describe('AffinityPlugin', () => {
         });
 
         // Move right at the end should just change affinity
-        editor.tf.move({ distance: 1, unit: 'character' });
+        editor.tf.move({ distance: 1, unit: "character" });
 
         // expect(editor.selection).toEqual(output.selection);
 
         // Insert text should now go outside the code mark
-        editor.tf.insertText('x');
+        editor.tf.insertText("x");
 
         expect(editor.children).toEqual(output.children);
       });
 
-      it('handle multiple hard edge marks correctly', () => {
+      it("handle multiple hard edge marks correctly", () => {
         const input = (
           <editor>
             <hp>
@@ -1089,19 +1084,19 @@ describe('AffinityPlugin', () => {
         const editor = createSlateEditor({
           plugins: [
             BaseCodePlugin.configure({
-              rules: { selection: { affinity: 'hard' } } as any,
+              rules: { selection: { affinity: "hard" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, unit: 'character' });
+        editor.tf.move({ distance: 1, unit: "character" });
 
         expect(editor.selection).toEqual(output.selection);
       });
 
-      it('handle hard edge with regular marks correctly', () => {
+      it("handle hard edge with regular marks correctly", () => {
         const input = (
           <editor>
             <hp>
@@ -1131,7 +1126,7 @@ describe('AffinityPlugin', () => {
         const editor = createSlateEditor({
           plugins: [
             BaseCodePlugin.configure({
-              rules: { selection: { affinity: 'hard' } } as any,
+              rules: { selection: { affinity: "hard" } } as any,
             }),
             BaseBoldPlugin,
           ],
@@ -1139,12 +1134,12 @@ describe('AffinityPlugin', () => {
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, unit: 'character' });
+        editor.tf.move({ distance: 1, unit: "character" });
 
         expect(editor.selection).toEqual(output.selection);
       });
 
-      it('does not interfere with normal character movement inside hard edge marks', () => {
+      it("does not interfere with normal character movement inside hard edge marks", () => {
         const input = (
           <editor>
             <hp>
@@ -1175,14 +1170,14 @@ describe('AffinityPlugin', () => {
         const editor = createSlateEditor({
           plugins: [
             BaseCodePlugin.configure({
-              rules: { selection: { affinity: 'hard' } } as any,
+              rules: { selection: { affinity: "hard" } } as any,
             }),
           ],
           selection: input.selection,
           value: input.children,
         });
 
-        editor.tf.move({ distance: 1, unit: 'character' });
+        editor.tf.move({ distance: 1, unit: "character" });
 
         expect(editor.selection).toEqual(output.selection);
       });

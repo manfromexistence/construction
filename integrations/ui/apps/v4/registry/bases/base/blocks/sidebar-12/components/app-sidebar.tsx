@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { Calendars } from "@/registry/bases/base/blocks/sidebar-12/components/calendars"
-import { DatePicker } from "@/registry/bases/base/blocks/sidebar-12/components/date-picker"
-import { NavUser } from "@/registry/bases/base/blocks/sidebar-12/components/nav-user"
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { Calendars } from "@/registry/bases/base/blocks/sidebar-12/components/calendars";
+import { DatePicker } from "@/registry/bases/base/blocks/sidebar-12/components/date-picker";
+import { NavUser } from "@/registry/bases/base/blocks/sidebar-12/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -15,8 +15,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
   SidebarSeparator,
-} from "@/registry/bases/base/ui/sidebar"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/base/ui/sidebar";
 
 // This is sample data.
 const data = {
@@ -39,7 +38,7 @@ const data = {
       items: ["Travel", "Reminders", "Deadlines"],
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -70,5 +69,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

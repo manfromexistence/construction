@@ -1,13 +1,6 @@
-import type {
-  ElementEntry,
-  Path,
-  Point,
-  SlateEditor,
-  TElement,
-  TRange,
-} from 'platejs';
+import type { ElementEntry, Path, Point, SlateEditor, TElement, TRange } from "platejs";
 
-import { getListTypes } from './getListTypes';
+import { getListTypes } from "./getListTypes";
 
 /** Searches upward for the root list element */
 export const getListRoot = (

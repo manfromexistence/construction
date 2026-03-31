@@ -1,4 +1,4 @@
-import type { Award } from "../types/awards"
+import type { Award } from "../types/awards";
 
 export const AWARDS: Award[] = [
   {
@@ -7,8 +7,7 @@ export const AWARDS: Award[] = [
     title: "Can Tho City Young Informatics Contest 2014",
     date: "2014-05",
     grade: "Grade 8",
-    description:
-      "- Field: Creative Software\n- Project: Website Hành Trình Khám Phá Miền Tây",
+    description: "- Field: Creative Software\n- Project: Website Hành Trình Khám Phá Miền Tây",
     referenceLink:
       "https://drive.google.com/file/d/16bia3XoeVbSlfvg4FzVapQf3LVI8wUA-/view?usp=sharing",
   },
@@ -29,8 +28,7 @@ export const AWARDS: Award[] = [
     title: "Can Tho City Young Informatics Contest 2015",
     date: "2015-05",
     grade: "Grade 9",
-    description:
-      "- Field: Creative Software\n- Project: VietnamStudy Learning Application",
+    description: "- Field: Creative Software\n- Project: VietnamStudy Learning Application",
     referenceLink:
       "https://drive.google.com/file/d/16MmjvxdJpAiLc2sC7kU8aT76mDhIETFx/view?usp=sharing",
   },
@@ -40,8 +38,7 @@ export const AWARDS: Award[] = [
     title: "Can Tho City Young Informatics Contest 2015",
     date: "2015-05",
     grade: "Grade 9",
-    description:
-      "- Field: Informatics Knowledge and Skills\n- Programming Language: Pascal",
+    description: "- Field: Informatics Knowledge and Skills\n- Programming Language: Pascal",
     referenceLink:
       "https://drive.google.com/file/d/1lCikjG4LHAN2Y1n12Zn_3Xw2hTTiwY8z/view?usp=sharing",
   },
@@ -73,8 +70,7 @@ export const AWARDS: Award[] = [
     title: "Can Tho City Youth and Children's Creativity Contest 2015",
     date: "2015-12",
     grade: "Grade 9",
-    description:
-      "- Field: Software\n- Project: VietnamStudy Learning Application",
+    description: "- Field: Software\n- Project: VietnamStudy Learning Application",
     referenceLink:
       "https://drive.google.com/file/d/1_NVmghi0LLc6mBHepefNoDznIVHM4ibC/view?usp=sharing",
   },
@@ -126,8 +122,7 @@ export const AWARDS: Award[] = [
     title: "National Youth and Children's Creativity Contest 2016",
     date: "2016-10",
     grade: "Grade 10",
-    description:
-      "- Organized in Hanoi, Viet Nam\n- Field: Software\n- Project: Study English",
+    description: "- Organized in Hanoi, Viet Nam\n- Field: Software\n- Project: Study English",
     referenceLink:
       "https://drive.google.com/file/d/1FZXB2CeW0rrZmKnL4bHJjzXt0r_WeU2q/view?usp=sharing",
   },
@@ -137,8 +132,7 @@ export const AWARDS: Award[] = [
     title: "Can Tho City Outstanding Student Selection Exam 2016-2017",
     date: "2017-02",
     grade: "Grade 11",
-    description:
-      "- Subject: Informatics (Programming)\n- Programming Language: C++",
+    description: "- Subject: Informatics (Programming)\n- Programming Language: C++",
     referenceLink:
       "https://drive.google.com/file/d/1LxIL0H-Tj7A6AVpAetf4BzdhkvJl00vg/view?usp=sharing",
   },
@@ -159,8 +153,7 @@ export const AWARDS: Award[] = [
     title: "Can Tho City Young Informatics Contest 2017",
     date: "2017-05",
     grade: "Grade 11",
-    description:
-      "- Field: Informatics Knowledge and Skills\n- Programming Language: C++",
+    description: "- Field: Informatics Knowledge and Skills\n- Programming Language: C++",
     referenceLink:
       "https://drive.google.com/file/d/1wkyMLztbBdziIYn328NsUIHFBdU8LS90/view?usp=sharing",
   },
@@ -203,8 +196,7 @@ export const AWARDS: Award[] = [
     title: "Can Tho City Outstanding Student Selection Exam 2017-2018",
     date: "2018-02",
     grade: "Grade 12",
-    description:
-      "- Subject: Informatics (Programming)\n- Programming Language: C++",
+    description: "- Subject: Informatics (Programming)\n- Programming Language: C++",
     referenceLink:
       "https://drive.google.com/file/d/1UQ-UX-YNtnkLylahYkgEObmIB-dcKCPH/view?usp=sharing",
   },
@@ -282,7 +274,6 @@ export const AWARDS: Award[] = [
     grade: "Personal Project",
     description:
       "- Selected for [▲Vercel OSS Program](https://vercel.com/blog/summer-2025-oss-program#react-wheel-picker) summer 2025 cohort\n- Received $3,600 in platform credits, OSS Starter Pack, and priority community support\n- Project: [React Wheel Picker](https://react-wheel-picker.chanhdai.com)",
-    referenceLink:
-      "https://vercel.com/blog/summer-2025-oss-program#react-wheel-picker",
+    referenceLink: "https://vercel.com/blog/summer-2025-oss-program#react-wheel-picker",
   },
-]
+];

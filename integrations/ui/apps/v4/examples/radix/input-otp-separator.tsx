@@ -3,7 +3,7 @@ import {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from "@/styles/radix-nova/ui/input-otp"
+} from "@/styles/radix-nova/ui/input-otp";
 
 export default function InputOTPWithSeparator() {
   return (
@@ -23,5 +23,5 @@ export default function InputOTPWithSeparator() {
         <InputOTPSlot index={5} />
       </InputOTPGroup>
     </InputOTP>
-  )
+  );
 }

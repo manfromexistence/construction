@@ -1,61 +1,61 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { serializeMd } from '../../../../../../packages/markdown/src/lib/serializer/serializeMd';
-import { wrapWithBlockId } from '../../../../../../packages/markdown/src/lib/serializer/wrapWithBlockId';
-import { createTestEditor } from './createTestEditor';
+import { serializeMd } from "../../../../../../packages/markdown/src/lib/serializer/serializeMd";
+import { wrapWithBlockId } from "../../../../../../packages/markdown/src/lib/serializer/wrapWithBlockId";
+import { createTestEditor } from "./createTestEditor";
 
 jsx;
 
 const editor = createTestEditor();
 
-describe('wrapWithBlockId', () => {
-  describe('unit tests', () => {
-    it('wrap a node with block element and ID attribute', () => {
+describe("wrapWithBlockId", () => {
+  describe("unit tests", () => {
+    it("wrap a node with block element and ID attribute", () => {
       const mdastNode = {
-        children: [{ type: 'text', value: 'Hello world' }],
-        type: 'paragraph',
+        children: [{ type: "text", value: "Hello world" }],
+        type: "paragraph",
       };
 
-      const result = wrapWithBlockId(mdastNode, 'test-id');
+      const result = wrapWithBlockId(mdastNode, "test-id");
 
       expect(result).toEqual({
         attributes: [
           {
-            name: 'id',
-            type: 'mdxJsxAttribute',
-            value: 'test-id',
+            name: "id",
+            type: "mdxJsxAttribute",
+            value: "test-id",
           },
         ],
         children: [mdastNode],
         data: {
           _mdxExplicitJsx: true,
         },
-        name: 'block',
-        type: 'mdxJsxFlowElement',
+        name: "block",
+        type: "mdxJsxFlowElement",
       } as any);
     });
 
-    it('convert numeric IDs to strings', () => {
+    it("convert numeric IDs to strings", () => {
       const mdastNode = {
-        children: [{ type: 'text', value: 'Test' }],
-        type: 'paragraph',
+        children: [{ type: "text", value: "Test" }],
+        type: "paragraph",
       };
 
-      const result = wrapWithBlockId(mdastNode, '123') as any;
+      const result = wrapWithBlockId(mdastNode, "123") as any;
 
-      expect(result.attributes[0].value).toBe('123');
+      expect(result.attributes[0].value).toBe("123");
     });
   });
 
-  describe('integration with serializeMd', () => {
-    it('wrap nodes with IDs in block elements when withBlockId is true', () => {
+  describe("integration with serializeMd", () => {
+    it("wrap nodes with IDs in block elements when withBlockId is true", () => {
       const slateNodes = [
         {
-          id: '123',
-          children: [{ text: 'Hello world' }],
-          type: 'p',
+          id: "123",
+          children: [{ text: "Hello world" }],
+          type: "p",
         },
       ];
 
@@ -67,11 +67,11 @@ describe('wrapWithBlockId', () => {
       expect(result).toMatchSnapshot();
     });
 
-    it('does not wrap nodes without IDs', () => {
+    it("does not wrap nodes without IDs", () => {
       const slateNodes = [
         {
-          children: [{ text: 'No ID here' }],
-          type: 'p',
+          children: [{ text: "No ID here" }],
+          type: "p",
         },
       ];
 
@@ -83,18 +83,18 @@ describe('wrapWithBlockId', () => {
       expect(result).toMatchSnapshot();
     });
 
-    it('handle complex nested structures', () => {
+    it("handle complex nested structures", () => {
       const slateNodes = [
         {
-          id: 'para-with-marks',
+          id: "para-with-marks",
           children: [
-            { text: 'Text with ' },
-            { bold: true, text: 'bold' },
-            { text: ' and ' },
-            { italic: true, text: 'italic' },
-            { text: ' marks' },
+            { text: "Text with " },
+            { bold: true, text: "bold" },
+            { text: " and " },
+            { italic: true, text: "italic" },
+            { text: " marks" },
           ],
-          type: 'p',
+          type: "p",
         },
       ];
 
@@ -106,7 +106,7 @@ describe('wrapWithBlockId', () => {
       expect(result).toMatchSnapshot();
     });
 
-    it('does not wrap nested block elements in tables', () => {
+    it("does not wrap nested block elements in tables", () => {
       const slateNodes = (
         <htable id="wX11A61CZN">
           <htr id="Q1LgIIFN3Q">
@@ -142,28 +142,28 @@ describe('wrapWithBlockId', () => {
       );
     });
 
-    it('wrap indent lists with IDs in block elements when withBlockId is true', () => {
+    it("wrap indent lists with IDs in block elements when withBlockId is true", () => {
       const slateNodes = [
         {
-          id: 'list-item-1',
-          children: [{ text: 'Item 1' }],
+          id: "list-item-1",
+          children: [{ text: "Item 1" }],
           indent: 1,
-          listStyleType: 'disc',
-          type: 'p',
+          listStyleType: "disc",
+          type: "p",
         },
         {
-          id: 'list-item-2',
-          children: [{ text: 'Item 2' }],
+          id: "list-item-2",
+          children: [{ text: "Item 2" }],
           indent: 1,
-          listStyleType: 'disc',
-          type: 'p',
+          listStyleType: "disc",
+          type: "p",
         },
         {
-          id: 'list-item-3',
-          children: [{ text: 'Nested item' }],
+          id: "list-item-3",
+          children: [{ text: "Nested item" }],
           indent: 2,
-          listStyleType: 'disc',
-          type: 'p',
+          listStyleType: "disc",
+          type: "p",
         },
       ];
 
@@ -175,21 +175,21 @@ describe('wrapWithBlockId', () => {
       expect(result).toMatchSnapshot();
     });
 
-    it('wrap ordered indent lists with IDs when withBlockId is true', () => {
+    it("wrap ordered indent lists with IDs when withBlockId is true", () => {
       const slateNodes = [
         {
-          id: 'ordered-1',
-          children: [{ text: 'First' }],
+          id: "ordered-1",
+          children: [{ text: "First" }],
           indent: 1,
-          listStyleType: 'decimal',
-          type: 'p',
+          listStyleType: "decimal",
+          type: "p",
         },
         {
-          id: 'ordered-2',
-          children: [{ text: 'Second' }],
+          id: "ordered-2",
+          children: [{ text: "Second" }],
           indent: 1,
-          listStyleType: 'decimal',
-          type: 'p',
+          listStyleType: "decimal",
+          type: "p",
         },
       ];
 

@@ -10,7 +10,7 @@ export function createHtmlDocument({
   theme?: string;
 }): string {
   return `<!DOCTYPE html>
-<html lang="en"${theme === 'dark' ? ' class="dark"' : ''}>
+<html lang="en"${theme === "dark" ? ' class="dark"' : ""}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

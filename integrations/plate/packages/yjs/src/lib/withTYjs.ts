@@ -1,7 +1,6 @@
-import type { Operation, SlateEditor } from 'platejs';
-import type * as Y from 'yjs';
-
-import { type YjsEditor, withYjs } from '@slate-yjs/core';
+import { withYjs, type YjsEditor } from "@slate-yjs/core";
+import type { Operation, SlateEditor } from "platejs";
+import type * as Y from "yjs";
 
 export type WithYjsOptions = {
   /**
@@ -20,19 +19,15 @@ export type YjsEditorProps = {
   storeLocalChange: (op: Operation) => void;
 } & Pick<
   YjsEditor,
-  | 'applyRemoteEvents'
-  | 'connect'
-  | 'disconnect'
-  | 'flushLocalChanges'
-  | 'isLocalOrigin'
-  | 'localOrigin'
-  | 'positionStorageOrigin'
-  | 'sharedRoot'
+  | "applyRemoteEvents"
+  | "connect"
+  | "disconnect"
+  | "flushLocalChanges"
+  | "isLocalOrigin"
+  | "localOrigin"
+  | "positionStorageOrigin"
+  | "sharedRoot"
 >;
 
-export const withTYjs = (
-  editor: SlateEditor,
-  sharedRoot: Y.XmlText,
-  options?: WithYjsOptions
-) =>
+export const withTYjs = (editor: SlateEditor, sharedRoot: Y.XmlText, options?: WithYjsOptions) =>
   withYjs(editor as any, sharedRoot, options) as SlateEditor & YjsEditorProps;

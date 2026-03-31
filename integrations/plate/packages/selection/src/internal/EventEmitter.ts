@@ -19,10 +19,7 @@ export class EventTarget<Events extends EventMap> {
   }
 
   // Let's also support on, off and emit like node
-  dispatchEvent<K extends keyof Events>(
-    event: K,
-    ...data: Parameters<Events[K]>
-  ): unknown {
+  dispatchEvent<K extends keyof Events>(event: K, ...data: Parameters<Events[K]>): unknown {
     let ok = true;
 
     for (const cb of this._listeners.get(event) ?? []) {

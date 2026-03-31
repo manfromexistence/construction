@@ -1,13 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { BlockSelectionPlugin } from "@platejs/selection/react";
 
-import type { NodeEntry } from 'platejs';
+import type { NodeEntry } from "platejs";
+import { useEditorPlugin, usePluginOption } from "platejs/react";
+import { useEffect } from "react";
 
-import { BlockSelectionPlugin } from '@platejs/selection/react';
-import { useEditorPlugin, usePluginOption } from 'platejs/react';
-
-import { AIChatPlugin } from '../AIChatPlugin';
+import { AIChatPlugin } from "../AIChatPlugin";
 
 export type UseEditorChatOptions = {
   // @deprecated not used
@@ -25,19 +24,15 @@ export const useEditorChat = ({
   onOpenSelection,
 }: UseEditorChatOptions) => {
   const { editor } = useEditorPlugin(AIChatPlugin);
-  const open = usePluginOption(AIChatPlugin, 'open');
+  const open = usePluginOption(AIChatPlugin, "open");
 
   useEffect(() => {
     onOpenChange?.(open);
 
     if (open) {
       if (onOpenBlockSelection) {
-        const blockSelectionApi =
-          editor.getApi(BlockSelectionPlugin).blockSelection;
-        const isBlockSelecting = editor.getOption(
-          BlockSelectionPlugin,
-          'isSelectingSome'
-        );
+        const blockSelectionApi = editor.getApi(BlockSelectionPlugin).blockSelection;
+        const isBlockSelecting = editor.getOption(BlockSelectionPlugin, "isSelectingSome");
 
         if (isBlockSelecting) {
           onOpenBlockSelection(blockSelectionApi.getNodes());

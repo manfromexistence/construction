@@ -1,20 +1,15 @@
 /** @jsx jsxt */
 
-import { BaseIndentPlugin } from '@platejs/indent';
-import { jsxt } from '@platejs/test-utils';
-import {
-  type SlateEditor,
-  BaseParagraphPlugin,
-  KEYS,
-  createSlateEditor,
-} from 'platejs';
+import { BaseIndentPlugin } from "@platejs/indent";
+import { jsxt } from "@platejs/test-utils";
+import { BaseParagraphPlugin, createSlateEditor, KEYS, type SlateEditor } from "platejs";
 
-import { BaseListPlugin } from '../BaseListPlugin';
+import { BaseListPlugin } from "../BaseListPlugin";
 
 jsxt;
 
-describe('withInsertBreakList', () => {
-  it('insert a new todo list line with the same formatting', () => {
+describe("withInsertBreakList", () => {
+  it("insert a new todo list line with the same formatting", () => {
     const input = (
       <editor>
         <hp checked={false} indent={1} listStyleType={KEYS.listTodo}>
@@ -29,12 +24,7 @@ describe('withInsertBreakList', () => {
         <hp checked={false} indent={1} listStyleType={KEYS.listTodo}>
           Todo item
         </hp>
-        <hp
-          checked={false}
-          indent={1}
-          listStart={2}
-          listStyleType={KEYS.listTodo}
-        >
+        <hp checked={false} indent={1} listStart={2} listStyleType={KEYS.listTodo}>
           <cursor />
         </hp>
       </editor>
@@ -51,7 +41,7 @@ describe('withInsertBreakList', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('behave like a normal break if not a todo line', () => {
+  it("behave like a normal break if not a todo line", () => {
     const input = (
       <editor>
         <hp indent={1} listStyleType="disc">
@@ -83,7 +73,7 @@ describe('withInsertBreakList', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('behave like a normal break if selection is expanded', () => {
+  it("behave like a normal break if selection is expanded", () => {
     const input = (
       <editor>
         <hp checked={false} indent={1} listStyleType={KEYS.listTodo}>
@@ -99,12 +89,7 @@ describe('withInsertBreakList', () => {
         <hp checked={false} indent={1} listStyleType={KEYS.listTodo}>
           Todo <cursor />
         </hp>
-        <hp
-          checked={false}
-          indent={1}
-          listStart={2}
-          listStyleType={KEYS.listTodo}
-        >
+        <hp checked={false} indent={1} listStart={2} listStyleType={KEYS.listTodo}>
           <cursor />
         </hp>
       </editor>

@@ -1,12 +1,12 @@
-import { pipeInsertFragment } from '../../internal/plugin/pipeInsertFragment';
-import { pipeTransformData } from '../../internal/plugin/pipeTransformData';
-import { pipeTransformFragment } from '../../internal/plugin/pipeTransformFragment';
-import { type Parser, createSlatePlugin, getEditorPlugin } from '../plugin';
-import { getInjectedPlugins } from '../utils';
-import { pipeInsertDataQuery } from '../utils/pipeInsertDataQuery';
+import { pipeInsertFragment } from "../../internal/plugin/pipeInsertFragment";
+import { pipeTransformData } from "../../internal/plugin/pipeTransformData";
+import { pipeTransformFragment } from "../../internal/plugin/pipeTransformFragment";
+import { createSlatePlugin, getEditorPlugin, type Parser } from "../plugin";
+import { getInjectedPlugins } from "../utils";
+import { pipeInsertDataQuery } from "../utils/pipeInsertDataQuery";
 
 export const ParserPlugin = createSlatePlugin({
-  key: 'parser',
+  key: "parser",
 }).overrideEditor(({ editor, tf: { insertData } }) => ({
   transforms: {
     insertData(dataTransfer: DataTransfer) {
@@ -23,15 +23,14 @@ export const ParserPlugin = createSlatePlugin({
         // Handle both string and string[] formats
         const formats = Array.isArray(format) ? format : format ? [format] : [];
         const mimeTypeList =
-          mimeTypes ||
-          formats.map((fmt) => (fmt.includes('/') ? fmt : `text/${fmt}`));
+          mimeTypes || formats.map((fmt) => (fmt.includes("/") ? fmt : `text/${fmt}`));
 
         for (const mimeType of mimeTypeList) {
           let data = dataTransfer.getData(mimeType);
 
           if (
-            (mimeType !== 'Files' && !data) ||
-            (mimeType === 'Files' && dataTransfer.files.length === 0)
+            (mimeType !== "Files" && !data) ||
+            (mimeType === "Files" && dataTransfer.files.length === 0)
           )
             continue;
           if (

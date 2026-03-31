@@ -7,28 +7,24 @@ import type * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const avatarVariants = cva(
-  "relative flex shrink-0 overflow-hidden rounded-full",
-  {
-    variants: {
-      size: {
-        sm: "size-7 text-sm",
-        md: "size-10",
-        lg: "size-12 text-lg",
-      },
+const avatarVariants = cva("relative flex shrink-0 overflow-hidden rounded-full", {
+  variants: {
+    size: {
+      sm: "size-7 text-sm",
+      md: "size-10",
+      lg: "size-12 text-lg",
     },
-    defaultVariants: {
-      size: "md",
-    },
-  }
-);
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
 
 function Avatar({
   className,
   size,
   ...props
-}: React.ComponentProps<typeof AvatarBase.Root> &
-  VariantProps<typeof avatarVariants>) {
+}: React.ComponentProps<typeof AvatarBase.Root> & VariantProps<typeof avatarVariants>) {
   return (
     <AvatarBase.Root
       className={cn(avatarVariants({ size }), className)}
@@ -38,10 +34,7 @@ function Avatar({
   );
 }
 
-function AvatarImage({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarBase.Image>) {
+function AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarBase.Image>) {
   return (
     <AvatarBase.Image
       className={cn("size-full object-cover", className)}
@@ -51,10 +44,7 @@ function AvatarImage({
   );
 }
 
-function AvatarFallback({
-  className,
-  ...props
-}: React.ComponentProps<typeof AvatarBase.Fallback>) {
+function AvatarFallback({ className, ...props }: React.ComponentProps<typeof AvatarBase.Fallback>) {
   return (
     <AvatarBase.Fallback
       className={cn(
@@ -67,4 +57,4 @@ function AvatarFallback({
   );
 }
 
-export { Avatar, AvatarImage, AvatarFallback };
+export { Avatar, AvatarFallback, AvatarImage };

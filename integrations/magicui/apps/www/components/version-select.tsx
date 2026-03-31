@@ -1,28 +1,27 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons"
-
-import { cn } from "@/lib/utils"
+import { CheckIcon, ChevronDownIcon } from "@radix-ui/react-icons";
+import * as React from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 
 const DOMAINS = {
   v3: "https://v3.magicui.design",
   v4: "https://magicui.design",
-} as const
+} as const;
 
 export function VersionSelect({ className }: { className?: string }) {
-  const [version, setVersion] = React.useState<keyof typeof DOMAINS>("v4")
+  const [version, setVersion] = React.useState<keyof typeof DOMAINS>("v4");
 
   const handleVersionChange = (value: keyof typeof DOMAINS) => {
-    setVersion(value)
-    window.location.href = DOMAINS[value]
-  }
+    setVersion(value);
+    window.location.href = DOMAINS[value];
+  };
 
   return (
     <DropdownMenu>
@@ -60,5 +59,5 @@ export function VersionSelect({ className }: { className?: string }) {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }

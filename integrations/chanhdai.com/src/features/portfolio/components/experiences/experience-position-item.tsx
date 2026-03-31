@@ -1,28 +1,18 @@
-import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react"
+import { BriefcaseBusinessIcon, InfinityIcon } from "lucide-react";
 
-import {
-  Collapsible,
-  CollapsibleChevronsIcon,
-} from "@/components/base/collapsible-animated"
-import {
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/base/ui/collapsible"
-import { Markdown } from "@/components/markdown"
-import { Separator } from "@/components/ui/separator"
-import { Tag } from "@/components/ui/tag"
-import { ProseMono } from "@/components/ui/typography"
-import { cn } from "@/lib/utils"
+import { Collapsible, CollapsibleChevronsIcon } from "@/components/base/collapsible-animated";
+import { CollapsibleContent, CollapsibleTrigger } from "@/components/base/ui/collapsible";
+import { Markdown } from "@/components/markdown";
+import { Separator } from "@/components/ui/separator";
+import { Tag } from "@/components/ui/tag";
+import { ProseMono } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 
-import type { ExperiencePosition } from "../../types/experiences"
+import type { ExperiencePosition } from "../../types/experiences";
 
-export function ExperiencePositionItem({
-  position,
-}: {
-  position: ExperiencePosition
-}) {
-  const { start, end } = position.employmentPeriod
-  const isOngoing = !end
+export function ExperiencePositionItem({ position }: { position: ExperiencePosition }) {
+  const { start, end } = position.employmentPeriod;
+  const isOngoing = !end;
 
   return (
     <Collapsible
@@ -108,5 +98,5 @@ export function ExperiencePositionItem({
         </ul>
       )}
     </Collapsible>
-  )
+  );
 }

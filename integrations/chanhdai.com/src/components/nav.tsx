@@ -1,8 +1,8 @@
-import Link from "next/link"
-import React from "react"
+import Link from "next/link";
+import React from "react";
 
-import { cn } from "@/lib/utils"
-import type { NavItem } from "@/types/nav"
+import { cn } from "@/lib/utils";
+import type { NavItem } from "@/types/nav";
 
 export function Nav({
   items,
@@ -10,32 +10,29 @@ export function Nav({
   className,
   exactMatch = false,
 }: {
-  items: NavItem[]
-  activeId?: string
-  className?: string
-  exactMatch?: boolean
+  items: NavItem[];
+  activeId?: string;
+  className?: string;
+  exactMatch?: boolean;
 }) {
   return (
-    <nav
-      data-active-id={activeId}
-      className={cn("flex items-center gap-4", className)}
-    >
+    <nav data-active-id={activeId} className={cn("flex items-center gap-4", className)}>
       {items.map(({ title, href }) => {
         const active = exactMatch
           ? activeId === href
           : activeId === href ||
             (href === "/" // Home page
               ? ["/", "/index"].includes(activeId || "")
-              : activeId?.startsWith(href))
+              : activeId?.startsWith(href));
 
         return (
           <NavItem key={href} href={href} active={active}>
             {title}
           </NavItem>
-        )
+        );
       })}
     </nav>
-  )
+  );
 }
 
 export function NavItem({
@@ -43,7 +40,7 @@ export function NavItem({
   active,
   ...props
 }: React.ComponentProps<typeof Link> & {
-  active?: boolean
+  active?: boolean;
 }) {
   return (
     <Link
@@ -54,5 +51,5 @@ export function NavItem({
       )}
       {...props}
     />
-  )
+  );
 }

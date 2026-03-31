@@ -1,18 +1,12 @@
-import type {
-  Path,
-  SlateEditor,
-  TTableCellElement,
-  TTableElement,
-} from 'platejs';
+import cloneDeep from "lodash/cloneDeep.js";
+import type { Path, SlateEditor, TTableCellElement, TTableElement } from "platejs";
+import { getEditorPlugin, KEYS } from "platejs";
 
-import cloneDeep from 'lodash/cloneDeep.js';
-import { getEditorPlugin, KEYS } from 'platejs';
-
-import { getCellIndices, getCellTypes } from '..';
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { deleteColumnWhenExpanded } from './deleteColumnWhenExpanded';
-import { findCellByIndexes } from './findCellByIndexes';
-import { getCellPath } from './getCellPath';
+import { getCellIndices, getCellTypes } from "..";
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { deleteColumnWhenExpanded } from "./deleteColumnWhenExpanded";
+import { findCellByIndexes } from "./findCellByIndexes";
+import { getCellPath } from "./getCellPath";
 
 export const deleteTableMergeColumn = (editor: SlateEditor) => {
   const type = editor.getType(KEYS.table);
@@ -73,10 +67,7 @@ export const deleteTableMergeColumn = (editor: SlateEditor) => {
 
         if (curColIndex < deletingColIndex && curColSpan > 1) {
           acc.squizeColSpanCells.push(currentCell);
-        } else if (
-          curColSpan > 1 &&
-          curColIndex + curColSpan - 1 > endingColIndex
-        ) {
+        } else if (curColSpan > 1 && curColIndex + curColSpan - 1 > endingColIndex) {
           acc.squizeColSpanCells.push(currentCell);
         }
 
@@ -89,23 +80,12 @@ export const deleteTableMergeColumn = (editor: SlateEditor) => {
     squizeColSpanCells.forEach((cur) => {
       const curCell = cur as TTableCellElement;
 
-      const { col: curColIndex, row: curColRowIndex } = getCellIndices(
-        editor,
-        curCell
-      );
+      const { col: curColIndex, row: curColRowIndex } = getCellIndices(editor, curCell);
       const curColSpan = api.table.getColSpan(curCell);
 
-      const curCellPath = getCellPath(
-        editor,
-        tableEntry,
-        curColRowIndex,
-        curColIndex
-      );
+      const curCellPath = getCellPath(editor, tableEntry, curColRowIndex, curColIndex);
 
-      const curCellEndingColIndex = Math.min(
-        curColIndex + curColSpan - 1,
-        endingColIndex
-      );
+      const curCellEndingColIndex = Math.min(curColIndex + curColSpan - 1, endingColIndex);
       const colsNumberAffected = curCellEndingColIndex - deletingColIndex + 1;
       const colSpan = curColSpan - colsNumberAffected;
       const newCell = cloneDeep({ ...curCell, colSpan });
@@ -135,22 +115,14 @@ export const deleteTableMergeColumn = (editor: SlateEditor) => {
       const paths: Path[][] = [];
       affectedCells.forEach((cur) => {
         const curCell = cur as TTableCellElement;
-        const { col: curColIndex, row: curRowIndex } = getCellIndices(
-          editor,
-          curCell
-        );
+        const { col: curColIndex, row: curRowIndex } = getCellIndices(editor, curCell);
 
         if (
           !squizeColSpanCells.includes(curCell) &&
           curColIndex >= deletingColIndex &&
           curColIndex <= endingColIndex
         ) {
-          const cellPath = getCellPath(
-            editor,
-            tableEntry,
-            curRowIndex,
-            curColIndex
-          );
+          const cellPath = getCellPath(editor, tableEntry, curRowIndex, curColIndex);
 
           if (!paths[curRowIndex]) {
             paths[curRowIndex] = [];
@@ -175,10 +147,7 @@ export const deleteTableMergeColumn = (editor: SlateEditor) => {
         const newColSizes = [...colSizes];
         newColSizes.splice(deletingColIndex, 1);
 
-        editor.tf.setNodes<TTableElement>(
-          { colSizes: newColSizes },
-          { at: tablePath }
-        );
+        editor.tf.setNodes<TTableElement>({ colSizes: newColSizes }, { at: tablePath });
       }
     }
   });

@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -8,7 +8,7 @@ export const fontValue: any = (
   <fragment>
     <hh2>Colors</hh2>
     <hp>
-      Add{' '}
+      Add{" "}
       <htext color="white" backgroundColor="#df4538">
         m
       </htext>
@@ -32,11 +32,11 @@ export const fontValue: any = (
       </htext>
       <htext color="white" backgroundColor="#f5a74b">
         e
-      </htext>{' '}
-      <htext color="rgb(252, 109, 38)">font</htext> and{' '}
+      </htext>{" "}
+      <htext color="rgb(252, 109, 38)">font</htext> and{" "}
       <htext color="white" backgroundColor="rgb(252, 109, 38)">
         background
-      </htext>{' '}
+      </htext>{" "}
       colors to create vibrant and eye-catching text.
     </hp>
   </fragment>

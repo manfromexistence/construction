@@ -1,17 +1,17 @@
 import {
-  type EditorBeforeOptions,
-  type PluginConfig,
-  type TLinkElement,
   createTSlatePlugin,
+  type EditorBeforeOptions,
   isUrl,
   KEYS,
-} from 'platejs';
+  type PluginConfig,
+  type TLinkElement,
+} from "platejs";
 
-import { getLinkAttributes, validateUrl } from './utils/index';
-import { withLink } from './withLink';
+import { getLinkAttributes, validateUrl } from "./utils/index";
+import { withLink } from "./withLink";
 
 export type BaseLinkConfig = PluginConfig<
-  'a',
+  "a",
   {
     /**
      * List of allowed URL schemes.
@@ -86,14 +86,13 @@ export type BaseLinkConfig = PluginConfig<
 export const BaseLinkPlugin = createTSlatePlugin<BaseLinkConfig>({
   key: KEYS.link,
   node: {
-    dangerouslyAllowAttributes: ['target'],
+    dangerouslyAllowAttributes: ["target"],
     isElement: true,
     isInline: true,
-    props: ({ editor, element }) =>
-      getLinkAttributes(editor, element as TLinkElement),
+    props: ({ editor, element }) => getLinkAttributes(editor, element as TLinkElement),
   },
   options: {
-    allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+    allowedSchemes: ["http", "https", "mailto", "tel"],
     dangerouslySkipSanitization: false,
     defaultLinkAttributes: {},
     isUrl,
@@ -101,7 +100,7 @@ export const BaseLinkPlugin = createTSlatePlugin<BaseLinkConfig>({
     rangeBeforeOptions: {
       afterMatch: true,
       matchBlockStart: true,
-      matchString: ' ',
+      matchString: " ",
       skipInvalid: true,
     },
   },
@@ -110,15 +109,15 @@ export const BaseLinkPlugin = createTSlatePlugin<BaseLinkConfig>({
       deserializer: {
         rules: [
           {
-            validNodeName: 'A',
+            validNodeName: "A",
           },
         ],
         parse: ({ editor, element, type }) => {
-          const url = element.getAttribute('href');
+          const url = element.getAttribute("href");
 
           if (url && validateUrl(editor, url)) {
             return {
-              target: element.getAttribute('target') || '_blank',
+              target: element.getAttribute("target") || "_blank",
               type,
               url,
             };
@@ -129,6 +128,6 @@ export const BaseLinkPlugin = createTSlatePlugin<BaseLinkConfig>({
   },
   rules: {
     normalize: { removeEmpty: true },
-    selection: { affinity: 'directional' },
+    selection: { affinity: "directional" },
   },
 }).overrideEditor(withLink);

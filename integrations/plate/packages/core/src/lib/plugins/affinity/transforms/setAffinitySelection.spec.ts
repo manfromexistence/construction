@@ -1,6 +1,6 @@
-import type { EdgeNodes } from '../types';
+import type { EdgeNodes } from "../types";
 
-import { setAffinitySelection } from './setAffinitySelection';
+import { setAffinitySelection } from "./setAffinitySelection";
 
 const createAffinityEditor = () => {
   const onChange = mock();
@@ -24,14 +24,14 @@ const createAffinityEditor = () => {
   };
 };
 
-describe('setAffinitySelection', () => {
-  it('clears marks when moving backward without a previous edge node', () => {
+describe("setAffinitySelection", () => {
+  it("clears marks when moving backward without a previous edge node", () => {
     const { editor, onChange, setSelection } = createAffinityEditor();
 
     setAffinitySelection(
       editor,
-      [null, [{ italic: true, text: 'after' }, [0, 1]]] as EdgeNodes,
-      'backward'
+      [null, [{ italic: true, text: "after" }, [0, 1]]] as EdgeNodes,
+      "backward"
     );
 
     expect(editor.marks).toEqual({});
@@ -39,16 +39,16 @@ describe('setAffinitySelection', () => {
     expect(setSelection).not.toHaveBeenCalled();
   });
 
-  it('moves selection to the previous text edge and clears marks for backward affinity', () => {
+  it("moves selection to the previous text edge and clears marks for backward affinity", () => {
     const { editor, onChange, setSelection } = createAffinityEditor();
 
     setAffinitySelection(
       editor,
       [
-        [{ bold: true, text: 'before' }, [0, 0]],
-        [{ italic: true, text: 'after' }, [0, 1]],
+        [{ bold: true, text: "before" }, [0, 0]],
+        [{ italic: true, text: "after" }, [0, 1]],
       ],
-      'backward'
+      "backward"
     );
 
     expect(setSelection).toHaveBeenCalledWith({
@@ -59,16 +59,16 @@ describe('setAffinitySelection', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it('copies the next text marks for forward affinity', () => {
+  it("copies the next text marks for forward affinity", () => {
     const { editor, onChange, setSelection } = createAffinityEditor();
 
     setAffinitySelection(
       editor,
       [
-        [{ bold: true, text: 'before' }, [0, 0]],
-        [{ italic: true, text: 'after' }, [0, 1]],
+        [{ bold: true, text: "before" }, [0, 0]],
+        [{ italic: true, text: "after" }, [0, 1]],
       ],
-      'forward'
+      "forward"
     );
 
     expect(setSelection).toHaveBeenCalledWith({
@@ -83,13 +83,13 @@ describe('setAffinitySelection', () => {
     expect(onChange).toHaveBeenCalledTimes(1);
   });
 
-  it('clears marks when moving forward without a previous edge node', () => {
+  it("clears marks when moving forward without a previous edge node", () => {
     const { editor, onChange, setSelection } = createAffinityEditor();
 
     setAffinitySelection(
       editor,
-      [null, [{ italic: true, text: 'after' }, [0, 1]]] as EdgeNodes,
-      'forward'
+      [null, [{ italic: true, text: "after" }, [0, 1]]] as EdgeNodes,
+      "forward"
     );
 
     expect(editor.marks).toBeNull();
@@ -97,16 +97,16 @@ describe('setAffinitySelection', () => {
     expect(setSelection).not.toHaveBeenCalled();
   });
 
-  it('keeps the current marks when forward affinity lands before an element node', () => {
+  it("keeps the current marks when forward affinity lands before an element node", () => {
     const { editor, onChange, setSelection } = createAffinityEditor();
 
     setAffinitySelection(
       editor,
       [
-        [{ bold: true, text: 'before' }, [0, 0]],
-        [{ children: [{ text: '' }], type: 'mention' }, [0, 1]],
+        [{ bold: true, text: "before" }, [0, 0]],
+        [{ children: [{ text: "" }], type: "mention" }, [0, 1]],
       ] as EdgeNodes,
-      'forward'
+      "forward"
     );
 
     expect(setSelection).toHaveBeenCalledWith({

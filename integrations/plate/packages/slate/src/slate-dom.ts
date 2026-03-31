@@ -41,4 +41,4 @@ export {
   targetRange,
   verifyDiffState,
   withDOM,
-} from 'slate-dom';
+} from "slate-dom";

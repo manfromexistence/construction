@@ -1,6 +1,6 @@
-import { type ElementEntry, type SlateEditor, match, PathApi } from 'platejs';
+import { type ElementEntry, match, PathApi, type SlateEditor } from "platejs";
 
-import { getListTypes } from '../queries/index';
+import { getListTypes } from "../queries/index";
 
 // When pasting from e.g. Google Docs, the structure of nested lists like "ul -> ul"
 // should be normalized to "ul -> li -> lic + ul".
@@ -12,8 +12,7 @@ export const normalizeNestedList = (
   const [, path] = nestedListItem;
 
   const parentNode = editor.api.parent(path);
-  const hasParentList =
-    parentNode && match(parentNode[0], [], { type: getListTypes(editor) });
+  const hasParentList = parentNode && match(parentNode[0], [], { type: getListTypes(editor) });
 
   if (!hasParentList) {
     return false;

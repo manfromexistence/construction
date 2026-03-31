@@ -1,38 +1,38 @@
-import { createSlateEditor, createSlatePlugin } from '../../../index';
-import { parseHtmlElement } from './parseHtmlElement';
-import { htmlElementToLeaf } from './htmlElementToLeaf';
+import { createSlateEditor, createSlatePlugin } from "../../../index";
+import { htmlElementToLeaf } from "./htmlElementToLeaf";
+import { parseHtmlElement } from "./parseHtmlElement";
 
-describe('htmlElementToLeaf', () => {
-  it('merges outer leaf marks into descendant text nodes and preserves nested leaf marks', () => {
+describe("htmlElementToLeaf", () => {
+  it("merges outer leaf marks into descendant text nodes and preserves nested leaf marks", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
-      node: { isElement: true, type: 'p' },
+      key: "p",
+      node: { isElement: true, type: "p" },
       parsers: {
         html: {
           deserializer: {
-            rules: [{ validNodeName: 'P' }],
+            rules: [{ validNodeName: "P" }],
           },
         },
       },
     });
     const BoldPlugin = createSlatePlugin({
-      key: 'bold',
+      key: "bold",
       node: { isLeaf: true },
       parsers: {
         html: {
           deserializer: {
-            rules: [{ validNodeName: 'STRONG' }],
+            rules: [{ validNodeName: "STRONG" }],
           },
         },
       },
     });
     const ItalicPlugin = createSlatePlugin({
-      key: 'italic',
+      key: "italic",
       node: { isLeaf: true },
       parsers: {
         html: {
           deserializer: {
-            rules: [{ validNodeName: 'EM' }],
+            rules: [{ validNodeName: "EM" }],
           },
         },
       },
@@ -42,19 +42,16 @@ describe('htmlElementToLeaf', () => {
     });
 
     expect(
-      htmlElementToLeaf(
-        editor,
-        parseHtmlElement('<strong><p>para</p><em>inline</em></strong>')
-      )
+      htmlElementToLeaf(editor, parseHtmlElement("<strong><p>para</p><em>inline</em></strong>"))
     ).toEqual([
       {
-        children: [{ bold: true, text: 'para' }],
-        type: 'p',
+        children: [{ bold: true, text: "para" }],
+        type: "p",
       },
       {
         bold: true,
         italic: true,
-        text: 'inline',
+        text: "inline",
       },
     ]);
   });

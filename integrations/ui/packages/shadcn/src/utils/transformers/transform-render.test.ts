@@ -1,8 +1,8 @@
-import { type Config } from "@/src/utils/get-config"
-import { transformRender } from "@/src/utils/transformers/transform-render"
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
+import { type Config } from "@/src/utils/get-config";
+import { transformRender } from "@/src/utils/transformers/transform-render";
 
-import { transform } from "."
+import { transform } from ".";
 
 const testConfig: Config = {
   style: "base-default",
@@ -28,7 +28,7 @@ const testConfig: Config = {
     tailwindConfig: "tailwind.config.ts",
     tailwindCss: "tailwind.css",
   },
-}
+};
 
 describe("transformRender", () => {
   describe("DropdownMenuTrigger with Button render and text children", () => {
@@ -56,9 +56,9 @@ export function Component() {
             <DropdownMenuTrigger render={<Button className="w-fit">Open</Button>} />
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("render prop with multiple props", () => {
     test("preserves all props on render component", async () => {
@@ -85,9 +85,9 @@ export function Component() {
             <DialogTrigger render={<Button variant="outline" size="sm">Edit Profile</Button>} />
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("render prop with no props on component", () => {
     test("handles render component without props", async () => {
@@ -114,9 +114,9 @@ export function Component() {
             <PopoverTrigger render={<Button>Click me</Button>} />
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("complex children content", () => {
     test("preserves complex children including JSX", async () => {
@@ -145,9 +145,9 @@ export function Component() {
             <TooltipTrigger render={<Button variant="ghost"><Icon />Settings</Button>} />
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("parent with additional attributes", () => {
     test("preserves parent attributes", async () => {
@@ -174,9 +174,9 @@ export function Component() {
             <MenuTrigger className="my-class" disabled render={<Button>Open Menu</Button>} />
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("no children", () => {
     test("does not transform when there are no children", async () => {
@@ -203,9 +203,9 @@ export function Component() {
             <DropdownMenuTrigger render={<Button className="w-fit" />}></DropdownMenuTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("render prop already has children", () => {
     test("does not transform when render component already has children", async () => {
@@ -232,9 +232,9 @@ export function Component() {
             <DropdownMenuTrigger render={<Button>Existing</Button>}>Ignored</DropdownMenuTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("non-base style", () => {
     test("does not transform when style is not base-*", async () => {
@@ -264,9 +264,9 @@ export function Component() {
             <DropdownMenuTrigger render={<Button />}>Open</DropdownMenuTrigger>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("multiple render elements", () => {
     test("transforms multiple render elements in same file", async () => {
@@ -299,9 +299,9 @@ export function Component() {
             </div>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("idempotency", () => {
     test("running twice produces same output", async () => {
@@ -311,7 +311,7 @@ export function Component() {
   return (
     <DropdownMenuTrigger render={<Button className="w-fit" />}>Open</DropdownMenuTrigger>
   )
-}`
+}`;
 
       const firstRun = await transform(
         {
@@ -320,7 +320,7 @@ export function Component() {
           config: testConfig,
         },
         [transformRender]
-      )
+      );
 
       const secondRun = await transform(
         {
@@ -329,11 +329,11 @@ export function Component() {
           config: testConfig,
         },
         [transformRender]
-      )
+      );
 
-      expect(secondRun).toBe(firstRun)
-    })
-  })
+      expect(secondRun).toBe(firstRun);
+    });
+  });
 
   describe("expression children", () => {
     test("handles expression children", async () => {
@@ -360,9 +360,9 @@ export function Component() {
             <DropdownMenuTrigger render={<Button>{label}</Button>} />
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("anchor render element", () => {
     test("handles anchor tag as render element", async () => {
@@ -389,7 +389,7 @@ export function Component() {
             <Button render={<a href="/home">Go Home</a>} />
           )
         }"
-      `)
-    })
-  })
-})
+      `);
+    });
+  });
+});

@@ -1,8 +1,8 @@
 /** @jsx jsxt */
 
-import { createSlateEditor, createSlatePlugin, KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
-import type { AutoformatConfig } from '../../../AutoformatPlugin';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, createSlatePlugin, KEYS } from "platejs";
+import type { AutoformatConfig } from "../../../AutoformatPlugin";
 
 jsxt;
 
@@ -23,10 +23,10 @@ const output = (
   </fragment>
 ) as any;
 
-it('autoformats a block with a single character trigger', () => {
+it("autoformats a block with a single character trigger", () => {
   const linkEditor = createSlateEditor({
     plugins: [
-      createSlatePlugin<string, AutoformatConfig['options']>({
+      createSlatePlugin<string, AutoformatConfig["options"]>({
         options: {
           rules: [
             {
@@ -35,13 +35,10 @@ it('autoformats a block with a single character trigger', () => {
                 const linkInputText = editor.api.string(linkInputRange);
                 const [, text, url] = /\[(.+)]\((.*)/.exec(linkInputText)!;
                 editor.tf.insertText(text, { at: linkInputRange });
-                editor.tf.wrapNodes(
-                  { children: [], type: KEYS.link, url },
-                  { at: linkInputRange }
-                );
+                editor.tf.wrapNodes({ children: [], type: KEYS.link, url }, { at: linkInputRange });
               },
-              match: ')',
-              mode: 'block',
+              match: ")",
+              mode: "block",
               triggerAtBlockStart: false,
               type: KEYS.link,
             },
@@ -52,7 +49,7 @@ it('autoformats a block with a single character trigger', () => {
     value: input,
   } as any);
 
-  linkEditor.tf.insertText(')');
+  linkEditor.tf.insertText(")");
 
   expect(input.children).toEqual(output.children);
 });

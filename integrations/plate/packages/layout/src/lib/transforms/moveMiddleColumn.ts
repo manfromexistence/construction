@@ -1,10 +1,10 @@
 import {
+  NodeApi,
   type NodeEntry,
   type SlateEditor,
   type TColumnElement,
   type TNode,
-  NodeApi,
-} from 'platejs';
+} from "platejs";
 
 /**
  * Move the middle column to the left if direction is 'left', or to the right if
@@ -14,12 +14,12 @@ export const moveMiddleColumn = <N extends TNode>(
   editor: SlateEditor,
   [node, path]: NodeEntry<N>,
   options?: {
-    direction: 'left' | 'right';
+    direction: "left" | "right";
   }
 ) => {
-  const direction = options?.direction || 'left';
+  const direction = options?.direction || "left";
 
-  if (direction === 'left') {
+  if (direction === "left") {
     const DESCENDANT_PATH = [1];
 
     const middleChildNode = NodeApi.get<TColumnElement>(node, DESCENDANT_PATH);
@@ -27,7 +27,7 @@ export const moveMiddleColumn = <N extends TNode>(
     if (!middleChildNode) return false;
 
     // Check emptiness using Api.string
-    const isEmpty = NodeApi.string(middleChildNode) === '';
+    const isEmpty = NodeApi.string(middleChildNode) === "";
 
     const middleChildPathRef = editor.api.pathRef(path.concat(DESCENDANT_PATH));
 

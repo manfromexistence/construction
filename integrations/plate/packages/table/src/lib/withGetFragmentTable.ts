@@ -4,11 +4,11 @@ import type {
   TElement,
   TTableCellElement,
   TTableRowElement,
-} from 'platejs';
+} from "platejs";
 
-import type { TableConfig } from './BaseTablePlugin';
+import type { TableConfig } from "./BaseTablePlugin";
 
-import { getTableGridAbove } from './queries/getTableGridAbove';
+import { getTableGridAbove } from "./queries/getTableGridAbove";
 
 /** If selection is in a table, get subtable above. */
 export const withGetFragmentTable: OverrideEditor<TableConfig> = ({

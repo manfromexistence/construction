@@ -1,43 +1,29 @@
 import {
-  type OverrideEditor,
-  type TColumnElement,
-  type TColumnGroupElement,
   ElementApi,
   KEYS,
+  type OverrideEditor,
   PathApi,
-} from 'platejs';
+  type TColumnElement,
+  type TColumnGroupElement,
+} from "platejs";
 
-export const withColumn: OverrideEditor = ({
-  editor,
-  tf: { normalizeNode, selectAll },
-  type,
-}) => ({
+export const withColumn: OverrideEditor = ({ editor, tf: { normalizeNode, selectAll }, type }) => ({
   transforms: {
     normalizeNode([n, path]) {
       // If it's a column group, ensure it has valid children
-      if (
-        ElementApi.isElement(n) &&
-        n.type === editor.getType(KEYS.columnGroup)
-      ) {
+      if (ElementApi.isElement(n) && n.type === editor.getType(KEYS.columnGroup)) {
         const node = n as TColumnGroupElement;
 
         // If the group only wraps a paragraph, keep the paragraph and drop the group.
         const firstChild = node.children[0];
-        if (
-          node.children.length === 1 &&
-          firstChild.type === editor.getType(KEYS.p)
-        ) {
+        if (node.children.length === 1 && firstChild.type === editor.getType(KEYS.p)) {
           editor.tf.unwrapNodes({ at: path });
 
           return;
         }
 
         // If no columns found, unwrap the column group
-        if (
-          !node.children.some(
-            (child) => ElementApi.isElement(child) && child.type === type
-          )
-        ) {
+        if (!node.children.some((child) => ElementApi.isElement(child) && child.type === type)) {
           editor.tf.unwrapNodes({ at: path });
 
           return;
@@ -73,10 +59,7 @@ export const withColumn: OverrideEditor = ({
             // Update the columns with the new widths
             widths.forEach((w, i) => {
               const columnPath = path.concat([i]);
-              editor.tf.setNodes<TColumnElement>(
-                { width: `${w}%` },
-                { at: columnPath }
-              );
+              editor.tf.setNodes<TColumnElement>({ width: `${w}%` }, { at: columnPath });
             });
           }
         });

@@ -1,6 +1,6 @@
-import type { TCommentText } from 'platejs';
+import type { TCommentText } from "platejs";
 
-import { isCommentKey } from './isCommentKey';
+import { isCommentKey } from "./isCommentKey";
 
 export const getCommentKeys = (node: TCommentText) => {
   const keys: string[] = [];

@@ -8,15 +8,12 @@ import {
   TestimonialAvatarRing,
   TestimonialQuote,
   TestimonialVerifiedBadge,
-} from "@/registry/components/testimonial"
-import { TestimonialSpotlight } from "@/registry/components/testimonial-spotlight"
+} from "@/registry/components/testimonial";
+import { TestimonialSpotlight } from "@/registry/components/testimonial-spotlight";
 
 export default function TestimonialSpotlightDemo02() {
   return (
-    <TestimonialSpotlight
-      className="w-72 max-w-full"
-      spotlightColor="rgba(219, 39, 119, 0.15)"
-    >
+    <TestimonialSpotlight className="w-72 max-w-full" spotlightColor="rgba(219, 39, 119, 0.15)">
       <Testimonial>
         <TestimonialQuote>
           <p>You’re doing amazing work.</p>
@@ -24,10 +21,7 @@ export default function TestimonialSpotlightDemo02() {
 
         <TestimonialAuthor>
           <TestimonialAvatar>
-            <TestimonialAvatarImg
-              src="https://unavatar.io/x/shadcn"
-              alt="shadcn"
-            />
+            <TestimonialAvatarImg src="https://unavatar.io/x/shadcn" alt="shadcn" />
             <TestimonialAvatarRing />
           </TestimonialAvatar>
 
@@ -43,11 +37,9 @@ export default function TestimonialSpotlightDemo02() {
             </TestimonialVerifiedBadge>
           </TestimonialAuthorName>
 
-          <TestimonialAuthorTagline>
-            Creator of shadcn/ui
-          </TestimonialAuthorTagline>
+          <TestimonialAuthorTagline>Creator of shadcn/ui</TestimonialAuthorTagline>
         </TestimonialAuthor>
       </Testimonial>
     </TestimonialSpotlight>
-  )
+  );
 }

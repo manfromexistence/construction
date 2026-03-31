@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('when wrap=false', () => {
-  describe('active', () => {
+describe("when wrap=false", () => {
+  describe("active", () => {
     const editor = createEditor(
       (
         <editor>
@@ -30,14 +30,14 @@ describe('when wrap=false', () => {
       ) as any
     );
 
-    it('toggle block type', () => {
-      editor.tf.toggleBlock('blockquote', { defaultType: 'p' });
+    it("toggle block type", () => {
+      editor.tf.toggleBlock("blockquote", { defaultType: "p" });
 
       expect(editor.children).toEqual(output.children);
     });
   });
 
-  describe('inactive', () => {
+  describe("inactive", () => {
     const editor = createEditor(
       (
         <editor>
@@ -60,16 +60,16 @@ describe('when wrap=false', () => {
       ) as any
     );
 
-    it('toggle block type', () => {
-      editor.tf.toggleBlock('blockquote');
+    it("toggle block type", () => {
+      editor.tf.toggleBlock("blockquote");
 
       expect(editor.children).toEqual(output.children);
     });
   });
 });
 
-describe('when wrap=true', () => {
-  describe('active', () => {
+describe("when wrap=true", () => {
+  describe("active", () => {
     const editor = createEditor(
       (
         <editor>
@@ -94,14 +94,14 @@ describe('when wrap=true', () => {
       ) as any
     );
 
-    it('unwrap block', () => {
-      editor.tf.toggleBlock('code_block', { wrap: true });
+    it("unwrap block", () => {
+      editor.tf.toggleBlock("code_block", { wrap: true });
 
       expect(editor.children).toEqual(output.children);
     });
   });
 
-  describe('inactive', () => {
+  describe("inactive", () => {
     const editor = createEditor(
       (
         <editor>
@@ -126,8 +126,8 @@ describe('when wrap=true', () => {
       ) as any
     );
 
-    it('wrap block', () => {
-      editor.tf.toggleBlock('code_block', { wrap: true });
+    it("wrap block", () => {
+      editor.tf.toggleBlock("code_block", { wrap: true });
 
       expect(editor.children).toEqual(output.children);
     });

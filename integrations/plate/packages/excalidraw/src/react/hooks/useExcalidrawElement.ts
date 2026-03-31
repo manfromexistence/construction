@@ -1,17 +1,11 @@
-import React from 'react';
+import type { OrderedExcalidrawElement } from "@excalidraw/excalidraw/element/types";
+import type { AppState, ExcalidrawImperativeAPI, LibraryItems } from "@excalidraw/excalidraw/types";
+import { cloneDeep, isEqual } from "lodash";
+import { useEditorRef, useReadOnly } from "platejs/react";
+import React from "react";
 
-import type { OrderedExcalidrawElement } from '@excalidraw/excalidraw/element/types';
-import type {
-  AppState,
-  ExcalidrawImperativeAPI,
-  LibraryItems,
-} from '@excalidraw/excalidraw/types';
-
-import { cloneDeep, isEqual } from 'lodash';
-import { useEditorRef, useReadOnly } from 'platejs/react';
-
-import type { TExcalidrawElement } from '../../lib';
-import type { TExcalidrawProps } from '../types';
+import type { TExcalidrawElement } from "../../lib";
+import type { TExcalidrawProps } from "../types";
 
 export const useExcalidrawElement = ({
   element,
@@ -27,14 +21,10 @@ export const useExcalidrawElement = ({
   const readOnly = useReadOnly();
 
   // Store last saved data for deduplication
-  const lastSavedDataRef = React.useRef<{ elements: any; state: any } | null>(
-    null
-  );
+  const lastSavedDataRef = React.useRef<{ elements: any; state: any } | null>(null);
 
   React.useEffect(() => {
-    void import('@excalidraw/excalidraw').then((comp) =>
-      setExcalidraw(comp.Excalidraw)
-    );
+    void import("@excalidraw/excalidraw").then((comp) => setExcalidraw(comp.Excalidraw));
   });
 
   const _excalidrawRef = React.useRef<ExcalidrawImperativeAPI>(null);
@@ -51,10 +41,7 @@ export const useExcalidrawElement = ({
       };
 
       // Use lodash isEqual for deep comparison and deduplication
-      if (
-        lastSavedDataRef.current &&
-        isEqual(lastSavedDataRef.current, newData)
-      ) {
+      if (lastSavedDataRef.current && isEqual(lastSavedDataRef.current, newData)) {
         return;
       }
 
@@ -65,7 +52,7 @@ export const useExcalidrawElement = ({
           editor.tf.setNodes({ data: newData }, { at: path });
         }
       } catch (error) {
-        console.error('Failed to save Excalidraw data:', error);
+        console.error("Failed to save Excalidraw data:", error);
       }
     },
     [editor, element, readOnly]

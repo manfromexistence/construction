@@ -3,15 +3,14 @@
  * contributors. See /packages/diff/LICENSE for more information.
  */
 
-import { type Descendant, TextApi } from 'platejs';
+import { type Descendant, TextApi } from "platejs";
 
-import type { ComputeDiffOptions } from '../../lib/computeDiff';
-import type { StringCharMapping } from '../utils/string-char-mapping';
-
-import { transformDiffNodes } from '../transforms/transformDiffNodes';
-import { transformDiffTexts } from '../transforms/transformDiffTexts';
-import { type NodeRelatedItem, diffNodes } from '../utils/diff-nodes';
-import { isEqual } from '../utils/is-equal';
+import type { ComputeDiffOptions } from "../../lib/computeDiff";
+import { transformDiffNodes } from "../transforms/transformDiffNodes";
+import { transformDiffTexts } from "../transforms/transformDiffTexts";
+import { diffNodes, type NodeRelatedItem } from "../utils/diff-nodes";
+import { isEqual } from "../utils/is-equal";
+import type { StringCharMapping } from "../utils/string-char-mapping";
 
 export interface TransformDiffDescendantsOptions extends ComputeDiffOptions {
   stringCharMapping: StringCharMapping;

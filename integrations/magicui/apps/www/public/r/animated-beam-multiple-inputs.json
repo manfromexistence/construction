@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Animated Beam Multiple Inputs",
   "description": "Example showing animated beams with multiple input points.",
-  "registryDependencies": [
-    "@magicui/animated-beam"
-  ],
+  "registryDependencies": ["@magicui/animated-beam"],
   "files": [
     {
       "path": "registry/example/animated-beam-multiple-inputs.tsx",

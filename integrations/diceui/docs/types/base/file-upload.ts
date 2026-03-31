@@ -136,7 +136,7 @@ export interface FileUploadProps extends RenderProps {
       onProgress: (file: File, progress: number) => void;
       onSuccess: (file: File) => void;
       onError: (file: File, error: Error) => void;
-    },
+    }
   ) => Promise<void> | void;
 
   /**
@@ -360,10 +360,7 @@ export interface FileUploadItemPreviewProps extends RenderProps {
    * />
    * ```
    */
-  previewRender?: (
-    file: File,
-    fallback: () => React.ReactNode,
-  ) => React.ReactNode;
+  previewRender?: (file: File, fallback: () => React.ReactNode) => React.ReactNode;
 }
 
 export interface FileUploadItemMetadataProps extends RenderProps {

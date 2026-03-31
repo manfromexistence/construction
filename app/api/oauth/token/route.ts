@@ -1,3 +1,5 @@
+import { and, eq, isNull } from "drizzle-orm";
+import { NextRequest } from "next/server";
 import { db } from "@/db";
 import { oauthAuthorizationCode, oauthToken } from "@/db/schema";
 import {
@@ -7,8 +9,6 @@ import {
   oauthError,
   verifyCodeChallenge,
 } from "@/lib/oauth";
-import { eq, and, isNull } from "drizzle-orm";
-import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   const body = await req.formData().catch(() => null);
@@ -107,11 +107,7 @@ async function handleAuthorizationCode(body: FormData) {
     .where(eq(oauthAuthorizationCode.id, authCode.id));
 
   // Create tokens
-  const tokenResponse = await createTokenPair(
-    app.id,
-    authCode.userId,
-    authCode.scopes
-  );
+  const tokenResponse = await createTokenPair(app.id, authCode.userId, authCode.scopes);
 
   return Response.json(tokenResponse);
 }
@@ -156,10 +152,7 @@ async function handleRefreshToken(body: FormData) {
     return oauthError("invalid_grant", "Invalid refresh token");
   }
 
-  if (
-    tokenRecord.refreshTokenExpiresAt &&
-    new Date() > tokenRecord.refreshTokenExpiresAt
-  ) {
+  if (tokenRecord.refreshTokenExpiresAt && new Date() > tokenRecord.refreshTokenExpiresAt) {
     return oauthError("invalid_grant", "Refresh token expired");
   }
 
@@ -170,11 +163,7 @@ async function handleRefreshToken(body: FormData) {
     .where(eq(oauthToken.id, tokenRecord.id));
 
   // Issue new token pair
-  const tokenResponse = await createTokenPair(
-    app.id,
-    tokenRecord.userId,
-    tokenRecord.scopes
-  );
+  const tokenResponse = await createTokenPair(app.id, tokenRecord.userId, tokenRecord.scopes);
 
   return Response.json(tokenResponse);
 }

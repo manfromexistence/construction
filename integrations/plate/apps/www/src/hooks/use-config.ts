@@ -1,15 +1,15 @@
-import { useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 type Config = {
-  installationType: 'cli' | 'manual';
-  packageManager: 'bun' | 'npm' | 'pnpm';
+  installationType: "cli" | "manual";
+  packageManager: "bun" | "npm" | "pnpm";
   radius: number;
 };
 
-const configAtom = atomWithStorage<Config>('config', {
-  installationType: 'cli',
-  packageManager: 'pnpm',
+const configAtom = atomWithStorage<Config>("config", {
+  installationType: "cli",
+  packageManager: "pnpm",
   radius: 0.5,
 });
 

@@ -1,4 +1,4 @@
-import { useEditorRef, useEditorSelector } from '@platejs/core/react';
+import { useEditorRef, useEditorSelector } from "@platejs/core/react";
 
 export const useMarkToolbarButtonState = ({
   clear,
@@ -7,10 +7,7 @@ export const useMarkToolbarButtonState = ({
   nodeType: string;
   clear?: string[] | string;
 }) => {
-  const pressed = useEditorSelector(
-    (editor) => editor.api.hasMark(nodeType),
-    [nodeType]
-  );
+  const pressed = useEditorSelector((editor) => editor.api.hasMark(nodeType), [nodeType]);
 
   return {
     clear,
@@ -19,9 +16,7 @@ export const useMarkToolbarButtonState = ({
   };
 };
 
-export const useMarkToolbarButton = (
-  state: ReturnType<typeof useMarkToolbarButtonState>
-) => {
+export const useMarkToolbarButton = (state: ReturnType<typeof useMarkToolbarButtonState>) => {
   const editor = useEditorRef();
 
   return {

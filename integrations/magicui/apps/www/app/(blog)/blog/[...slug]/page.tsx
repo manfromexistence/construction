@@ -1,53 +1,51 @@
 /* eslint-disable @next/next/no-img-element */
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { mdxComponents } from "@/mdx-components"
-import { ArrowLeftIcon } from "lucide-react"
-import type { BlogPosting, BreadcrumbList, WithContext } from "schema-dts"
 
-import { siteConfig } from "@/config/site"
-import { blogSource } from "@/lib/source"
-import { absoluteUrl, calculateReadingTime, formatDate } from "@/lib/utils"
-import { Badge } from "@/components/ui/badge"
-import { buttonVariants } from "@/components/ui/button"
-import { MobileTOC } from "@/components/blog/mobile-toc"
-import { BlogTableOfContents } from "@/components/blog/table-of-contents"
-import { SidebarCTA } from "@/components/sidebar-cta"
+import { ArrowLeftIcon } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { BlogPosting, BreadcrumbList, WithContext } from "schema-dts";
+import { MobileTOC } from "@/components/blog/mobile-toc";
+import { BlogTableOfContents } from "@/components/blog/table-of-contents";
+import { SidebarCTA } from "@/components/sidebar-cta";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import { siteConfig } from "@/config/site";
+import { blogSource } from "@/lib/source";
+import { absoluteUrl, calculateReadingTime, formatDate } from "@/lib/utils";
+import { mdxComponents } from "@/mdx-components";
 
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 interface PageProps {
   params: Promise<{
-    slug: string[]
-  }>
+    slug: string[];
+  }>;
 }
 
 export function generateStaticParams() {
-  return blogSource.generateParams()
+  return blogSource.generateParams();
 }
 
 async function getDocFromParams({ params }: PageProps) {
-  const { slug } = await params
-  const page = blogSource.getPage(slug)
-  if (!page) notFound()
-  const doc = page.data
+  const { slug } = await params;
+  const page = blogSource.getPage(slug);
+  if (!page) notFound();
+  const doc = page.data;
   if (!doc.title || !doc.description) {
-    notFound()
+    notFound();
   }
 
-  return { doc, page }
+  return { doc, page };
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { doc, page } = await getDocFromParams({ params })
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { doc, page } = await getDocFromParams({ params });
 
   if (!page) {
-    return {}
+    return {};
   }
 
   return {
@@ -74,37 +72,35 @@ export async function generateMetadata({
       images: [doc.image ?? ""],
       creator: "@dillionverma",
     },
-  }
+  };
 }
 
 export default async function BlogPage({ params }: PageProps) {
-  const { doc, page } = await getDocFromParams({ params })
-  const content = await doc.getText("raw")
-  const MDX = doc.body
+  const { doc, page } = await getDocFromParams({ params });
+  const content = await doc.getText("raw");
+  const MDX = doc.body;
 
   const toBreadcrumbLabel = (segment: string) =>
     segment
       .split("-")
       .filter(Boolean)
       .map((part) => part.slice(0, 1).toUpperCase() + part.slice(1))
-      .join(" ") || segment
+      .join(" ") || segment;
 
   const slugSegments = page.url
     .replace(/^\/blog\/?/, "")
     .split("/")
-    .filter(Boolean)
-  const intermediateCrumbs = slugSegments
-    .slice(0, -1)
-    .map((segment, index) => ({
-      name: toBreadcrumbLabel(segment),
-      url: `/blog/${slugSegments.slice(0, index + 1).join("/")}`,
-    }))
+    .filter(Boolean);
+  const intermediateCrumbs = slugSegments.slice(0, -1).map((segment, index) => ({
+    name: toBreadcrumbLabel(segment),
+    url: `/blog/${slugSegments.slice(0, index + 1).join("/")}`,
+  }));
   const breadcrumbs = [
     { name: "Home", url: "/" },
     { name: "Blog", url: "/blog" },
     ...intermediateCrumbs,
     { name: doc.title, url: page.url },
-  ] as const
+  ] as const;
 
   // Generate structured data for individual blog post
   const structuredData: WithContext<BlogPosting> = {
@@ -137,12 +133,12 @@ export default async function BlogPage({ params }: PageProps) {
     wordCount: content ? content.split(/\s+/).length : 0,
     timeRequired: `PT${calculateReadingTime(content || "")}M`,
     keywords: (() => {
-      const docTag = doc.tags
-      if (!docTag) return undefined
-      return Array.isArray(docTag) ? docTag : [docTag]
+      const docTag = doc.tags;
+      if (!docTag) return undefined;
+      return Array.isArray(docTag) ? docTag : [docTag];
     })(),
     inLanguage: "en-US",
-  }
+  };
 
   const breadcrumbStructuredData: WithContext<BreadcrumbList> = {
     "@context": "https://schema.org",
@@ -153,15 +149,13 @@ export default async function BlogPage({ params }: PageProps) {
       name: breadcrumb.name,
       item: absoluteUrl(breadcrumb.url),
     })),
-  }
+  };
 
-  const serializedStructuredData = JSON.stringify(structuredData).replace(
+  const serializedStructuredData = JSON.stringify(structuredData).replace(/</g, "\\u003c");
+  const serializedBreadcrumbStructuredData = JSON.stringify(breadcrumbStructuredData).replace(
     /</g,
     "\\u003c"
-  )
-  const serializedBreadcrumbStructuredData = JSON.stringify(
-    breadcrumbStructuredData
-  ).replace(/</g, "\\u003c")
+  );
 
   return (
     <>
@@ -201,9 +195,7 @@ export default async function BlogPage({ params }: PageProps) {
                     {doc.description}
                   </p>
                   <div className="text-secondary-foreground flex items-center justify-center gap-x-2 text-sm">
-                    {doc.publishedOn && (
-                      <time>{formatDate(doc.publishedOn)}</time>
-                    )}
+                    {doc.publishedOn && <time>{formatDate(doc.publishedOn)}</time>}
                     {doc.publishedOn && <span>·</span>}
                     <span>{calculateReadingTime(content)} min read</span>
                   </div>
@@ -211,32 +203,22 @@ export default async function BlogPage({ params }: PageProps) {
               </div>
               <div className="text-secondary-foreground flex items-center justify-center gap-x-2 p-3 text-sm">
                 {(() => {
-                  const docTag = doc.tags
-                  const tags = docTag
-                    ? Array.isArray(docTag)
-                      ? docTag
-                      : [docTag]
-                    : []
+                  const docTag = doc.tags;
+                  const tags = docTag ? (Array.isArray(docTag) ? docTag : [docTag]) : [];
 
                   return (
                     tags.length > 0 && (
                       <div className="flex flex-wrap items-center justify-center gap-1">
                         {tags.map((tag) => (
-                          <Link
-                            key={tag}
-                            href={`/blog?tag=${encodeURIComponent(tag)}`}
-                          >
-                            <Badge
-                              variant="secondary"
-                              className="border-border border text-xs"
-                            >
+                          <Link key={tag} href={`/blog?tag=${encodeURIComponent(tag)}`}>
+                            <Badge variant="secondary" className="border-border border text-xs">
                               {tag}
                             </Badge>
                           </Link>
                         ))}
                       </div>
                     )
-                  )
+                  );
                 })()}
               </div>
             </div>
@@ -255,5 +237,5 @@ export default async function BlogPage({ params }: PageProps) {
         <MobileTOC />
       </div>
     </>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-import type { UnknownObject } from '@udecode/utils';
+import type { UnknownObject } from "@udecode/utils";
 
-import { Element as SlateElement } from 'slate';
+import { Element as SlateElement } from "slate";
 
-import type { Editor, Value } from './editor';
-import type { Ancestor, Descendant, TNode } from './node';
-import type { TextIn, TextOf } from './text';
+import type { Editor, Value } from "./editor";
+import type { Ancestor, Descendant, TNode } from "./node";
+import type { TextIn, TextOf } from "./text";
 
 /**
  * `TElement` objects are a type of node in a Slate document that contain other
@@ -61,14 +61,9 @@ export type ElementOf<N extends TNode> = Editor extends N
   : TElement extends N
     ? TElement
     : N extends Editor
-      ?
-          | ElementOf<N['children'][number]>
-          | Extract<N['children'][number], TElement>
+      ? ElementOf<N["children"][number]> | Extract<N["children"][number], TElement>
       : N extends TElement
-        ?
-            | ElementOf<N['children'][number]>
-            | Extract<N['children'][number], TElement>
-            | N
+        ? ElementOf<N["children"][number]> | Extract<N["children"][number], TElement> | N
         : never;
 
 /**

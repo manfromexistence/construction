@@ -1,8 +1,8 @@
-import { ThemeStyles, ThemeStyleProps } from "@/types/theme";
+import { defaultDarkThemeStyles, defaultLightThemeStyles } from "@/config/theme";
+import { ThemeStyleProps, ThemeStyles } from "@/types/theme";
 import { colorFormatter } from "@/utils/color-converter";
-import { getShadowMap } from "@/utils/shadows";
-import { defaultLightThemeStyles, defaultDarkThemeStyles } from "@/config/theme";
 import { SYSTEM_FONTS } from "@/utils/fonts";
+import { getShadowMap } from "@/utils/shadows";
 
 type FontConfig = {
   family: string;

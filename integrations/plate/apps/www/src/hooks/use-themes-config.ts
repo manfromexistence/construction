@@ -1,13 +1,13 @@
-import { useAtom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils';
+import { useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-import { type Theme, THEMES } from '@/lib/themes';
+import { THEMES, type Theme } from "@/lib/themes";
 
 type ThemesConfig = {
   activeTheme: Theme;
 };
-const configAtom = atomWithStorage<ThemesConfig>('themes:config4', {
-  activeTheme: THEMES['default-shadcn'],
+const configAtom = atomWithStorage<ThemesConfig>("themes:config4", {
+  activeTheme: THEMES["default-shadcn"],
 });
 
 export function useThemesConfig() {

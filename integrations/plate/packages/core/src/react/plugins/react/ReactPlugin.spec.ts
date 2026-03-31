@@ -1,11 +1,9 @@
-import type { LegacyEditorMethods } from '@platejs/slate';
+import type { LegacyEditorMethods } from "@platejs/slate";
+import { createPlateEditor } from "../../../react/editor/withPlate";
+import type { PlateEditor } from "../../editor/PlateEditor";
+import { createPlatePlugin } from "../../plugin/createPlatePlugin";
 
-import type { PlateEditor } from '../../editor/PlateEditor';
-
-import { createPlateEditor } from '../../../react/editor/withPlate';
-import { createPlatePlugin } from '../../plugin/createPlatePlugin';
-
-describe('ReactPlugin', () => {
+describe("ReactPlugin", () => {
   let editor: PlateEditor;
 
   beforeEach(() => {
@@ -18,13 +16,13 @@ describe('ReactPlugin', () => {
     (editor.tf.focus as ReturnType<typeof mock>).mockReset();
   });
 
-  it('allows overriding both legacy and new APIs', () => {
+  it("allows overriding both legacy and new APIs", () => {
     const fn = mock();
     const fn2 = mock();
     editor = createPlateEditor({
       plugins: [
         createPlatePlugin({
-          key: 'reactText',
+          key: "reactText",
           extendEditor: ({ editor }) => {
             const e = editor as typeof editor & LegacyEditorMethods;
             const { insertData } = e;
@@ -48,27 +46,25 @@ describe('ReactPlugin', () => {
     });
 
     const mockDataTransfer = {
-      getData: (format: string) => (format === 'text/plain' ? 'test' : ''),
+      getData: (format: string) => (format === "text/plain" ? "test" : ""),
     } as DataTransfer;
 
-    (editor as typeof editor & LegacyEditorMethods).insertData(
-      mockDataTransfer
-    );
+    (editor as typeof editor & LegacyEditorMethods).insertData(mockDataTransfer);
     editor.tf.insertData(mockDataTransfer);
 
     expect(fn).toHaveBeenCalledTimes(2);
     expect(fn2).toHaveBeenCalledTimes(2);
   });
 
-  it('override reset method', () => {
+  it("override reset method", () => {
     (editor.api.isFocused as ReturnType<typeof mock>).mockReturnValue(true);
 
     editor.tf.reset();
 
-    expect(editor.tf.focus).toHaveBeenCalledWith({ edge: 'startEditor' });
+    expect(editor.tf.focus).toHaveBeenCalledWith({ edge: "startEditor" });
   });
 
-  it('does not focus editor if it was not focused before reset', () => {
+  it("does not focus editor if it was not focused before reset", () => {
     (editor.api.isFocused as ReturnType<typeof mock>).mockReturnValue(false);
 
     editor.tf.reset();

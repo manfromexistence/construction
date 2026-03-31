@@ -2,12 +2,7 @@
 
 import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-} from "lucide-react";
+import { ChevronDownIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 import { useAsRef } from "@/registry/bases/base/hooks/use-as-ref";
@@ -47,10 +42,7 @@ interface Store {
 
 const StoreContext = React.createContext<Store | null>(null);
 
-function useStore<T>(
-  selector: (state: StoreState) => T,
-  ogStore?: Store | null,
-): T {
+function useStore<T>(selector: (state: StoreState) => T, ogStore?: Store | null): T {
   const contextStore = React.useContext(StoreContext);
 
   const store = ogStore ?? contextStore;
@@ -59,10 +51,7 @@ function useStore<T>(
     throw new Error(`\`useStore\` must be used within \`${ROOT_NAME}\``);
   }
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
@@ -72,8 +61,7 @@ interface CompareSliderContextValue {
   orientation: Orientation;
 }
 
-const CompareSliderContext =
-  React.createContext<CompareSliderContextValue | null>(null);
+const CompareSliderContext = React.createContext<CompareSliderContextValue | null>(null);
 
 function useCompareSliderContext(consumerName: string) {
   const context = React.useContext(CompareSliderContext);
@@ -83,9 +71,7 @@ function useCompareSliderContext(consumerName: string) {
   return context;
 }
 
-interface CompareSliderProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {
+interface CompareSliderProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {
   value?: number;
   defaultValue?: number;
   onValueChange?: (value: number) => void;
@@ -179,15 +165,13 @@ function CompareSlider(props: CompareSliderProps) {
 
       const rootRect = rootRef.current.getBoundingClientRect();
       const isVertical = propsRef.current.orientation === "vertical";
-      const position = isVertical
-        ? event.clientY - rootRect.top
-        : event.clientX - rootRect.left;
+      const position = isVertical ? event.clientY - rootRect.top : event.clientX - rootRect.left;
       const size = isVertical ? rootRect.height : rootRect.width;
       const percentage = clamp((position / size) * 100, 0, 100);
 
       store.setState("value", percentage);
     },
-    [propsRef, store],
+    [propsRef, store]
   );
 
   const onPointerDown = React.useCallback(
@@ -201,7 +185,7 @@ function CompareSlider(props: CompareSliderProps) {
       isDraggingRef.current = true;
       store.setState("isDragging", true);
     },
-    [store, propsRef],
+    [store, propsRef]
   );
 
   const onPointerUp = React.useCallback(
@@ -215,7 +199,7 @@ function CompareSlider(props: CompareSliderProps) {
       isDraggingRef.current = false;
       store.setState("isDragging", false);
     },
-    [store, propsRef],
+    [store, propsRef]
   );
 
   const onKeyDown = React.useCallback(
@@ -236,8 +220,7 @@ function CompareSlider(props: CompareSliderProps) {
         event.preventDefault();
 
         const isPageKey = PAGE_KEYS.includes(event.key);
-        const isSkipKey =
-          isPageKey || (event.shiftKey && ARROW_KEYS.includes(event.key));
+        const isSkipKey = isPageKey || (event.shiftKey && ARROW_KEYS.includes(event.key));
         const multiplier = isSkipKey ? 10 : 1;
 
         let direction = 0;
@@ -254,7 +237,7 @@ function CompareSlider(props: CompareSliderProps) {
         store.setState("value", newValue);
       }
     },
-    [store, propsRef],
+    [store, propsRef]
   );
 
   const contextValue = React.useMemo<CompareSliderContextValue>(
@@ -262,7 +245,7 @@ function CompareSlider(props: CompareSliderProps) {
       interaction,
       orientation,
     }),
-    [interaction, orientation],
+    [interaction, orientation]
   );
 
   const element = useRender({
@@ -278,7 +261,7 @@ function CompareSlider(props: CompareSliderProps) {
         className: cn(
           "relative isolate touch-none select-none overflow-hidden outline-none transition-all focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50",
           orientation === "horizontal" ? "w-full" : "h-full",
-          className,
+          className
         ),
         onPointerDown,
         onPointerMove,
@@ -288,7 +271,7 @@ function CompareSlider(props: CompareSliderProps) {
         ref: composedRef,
         children,
       },
-      rootProps,
+      rootProps
     ),
     render,
     state: {
@@ -299,9 +282,7 @@ function CompareSlider(props: CompareSliderProps) {
 
   return (
     <StoreContext.Provider value={store}>
-      <CompareSliderContext.Provider value={contextValue}>
-        {element}
-      </CompareSliderContext.Provider>
+      <CompareSliderContext.Provider value={contextValue}>{element}</CompareSliderContext.Provider>
     </StoreContext.Provider>
   );
 }
@@ -313,8 +294,7 @@ interface CompareSliderBeforeProps
 }
 
 function CompareSliderBefore(props: CompareSliderBeforeProps) {
-  const { className, children, style, label, render, ref, ...beforeProps } =
-    props;
+  const { className, children, style, label, render, ref, ...beforeProps } = props;
 
   const value = useStore((state) => state.value);
   const { orientation } = useCompareSliderContext(BEFORE_NAME);
@@ -322,9 +302,7 @@ function CompareSliderBefore(props: CompareSliderBeforeProps) {
   const labelId = React.useId();
 
   const isVertical = orientation === "vertical";
-  const clipPath = isVertical
-    ? `inset(${value}% 0 0 0)`
-    : `inset(0 0 0 ${value}%)`;
+  const clipPath = isVertical ? `inset(${value}% 0 0 0)` : `inset(0 0 0 ${value}%)`;
 
   return useRender({
     defaultTagName: "div",
@@ -350,7 +328,7 @@ function CompareSliderBefore(props: CompareSliderBeforeProps) {
           </>
         ),
       },
-      beforeProps,
+      beforeProps
     ),
     render,
     state: {
@@ -367,8 +345,7 @@ interface CompareSliderAfterProps
 }
 
 function CompareSliderAfter(props: CompareSliderAfterProps) {
-  const { className, children, style, label, render, ref, ...afterProps } =
-    props;
+  const { className, children, style, label, render, ref, ...afterProps } = props;
 
   const value = useStore((state) => state.value);
   const { orientation } = useCompareSliderContext(AFTER_NAME);
@@ -376,9 +353,7 @@ function CompareSliderAfter(props: CompareSliderAfterProps) {
   const labelId = React.useId();
 
   const isVertical = orientation === "vertical";
-  const clipPath = isVertical
-    ? `inset(0 0 ${100 - value}% 0)`
-    : `inset(0 ${100 - value}% 0 0)`;
+  const clipPath = isVertical ? `inset(0 0 ${100 - value}% 0)` : `inset(0 ${100 - value}% 0 0)`;
 
   return useRender({
     defaultTagName: "div",
@@ -404,7 +379,7 @@ function CompareSliderAfter(props: CompareSliderAfterProps) {
           </>
         ),
       },
-      afterProps,
+      afterProps
     ),
     render,
     state: {
@@ -434,11 +409,9 @@ function CompareSliderHandle(props: CompareSliderHandleProps) {
         "aria-hidden": "true",
         className: cn(
           "absolute z-50 flex items-center justify-center",
-          isVertical
-            ? "left-0 h-10 w-full -translate-y-1/2"
-            : "top-0 h-full w-10 -translate-x-1/2",
+          isVertical ? "left-0 h-10 w-full -translate-y-1/2" : "top-0 h-full w-10 -translate-x-1/2",
           interaction === "drag" && "cursor-grab active:cursor-grabbing",
-          className,
+          className
         ),
         style: {
           [isVertical ? "top" : "left"]: `${value}%`,
@@ -454,7 +427,7 @@ function CompareSliderHandle(props: CompareSliderHandleProps) {
                   "absolute bg-background",
                   isVertical
                     ? "top-1/2 h-1 w-full -translate-y-1/2"
-                    : "left-1/2 h-full w-1 -translate-x-1/2",
+                    : "left-1/2 h-full w-1 -translate-x-1/2"
                 )}
               />
               {interaction === "drag" && (
@@ -475,7 +448,7 @@ function CompareSliderHandle(props: CompareSliderHandleProps) {
             </>
           ))(),
       },
-      handleProps,
+      handleProps
     ),
     render,
     state: {
@@ -510,12 +483,12 @@ function CompareSliderLabel(props: CompareSliderLabelProps) {
             : side === "before"
               ? "top-2 left-2"
               : "top-2 right-2",
-          className,
+          className
         ),
         ref,
         children,
       },
-      labelProps,
+      labelProps
     ),
     render,
     state: {

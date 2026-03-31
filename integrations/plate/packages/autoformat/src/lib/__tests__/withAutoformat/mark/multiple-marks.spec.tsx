@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import { createAutoformatEditor } from '../createAutoformatEditor';
+import { createAutoformatEditor } from "../createAutoformatEditor";
 
 jsxt;
 
-describe('AutoformatPlugin multi-mark rules', () => {
-  it('formats triple asterisks into bold italic text', () => {
+describe("AutoformatPlugin multi-mark rules", () => {
+  it("formats triple asterisks into bold italic text", () => {
     const input = (
       <fragment>
         <hp>
@@ -31,22 +31,22 @@ describe('AutoformatPlugin multi-mark rules', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          match: '***',
-          mode: 'mark',
+          match: "***",
+          mode: "mark",
           type: [KEYS.bold, KEYS.italic],
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('*');
-    editor.tf.insertText('*');
-    editor.tf.insertText('*');
+    editor.tf.insertText("*");
+    editor.tf.insertText("*");
+    editor.tf.insertText("*");
 
     expect(input.children).toEqual(output.children);
   });
 
-  it('formats a custom nested mark rule when the closing trigger arrives', () => {
+  it("formats a custom nested mark rule when the closing trigger arrives", () => {
     const input = (
       <fragment>
         <hp>
@@ -69,21 +69,21 @@ describe('AutoformatPlugin multi-mark rules', () => {
     const editor = createAutoformatEditor({
       rules: [
         {
-          match: { end: '***__', start: '___***' },
-          mode: 'mark',
-          trigger: '_',
+          match: { end: "***__", start: "___***" },
+          mode: "mark",
+          trigger: "_",
           type: [KEYS.underline, KEYS.bold, KEYS.italic],
         },
       ],
       value: input,
     });
 
-    editor.tf.insertText('*');
-    editor.tf.insertText('*');
-    editor.tf.insertText('*');
-    editor.tf.insertText('_');
-    editor.tf.insertText('_');
-    editor.tf.insertText('_');
+    editor.tf.insertText("*");
+    editor.tf.insertText("*");
+    editor.tf.insertText("*");
+    editor.tf.insertText("_");
+    editor.tf.insertText("_");
+    editor.tf.insertText("_");
 
     expect(input.children).toEqual(output.children);
   });

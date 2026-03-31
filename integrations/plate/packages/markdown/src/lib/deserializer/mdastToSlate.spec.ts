@@ -1,8 +1,8 @@
-import { createTestEditor } from '../__tests__/createTestEditor';
-import { mdastToSlate } from './mdastToSlate';
+import { createTestEditor } from "../__tests__/createTestEditor";
+import { mdastToSlate } from "./mdastToSlate";
 
-describe('mdastToSlate', () => {
-  it('keeps children without positions when splitLineBreaks is enabled', () => {
+describe("mdastToSlate", () => {
+  it("keeps children without positions when splitLineBreaks is enabled", () => {
     const editor = createTestEditor();
 
     expect(
@@ -10,23 +10,23 @@ describe('mdastToSlate', () => {
         {
           children: [
             {
-              children: [{ type: 'text', value: 'first' }],
+              children: [{ type: "text", value: "first" }],
               position: {
                 end: { line: 1 },
                 start: { line: 1 },
               },
-              type: 'paragraph',
+              type: "paragraph",
             },
             {
-              children: [{ type: 'text', value: 'second' }],
-              type: 'paragraph',
+              children: [{ type: "text", value: "second" }],
+              type: "paragraph",
             },
           ],
           position: {
             end: { line: 2 },
             start: { line: 1 },
           },
-          type: 'root',
+          type: "root",
         } as any,
         {
           editor,
@@ -35,12 +35,12 @@ describe('mdastToSlate', () => {
       )
     ).toEqual([
       {
-        children: [{ text: 'first' }],
-        type: 'p',
+        children: [{ text: "first" }],
+        type: "p",
       },
       {
-        children: [{ text: 'second' }],
-        type: 'p',
+        children: [{ text: "second" }],
+        type: "p",
       },
     ]);
   });

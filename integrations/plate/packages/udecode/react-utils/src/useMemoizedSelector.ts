@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 /**
  * Re-render only when the selector result changes.

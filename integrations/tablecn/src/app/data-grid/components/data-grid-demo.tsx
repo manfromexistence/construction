@@ -13,21 +13,12 @@ import { DataGridSortMenu } from "@/components/data-grid/data-grid-sort-menu";
 import { DataGridViewMenu } from "@/components/data-grid/data-grid-view-menu";
 import { Toggle } from "@/components/ui/toggle";
 import { type UseDataGridProps, useDataGrid } from "@/hooks/use-data-grid";
-import {
-  type UndoRedoCellUpdate,
-  useDataGridUndoRedo,
-} from "@/hooks/use-data-grid-undo-redo";
+import { type UndoRedoCellUpdate, useDataGridUndoRedo } from "@/hooks/use-data-grid-undo-redo";
 import { useWindowSize } from "@/hooks/use-window-size";
 import { getFilterFn } from "@/lib/data-grid-filters";
 import { generateId } from "@/lib/id";
 import type { Direction } from "@/types/data-grid";
-import {
-  departments,
-  initialData,
-  type Person,
-  skills,
-  statuses,
-} from "../lib/seeds";
+import { departments, initialData, type Person, skills, statuses } from "../lib/seeds";
 
 interface DataGridDemoImplProps extends UseDataGridProps<Person> {
   dir: Direction;
@@ -35,12 +26,7 @@ interface DataGridDemoImplProps extends UseDataGridProps<Person> {
   height: number;
 }
 
-function DataGridDemoImpl({
-  dir,
-  onDirChange,
-  height,
-  ...props
-}: DataGridDemoImplProps) {
+function DataGridDemoImpl({ dir, onDirChange, height, ...props }: DataGridDemoImplProps) {
   const { table, ...dataGridProps } = useDataGrid({
     getRowId: (row) => row.id,
     initialState: {
@@ -272,131 +258,125 @@ export function DataGridDemo() {
             variant: "file",
             maxFileSize: 10 * 1024 * 1024, // 10MB
             maxFiles: 5,
-            accept:
-              "image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx",
+            accept: "image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx",
             multiple: true,
           },
         },
       },
     ],
-    [filterFn],
+    [filterFn]
   );
 
-  const { trackCellsUpdate, trackRowsAdd, trackRowsDelete } =
-    useDataGridUndoRedo({
-      data,
-      onDataChange: setData,
-      getRowId: (row) => row.id,
-    });
+  const { trackCellsUpdate, trackRowsAdd, trackRowsDelete } = useDataGridUndoRedo({
+    data,
+    onDataChange: setData,
+    getRowId: (row) => row.id,
+  });
 
-  const onRowAdd: NonNullable<UseDataGridProps<Person>["onRowAdd"]> =
-    React.useCallback(() => {
-      // Called when user manually adds a single row (e.g., clicking "Add Row" button)
+  const onRowAdd: NonNullable<UseDataGridProps<Person>["onRowAdd"]> = React.useCallback(() => {
+    // Called when user manually adds a single row (e.g., clicking "Add Row" button)
+    // In a real app, you would make a server call here:
+    // await fetch('/api/people', {
+    //   method: 'POST',
+    //   body: JSON.stringify({ name: 'New Person' })
+    // });
+
+    const newRow: Person = {
+      id: generateId(),
+    };
+
+    const newRowIndex = data.length;
+
+    // For this demo, just add a new row to the data
+    setData((prev) => [...prev, newRow]);
+
+    // Track for undo/redo
+    trackRowsAdd([newRow]);
+
+    return {
+      rowIndex: newRowIndex,
+      columnId: "name",
+    };
+  }, [data.length, trackRowsAdd]);
+
+  const onRowsAdd: NonNullable<UseDataGridProps<Person>["onRowsAdd"]> = React.useCallback(
+    (count: number) => {
+      // Called when paste operation needs to create multiple rows at once
+      // This is more efficient than calling onRowAdd multiple times - only a single API call needed
       // In a real app, you would make a server call here:
-      // await fetch('/api/people', {
+      // await fetch('/api/people/bulk', {
       //   method: 'POST',
-      //   body: JSON.stringify({ name: 'New Person' })
+      //   body: JSON.stringify({ count })
       // });
 
-      const newRow: Person = {
+      const newRows: Person[] = Array.from({ length: count }, () => ({
         id: generateId(),
-      };
+      }));
 
-      const newRowIndex = data.length;
-
-      // For this demo, just add a new row to the data
-      setData((prev) => [...prev, newRow]);
+      // For this demo, create multiple rows in a single state update
+      setData((prev) => [...prev, ...newRows]);
 
       // Track for undo/redo
-      trackRowsAdd([newRow]);
+      trackRowsAdd(newRows);
+    },
+    [trackRowsAdd]
+  );
 
-      return {
-        rowIndex: newRowIndex,
-        columnId: "name",
-      };
-    }, [data.length, trackRowsAdd]);
+  const onRowsDelete: NonNullable<UseDataGridProps<Person>["onRowsDelete"]> = React.useCallback(
+    (rows) => {
+      // In a real app, you would make a server call here:
+      // await fetch('/api/people', {
+      //   method: 'DELETE',
+      //   body: JSON.stringify({ ids: rows.map(r => r.id) })
+      // });
 
-  const onRowsAdd: NonNullable<UseDataGridProps<Person>["onRowsAdd"]> =
-    React.useCallback(
-      (count: number) => {
-        // Called when paste operation needs to create multiple rows at once
-        // This is more efficient than calling onRowAdd multiple times - only a single API call needed
-        // In a real app, you would make a server call here:
-        // await fetch('/api/people/bulk', {
-        //   method: 'POST',
-        //   body: JSON.stringify({ count })
-        // });
+      // Track for undo/redo (before deletion to capture the rows)
+      trackRowsDelete(rows);
 
-        const newRows: Person[] = Array.from({ length: count }, () => ({
-          id: generateId(),
-        }));
+      // For this demo, just filter out the deleted rows
+      setData((prev) => prev.filter((row) => !rows.includes(row)));
+    },
+    [trackRowsDelete]
+  );
 
-        // For this demo, create multiple rows in a single state update
-        setData((prev) => [...prev, ...newRows]);
+  const onFilesUpload: NonNullable<UseDataGridProps<Person>["onFilesUpload"]> = React.useCallback(
+    async ({ files, rowIndex: _rowIndex, columnId: _columnId }) => {
+      // In a real app, you would upload multiple files to your server/storage:
+      // const row = data[rowIndex];
+      // const formData = new FormData();
+      // files.forEach(file => formData.append('files', file));
+      // formData.append('personId', row.id);
+      // formData.append('columnId', columnId);
+      //
+      // const response = await fetch('/api/upload', {
+      //   method: 'POST',
+      //   body: formData
+      // });
+      // const data = await response.json();
+      // return data.files.map(f => ({
+      //   id: f.fileId,
+      //   name: f.fileName,
+      //   size: f.fileSize,
+      //   type: f.fileType,
+      //   url: f.fileUrl
+      // }));
 
-        // Track for undo/redo
-        trackRowsAdd(newRows);
-      },
-      [trackRowsAdd],
-    );
+      // For this demo, simulate an upload delay and create local URLs
+      await new Promise((resolve) => setTimeout(resolve, 800));
 
-  const onRowsDelete: NonNullable<UseDataGridProps<Person>["onRowsDelete"]> =
-    React.useCallback(
-      (rows) => {
-        // In a real app, you would make a server call here:
-        // await fetch('/api/people', {
-        //   method: 'DELETE',
-        //   body: JSON.stringify({ ids: rows.map(r => r.id) })
-        // });
+      return files.map((file) => ({
+        id: crypto.randomUUID(),
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        url: URL.createObjectURL(file),
+      }));
+    },
+    []
+  );
 
-        // Track for undo/redo (before deletion to capture the rows)
-        trackRowsDelete(rows);
-
-        // For this demo, just filter out the deleted rows
-        setData((prev) => prev.filter((row) => !rows.includes(row)));
-      },
-      [trackRowsDelete],
-    );
-
-  const onFilesUpload: NonNullable<UseDataGridProps<Person>["onFilesUpload"]> =
-    React.useCallback(
-      async ({ files, rowIndex: _rowIndex, columnId: _columnId }) => {
-        // In a real app, you would upload multiple files to your server/storage:
-        // const row = data[rowIndex];
-        // const formData = new FormData();
-        // files.forEach(file => formData.append('files', file));
-        // formData.append('personId', row.id);
-        // formData.append('columnId', columnId);
-        //
-        // const response = await fetch('/api/upload', {
-        //   method: 'POST',
-        //   body: formData
-        // });
-        // const data = await response.json();
-        // return data.files.map(f => ({
-        //   id: f.fileId,
-        //   name: f.fileName,
-        //   size: f.fileSize,
-        //   type: f.fileType,
-        //   url: f.fileUrl
-        // }));
-
-        // For this demo, simulate an upload delay and create local URLs
-        await new Promise((resolve) => setTimeout(resolve, 800));
-
-        return files.map((file) => ({
-          id: crypto.randomUUID(),
-          name: file.name,
-          size: file.size,
-          type: file.type,
-          url: URL.createObjectURL(file),
-        }));
-      },
-      [],
-    );
-
-  const onFilesDelete: NonNullable<UseDataGridProps<Person>["onFilesDelete"]> =
-    React.useCallback(async ({ fileIds, rowIndex, columnId }) => {
+  const onFilesDelete: NonNullable<UseDataGridProps<Person>["onFilesDelete"]> = React.useCallback(
+    async ({ fileIds, rowIndex, columnId }) => {
       // In a real app, you would delete multiple files from your server/storage:
       // const row = data[rowIndex];
       // await fetch('/api/files/batch-delete', {
@@ -407,9 +387,11 @@ export function DataGridDemo() {
       // For this demo, just log the deletion
       console.log(
         `Deleting ${fileIds.length} file(s) from row ${rowIndex}, column ${columnId}:`,
-        fileIds,
+        fileIds
       );
-    }, []);
+    },
+    []
+  );
 
   // Wrapper for onDataChange that tracks cell updates for undo/redo
   const onDataChange = React.useCallback(
@@ -426,18 +408,11 @@ export function DataGridDemo() {
         // Skip if both rows exist and we need to compare columns
         if (oldRow && newRow) {
           // Get all keys from both rows
-          const allKeys = new Set([
-            ...Object.keys(oldRow),
-            ...Object.keys(newRow),
-          ]);
+          const allKeys = new Set([...Object.keys(oldRow), ...Object.keys(newRow)]);
 
           for (const key of allKeys) {
-            const oldValue = (oldRow as unknown as Record<string, unknown>)[
-              key
-            ];
-            const newValue = (newRow as unknown as Record<string, unknown>)[
-              key
-            ];
+            const oldValue = (oldRow as unknown as Record<string, unknown>)[key];
+            const newValue = (newRow as unknown as Record<string, unknown>)[key];
 
             if (!Object.is(oldValue, newValue)) {
               cellUpdates.push({
@@ -458,7 +433,7 @@ export function DataGridDemo() {
 
       setData(newData);
     },
-    [data, trackCellsUpdate],
+    [data, trackCellsUpdate]
   );
 
   const height = Math.max(400, windowSize.height - 150);

@@ -1,9 +1,5 @@
-import { Button } from "@/styles/radix-nova/ui/button"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/radix-nova/ui/popover"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/radix-nova/ui/popover";
 
 export function PopoverAlignments() {
   return (
@@ -39,5 +35,5 @@ export function PopoverAlignments() {
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

@@ -1,15 +1,15 @@
-import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react"
+import { ChevronRightIcon, FileIcon, FolderIcon } from "lucide-react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
-import { Card, CardContent, CardHeader } from "@/styles/radix-nova/ui/card"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Card, CardContent, CardHeader } from "@/styles/radix-nova/ui/card";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/radix-nova/ui/collapsible"
-import { Tabs, TabsList, TabsTrigger } from "@/styles/radix-nova/ui/tabs"
+} from "@/styles/radix-nova/ui/collapsible";
+import { Tabs, TabsList, TabsTrigger } from "@/styles/radix-nova/ui/tabs";
 
-type FileTreeItem = { name: string } | { name: string; items: FileTreeItem[] }
+type FileTreeItem = { name: string } | { name: string; items: FileTreeItem[] };
 
 export function CollapsibleFileTree() {
   const fileTree: FileTreeItem[] = [
@@ -49,11 +49,7 @@ export function CollapsibleFileTree() {
     },
     {
       name: "public",
-      items: [
-        { name: "favicon.ico" },
-        { name: "logo.svg" },
-        { name: "images" },
-      ],
+      items: [{ name: "favicon.ico" }, { name: "logo.svg" }, { name: "images" }],
     },
     { name: "app.tsx" },
     { name: "layout.tsx" },
@@ -62,7 +58,7 @@ export function CollapsibleFileTree() {
     { name: "tsconfig.json" },
     { name: "README.md" },
     { name: ".gitignore" },
-  ]
+  ];
 
   const renderItem = (fileItem: FileTreeItem) => {
     if ("items" in fileItem) {
@@ -85,7 +81,7 @@ export function CollapsibleFileTree() {
             </div>
           </CollapsibleContent>
         </Collapsible>
-      )
+      );
     }
     return (
       <Button
@@ -97,8 +93,8 @@ export function CollapsibleFileTree() {
         <FileIcon />
         <span>{fileItem.name}</span>
       </Button>
-    )
-  }
+    );
+  };
 
   return (
     <Card className="mx-auto w-full max-w-[16rem] gap-2" size="sm">
@@ -111,10 +107,8 @@ export function CollapsibleFileTree() {
         </Tabs>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col gap-1">
-          {fileTree.map((item) => renderItem(item))}
-        </div>
+        <div className="flex flex-col gap-1">{fileTree.map((item) => renderItem(item))}</div>
       </CardContent>
     </Card>
-  )
+  );
 }

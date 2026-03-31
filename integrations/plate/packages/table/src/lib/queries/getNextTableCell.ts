@@ -1,6 +1,6 @@
-import { type Editor, type NodeEntry, type Path, PathApi } from 'platejs';
+import { type Editor, type NodeEntry, type Path, PathApi } from "platejs";
 
-import { getCellInNextTableRow } from './getCellInNextTableRow';
+import { getCellInNextTableRow } from "./getCellInNextTableRow";
 
 export const getNextTableCell = (
   editor: Editor,

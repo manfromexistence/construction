@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { getPlateCopyMarkdown } from '@/lib/llm-context';
+} from "@/components/ui/dropdown-menu";
+import { getPlateCopyMarkdown } from "@/lib/llm-context";
 
 type ViewOptionsProps = {
   content: string;
@@ -33,8 +33,8 @@ export function ViewOptions({ content, docUrl, title }: ViewOptionsProps) {
       body: `I have a question about the [${title}](${docUrl}) documentation.
 
 `,
-      category: 'q-a',
-      title: '',
+      category: "q-a",
+      title: "",
     }
   )}`;
 
@@ -48,11 +48,7 @@ export function ViewOptions({ content, docUrl, title }: ViewOptionsProps) {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">
         <DropdownMenuItem asChild>
-          <a
-            href={githubDiscussionUrl}
-            rel="noreferrer noopener"
-            target="_blank"
-          >
+          <a href={githubDiscussionUrl} rel="noreferrer noopener" target="_blank">
             <svg
               className="h-4 w-4 text-foreground"
               fill="currentColor"

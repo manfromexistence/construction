@@ -1,30 +1,18 @@
-import { type Modify, isDefined } from '@udecode/utils';
+import { isDefined, type Modify } from "@udecode/utils";
+import { isFunction } from "../../internal/utils/isFunction";
+import { mergePlugins } from "../../internal/utils/mergePlugins";
+import type { SlateEditor } from "../editor/SlateEditor";
+import type { AnyPluginConfig, PluginConfig } from "./BasePlugin";
+import type { SlatePlugin, SlatePluginMethods, SlatePlugins } from "./SlatePlugin";
 
-import type { SlateEditor } from '../editor/SlateEditor';
-import type { AnyPluginConfig, PluginConfig } from './BasePlugin';
-import type {
-  SlatePlugin,
-  SlatePluginMethods,
-  SlatePlugins,
-} from './SlatePlugin';
-
-import { isFunction } from '../../internal/utils/isFunction';
-import { mergePlugins } from '../../internal/utils/mergePlugins';
-
-type SlatePluginConfig<
-  K extends string = any,
-  O = {},
-  A = {},
-  T = {},
-  S = {},
-> = Omit<
+type SlatePluginConfig<K extends string = any, O = {}, A = {}, T = {}, S = {}> = Omit<
   Partial<
     Modify<
       SlatePlugin<PluginConfig<K, O, A, T, S>>,
-      { node?: Partial<SlatePlugin<PluginConfig<K, O, A, T, S>>['node']> }
+      { node?: Partial<SlatePlugin<PluginConfig<K, O, A, T, S>>["node"]> }
     >
   >,
-  keyof SlatePluginMethods | 'optionsStore'
+  keyof SlatePluginMethods | "optionsStore"
 >;
 
 type TSlatePluginConfig<C extends AnyPluginConfig = PluginConfig> = Omit<
@@ -32,11 +20,11 @@ type TSlatePluginConfig<C extends AnyPluginConfig = PluginConfig> = Omit<
     Modify<
       SlatePlugin<C>,
       {
-        node?: Partial<SlatePlugin<C>['node']>;
+        node?: Partial<SlatePlugin<C>["node"]>;
       }
     >
   >,
-  keyof SlatePluginMethods | 'optionsStore'
+  keyof SlatePluginMethods | "optionsStore"
 >;
 
 /**
@@ -88,13 +76,7 @@ type TSlatePluginConfig<C extends AnyPluginConfig = PluginConfig> = Omit<
  *   - `extendPlugin`: A method to extend an existing plugin (including nested
  *       plugins) or add a new one if not found.
  */
-export function createSlatePlugin<
-  K extends string = any,
-  O = {},
-  A = {},
-  T = {},
-  S = {},
->(
+export function createSlatePlugin<K extends string = any, O = {}, A = {}, T = {}, S = {}>(
   config:
     | ((editor: SlateEditor) => SlatePluginConfig<K, O, A, T, S>)
     | SlatePluginConfig<K, O, A, T, S> = {}
@@ -103,13 +85,13 @@ export function createSlatePlugin<
   let initialExtension: any;
 
   if (isFunction(config)) {
-    baseConfig = { key: '' as K };
+    baseConfig = { key: "" as K };
     initialExtension = (editor: any) => config(editor);
   } else {
     baseConfig = config as any;
   }
 
-  const key = baseConfig.key ?? '';
+  const key = baseConfig.key ?? "";
 
   const plugin = mergePlugins(
     {
@@ -144,8 +126,7 @@ export function createSlatePlugin<
 
   plugin.configure = (config) => {
     const newPlugin = { ...plugin };
-    newPlugin.__configuration = (ctx) =>
-      isFunction(config) ? config(ctx as any) : config;
+    newPlugin.__configuration = (ctx) => (isFunction(config) ? config(ctx as any) : config);
 
     return createSlatePlugin(newPlugin) as any;
   };
@@ -164,8 +145,7 @@ export function createSlatePlugin<
 
           return createSlatePlugin({
             ...nestedPlugin,
-            __configuration: (ctx: any) =>
-              isFunction(config) ? config(ctx) : config,
+            __configuration: (ctx: any) => (isFunction(config) ? config(ctx) : config),
           } as any);
         }
         if (nestedPlugin.plugins && nestedPlugin.plugins.length > 0) {
@@ -204,10 +184,7 @@ export function createSlatePlugin<
 
   plugin.extendSelectors = (extension) => {
     const newPlugin = { ...plugin };
-    newPlugin.__selectorExtensions = [
-      ...(newPlugin.__selectorExtensions as any),
-      extension,
-    ];
+    newPlugin.__selectorExtensions = [...(newPlugin.__selectorExtensions as any), extension];
 
     return createSlatePlugin(newPlugin) as any;
   };
@@ -261,10 +238,7 @@ export function createSlatePlugin<
     let newPlugin = { ...plugin };
 
     if (isFunction(extendConfig)) {
-      newPlugin.__extensions = [
-        ...(newPlugin.__extensions as any),
-        extendConfig,
-      ];
+      newPlugin.__extensions = [...(newPlugin.__extensions as any), extendConfig];
     } else {
       newPlugin = mergePlugins(newPlugin, extendConfig as any);
     }
@@ -289,8 +263,7 @@ export function createSlatePlugin<
             ...nestedPlugin,
             __extensions: [
               ...(nestedPlugin.__extensions as any),
-              (ctx: any) =>
-                isFunction(extendConfig) ? extendConfig(ctx) : extendConfig,
+              (ctx: any) => (isFunction(extendConfig) ? extendConfig(ctx) : extendConfig),
             ],
           } as any);
         }
@@ -320,9 +293,7 @@ export function createSlatePlugin<
           key: p.key,
           __extensions: [
             (ctx: any) =>
-              isFunction(extendConfig)
-                ? extendConfig(ctx as any)
-                : (extendConfig as any),
+              isFunction(extendConfig) ? extendConfig(ctx as any) : (extendConfig as any),
           ],
         } as any)
       );
@@ -350,9 +321,7 @@ export function createSlatePlugin<
  *   result.
  */
 export function createTSlatePlugin<C extends AnyPluginConfig = PluginConfig>(
-  config:
-    | ((editor: SlateEditor) => TSlatePluginConfig<C>)
-    | TSlatePluginConfig<C> = {}
+  config: ((editor: SlateEditor) => TSlatePluginConfig<C>) | TSlatePluginConfig<C> = {}
 ): SlatePlugin<C> {
   return createSlatePlugin(config as any) as any;
 }

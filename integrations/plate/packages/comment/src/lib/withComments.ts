@@ -1,10 +1,10 @@
-import type { OverrideEditor, TCommentText } from 'platejs';
+import type { OverrideEditor, TCommentText } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import type { BaseCommentConfig } from './BaseCommentPlugin';
+import type { BaseCommentConfig } from "./BaseCommentPlugin";
 
-import { getCommentCount, getDraftCommentKey } from './utils';
+import { getCommentCount, getDraftCommentKey } from "./utils";
 
 export const withComment: OverrideEditor<BaseCommentConfig> = ({
   editor,

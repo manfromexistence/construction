@@ -1,33 +1,29 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { BoldPlugin, ItalicPlugin, UnderlinePlugin } from "@platejs/basic-nodes/react";
 
-import type { Value } from 'platejs';
+import type { Value } from "platejs";
+import { Plate, usePlateEditor } from "platejs/react";
+import * as React from "react";
 
-import {
-  BoldPlugin,
-  ItalicPlugin,
-  UnderlinePlugin,
-} from '@platejs/basic-nodes/react';
-import { Plate, usePlateEditor } from 'platejs/react';
+import { Editor, EditorContainer } from "@/registry/ui/editor";
+import { FixedToolbar } from "@/registry/ui/fixed-toolbar";
+import { MarkToolbarButton } from "@/registry/ui/mark-toolbar-button";
 
-import { Editor, EditorContainer } from '@/registry/ui/editor';
-import { FixedToolbar } from '@/registry/ui/fixed-toolbar';
-import { MarkToolbarButton } from '@/registry/ui/mark-toolbar-button';
 // import { Bold, Italic, Underline } from 'lucide-react'; // Example icons
 
 const initialValue: Value = [
   {
     children: [
-      { text: 'Hello! Try out the ' },
-      { bold: true, text: 'bold' },
-      { text: ', ' },
-      { italic: true, text: 'italic' },
-      { text: ', and ' },
-      { text: 'underline', underline: true },
-      { text: ' formatting.' },
+      { text: "Hello! Try out the " },
+      { bold: true, text: "bold" },
+      { text: ", " },
+      { italic: true, text: "italic" },
+      { text: ", and " },
+      { text: "underline", underline: true },
+      { text: " formatting." },
     ],
-    type: 'p',
+    type: "p",
   },
 ];
 

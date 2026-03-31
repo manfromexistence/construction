@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Sparkles Text Demo",
   "description": "Example showing text with animated sparkle effects.",
-  "registryDependencies": [
-    "@magicui/sparkles-text"
-  ],
+  "registryDependencies": ["@magicui/sparkles-text"],
   "files": [
     {
       "path": "registry/example/sparkles-text-demo.tsx",

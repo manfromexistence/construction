@@ -1,18 +1,18 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { ListStyleType } from '../types';
-import { setIndentTodoNode, setListNode } from './setListNode';
+import { ListStyleType } from "../types";
+import { setIndentTodoNode, setListNode } from "./setListNode";
 
 const createTransformEditor = (children: any[]) =>
   createSlateEditor({
     value: children,
   });
 
-describe('setListNode', () => {
-  it('defaults to indent 1 and disc list style', () => {
+describe("setListNode", () => {
+  it("defaults to indent 1 and disc list style", () => {
     const editor = createTransformEditor([
       {
-        children: [{ text: 'Item' }],
+        children: [{ text: "Item" }],
         type: KEYS.p,
       },
     ]);
@@ -26,10 +26,10 @@ describe('setListNode', () => {
     });
   });
 
-  it('keeps a non-zero indent and custom list style', () => {
+  it("keeps a non-zero indent and custom list style", () => {
     const editor = createTransformEditor([
       {
-        children: [{ text: 'Item' }],
+        children: [{ text: "Item" }],
         type: KEYS.p,
       },
     ]);
@@ -37,22 +37,22 @@ describe('setListNode', () => {
     setListNode(editor, {
       at: [0],
       indent: 3,
-      listStyleType: 'decimal',
+      listStyleType: "decimal",
     });
 
     expect(editor.children[0]).toMatchObject({
       [KEYS.indent]: 3,
-      [KEYS.listType]: 'decimal',
+      [KEYS.listType]: "decimal",
       type: KEYS.p,
     });
   });
 });
 
-describe('setIndentTodoNode', () => {
-  it('defaults to indent 1, todo list type, and unchecked state', () => {
+describe("setIndentTodoNode", () => {
+  it("defaults to indent 1, todo list type, and unchecked state", () => {
     const editor = createTransformEditor([
       {
-        children: [{ text: 'Todo' }],
+        children: [{ text: "Todo" }],
         type: KEYS.p,
       },
     ]);
@@ -67,10 +67,10 @@ describe('setIndentTodoNode', () => {
     });
   });
 
-  it('keeps a non-zero indent for todo nodes', () => {
+  it("keeps a non-zero indent for todo nodes", () => {
     const editor = createTransformEditor([
       {
-        children: [{ text: 'Todo' }],
+        children: [{ text: "Todo" }],
         type: KEYS.p,
       },
     ]);

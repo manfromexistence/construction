@@ -2,12 +2,7 @@
   "name": "@platejs/test-utils",
   "version": "52.3.12",
   "description": "Testing utilities for Plate",
-  "keywords": [
-    "plate",
-    "plugin",
-    "slate",
-    "test"
-  ],
+  "keywords": ["plate", "plugin", "slate", "test"],
   "homepage": "https://platejs.org",
   "bugs": {
     "url": "https://github.com/udecode/plate/issues"
@@ -26,9 +21,7 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist/**/*"],
   "scripts": {
     "brl": "plate-pkg p:brl",
     "build": "plate-pkg p:build",

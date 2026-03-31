@@ -105,59 +105,35 @@ describe("MaskInput", () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="phone"
-          onValueChange={onValueChange}
-          data-testid="phone-input"
-        />,
-      );
+      render(<MaskInput mask="phone" onValueChange={onValueChange} data-testid="phone-input" />);
 
       const input = screen.getByTestId("phone-input");
 
       await user.type(input, "1234567890");
 
       expect(input).toHaveValue("(123) 456-7890");
-      expect(onValueChange).toHaveBeenLastCalledWith(
-        "(123) 456-7890",
-        "1234567890",
-      );
+      expect(onValueChange).toHaveBeenLastCalledWith("(123) 456-7890", "1234567890");
     });
 
     test("ssn mask pattern", async () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="ssn"
-          onValueChange={onValueChange}
-          data-testid="ssn-input"
-        />,
-      );
+      render(<MaskInput mask="ssn" onValueChange={onValueChange} data-testid="ssn-input" />);
 
       const input = screen.getByTestId("ssn-input");
 
       await user.type(input, "123456789");
 
       expect(input).toHaveValue("123-45-6789");
-      expect(onValueChange).toHaveBeenLastCalledWith(
-        "123-45-6789",
-        "123456789",
-      );
+      expect(onValueChange).toHaveBeenLastCalledWith("123-45-6789", "123456789");
     });
 
     test("date mask pattern", async () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="date"
-          onValueChange={onValueChange}
-          data-testid="date-input"
-        />,
-      );
+      render(<MaskInput mask="date" onValueChange={onValueChange} data-testid="date-input" />);
 
       const input = screen.getByTestId("date-input");
 
@@ -171,13 +147,7 @@ describe("MaskInput", () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="time"
-          onValueChange={onValueChange}
-          data-testid="time-input"
-        />,
-      );
+      render(<MaskInput mask="time" onValueChange={onValueChange} data-testid="time-input" />);
 
       const input = screen.getByTestId("time-input");
 
@@ -196,7 +166,7 @@ describe("MaskInput", () => {
           mask="creditCard"
           onValueChange={onValueChange}
           data-testid="credit-card-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("credit-card-input");
@@ -204,10 +174,7 @@ describe("MaskInput", () => {
       await user.type(input, "1234567890123456");
 
       expect(input).toHaveValue("1234 5678 9012 3456");
-      expect(onValueChange).toHaveBeenLastCalledWith(
-        "1234 5678 9012 3456",
-        "1234567890123456",
-      );
+      expect(onValueChange).toHaveBeenLastCalledWith("1234 5678 9012 3456", "1234567890123456");
     });
 
     test("creditCardExpiry mask pattern", async () => {
@@ -219,7 +186,7 @@ describe("MaskInput", () => {
           mask="creditCardExpiry"
           onValueChange={onValueChange}
           data-testid="credit-card-expiry-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("credit-card-expiry-input");
@@ -234,13 +201,7 @@ describe("MaskInput", () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="zipCode"
-          onValueChange={onValueChange}
-          data-testid="zip-input"
-        />,
-      );
+      render(<MaskInput mask="zipCode" onValueChange={onValueChange} data-testid="zip-input" />);
 
       const input = screen.getByTestId("zip-input");
 
@@ -255,11 +216,7 @@ describe("MaskInput", () => {
       const onValueChange = vi.fn();
 
       render(
-        <MaskInput
-          mask="currency"
-          onValueChange={onValueChange}
-          data-testid="currency-input"
-        />,
+        <MaskInput mask="currency" onValueChange={onValueChange} data-testid="currency-input" />
       );
 
       const input = screen.getByTestId("currency-input");
@@ -281,7 +238,7 @@ describe("MaskInput", () => {
           locale="de-DE"
           onValueChange={onValueChange}
           data-testid="currency-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("currency-input");
@@ -297,10 +254,7 @@ describe("MaskInput", () => {
         maximumFractionDigits: 2,
       }).format(1234.56);
       expect(input).toHaveValue(expectedEurFormat);
-      expect(onValueChange).toHaveBeenLastCalledWith(
-        expectedEurFormat,
-        "1234.56",
-      );
+      expect(onValueChange).toHaveBeenLastCalledWith(expectedEurFormat, "1234.56");
     });
 
     test("currency mask pattern with GBP", async () => {
@@ -314,7 +268,7 @@ describe("MaskInput", () => {
           locale="en-GB"
           onValueChange={onValueChange}
           data-testid="currency-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("currency-input");
@@ -330,11 +284,7 @@ describe("MaskInput", () => {
       const onValueChange = vi.fn();
 
       render(
-        <MaskInput
-          mask="currency"
-          onValueChange={onValueChange}
-          data-testid="currency-input"
-        />,
+        <MaskInput mask="currency" onValueChange={onValueChange} data-testid="currency-input" />
       );
 
       const input = screen.getByTestId("currency-input");
@@ -361,11 +311,7 @@ describe("MaskInput", () => {
       const onValueChange = vi.fn();
 
       render(
-        <MaskInput
-          mask="percentage"
-          onValueChange={onValueChange}
-          data-testid="percentage-input"
-        />,
+        <MaskInput mask="percentage" onValueChange={onValueChange} data-testid="percentage-input" />
       );
 
       const input = screen.getByTestId("percentage-input");
@@ -385,7 +331,7 @@ describe("MaskInput", () => {
           mask="licensePlate"
           onValueChange={onValueChange}
           data-testid="license-plate-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("license-plate-input");
@@ -400,13 +346,7 @@ describe("MaskInput", () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="ipv4"
-          onValueChange={onValueChange}
-          data-testid="ipv4-input"
-        />,
-      );
+      render(<MaskInput mask="ipv4" onValueChange={onValueChange} data-testid="ipv4-input" />);
 
       const input = screen.getByTestId("ipv4-input");
 
@@ -429,11 +369,7 @@ describe("MaskInput", () => {
       };
 
       render(
-        <MaskInput
-          mask={customMask}
-          onValueChange={onValueChange}
-          data-testid="custom-input"
-        />,
+        <MaskInput mask={customMask} onValueChange={onValueChange} data-testid="custom-input" />
       );
 
       const input = screen.getByTestId("custom-input");
@@ -453,11 +389,7 @@ describe("MaskInput", () => {
       };
 
       render(
-        <MaskInput
-          mask={customMask}
-          onValidate={onValidate}
-          data-testid="validation-input"
-        />,
+        <MaskInput mask={customMask} onValidate={onValidate} data-testid="validation-input" />
       );
 
       const input = screen.getByTestId("validation-input");
@@ -474,9 +406,7 @@ describe("MaskInput", () => {
   });
 
   describe("Validation Modes", () => {
-    const createValidationTest = (
-      mode: NonNullable<MaskInputProps["validationMode"]>,
-    ) => {
+    const createValidationTest = (mode: NonNullable<MaskInputProps["validationMode"]>) => {
       return async () => {
         const user = userEvent.setup();
         const onValidate = vi.fn();
@@ -487,7 +417,7 @@ describe("MaskInput", () => {
             validationMode={mode}
             onValidate={onValidate}
             data-testid="validation-input"
-          />,
+          />
         );
 
         const input = screen.getByTestId("validation-input");
@@ -530,7 +460,7 @@ describe("MaskInput", () => {
           validationMode="onTouched"
           onValidate={onValidate}
           data-testid="validation-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("validation-input");
@@ -554,13 +484,7 @@ describe("MaskInput", () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="phone"
-          onValueChange={onValueChange}
-          data-testid="phone-input"
-        />,
-      );
+      render(<MaskInput mask="phone" onValueChange={onValueChange} data-testid="phone-input" />);
 
       const input = screen.getByTestId("phone-input");
 
@@ -586,13 +510,7 @@ describe("MaskInput", () => {
     test("handles composition events (IME)", async () => {
       const onValueChange = vi.fn();
 
-      render(
-        <MaskInput
-          mask="phone"
-          onValueChange={onValueChange}
-          data-testid="phone-input"
-        />,
-      );
+      render(<MaskInput mask="phone" onValueChange={onValueChange} data-testid="phone-input" />);
 
       const input = screen.getByTestId("phone-input");
 
@@ -623,7 +541,7 @@ describe("MaskInput", () => {
           onBlur={onBlur}
           placeholder="Enter phone"
           data-testid="phone-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("phone-input");
@@ -650,7 +568,7 @@ describe("MaskInput", () => {
           placeholder="Enter phone"
           maskPlaceholder="(___) ___-____"
           data-testid="phone-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("phone-input");
@@ -670,13 +588,7 @@ describe("MaskInput", () => {
     test("does not show mask placeholder when maskPlaceholder prop is not provided", async () => {
       const user = userEvent.setup();
 
-      render(
-        <MaskInput
-          mask="phone"
-          placeholder="Enter phone"
-          data-testid="phone-input"
-        />,
-      );
+      render(<MaskInput mask="phone" placeholder="Enter phone" data-testid="phone-input" />);
 
       const input = screen.getByTestId("phone-input");
 
@@ -701,7 +613,7 @@ describe("MaskInput", () => {
           placeholder="Enter amount"
           maskPlaceholder="$0.00"
           data-testid="currency-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("currency-input");
@@ -727,7 +639,7 @@ describe("MaskInput", () => {
           placeholder="Enter percentage"
           maskPlaceholder="0.00%"
           data-testid="percentage-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("percentage-input");
@@ -758,7 +670,7 @@ describe("MaskInput", () => {
           placeholder="Enter code"
           maskPlaceholder="ABC-123"
           data-testid="custom-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("custom-input");
@@ -778,13 +690,7 @@ describe("MaskInput", () => {
     test("handles maskPlaceholder without regular placeholder", async () => {
       const user = userEvent.setup();
 
-      render(
-        <MaskInput
-          mask="phone"
-          maskPlaceholder="(___) ___-____"
-          data-testid="phone-input"
-        />,
-      );
+      render(<MaskInput mask="phone" maskPlaceholder="(___) ___-____" data-testid="phone-input" />);
 
       const input = screen.getByTestId("phone-input");
 
@@ -812,7 +718,7 @@ describe("MaskInput", () => {
           withoutMask
           onValueChange={onValueChange}
           data-testid="no-mask-input"
-        />,
+        />
       );
 
       const input = screen.getByTestId("no-mask-input");
@@ -820,25 +726,20 @@ describe("MaskInput", () => {
       await user.type(input, "1234567890");
 
       expect(input).toHaveValue("1234567890");
-      expect(onValueChange).toHaveBeenLastCalledWith(
-        "1234567890",
-        "1234567890",
-      );
+      expect(onValueChange).toHaveBeenLastCalledWith("1234567890", "1234567890");
     });
 
     test("controlled vs uncontrolled behavior", async () => {
       // Uncontrolled
       const { rerender } = render(
-        <MaskInput mask="phone" defaultValue="123" data-testid="phone-input" />,
+        <MaskInput mask="phone" defaultValue="123" data-testid="phone-input" />
       );
 
       let input = screen.getByTestId("phone-input");
       expect(input).toHaveValue("(123");
 
       // Controlled
-      rerender(
-        <MaskInput mask="phone" value="456" data-testid="phone-input" />,
-      );
+      rerender(<MaskInput mask="phone" value="456" data-testid="phone-input" />);
 
       input = screen.getByTestId("phone-input");
       expect(input).toHaveValue("(456");
@@ -872,7 +773,7 @@ describe("MaskInput", () => {
       render(
         <MaskInput asChild mask="phone">
           <CustomInput />
-        </MaskInput>,
+        </MaskInput>
       );
 
       // Should render the custom component structure
@@ -1046,8 +947,7 @@ describe("MaskInput", () => {
       });
 
       test("applies custom transform", () => {
-        const transform = (value: string) =>
-          value.replace(/[^A-Z0-9]/gi, "").toUpperCase();
+        const transform = (value: string) => value.replace(/[^A-Z0-9]/gi, "").toUpperCase();
         const result = getUnmaskedValue({
           value: "abc-123",
           transform,
@@ -1418,14 +1318,7 @@ describe("MaskInput", () => {
 
     test("maintains cursor position when editing EUR currency in the middle", async () => {
       const user = userEvent.setup();
-      render(
-        <MaskInput
-          mask="currency"
-          currency="EUR"
-          locale="de-DE"
-          data-testid="mask-input"
-        />,
-      );
+      render(<MaskInput mask="currency" currency="EUR" locale="de-DE" data-testid="mask-input" />);
       const input = screen.getByTestId("mask-input") as HTMLInputElement;
 
       // Type EUR amount (German format uses comma as decimal separator)
@@ -1453,14 +1346,7 @@ describe("MaskInput", () => {
 
     test("maintains cursor position when editing USD currency in the middle", async () => {
       const user = userEvent.setup();
-      render(
-        <MaskInput
-          mask="currency"
-          currency="USD"
-          locale="en-US"
-          data-testid="mask-input"
-        />,
-      );
+      render(<MaskInput mask="currency" currency="USD" locale="en-US" data-testid="mask-input" />);
       const input = screen.getByTestId("mask-input") as HTMLInputElement;
 
       // Type USD amount

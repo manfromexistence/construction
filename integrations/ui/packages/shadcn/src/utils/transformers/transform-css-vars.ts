@@ -1,16 +1,12 @@
-import { registryBaseColorSchema } from "@/src/schema"
-import { Transformer } from "@/src/utils/transformers"
-import { ScriptKind, SyntaxKind } from "ts-morph"
-import { z } from "zod"
+import { ScriptKind, SyntaxKind } from "ts-morph";
+import { z } from "zod";
+import { registryBaseColorSchema } from "@/src/schema";
+import { Transformer } from "@/src/utils/transformers";
 
-export const transformCssVars: Transformer = async ({
-  sourceFile,
-  config,
-  baseColor,
-}) => {
+export const transformCssVars: Transformer = async ({ sourceFile, config, baseColor }) => {
   // No transform if using css variables.
   if (config.tailwind?.cssVariables || !baseColor?.inlineColors) {
-    return sourceFile
+    return sourceFile;
   }
 
   // Find jsx attributes with the name className.
@@ -31,15 +27,15 @@ export const transformCssVars: Transformer = async ({
   //   }
   // }
   sourceFile.getDescendantsOfKind(SyntaxKind.StringLiteral).forEach((node) => {
-    const raw = node.getLiteralText()
-    const mapped = applyColorMapping(raw, baseColor.inlineColors).trim()
+    const raw = node.getLiteralText();
+    const mapped = applyColorMapping(raw, baseColor.inlineColors).trim();
     if (mapped !== raw) {
-      node.setLiteralValue(mapped)
+      node.setLiteralValue(mapped);
     }
-  })
+  });
 
-  return sourceFile
-}
+  return sourceFile;
+};
 
 // export default function transformer(file: FileInfo, api: API) {
 //   const j = api.jscodeshift.withParser("tsx")
@@ -104,48 +100,48 @@ export const transformCssVars: Transformer = async ({
 // eg. sm:group-data-[size=default]/alert-dialog-content:text-left -> [sm:group-data-[size=default]/alert-dialog-content, text-left, null]
 export function splitClassName(className: string): (string | null)[] {
   if (!className.includes("/") && !className.includes(":")) {
-    return [null, className, null]
+    return [null, className, null];
   }
 
   // Find the last colon that's not inside brackets to split variant from name.
-  let lastColonIndex = -1
-  let bracketDepth = 0
+  let lastColonIndex = -1;
+  let bracketDepth = 0;
   for (let i = className.length - 1; i >= 0; i--) {
-    const char = className[i]
-    if (char === "]") bracketDepth++
-    else if (char === "[") bracketDepth--
+    const char = className[i];
+    if (char === "]") bracketDepth++;
+    else if (char === "[") bracketDepth--;
     else if (char === ":" && bracketDepth === 0) {
-      lastColonIndex = i
-      break
+      lastColonIndex = i;
+      break;
     }
   }
 
-  let variant: string | null = null
-  let nameWithAlpha: string
+  let variant: string | null = null;
+  let nameWithAlpha: string;
 
   if (lastColonIndex === -1) {
     // No colon outside brackets, entire string is the name (possibly with alpha).
-    nameWithAlpha = className
+    nameWithAlpha = className;
   } else {
-    variant = className.slice(0, lastColonIndex)
-    nameWithAlpha = className.slice(lastColonIndex + 1)
+    variant = className.slice(0, lastColonIndex);
+    nameWithAlpha = className.slice(lastColonIndex + 1);
   }
 
   // Now split nameWithAlpha by "/" for alpha modifier.
   // Alpha modifiers are numeric (e.g., /50) or arbitrary (e.g., /[50%]).
   // Named groups like /alert-dialog-content would have been part of variant.
-  const slashIndex = nameWithAlpha.lastIndexOf("/")
+  const slashIndex = nameWithAlpha.lastIndexOf("/");
   if (slashIndex === -1) {
-    return [variant, nameWithAlpha, null]
+    return [variant, nameWithAlpha, null];
   }
 
-  const name = nameWithAlpha.slice(0, slashIndex)
-  const alpha = nameWithAlpha.slice(slashIndex + 1)
+  const name = nameWithAlpha.slice(0, slashIndex);
+  const alpha = nameWithAlpha.slice(slashIndex + 1);
 
-  return [variant, name, alpha]
+  return [variant, name, alpha];
 }
 
-const PREFIXES = ["bg-", "text-", "border-", "ring-offset-", "ring-"]
+const PREFIXES = ["bg-", "text-", "border-", "ring-offset-", "ring-"];
 
 export function applyColorMapping(
   input: string,
@@ -153,43 +149,41 @@ export function applyColorMapping(
 ) {
   // Handle border classes.
   if (input.includes(" border ")) {
-    input = input.replace(" border ", " border border-border ")
+    input = input.replace(" border ", " border border-border ");
   }
 
   // Build color mappings.
-  const classNames = input.split(" ")
-  const lightMode = new Set<string>()
-  const darkMode = new Set<string>()
-  for (let className of classNames) {
-    const [variant, value, modifier] = splitClassName(className)
-    const prefix = PREFIXES.find((prefix) => value?.startsWith(prefix))
+  const classNames = input.split(" ");
+  const lightMode = new Set<string>();
+  const darkMode = new Set<string>();
+  for (const className of classNames) {
+    const [variant, value, modifier] = splitClassName(className);
+    const prefix = PREFIXES.find((prefix) => value?.startsWith(prefix));
     if (!prefix) {
       if (!lightMode.has(className)) {
-        lightMode.add(className)
+        lightMode.add(className);
       }
-      continue
+      continue;
     }
 
-    const needle = value?.replace(prefix, "")
+    const needle = value?.replace(prefix, "");
     if (needle && needle in mapping.light) {
       lightMode.add(
-        [variant, `${prefix}${mapping.light[needle]}`]
-          .filter(Boolean)
-          .join(":") + (modifier ? `/${modifier}` : "")
-      )
+        [variant, `${prefix}${mapping.light[needle]}`].filter(Boolean).join(":") +
+          (modifier ? `/${modifier}` : "")
+      );
 
       darkMode.add(
-        ["dark", variant, `${prefix}${mapping.dark[needle]}`]
-          .filter(Boolean)
-          .join(":") + (modifier ? `/${modifier}` : "")
-      )
-      continue
+        ["dark", variant, `${prefix}${mapping.dark[needle]}`].filter(Boolean).join(":") +
+          (modifier ? `/${modifier}` : "")
+      );
+      continue;
     }
 
     if (!lightMode.has(className)) {
-      lightMode.add(className)
+      lightMode.add(className);
     }
   }
 
-  return [...Array.from(lightMode), ...Array.from(darkMode)].join(" ").trim()
+  return [...Array.from(lightMode), ...Array.from(darkMode)].join(" ").trim();
 }

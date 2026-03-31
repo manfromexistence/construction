@@ -63,10 +63,7 @@ function useStore<T>(selector: (state: StoreState) => T): T {
     throw new Error(`\`useQRCode\` must be used within \`${ROOT_NAME}\``);
   }
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
@@ -169,7 +166,7 @@ function QRCode(props: QRCodeProps) {
       },
       width: size,
     }),
-    [level, margin, foregroundColor, backgroundColor, size, quality],
+    [level, margin, foregroundColor, backgroundColor, size, quality]
   );
 
   const generationKey = React.useMemo(() => {
@@ -191,11 +188,7 @@ function QRCode(props: QRCodeProps) {
       if (!value || !targetGenerationKey) return;
 
       const currentState = store.getState();
-      if (
-        currentState.isGenerating ||
-        currentState.generationKey === targetGenerationKey
-      )
-        return;
+      if (currentState.isGenerating || currentState.generationKey === targetGenerationKey) return;
 
       store.setStates({
         isGenerating: true,
@@ -235,9 +228,7 @@ function QRCode(props: QRCodeProps) {
         onGenerated?.();
       } catch (error) {
         const parsedError =
-          error instanceof Error
-            ? error
-            : new Error("Failed to generate QR code");
+          error instanceof Error ? error : new Error("Failed to generate QR code");
         store.setStates({
           error: parsedError,
           isGenerating: false,
@@ -245,7 +236,7 @@ function QRCode(props: QRCodeProps) {
         onError?.(parsedError);
       }
     },
-    [value, canvasOpts, store, onError, onGenerated],
+    [value, canvasOpts, store, onError, onGenerated]
   );
 
   const contextValue = React.useMemo<QRCodeContextValue>(
@@ -258,7 +249,7 @@ function QRCode(props: QRCodeProps) {
       foregroundColor,
       canvasRef,
     }),
-    [value, size, backgroundColor, foregroundColor, level, margin],
+    [value, size, backgroundColor, foregroundColor, level, margin]
   );
 
   React.useLayoutEffect(() => {
@@ -316,7 +307,7 @@ function QRCodeCanvas(props: QRCodeCanvasProps) {
       className={cn(
         "relative max-h-(--qr-code-size) max-w-(--qr-code-size)",
         !generationKey && "invisible",
-        className,
+        className
       )}
     />
   );
@@ -340,10 +331,7 @@ function QRCodeSvg(props: QRCodeSvgProps) {
     <SvgPrimitive
       data-slot="qr-code-svg"
       {...svgProps}
-      className={cn(
-        "relative max-h-(--qr-code-size) max-w-(--qr-code-size)",
-        className,
-      )}
+      className={cn("relative max-h-(--qr-code-size) max-w-(--qr-code-size)", className)}
       style={{ width: context.size, height: context.size, ...style }}
       dangerouslySetInnerHTML={{ __html: svgString }}
     />
@@ -372,10 +360,7 @@ function QRCodeImage(props: QRCodeImageProps) {
       alt={alt}
       width={context.size}
       height={context.size}
-      className={cn(
-        "relative max-h-(--qr-code-size) max-w-(--qr-code-size)",
-        className,
-      )}
+      className={cn("relative max-h-(--qr-code-size) max-w-(--qr-code-size)", className)}
     />
   );
 }
@@ -425,7 +410,7 @@ function QRCodeDownload(props: QRCodeDownloadProps) {
         URL.revokeObjectURL(link.href);
       }
     },
-    [dataUrl, svgString, filename, format, buttonProps.onClick],
+    [dataUrl, svgString, filename, format, buttonProps.onClick]
   );
 
   const ButtonPrimitive = asChild ? SlotPrimitive.Slot : "button";
@@ -458,7 +443,7 @@ function QRCodeOverlay(props: QRCodeOverlayProps) {
       {...overlayProps}
       className={cn(
         "absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-sm bg-background",
-        className,
+        className
       )}
     />
   );
@@ -488,7 +473,7 @@ function QRCodeSkeleton(props: QRCodeSkeletonProps) {
       {...skeletonProps}
       className={cn(
         "absolute max-h-(--qr-code-size) max-w-(--qr-code-size) animate-pulse bg-accent",
-        className,
+        className
       )}
       style={{
         width: context.size,

@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { BluetoothIcon } from "lucide-react"
+import { BluetoothIcon } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,8 +15,8 @@ import {
   AlertDialogMedia,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/styles/radix-nova/ui-rtl/alert-dialog"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
+} from "@/styles/radix-nova/ui-rtl/alert-dialog";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
 
 const translations: Translations = {
   en: {
@@ -33,8 +30,7 @@ const translations: Translations = {
       cancel: "Cancel",
       continue: "Continue",
       smallTitle: "Allow accessory to connect?",
-      smallDescription:
-        "Do you want to allow the USB accessory to connect to this device?",
+      smallDescription: "Do you want to allow the USB accessory to connect to this device?",
       dontAllow: "Don't allow",
       allow: "Allow",
     },
@@ -45,8 +41,7 @@ const translations: Translations = {
       showDialog: "إظهار الحوار",
       showDialogSm: "إظهار الحوار (صغير)",
       title: "هل أنت متأكد تمامًا؟",
-      description:
-        "لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا من خوادمنا.",
+      description: "لا يمكن التراجع عن هذا الإجراء. سيؤدي هذا إلى حذف حسابك نهائيًا من خوادمنا.",
       cancel: "إلغاء",
       continue: "متابعة",
       smallTitle: "السماح للملحق بالاتصال؟",
@@ -61,8 +56,7 @@ const translations: Translations = {
       showDialog: "הצג דיאלוג",
       showDialogSm: "הצג דיאלוג (קטן)",
       title: "האם אתה בטוח לחלוטין?",
-      description:
-        "פעולה זו לא ניתנת לביטול. זה ימחק לצמיתות את החשבון שלך מהשרתים שלנו.",
+      description: "פעולה זו לא ניתנת לביטול. זה ימחק לצמיתות את החשבון שלך מהשרתים שלנו.",
       cancel: "ביטול",
       continue: "המשך",
       smallTitle: "לאפשר להתקן להתחבר?",
@@ -71,10 +65,10 @@ const translations: Translations = {
       allow: "אפשר",
     },
   },
-}
+};
 
 export function AlertDialogRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
+  const { dir, t, language } = useTranslation(translations, "ar");
 
   return (
     <div className="flex gap-4" dir={dir}>
@@ -82,10 +76,7 @@ export function AlertDialogRtl() {
         <AlertDialogTrigger asChild>
           <Button variant="outline">{t.showDialog}</Button>
         </AlertDialogTrigger>
-        <AlertDialogContent
-          dir={dir}
-          data-lang={dir === "rtl" ? language : undefined}
-        >
+        <AlertDialogContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
           <AlertDialogHeader>
             <AlertDialogTitle>{t.title}</AlertDialogTitle>
             <AlertDialogDescription>{t.description}</AlertDialogDescription>
@@ -100,19 +91,13 @@ export function AlertDialogRtl() {
         <AlertDialogTrigger asChild>
           <Button variant="outline">{t.showDialogSm}</Button>
         </AlertDialogTrigger>
-        <AlertDialogContent
-          size="sm"
-          dir={dir}
-          data-lang={dir === "rtl" ? language : undefined}
-        >
+        <AlertDialogContent size="sm" dir={dir} data-lang={dir === "rtl" ? language : undefined}>
           <AlertDialogHeader>
             <AlertDialogMedia>
               <BluetoothIcon />
             </AlertDialogMedia>
             <AlertDialogTitle>{t.smallTitle}</AlertDialogTitle>
-            <AlertDialogDescription>
-              {t.smallDescription}
-            </AlertDialogDescription>
+            <AlertDialogDescription>{t.smallDescription}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t.dontAllow}</AlertDialogCancel>
@@ -121,5 +106,5 @@ export function AlertDialogRtl() {
         </AlertDialogContent>
       </AlertDialog>
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import { InteractiveGridPattern } from "@/registry/magicui/interactive-grid-pattern"
+import { cn } from "@/lib/utils";
+import { InteractiveGridPattern } from "@/registry/magicui/interactive-grid-pattern";
 
 export default function InteractiveGridPatternDemo() {
   return (
@@ -13,5 +13,5 @@ export default function InteractiveGridPatternDemo() {
         )}
       />
     </div>
-  )
+  );
 }

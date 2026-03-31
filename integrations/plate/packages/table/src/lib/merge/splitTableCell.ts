@@ -1,22 +1,16 @@
-import type {
-  Descendant,
-  Path,
-  SlateEditor,
-  TTableCellElement,
-  TTableRowElement,
-} from 'platejs';
+import type { Descendant, Path, SlateEditor, TTableCellElement, TTableRowElement } from "platejs";
 
-import { getEditorPlugin, KEYS } from 'platejs';
+import { getEditorPlugin, KEYS } from "platejs";
 
-import { getCellIndices } from '..';
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { getTableGridAbove } from '../queries';
+import { getCellIndices } from "..";
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { getTableGridAbove } from "../queries";
 
 export const splitTableCell = (editor: SlateEditor) => {
   const { api } = getEditorPlugin(editor, BaseTablePlugin);
   const tableRowType = editor.getType(KEYS.tr);
 
-  const cellEntries = getTableGridAbove(editor, { format: 'cell' });
+  const cellEntries = getTableGridAbove(editor, { format: "cell" });
   const [[cellElem, path]] = cellEntries;
 
   editor.tf.withoutNormalizing(() => {
@@ -104,10 +98,7 @@ export const splitTableCell = (editor: SlateEditor) => {
       for (let j = 0; j < colPaths.length; j++) {
         const cellChildren = api.table.getCellChildren!(cellElem);
 
-        const cellToInsert =
-          i === 0 && j === 0
-            ? createEmptyCell(cellChildren)
-            : createEmptyCell();
+        const cellToInsert = i === 0 && j === 0 ? createEmptyCell(cellChildren) : createEmptyCell();
 
         // if row exists, insert into it, otherwise insert row
         if (rowEntry) {

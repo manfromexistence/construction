@@ -1,17 +1,13 @@
-"use client"
+"use client";
 
-import { BotIcon, ChevronDownIcon } from "lucide-react"
+import { BotIcon, ChevronDownIcon } from "lucide-react";
 
-import { useLanguageContext } from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/base-nova/ui-rtl/popover"
-import { Separator } from "@/styles/base-nova/ui-rtl/separator"
-import { Textarea } from "@/styles/base-nova/ui-rtl/textarea"
+import { useLanguageContext } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/base-nova/ui-rtl/popover";
+import { Separator } from "@/styles/base-nova/ui-rtl/separator";
+import { Textarea } from "@/styles/base-nova/ui-rtl/textarea";
 
 const translations = {
   ar: {
@@ -21,8 +17,7 @@ const translations = {
     agentTasks: "مهام الوكيل",
     placeholder: "صف مهمتك بلغة طبيعية.",
     startTask: "ابدأ مهمة جديدة مع المساعد",
-    description:
-      "صف مهمتك بلغة طبيعية. سيعمل المساعد في الخلفية ويفتح طلب سحب لمراجعتك.",
+    description: "صف مهمتك بلغة طبيعية. سيعمل المساعد في الخلفية ويفتح طلب سحب لمراجعتك.",
   },
   he: {
     dir: "rtl" as const,
@@ -31,15 +26,14 @@ const translations = {
     agentTasks: "משימות סוכן",
     placeholder: "תאר את המשימה שלך בשפה טבעית.",
     startTask: "התחל משימה חדשה עם העוזר",
-    description:
-      "תאר את המשימה שלך בשפה טבעית. העוזר יעבוד ברקע ויפתח בקשת משיכה לבדיקתך.",
+    description: "תאר את המשימה שלך בשפה טבעית. העוזר יעבוד ברקע ויפתח בקשת משיכה לבדיקתך.",
   },
-}
+};
 
 export function ButtonGroupPopover() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
 
   return (
     <ButtonGroup dir={t.dir}>
@@ -48,36 +42,22 @@ export function ButtonGroupPopover() {
       </Button>
       <Popover>
         <PopoverTrigger
-          render={
-            <Button
-              variant="outline"
-              size="icon-sm"
-              aria-label={t.openPopover}
-            />
-          }
+          render={<Button variant="outline" size="icon-sm" aria-label={t.openPopover} />}
         >
           <ChevronDownIcon />
         </PopoverTrigger>
-        <PopoverContent
-          align="start"
-          dir={t.dir}
-          data-lang={lang}
-          className="p-0"
-        >
+        <PopoverContent align="start" dir={t.dir} data-lang={lang} className="p-0">
           <div className="px-4 py-3">
             <div className="text-sm font-medium">{t.agentTasks}</div>
           </div>
           <Separator />
           <div className="p-4 text-sm *:[p:not(:last-child)]:mb-2">
-            <Textarea
-              placeholder={t.placeholder}
-              className="mb-4 resize-none"
-            />
+            <Textarea placeholder={t.placeholder} className="mb-4 resize-none" />
             <p className="font-medium">{t.startTask}</p>
             <p className="text-muted-foreground">{t.description}</p>
           </div>
         </PopoverContent>
       </Popover>
     </ButtonGroup>
-  )
+  );
 }

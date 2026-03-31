@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "field",
-  "registryDependencies": [
-    "label",
-    "separator"
-  ],
+  "registryDependencies": ["label", "separator"],
   "files": [
     {
       "path": "registry/base-mira/ui/field.tsx",

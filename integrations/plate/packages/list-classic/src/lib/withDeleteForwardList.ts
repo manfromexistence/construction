@@ -1,28 +1,23 @@
 import {
   type EditorTransforms,
   type ElementEntry,
-  type OverrideEditor,
-  type SlateEditor,
-  type TElement,
   KEYS,
   NodeApi,
+  type OverrideEditor,
   PathApi,
-} from 'platejs';
+  type SlateEditor,
+  type TElement,
+} from "platejs";
 
-import type { ListConfig } from './BaseListPlugin';
+import type { ListConfig } from "./BaseListPlugin";
 
-import {
-  getListItemEntry,
-  getListRoot,
-  hasListChild,
-  isAcrossListItems,
-} from './queries/index';
+import { getListItemEntry, getListRoot, hasListChild, isAcrossListItems } from "./queries/index";
 import {
   moveListItemsToList,
   moveListItemUp,
   removeFirstListItem,
   removeListItem,
-} from './transforms/index';
+} from "./transforms/index";
 
 const selectionIsNotInAListHandler = (editor: SlateEditor): boolean => {
   const pointAfterSelection = editor.api.after(editor.selection!.focus);
@@ -63,8 +58,8 @@ const selectionIsNotInAListHandler = (editor: SlateEditor): boolean => {
 const selectionIsInAListHandler = (
   editor: SlateEditor,
   res: { list: ElementEntry; listItem: ElementEntry },
-  defaultDelete: EditorTransforms['deleteBackward'],
-  unit: 'block' | 'character' | 'line' | 'word' = 'character'
+  defaultDelete: EditorTransforms["deleteBackward"],
+  unit: "block" | "character" | "line" | "word" = "character"
 ): boolean => {
   const { listItem } = res;
 
@@ -73,7 +68,7 @@ const selectionIsInAListHandler = (
     const liType = editor.getType(KEYS.li);
     const _nodes = editor.api.nodes({
       at: listItem[1],
-      mode: 'lowest',
+      mode: "lowest",
       match: (node, path) => {
         if (path.length === 0) {
           return false;
@@ -115,9 +110,7 @@ const selectionIsInAListHandler = (
       return false;
     }
 
-    const siblingListItem = editor.api.node<TElement>(
-      PathApi.next(liWithSiblings)
-    );
+    const siblingListItem = editor.api.node<TElement>(PathApi.next(liWithSiblings));
 
     if (!siblingListItem) return false;
 
@@ -150,7 +143,7 @@ const selectionIsInAListHandler = (
     const licType = editor.getType(KEYS.lic);
     const _licNodes = editor.api.nodes<TElement>({
       at: pointAfterListItem.path,
-      mode: 'lowest',
+      mode: "lowest",
       match: (node) => node.type === licType,
     });
     const nextSelectableLic = [..._licNodes][0];
@@ -161,9 +154,7 @@ const selectionIsInAListHandler = (
     // manually run default delete
     defaultDelete(unit);
 
-    const leftoverListItem = editor.api.node<TElement>(
-      PathApi.parent(nextSelectableLic[1])
-    )!;
+    const leftoverListItem = editor.api.node<TElement>(PathApi.parent(nextSelectableLic[1]))!;
 
     if (leftoverListItem && leftoverListItem[0].children.length === 0) {
       // remove the leftover empty list item
@@ -174,15 +165,11 @@ const selectionIsInAListHandler = (
   }
 
   // if it has children
-  const nestedList = editor.api.node<TElement>(
-    PathApi.next([...listItem[1], 0])
-  );
+  const nestedList = editor.api.node<TElement>(PathApi.next([...listItem[1], 0]));
 
   if (!nestedList) return false;
 
-  const nestedListItem = Array.from(
-    NodeApi.children<TElement>(editor, nestedList[1])
-  )[0];
+  const nestedListItem = Array.from(NodeApi.children<TElement>(editor, nestedList[1]))[0];
 
   if (
     removeFirstListItem(editor, {
@@ -229,12 +216,7 @@ export const withDeleteForwardList: OverrideEditor<ListConfig> = ({
             return;
           }
 
-          skipDefaultDelete = selectionIsInAListHandler(
-            editor,
-            res,
-            deleteForward,
-            unit
-          );
+          skipDefaultDelete = selectionIsInAListHandler(editor, res, deleteForward, unit);
         });
 
         return skipDefaultDelete;

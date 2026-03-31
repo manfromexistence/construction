@@ -1,15 +1,14 @@
-import React from 'react';
+import type { Value } from "@platejs/slate";
+import React from "react";
 
-import type { Value } from '@platejs/slate';
-
-import type { AnyPluginConfig } from '../../lib';
+import type { AnyPluginConfig } from "../../lib";
 
 import {
   type CreatePlateEditorOptions,
+  createPlateEditor,
   type PlateCorePlugin,
   type TPlateEditor,
-  createPlateEditor,
-} from '../editor';
+} from "../editor";
 
 /**
  * Creates a memoized Plate editor for React components.

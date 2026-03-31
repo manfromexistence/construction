@@ -1,20 +1,9 @@
-import type { PlateEditor } from 'platejs/react';
+import { BlockSelectionPlugin, removeBlockSelectionNodes } from "@platejs/selection/react";
+import cloneDeep from "lodash/cloneDeep.js";
+import { KEYS, NodeApi, type NodeEntry, type SlateEditor, type TElement, TextApi } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import {
-  BlockSelectionPlugin,
-  removeBlockSelectionNodes,
-} from '@platejs/selection/react';
-import cloneDeep from 'lodash/cloneDeep.js';
-import {
-  type NodeEntry,
-  type SlateEditor,
-  type TElement,
-  KEYS,
-  NodeApi,
-  TextApi,
-} from 'platejs';
-
-import type { AIChatPluginConfig } from '../AIChatPlugin';
+import type { AIChatPluginConfig } from "../AIChatPlugin";
 
 export const createFormattedBlocks = ({
   blocks,
@@ -22,10 +11,10 @@ export const createFormattedBlocks = ({
   sourceBlock,
 }: {
   blocks: TElement[];
-  format: 'all' | 'none' | 'single';
+  format: "all" | "none" | "single";
   sourceBlock: NodeEntry;
 }) => {
-  if (format === 'none') return cloneDeep(blocks);
+  if (format === "none") return cloneDeep(blocks);
 
   const [sourceNode] = sourceBlock;
   const firstTextEntry = NodeApi.firstText(sourceNode);
@@ -50,7 +39,7 @@ export const createFormattedBlocks = ({
   };
 
   return blocks.map((block, index) => {
-    if (format === 'single' && index > 0) {
+    if (format === "single" && index > 0) {
       return block;
     }
 
@@ -64,14 +53,11 @@ export const createFormattedBlocks = ({
 export const replaceSelectionAIChat = (
   editor: PlateEditor,
   sourceEditor: SlateEditor,
-  { format = 'single' }: { format?: 'all' | 'none' | 'single' } = {}
+  { format = "single" }: { format?: "all" | "none" | "single" } = {}
 ) => {
   if (!sourceEditor || sourceEditor.api.isEmpty()) return;
 
-  const isBlockSelecting = editor.getOption(
-    BlockSelectionPlugin,
-    'isSelectingSome'
-  );
+  const isBlockSelecting = editor.getOption(BlockSelectionPlugin, "isSelectingSome");
 
   editor.getApi<AIChatPluginConfig>({ key: KEYS.ai }).aiChat.hide();
 
@@ -79,13 +65,13 @@ export const replaceSelectionAIChat = (
   if (!isBlockSelecting) {
     const firstBlock = editor.api.node({
       block: true,
-      mode: 'lowest',
+      mode: "lowest",
     });
 
     if (
       firstBlock &&
       editor.api.isSelected(firstBlock[1], { contains: true }) &&
-      format !== 'none'
+      format !== "none"
     ) {
       const formattedBlocks = createFormattedBlocks({
         blocks: cloneDeep(sourceEditor.children),
@@ -123,19 +109,16 @@ export const replaceSelectionAIChat = (
   if (selectedBlocks.length === 0) return;
   // If format is 'none' or multiple blocks with 'single',
   // just insert the content as is
-  if (format === 'none' || (format === 'single' && selectedBlocks.length > 1)) {
+  if (format === "none" || (format === "single" && selectedBlocks.length > 1)) {
     editor.tf.withoutNormalizing(() => {
       removeBlockSelectionNodes(editor);
 
       editor.tf.withNewBatch(() => {
         editor
           .getTransforms(BlockSelectionPlugin)
-          .blockSelection.insertBlocksAndSelect(
-            cloneDeep(sourceEditor.children),
-            {
-              at: selectedBlocks[0][1],
-            }
-          );
+          .blockSelection.insertBlocksAndSelect(cloneDeep(sourceEditor.children), {
+            at: selectedBlocks[0][1],
+          });
       });
     });
 

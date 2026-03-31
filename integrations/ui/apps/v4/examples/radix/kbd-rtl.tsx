@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Kbd, KbdGroup } from "@/styles/radix-nova/ui-rtl/kbd"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Kbd, KbdGroup } from "@/styles/radix-nova/ui-rtl/kbd";
 
 const translations: Translations = {
   en: {
@@ -21,10 +18,10 @@ const translations: Translations = {
     dir: "rtl",
     values: {},
   },
-}
+};
 
 export function KbdRtl() {
-  const { dir } = useTranslation(translations, "ar")
+  const { dir } = useTranslation(translations, "ar");
 
   return (
     <div className="flex flex-col items-center gap-4" dir={dir}>
@@ -40,5 +37,5 @@ export function KbdRtl() {
         <Kbd>B</Kbd>
       </KbdGroup>
     </div>
-  )
+  );
 }

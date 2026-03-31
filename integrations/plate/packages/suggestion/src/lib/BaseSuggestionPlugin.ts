@@ -1,25 +1,25 @@
 import {
+  createTSlatePlugin,
   type EditorNodesOptions,
+  ElementApi,
+  getAt,
+  KEYS,
   type NodeEntry,
   type PluginConfig,
   type TElement,
+  TextApi,
   type TInlineSuggestionData,
   type TNode,
   type TSuggestionElement,
   type TSuggestionText,
-  createTSlatePlugin,
-  ElementApi,
-  getAt,
-  KEYS,
-  TextApi,
-} from 'platejs';
+} from "platejs";
 
-import { getSuggestionKey, getSuggestionKeyId } from './utils';
-import { getTransientSuggestionKey } from './utils/getTransientSuggestionKey';
-import { withSuggestion } from './withSuggestion';
+import { getSuggestionKey, getSuggestionKeyId } from "./utils";
+import { getTransientSuggestionKey } from "./utils/getTransientSuggestionKey";
+import { withSuggestion } from "./withSuggestion";
 
 export type BaseSuggestionConfig = PluginConfig<
-  'suggestion',
+  "suggestion",
   {
     currentUserId: string | null;
     isSuggesting: boolean;
@@ -40,7 +40,7 @@ export type BaseSuggestionConfig = PluginConfig<
       ) => NodeEntry<TElement | TSuggestionText>[];
       suggestionData: (
         node: TElement | TSuggestionText
-      ) => TInlineSuggestionData | TSuggestionElement['suggestion'] | undefined;
+      ) => TInlineSuggestionData | TSuggestionElement["suggestion"] | undefined;
       withoutSuggestions: (fn: () => void) => void;
     };
   }
@@ -50,22 +50,20 @@ export const BaseSuggestionPlugin = createTSlatePlugin<BaseSuggestionConfig>({
   key: KEYS.suggestion,
   node: { isLeaf: true },
   options: {
-    currentUserId: 'alice',
+    currentUserId: "alice",
     isSuggesting: false,
   },
-  rules: { selection: { affinity: 'outward' } },
+  rules: { selection: { affinity: "outward" } },
 })
   .overrideEditor(withSuggestion)
-  .extendApi<BaseSuggestionConfig['api']['suggestion']>(
+  .extendApi<BaseSuggestionConfig["api"]["suggestion"]>(
     ({ api, editor, getOption, setOption, type }) => ({
       dataList: (node: TSuggestionText): TInlineSuggestionData[] =>
         Object.keys(node)
           .filter((key) => key.startsWith(`${KEYS.suggestion}_`))
           .map((key) => node[key] as TInlineSuggestionData),
       isBlockSuggestion: (node): node is TSuggestionElement =>
-        ElementApi.isElement(node) &&
-        !editor.api.isInline(node) &&
-        'suggestion' in node,
+        ElementApi.isElement(node) && !editor.api.isInline(node) && "suggestion" in node,
       node: (options = {}) => {
         const { id, isText, ...rest } = options;
         const result = editor.api.node<TSuggestionElement | TSuggestionText>({
@@ -76,10 +74,7 @@ export const BaseSuggestionPlugin = createTSlatePlugin<BaseSuggestionConfig>({
               if (TextApi.isText(n)) {
                 return !!n[getSuggestionKey(id)];
               }
-              if (
-                ElementApi.isElement(n) &&
-                api.suggestion.isBlockSuggestion(n)
-              ) {
+              if (ElementApi.isElement(n) && api.suggestion.isBlockSuggestion(n)) {
                 return n.suggestion.id === id;
               }
             }
@@ -92,15 +87,12 @@ export const BaseSuggestionPlugin = createTSlatePlugin<BaseSuggestionConfig>({
         return result;
       },
       nodeId: (node) => {
-        if (
-          TextApi.isText(node) ||
-          (ElementApi.isElement(node) && editor.api.isInline(node))
-        ) {
+        if (TextApi.isText(node) || (ElementApi.isElement(node) && editor.api.isInline(node))) {
           const keyId = getSuggestionKeyId(node);
 
           if (!keyId) return;
 
-          return keyId.replace(`${type}_`, '');
+          return keyId.replace(`${type}_`, "");
         }
 
         if (api.suggestion.isBlockSuggestion(node)) {
@@ -116,17 +108,13 @@ export const BaseSuggestionPlugin = createTSlatePlugin<BaseSuggestionConfig>({
           ...editor.api.nodes<TElement | TSuggestionText>({
             ...options,
             at,
-            mode: 'all',
-            match: (n) =>
-              n[type] && (transient ? n[getTransientSuggestionKey()] : true),
+            mode: "all",
+            match: (n) => n[type] && (transient ? n[getTransientSuggestionKey()] : true),
           }),
         ];
       },
       suggestionData: (node) => {
-        if (
-          TextApi.isText(node) ||
-          (ElementApi.isElement(node) && editor.api.isInline(node))
-        ) {
+        if (TextApi.isText(node) || (ElementApi.isElement(node) && editor.api.isInline(node))) {
           const keyId = getSuggestionKeyId(node);
 
           if (!keyId) return;
@@ -139,10 +127,10 @@ export const BaseSuggestionPlugin = createTSlatePlugin<BaseSuggestionConfig>({
         }
       },
       withoutSuggestions: (fn) => {
-        const prev = getOption('isSuggesting');
-        setOption('isSuggesting', false);
+        const prev = getOption("isSuggesting");
+        setOption("isSuggesting", false);
         fn();
-        setOption('isSuggesting', prev);
+        setOption("isSuggesting", prev);
       },
     })
   );

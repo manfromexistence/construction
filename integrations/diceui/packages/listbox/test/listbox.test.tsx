@@ -1,11 +1,4 @@
-import {
-  act,
-  cleanup,
-  fireEvent,
-  render,
-  screen,
-  waitFor,
-} from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { beforeEach, describe, expect, test, vi } from "vitest";
 
 import * as Listbox from "../src/listbox";
@@ -36,39 +29,29 @@ describe("Listbox", () => {
     cleanup();
   });
 
-  function renderListbox<T extends boolean>(
-    props: Listbox.ListboxRootProps<T> = {},
-  ) {
+  function renderListbox<T extends boolean>(props: Listbox.ListboxRootProps<T> = {}) {
     const { value, multiple, children, ...listboxProps } = props;
 
     return render(
       <Listbox.Root value={value} multiple={multiple} {...listboxProps}>
         <Listbox.Item value="kickflip" data-testid="kickflip-option">
           Kickflip
-          <Listbox.ItemIndicator data-testid="kickflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="heelflip" data-testid="heelflip-option">
           Heelflip
-          <Listbox.ItemIndicator data-testid="heelflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="fs-540" data-testid="fs-540-option">
           FS 540
-          <Listbox.ItemIndicator data-testid="fs540-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         {children}
-      </Listbox.Root>,
+      </Listbox.Root>
     );
   }
 
-  function renderListboxWithGroups<T extends boolean>(
-    props: Listbox.ListboxRootProps<T> = {},
-  ) {
+  function renderListboxWithGroups<T extends boolean>(props: Listbox.ListboxRootProps<T> = {}) {
     const { value, multiple, ...listboxProps } = props;
 
     return render(
@@ -77,27 +60,21 @@ describe("Listbox", () => {
           <Listbox.GroupLabel>Basic Tricks</Listbox.GroupLabel>
           <Listbox.Item value="kickflip" data-testid="kickflip-option">
             Kickflip
-            <Listbox.ItemIndicator data-testid="kickflip-indicator">
-              ✓
-            </Listbox.ItemIndicator>
+            <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
           </Listbox.Item>
           <Listbox.Item value="heelflip" data-testid="heelflip-option">
             Heelflip
-            <Listbox.ItemIndicator data-testid="heelflip-indicator">
-              ✓
-            </Listbox.ItemIndicator>
+            <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
           </Listbox.Item>
         </Listbox.Group>
         <Listbox.Group>
           <Listbox.GroupLabel>Advanced Tricks</Listbox.GroupLabel>
           <Listbox.Item value="fs-540" data-testid="fs-540-option">
             FS 540
-            <Listbox.ItemIndicator data-testid="fs540-indicator">
-              ✓
-            </Listbox.ItemIndicator>
+            <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
           </Listbox.Item>
         </Listbox.Group>
-      </Listbox.Root>,
+      </Listbox.Root>
     );
   }
 
@@ -132,23 +109,17 @@ describe("Listbox", () => {
       <Listbox.Root value="heelflip" onValueChange={onValueChange}>
         <Listbox.Item value="kickflip" data-testid="kickflip-option">
           Kickflip
-          <Listbox.ItemIndicator data-testid="kickflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="heelflip" data-testid="heelflip-option">
           Heelflip
-          <Listbox.ItemIndicator data-testid="heelflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="fs-540" data-testid="fs-540-option">
           FS 540
-          <Listbox.ItemIndicator data-testid="fs540-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
-      </Listbox.Root>,
+      </Listbox.Root>
     );
 
     // Verify the new selection
@@ -234,23 +205,17 @@ describe("Listbox", () => {
       <Listbox.Root multiple value={["kickflip"]} onValueChange={onValueChange}>
         <Listbox.Item value="kickflip" data-testid="kickflip-option">
           Kickflip
-          <Listbox.ItemIndicator data-testid="kickflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="heelflip" data-testid="heelflip-option">
           Heelflip
-          <Listbox.ItemIndicator data-testid="heelflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="fs-540" data-testid="fs-540-option">
           FS 540
-          <Listbox.ItemIndicator data-testid="fs540-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
-      </Listbox.Root>,
+      </Listbox.Root>
     );
 
     // Select second item (should add to selection)
@@ -262,30 +227,20 @@ describe("Listbox", () => {
 
     // Update the selection manually
     rerender(
-      <Listbox.Root
-        multiple
-        value={["kickflip", "heelflip"]}
-        onValueChange={onValueChange}
-      >
+      <Listbox.Root multiple value={["kickflip", "heelflip"]} onValueChange={onValueChange}>
         <Listbox.Item value="kickflip" data-testid="kickflip-option">
           Kickflip
-          <Listbox.ItemIndicator data-testid="kickflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="heelflip" data-testid="heelflip-option">
           Heelflip
-          <Listbox.ItemIndicator data-testid="heelflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="fs-540" data-testid="fs-540-option">
           FS 540
-          <Listbox.ItemIndicator data-testid="fs540-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
-      </Listbox.Root>,
+      </Listbox.Root>
     );
 
     // Verify both are selected
@@ -326,23 +281,17 @@ describe("Listbox", () => {
       <Listbox.Root multiple value={["kickflip"]} onValueChange={onValueChange}>
         <Listbox.Item value="kickflip" data-testid="kickflip-option">
           Kickflip
-          <Listbox.ItemIndicator data-testid="kickflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="heelflip" data-testid="heelflip-option">
           Heelflip
-          <Listbox.ItemIndicator data-testid="heelflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="fs-540" data-testid="fs-540-option">
           FS 540
-          <Listbox.ItemIndicator data-testid="fs540-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
-      </Listbox.Root>,
+      </Listbox.Root>
     );
 
     // Navigate to second item
@@ -363,30 +312,20 @@ describe("Listbox", () => {
 
     // Update the selection manually
     rerender(
-      <Listbox.Root
-        multiple
-        value={["kickflip", "heelflip"]}
-        onValueChange={onValueChange}
-      >
+      <Listbox.Root multiple value={["kickflip", "heelflip"]} onValueChange={onValueChange}>
         <Listbox.Item value="kickflip" data-testid="kickflip-option">
           Kickflip
-          <Listbox.ItemIndicator data-testid="kickflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="heelflip" data-testid="heelflip-option">
           Heelflip
-          <Listbox.ItemIndicator data-testid="heelflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="fs-540" data-testid="fs-540-option">
           FS 540
-          <Listbox.ItemIndicator data-testid="fs540-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
-      </Listbox.Root>,
+      </Listbox.Root>
     );
 
     // Navigate to third item
@@ -403,11 +342,7 @@ describe("Listbox", () => {
     await act(async () => {
       fireEvent.keyDown(fs540Option, { key: " ", metaKey: true });
     });
-    expect(onValueChange).toHaveBeenCalledWith([
-      "kickflip",
-      "heelflip",
-      "fs-540",
-    ]);
+    expect(onValueChange).toHaveBeenCalledWith(["kickflip", "heelflip", "fs-540"]);
   });
 
   test("handles disabled state", async () => {
@@ -436,9 +371,7 @@ describe("Listbox", () => {
       children: (
         <Listbox.Item value="impossible" disabled data-testid="disabled-option">
           Impossible
-          <Listbox.ItemIndicator data-testid="impossible-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="impossible-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
       ),
     });
@@ -677,23 +610,17 @@ describe("Listbox", () => {
       <Listbox.Root value="heelflip">
         <Listbox.Item value="kickflip" data-testid="kickflip-option">
           Kickflip
-          <Listbox.ItemIndicator data-testid="kickflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="kickflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="heelflip" data-testid="heelflip-option">
           Heelflip
-          <Listbox.ItemIndicator data-testid="heelflip-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="heelflip-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
         <Listbox.Item value="fs-540" data-testid="fs-540-option">
           FS 540
-          <Listbox.ItemIndicator data-testid="fs540-indicator">
-            ✓
-          </Listbox.ItemIndicator>
+          <Listbox.ItemIndicator data-testid="fs540-indicator">✓</Listbox.ItemIndicator>
         </Listbox.Item>
-      </Listbox.Root>,
+      </Listbox.Root>
     );
 
     // Verify selection has changed

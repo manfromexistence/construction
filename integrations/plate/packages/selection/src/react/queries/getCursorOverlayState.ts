@@ -1,14 +1,10 @@
-import type { UnknownObject } from 'platejs';
-
-import type { CursorOverlayState, CursorState, SelectionRect } from '../types';
-
-import { FROZEN_EMPTY_ARRAY } from '../hooks';
-import { getCaretPosition } from './getCaretPosition';
+import type { UnknownObject } from "platejs";
+import { FROZEN_EMPTY_ARRAY } from "../hooks";
+import type { CursorOverlayState, CursorState, SelectionRect } from "../types";
+import { getCaretPosition } from "./getCaretPosition";
 
 /** Get cursor overlay state from selection rects. */
-export const getCursorOverlayState = <
-  TCursorData extends UnknownObject = UnknownObject,
->({
+export const getCursorOverlayState = <TCursorData extends UnknownObject = UnknownObject>({
   cursors: cursorStates,
   selectionRects,
 }: {

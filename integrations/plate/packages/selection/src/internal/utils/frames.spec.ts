@@ -1,7 +1,7 @@
-import { frames } from './frames';
+import { frames } from "./frames";
 
-describe('frames', () => {
-  it('coalesces queued calls until the animation frame runs', () => {
+describe("frames", () => {
+  it("coalesces queued calls until the animation frame runs", () => {
     const callbackCalls: string[] = [];
     const callback = (...args: [string]) => {
       callbackCalls.push(...args);
@@ -22,21 +22,21 @@ describe('frames', () => {
     try {
       const frame = frames(callback);
 
-      frame.next('first');
-      frame.next('second');
+      frame.next("first");
+      frame.next("second");
 
       expect(callbackCalls).toEqual([]);
 
       scheduledFrame?.(0);
 
-      expect(callbackCalls).toEqual(['second']);
+      expect(callbackCalls).toEqual(["second"]);
     } finally {
       globalThis.requestAnimationFrame = originalRequestAnimationFrame;
       globalThis.cancelAnimationFrame = originalCancelAnimationFrame;
     }
   });
 
-  it('cancels the pending frame and allows rescheduling', () => {
+  it("cancels the pending frame and allows rescheduling", () => {
     const callbackCalls: string[] = [];
     const callback = (...args: [string]) => {
       callbackCalls.push(...args);
@@ -59,15 +59,15 @@ describe('frames', () => {
     try {
       const frame = frames(callback);
 
-      frame.next('first');
+      frame.next("first");
       frame.cancel();
-      frame.next('second');
+      frame.next("second");
 
       expect(canceledHandles).toEqual([1]);
 
       scheduledFrame?.(0);
 
-      expect(callbackCalls).toEqual(['second']);
+      expect(callbackCalls).toEqual(["second"]);
     } finally {
       globalThis.requestAnimationFrame = originalRequestAnimationFrame;
       globalThis.cancelAnimationFrame = originalCancelAnimationFrame;

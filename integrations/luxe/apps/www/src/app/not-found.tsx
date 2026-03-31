@@ -1,7 +1,6 @@
+import { MoveLeftIcon } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
-
-import { MoveLeftIcon } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Not Found",
@@ -19,10 +18,7 @@ export default function NotFoundPage() {
           <div className="absolute aspect-square min-h-[200vh] min-w-[200vw] translate-x-[calc(var(--tx)-50%)] translate-y-[calc(var(--ty)-50%)]">
             <div className="absolute inset-0 bg-center bg-no-repeat [background-image:radial-gradient(300px_300px_at_center,transparent,rgba(0,0,0,.9)_70%)]"></div>
           </div>
-          <div
-            aria-hidden="true"
-            className="container pointer-events-none absolute inset-0"
-          >
+          <div aria-hidden="true" className="container pointer-events-none absolute inset-0">
             <div className="h-full w-full" />
           </div>
         </div>

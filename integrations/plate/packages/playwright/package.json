@@ -2,10 +2,7 @@
   "name": "@platejs/playwright",
   "version": "52.3.10",
   "description": "Interact with a Plate editor from inside a Playwright test",
-  "keywords": [
-    "plate",
-    "slate"
-  ],
+  "keywords": ["plate", "slate"],
   "homepage": "https://platejs.org",
   "bugs": {
     "url": "https://github.com/udecode/plate/issues"
@@ -25,9 +22,7 @@
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": [
-    "dist/**/*"
-  ],
+  "files": ["dist/**/*"],
   "scripts": {
     "brl": "plate-pkg p:brl",
     "build": "plate-pkg p:build",

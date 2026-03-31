@@ -1,19 +1,19 @@
-import { format } from "date-fns"
-import { ArrowUpRightIcon, CircleCheckBigIcon } from "lucide-react"
-import Image from "next/image"
+import { format } from "date-fns";
+import { ArrowUpRightIcon, CircleCheckBigIcon } from "lucide-react";
+import Image from "next/image";
 
-import { getIcon } from "@/components/icons"
-import { Separator } from "@/components/ui/separator"
-import { cn } from "@/lib/utils"
+import { getIcon } from "@/components/icons";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
 
-import type { Certification } from "../../types/certifications"
+import type { Certification } from "../../types/certifications";
 
 export function CertificationItem({
   className,
   certification,
 }: {
-  className?: string
-  certification: Certification
+  className?: string;
+  certification: Certification;
 }) {
   return (
     <a
@@ -46,9 +46,7 @@ export function CertificationItem({
       )}
 
       <div className="flex-1 space-y-1 border-l border-dashed border-line p-4 pr-2">
-        <h3 className="leading-snug font-medium text-balance">
-          {certification.title}
-        </h3>
+        <h3 className="leading-snug font-medium text-balance">{certification.title}</h3>
 
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-muted-foreground">
           <dl>
@@ -75,9 +73,7 @@ export function CertificationItem({
         </div>
       </div>
 
-      {certification.credentialURL && (
-        <ArrowUpRightIcon className="size-4 text-muted-foreground" />
-      )}
+      {certification.credentialURL && <ArrowUpRightIcon className="size-4 text-muted-foreground" />}
     </a>
-  )
+  );
 }

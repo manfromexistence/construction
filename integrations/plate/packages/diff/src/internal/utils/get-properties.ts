@@ -3,7 +3,7 @@
  * contributors. See /packages/diff/LICENSE for more information.
  */
 
-import type { TText } from 'platejs';
+import type { TText } from "platejs";
 
 // Get object that will set the properties of before
 // to equal the properties of node, in terms of the
@@ -13,7 +13,7 @@ export function getProperties(goal: TText, before?: TText): any {
   const props: any = {};
 
   for (const x in goal) {
-    if (x !== 'text') {
+    if (x !== "text") {
       if (before == null) {
         if (goal[x]) {
           props[x] = goal[x];
@@ -33,7 +33,7 @@ export function getProperties(goal: TText, before?: TText): any {
     // also be sure to explicitly remove props not in goal
     // WARNING: this might change in slatejs; I saw a discussion about this.
     for (const x in before) {
-      if (x !== 'text' && goal[x] == null) {
+      if (x !== "text" && goal[x] == null) {
         props[x] = undefined;
       }
     }

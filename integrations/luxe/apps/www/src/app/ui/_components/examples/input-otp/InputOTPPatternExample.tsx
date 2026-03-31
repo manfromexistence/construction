@@ -5,8 +5,8 @@ import { REGEXP_ONLY_DIGITS } from "input-otp";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSlot,
   InputOTPSeparator,
+  InputOTPSlot,
 } from "@/app/_components/ui/input-otp";
 
 export function InputOTPPatternExample() {

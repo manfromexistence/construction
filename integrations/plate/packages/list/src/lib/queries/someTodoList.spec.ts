@@ -1,6 +1,6 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { someTodoList } from './someTodoList';
+import { someTodoList } from "./someTodoList";
 
 const createListEditor = ({ children }: { children: any[] }) =>
   createSlateEditor({
@@ -11,16 +11,16 @@ const createListEditor = ({ children }: { children: any[] }) =>
     value: children as any,
   });
 
-describe('someTodoList', () => {
-  it('returns true for a todo paragraph with checked metadata', () => {
+describe("someTodoList", () => {
+  it("returns true for a todo paragraph with checked metadata", () => {
     const editor = createListEditor({
       children: [
         {
           [KEYS.indent]: 1,
           [KEYS.listChecked]: false,
           [KEYS.listType]: KEYS.listTodo,
-          children: [{ text: 'Todo' }],
-          type: 'p',
+          children: [{ text: "Todo" }],
+          type: "p",
         },
       ],
     });
@@ -28,14 +28,14 @@ describe('someTodoList', () => {
     expect(someTodoList(editor)).toBe(true);
   });
 
-  it('returns false for a regular list paragraph', () => {
+  it("returns false for a regular list paragraph", () => {
     const editor = createListEditor({
       children: [
         {
           [KEYS.indent]: 1,
-          [KEYS.listType]: 'disc',
-          children: [{ text: 'Item' }],
-          type: 'p',
+          [KEYS.listType]: "disc",
+          children: [{ text: "Item" }],
+          type: "p",
         },
       ],
     });
@@ -43,15 +43,15 @@ describe('someTodoList', () => {
     expect(someTodoList(editor)).toBe(false);
   });
 
-  it('returns false when the checked node is not a paragraph', () => {
+  it("returns false when the checked node is not a paragraph", () => {
     const editor = createListEditor({
       children: [
         {
           [KEYS.indent]: 1,
           [KEYS.listChecked]: false,
           [KEYS.listType]: KEYS.listTodo,
-          children: [{ text: 'Title' }],
-          type: 'h1',
+          children: [{ text: "Title" }],
+          type: "h1",
         },
       ],
     });

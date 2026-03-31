@@ -1,9 +1,9 @@
-import type { TElement } from '@platejs/slate';
+import type { TElement } from "@platejs/slate";
 
-import { getTableColumnCount } from './getTableColumnCount';
+import { getTableColumnCount } from "./getTableColumnCount";
 
-describe('getTableColumnCount', () => {
-  it('returns 0 if tableNode has no children', () => {
+describe("getTableColumnCount", () => {
+  it("returns 0 if tableNode has no children", () => {
     const tableNode = {
       children: [],
     } as unknown as TElement;
@@ -12,7 +12,7 @@ describe('getTableColumnCount', () => {
     expect(result).toBe(0);
   });
 
-  it('returns the sum of colSpan values of the first row elements', () => {
+  it("returns the sum of colSpan values of the first row elements", () => {
     const tableNode = {
       children: [
         {
@@ -25,15 +25,11 @@ describe('getTableColumnCount', () => {
     expect(result).toBe(6);
   });
 
-  it('returns the sum of colSpan values with colspan attribute of the first row elements', () => {
+  it("returns the sum of colSpan values with colspan attribute of the first row elements", () => {
     const tableNode = {
       children: [
         {
-          children: [
-            { attributes: { colspan: 2 } },
-            { attributes: { colspan: 3 } },
-            {},
-          ],
+          children: [{ attributes: { colspan: 2 } }, { attributes: { colspan: 3 } }, {}],
         },
       ],
     } as TElement;
@@ -42,7 +38,7 @@ describe('getTableColumnCount', () => {
     expect(result).toBe(6);
   });
 
-  it('handle elements without colSpan or colspan attribute', () => {
+  it("handle elements without colSpan or colspan attribute", () => {
     const tableNode = {
       children: [
         {

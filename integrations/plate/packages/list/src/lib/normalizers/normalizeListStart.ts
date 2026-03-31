@@ -2,19 +2,14 @@ import {
   type Editor,
   type ElementEntryOf,
   type ElementOf,
-  type NodeEntry,
   isDefined,
   KEYS,
-} from 'platejs';
+  type NodeEntry,
+} from "platejs";
+import { getPreviousList } from "../queries/getPreviousList";
+import type { GetSiblingListOptions } from "../queries/getSiblingList";
 
-import type { GetSiblingListOptions } from '../queries/getSiblingList';
-
-import { getPreviousList } from '../queries/getPreviousList';
-
-export const getListExpectedListStart = (
-  entry: NodeEntry,
-  prevEntry?: NodeEntry
-): number => {
+export const getListExpectedListStart = (entry: NodeEntry, prevEntry?: NodeEntry): number => {
   const [node] = entry;
   const [prevNode] = prevEntry ?? [null];
 
@@ -37,10 +32,7 @@ export const getListExpectedListStart = (
   return 1;
 };
 
-export const normalizeListStart = <
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
->(
+export const normalizeListStart = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,
   entry: ElementEntryOf<E>,
   options?: Partial<GetSiblingListOptions<N, E>>

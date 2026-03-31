@@ -1,17 +1,17 @@
 /** @jsx jsx */
-import { BaseMentionPlugin } from '@platejs/mention';
-import { jsx } from '@platejs/test-utils';
+import { BaseMentionPlugin } from "@platejs/mention";
+import { jsx } from "@platejs/test-utils";
 
-import { createTestEditor } from '../__tests__/createTestEditor';
-import { deserializeMd } from './deserializeMd';
+import { createTestEditor } from "../__tests__/createTestEditor";
+import { deserializeMd } from "./deserializeMd";
 
 jsx;
 
-describe('deserializeMd - mention link format', () => {
-  it('deserialize [display text](mention:id) format', () => {
+describe("deserializeMd - mention link format", () => {
+  it("deserialize [display text](mention:id) format", () => {
     const editor = createTestEditor([BaseMentionPlugin]);
 
-    const markdown = 'Hello [John Doe](mention:john_doe), how are you?';
+    const markdown = "Hello [John Doe](mention:john_doe), how are you?";
     const value = deserializeMd(editor, markdown);
 
     expect(value).toEqual([
@@ -25,10 +25,10 @@ describe('deserializeMd - mention link format', () => {
     ]);
   });
 
-  it('deserialize mentions with spaces in ID', () => {
+  it("deserialize mentions with spaces in ID", () => {
     const editor = createTestEditor([BaseMentionPlugin]);
 
-    const markdown = 'CC: [Jane Smith](mention:jane%20smith)';
+    const markdown = "CC: [Jane Smith](mention:jane%20smith)";
     const value = deserializeMd(editor, markdown);
 
     expect(value).toEqual([
@@ -41,11 +41,10 @@ describe('deserializeMd - mention link format', () => {
     ]);
   });
 
-  it('deserialize mixed mention formats', () => {
+  it("deserialize mixed mention formats", () => {
     const editor = createTestEditor([BaseMentionPlugin]);
 
-    const markdown =
-      '@alice mentioned [Bob Johnson](mention:bob_johnson) and @charlie';
+    const markdown = "@alice mentioned [Bob Johnson](mention:bob_johnson) and @charlie";
     const value = deserializeMd(editor, markdown);
 
     expect(value).toEqual([
@@ -65,11 +64,10 @@ describe('deserializeMd - mention link format', () => {
     ]);
   });
 
-  it('handle multiple link mentions in one paragraph', () => {
+  it("handle multiple link mentions in one paragraph", () => {
     const editor = createTestEditor([BaseMentionPlugin]);
 
-    const markdown =
-      '[Team Lead](mention:team_lead) assigned this to [QA Team](mention:qa_team)';
+    const markdown = "[Team Lead](mention:team_lead) assigned this to [QA Team](mention:qa_team)";
     const value = deserializeMd(editor, markdown);
 
     expect(value).toEqual([
@@ -85,11 +83,10 @@ describe('deserializeMd - mention link format', () => {
     ]);
   });
 
-  it('handle special characters in mention IDs', () => {
+  it("handle special characters in mention IDs", () => {
     const editor = createTestEditor([BaseMentionPlugin]);
 
-    const markdown =
-      '[User 123](mention:user-123) and [Dev Team](mention:dev.team)';
+    const markdown = "[User 123](mention:user-123) and [Dev Team](mention:dev.team)";
     const value = deserializeMd(editor, markdown);
 
     expect(value).toEqual([
@@ -105,10 +102,10 @@ describe('deserializeMd - mention link format', () => {
     ]);
   });
 
-  it('does not convert regular links to mentions even with @ in text', () => {
+  it("does not convert regular links to mentions even with @ in text", () => {
     const editor = createTestEditor([BaseMentionPlugin]);
 
-    const markdown = '[@mention](/docs/mention)';
+    const markdown = "[@mention](/docs/mention)";
     const value = deserializeMd(editor, markdown);
 
     expect(value).toEqual([
@@ -120,11 +117,10 @@ describe('deserializeMd - mention link format', () => {
     ]);
   });
 
-  it('handle mixed links and mentions correctly', () => {
+  it("handle mixed links and mentions correctly", () => {
     const editor = createTestEditor([BaseMentionPlugin]);
 
-    const markdown =
-      'Check [@docs](https://docs.com) and [Alice](mention:alice) plus @bob';
+    const markdown = "Check [@docs](https://docs.com) and [Alice](mention:alice) plus @bob";
     const value = deserializeMd(editor, markdown);
 
     expect(value).toEqual([

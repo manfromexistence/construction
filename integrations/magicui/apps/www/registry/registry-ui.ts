@@ -1,4 +1,4 @@
-import { type Registry } from "shadcn/schema"
+import { type Registry } from "shadcn/schema";
 
 export const ui: Registry["items"] = [
   {
@@ -152,8 +152,7 @@ export const ui: Registry["items"] = [
     name: "pointer",
     type: "registry:ui",
     title: "Pointer",
-    description:
-      "A component that displays a pointer when hovering over an element",
+    description: "A component that displays a pointer when hovering over an element",
     dependencies: ["motion"],
     files: [
       {
@@ -201,8 +200,7 @@ export const ui: Registry["items"] = [
     ],
     cssVars: {
       theme: {
-        "animate-background-position-spin":
-          "background-position-spin 3000ms infinite alternate",
+        "animate-background-position-spin": "background-position-spin 3000ms infinite alternate",
       },
     },
     css: {
@@ -246,8 +244,7 @@ export const ui: Registry["items"] = [
     name: "grid-pattern",
     type: "registry:ui",
     title: "Grid Pattern",
-    description:
-      "A background grid pattern made with SVGs, fully customizable using Tailwind CSS.",
+    description: "A background grid pattern made with SVGs, fully customizable using Tailwind CSS.",
     files: [
       {
         path: "magicui/grid-pattern.tsx",
@@ -286,8 +283,7 @@ export const ui: Registry["items"] = [
     name: "dot-pattern",
     type: "registry:ui",
     title: "Dot Pattern",
-    description:
-      "A background dot pattern made with SVGs, fully customizable using Tailwind CSS.",
+    description: "A background dot pattern made with SVGs, fully customizable using Tailwind CSS.",
     files: [
       {
         path: "magicui/dot-pattern.tsx",
@@ -349,8 +345,7 @@ export const ui: Registry["items"] = [
     cssVars: {
       theme: {
         "animate-marquee": "marquee var(--duration) infinite linear",
-        "animate-marquee-vertical":
-          "marquee-vertical var(--duration) linear infinite",
+        "animate-marquee-vertical": "marquee-vertical var(--duration) linear infinite",
       },
     },
     css: {
@@ -376,8 +371,7 @@ export const ui: Registry["items"] = [
     name: "globe",
     type: "registry:ui",
     title: "Globe",
-    description:
-      "An autorotating, interactive, and highly performant globe made using WebGL.",
+    description: "An autorotating, interactive, and highly performant globe made using WebGL.",
     dependencies: ["cobe", "motion"],
     files: [
       {
@@ -390,8 +384,7 @@ export const ui: Registry["items"] = [
     name: "shimmer-button",
     type: "registry:ui",
     title: "Shimmer Button",
-    description:
-      "A button with a shimmering light which travels around the perimeter.",
+    description: "A button with a shimmering light which travels around the perimeter.",
     files: [
       {
         path: "magicui/shimmer-button.tsx",
@@ -400,10 +393,8 @@ export const ui: Registry["items"] = [
     ],
     cssVars: {
       theme: {
-        "animate-shimmer-slide":
-          "shimmer-slide var(--speed) ease-in-out infinite alternate",
-        "animate-spin-around":
-          "spin-around calc(var(--speed) * 2) infinite linear",
+        "animate-shimmer-slide": "shimmer-slide var(--speed) ease-in-out infinite alternate",
+        "animate-spin-around": "spin-around calc(var(--speed) * 2) infinite linear",
       },
     },
     css: {
@@ -501,8 +492,7 @@ export const ui: Registry["items"] = [
     name: "ripple",
     type: "registry:ui",
     title: "Ripple",
-    description:
-      "An animated ripple effect typically used behind elements to emphasize them.",
+    description: "An animated ripple effect typically used behind elements to emphasize them.",
     files: [
       {
         path: "magicui/ripple.tsx",
@@ -511,8 +501,7 @@ export const ui: Registry["items"] = [
     ],
     cssVars: {
       theme: {
-        "animate-ripple":
-          "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
+        "animate-ripple": "ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite",
       },
     },
     css: {
@@ -599,8 +588,7 @@ export const ui: Registry["items"] = [
     name: "border-beam",
     type: "registry:ui",
     title: "Border Beam",
-    description:
-      "An animated beam of light which travels along the border of its container.",
+    description: "An animated beam of light which travels along the border of its container.",
     dependencies: ["motion"],
     files: [
       {
@@ -640,8 +628,7 @@ export const ui: Registry["items"] = [
     name: "hyper-text",
     type: "registry:ui",
     title: "Hyper Text",
-    description:
-      "A text animation that scrambles letters before revealing the final text.",
+    description: "A text animation that scrambles letters before revealing the final text.",
     dependencies: ["motion"],
     files: [
       {
@@ -654,8 +641,7 @@ export const ui: Registry["items"] = [
     name: "animated-gradient-text",
     type: "registry:ui",
     title: "Animated Gradient Text",
-    description:
-      "An animated gradient background which transitions between colors for text.",
+    description: "An animated gradient background which transitions between colors for text.",
     files: [
       {
         path: "magicui/animated-gradient-text.tsx",
@@ -679,8 +665,7 @@ export const ui: Registry["items"] = [
     name: "orbiting-circles",
     type: "registry:ui",
     title: "Orbiting Circles",
-    description:
-      "A collection of circles which move in orbit along a circular path",
+    description: "A collection of circles which move in orbit along a circular path",
     files: [
       {
         path: "magicui/orbiting-circles.tsx",
@@ -709,8 +694,7 @@ export const ui: Registry["items"] = [
     name: "dock",
     type: "registry:ui",
     title: "Dock",
-    description:
-      "An implementation of the MacOS dock using react + tailwindcss + motion",
+    description: "An implementation of the MacOS dock using react + tailwindcss + motion",
     dependencies: ["motion"],
     files: [
       {
@@ -857,8 +841,7 @@ export const ui: Registry["items"] = [
     name: "shiny-button",
     type: "registry:ui",
     title: "Shiny Button",
-    description:
-      "A shiny button component with dynamic styles in the dark mode or light mode.",
+    description: "A shiny button component with dynamic styles in the dark mode or light mode.",
     dependencies: ["motion"],
     files: [
       {
@@ -941,8 +924,7 @@ export const ui: Registry["items"] = [
     name: "pulsating-button",
     type: "registry:ui",
     title: "Pulsating Button",
-    description:
-      "An animated pulsating button useful for capturing attention of users.",
+    description: "An animated pulsating button useful for capturing attention of users.",
     files: [
       {
         path: "magicui/pulsating-button.tsx",
@@ -993,8 +975,7 @@ export const ui: Registry["items"] = [
     name: "file-tree",
     type: "registry:ui",
     title: "File Tree",
-    description:
-      "A component used to showcase the folder and file structure of a directory.",
+    description: "A component used to showcase the folder and file structure of a directory.",
     files: [
       {
         path: "magicui/file-tree.tsx",
@@ -1006,8 +987,7 @@ export const ui: Registry["items"] = [
     name: "blur-fade",
     type: "registry:ui",
     title: "Blur Fade",
-    description:
-      "Blur fade in and out animation. Used to smoothly fade in and out content.",
+    description: "Blur fade in and out animation. Used to smoothly fade in and out content.",
     dependencies: ["motion"],
     files: [
       {
@@ -1104,8 +1084,7 @@ export const ui: Registry["items"] = [
     name: "video-text",
     type: "registry:ui",
     title: "Video Text",
-    description:
-      "A component that displays text with a video playing in the background.",
+    description: "A component that displays text with a video playing in the background.",
     files: [
       {
         path: "magicui/video-text.tsx",
@@ -1130,8 +1109,7 @@ export const ui: Registry["items"] = [
     name: "highlighter",
     type: "registry:ui",
     title: "Highlighter",
-    description:
-      "A text highlighter that mimics the effect of a human-drawn marker stroke.",
+    description: "A text highlighter that mimics the effect of a human-drawn marker stroke.",
     files: [
       {
         path: "magicui/highlighter.tsx",
@@ -1163,8 +1141,7 @@ export const ui: Registry["items"] = [
     name: "light-rays",
     type: "registry:ui",
     title: "Light Rays",
-    description:
-      "A component with animated light rays which shine down from above.",
+    description: "A component with animated light rays which shine down from above.",
     dependencies: ["motion"],
     files: [
       {
@@ -1199,4 +1176,4 @@ export const ui: Registry["items"] = [
       },
     ],
   },
-]
+];

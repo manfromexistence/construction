@@ -1,5 +1,7 @@
 "use client";
 
+// import { ThemePresetSelector } from "@/components/home/theme-preset-selector";
+import { useEffect, useState } from "react";
 import { Footer } from "@/components/footer";
 import { AIGenerationCTA } from "@/components/home/ai-generation-cta";
 import { CTA } from "@/components/home/cta";
@@ -9,8 +11,6 @@ import { Header } from "@/components/home/header";
 import { Hero } from "@/components/home/hero";
 import { HowItWorks } from "@/components/home/how-it-works";
 import { Testimonials } from "@/components/home/testimonials";
-// import { ThemePresetSelector } from "@/components/home/theme-preset-selector";
-import { useEffect, useState } from "react";
 
 export default function Home() {
   const [isScrolled, setIsScrolled] = useState(false);

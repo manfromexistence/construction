@@ -1,12 +1,11 @@
-import { CalendarIcon, FileTextIcon } from "@radix-ui/react-icons"
-import { BellIcon, Share2Icon } from "lucide-react"
-
-import { cn } from "@/lib/utils"
-import { Calendar } from "@/components/ui/calendar"
-import AnimatedBeamMultipleOutputDemo from "@/registry/example/animated-beam-multiple-outputs"
-import AnimatedListDemo from "@/registry/example/animated-list-demo"
-import { BentoCard, BentoGrid } from "@/registry/magicui/bento-grid"
-import { Marquee } from "@/registry/magicui/marquee"
+import { CalendarIcon, FileTextIcon } from "@radix-ui/react-icons";
+import { BellIcon, Share2Icon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { cn } from "@/lib/utils";
+import AnimatedBeamMultipleOutputDemo from "@/registry/example/animated-beam-multiple-outputs";
+import AnimatedListDemo from "@/registry/example/animated-list-demo";
+import { BentoCard, BentoGrid } from "@/registry/magicui/bento-grid";
+import { Marquee } from "@/registry/magicui/marquee";
 
 const files = [
   {
@@ -29,7 +28,7 @@ const files = [
     name: "seed.txt",
     body: "A seed phrase, seed recovery phrase or backup seed phrase is a list of words which store all the information needed to recover Bitcoin funds on-chain.",
   },
-]
+];
 
 const features = [
   {
@@ -56,9 +55,7 @@ const features = [
           >
             <div className="flex flex-row items-center gap-2">
               <div className="flex flex-col">
-                <figcaption className="text-sm font-medium dark:text-white">
-                  {f.name}
-                </figcaption>
+                <figcaption className="text-sm font-medium dark:text-white">{f.name}</figcaption>
               </div>
             </div>
             <blockquote className="mt-2 text-xs">{f.body}</blockquote>
@@ -104,7 +101,7 @@ const features = [
       />
     ),
   },
-]
+];
 
 export default function BentoDemo() {
   return (
@@ -113,5 +110,5 @@ export default function BentoDemo() {
         <BentoCard key={idx} {...feature} />
       ))}
     </BentoGrid>
-  )
+  );
 }

@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
 
-import { useLanguageContext } from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group"
+import { useLanguageContext } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group";
 
 const translations = {
   ar: {
@@ -19,16 +19,16 @@ const translations = {
     previous: "הקודם",
     next: "הבא",
   },
-}
+};
 
 function formatNumber(value: number, locale: string) {
-  return new Intl.NumberFormat(locale).format(value)
+  return new Intl.NumberFormat(locale).format(value);
 }
 
 export function ButtonGroupNested() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
 
   return (
     <ButtonGroup dir={t.dir}>
@@ -52,5 +52,5 @@ export function ButtonGroupNested() {
         </Button>
       </ButtonGroup>
     </ButtonGroup>
-  )
+  );
 }

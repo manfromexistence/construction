@@ -3,10 +3,7 @@
   "name": "sidebar-03",
   "title": "Sidebar 03",
   "description": "A sidebar with submenus.",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb"],
   "files": [
     {
       "path": "registry/radix-vega/blocks/sidebar-03/page.tsx",
@@ -20,9 +17,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "sidebar",
-    "dashboard"
-  ],
+  "categories": ["sidebar", "dashboard"],
   "type": "registry:block"
 }

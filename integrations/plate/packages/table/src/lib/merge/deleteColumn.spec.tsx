@@ -1,12 +1,11 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import * as deleteColumnExpandedModule from './deleteColumnWhenExpanded';
-import { deleteTableMergeColumn } from './deleteColumn';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { deleteTableMergeColumn } from "./deleteColumn";
+import * as deleteColumnExpandedModule from "./deleteColumnWhenExpanded";
 
 jsxt;
 
@@ -18,8 +17,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('deleteTableMergeColumn', () => {
-  it('delegates expanded selections to deleteColumnWhenExpanded', () => {
+describe("deleteTableMergeColumn", () => {
+  it("delegates expanded selections to deleteColumnWhenExpanded", () => {
     const input = (
       <editor>
         <htable>
@@ -50,10 +49,9 @@ describe('deleteTableMergeColumn', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const spy = spyOn(
-      deleteColumnExpandedModule,
-      'deleteColumnWhenExpanded'
-    ).mockReturnValue(undefined as any);
+    const spy = spyOn(deleteColumnExpandedModule, "deleteColumnWhenExpanded").mockReturnValue(
+      undefined as any
+    );
 
     deleteTableMergeColumn(editor);
 
@@ -62,12 +60,12 @@ describe('deleteTableMergeColumn', () => {
     spy.mockRestore();
   });
 
-  it('shrinks spanning cells and table colSizes when deleting a merged column', () => {
+  it("shrinks spanning cells and table colSizes when deleting a merged column", () => {
     const input = (
       <editor>
         <htable colSizes={[40, 60]}>
           <htr>
-            <htd attributes={{ colspan: '2' }} colSpan={2}>
+            <htd attributes={{ colspan: "2" }} colSpan={2}>
               <hp>11</hp>
             </htd>
           </htr>
@@ -93,26 +91,26 @@ describe('deleteTableMergeColumn', () => {
     expect(editor.children).toMatchObject([
       {
         colSizes: [40],
-        type: 'table',
+        type: "table",
         children: [
           {
             children: [
               {
-                attributes: { colspan: '1' },
+                attributes: { colspan: "1" },
                 colSpan: 1,
-                type: 'td',
+                type: "td",
               },
             ],
-            type: 'tr',
+            type: "tr",
           },
           {
             children: [
               {
-                children: [{ children: [{ text: '21' }] }],
-                type: 'td',
+                children: [{ children: [{ text: "21" }] }],
+                type: "td",
               },
             ],
-            type: 'tr',
+            type: "tr",
           },
         ],
       },

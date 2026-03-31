@@ -1,6 +1,6 @@
-import type { Editor, EditorNodesOptions, ValueOf } from 'platejs';
+import type { Editor, EditorNodesOptions, ValueOf } from "platejs";
 
-import { getBlocksWithId } from '../queries/getBlocksWithId';
+import { getBlocksWithId } from "../queries/getBlocksWithId";
 
 /** Remove blocks with an id and focus the editor. */
 export const removeBlocksAndFocus = <E extends Editor = Editor>(

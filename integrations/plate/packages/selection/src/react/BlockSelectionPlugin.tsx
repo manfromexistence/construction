@@ -1,6 +1,3 @@
-import type { CSSProperties } from 'react';
-import type React from 'react';
-
 import type {
   NodeEntry,
   OmitFirst,
@@ -9,39 +6,37 @@ import type {
   SlateEditor,
   TElement,
   TIdElement,
-} from 'platejs';
+} from "platejs";
+import { bindFirst, KEYS, PathApi } from "platejs";
+import { createTPlatePlugin, type PlatePluginContext } from "platejs/react";
+import type React from "react";
+import type { CSSProperties } from "react";
 
-import { bindFirst, KEYS, PathApi } from 'platejs';
-import { type PlatePluginContext, createTPlatePlugin } from 'platejs/react';
+import type { PartialSelectionOptions } from "../internal";
 
-import type { PartialSelectionOptions } from '../internal';
-
-import { selectBlocks } from '../internal/transforms/selectBlocks';
-import { BlockMenuPlugin } from './BlockMenuPlugin';
-import { BlockSelectionAfterEditable } from './components/BlockSelectionAfterEditable';
-import {
-  addOnContextMenu,
-  useBlockSelectable,
-} from './hooks/useBlockSelectable';
-import { moveSelection } from './internal/api/moveSelection';
-import { addSelectedRow, setSelectedIds } from './internal/api/setSelectedIds';
-import { shiftSelection } from './internal/api/shiftSelection';
-import { duplicateBlockSelectionNodes } from './transforms/duplicateBlockSelectionNodes';
-import { insertBlocksAndSelect } from './transforms/insertBlocksAndSelect';
-import { removeBlockSelectionNodes } from './transforms/removeBlockSelectionNodes';
-import { selectBlockSelectionNodes } from './transforms/selectBlockSelectionNodes';
+import { selectBlocks } from "../internal/transforms/selectBlocks";
+import { BlockMenuPlugin } from "./BlockMenuPlugin";
+import { BlockSelectionAfterEditable } from "./components/BlockSelectionAfterEditable";
+import { addOnContextMenu, useBlockSelectable } from "./hooks/useBlockSelectable";
+import { moveSelection } from "./internal/api/moveSelection";
+import { addSelectedRow, setSelectedIds } from "./internal/api/setSelectedIds";
+import { shiftSelection } from "./internal/api/shiftSelection";
+import { duplicateBlockSelectionNodes } from "./transforms/duplicateBlockSelectionNodes";
+import { insertBlocksAndSelect } from "./transforms/insertBlocksAndSelect";
+import { removeBlockSelectionNodes } from "./transforms/removeBlockSelectionNodes";
+import { selectBlockSelectionNodes } from "./transforms/selectBlockSelectionNodes";
 import {
   setBlockSelectionIndent,
   setBlockSelectionNodes,
   setBlockSelectionTexts,
-} from './transforms/setBlockSelectionNodes';
+} from "./transforms/setBlockSelectionNodes";
 
 export type BlockSelectionConfig = PluginConfig<
-  'blockSelection',
+  "blockSelection",
   {
     anchorId?: string | null;
     areaOptions?: PartialSelectionOptions;
-    editorPaddingRight?: CSSProperties['width'];
+    editorPaddingRight?: CSSProperties["width"];
     enableContextMenu?: boolean;
     /**
      * Disable the plugin's custom selectAll (Cmd+A) behavior.
@@ -70,10 +65,7 @@ export type BlockSelectionConfig = PluginConfig<
        *
        * @deprecated Use `add` or `set` instead.
        */
-      addSelectedRow: (
-        id: string,
-        options?: { clear?: boolean; delay?: number }
-      ) => void;
+      addSelectedRow: (id: string, options?: { clear?: boolean; delay?: number }) => void;
       /** Clear block selection */
       clear: () => void;
       /** Delete a block from the selection. */
@@ -106,7 +98,7 @@ export type BlockSelectionConfig = PluginConfig<
       /** Check if a block is selectable. */
       isSelectable: (element: TElement, path: Path) => boolean;
       /** Arrow-based move selection */
-      moveSelection: (direction: 'down' | 'up') => void;
+      moveSelection: (direction: "down" | "up") => void;
       /** Reset selected block ids. @deprecated Use `clear` instead. */
       resetSelectedIds: () => void;
       /** Select all selectable blocks */
@@ -114,7 +106,7 @@ export type BlockSelectionConfig = PluginConfig<
       /** Set a block to be selected. */
       set: (id: string[] | string) => void;
       /** Shift-based expand/shrink selection */
-      shiftSelection: (direction: 'down' | 'up') => void;
+      shiftSelection: (direction: "down" | "up") => void;
       /** Deselect all blocks. @deprecated Use `deselect` instead. */
       unselect: () => void;
     };
@@ -144,7 +136,7 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
       if (
         event.button === 0 &&
         getOptions().selectedIds!.size > 0 &&
-        !editor.getOption(BlockMenuPlugin, 'openId')
+        !editor.getOption(BlockMenuPlugin, "openId")
       ) {
         api.blockSelection.deselect();
       }
@@ -181,11 +173,11 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
     afterEditable: BlockSelectionAfterEditable,
   },
 })
-  .extendSelectors<BlockSelectionConfig['selectors']>(({ getOptions }) => ({
+  .extendSelectors<BlockSelectionConfig["selectors"]>(({ getOptions }) => ({
     isSelected: (id) => !!id && getOptions().selectedIds!.has(id),
     isSelectingSome: () => getOptions().selectedIds!.size > 0,
   }))
-  .extendApi<Partial<BlockSelectionConfig['api']['blockSelection']>>(
+  .extendApi<Partial<BlockSelectionConfig["api"]["blockSelection"]>>(
     ({ editor, getOption, getOptions, setOption }) => ({
       addOnContextMenu: bindFirst(addOnContextMenu, editor),
       moveSelection: bindFirst(moveSelection, editor),
@@ -202,10 +194,10 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
           next.add(id);
         }
 
-        setOption('selectedIds', next);
+        setOption("selectedIds", next);
       },
       clear: () => {
-        setOption('selectedIds', new Set());
+        setOption("selectedIds", new Set());
       },
       delete: (id) => {
         const next = new Set(getOptions().selectedIds!);
@@ -218,14 +210,14 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
           next.delete(id);
         }
 
-        setOption('selectedIds', next);
+        setOption("selectedIds", next);
       },
       deselect: () => {
-        setOption('selectedIds', new Set());
-        setOption('isSelecting', false);
+        setOption("selectedIds", new Set());
+        setOption("isSelecting", false);
       },
       first: () => {
-        const selectedIds = getOption('selectedIds');
+        const selectedIds = getOption("selectedIds");
 
         if (!selectedIds || selectedIds.size === 0) return null;
 
@@ -235,14 +227,14 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
         })!;
       },
       focus: () => {
-        const shadowInputRef = getOption('shadowInputRef');
+        const shadowInputRef = getOption("shadowInputRef");
 
         if (shadowInputRef?.current) {
           shadowInputRef.current.focus({ preventScroll: true });
         }
       },
       getNodes: (options) => {
-        const selectedIds = getOption('selectedIds');
+        const selectedIds = getOption("selectedIds");
 
         const nodes = editor.api.blocks<TIdElement>({
           at: [],
@@ -291,7 +283,7 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
         }
 
         if (nodes.length === 0 && options?.selectionFallback) {
-          return editor.api.blocks({ mode: 'highest' });
+          return editor.api.blocks({ mode: "highest" });
         }
 
         return nodes;
@@ -304,35 +296,32 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
         return getOptions().selectedIds!.has(id);
       },
       isSelectable: (element, path) =>
-        !!element.id &&
-        editor.api.isBlock(element) &&
-        getOptions().isSelectable!(element, path),
+        !!element.id && editor.api.isBlock(element) && getOptions().isSelectable!(element, path),
       resetSelectedIds: () => {
-        setOption('selectedIds', new Set());
+        setOption("selectedIds", new Set());
       },
       set: (id) => {
-        setOption('selectedIds', new Set(Array.isArray(id) ? id : [id]));
+        setOption("selectedIds", new Set(Array.isArray(id) ? id : [id]));
       },
       unselect: () => {
-        setOption('selectedIds', new Set());
-        setOption('isSelecting', false);
+        setOption("selectedIds", new Set());
+        setOption("isSelecting", false);
       },
     })
   )
-  .extendApi<Partial<BlockSelectionConfig['api']['blockSelection']>>(
+  .extendApi<Partial<BlockSelectionConfig["api"]["blockSelection"]>>(
     ({ api, editor, setOption }) => ({
       addSelectedRow: bindFirst(addSelectedRow, editor),
       selectAll: () => {
         const ids = api
           .blocks({
             at: [],
-            mode: 'highest',
-            match: (n, p) =>
-              !!n.id && api.blockSelection.isSelectable(n as any, p),
+            mode: "highest",
+            match: (n, p) => !!n.id && api.blockSelection.isSelectable(n as any, p),
           })
           .map((n) => n[0].id as string);
 
-        setOption('selectedIds', new Set(ids));
+        setOption("selectedIds", new Set(ids));
         api.blockSelection.focus();
       },
     })
@@ -385,7 +374,7 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
       api: {
         // turn-into-dropdown-menu
         nodes(options) {
-          if (!options?.at && getOption('isSelectingSome')) {
+          if (!options?.at && getOption("isSelectingSome")) {
             return api.blockSelection.getNodes();
           }
 
@@ -418,7 +407,7 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
           return escape();
         },
         focus() {
-          if (!editor.meta._forceFocus && getOption('isSelectingSome')) return;
+          if (!editor.meta._forceFocus && getOption("isSelectingSome")) return;
           focus();
         },
         selectAll: () => {
@@ -458,10 +447,7 @@ export const BlockSelectionPlugin = createTPlatePlugin<BlockSelectionConfig>({
           });
         },
         setSelection(props) {
-          if (
-            getOptions().selectedIds!.size > 0 &&
-            !editor.getOption(BlockMenuPlugin, 'openId')
-          ) {
+          if (getOptions().selectedIds!.size > 0 && !editor.getOption(BlockMenuPlugin, "openId")) {
             api.blockSelection.deselect();
           }
 
@@ -480,11 +466,9 @@ const withBlockSelection = (
   { api, editor, getOption }: PlatePluginContext<BlockSelectionConfig>,
   callback: any
 ) => {
-  if (getOption('isSelectingSome')) {
+  if (getOption("isSelectingSome")) {
     editor.tf.withoutNormalizing(() => {
-      const blocks = editor
-        .getApi(BlockSelectionPlugin)
-        .blockSelection.getNodes();
+      const blocks = editor.getApi(BlockSelectionPlugin).blockSelection.getNodes();
 
       editor.tf.select(editor.api.nodesRange(blocks));
 

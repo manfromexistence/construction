@@ -1,15 +1,7 @@
 {
   "name": "stepper-validation-demo",
-  "dependencies": [
-    "@hookform/resolvers",
-    "react-hook-form",
-    "sonner",
-    "zod"
-  ],
-  "registryDependencies": [
-    "stepper",
-    "form"
-  ],
+  "dependencies": ["@hookform/resolvers", "react-hook-form", "sonner", "zod"],
+  "registryDependencies": ["stepper", "form"],
   "files": [
     {
       "path": "examples/stepper-validation-demo.tsx",

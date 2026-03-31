@@ -1,14 +1,13 @@
-import React from 'react';
+import { act, renderHook } from "@testing-library/react";
+import React from "react";
 
-import { act, renderHook } from '@testing-library/react';
+import { TestPlate as Plate } from "../../__tests__/TestPlate";
+import { createPlateEditor } from "../../editor";
+import { useElementSelector } from "./useElementSelector";
+import { ElementProvider } from "./useElementStore";
 
-import { TestPlate as Plate } from '../../__tests__/TestPlate';
-import { createPlateEditor } from '../../editor';
-import { ElementProvider } from './useElementStore';
-import { useElementSelector } from './useElementSelector';
-
-describe('useElementSelector', () => {
-  it('skips rerenders when equalityFn treats the derived value as unchanged', () => {
+describe("useElementSelector", () => {
+  it("skips rerenders when equalityFn treats the derived value as unchanged", () => {
     const editor = createPlateEditor();
     const renderValues: number[] = [];
     let setEntry: React.Dispatch<React.SetStateAction<any>>;
@@ -16,9 +15,9 @@ describe('useElementSelector', () => {
     const wrapper = ({ children }: { children: React.ReactNode }) => {
       const [entry, updateEntry] = React.useState<any>([
         {
-          children: [{ text: 'one' }],
-          tone: 'red',
-          type: 'p',
+          children: [{ text: "one" }],
+          tone: "red",
+          type: "p",
         },
         [0],
       ]);
@@ -27,12 +26,7 @@ describe('useElementSelector', () => {
 
       return (
         <Plate editor={editor}>
-          <ElementProvider
-            element={entry[0]}
-            entry={entry}
-            path={entry[1]}
-            scope="element"
-          >
+          <ElementProvider element={entry[0]} entry={entry} path={entry[1]} scope="element">
             {children}
           </ElementProvider>
         </Plate>
@@ -41,11 +35,10 @@ describe('useElementSelector', () => {
 
     const { result } = renderHook(
       () => {
-        const value = useElementSelector(
-          ([element]) => element.children.length,
-          [],
-          { equalityFn: (a, b) => a === b, key: 'element' }
-        );
+        const value = useElementSelector(([element]) => element.children.length, [], {
+          equalityFn: (a, b) => a === b,
+          key: "element",
+        });
 
         renderValues.push(value);
 
@@ -58,7 +51,7 @@ describe('useElementSelector', () => {
     const initialRenderCount = renderValues.length;
 
     act(() => {
-      setEntry?.(([element, path]) => [{ ...element, tone: 'blue' }, path]);
+      setEntry?.(([element, path]) => [{ ...element, tone: "blue" }, path]);
     });
 
     expect(result.current).toBe(1);
@@ -68,7 +61,7 @@ describe('useElementSelector', () => {
       setEntry?.(([element, path]) => [
         {
           ...element,
-          children: [...element.children, { text: 'two' }],
+          children: [...element.children, { text: "two" }],
         },
         path,
       ]);

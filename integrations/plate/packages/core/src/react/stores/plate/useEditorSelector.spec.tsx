@@ -1,16 +1,14 @@
-import React from 'react';
+import { act, renderHook, waitFor } from "@testing-library/react";
+import React from "react";
+import { TestPlate as Plate } from "../../__tests__/TestPlate";
+import { createPlateEditor } from "../../editor";
+import { usePlateStore } from "./createPlateStore";
+import { useEditorSelector } from "./useEditorSelector";
 
-import { act, renderHook, waitFor } from '@testing-library/react';
-
-import { createPlateEditor } from '../../editor';
-import { TestPlate as Plate } from '../../__tests__/TestPlate';
-import { usePlateStore } from './createPlateStore';
-import { useEditorSelector } from './useEditorSelector';
-
-describe('useEditorSelector', () => {
-  it('skips rerenders when equalityFn treats the derived value as unchanged', async () => {
+describe("useEditorSelector", () => {
+  it("skips rerenders when equalityFn treats the derived value as unchanged", async () => {
     const editor = createPlateEditor({
-      value: [{ children: [{ text: 'one' }], type: 'p' }],
+      value: [{ children: [{ text: "one" }], type: "p" }],
     });
     const renderValues: number[] = [];
 
@@ -21,11 +19,9 @@ describe('useEditorSelector', () => {
     const { result } = renderHook(
       () => {
         const store = usePlateStore();
-        const value = useEditorSelector(
-          (nextEditor) => nextEditor.children.length,
-          [],
-          { equalityFn: (a, b) => a === b }
-        );
+        const value = useEditorSelector((nextEditor) => nextEditor.children.length, [], {
+          equalityFn: (a, b) => a === b,
+        });
 
         renderValues.push(value);
 
@@ -39,18 +35,15 @@ describe('useEditorSelector', () => {
 
     act(() => {
       editor.children = [...editor.children];
-      result.current.store.set('versionEditor', 2);
+      result.current.store.set("versionEditor", 2);
     });
 
     expect(result.current.value).toBe(1);
     expect(renderValues).toHaveLength(initialRenderCount);
 
     act(() => {
-      editor.children = [
-        ...editor.children,
-        { children: [{ text: 'two' }], type: 'p' },
-      ];
-      result.current.store.set('versionEditor', 3);
+      editor.children = [...editor.children, { children: [{ text: "two" }], type: "p" }];
+      result.current.store.set("versionEditor", 3);
     });
 
     await waitFor(() => {

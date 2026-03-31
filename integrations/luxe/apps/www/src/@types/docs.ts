@@ -10,5 +10,5 @@ export type Docs = {
   author_twitter?: string;
   banner?: string;
   author?: string;
-	isNew?: boolean;
+  isNew?: boolean;
 };

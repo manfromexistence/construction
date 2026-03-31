@@ -1,10 +1,9 @@
-import React from 'react';
+import { type Atom, atom } from "jotai";
 
-import type { JotaiStore } from 'jotai-x';
+import type { JotaiStore } from "jotai-x";
+import React from "react";
 
-import { type Atom, atom } from 'jotai';
-
-import { createAtomStore, useStoreAtomValue } from '../../libs';
+import { createAtomStore, useStoreAtomValue } from "../../libs";
 
 const {
   PlateControllerProvider: PlateController,
@@ -17,26 +16,23 @@ const {
     primaryEditorIds: atom<string[]>([]),
   },
   {
-    name: 'plateController',
+    name: "plateController",
   }
 );
 
 export { PlateController, plateControllerStore };
 
-export const usePlateControllerLocalStore: typeof _usePlateControllerStore = (
-  options
-) =>
+export const usePlateControllerLocalStore: typeof _usePlateControllerStore = (options) =>
   _usePlateControllerStore({
-    scope: typeof options === 'string' ? options : undefined,
+    scope: typeof options === "string" ? options : undefined,
     warnIfNoStore: false,
-    ...(typeof options === 'object' ? options : {}),
+    ...(typeof options === "object" ? options : {}),
   });
 
 // export const usePlateControllerStore = (options?: UsePlateControllerStoreOptions) =>
 //   _usePlateControllerStore(options);
 
-export const usePlateControllerExists = () =>
-  !!usePlateControllerLocalStore().store;
+export const usePlateControllerExists = () => !!usePlateControllerLocalStore().store;
 
 /**
  * Retrieve from PlateController the JotaiStore for the editor with a given ID,

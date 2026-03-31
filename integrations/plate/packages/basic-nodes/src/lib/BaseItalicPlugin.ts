@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS, someHtmlElement } from 'platejs';
+import { createSlatePlugin, KEYS, someHtmlElement } from "platejs";
 
 /** Enables support for italic formatting. */
 export const BaseItalicPlugin = createSlatePlugin({
@@ -7,19 +7,13 @@ export const BaseItalicPlugin = createSlatePlugin({
   parsers: {
     html: {
       deserializer: {
-        rules: [
-          { validNodeName: ['EM', 'I'] },
-          { validStyle: { fontStyle: 'italic' } },
-        ],
+        rules: [{ validNodeName: ["EM", "I"] }, { validStyle: { fontStyle: "italic" } }],
         query: ({ element }) =>
-          !someHtmlElement(
-            element,
-            (node) => node.style.fontStyle === 'normal'
-          ),
+          !someHtmlElement(element, (node) => node.style.fontStyle === "normal"),
       },
     },
   },
-  render: { as: 'em' },
+  render: { as: "em" },
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
     editor.tf.toggleMark(type);

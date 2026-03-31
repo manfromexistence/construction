@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { useTocObserver } from './useTocObserver';
+import { useTocObserver } from "./useTocObserver";
 
 type UseTocController = {
   activeId: string;
@@ -8,12 +8,8 @@ type UseTocController = {
   tocRef: React.RefObject<HTMLElement | null>;
 };
 
-export const useTocController = ({
-  activeId,
-  isObserve,
-  tocRef,
-}: UseTocController) => {
-  const [activeTocId, setActiveTocId] = React.useState('');
+export const useTocController = ({ activeId, isObserve, tocRef }: UseTocController) => {
+  const [activeTocId, setActiveTocId] = React.useState("");
   const { offset, visible } = useTocObserver({
     activeId: activeTocId,
     isObserve,
@@ -22,10 +18,10 @@ export const useTocController = ({
 
   React.useEffect(() => {
     if (!visible) {
-      const tocItemWrapper = tocRef.current?.querySelector('#toc_wrap');
+      const tocItemWrapper = tocRef.current?.querySelector("#toc_wrap");
       const top = (tocItemWrapper?.scrollTop as any) + offset;
 
-      tocItemWrapper?.scrollTo({ behavior: 'instant', top });
+      tocItemWrapper?.scrollTo({ behavior: "instant", top });
     }
   }, [visible, offset, tocRef]);
 

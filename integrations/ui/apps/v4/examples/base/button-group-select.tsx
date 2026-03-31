@@ -1,27 +1,27 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ArrowRightIcon } from "lucide-react"
+import { ArrowRightIcon } from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/styles/base-nova/ui/button"
-import { ButtonGroup } from "@/styles/base-nova/ui/button-group"
-import { Input } from "@/styles/base-nova/ui/input"
+import { Button } from "@/styles/base-nova/ui/button";
+import { ButtonGroup } from "@/styles/base-nova/ui/button-group";
+import { Input } from "@/styles/base-nova/ui/input";
 import {
   Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
-} from "@/styles/base-nova/ui/select"
+} from "@/styles/base-nova/ui/select";
 
 const CURRENCIES = [
   { label: "US Dollar", value: "$" },
   { label: "Euro", value: "€" },
   { label: "British Pound", value: "£" },
-]
+];
 
 export default function ButtonGroupSelect() {
-  const [currency, setCurrency] = React.useState("$")
+  const [currency, setCurrency] = React.useState("$");
 
   return (
     <ButtonGroup>
@@ -36,8 +36,7 @@ export default function ButtonGroupSelect() {
             <SelectGroup>
               {CURRENCIES.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
-                  {item.value}{" "}
-                  <span className="text-muted-foreground">{item.label}</span>
+                  {item.value} <span className="text-muted-foreground">{item.label}</span>
                 </SelectItem>
               ))}
             </SelectGroup>
@@ -51,5 +50,5 @@ export default function ButtonGroupSelect() {
         </Button>
       </ButtonGroup>
     </ButtonGroup>
-  )
+  );
 }

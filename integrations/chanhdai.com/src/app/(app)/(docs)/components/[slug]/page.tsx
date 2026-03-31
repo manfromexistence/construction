@@ -1,60 +1,52 @@
-import { getTableOfContents } from "fumadocs-core/content/toc"
-import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react"
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import type { BlogPosting as PageSchema, WithContext } from "schema-dts"
+import { getTableOfContents } from "fumadocs-core/content/toc";
+import { ArrowLeftIcon, ArrowRightIcon } from "lucide-react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { BlogPosting as PageSchema, WithContext } from "schema-dts";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
-import { InlineTOC } from "@/components/inline-toc"
-import { MDX } from "@/components/mdx"
-import { Button } from "@/components/ui/button"
-import { Kbd } from "@/components/ui/kbd"
-import { Prose } from "@/components/ui/typography"
-import { SITE_INFO, X_USERNAME } from "@/config/site"
-import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts"
-import { LLMCopyButtonWithViewOptions } from "@/features/blog/components/post-page-actions"
-import { PostShareMenu } from "@/features/blog/components/post-share-menu"
-import {
-  findNeighbour,
-  getDocBySlug,
-  getDocsByCategory,
-} from "@/features/doc/data/documents"
-import type { Doc } from "@/features/doc/types/document"
-import { USER } from "@/features/portfolio/data/user"
-import { cn } from "@/lib/utils"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/base/ui/tooltip";
+import { InlineTOC } from "@/components/inline-toc";
+import { MDX } from "@/components/mdx";
+import { Button } from "@/components/ui/button";
+import { Kbd } from "@/components/ui/kbd";
+import { Prose } from "@/components/ui/typography";
+import { SITE_INFO, X_USERNAME } from "@/config/site";
+import { PostKeyboardShortcuts } from "@/features/blog/components/post-keyboard-shortcuts";
+import { LLMCopyButtonWithViewOptions } from "@/features/blog/components/post-page-actions";
+import { PostShareMenu } from "@/features/blog/components/post-share-menu";
+import { findNeighbour, getDocBySlug, getDocsByCategory } from "@/features/doc/data/documents";
+import type { Doc } from "@/features/doc/types/document";
+import { USER } from "@/features/portfolio/data/user";
+import { cn } from "@/lib/utils";
 
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export async function generateStaticParams() {
-  const docs = getDocsByCategory("components")
-  return docs.map((doc) => ({ slug: doc.slug }))
+  const docs = getDocsByCategory("components");
+  return docs.map((doc) => ({ slug: doc.slug }));
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const slug = (await params).slug
-  const doc = getDocBySlug(slug)
+  const slug = (await params).slug;
+  const doc = getDocBySlug(slug);
 
   if (!doc || doc.metadata.category !== "components") {
-    return notFound()
+    return notFound();
   }
 
-  const { title, description, image, createdAt, updatedAt } = doc.metadata
+  const { title, description, image, createdAt, updatedAt } = doc.metadata;
 
-  const postUrl = `/components/${doc.slug}`
+  const postUrl = `/components/${doc.slug}`;
   const ogImage =
     image ||
-    `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+    `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
   return {
     title,
@@ -80,7 +72,7 @@ export async function generateMetadata({
       creator: X_USERNAME,
       images: [ogImage],
     },
-  }
+  };
 }
 
 function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
@@ -101,28 +93,28 @@ function getPageJsonLd(doc: Doc): WithContext<PageSchema> {
       identifier: USER.username,
       image: USER.avatar,
     },
-  }
+  };
 }
 
 export default async function Page({
   params,
 }: {
   params: Promise<{
-    slug: string
-  }>
+    slug: string;
+  }>;
 }) {
-  const slug = (await params).slug
-  const doc = getDocBySlug(slug)
+  const slug = (await params).slug;
+  const doc = getDocBySlug(slug);
 
   if (!doc) {
-    notFound()
+    notFound();
   }
 
   if (doc.metadata.category !== "components") {
-    notFound()
+    notFound();
   }
 
-  const toc = getTableOfContents(doc.content)
+  const toc = getTableOfContents(doc.content);
 
   const allDocs = getDocsByCategory("components")
     .slice()
@@ -130,8 +122,8 @@ export default async function Page({
       a.metadata.title.localeCompare(b.metadata.title, "en", {
         sensitivity: "base",
       })
-    )
-  const { previous, next } = findNeighbour(allDocs, slug)
+    );
+  const { previous, next } = findNeighbour(allDocs, slug);
 
   return (
     <>
@@ -142,11 +134,7 @@ export default async function Page({
         }}
       />
 
-      <PostKeyboardShortcuts
-        basePath="/components"
-        previous={previous}
-        next={next}
-      />
+      <PostKeyboardShortcuts basePath="/components" previous={previous} next={next} />
 
       <div className="flex items-center justify-between p-2 pl-4">
         <Button
@@ -162,26 +150,15 @@ export default async function Page({
         </Button>
 
         <div className="flex items-center gap-2">
-          <LLMCopyButtonWithViewOptions
-            markdownUrl={`/components/${doc.slug}.mdx`}
-            isComponent
-          />
+          <LLMCopyButtonWithViewOptions markdownUrl={`/components/${doc.slug}.mdx`} isComponent />
 
-          <PostShareMenu
-            title={doc.metadata.title}
-            url={`/components/${doc.slug}`}
-          />
+          <PostShareMenu title={doc.metadata.title} url={`/components/${doc.slug}`} />
 
           {previous && (
             <Tooltip>
               <TooltipTrigger
                 render={
-                  <Button
-                    className="size-7 border-none"
-                    variant="secondary"
-                    size="icon-sm"
-                    asChild
-                  >
+                  <Button className="size-7 border-none" variant="secondary" size="icon-sm" asChild>
                     <Link href={`/components/${previous.slug}`}>
                       <ArrowLeftIcon />
                       <span className="sr-only">Previous</span>
@@ -204,12 +181,7 @@ export default async function Page({
             <Tooltip>
               <TooltipTrigger
                 render={
-                  <Button
-                    className="size-7 border-none"
-                    variant="secondary"
-                    size="icon-sm"
-                    asChild
-                  >
+                  <Button className="size-7 border-none" variant="secondary" size="icon-sm" asChild>
                     <Link href={`/components/${next.slug}`}>
                       <span className="sr-only">Next</span>
                       <ArrowRightIcon />
@@ -255,5 +227,5 @@ export default async function Page({
 
       <div className="screen-line-top h-4 w-full" />
     </>
-  )
+  );
 }

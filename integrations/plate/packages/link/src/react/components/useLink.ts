@@ -1,8 +1,8 @@
-import type { TLinkElement } from 'platejs';
+import type { TLinkElement } from "platejs";
 
-import { useEditorRef } from 'platejs/react';
+import { useEditorRef } from "platejs/react";
 
-import { getLinkAttributes } from '../../lib';
+import { getLinkAttributes } from "../../lib";
 
 export const useLink = ({ element }: { element: TLinkElement }) => {
   const editor = useEditorRef();

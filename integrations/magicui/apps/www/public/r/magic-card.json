@@ -4,10 +4,7 @@
   "type": "registry:ui",
   "title": "Magic Card",
   "description": "A spotlight effect that follows your mouse cursor and highlights borders on hover.",
-  "dependencies": [
-    "motion",
-    "next-themes"
-  ],
+  "dependencies": ["motion", "next-themes"],
   "files": [
     {
       "path": "registry/magicui/magic-card.tsx",

@@ -1,8 +1,6 @@
-import { isHtmlBlockElement } from '../isHtmlBlockElement';
+import { isHtmlBlockElement } from "../isHtmlBlockElement";
 
-export const isLastNonEmptyTextOfInlineFormattingContext = (
-  initialText: Text
-): boolean => {
+export const isLastNonEmptyTextOfInlineFormattingContext = (initialText: Text): boolean => {
   let currentNode: Node | null = initialText;
 
   while (true) {
@@ -29,7 +27,7 @@ export const isLastNonEmptyTextOfInlineFormattingContext = (
       return true;
     }
     // If the next node is a non-empty text node, we're not at the end
-    if ((currentNode.textContent || '').length > 0) {
+    if ((currentNode.textContent || "").length > 0) {
       return false;
     }
 

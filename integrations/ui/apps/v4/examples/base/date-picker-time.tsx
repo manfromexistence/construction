@@ -1,22 +1,18 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { format } from "date-fns"
-import { ChevronDownIcon } from "lucide-react"
+import { format } from "date-fns";
+import { ChevronDownIcon } from "lucide-react";
+import * as React from "react";
 
-import { Button } from "@/styles/base-nova/ui/button"
-import { Calendar } from "@/styles/base-nova/ui/calendar"
-import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field"
-import { Input } from "@/styles/base-nova/ui/input"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/base-nova/ui/popover"
+import { Button } from "@/styles/base-nova/ui/button";
+import { Calendar } from "@/styles/base-nova/ui/calendar";
+import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field";
+import { Input } from "@/styles/base-nova/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/base-nova/ui/popover";
 
 export function DatePickerTime() {
-  const [open, setOpen] = React.useState(false)
-  const [date, setDate] = React.useState<Date | undefined>(undefined)
+  const [open, setOpen] = React.useState(false);
+  const [date, setDate] = React.useState<Date | undefined>(undefined);
 
   return (
     <FieldGroup className="mx-auto max-w-xs flex-row">
@@ -42,8 +38,8 @@ export function DatePickerTime() {
               captionLayout="dropdown"
               defaultMonth={date}
               onSelect={(date) => {
-                setDate(date)
-                setOpen(false)
+                setDate(date);
+                setOpen(false);
               }}
             />
           </PopoverContent>
@@ -60,5 +56,5 @@ export function DatePickerTime() {
         />
       </Field>
     </FieldGroup>
-  )
+  );
 }

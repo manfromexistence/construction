@@ -1,21 +1,18 @@
-'use client';
+"use client";
 
-import * as React from 'react';
-
-import type { NpmCommands } from '@/types/unist';
-
-import { CheckIcon, ClipboardIcon } from 'lucide-react';
-
-import { copyToClipboardWithMeta } from '@/components/copy-button';
-import { Button } from '@/components/ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useConfig } from '@/hooks/use-config';
+import { CheckIcon, ClipboardIcon } from "lucide-react";
+import * as React from "react";
+import { copyToClipboardWithMeta } from "@/components/copy-button";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useConfig } from "@/hooks/use-config";
+import type { NpmCommands } from "@/types/unist";
 
 export function CodeBlockCommand({
   __bunCommand__,
   __npmCommand__,
   __pnpmCommand__,
-}: React.ComponentProps<'pre'> & NpmCommands) {
+}: React.ComponentProps<"pre"> & NpmCommands) {
   const [config, setConfig] = useConfig();
   const [hasCopied, setHasCopied] = React.useState(false);
   React.useEffect(() => {
@@ -24,7 +21,7 @@ export function CodeBlockCommand({
       return () => clearTimeout(timer);
     }
   }, [hasCopied]);
-  const packageManager = config.packageManager || 'pnpm';
+  const packageManager = config.packageManager || "pnpm";
   const tabs = React.useMemo(
     () => ({
       bun: __bunCommand__,
@@ -39,7 +36,7 @@ export function CodeBlockCommand({
       return;
     }
     copyToClipboardWithMeta(command, {
-      name: 'copy_npm_command',
+      name: "copy_npm_command",
       properties: {
         command,
         pm: packageManager,
@@ -54,7 +51,7 @@ export function CodeBlockCommand({
         onValueChange={(value) => {
           setConfig({
             ...config,
-            packageManager: value as 'bun' | 'npm' | 'pnpm',
+            packageManager: value as "bun" | "npm" | "pnpm",
           });
         }}
       >
@@ -74,10 +71,7 @@ export function CodeBlockCommand({
         {Object.entries(tabs).map(([key, value]) => (
           <TabsContent key={key} className="mt-0" value={key}>
             <pre className="px-4 py-5">
-              <code
-                className="relative font-mono text-sm leading-none"
-                data-language="bash"
-              >
+              <code className="relative font-mono text-sm leading-none" data-language="bash">
                 {value}
               </code>
             </pre>

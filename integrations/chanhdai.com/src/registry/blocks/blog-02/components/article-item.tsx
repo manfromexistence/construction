@@ -1,20 +1,15 @@
-import { format } from "date-fns"
+import { format } from "date-fns";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type ArticleItemProps = {
-  url: string
-  title: string
-  coverUrl: string
-  createdAt: string
-}
+  url: string;
+  title: string;
+  coverUrl: string;
+  createdAt: string;
+};
 
-export function ArticleItem({
-  url,
-  title,
-  coverUrl,
-  createdAt,
-}: ArticleItemProps) {
+export function ArticleItem({ url, title, coverUrl, createdAt }: ArticleItemProps) {
   return (
     <a
       href={url}
@@ -26,18 +21,12 @@ export function ArticleItem({
       )}
     >
       <div className="relative aspect-video">
-        <img
-          src={coverUrl}
-          alt={title}
-          className="size-full rounded-xl object-cover"
-        />
+        <img src={coverUrl} alt={title} className="size-full rounded-xl object-cover" />
         <div className="pointer-events-none absolute inset-0 rounded-xl ring-1 ring-black/10 ring-inset dark:ring-white/10" />
       </div>
 
       <div className="flex flex-col gap-2 p-2">
-        <h3 className="text-lg leading-tight font-medium text-balance">
-          {title}
-        </h3>
+        <h3 className="text-lg leading-tight font-medium text-balance">{title}</h3>
 
         <dl>
           <dt className="sr-only">Published on</dt>
@@ -49,5 +38,5 @@ export function ArticleItem({
         </dl>
       </div>
     </a>
-  )
+  );
 }

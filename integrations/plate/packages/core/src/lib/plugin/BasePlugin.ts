@@ -1,14 +1,9 @@
-import type {
-  EditorApi,
-  EditorTransforms,
-  TElement,
-  TText,
-} from '@platejs/slate';
-import type { AnyObject, Nullable } from '@udecode/utils';
-import type { Draft } from 'mutative';
-import type { TStateApi } from 'zustand-x';
+import type { EditorApi, EditorTransforms, TElement, TText } from "@platejs/slate";
+import type { AnyObject, Nullable } from "@udecode/utils";
+import type { Draft } from "mutative";
+import type { TStateApi } from "zustand-x";
 
-import type { CorePluginApi, CorePluginTransforms } from '../plugins';
+import type { CorePluginApi, CorePluginTransforms } from "../plugins";
 
 export type AnyPluginConfig = {
   key: any;
@@ -52,9 +47,7 @@ export type BaseHtmlDeserializer = BaseDeserializer & {
      * Valid element style values. Can be a list of string (only one match is
      * needed).
      */
-    validStyle?: Partial<
-      Record<keyof CSSStyleDeclaration, string[] | string | undefined>
-    >;
+    validStyle?: Partial<Record<keyof CSSStyleDeclaration, string[] | string | undefined>>;
   }[];
   /** Whether or not to include deserialized children on this node */
   withoutChildren?: boolean;
@@ -85,7 +78,7 @@ export type BaseInjectProps = {
 
 export type BasePlugin<C extends AnyPluginConfig = PluginConfig> = {
   /** Unique identifier for this plugin. */
-  key: C['key'];
+  key: C["key"];
   /** API methods provided by this plugin. */
   api: InferApi<C>;
   /**
@@ -119,12 +112,7 @@ export type BasePlugin<C extends AnyPluginConfig = PluginConfig> = {
   /** Extended properties used by any plugin as options. */
   options: InferOptions<C>;
   /** Store for managing plugin options. */
-  optionsStore: TStateApi<
-    C['options'],
-    [['zustand/mutative-x', never]],
-    {},
-    C['selectors']
-  >;
+  optionsStore: TStateApi<C["options"], [["zustand/mutative-x", never]], {}, C["selectors"]>;
   override: {
     /** Enable or disable plugins */
     enabled?: Partial<Record<string, boolean>>;
@@ -233,22 +221,16 @@ export type BasePlugin<C extends AnyPluginConfig = PluginConfig> = {
 };
 
 export type BasePluginContext<C extends AnyPluginConfig = PluginConfig> = {
-  api: C['api'] & EditorApi & CorePluginApi;
+  api: C["api"] & EditorApi & CorePluginApi;
   setOptions: (
-    options:
-      | ((state: Draft<Partial<InferOptions<C>>>) => void)
-      | Partial<InferOptions<C>>
+    options: ((state: Draft<Partial<InferOptions<C>>>) => void) | Partial<InferOptions<C>>
   ) => void;
-  tf: C['transforms'] & EditorTransforms & CorePluginTransforms;
+  tf: C["transforms"] & EditorTransforms & CorePluginTransforms;
   type: string;
-  getOption: <
-    K extends keyof InferOptions<C> | keyof InferSelectors<C> | 'state',
-  >(
+  getOption: <K extends keyof InferOptions<C> | keyof InferSelectors<C> | "state">(
     key: K,
-    ...args: K extends keyof InferSelectors<C>
-      ? Parameters<InferSelectors<C>[K]>
-      : unknown[]
-  ) => K extends 'state'
+    ...args: K extends keyof InferSelectors<C> ? Parameters<InferSelectors<C>[K]> : unknown[]
+  ) => K extends "state"
     ? InferOptions<C>
     : K extends keyof InferSelectors<C>
       ? ReturnType<InferSelectors<C>[K]>
@@ -256,10 +238,7 @@ export type BasePluginContext<C extends AnyPluginConfig = PluginConfig> = {
         ? InferOptions<C>[K]
         : never;
   getOptions: () => InferOptions<C>;
-  setOption: <K extends keyof InferOptions<C>>(
-    optionKey: K,
-    value: InferOptions<C>[K]
-  ) => void;
+  setOption: <K extends keyof InferOptions<C>>(optionKey: K, value: InferOptions<C>[K]) => void;
 };
 
 export type BasePluginNode<C extends AnyPluginConfig = PluginConfig> = {
@@ -373,9 +352,7 @@ export type BasePluginNode<C extends AnyPluginConfig = PluginConfig> = {
    * Function that returns an object of data attributes to be added to the
    * element.
    */
-  toDataAttributes?: (
-    options: BasePluginContext<C> & { node: TElement }
-  ) => AnyObject | undefined;
+  toDataAttributes?: (options: BasePluginContext<C> & { node: TElement }) => AnyObject | undefined;
 };
 
 export type BaseSerializer = AnyObject;
@@ -389,7 +366,7 @@ export type BaseTransformOptions = GetInjectNodePropsOptions & {
 
 export type BreakRules = {
   /** Action when Enter is pressed in an empty block. */
-  empty?: 'default' | 'deleteExit' | 'exit' | 'reset';
+  empty?: "default" | "deleteExit" | "exit" | "reset";
   /**
    * Action when Enter is pressed at the end of an empty line. This is typically
    * used with `default: 'lineBreak'`.
@@ -403,9 +380,9 @@ export type BreakRules = {
    *     </blockquote>
    * ```
    */
-  emptyLineEnd?: 'default' | 'deleteExit' | 'exit';
+  emptyLineEnd?: "default" | "deleteExit" | "exit";
   /** Default action when Enter is pressed. Defaults to splitting the block. */
-  default?: 'default' | 'deleteExit' | 'exit' | 'lineBreak';
+  default?: "default" | "deleteExit" | "exit" | "lineBreak";
   /** If true, the new block after splitting will be reset to the default type. */
   splitReset?: boolean;
 };
@@ -433,9 +410,9 @@ export type DeleteRules = {
    *     </blockquote>
    * ```
    */
-  start?: 'default' | 'reset';
+  start?: "default" | "reset";
   /** Action when Backspace is pressed and the block is empty. */
-  empty?: 'default' | 'reset';
+  empty?: "default" | "reset";
 };
 
 export type SelectionRules = {
@@ -450,19 +427,19 @@ export type SelectionRules = {
    *   Uses offset-based navigation.
    * - `default`: Uses Slate's default behavior.
    */
-  affinity?: 'default' | 'directional' | 'hard' | 'outward';
+  affinity?: "default" | "directional" | "hard" | "outward";
 };
 
 export type MatchRules =
-  | 'break.default'
-  | 'break.empty'
-  | 'break.emptyLineEnd'
-  | 'break.splitReset'
-  | 'delete.empty'
-  | 'delete.start'
-  | 'merge.removeEmpty'
-  | 'normalize.removeEmpty'
-  | 'selection.affinity';
+  | "break.default"
+  | "break.empty"
+  | "break.emptyLineEnd"
+  | "break.splitReset"
+  | "delete.empty"
+  | "delete.start"
+  | "merge.removeEmpty"
+  | "normalize.removeEmpty"
+  | "selection.affinity";
 
 export type EditOnlyConfig = {
   /**
@@ -494,18 +471,12 @@ export type EditOnlyConfig = {
   render?: boolean;
 };
 
-export type ExtendConfig<
-  C extends PluginConfig,
-  EO = {},
-  EA = {},
-  ET = {},
-  ES = {},
-> = {
-  key: C['key'];
-  api: C['api'] & EA;
-  options: C['options'] & EO;
-  selectors: C['selectors'] & ES;
-  transforms: C['transforms'] & ET;
+export type ExtendConfig<C extends PluginConfig, EO = {}, EA = {}, ET = {}, ES = {}> = {
+  key: C["key"];
+  api: C["api"] & EA;
+  options: C["options"] & EO;
+  selectors: C["selectors"] & ES;
+  transforms: C["transforms"] & ET;
 };
 
 export type GetInjectNodePropsOptions = {
@@ -527,17 +498,15 @@ export type GetInjectNodePropsReturnType = AnyObject & {
   style?: CSSStyleDeclaration;
 };
 
-export type InferKey<P> = P extends PluginConfig ? P['key'] : never;
+export type InferKey<P> = P extends PluginConfig ? P["key"] : never;
 
-export type InferApi<P> = P extends PluginConfig ? P['api'] : never;
+export type InferApi<P> = P extends PluginConfig ? P["api"] : never;
 
-export type InferOptions<P> = P extends PluginConfig ? P['options'] : never;
+export type InferOptions<P> = P extends PluginConfig ? P["options"] : never;
 
-export type InferSelectors<P> = P extends PluginConfig ? P['selectors'] : never;
+export type InferSelectors<P> = P extends PluginConfig ? P["selectors"] : never;
 
-export type InferTransforms<P> = P extends PluginConfig
-  ? P['transforms']
-  : never;
+export type InferTransforms<P> = P extends PluginConfig ? P["transforms"] : never;
 
 /**
  * Renders a component for Slate Nodes (elements if `isElement: true` or leaves
@@ -556,13 +525,13 @@ export type ParserOptions = {
   mimeType: string;
 };
 
-export type PluginConfig<
-  K extends string = any,
-  O = {},
-  A = {},
-  T = {},
-  S = {},
-> = { key: K; api: A; options: O; selectors: S; transforms: T };
+export type PluginConfig<K extends string = any, O = {}, A = {}, T = {}, S = {}> = {
+  key: K;
+  api: A;
+  options: O;
+  selectors: S;
+  transforms: T;
+};
 
 export type WithAnyKey<C extends AnyPluginConfig = PluginConfig> = PluginConfig<
   any,
@@ -572,6 +541,4 @@ export type WithAnyKey<C extends AnyPluginConfig = PluginConfig> = PluginConfig<
   InferSelectors<C>
 >;
 
-export type WithRequiredKey<P = {}> =
-  | (P extends { key: string } ? P : never)
-  | { key: string };
+export type WithRequiredKey<P = {}> = (P extends { key: string } ? P : never) | { key: string };

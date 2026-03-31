@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import { ChevronRightIcon } from "lucide-react"
+import { ChevronRightIcon } from "lucide-react";
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/radix-nova/ui/collapsible"
+} from "@/styles/radix-nova/ui/collapsible";
 import {
   Sidebar,
   SidebarContent,
@@ -19,7 +19,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarProvider,
-} from "@/styles/radix-nova/ui/sidebar"
+} from "@/styles/radix-nova/ui/sidebar";
 
 const items = [
   {
@@ -147,7 +147,7 @@ const items = [
       },
     ],
   },
-]
+];
 
 export default function AppSidebar() {
   return (
@@ -158,11 +158,7 @@ export default function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {items.map((item, index) => (
-                  <Collapsible
-                    key={index}
-                    className="group/collapsible"
-                    defaultOpen={index === 0}
-                  >
+                  <Collapsible key={index} className="group/collapsible" defaultOpen={index === 0}>
                     <SidebarMenuItem>
                       <CollapsibleTrigger asChild>
                         <SidebarMenuButton>
@@ -192,5 +188,5 @@ export default function AppSidebar() {
         </SidebarContent>
       </Sidebar>
     </SidebarProvider>
-  )
+  );
 }

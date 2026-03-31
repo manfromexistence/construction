@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS, someHtmlElement } from 'platejs';
+import { createSlatePlugin, KEYS, someHtmlElement } from "platejs";
 
 /** Enables support for underline formatting. */
 export const BaseUnderlinePlugin = createSlatePlugin({
@@ -7,19 +7,13 @@ export const BaseUnderlinePlugin = createSlatePlugin({
   parsers: {
     html: {
       deserializer: {
-        rules: [
-          { validNodeName: ['U'] },
-          { validStyle: { textDecoration: ['underline'] } },
-        ],
+        rules: [{ validNodeName: ["U"] }, { validStyle: { textDecoration: ["underline"] } }],
         query: ({ element }) =>
-          !someHtmlElement(
-            element,
-            (node) => node.style.textDecoration === 'none'
-          ),
+          !someHtmlElement(element, (node) => node.style.textDecoration === "none"),
       },
     },
   },
-  render: { as: 'u' },
+  render: { as: "u" },
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
     editor.tf.toggleMark(type);

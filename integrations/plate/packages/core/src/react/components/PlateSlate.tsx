@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
-import { useSlateProps } from '../hooks';
-import { Slate } from '../slate-react';
-import { useEditorRef } from '../stores/plate';
+import { useSlateProps } from "../hooks";
+import { Slate } from "../slate-react";
+import { useEditorRef } from "../stores/plate";
 
 /**
  * Slate with plugins.
@@ -10,13 +10,7 @@ import { useEditorRef } from '../stores/plate';
  * - OnChange prop
  * - RenderAboveSlate
  */
-export function PlateSlate({
-  id,
-  children,
-}: {
-  children: React.ReactNode;
-  id?: string;
-}) {
+export function PlateSlate({ id, children }: { children: React.ReactNode; id?: string }) {
   const slateProps = useSlateProps({ id });
 
   const editor = useEditorRef(id);

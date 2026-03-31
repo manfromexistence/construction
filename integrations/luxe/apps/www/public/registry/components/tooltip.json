@@ -1,8 +1,6 @@
 {
   "name": "tooltip",
-  "externalDependencies": [
-    "@radix-ui/react-tooltip"
-  ],
+  "externalDependencies": ["@radix-ui/react-tooltip"],
   "internalDependencies": [],
   "file": {
     "name": "tooltip.tsx",

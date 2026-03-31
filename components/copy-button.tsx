@@ -1,9 +1,9 @@
 "use client";
 
-import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { cn } from "@/lib/utils";
 import { Copy, CopyCheck } from "lucide-react";
 import { ComponentProps } from "react";
+import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
+import { cn } from "@/lib/utils";
 import { TooltipWrapper } from "./tooltip-wrapper";
 import { Button } from "./ui/button";
 

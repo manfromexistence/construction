@@ -1,13 +1,9 @@
-import Image from "next/image"
+import Image from "next/image";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/base/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/base/ui/tooltip";
 
-import { TECH_STACK } from "../data/tech-stack"
-import { Panel, PanelContent, PanelHeader, PanelTitle } from "./panel"
+import { TECH_STACK } from "../data/tech-stack";
+import { Panel, PanelContent, PanelHeader, PanelTitle } from "./panel";
 
 export function TechStack() {
   return (
@@ -24,12 +20,7 @@ export function TechStack() {
                 <Tooltip>
                   <TooltipTrigger
                     render={
-                      <a
-                        href={tech.href}
-                        target="_blank"
-                        rel="noopener"
-                        aria-label={tech.title}
-                      >
+                      <a href={tech.href} target="_blank" rel="noopener" aria-label={tech.title}>
                         {tech.theme ? (
                           <>
                             <Image
@@ -66,10 +57,10 @@ export function TechStack() {
                   </TooltipContent>
                 </Tooltip>
               </li>
-            )
+            );
           })}
         </ul>
       </PanelContent>
     </Panel>
-  )
+  );
 }

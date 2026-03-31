@@ -1,10 +1,4 @@
-import {
-  type Editor,
-  type NodeEntry,
-  type Path,
-  type TElement,
-  PathApi,
-} from 'platejs';
+import { type Editor, type NodeEntry, type Path, PathApi, type TElement } from "platejs";
 
 export const getCellInPreviousTableRow = (
   editor: Editor,
@@ -19,11 +13,8 @@ export const getCellInPreviousTableRow = (
   if (!previousRow) return;
 
   const [previousRowNode, previousRowPath] = previousRow;
-  const previousCell =
-    previousRowNode?.children?.[previousRowNode.children.length - 1];
-  const previousCellPath = previousRowPath.concat(
-    previousRowNode.children.length - 1
-  );
+  const previousCell = previousRowNode?.children?.[previousRowNode.children.length - 1];
+  const previousCellPath = previousRowPath.concat(previousRowNode.children.length - 1);
 
   if (previousCell && previousCellPath) {
     return editor.api.node(previousCellPath);

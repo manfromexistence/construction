@@ -10,12 +10,12 @@
  */
 
 import { neon } from "@neondatabase/serverless";
-import { drizzle } from "drizzle-orm/neon-http";
-import { oauthApp } from "../db/schema";
-import { generateSecureToken, hashSecret } from "../lib/oauth";
 import { randomBytes } from "crypto";
 import cuid from "cuid";
 import { config } from "dotenv";
+import { drizzle } from "drizzle-orm/neon-http";
+import { oauthApp } from "../db/schema";
+import { generateSecureToken, hashSecret } from "../lib/oauth";
 
 config({ path: ".env.local" });
 
@@ -79,9 +79,7 @@ async function main() {
   console.log("  Client Secret: ", clientSecret);
   console.log("  Redirect URIs: ", redirectUris.join(", "));
   console.log("  Scopes:        ", scopes.join(", "));
-  console.log(
-    "\n  ⚠️  Save the client secret now — it cannot be retrieved later.\n"
-  );
+  console.log("\n  ⚠️  Save the client secret now — it cannot be retrieved later.\n");
 }
 
 main().catch((err) => {

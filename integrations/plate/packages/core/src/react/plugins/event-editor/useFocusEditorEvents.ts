@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
-import type { PlateEditor } from '../../editor/PlateEditor';
+import type { PlateEditor } from "../../editor/PlateEditor";
 
-export const FOCUS_EDITOR_EVENT = 'focus-editor-event';
+export const FOCUS_EDITOR_EVENT = "focus-editor-event";
 
-export const BLUR_EDITOR_EVENT = 'blur-editor-event';
+export const BLUR_EDITOR_EVENT = "blur-editor-event";
 
 export const useFocusEditorEvents = ({
   editorRef,

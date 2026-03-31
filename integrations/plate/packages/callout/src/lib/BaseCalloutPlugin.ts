@@ -1,6 +1,6 @@
-import { bindFirst, createSlatePlugin, KEYS } from 'platejs';
+import { bindFirst, createSlatePlugin, KEYS } from "platejs";
 
-import { insertCallout } from './transforms';
+import { insertCallout } from "./transforms";
 
 export const BaseCalloutPlugin = createSlatePlugin({
   key: KEYS.callout,
@@ -9,12 +9,12 @@ export const BaseCalloutPlugin = createSlatePlugin({
   },
   rules: {
     break: {
-      default: 'lineBreak',
-      empty: 'reset',
-      emptyLineEnd: 'deleteExit',
+      default: "lineBreak",
+      empty: "reset",
+      emptyLineEnd: "deleteExit",
     },
     delete: {
-      start: 'reset',
+      start: "reset",
     },
   },
 }).extendEditorTransforms(({ editor }) => ({

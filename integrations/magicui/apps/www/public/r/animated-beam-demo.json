@@ -4,12 +4,8 @@
   "type": "registry:example",
   "title": "Animated Beam Demo",
   "description": "Example showing an animated beam of light effect.",
-  "dependencies": [
-    "@radix-ui/react-icons"
-  ],
-  "registryDependencies": [
-    "@magicui/animated-beam"
-  ],
+  "dependencies": ["@radix-ui/react-icons"],
+  "registryDependencies": ["@magicui/animated-beam"],
   "files": [
     {
       "path": "registry/example/animated-beam-demo.tsx",

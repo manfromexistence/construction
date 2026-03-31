@@ -1,19 +1,19 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export function ChartIframe({
   src,
   height,
   title,
 }: {
-  src: string
-  height: number
-  title: string
+  src: string;
+  height: number;
+  title: string;
 }) {
-  const [loaded, setLoaded] = React.useState(false)
+  const [loaded, setLoaded] = React.useState(false);
 
   return (
     <iframe
@@ -27,5 +27,5 @@ export function ChartIframe({
       title={title}
       onLoad={() => setLoaded(true)}
     />
-  )
+  );
 }

@@ -1,16 +1,16 @@
 import {
   type Descendant,
-  type QueryNodeOptions,
-  type Value,
   ElementApi,
+  type QueryNodeOptions,
   queryNode,
-} from '@platejs/slate';
-import { nanoid } from 'nanoid';
+  type Value,
+} from "@platejs/slate";
+import { nanoid } from "nanoid";
 
-import type { PluginConfig } from '../../plugin/BasePlugin';
+import type { PluginConfig } from "../../plugin/BasePlugin";
 
-import { createTSlatePlugin } from '../../plugin/createSlatePlugin';
-import { withNodeId } from './withNodeId';
+import { createTSlatePlugin } from "../../plugin/createSlatePlugin";
+import { withNodeId } from "./withNodeId";
 
 export type NodeIdOptions = {
   /**
@@ -62,13 +62,7 @@ export type NodeIdOptions = {
 
 export type NormalizeNodeIdOptions = Pick<
   NodeIdOptions,
-  | 'allow'
-  | 'exclude'
-  | 'filter'
-  | 'filterInline'
-  | 'filterText'
-  | 'idCreator'
-  | 'idKey'
+  "allow" | "exclude" | "filter" | "filterInline" | "filterText" | "idCreator" | "idKey"
 >;
 
 /**
@@ -86,7 +80,7 @@ export const normalizeNodeId = <V extends Value>(
     filterInline = true,
     filterText = true,
     idCreator = () => nanoid(10),
-    idKey = 'id',
+    idKey = "id",
   } = options;
 
   const normalizeNode = (node: Descendant, path: number[]): Descendant => {
@@ -137,7 +131,7 @@ export const normalizeNodeId = <V extends Value>(
 };
 
 export type NodeIdConfig = PluginConfig<
-  'nodeId',
+  "nodeId",
   NodeIdOptions,
   {},
   {
@@ -149,11 +143,11 @@ export type NodeIdConfig = PluginConfig<
 
 /** @see {@link withNodeId} */
 export const NodeIdPlugin = createTSlatePlugin<NodeIdConfig>({
-  key: 'nodeId',
+  key: "nodeId",
   options: {
     filterInline: true,
     filterText: true,
-    idKey: 'id',
+    idKey: "id",
     normalizeInitialValue: false,
     filter: () => true,
     idCreator: () => nanoid(10),
@@ -161,8 +155,7 @@ export const NodeIdPlugin = createTSlatePlugin<NodeIdConfig>({
 })
   .extendTransforms(({ editor, getOptions }) => ({
     normalize() {
-      const { allow, exclude, filter, filterInline, filterText, idKey } =
-        getOptions();
+      const { allow, exclude, filter, filterInline, filterText, idKey } = getOptions();
 
       const addNodeId = (entry: [Descendant, number[]]) => {
         const [node, path] = entry;
@@ -178,11 +171,7 @@ export const NodeIdPlugin = createTSlatePlugin<NodeIdConfig>({
               if (filterText && !ElementApi.isElement(node)) {
                 return false;
               }
-              if (
-                filterInline &&
-                ElementApi.isElement(node) &&
-                !editor.api.isBlock(node)
-              ) {
+              if (filterInline && ElementApi.isElement(node) && !editor.api.isBlock(node)) {
                 return false;
               }
 
@@ -197,10 +186,7 @@ export const NodeIdPlugin = createTSlatePlugin<NodeIdConfig>({
           }
 
           editor.tf.withoutSaving(() => {
-            editor.tf.setNodes(
-              { [idKey!]: getOptions().idCreator!() },
-              { at: path }
-            );
+            editor.tf.setNodes({ [idKey!]: getOptions().idCreator!() }, { at: path });
           });
         }
 

@@ -1,16 +1,3 @@
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Command, CommandEmpty, CommandGroup, CommandItem, CommandList } from "@/components/ui/command";
-import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { authClient } from "@/lib/auth-client";
-import { cn } from "@/lib/utils";
-import { useEditorStore } from "@/store/editor-store";
-import { useThemePresetStore } from "@/store/theme-preset-store";
-import { ThemePreset } from "@/types/theme";
-import { getPresetThemeStyles } from "@/utils/theme-preset-helper";
 import {
   ArrowLeft,
   ArrowRight,
@@ -23,6 +10,25 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { Input } from "@/components/ui/input";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Separator } from "@/components/ui/separator";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { authClient } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
+import { useEditorStore } from "@/store/editor-store";
+import { useThemePresetStore } from "@/store/theme-preset-store";
+import { ThemePreset } from "@/types/theme";
+import { getPresetThemeStyles } from "@/utils/theme-preset-helper";
 import { ThemeToggle } from "../theme-toggle";
 import { TooltipWrapper } from "../tooltip-wrapper";
 
@@ -214,11 +220,11 @@ const ThemePresetSelect: React.FC<ThemePresetSelectProps> = ({
       search.trim() === ""
         ? presetNames
         : presetNames.filter((name) => {
-          if (name === "default") {
-            return "default".toLowerCase().includes(search.toLowerCase());
-          }
-          return presets[name]?.label?.toLowerCase().includes(search.toLowerCase());
-        });
+            if (name === "default") {
+              return "default".toLowerCase().includes(search.toLowerCase());
+            }
+            return presets[name]?.label?.toLowerCase().includes(search.toLowerCase());
+          });
 
     // Separate saved and default themes
     const savedThemesList = filteredList.filter((name) => name !== "default" && isSavedTheme(name));
@@ -278,9 +284,7 @@ const ThemePresetSelect: React.FC<ThemePresetSelectProps> = ({
                   </div>
                 )}
               <span className="truncate text-left font-medium capitalize">
-                {presets[currentPresetName || "default"]?.label ||
-                  currentPresetName ||
-                  "default"}
+                {presets[currentPresetName || "default"]?.label || currentPresetName || "default"}
                 {hasUnsavedChanges() && "*"}
               </span>
             </div>

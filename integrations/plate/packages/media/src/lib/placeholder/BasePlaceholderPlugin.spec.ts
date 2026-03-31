@@ -1,17 +1,17 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BasePlaceholderPlugin } from './BasePlaceholderPlugin';
+import { BasePlaceholderPlugin } from "./BasePlaceholderPlugin";
 
-describe('BasePlaceholderPlugin', () => {
+describe("BasePlaceholderPlugin", () => {
   it.each([
-    ['audioPlaceholder', KEYS.audio],
-    ['filePlaceholder', KEYS.file],
-    ['imagePlaceholder', KEYS.img],
-    ['videoPlaceholder', KEYS.video],
-  ])('configures %s and inserts %s placeholders', (transform, mediaType) => {
+    ["audioPlaceholder", KEYS.audio],
+    ["filePlaceholder", KEYS.file],
+    ["imagePlaceholder", KEYS.img],
+    ["videoPlaceholder", KEYS.video],
+  ])("configures %s and inserts %s placeholders", (transform, mediaType) => {
     const editor = createSlateEditor({
       plugins: [BasePlaceholderPlugin],
-      value: [{ children: [{ text: 'one' }], type: 'p' }],
+      value: [{ children: [{ text: "one" }], type: "p" }],
     } as any);
     const plugin = editor.getPlugin(BasePlaceholderPlugin);
 

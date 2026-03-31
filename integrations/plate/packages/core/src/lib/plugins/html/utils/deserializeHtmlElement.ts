@@ -1,7 +1,7 @@
-import type { SlateEditor } from '../../../editor';
-import type { DeserializeHtmlNodeReturnType } from '../types';
+import type { SlateEditor } from "../../../editor";
+import type { DeserializeHtmlNodeReturnType } from "../types";
 
-import { deserializeHtmlNode } from './deserializeHtmlNode';
+import { deserializeHtmlNode } from "./deserializeHtmlNode";
 
 /** Deserialize HTML element to fragment. */
 export const deserializeHtmlElement = (

@@ -1,4 +1,4 @@
-import { mergeDeep } from './mergeDeep';
+import { mergeDeep } from "./mergeDeep";
 
 class Example {
   value: number;
@@ -8,21 +8,21 @@ class Example {
   }
 }
 
-describe('mergeDeep', () => {
-  it('merges nested plain objects without mutating the target', () => {
+describe("mergeDeep", () => {
+  it("merges nested plain objects without mutating the target", () => {
     const target = {
       keep: true,
       nested: {
         left: 1,
-        shared: { a: 'a' },
+        shared: { a: "a" },
       },
     };
     const source = {
       nested: {
         right: 2,
-        shared: { b: 'b' },
+        shared: { b: "b" },
       },
-      next: 'value',
+      next: "value",
     };
 
     const result = mergeDeep(target, source);
@@ -32,9 +32,9 @@ describe('mergeDeep', () => {
       nested: {
         left: 1,
         right: 2,
-        shared: { a: 'a', b: 'b' },
+        shared: { a: "a", b: "b" },
       },
-      next: 'value',
+      next: "value",
     });
     expect(result).not.toBe(target);
     expect(result.nested).not.toBe(target.nested);
@@ -42,12 +42,12 @@ describe('mergeDeep', () => {
       keep: true,
       nested: {
         left: 1,
-        shared: { a: 'a' },
+        shared: { a: "a" },
       },
     });
   });
 
-  it('replaces non-plain nested values instead of recursing into them', () => {
+  it("replaces non-plain nested values instead of recursing into them", () => {
     const sourceInstance = new Example(3);
 
     const result = mergeDeep(

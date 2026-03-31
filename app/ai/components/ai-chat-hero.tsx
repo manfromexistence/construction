@@ -1,13 +1,13 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { HorizontalScrollArea } from "@/components/horizontal-scroll-area";
-import { useChatContext } from "@/hooks/use-chat-context";
 import { useAIThemeGenerationCore } from "@/hooks/use-ai-theme-generation-core";
+import { useChatContext } from "@/hooks/use-chat-context";
 import { useGuards } from "@/hooks/use-guards";
 import { usePostLoginAction } from "@/hooks/use-post-login-action";
 import { usePreferencesStore } from "@/store/preferences-store";
 import { AIPromptData } from "@/types/ai";
-import { useRouter } from "next/navigation";
 import { AIChatForm } from "./ai-chat-form";
 import { ChatHeading } from "./chat-heading";
 import { SuggestedPillActions } from "./suggested-pill-actions";

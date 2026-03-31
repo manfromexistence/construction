@@ -1,12 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link from "next/link"
-import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  CircleDashedIcon,
-} from "lucide-react"
+import { CircleAlertIcon, CircleCheckIcon, CircleDashedIcon } from "lucide-react";
+import Link from "next/link";
+import * as React from "react";
 
 import {
   NavigationMenu,
@@ -16,7 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "@/styles/base-nova/ui/navigation-menu"
+} from "@/styles/base-nova/ui/navigation-menu";
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -28,8 +24,7 @@ const components: { title: string; href: string; description: string }[] = [
   {
     title: "Hover Card",
     href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
+    description: "For sighted users to preview content available behind a link.",
   },
   {
     title: "Progress",
@@ -54,7 +49,7 @@ const components: { title: string; href: string; description: string }[] = [
     description:
       "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
   },
-]
+];
 
 export default function NavigationMenuDemo() {
   return (
@@ -81,11 +76,7 @@ export default function NavigationMenuDemo() {
           <NavigationMenuContent>
             <ul className="grid w-[400px] gap-2 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
               {components.map((component) => (
-                <ListItem
-                  key={component.title}
-                  title={component.title}
-                  href={component.href}
-                >
+                <ListItem key={component.title} title={component.title} href={component.href}>
                   {component.description}
                 </ListItem>
               ))}
@@ -98,25 +89,19 @@ export default function NavigationMenuDemo() {
             <ul className="grid w-[200px]">
               <li>
                 <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2" />
-                  }
+                  render={<Link href="#" className="flex-row items-center gap-2" />}
                 >
                   <CircleAlertIcon />
                   Backlog
                 </NavigationMenuLink>
                 <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2" />
-                  }
+                  render={<Link href="#" className="flex-row items-center gap-2" />}
                 >
                   <CircleDashedIcon />
                   To Do
                 </NavigationMenuLink>
                 <NavigationMenuLink
-                  render={
-                    <Link href="#" className="flex-row items-center gap-2" />
-                  }
+                  render={<Link href="#" className="flex-row items-center gap-2" />}
                 >
                   <CircleCheckIcon />
                   Done
@@ -135,7 +120,7 @@ export default function NavigationMenuDemo() {
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
-  )
+  );
 }
 
 function ListItem({
@@ -153,5 +138,5 @@ function ListItem({
         </div>
       </NavigationMenuLink>
     </li>
-  )
+  );
 }

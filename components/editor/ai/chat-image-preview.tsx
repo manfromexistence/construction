@@ -1,3 +1,6 @@
+import { ImageIcon } from "lucide-react";
+import Image from "next/image";
+import { ComponentProps } from "react";
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
@@ -6,9 +9,6 @@ import {
   ResponsiveDialogTrigger,
 } from "@/components/ui/revola";
 import { cn } from "@/lib/utils";
-import { ImageIcon } from "lucide-react";
-import Image from "next/image";
-import { ComponentProps } from "react";
 
 interface ChatImagePreviewProps extends ComponentProps<typeof Image> {
   name?: string;

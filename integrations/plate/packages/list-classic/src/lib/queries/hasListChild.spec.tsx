@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { hasListChild } from './hasListChild';
+import { hasListChild } from "./hasListChild";
 
 jsxt;
 
@@ -30,7 +30,7 @@ it.each([
         </hul>
       </editor>
     ) as any,
-    title: 'returns true when the list item contains a nested list',
+    title: "returns true when the list item contains a nested list",
   },
   {
     expected: false,
@@ -43,14 +43,14 @@ it.each([
         </hul>
       </editor>
     ) as any,
-    title: 'returns false when the list item has no nested list',
+    title: "returns false when the list item has no nested list",
   },
-])('$title', ({ expected, input }) => {
+])("$title", ({ expected, input }) => {
   const editor = createSlateEditor({
     selection: input.selection,
     value: input.children,
   });
-  const listItem = editor.api.node({ at: [], id: '2' });
+  const listItem = editor.api.node({ at: [], id: "2" });
 
   expect(hasListChild(editor, listItem?.[0] as any)).toBe(expected);
 });

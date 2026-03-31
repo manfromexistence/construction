@@ -1,9 +1,9 @@
-import { Range as SlateRange } from 'slate';
+import { Range as SlateRange } from "slate";
 
-import type { RangeDirection } from '../types';
-import type { Operation } from './operation';
-import type { Path } from './path';
-import type { Point, PointEntry } from './point';
+import type { RangeDirection } from "../types";
+import type { Operation } from "./operation";
+import type { Path } from "./path";
+import type { Point, PointEntry } from "./point";
 
 /**
  * `TRange` objects are a set of points that refer to a specific span of a Slate
@@ -69,25 +69,16 @@ export const RangeApi: {
   /** Check if a range includes another range. */
   surrounds: (range: TRange, target: TRange) => boolean;
   /** Transform a range by an operation. */
-  transform: (
-    range: TRange,
-    op: Operation,
-    options?: RangeTransformOptions
-  ) => TRange | null;
+  transform: (range: TRange, op: Operation, options?: RangeTransformOptions) => TRange | null;
 } = {
   ...SlateRange,
   contains: (range: TRange, target: TRange) => {
     const [targetStart, targetEnd] = RangeApi.edges(target);
 
-    return (
-      RangeApi.includes(range, targetStart) &&
-      RangeApi.includes(range, targetEnd)
-    );
+    return RangeApi.includes(range, targetStart) && RangeApi.includes(range, targetEnd);
   },
-  isCollapsed: (range?: TRange | null) =>
-    !!range && SlateRange.isCollapsed(range),
-  isExpanded: (range?: TRange | null) =>
-    !!range && SlateRange.isExpanded(range),
+  isCollapsed: (range?: TRange | null) => !!range && SlateRange.isCollapsed(range),
+  isExpanded: (range?: TRange | null) => !!range && SlateRange.isExpanded(range),
 } as any;
 
 /**

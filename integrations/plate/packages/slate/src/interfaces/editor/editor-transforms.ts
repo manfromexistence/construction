@@ -1,36 +1,36 @@
-import type { OmitFirst } from '@udecode/utils';
-import type { DOMEditor } from 'slate-dom';
+import type { OmitFirst } from "@udecode/utils";
+import type { DOMEditor } from "slate-dom";
 
-import type { blur } from '../../internal/dom-editor/blur';
-import type { deselectDOM } from '../../internal/dom-editor/deselectDOM';
-import type { focus } from '../../internal/dom-editor/focus';
-import type { addMark } from '../../internal/editor/addMark';
-import type { deleteBackward } from '../../internal/editor/deleteBackward';
-import type { deleteForward } from '../../internal/editor/deleteForward';
-import type { deleteFragment } from '../../internal/editor/deleteFragment';
-import type { insertBreak } from '../../internal/editor/insertBreak';
-import type { withoutNormalizing } from '../../internal/editor/withoutNormalizing';
-import type { collapseSelection } from '../../internal/transforms/collapseSelection';
-import type { deleteText } from '../../internal/transforms/deleteText';
-import type { moveSelection } from '../../internal/transforms/moveSelection';
-import type { select } from '../../internal/transforms/select';
-import type { setPoint } from '../../internal/transforms/setPoint';
-import type { setSelection } from '../../internal/transforms/setSelection';
-import type { addMarks } from '../../internal/transforms-extension/addMarks';
-import type { duplicateNodes } from '../../internal/transforms-extension/duplicateNodes';
-import type { removeMarks } from '../../internal/transforms-extension/removeMarks';
-import type { reset } from '../../internal/transforms-extension/reset';
-import type { toggleBlock } from '../../internal/transforms-extension/toggleBlock';
-import type { toggleMark } from '../../internal/transforms-extension/toggleMark';
-import type { HistoryApi } from '../../slate-history/index';
-import type { At, TextUnit } from '../../types';
-import type { QueryNodeOptions } from '../../utils';
-import type { ElementIn, ElementOrTextIn } from '../element';
-import type { Descendant, DescendantIn, NodeIn, NodeProps } from '../node';
-import type { NodeEntry } from '../node-entry';
-import type { Operation } from '../operation';
-import type { Path } from '../path';
-import type { TRange } from '../range';
+import type { blur } from "../../internal/dom-editor/blur";
+import type { deselectDOM } from "../../internal/dom-editor/deselectDOM";
+import type { focus } from "../../internal/dom-editor/focus";
+import type { addMark } from "../../internal/editor/addMark";
+import type { deleteBackward } from "../../internal/editor/deleteBackward";
+import type { deleteForward } from "../../internal/editor/deleteForward";
+import type { deleteFragment } from "../../internal/editor/deleteFragment";
+import type { insertBreak } from "../../internal/editor/insertBreak";
+import type { withoutNormalizing } from "../../internal/editor/withoutNormalizing";
+import type { collapseSelection } from "../../internal/transforms/collapseSelection";
+import type { deleteText } from "../../internal/transforms/deleteText";
+import type { moveSelection } from "../../internal/transforms/moveSelection";
+import type { select } from "../../internal/transforms/select";
+import type { setPoint } from "../../internal/transforms/setPoint";
+import type { setSelection } from "../../internal/transforms/setSelection";
+import type { addMarks } from "../../internal/transforms-extension/addMarks";
+import type { duplicateNodes } from "../../internal/transforms-extension/duplicateNodes";
+import type { removeMarks } from "../../internal/transforms-extension/removeMarks";
+import type { reset } from "../../internal/transforms-extension/reset";
+import type { toggleBlock } from "../../internal/transforms-extension/toggleBlock";
+import type { toggleMark } from "../../internal/transforms-extension/toggleMark";
+import type { HistoryApi } from "../../slate-history/index";
+import type { At, TextUnit } from "../../types";
+import type { QueryNodeOptions } from "../../utils";
+import type { ElementIn, ElementOrTextIn } from "../element";
+import type { Descendant, DescendantIn, NodeIn, NodeProps } from "../node";
+import type { NodeEntry } from "../node-entry";
+import type { Operation } from "../operation";
+import type { Path } from "../path";
+import type { TRange } from "../range";
 import type {
   EditorNodesOptions,
   EditorNormalizeOptions,
@@ -39,8 +39,8 @@ import type {
   QueryOptions,
   QueryTextUnit,
   QueryVoids,
-} from './editor-api';
-import type { Editor, Value } from './editor-type';
+} from "./editor-api";
+import type { Editor, Value } from "./editor-type";
 
 export type AddMarksOptions = {
   /** Marks to remove before adding new ones */
@@ -63,7 +63,7 @@ export type DuplicateNodesOptions<V extends Value = Value> = {
   block?: boolean;
   /** Specific nodes to duplicate. If provided, ignores `block` option */
   nodes?: NodeEntry[];
-} & Omit<InsertNodesOptions<V>, 'at' | 'block'>;
+} & Omit<InsertNodesOptions<V>, "at" | "block">;
 
 export type EditorTransforms<V extends Value = Value> = {
   /**
@@ -178,10 +178,7 @@ export type EditorTransforms<V extends Value = Value> = {
    * Atomically insert `node` at the specified location or (if not defined) the
    * current selection or (if not defined) the end of the document.
    */
-  insertNode: <N extends DescendantIn<V>>(
-    node: N,
-    options?: InsertNodesOptions<V>
-  ) => void;
+  insertNode: <N extends DescendantIn<V>>(node: N, options?: InsertNodesOptions<V>) => void;
   /**
    * Atomically inserts `nodes` at the specified location or (if not defined)
    * the current selection or (if not defined) the end of the document.
@@ -297,15 +294,12 @@ export type EditorTransforms<V extends Value = Value> = {
    * Wrap nodes at the specified location in the `element` container. If no
    * location is specified, wrap the selection.
    */
-  wrapNodes: <N extends ElementIn<V>>(
-    element: N,
-    options?: WrapNodesOptions<V>
-  ) => void;
+  wrapNodes: <N extends ElementIn<V>>(element: N, options?: WrapNodesOptions<V>) => void;
   /**
    * Push a batch of operations as either `undos` or `redos` onto `editor.undos`
    * or `editor.redos`
    */
-  writeHistory: (stack: 'redos' | 'undos', batch: any) => void;
+  writeHistory: (stack: "redos" | "undos", batch: any) => void;
 } /** Text Transforms */ & {
   /** Delete text in the document. */
   delete: OmitFirst<typeof deleteText>;
@@ -369,19 +363,19 @@ export type EditorTransforms<V extends Value = Value> = {
    * DataTransfer)` and then `insertTextData(editor: Editor, data:
    * DataTransfer)`.
    */
-  insertData: DOMEditor['insertData'];
+  insertData: DOMEditor["insertData"];
   /**
    * Insert fragment data from a `DataTransfer` into the editor. Returns true if
    * some content has been effectively inserted.
    */
-  insertFragmentData: DOMEditor['insertFragmentData'];
+  insertFragmentData: DOMEditor["insertFragmentData"];
   /**
    * Insert text data from a `DataTransfer` into the editor. Returns true if
    * some content has been effectively inserted.
    */
-  insertTextData: DOMEditor['insertTextData'];
+  insertTextData: DOMEditor["insertTextData"];
   /** Sets data from the currently selected fragment on a `DataTransfer`. */
-  setFragmentData: DOMEditor['setFragmentData'];
+  setFragmentData: DOMEditor["setFragmentData"];
 } & {
   setSplittingOnce: OmitFirst<typeof HistoryApi.setSplittingOnce>;
   /**
@@ -419,7 +413,7 @@ export type FocusOptions = {
   /** Target location to select before focusing */
   at?: At;
   /** Focus at location or editor edge. Default location is at or selection. */
-  edge?: 'end' | 'endEditor' | 'start' | 'startEditor';
+  edge?: "end" | "endEditor" | "start" | "startEditor";
   /** Number of times to retry focusing */
   retries?: number;
 };
@@ -456,9 +450,7 @@ export type InsertTextOptions = {
 } & QueryAt &
   QueryVoids;
 
-export type LiftNodesOptions<V extends Value = Value> = QueryOptions<V> &
-  QueryMode &
-  QueryVoids;
+export type LiftNodesOptions<V extends Value = Value> = QueryOptions<V> & QueryMode & QueryVoids;
 
 export type MergeNodesOptions<V extends Value, _E extends Editor = Editor> = {
   hanging?: boolean;
@@ -483,12 +475,12 @@ export type RemoveMarksOptions = {
   at?: TRange;
   /** When true, trigger onChange if collapsed selection */
   shouldChange?: boolean;
-} & Omit<UnsetNodesOptions, 'match' | 'split'>;
+} & Omit<UnsetNodesOptions, "match" | "split">;
 
 export type RemoveNodesOptions<V extends Value = Value> = {
   /** When true, remove all children of the node at the specified location */
   children?: boolean;
-  event?: { type: 'mergeNodes' };
+  event?: { type: "mergeNodes" };
   hanging?: boolean;
   /** When true, remove the previous empty block if it exists */
   previousEmptyBlock?: boolean;
@@ -500,17 +492,17 @@ export type ReplaceNodesOptions<V extends Value = Value> = {
   /** When true, replace all children of the node at the specified location */
   children?: boolean;
   /** Options for removing nodes */
-  removeNodes?: Omit<RemoveNodesOptions<V>, 'at'>;
+  removeNodes?: Omit<RemoveNodesOptions<V>, "at">;
 } & InsertNodesOptions<V>;
 
 export type ResetOptions = {
   /** When true, only reset children without clearing history and operations */
   children?: boolean;
-} & Omit<ReplaceNodesOptions, 'at' | 'children'>;
+} & Omit<ReplaceNodesOptions, "at" | "children">;
 
 export type SelectOptions = {
   /** Select edge of the block above location */
-  edge?: 'end' | 'start';
+  edge?: "end" | "start";
   /** If true, focus the editor before selecting */
   focus?: boolean;
   /** Select start of next sibling */
@@ -591,12 +583,6 @@ export type WrapNodesOptions<V extends Value = Value> = {
   QueryMode &
   QueryVoids;
 
-type PropsCompare = (
-  prop: Partial<Descendant>,
-  node: Partial<Descendant>
-) => boolean;
+type PropsCompare = (prop: Partial<Descendant>, node: Partial<Descendant>) => boolean;
 
-type PropsMerge = (
-  prop: Partial<Descendant>,
-  node: Partial<Descendant>
-) => object;
+type PropsMerge = (prop: Partial<Descendant>, node: Partial<Descendant>) => object;

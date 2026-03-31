@@ -1,11 +1,8 @@
-import type { Metadata } from "next"
+import type { Metadata } from "next";
 
-import { X_USERNAME } from "@/config/site"
-import {
-  TESTIMONIALS_1,
-  TESTIMONIALS_2,
-} from "@/features/portfolio/data/testimonials"
-import { cn } from "@/lib/utils"
+import { X_USERNAME } from "@/config/site";
+import { TESTIMONIALS_1, TESTIMONIALS_2 } from "@/features/portfolio/data/testimonials";
+import { cn } from "@/lib/utils";
 import {
   Testimonial,
   TestimonialAuthor,
@@ -15,12 +12,12 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-} from "@/registry/components/testimonial"
+} from "@/registry/components/testimonial";
 
-const title = "Wall of Love"
-const description = "The kind words that keep me building."
+const title = "Wall of Love";
+const description = "The kind words that keep me building.";
 
-const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
 export const metadata: Metadata = {
   title,
@@ -44,7 +41,7 @@ export const metadata: Metadata = {
     creator: X_USERNAME,
     images: [ogImage],
   },
-}
+};
 
 const TESTIMONIALS = [
   ...TESTIMONIALS_1.slice().sort((a, b) =>
@@ -53,7 +50,7 @@ const TESTIMONIALS = [
   ...TESTIMONIALS_2.slice().sort((a, b) =>
     a.date.localeCompare(b.date, undefined, { numeric: true })
   ),
-]
+];
 
 export default function WallOfLovePage() {
   return (
@@ -63,9 +60,7 @@ export default function WallOfLovePage() {
       </div>
 
       <div className="p-4">
-        <p className="font-mono text-sm text-balance text-muted-foreground">
-          {description}
-        </p>
+        <p className="font-mono text-sm text-balance text-muted-foreground">{description}</p>
       </div>
 
       <div className="screen-line-top relative pt-4">
@@ -94,19 +89,12 @@ export default function WallOfLovePage() {
 
                 <TestimonialAuthor>
                   <TestimonialAvatar>
-                    <TestimonialAvatarImg
-                      src={item.authorAvatar}
-                      alt={item.authorName}
-                    />
+                    <TestimonialAvatarImg src={item.authorAvatar} alt={item.authorName} />
                     <TestimonialAvatarRing />
                   </TestimonialAvatar>
 
-                  <TestimonialAuthorName>
-                    {item.authorName}
-                  </TestimonialAuthorName>
-                  <TestimonialAuthorTagline>
-                    {item.authorTagline}
-                  </TestimonialAuthorTagline>
+                  <TestimonialAuthorName>{item.authorName}</TestimonialAuthorName>
+                  <TestimonialAuthorTagline>{item.authorTagline}</TestimonialAuthorTagline>
                 </TestimonialAuthor>
               </Testimonial>
             </a>
@@ -116,5 +104,5 @@ export default function WallOfLovePage() {
 
       <div className="h-4" />
     </div>
-  )
+  );
 }

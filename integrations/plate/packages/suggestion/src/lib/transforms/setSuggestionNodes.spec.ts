@@ -1,11 +1,11 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { getSuggestionKey } from '../utils';
-import { setSuggestionNodes } from './setSuggestionNodes';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { getSuggestionKey } from "../utils";
+import { setSuggestionNodes } from "./setSuggestionNodes";
 
-describe('setSuggestionNodes', () => {
-  it('marks the selection and each inline node with shared suggestion metadata', () => {
+describe("setSuggestionNodes", () => {
+  it("marks the selection and each inline node with shared suggestion metadata", () => {
     const setNodes = mock();
     const selection = {
       anchor: { offset: 0, path: [0, 0] },
@@ -15,14 +15,14 @@ describe('setSuggestionNodes', () => {
       api: {
         isInline: () => true,
         nodes: () => [
-          [{ type: 'a' }, [0, 1]],
-          [{ type: 'a' }, [0, 2]],
+          [{ type: "a" }, [0, 1]],
+          [{ type: "a" }, [0, 2]],
         ],
       },
       getOptions: (plugin: unknown) => {
         expect(plugin).toBe(BaseSuggestionPlugin);
 
-        return { currentUserId: 'user-1' };
+        return { currentUserId: "user-1" };
       },
       selection,
       tf: {
@@ -33,16 +33,16 @@ describe('setSuggestionNodes', () => {
 
     setSuggestionNodes(editor, {
       createdAt: 123,
-      suggestionId: 's-1',
+      suggestionId: "s-1",
     });
 
     const props = {
       [KEYS.suggestion]: true,
-      [getSuggestionKey('s-1')]: {
+      [getSuggestionKey("s-1")]: {
         createdAt: 123,
-        id: 's-1',
-        type: 'remove',
-        userId: 'user-1',
+        id: "s-1",
+        type: "remove",
+        userId: "user-1",
       },
     };
 

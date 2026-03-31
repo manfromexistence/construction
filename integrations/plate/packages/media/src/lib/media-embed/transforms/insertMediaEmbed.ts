@@ -1,14 +1,10 @@
-import type {
-  InsertNodesOptions,
-  SlateEditor,
-  TMediaEmbedElement,
-} from 'platejs';
+import type { InsertNodesOptions, SlateEditor, TMediaEmbedElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const insertMediaEmbed = (
   editor: SlateEditor,
-  { url = '' }: Partial<TMediaEmbedElement>,
+  { url = "" }: Partial<TMediaEmbedElement>,
   options: InsertNodesOptions = {}
 ): void => {
   if (!editor.selection) return;
@@ -20,7 +16,7 @@ export const insertMediaEmbed = (
   const [, path] = selectionParentEntry;
   editor.tf.insertNodes<TMediaEmbedElement>(
     {
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       type: editor.getType(KEYS.mediaEmbed),
       url,
     },

@@ -29,7 +29,7 @@ function VisuallyHidden(props: VisuallyHiddenProps) {
           ...style,
         },
       },
-      visuallyHiddenProps,
+      visuallyHiddenProps
     ),
     render,
     state: {

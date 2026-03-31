@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form-tanstack-complex",
-  "dependencies": [
-    "@tanstack/react-form",
-    "zod"
-  ],
+  "dependencies": ["@tanstack/react-form", "zod"],
   "registryDependencies": [
     "field",
     "button",

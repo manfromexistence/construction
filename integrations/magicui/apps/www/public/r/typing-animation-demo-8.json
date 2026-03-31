@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Typing Animation Cursor Styles",
   "description": "Example showing different cursor styles (line, block, underscore).",
-  "registryDependencies": [
-    "@magicui/typing-animation"
-  ],
+  "registryDependencies": ["@magicui/typing-animation"],
   "files": [
     {
       "path": "registry/example/typing-animation-demo-8.tsx",

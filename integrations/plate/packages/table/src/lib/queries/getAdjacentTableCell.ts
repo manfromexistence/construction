@@ -5,11 +5,11 @@ import type {
   TTableCellElement,
   TTableElement,
   TTableRowElement,
-} from 'platejs';
+} from "platejs";
 
-import { getCellIndicesWithSpans } from '../merge/getCellIndicesWithSpans';
-import { getCellIndices } from '../utils/getCellIndices';
-import { getTableEntries } from './getTableEntries';
+import { getCellIndicesWithSpans } from "../merge/getCellIndicesWithSpans";
+import { getCellIndices } from "../utils/getCellIndices";
+import { getTableEntries } from "./getTableEntries";
 
 type TableCellLookup = Map<string, NodeEntry<TTableCellElement>>;
 
@@ -17,10 +17,7 @@ const adjacentTableCellLookup = new WeakMap<TTableElement, TableCellLookup>();
 
 const getLookupKey = (row: number, col: number) => `${row}:${col}`;
 
-const createTableCellLookup = (
-  editor: SlateEditor,
-  tableEntry: NodeEntry<TTableElement>
-) => {
+const createTableCellLookup = (editor: SlateEditor, tableEntry: NodeEntry<TTableElement>) => {
   const [table, tablePath] = tableEntry;
   const cachedLookup = adjacentTableCellLookup.get(table);
 
@@ -35,10 +32,7 @@ const createTableCellLookup = (
         tablePath.concat([rowIndex, cellIndex]),
       ] as NodeEntry<TTableCellElement>;
       const indices = getCellIndices(editor, cellEntry[0]);
-      const { col: endCol, row: endRow } = getCellIndicesWithSpans(
-        indices,
-        cellEntry[0]
-      );
+      const { col: endCol, row: endRow } = getCellIndicesWithSpans(indices, cellEntry[0]);
 
       for (let row = indices.row; row <= endRow; row++) {
         for (let col = indices.col; col <= endCol; col++) {
@@ -78,7 +72,5 @@ export const getAdjacentTableCell = (
 
   if (nextCol < 0 || nextRow < 0) return;
 
-  return createTableCellLookup(editor, tableEntry).get(
-    getLookupKey(nextRow, nextCol)
-  );
+  return createTableCellLookup(editor, tableEntry).get(getLookupKey(nextRow, nextCol));
 };

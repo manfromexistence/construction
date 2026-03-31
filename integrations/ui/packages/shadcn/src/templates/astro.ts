@@ -1,7 +1,7 @@
-import dedent from "dedent"
+import dedent from "dedent";
 
-import { createTemplate } from "./create-template"
-import { fontsourceMonorepoInit } from "./monorepo"
+import { createTemplate } from "./create-template";
+import { fontsourceMonorepoInit } from "./monorepo";
 
 export const astro = createTemplate({
   name: "astro",
@@ -55,4 +55,4 @@ import { ComponentExample } from "@/components/component-example"
       },
     ],
   },
-})
+});

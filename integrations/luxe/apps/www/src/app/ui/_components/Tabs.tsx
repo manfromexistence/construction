@@ -1,15 +1,7 @@
 "use client";
 
-import {
-  createContext,
-  forwardRef,
-  useEffect,
-  useId,
-  useRef,
-  useState,
-} from "react";
-
 import * as TabsPrimitive from "@radix-ui/react-tabs";
+import { createContext, forwardRef, useEffect, useId, useRef, useState } from "react";
 
 import { cn } from "@/utils/cn";
 
@@ -38,7 +30,7 @@ export const TabsList = forwardRef<
     ref={ref}
     className={cn(
       "inline-flex h-[44px] gap-4 w-full items-center justify-start rounded-t-lg bg-background",
-      className,
+      className
     )}
     {...props}
   />
@@ -51,48 +43,43 @@ export const TabsTrigger = forwardRef<
     classNameIndicator?: string;
     isIndicator?: boolean;
   }
->(
-  (
-    { className, children, classNameIndicator, isIndicator = false, ...props },
-    ref,
-  ) => {
-    const triggerRef = useRef<HTMLButtonElement>(null);
-    const [isActive, setIsActive] = useState(false);
+>(({ className, children, classNameIndicator, isIndicator = false, ...props }, ref) => {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [isActive, setIsActive] = useState(false);
 
-    useEffect(() => {
-      const element = triggerRef.current;
+  useEffect(() => {
+    const element = triggerRef.current;
 
-      if (element) {
+    if (element) {
+      setIsActive(element.dataset.state === "active");
+
+      const observer = new MutationObserver(() => {
         setIsActive(element.dataset.state === "active");
+      });
 
-        const observer = new MutationObserver(() => {
-          setIsActive(element.dataset.state === "active");
-        });
+      observer.observe(element, { attributes: true });
 
-        observer.observe(element, { attributes: true });
+      return () => observer.disconnect();
+    }
+  }, []);
 
-        return () => observer.disconnect();
-      }
-    }, []);
-
-    return (
-      <TabsPrimitive.Trigger
-        ref={triggerRef}
-        className={cn(
-          "group relative inline-flex -mx-2 px-2 items-center justify-center rounded-none bg-transparent py-2 text-sm font-medium whitespace-nowrap transition-none focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 text-neutral-500 data-[state=active]:text-primary",
-          isIndicator && "border border-transparent py-[3px]",
-          isIndicator &&
-            isActive &&
-            "bg-main-foreground dark:bg-main-secondary border-border rounded-lg",
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </TabsPrimitive.Trigger>
-    );
-  },
-);
+  return (
+    <TabsPrimitive.Trigger
+      ref={triggerRef}
+      className={cn(
+        "group relative inline-flex -mx-2 px-2 items-center justify-center rounded-none bg-transparent py-2 text-sm font-medium whitespace-nowrap transition-none focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 text-neutral-500 data-[state=active]:text-primary",
+        isIndicator && "border border-transparent py-[3px]",
+        isIndicator &&
+          isActive &&
+          "bg-main-foreground dark:bg-main-secondary border-border rounded-lg",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </TabsPrimitive.Trigger>
+  );
+});
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
 
 export const TabsContent = forwardRef<
@@ -101,10 +88,7 @@ export const TabsContent = forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    className={cn(
-      "pt-1 relative rounded-md focus-visible:outline-none",
-      className,
-    )}
+    className={cn("pt-1 relative rounded-md focus-visible:outline-none", className)}
     {...props}
   />
 ));

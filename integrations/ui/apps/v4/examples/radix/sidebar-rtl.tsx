@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
   BadgeCheck,
   Bell,
@@ -21,25 +20,22 @@ import {
   Sparkles,
   SquareTerminal,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
+import * as React from "react";
 
 import {
   LanguageProvider,
   LanguageSelector,
-  useTranslation,
   type Translations,
-} from "@/components/language-selector"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/radix-nova/ui-rtl/avatar"
+  useTranslation,
+} from "@/components/language-selector";
+import { Avatar, AvatarFallback, AvatarImage } from "@/styles/radix-nova/ui-rtl/avatar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/radix-nova/ui-rtl/collapsible"
-import { DirectionProvider } from "@/styles/radix-nova/ui-rtl/direction"
+} from "@/styles/radix-nova/ui-rtl/collapsible";
+import { DirectionProvider } from "@/styles/radix-nova/ui-rtl/direction";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,7 +44,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/styles/radix-nova/ui-rtl/dropdown-menu"
+} from "@/styles/radix-nova/ui-rtl/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -68,7 +64,7 @@ import {
   SidebarRail,
   SidebarTrigger,
   useSidebar,
-} from "@/styles/radix-nova/ui-rtl/sidebar"
+} from "@/styles/radix-nova/ui-rtl/sidebar";
 
 const translations: Translations = {
   en: {
@@ -182,18 +178,18 @@ const translations: Translations = {
       travel: "נסיעות",
     },
   },
-}
+};
 
 export function SidebarRtl() {
   return (
     <LanguageProvider defaultLanguage="ar">
       <AppSidebarWithProvider />
     </LanguageProvider>
-  )
+  );
 }
 
 function AppSidebarWithProvider() {
-  const { language, setLanguage, dir } = useTranslation(translations, "ar")
+  const { language, setLanguage, dir } = useTranslation(translations, "ar");
 
   return (
     <DirectionProvider dir={dir}>
@@ -206,11 +202,11 @@ function AppSidebarWithProvider() {
         <AppSidebar />
       </div>
     </DirectionProvider>
-  )
+  );
 }
 
 function AppSidebar() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   const navMain = [
     {
@@ -256,31 +252,25 @@ function AppSidebar() {
         { title: t.limits, url: "#" },
       ],
     },
-  ]
+  ];
 
   const projects = [
     { name: t.designEngineering, url: "#", icon: Frame },
     { name: t.salesMarketing, url: "#", icon: PieChart },
     { name: t.travel, url: "#", icon: Map },
-  ]
+  ];
 
   const user = {
     name: "shadcn",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
-  }
+  };
 
   return (
     <SidebarProvider>
-      <SidebarContentInner
-        dir={dir}
-        t={t}
-        navMain={navMain}
-        projects={projects}
-        user={user}
-      />
+      <SidebarContentInner dir={dir} t={t} navMain={navMain} projects={projects} user={user} />
     </SidebarProvider>
-  )
+  );
 }
 
 function SidebarContentInner({
@@ -290,35 +280,31 @@ function SidebarContentInner({
   projects,
   user,
 }: {
-  dir: "ltr" | "rtl"
-  t: typeof translations.ar.values
+  dir: "ltr" | "rtl";
+  t: typeof translations.ar.values;
   navMain: Array<{
-    title: string
-    url: string
-    icon?: React.ElementType
-    isActive?: boolean
-    items?: Array<{ title: string; url: string }>
-  }>
+    title: string;
+    url: string;
+    icon?: React.ElementType;
+    isActive?: boolean;
+    items?: Array<{ title: string; url: string }>;
+  }>;
   projects: Array<{
-    name: string
-    url: string
-    icon: React.ElementType
-  }>
+    name: string;
+    url: string;
+    icon: React.ElementType;
+  }>;
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
 
   return (
     <>
-      <Sidebar
-        collapsible="icon"
-        dir={dir}
-        side={dir === "ltr" ? "left" : "right"}
-      >
+      <Sidebar collapsible="icon" dir={dir} side={dir === "ltr" ? "left" : "right"}>
         <SidebarHeader>
           <SidebarMenu>
             <SidebarMenuItem>
@@ -457,14 +443,10 @@ function SidebarContentInner({
                       <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                         <Avatar>
                           <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback className="rounded-lg">
-                            CN
-                          </AvatarFallback>
+                          <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                         </Avatar>
                         <div className="grid flex-1 text-start text-sm leading-tight">
-                          <span className="truncate font-medium">
-                            {user.name}
-                          </span>
+                          <span className="truncate font-medium">{user.name}</span>
                           <span className="truncate text-xs">{user.email}</span>
                         </div>
                       </div>
@@ -517,5 +499,5 @@ function SidebarContentInner({
         </header>
       </SidebarInset>
     </>
-  )
+  );
 }

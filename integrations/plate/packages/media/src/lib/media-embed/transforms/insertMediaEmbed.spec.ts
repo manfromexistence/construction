@@ -1,9 +1,9 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { insertMediaEmbed } from './insertMediaEmbed';
+import { insertMediaEmbed } from "./insertMediaEmbed";
 
-describe('insertMediaEmbed', () => {
-  it('does nothing without a selection', () => {
+describe("insertMediaEmbed", () => {
+  it("does nothing without a selection", () => {
     const insertNodes = mock();
     const editor = {
       api: { parent: mock() },
@@ -12,12 +12,12 @@ describe('insertMediaEmbed', () => {
       tf: { insertNodes },
     } as any;
 
-    insertMediaEmbed(editor, { url: 'https://platejs.org/embed' });
+    insertMediaEmbed(editor, { url: "https://platejs.org/embed" });
 
     expect(insertNodes).not.toHaveBeenCalled();
   });
 
-  it('does nothing when the selection parent cannot be resolved', () => {
+  it("does nothing when the selection parent cannot be resolved", () => {
     const insertNodes = mock();
     const parent = mock(() => {});
     const editor = {
@@ -27,12 +27,12 @@ describe('insertMediaEmbed', () => {
       tf: { insertNodes },
     } as any;
 
-    insertMediaEmbed(editor, { url: 'https://platejs.org/embed' });
+    insertMediaEmbed(editor, { url: "https://platejs.org/embed" });
 
     expect(insertNodes).not.toHaveBeenCalled();
   });
 
-  it('inserts an embed node at the parent path', () => {
+  it("inserts an embed node at the parent path", () => {
     const insertNodes = mock();
     const parent = mock(() => [{}, [1]]);
     const editor = {
@@ -45,13 +45,13 @@ describe('insertMediaEmbed', () => {
       tf: { insertNodes },
     } as any;
 
-    insertMediaEmbed(editor, { url: 'https://platejs.org/embed' }, { at: [9] });
+    insertMediaEmbed(editor, { url: "https://platejs.org/embed" }, { at: [9] });
 
     expect(insertNodes).toHaveBeenCalledWith(
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         type: KEYS.mediaEmbed,
-        url: 'https://platejs.org/embed',
+        url: "https://platejs.org/embed",
       },
       {
         at: [9],

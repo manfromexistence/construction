@@ -1,12 +1,12 @@
 "use client";
 
+import { Inspect } from "lucide-react";
+import React from "react";
+import { createPortal } from "react-dom";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Separator } from "@/components/ui/separator";
 import { useClassNames } from "@/hooks/use-theme-inspector-classnames";
 import { cn } from "@/lib/utils";
-import { Inspect } from "lucide-react";
-import React from "react";
-import { createPortal } from "react-dom";
 import InspectorClassItem from "./inspector-class-item";
 
 interface InspectorState {

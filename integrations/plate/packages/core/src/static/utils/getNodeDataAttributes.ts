@@ -1,26 +1,22 @@
-import type { TElement, TText } from '@platejs/slate';
+import type { TElement, TText } from "@platejs/slate";
 
 import {
   type AnyEditorPlugin,
-  type SlateEditor,
   getEditorPlugin,
   keyToDataAttribute,
-} from '../../lib';
+  type SlateEditor,
+} from "../../lib";
 
 export const getNodeDataAttributes = (
   editor: SlateEditor,
   node: TElement | TText,
-  {
-    isElement,
-    isLeaf,
-    isText,
-  }: { isElement?: boolean; isLeaf?: boolean; isText?: boolean }
+  { isElement, isLeaf, isText }: { isElement?: boolean; isLeaf?: boolean; isText?: boolean }
 ) => {
   const dataAttributes = Object.keys(node).reduce(
     (acc, key) => {
-      if (typeof node[key] === 'object') return acc;
-      if (isElement && key === 'children') return acc;
-      if ((isLeaf || isText) && key === 'text') return acc;
+      if (typeof node[key] === "object") return acc;
+      if (isElement && key === "children") return acc;
+      if ((isLeaf || isText) && key === "text") return acc;
 
       const plugin = editor.getPlugin({ key });
 
@@ -28,11 +24,7 @@ export const getNodeDataAttributes = (
         return acc;
       }
 
-      if (
-        isText &&
-        plugin?.node.isLeaf &&
-        plugin?.node.isDecoration !== false
-      ) {
+      if (isText && plugin?.node.isLeaf && plugin?.node.isDecoration !== false) {
         return acc;
       }
 

@@ -31,9 +31,7 @@
       "@platejs/media/react": ["../../packages/media/src/react"],
       "@platejs/mention/react": ["../../packages/mention/src/react"],
       "@platejs/selection/react": ["../../packages/selection/src/react"],
-      "@platejs/slash-command/react": [
-        "../../packages/slash-command/src/react"
-      ],
+      "@platejs/slash-command/react": ["../../packages/slash-command/src/react"],
       "@platejs/suggestion/react": ["../../packages/suggestion/src/react"],
       "@platejs/tabbable/react": ["../../packages/tabbable/src/react"],
       "@platejs/table/react": ["../../packages/table/src/react"],

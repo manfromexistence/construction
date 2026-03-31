@@ -1,8 +1,6 @@
 {
   "name": "accordion",
-  "externalDependencies": [
-    "@radix-ui/react-accordion"
-  ],
+  "externalDependencies": ["@radix-ui/react-accordion"],
   "internalDependencies": [],
   "file": {
     "name": "accordion.tsx",

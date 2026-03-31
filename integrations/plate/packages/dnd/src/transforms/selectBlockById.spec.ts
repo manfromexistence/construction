@@ -1,7 +1,7 @@
-import { selectBlockById } from './selectBlockById';
+import { selectBlockById } from "./selectBlockById";
 
-describe('selectBlockById', () => {
-  it('does nothing when the block cannot be found', () => {
+describe("selectBlockById", () => {
+  it("does nothing when the block cannot be found", () => {
     const select = mock();
     const focus = mock();
     const editor = {
@@ -15,18 +15,18 @@ describe('selectBlockById', () => {
       },
     } as any;
 
-    selectBlockById(editor, 'missing');
+    selectBlockById(editor, "missing");
 
     expect(select).not.toHaveBeenCalled();
     expect(focus).not.toHaveBeenCalled();
   });
 
-  it('selects the block range and focuses the editor', () => {
+  it("selects the block range and focuses the editor", () => {
     const select = mock();
     const focus = mock();
     const editor = {
       api: {
-        node: mock(() => [{ id: 'a' }, [1]]),
+        node: mock(() => [{ id: "a" }, [1]]),
         range: mock(() => ({
           anchor: { offset: 0, path: [1, 0] },
           focus: { offset: 0, path: [1, 1] },
@@ -38,7 +38,7 @@ describe('selectBlockById', () => {
       },
     } as any;
 
-    selectBlockById(editor, 'a');
+    selectBlockById(editor, "a");
 
     expect(select).toHaveBeenCalledWith({
       anchor: { offset: 0, path: [1, 0] },

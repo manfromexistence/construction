@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 
-import { cn } from "@/registry/bases/radix/lib/utils"
+import { cn } from "@/registry/bases/radix/lib/utils";
 
 function Card({
   className,
@@ -14,7 +14,7 @@ function Card({
       className={cn("cn-card group/card flex flex-col", className)}
       {...props}
     />
-  )
+  );
 }
 
 function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
@@ -27,7 +27,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
@@ -37,17 +37,13 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("cn-card-title cn-font-heading", className)}
       {...props}
     />
-  )
+  );
 }
 
 function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div
-      data-slot="card-description"
-      className={cn("cn-card-description", className)}
-      {...props}
-    />
-  )
+    <div data-slot="card-description" className={cn("cn-card-description", className)} {...props} />
+  );
 }
 
 function CardAction({ className, ...props }: React.ComponentProps<"div">) {
@@ -60,17 +56,11 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
       )}
       {...props}
     />
-  )
+  );
 }
 
 function CardContent({ className, ...props }: React.ComponentProps<"div">) {
-  return (
-    <div
-      data-slot="card-content"
-      className={cn("cn-card-content", className)}
-      {...props}
-    />
-  )
+  return <div data-slot="card-content" className={cn("cn-card-content", className)} {...props} />;
 }
 
 function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
@@ -80,15 +70,7 @@ function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
       className={cn("cn-card-footer flex items-center", className)}
       {...props}
     />
-  )
+  );
 }
 
-export {
-  Card,
-  CardHeader,
-  CardFooter,
-  CardTitle,
-  CardAction,
-  CardDescription,
-  CardContent,
-}
+export { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };

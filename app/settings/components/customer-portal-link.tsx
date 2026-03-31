@@ -1,8 +1,8 @@
+import { headers } from "next/headers";
+import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { polar } from "@/lib/polar";
 import { cn } from "@/lib/utils";
-import { headers } from "next/headers";
-import Link from "next/link";
 
 export async function CustomerPortalLink() {
   const session = await auth.api.getSession({ headers: await headers() });

@@ -1,16 +1,14 @@
-import type { Value } from '@platejs/slate';
-
-import type { PlateEditor } from '../editor/PlateEditor';
-
-import { isEditOnly } from '../../internal/plugin/isEditOnlyDisabled';
-import { getPlugin } from '../plugin';
-import { getEditorPlugin } from '../plugin/getEditorPlugin';
+import type { Value } from "@platejs/slate";
+import { isEditOnly } from "../../internal/plugin/isEditOnlyDisabled";
+import type { PlateEditor } from "../editor/PlateEditor";
+import { getPlugin } from "../plugin";
+import { getEditorPlugin } from "../plugin/getEditorPlugin";
 
 export const pipeOnChange = (editor: PlateEditor, value: Value) => {
   return editor.meta.pluginCache.handlers.onChange.some((key) => {
     const plugin = getPlugin(editor, { key });
 
-    if (isEditOnly(editor.dom.readOnly, plugin, 'handlers')) {
+    if (isEditOnly(editor.dom.readOnly, plugin, "handlers")) {
       return false;
     }
 

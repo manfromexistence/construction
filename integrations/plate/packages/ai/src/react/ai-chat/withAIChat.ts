@@ -1,9 +1,8 @@
-import type { OverrideEditor } from 'platejs/react';
+import { ElementApi, KEYS } from "platejs";
+import type { OverrideEditor } from "platejs/react";
 
-import { ElementApi, KEYS } from 'platejs';
-
-import { BaseAIPlugin } from '../../lib/BaseAIPlugin';
-import { type AIChatPluginConfig, AIChatPlugin } from './AIChatPlugin';
+import { BaseAIPlugin } from "../../lib/BaseAIPlugin";
+import { AIChatPlugin, type AIChatPluginConfig } from "./AIChatPlugin";
 
 export const withAIChat: OverrideEditor<AIChatPluginConfig> = ({
   api,
@@ -42,12 +41,9 @@ export const withAIChat: OverrideEditor<AIChatPluginConfig> = ({
           }
 
           // Make sure an input is created at the beginning of line or after a whitespace
-          const previousChar = editor.api.string(
-            editor.api.range('before', editor.selection)
-          );
+          const previousChar = editor.api.string(editor.api.range("before", editor.selection));
 
-          const matchesPreviousCharPattern =
-            triggerPreviousCharPattern?.test(previousChar);
+          const matchesPreviousCharPattern = triggerPreviousCharPattern?.test(previousChar);
 
           if (!matchesPreviousCharPattern) return;
 
@@ -73,11 +69,7 @@ export const withAIChat: OverrideEditor<AIChatPluginConfig> = ({
           return;
         }
 
-        if (
-          ElementApi.isElement(node) &&
-          node.type === type &&
-          !getOptions().open
-        ) {
+        if (ElementApi.isElement(node) && node.type === type && !getOptions().open) {
           editor.getTransforms(AIChatPlugin).aiChat.removeAnchor({ at: path });
 
           return;

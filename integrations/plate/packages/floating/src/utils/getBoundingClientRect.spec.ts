@@ -1,8 +1,8 @@
-import { makeClientRect } from './makeClientRect';
-import { getBoundingClientRect } from './getBoundingClientRect';
+import { getBoundingClientRect } from "./getBoundingClientRect";
+import { makeClientRect } from "./makeClientRect";
 
-describe('getBoundingClientRect', () => {
-  it('uses the current selection when no location is provided', () => {
+describe("getBoundingClientRect", () => {
+  it("uses the current selection when no location is provided", () => {
     const selection = {
       anchor: { offset: 0, path: [0, 0] },
       focus: { offset: 1, path: [0, 0] },
@@ -17,16 +17,14 @@ describe('getBoundingClientRect', () => {
       selection,
       api: {
         toDOMRange: (range: any) =>
-          range === selection
-            ? { getBoundingClientRect: () => rect }
-            : undefined,
+          range === selection ? { getBoundingClientRect: () => rect } : undefined,
       },
     };
 
     expect(getBoundingClientRect(editor)).toMatchObject(rect);
   });
 
-  it('merges the DOM rects for multiple explicit locations', () => {
+  it("merges the DOM rects for multiple explicit locations", () => {
     const rangeA = {
       anchor: { offset: 0, path: [0, 0] },
       focus: { offset: 1, path: [0, 0] },
@@ -65,7 +63,7 @@ describe('getBoundingClientRect', () => {
     });
   });
 
-  it('returns undefined when there is no selection or DOM range', () => {
+  it("returns undefined when there is no selection or DOM range", () => {
     const editor: any = {
       selection: null,
       api: {

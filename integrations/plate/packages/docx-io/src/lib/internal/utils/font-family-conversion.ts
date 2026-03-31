@@ -10,7 +10,7 @@ export const fontFamilyToTableObject = (
   fallbackFont: string
 ): FontTableObject => {
   const fontFamilyElements = fontFamilyString
-    ? fontFamilyString.split(',').map((fontName) => {
+    ? fontFamilyString.split(",").map((fontName) => {
         const trimmedFontName = fontName.trim();
         if (removeSimpleOrDoubleQuotes.test(trimmedFontName)) {
           const match = trimmedFontName.match(removeSimpleOrDoubleQuotes);

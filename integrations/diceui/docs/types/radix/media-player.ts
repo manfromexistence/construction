@@ -1,9 +1,6 @@
 import type { Slider } from "@radix-ui/react-slider";
 import type { Button } from "@/registry/bases/radix/ui/button";
-import type {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/registry/bases/radix/ui/dropdown-menu";
+import type { DropdownMenu, DropdownMenuTrigger } from "@/registry/bases/radix/ui/dropdown-menu";
 import type { CompositionProps, EmptyProps } from "@/types";
 
 interface MediaPlayerDropdownMenuProps
@@ -208,25 +205,15 @@ export interface MediaPlayerProps extends EmptyProps<"div">, CompositionProps {
   withoutTooltip?: boolean;
 }
 
-export interface MediaPlayerVideoProps
-  extends EmptyProps<"video">,
-    CompositionProps {}
+export interface MediaPlayerVideoProps extends EmptyProps<"video">, CompositionProps {}
 
-export interface MediaPlayerAudioProps
-  extends EmptyProps<"audio">,
-    CompositionProps {}
+export interface MediaPlayerAudioProps extends EmptyProps<"audio">, CompositionProps {}
 
-export interface MediaPlayerControlsProps
-  extends EmptyProps<"div">,
-    CompositionProps {}
+export interface MediaPlayerControlsProps extends EmptyProps<"div">, CompositionProps {}
 
-export interface MediaPlayerControlsOverlayProps
-  extends EmptyProps<"div">,
-    CompositionProps {}
+export interface MediaPlayerControlsOverlayProps extends EmptyProps<"div">, CompositionProps {}
 
-export interface MediaPlayerLoadingProps
-  extends EmptyProps<"div">,
-    CompositionProps {
+export interface MediaPlayerLoadingProps extends EmptyProps<"div">, CompositionProps {
   /**
    * The delay in milliseconds before showing the loading indicator.
    *
@@ -239,9 +226,7 @@ export interface MediaPlayerLoadingProps
   delay?: number;
 }
 
-export interface MediaPlayerErrorProps
-  extends EmptyProps<"div">,
-    CompositionProps {
+export interface MediaPlayerErrorProps extends EmptyProps<"div">, CompositionProps {
   /**
    * The media error object. If not provided, will use the error from media state.
    *
@@ -300,17 +285,11 @@ export interface MediaPlayerErrorProps
   onReload?: () => void;
 }
 
-export interface MediaPlayerVolumeIndicatorProps
-  extends EmptyProps<"div">,
-    CompositionProps {}
+export interface MediaPlayerVolumeIndicatorProps extends EmptyProps<"div">, CompositionProps {}
 
-export interface MediaPlayerPlayProps
-  extends EmptyProps<"button">,
-    CompositionProps {}
+export interface MediaPlayerPlayProps extends EmptyProps<"button">, CompositionProps {}
 
-export interface MediaPlayerSeekBackwardProps
-  extends EmptyProps<"button">,
-    CompositionProps {
+export interface MediaPlayerSeekBackwardProps extends EmptyProps<"button">, CompositionProps {
   /**
    * The number of seconds to seek backward.
    *
@@ -323,9 +302,7 @@ export interface MediaPlayerSeekBackwardProps
   seconds?: number;
 }
 
-export interface MediaPlayerSeekForwardProps
-  extends EmptyProps<"button">,
-    CompositionProps {
+export interface MediaPlayerSeekForwardProps extends EmptyProps<"button">, CompositionProps {
   /**
    * The number of seconds to seek forward.
    *
@@ -339,10 +316,7 @@ export interface MediaPlayerSeekForwardProps
 }
 
 export interface MediaPlayerSeekProps
-  extends Omit<
-      React.ComponentProps<typeof Slider>,
-      keyof React.ComponentProps<"div">
-    >,
+  extends Omit<React.ComponentProps<typeof Slider>, keyof React.ComponentProps<"div">>,
     CompositionProps {
   /**
    * Whether to display the current time and remaining time alongside the seek bar.
@@ -454,16 +428,11 @@ export interface MediaPlayerSeekProps
    *
    * @default 10
    */
-  tooltipCollisionPadding?:
-    | number
-    | Partial<Record<"top" | "right" | "bottom" | "left", number>>;
+  tooltipCollisionPadding?: number | Partial<Record<"top" | "right" | "bottom" | "left", number>>;
 }
 
 export interface MediaPlayerVolumeProps
-  extends Omit<
-      React.ComponentProps<typeof Slider>,
-      keyof React.ComponentProps<"div">
-    >,
+  extends Omit<React.ComponentProps<typeof Slider>, keyof React.ComponentProps<"div">>,
     CompositionProps {
   /**
    * Whether the volume slider should expand on hover.
@@ -477,9 +446,7 @@ export interface MediaPlayerVolumeProps
   expandable?: boolean;
 }
 
-export interface MediaPlayerTimeProps
-  extends EmptyProps<"div">,
-    CompositionProps {
+export interface MediaPlayerTimeProps extends EmptyProps<"div">, CompositionProps {
   /**
    * The format variant for displaying time.
    * - `progress`: Shows "currentTime / duration" (e.g., "1:23 / 5:00").
@@ -496,10 +463,7 @@ export interface MediaPlayerTimeProps
 }
 
 export interface MediaPlayerPlaybackSpeedProps
-  extends Omit<
-      MediaPlayerDropdownMenuProps,
-      keyof React.ComponentProps<"button">
-    >,
+  extends Omit<MediaPlayerDropdownMenuProps, keyof React.ComponentProps<"button">>,
     CompositionProps {
   /**
    * Whether the dropdown menu is open by default.
@@ -535,9 +499,7 @@ export interface MediaPlayerPlaybackSpeedProps
   speeds?: number[];
 }
 
-export interface MediaPlayerLoopProps
-  extends EmptyProps<"button">,
-    CompositionProps {}
+export interface MediaPlayerLoopProps extends EmptyProps<"button">, CompositionProps {}
 
 export interface MediaPlayerPiPProps
   extends EmptyProps<"button">,
@@ -565,28 +527,17 @@ export interface MediaPlayerPiPProps
    *
    * @default PictureInPictureIcon when not in PiP, PictureInPicture2Icon when in PiP
    */
-  children?:
-    | React.ReactNode
-    | ((isPictureInPicture: boolean) => React.ReactNode);
+  children?: React.ReactNode | ((isPictureInPicture: boolean) => React.ReactNode);
 }
 
-export interface MediaPlayerFullscreenProps
-  extends EmptyProps<"button">,
-    CompositionProps {}
+export interface MediaPlayerFullscreenProps extends EmptyProps<"button">, CompositionProps {}
 
-export interface MediaPlayerCaptionsProps
-  extends EmptyProps<"button">,
-    CompositionProps {}
+export interface MediaPlayerCaptionsProps extends EmptyProps<"button">, CompositionProps {}
 
-export interface MediaPlayerDownloadProps
-  extends EmptyProps<"button">,
-    CompositionProps {}
+export interface MediaPlayerDownloadProps extends EmptyProps<"button">, CompositionProps {}
 
 export interface MediaPlayerSettingsProps
-  extends Omit<
-      MediaPlayerPlaybackSpeedProps,
-      keyof React.ComponentProps<"button">
-    >,
+  extends Omit<MediaPlayerPlaybackSpeedProps, keyof React.ComponentProps<"button">>,
     CompositionProps {
   /**
    * The settings menu provides a unified interface for adjusting playback speed,

@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Menubar,
   MenubarCheckboxItem,
@@ -21,7 +18,7 @@ import {
   MenubarSubContent,
   MenubarSubTrigger,
   MenubarTrigger,
-} from "@/styles/base-nova/ui-rtl/menubar"
+} from "@/styles/base-nova/ui-rtl/menubar";
 
 const translations: Translations = {
   en: {
@@ -138,11 +135,11 @@ const translations: Translations = {
       addProfile: "הוסף פרופיל...",
     },
   },
-}
+};
 
 export function MenubarRtl() {
-  const { dir, t, language } = useTranslation(translations, "ar")
-  const [profile, setProfile] = React.useState("benoit")
+  const { dir, t, language } = useTranslation(translations, "ar");
+  const [profile, setProfile] = React.useState("benoit");
 
   return (
     <Menubar className="w-72" dir={dir}>
@@ -162,10 +159,7 @@ export function MenubarRtl() {
           <MenubarGroup>
             <MenubarSub>
               <MenubarSubTrigger>{t.share}</MenubarSubTrigger>
-              <MenubarSubContent
-                dir={dir}
-                data-lang={dir === "rtl" ? language : undefined}
-              >
+              <MenubarSubContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
                 <MenubarGroup>
                   <MenubarItem>{t.emailLink}</MenubarItem>
                   <MenubarItem>{t.messages}</MenubarItem>
@@ -201,10 +195,7 @@ export function MenubarRtl() {
           <MenubarGroup>
             <MenubarSub>
               <MenubarSubTrigger>{t.find}</MenubarSubTrigger>
-              <MenubarSubContent
-                dir={dir}
-                data-lang={dir === "rtl" ? language : undefined}
-              >
+              <MenubarSubContent dir={dir} data-lang={dir === "rtl" ? language : undefined}>
                 <MenubarGroup>
                   <MenubarItem>{t.searchTheWeb}</MenubarItem>
                 </MenubarGroup>
@@ -279,5 +270,5 @@ export function MenubarRtl() {
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
-  )
+  );
 }

@@ -3,9 +3,7 @@
   "name": "flip-sentences",
   "title": "Flip Sentences",
   "author": "ncdai <dai@chanhdai.com>",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "src/registry/components/flip-sentences/flip-sentences.tsx",

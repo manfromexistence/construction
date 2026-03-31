@@ -1,21 +1,20 @@
-import React from 'react';
+import { renderHook } from "@testing-library/react";
+import React from "react";
 
-import { renderHook } from '@testing-library/react';
+import { createSlatePlugin } from "../../lib";
+import { TestPlate as Plate } from "../__tests__/TestPlate";
+import { createPlateEditor } from "../editor";
+import { useEditableProps } from "./useEditableProps";
 
-import { createSlatePlugin } from '../../lib';
-import { TestPlate as Plate } from '../__tests__/TestPlate';
-import { createPlateEditor } from '../editor';
-import { useEditableProps } from './useEditableProps';
-
-describe('useEditableProps', () => {
-  describe('default', () => {
-    it('keeps decorate stable across rerenders with unchanged inputs', () => {
+describe("useEditableProps", () => {
+  describe("default", () => {
+    it("keeps decorate stable across rerenders with unchanged inputs", () => {
       const decorate = mock();
 
       const editor = createPlateEditor({
         plugins: [
           createSlatePlugin({
-            key: 'a',
+            key: "a",
             decorate: () => {
               decorate();
 
@@ -25,9 +24,7 @@ describe('useEditableProps', () => {
         ],
       });
 
-      const wrapper = ({ children }: any) => (
-        <Plate editor={editor}>{children}</Plate>
-      );
+      const wrapper = ({ children }: any) => <Plate editor={editor}>{children}</Plate>;
       const { result, rerender } = renderHook(() => useEditableProps(), {
         wrapper,
       });

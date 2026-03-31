@@ -3,17 +3,8 @@
   "name": "data-table-sort-list",
   "title": "Data Table Sort List",
   "description": "A sort list component for the data table",
-  "dependencies": [
-    "@tanstack/react-table",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "badge",
-    "button",
-    "command",
-    "popover",
-    "select"
-  ],
+  "dependencies": ["@tanstack/react-table", "lucide-react"],
+  "registryDependencies": ["badge", "button", "command", "popover", "select"],
   "files": [
     {
       "path": "src/components/data-table/data-table-sort-list.tsx",

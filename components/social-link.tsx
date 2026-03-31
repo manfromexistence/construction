@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
 import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface SocialLinkProps extends React.ComponentProps<"a"> {
   showIcon?: boolean;

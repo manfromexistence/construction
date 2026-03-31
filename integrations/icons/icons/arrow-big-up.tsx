@@ -80,11 +80,7 @@ const ArrowBigUpIcon = forwardRef<ArrowBigUpIconHandle, ArrowBigUpIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.path
-            animate={controls}
-            d="M9 18v-6H5l7-7 7 7h-4v6H9z"
-            variants={PATH_VARIANTS}
-          />
+          <motion.path animate={controls} d="M9 18v-6H5l7-7 7 7h-4v6H9z" variants={PATH_VARIANTS} />
         </svg>
       </div>
     );

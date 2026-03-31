@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 
 const translations: Translations = {
   en: {
@@ -63,8 +60,7 @@ const translations: Translations = {
       blockquote:
         '"في النهاية،" قال، "الجميع يستمتع بنكتة جيدة، لذا من العدل أن يدفعوا مقابل هذا الامتياز."',
       jokeTax: "ضريبة النكتة",
-      subjectsNotAmused:
-        "لم يكن رعايا الملك سعداء. تذمروا واشتكوا، لكن الملك كان حازماً:",
+      subjectsNotAmused: "لم يكن رعايا الملك سعداء. تذمروا واشتكوا، لكن الملك كان حازماً:",
       level1: "المستوى الأول من التورية: 5 قطع ذهبية",
       level2: "المستوى الثاني من النكات: 10 قطع ذهبية",
       level3: "المستوى الثالث من النكات القصيرة: 20 قطعة ذهبية",
@@ -88,8 +84,7 @@ const translations: Translations = {
       ecstatic: "منتشٍ",
       realized:
         "الملك، عندما رأى مدى سعادة رعاياه، أدرك خطأ طرقه وألغى ضريبة النكتة. أُعلن المازح بطلاً، وعاشت المملكة في سعادة دائمة.",
-      moral:
-        "مغزى القصة هو: لا تستهن أبداً بقوة الضحك الجيد وكن دائماً حذراً من الأفكار السيئة.",
+      moral: "مغزى القصة هو: لا تستهن أبداً بقوة الضحك الجيد وكن دائماً حذراً من الأفكار السيئة.",
     },
   },
   he: {
@@ -102,11 +97,9 @@ const translations: Translations = {
       kingThought: "המלך חשב ארוכות וקשות, ולבסוף העלה",
       brilliantPlan: "תוכנית גאונית",
       taxJokes: ": הוא ימסה את הבדיחות בממלכה.",
-      blockquote:
-        '"אחרי הכל," אמר, "כולם נהנים מבדיחה טובה, אז זה רק הוגן שישלמו על הזכות הזו."',
+      blockquote: '"אחרי הכל," אמר, "כולם נהנים מבדיחה טובה, אז זה רק הוגן שישלמו על הזכות הזו."',
       jokeTax: "מס הבדיחה",
-      subjectsNotAmused:
-        "נתיני המלך לא היו מרוצים. הם התלוננו והתרעמו, אבל המלך היה נחוש:",
+      subjectsNotAmused: "נתיני המלך לא היו מרוצים. הם התלוננו והתרעמו, אבל המלך היה נחוש:",
       level1: "רמה ראשונה של משחקי מילים: 5 מטבעות זהב",
       level2: "רמה שנייה של בדיחות: 10 מטבעות זהב",
       level3: "רמה שלישית של חידודים: 20 מטבעות זהב",
@@ -130,20 +123,17 @@ const translations: Translations = {
       ecstatic: "אקסטטי",
       realized:
         "המלך, כשראה כמה מאושרים נתיניו, הבין את טעותו וביטל את מס הבדיחה. הבדחן הוכרז כגיבור, והממלכה חיה באושר לנצח.",
-      moral:
-        "המוסר של הסיפור הוא: לעולם אל תזלזל בכוח של צחוק טוב ותמיד היזהר מרעיונות רעים.",
+      moral: "המוסר של הסיפור הוא: לעולם אל תזלזל בכוח של צחוק טוב ותמיד היזהר מרעיונות רעים.",
     },
   },
-}
+};
 
 export function TypographyRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div dir={dir}>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight text-balance">
-        {t.title}
-      </h1>
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight text-balance">{t.title}</h1>
       <p className="text-xl leading-7 text-muted-foreground [&:not(:first-child)]:mt-6">
         {t.leadParagraph}
       </p>
@@ -152,23 +142,14 @@ export function TypographyRtl() {
       </h2>
       <p className="leading-7 [&:not(:first-child)]:mt-6">
         {t.kingThought}{" "}
-        <a
-          href="#"
-          className="font-medium text-primary underline underline-offset-4"
-        >
+        <a href="#" className="font-medium text-primary underline underline-offset-4">
           {t.brilliantPlan}
         </a>
         {t.taxJokes}
       </p>
-      <blockquote className="mt-6 border-s-2 ps-6 italic">
-        {t.blockquote}
-      </blockquote>
-      <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">
-        {t.jokeTax}
-      </h3>
-      <p className="leading-7 [&:not(:first-child)]:mt-6">
-        {t.subjectsNotAmused}
-      </p>
+      <blockquote className="mt-6 border-s-2 ps-6 italic">{t.blockquote}</blockquote>
+      <h3 className="mt-8 scroll-m-20 text-2xl font-semibold tracking-tight">{t.jokeTax}</h3>
+      <p className="leading-7 [&:not(:first-child)]:mt-6">{t.subjectsNotAmused}</p>
       <ul className="my-6 ms-6 list-disc [&>li]:mt-2">
         <li>{t.level1}</li>
         <li>{t.level2}</li>
@@ -188,12 +169,8 @@ export function TypographyRtl() {
         <table className="w-full">
           <thead>
             <tr className="m-0 border-t p-0 even:bg-muted">
-              <th className="border px-4 py-2 text-start font-bold">
-                {t.kingsTreasury}
-              </th>
-              <th className="border px-4 py-2 text-start font-bold">
-                {t.peoplesHappiness}
-              </th>
+              <th className="border px-4 py-2 text-start font-bold">{t.kingsTreasury}</th>
+              <th className="border px-4 py-2 text-start font-bold">{t.peoplesHappiness}</th>
             </tr>
           </thead>
           <tbody>
@@ -215,5 +192,5 @@ export function TypographyRtl() {
       <p className="leading-7 [&:not(:first-child)]:mt-6">{t.realized}</p>
       <p className="leading-7 [&:not(:first-child)]:mt-6">{t.moral}</p>
     </div>
-  )
+  );
 }

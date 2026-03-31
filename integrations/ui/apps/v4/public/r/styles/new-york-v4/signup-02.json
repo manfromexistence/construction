@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "signup-02",
   "description": "A two column signup page with a cover image.",
-  "registryDependencies": [
-    "button",
-    "input",
-    "label",
-    "field"
-  ],
+  "registryDependencies": ["button", "input", "label", "field"],
   "files": [
     {
       "path": "registry/new-york-v4/blocks/signup-02/page.tsx",
@@ -21,9 +16,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "signup"
-  ],
+  "categories": ["authentication", "signup"],
   "type": "registry:block"
 }

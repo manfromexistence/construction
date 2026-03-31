@@ -1,4 +1,4 @@
-import type { unistLib } from '../types';
+import type { unistLib } from "../types";
 
 /**
  * Wraps an mdast node with a block element containing an ID attribute. Used for
@@ -8,15 +8,12 @@ import type { unistLib } from '../types';
  * @param nodeId - The ID to attach to the block element
  * @returns The wrapped mdast node with block element and ID attribute
  */
-export const wrapWithBlockId = (
-  mdastNode: unistLib.Node,
-  nodeId: string
-): unistLib.Node =>
+export const wrapWithBlockId = (mdastNode: unistLib.Node, nodeId: string): unistLib.Node =>
   ({
     attributes: [
       {
-        name: 'id',
-        type: 'mdxJsxAttribute',
+        name: "id",
+        type: "mdxJsxAttribute",
         value: String(nodeId),
       },
     ],
@@ -24,6 +21,6 @@ export const wrapWithBlockId = (
     data: {
       _mdxExplicitJsx: true,
     },
-    name: 'block',
-    type: 'mdxJsxFlowElement',
+    name: "block",
+    type: "mdxJsxFlowElement",
   }) as any;

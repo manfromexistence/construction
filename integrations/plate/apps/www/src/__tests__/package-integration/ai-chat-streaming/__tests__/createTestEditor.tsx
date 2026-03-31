@@ -1,27 +1,24 @@
 /** @jsx jsxt */
-import { jsxt } from '@platejs/test-utils';
-import { KEYS, createSlateEditor, type SlateEditor } from 'platejs';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, KEYS, type SlateEditor } from "platejs";
+import remarkGfm from "remark-gfm";
+import remarkMath from "remark-math";
 
 // biome-ignore lint/nursery/noUnusedExpressions: required to prevent removal by compiler
 jsxt;
 
-import { AIChatPlugin } from '../../../../../../../packages/ai/src/react/ai-chat/AIChatPlugin';
-import { BaseAIPlugin } from '../../../../../../../packages/ai/src/lib/BaseAIPlugin';
-import { BaseBasicMarksPlugin } from '../../../../../../../packages/basic-nodes/src/lib/BaseBasicMarksPlugin';
-import { BaseIndentPlugin } from '../../../../../../../packages/indent/src/lib/BaseIndentPlugin';
-import { BaseListPlugin } from '../../../../../../../packages/list/src/lib/BaseListPlugin';
-import { MarkdownPlugin } from '../../../../../../../packages/markdown/src/lib/MarkdownPlugin';
-import {
-  remarkMdx,
-  remarkMention,
-} from '../../../../../../../packages/markdown/src/lib/plugins';
+import { BaseAIPlugin } from "../../../../../../../packages/ai/src/lib/BaseAIPlugin";
+import { AIChatPlugin } from "../../../../../../../packages/ai/src/react/ai-chat/AIChatPlugin";
+import { BaseBasicMarksPlugin } from "../../../../../../../packages/basic-nodes/src/lib/BaseBasicMarksPlugin";
+import { BaseParagraphPlugin } from "../../../../../../../packages/core/src/lib/plugins/paragraph/BaseParagraphPlugin";
+import { BaseIndentPlugin } from "../../../../../../../packages/indent/src/lib/BaseIndentPlugin";
+import { BaseListPlugin } from "../../../../../../../packages/list/src/lib/BaseListPlugin";
+import { MarkdownPlugin } from "../../../../../../../packages/markdown/src/lib/MarkdownPlugin";
+import { remarkMdx, remarkMention } from "../../../../../../../packages/markdown/src/lib/plugins";
 import {
   BaseEquationPlugin,
   BaseInlineEquationPlugin,
-} from '../../../../../../../packages/math/src/lib';
-import { BaseParagraphPlugin } from '../../../../../../../packages/core/src/lib/plugins/paragraph/BaseParagraphPlugin';
+} from "../../../../../../../packages/math/src/lib";
 
 const markdownPlugin = MarkdownPlugin.configure({
   options: {

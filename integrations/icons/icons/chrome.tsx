@@ -91,14 +91,7 @@ const ChromeIcon = forwardRef<ChromeIconHandle, ChromeIconProps>(
           xmlns="http://www.w3.org/2000/svg"
         >
           <circle cx="12" cy="12" r="10" />
-          <motion.circle
-            animate={controls}
-            custom={0}
-            cx="12"
-            cy="12"
-            r="4"
-            variants={VARIANTS}
-          />
+          <motion.circle animate={controls} custom={0} cx="12" cy="12" r="4" variants={VARIANTS} />
           <motion.line
             animate={controls}
             custom={3}

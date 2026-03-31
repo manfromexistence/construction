@@ -1,9 +1,4 @@
-import {
-  Marquee,
-  MarqueeContent,
-  MarqueeFade,
-  MarqueeItem,
-} from "@/components/kibo-ui/marquee"
+import { Marquee, MarqueeContent, MarqueeFade, MarqueeItem } from "@/components/kibo-ui/marquee";
 import {
   Testimonial,
   TestimonialAuthor,
@@ -13,27 +8,27 @@ import {
   TestimonialAvatarImg,
   TestimonialAvatarRing,
   TestimonialQuote,
-} from "@/registry/components/testimonial"
+} from "@/registry/components/testimonial";
 
 export type TestimonialType = {
   /** URL to the person's profile picture or avatar image */
-  authorAvatar: string
+  authorAvatar: string;
   /** Full display name of the person giving the testimonial */
-  authorName: string
+  authorName: string;
   /** Short tagline, title, or description of the person */
-  authorTagline: string
+  authorTagline: string;
   /** Link to the person's profile, website, or social media page */
-  url: string
+  url: string;
   /** The testimonial text content or recommendation message */
-  quote: string
-}
+  quote: string;
+};
 
 export function TestimonialList({
   direction,
   data,
 }: {
-  direction?: "right" | "left"
-  data: TestimonialType[]
+  direction?: "right" | "left";
+  data: TestimonialType[];
 }) {
   return (
     <Marquee>
@@ -42,10 +37,7 @@ export function TestimonialList({
 
       <MarqueeContent direction={direction}>
         {data.map((item) => (
-          <MarqueeItem
-            key={item.url}
-            className="mx-0 h-full w-xs border-r border-line"
-          >
+          <MarqueeItem key={item.url} className="mx-0 h-full w-xs border-r border-line">
             <a
               className="block h-full transition-[background-color] hover:bg-accent/15"
               href={item.url}
@@ -58,15 +50,10 @@ export function TestimonialList({
         ))}
       </MarqueeContent>
     </Marquee>
-  )
+  );
 }
 
-function TestimonialItem({
-  authorAvatar,
-  authorName,
-  authorTagline,
-  quote,
-}: TestimonialType) {
+function TestimonialItem({ authorAvatar, authorName, authorTagline, quote }: TestimonialType) {
   return (
     <Testimonial>
       <TestimonialQuote className="min-h-14">
@@ -83,5 +70,5 @@ function TestimonialItem({
         <TestimonialAuthorTagline>{authorTagline}</TestimonialAuthorTagline>
       </TestimonialAuthor>
     </Testimonial>
-  )
+  );
 }

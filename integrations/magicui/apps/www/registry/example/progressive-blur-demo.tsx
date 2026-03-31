@@ -1,7 +1,7 @@
-"use client"
+"use client";
 
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { ProgressiveBlur } from "@/registry/magicui/progressive-blur"
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { ProgressiveBlur } from "@/registry/magicui/progressive-blur";
 
 export default function ProgressiveBlurDemo() {
   return (
@@ -20,5 +20,5 @@ export default function ProgressiveBlurDemo() {
         <ProgressiveBlur position="bottom" height="40%" />
       </ScrollArea>
     </div>
-  )
+  );
 }

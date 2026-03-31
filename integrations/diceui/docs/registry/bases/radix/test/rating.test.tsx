@@ -30,7 +30,7 @@ describe("Rating Component", () => {
           <RatingItem data-testid="item-3" />
           <RatingItem data-testid="item-4" />
           <RatingItem data-testid="item-5" />
-        </Rating>,
+        </Rating>
       );
 
       const items = screen.getAllByRole("radio");
@@ -57,7 +57,7 @@ describe("Rating Component", () => {
           <RatingItem index={0} data-testid="item-1" />
           <RatingItem index={1} data-testid="item-2" />
           <RatingItem index={2} data-testid="item-3" />
-        </Rating>,
+        </Rating>
       );
 
       const items = screen.getAllByRole("radio");
@@ -82,7 +82,7 @@ describe("Rating Component", () => {
           <RatingItem index={2} data-testid="manual-2" />
           <RatingItem data-testid="auto-2" />
           <RatingItem data-testid="auto-3" />
-        </Rating>,
+        </Rating>
       );
 
       const items = screen.getAllByRole("radio");
@@ -109,7 +109,7 @@ describe("Rating Component", () => {
           <RatingItem data-testid="item-1" />
           <RatingItem data-testid="item-2" />
           <RatingItem data-testid="item-3" />
-        </Rating>,
+        </Rating>
       );
 
       const items = screen.getAllByRole("radio");
@@ -138,15 +138,13 @@ describe("Rating Component", () => {
           <RatingItem data-testid="item-3" />
           <RatingItem data-testid="item-4" />
           <RatingItem data-testid="item-5" />
-        </Rating>,
+        </Rating>
       );
 
       const items = screen.getAllByRole("radio");
 
       // Record initial aria-posinset values
-      const initialPositions = items.map((item) =>
-        item.getAttribute("aria-posinset"),
-      );
+      const initialPositions = items.map((item) => item.getAttribute("aria-posinset"));
 
       const fourthItem = items[3];
 
@@ -158,9 +156,7 @@ describe("Rating Component", () => {
       await user.click(fourthItem);
 
       // Check that aria-posinset values remain the same (no index reassignment)
-      const afterClickPositions = items.map((item) =>
-        item.getAttribute("aria-posinset"),
-      );
+      const afterClickPositions = items.map((item) => item.getAttribute("aria-posinset"));
 
       expect(afterClickPositions).toEqual(initialPositions);
       expect(afterClickPositions).toEqual(["1", "2", "3", "4", "5"]);

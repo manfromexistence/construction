@@ -1,8 +1,6 @@
 {
   "name": "pending",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "components/pending.tsx",

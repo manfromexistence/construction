@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Logo from "@/assets/logo.svg";
-import GitHubIcon from "@/assets/github.svg";
-import TwitterIcon from "@/assets/twitter.svg";
 import DiscordIcon from "@/assets/discord.svg";
+import GitHubIcon from "@/assets/github.svg";
+import Logo from "@/assets/logo.svg";
+import TwitterIcon from "@/assets/twitter.svg";
 
 export function Footer() {
   return (

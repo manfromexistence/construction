@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import { Calendar } from "@/styles/radix-nova/ui/calendar"
-import { Card, CardContent } from "@/styles/radix-nova/ui/card"
+import { Calendar } from "@/styles/radix-nova/ui/calendar";
+import { Card, CardContent } from "@/styles/radix-nova/ui/card";
 
 export function CalendarWeekNumbers() {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(new Date().getFullYear(), 1, 3)
-  )
+  );
 
   return (
     <Card className="mx-auto w-fit p-0">
@@ -22,5 +22,5 @@ export function CalendarWeekNumbers() {
         />
       </CardContent>
     </Card>
-  )
+  );
 }

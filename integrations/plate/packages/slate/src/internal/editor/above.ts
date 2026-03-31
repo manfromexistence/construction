@@ -1,10 +1,10 @@
-import { above as aboveBase } from 'slate';
+import { above as aboveBase } from "slate";
 
-import type { AncestorOf, EditorAboveOptions } from '../../interfaces';
-import type { Editor, ValueOf } from '../../interfaces/editor/editor-type';
-import type { NodeEntry } from '../../interfaces/node-entry';
+import type { AncestorOf, EditorAboveOptions } from "../../interfaces";
+import type { Editor, ValueOf } from "../../interfaces/editor/editor-type";
+import type { NodeEntry } from "../../interfaces/node-entry";
 
-import { getQueryOptions } from '../../utils/match';
+import { getQueryOptions } from "../../utils/match";
 
 export const above = <N extends AncestorOf<E>, E extends Editor = Editor>(
   editor: E,

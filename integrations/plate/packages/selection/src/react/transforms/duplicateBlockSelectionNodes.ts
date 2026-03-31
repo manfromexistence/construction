@@ -1,8 +1,7 @@
-import type { PlateEditor } from 'platejs/react';
+import { PathApi } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
-import { PathApi } from 'platejs';
-
-import { BlockSelectionPlugin } from '../BlockSelectionPlugin';
+import { BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 export const duplicateBlockSelectionNodes = (editor: PlateEditor) => {
   const blocks = editor.getApi(BlockSelectionPlugin).blockSelection.getNodes();
@@ -27,6 +26,6 @@ export const duplicateBlockSelectionNodes = (editor: PlateEditor) => {
     .filter(Boolean);
 
   setTimeout(() => {
-    editor.setOption(BlockSelectionPlugin, 'selectedIds', new Set(ids));
+    editor.setOption(BlockSelectionPlugin, "selectedIds", new Set(ids));
   }, 0);
 };

@@ -2,18 +2,7 @@
 
 import "server-only";
 
-import {
-  and,
-  asc,
-  count,
-  desc,
-  gt,
-  gte,
-  ilike,
-  inArray,
-  lte,
-  sql,
-} from "drizzle-orm";
+import { and, asc, count, desc, gt, gte, ilike, inArray, lte, sql } from "drizzle-orm";
 import { cacheLife, cacheTag } from "next/cache";
 import { db } from "@/db";
 import { tasks } from "@/db/schema";
@@ -29,8 +18,7 @@ export async function getTasks(input: GetTasksSchema) {
   try {
     const offset = (input.page - 1) * input.perPage;
     const advancedTable =
-      input.filterFlag === "advancedFilters" ||
-      input.filterFlag === "commandFilters";
+      input.filterFlag === "advancedFilters" || input.filterFlag === "commandFilters";
 
     const advancedWhere = filterColumns({
       table: tasks,
@@ -42,12 +30,8 @@ export async function getTasks(input: GetTasksSchema) {
       ? advancedWhere
       : and(
           input.title ? ilike(tasks.title, `%${input.title}%`) : undefined,
-          input.status.length > 0
-            ? inArray(tasks.status, input.status)
-            : undefined,
-          input.priority.length > 0
-            ? inArray(tasks.priority, input.priority)
-            : undefined,
+          input.status.length > 0 ? inArray(tasks.status, input.status) : undefined,
+          input.priority.length > 0 ? inArray(tasks.priority, input.priority) : undefined,
           input.estimatedHours.length > 0
             ? and(
                 input.estimatedHours[0]
@@ -55,7 +39,7 @@ export async function getTasks(input: GetTasksSchema) {
                   : undefined,
                 input.estimatedHours[1]
                   ? lte(tasks.estimatedHours, input.estimatedHours[1])
-                  : undefined,
+                  : undefined
               )
             : undefined,
           input.createdAt.length > 0
@@ -67,7 +51,7 @@ export async function getTasks(input: GetTasksSchema) {
                         const date = new Date(input.createdAt[0]);
                         date.setHours(0, 0, 0, 0);
                         return date;
-                      })(),
+                      })()
                     )
                   : undefined,
                 input.createdAt[1]
@@ -77,18 +61,16 @@ export async function getTasks(input: GetTasksSchema) {
                         const date = new Date(input.createdAt[1]);
                         date.setHours(23, 59, 59, 999);
                         return date;
-                      })(),
+                      })()
                     )
-                  : undefined,
+                  : undefined
               )
-            : undefined,
+            : undefined
         );
 
     const orderBy =
       input.sort.length > 0
-        ? input.sort.map((item) =>
-            item.desc ? desc(tasks[item.id]) : asc(tasks[item.id]),
-          )
+        ? input.sort.map((item) => (item.desc ? desc(tasks[item.id]) : asc(tasks[item.id])))
         : [asc(tasks.createdAt)];
 
     const { data, total } = await db.transaction(async (tx) => {
@@ -146,8 +128,8 @@ export async function getTaskStatusCounts() {
             "in-progress": 0,
             done: 0,
             canceled: 0,
-          },
-        ),
+          }
+        )
       );
   } catch {
     return {
@@ -182,8 +164,8 @@ export async function getTaskPriorityCounts() {
             low: 0,
             medium: 0,
             high: 0,
-          },
-        ),
+          }
+        )
       );
   } catch {
     return {

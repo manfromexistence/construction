@@ -1,16 +1,7 @@
 {
   "name": "file-upload-chat-input-demo",
-  "dependencies": [
-    "lucide-react",
-    "sonner",
-    "uploadthing",
-    "@uploadthing/react"
-  ],
-  "registryDependencies": [
-    "button",
-    "file-upload",
-    "textarea"
-  ],
+  "dependencies": ["lucide-react", "sonner", "uploadthing", "@uploadthing/react"],
+  "registryDependencies": ["button", "file-upload", "textarea"],
   "files": [
     {
       "path": "examples/file-upload-chat-input-demo.tsx",

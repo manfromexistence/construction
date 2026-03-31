@@ -18,9 +18,7 @@ const fetchGithubStars = async (): Promise<number> => {
 
     const data = await res.json();
 
-    return data.stargazers_count < DEFAULT_STARS
-      ? DEFAULT_STARS
-      : data.stargazers_count;
+    return data.stargazers_count < DEFAULT_STARS ? DEFAULT_STARS : data.stargazers_count;
   } catch (error) {
     console.error("Failed to fetch GitHub stars:", error);
     return DEFAULT_STARS;
@@ -32,10 +30,7 @@ const getGithubStars = unstable_cache(fetchGithubStars, ["github-stars"], {
 });
 
 const GithubStartsButton = async () => {
-  const stars =
-    process.env.NODE_ENV === "production"
-      ? await getGithubStars()
-      : DEFAULT_STARS;
+  const stars = process.env.NODE_ENV === "production" ? await getGithubStars() : DEFAULT_STARS;
 
   return (
     <a
@@ -45,9 +40,7 @@ const GithubStartsButton = async () => {
       tabIndex={0}
       target="_blank"
     >
-      <span className="sr-only">
-        Star on GitHub ({stars.toLocaleString()} stars)
-      </span>
+      <span className="sr-only">Star on GitHub ({stars.toLocaleString()} stars)</span>
       <svg
         aria-hidden="true"
         className="size-4"

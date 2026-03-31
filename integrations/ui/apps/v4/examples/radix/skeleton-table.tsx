@@ -1,4 +1,4 @@
-import { Skeleton } from "@/styles/radix-nova/ui/skeleton"
+import { Skeleton } from "@/styles/radix-nova/ui/skeleton";
 
 export function SkeletonTable() {
   return (
@@ -11,5 +11,5 @@ export function SkeletonTable() {
         </div>
       ))}
     </div>
-  )
+  );
 }

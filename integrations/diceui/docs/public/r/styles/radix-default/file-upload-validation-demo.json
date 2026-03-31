@@ -1,13 +1,7 @@
 {
   "name": "file-upload-validation-demo",
-  "dependencies": [
-    "lucide-react",
-    "sonner"
-  ],
-  "registryDependencies": [
-    "button",
-    "file-upload"
-  ],
+  "dependencies": ["lucide-react", "sonner"],
+  "registryDependencies": ["button", "file-upload"],
   "files": [
     {
       "path": "examples/file-upload-validation-demo.tsx",

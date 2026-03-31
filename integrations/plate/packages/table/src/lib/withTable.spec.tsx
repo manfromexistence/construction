@@ -1,10 +1,9 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from './__tests__/getTestTablePlugins';
+import { getTestTablePlugins } from "./__tests__/getTestTablePlugins";
 
 jsxt;
 
@@ -33,7 +32,7 @@ const mockToDOMRange = (
 ) => {
   let index = 0;
 
-  spyOn(editor.api, 'toDOMRange').mockImplementation(
+  spyOn(editor.api, "toDOMRange").mockImplementation(
     () => ranges[index++] as ReturnType<typeof editor.api.toDOMRange>
   );
 };
@@ -46,8 +45,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('withTable', () => {
-  it('selectAll selects the whole table when the cursor is inside it', () => {
+describe("withTable", () => {
+  it("selectAll selects the whole table when the cursor is inside it", () => {
     const input = (
       <editor>
         <htable>
@@ -67,11 +66,11 @@ describe('withTable', () => {
     const tableRange = editor.api.range([0]);
 
     expect(editor.tf.selectAll()).toBe(true);
-    if (!tableRange) throw new Error('Expected table range');
+    if (!tableRange) throw new Error("Expected table range");
     expect(editor.selection).toEqual(tableRange);
   });
 
-  it('collapses a multi-cell selection before tabbing', () => {
+  it("collapses a multi-cell selection before tabbing", () => {
     const input = (
       <editor>
         <htable>
@@ -103,7 +102,7 @@ describe('withTable', () => {
     });
   });
 
-  it('tabs forward to the next cell', () => {
+  it("tabs forward to the next cell", () => {
     const input = (
       <editor>
         <htable>
@@ -131,7 +130,7 @@ describe('withTable', () => {
     });
   });
 
-  it('shift-tabs back to the previous cell', () => {
+  it("shift-tabs back to the previous cell", () => {
     const input = (
       <editor>
         <htable>
@@ -159,7 +158,7 @@ describe('withTable', () => {
     });
   });
 
-  it('keeps ArrowDown inside a multi-block cell until the caret reaches the end', () => {
+  it("keeps ArrowDown inside a multi-block cell until the caret reaches the end", () => {
     const input = (
       <editor>
         <htable>
@@ -188,7 +187,7 @@ describe('withTable', () => {
     expect(editor.selection).toEqual(initialSelection);
   });
 
-  it('moves ArrowDown to the next cell after the last block in a multi-block cell', () => {
+  it("moves ArrowDown to the next cell after the last block in a multi-block cell", () => {
     const input = (
       <editor>
         <htable>
@@ -237,7 +236,7 @@ describe('withTable', () => {
     expect(editor.selection).toEqual(output.selection!);
   });
 
-  it('keeps ArrowUp inside a multi-block cell until the caret reaches the start', () => {
+  it("keeps ArrowUp inside a multi-block cell until the caret reaches the start", () => {
     const input = (
       <editor>
         <htable>
@@ -266,7 +265,7 @@ describe('withTable', () => {
     expect(editor.selection).toEqual(initialSelection);
   });
 
-  it('moves ArrowUp to the previous cell before the first block in a multi-block cell', () => {
+  it("moves ArrowUp to the previous cell before the first block in a multi-block cell", () => {
     const input = (
       <editor>
         <htable>
@@ -315,13 +314,13 @@ describe('withTable', () => {
     expect(editor.selection).toEqual(output.selection!);
   });
 
-  it('keeps ArrowDown native inside a soft-break cell before the last visual line', () => {
+  it("keeps ArrowDown native inside a soft-break cell before the last visual line", () => {
     const input = (
       <editor>
         <htable>
           <htr>
             <htd>
-              <hp>{'11\n12'}</hp>
+              <hp>{"11\n12"}</hp>
             </htd>
           </htr>
           <htr>
@@ -354,13 +353,13 @@ describe('withTable', () => {
     expect(editor.selection).toEqual(selection);
   });
 
-  it('keeps ArrowDown native when DOM ranges are unavailable', () => {
+  it("keeps ArrowDown native when DOM ranges are unavailable", () => {
     const input = (
       <editor>
         <htable>
           <htr>
             <htd>
-              <hp>{'11\n12'}</hp>
+              <hp>{"11\n12"}</hp>
             </htd>
           </htr>
           <htr>
@@ -380,19 +379,19 @@ describe('withTable', () => {
     };
     editor.selection = selection;
 
-    spyOn(editor.api, 'toDOMRange').mockReturnValue(undefined as any);
+    spyOn(editor.api, "toDOMRange").mockReturnValue(undefined as any);
 
     expect(editor.tf.moveLine({ reverse: false })).toBe(false);
     expect(editor.selection).toEqual(selection);
   });
 
-  it('moves ArrowDown to the next cell from the last visual line in a soft-break cell', () => {
+  it("moves ArrowDown to the next cell from the last visual line in a soft-break cell", () => {
     const input = (
       <editor>
         <htable>
           <htr>
             <htd>
-              <hp>{'11\n12'}</hp>
+              <hp>{"11\n12"}</hp>
             </htd>
           </htr>
           <htr>
@@ -409,7 +408,7 @@ describe('withTable', () => {
         <htable>
           <htr>
             <htd>
-              <hp>{'11\n12'}</hp>
+              <hp>{"11\n12"}</hp>
             </htd>
           </htr>
           <htr>
@@ -444,7 +443,7 @@ describe('withTable', () => {
     expect(editor.selection).toEqual(output.selection!);
   });
 
-  it('keeps ArrowUp native inside a soft-wrapped cell after the first visual line', () => {
+  it("keeps ArrowUp native inside a soft-wrapped cell after the first visual line", () => {
     const input = (
       <editor>
         <htable>
@@ -483,7 +482,7 @@ describe('withTable', () => {
     expect(editor.selection).toEqual(selection);
   });
 
-  it('moves ArrowUp to the previous cell from the first visual line in a soft-wrapped cell', () => {
+  it("moves ArrowUp to the previous cell from the first visual line in a soft-wrapped cell", () => {
     const input = (
       <editor>
         <htable>

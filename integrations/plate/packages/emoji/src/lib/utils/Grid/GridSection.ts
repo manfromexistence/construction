@@ -1,14 +1,6 @@
-import type {
-  GridRows,
-  IGridSection,
-  SectionElements,
-  SectionId,
-  Unknown,
-} from './Grid.types';
+import type { GridRows, IGridSection, SectionElements, SectionId, Unknown } from "./Grid.types";
 
-export abstract class AGridSection<R extends Unknown, T = SectionId>
-  implements IGridSection<R, T>
-{
+export abstract class AGridSection<R extends Unknown, T = SectionId> implements IGridSection<R, T> {
   protected _indexRowStart = 0;
   protected _root!: R;
   protected _rowsNum = 0;

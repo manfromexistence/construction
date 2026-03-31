@@ -1,21 +1,19 @@
-import React from 'react';
+import clsx from "clsx";
+import React from "react";
 
-import clsx from 'clsx';
-
-import type { EditableProps } from '../../lib';
-import type { PlateEditor } from '../editor/PlateEditor';
-import type { AnyEditorPlatePlugin } from '../plugin';
-
-import { PlateLeaf } from '../components';
-import { useReadOnly } from '../slate-react';
-import { getRenderNodeProps } from './getRenderNodeProps';
-import { type RenderLeaf, pluginRenderLeaf } from './pluginRenderLeaf';
+import type { EditableProps } from "../../lib";
+import { PlateLeaf } from "../components";
+import type { PlateEditor } from "../editor/PlateEditor";
+import type { AnyEditorPlatePlugin } from "../plugin";
+import { useReadOnly } from "../slate-react";
+import { getRenderNodeProps } from "./getRenderNodeProps";
+import { pluginRenderLeaf, type RenderLeaf } from "./pluginRenderLeaf";
 
 /** @see {@link RenderLeaf} */
 export const pipeRenderLeaf = (
   editor: PlateEditor,
-  renderLeafProp?: EditableProps['renderLeaf']
-): EditableProps['renderLeaf'] => {
+  renderLeafProp?: EditableProps["renderLeaf"]
+): EditableProps["renderLeaf"] => {
   const renderLeafs: RenderLeaf[] = [];
   const leafPropsPlugins: AnyEditorPlatePlugin[] = [];
 
@@ -49,15 +47,12 @@ export const pipeRenderLeaf = (
     leafPropsPlugins.forEach((plugin) => {
       if (props.leaf[plugin.node.type]) {
         const pluginLeafProps =
-          typeof plugin.node.leafProps === 'function'
+          typeof plugin.node.leafProps === "function"
             ? plugin.node.leafProps(props as any)
             : (plugin.node.leafProps ?? {});
 
         if (pluginLeafProps.className) {
-          pluginLeafProps.className = clsx(
-            (props as any).className,
-            pluginLeafProps.className
-          );
+          pluginLeafProps.className = clsx((props as any).className, pluginLeafProps.className);
         }
 
         attributes = {

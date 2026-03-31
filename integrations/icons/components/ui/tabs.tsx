@@ -8,13 +8,7 @@ import { cn } from "@/lib/utils";
 type TabsProps = React.ComponentProps<typeof BaseTabs.Root>;
 
 const Tabs = ({ className, ...props }: TabsProps) => {
-  return (
-    <BaseTabs.Root
-      className={cn("flex flex-col", className)}
-      data-slot="tabs"
-      {...props}
-    />
-  );
+  return <BaseTabs.Root className={cn("flex flex-col", className)} data-slot="tabs" {...props} />;
 };
 
 type TabsListProps = React.ComponentProps<typeof BaseTabs.List>;
@@ -55,4 +49,4 @@ const TabsContent = (props: React.ComponentProps<typeof BaseTabs.Panel>) => {
   return <BaseTabs.Panel data-slot="tabs-content" {...props} />;
 };
 
-export { Tabs, TabsList, TabsTrigger, TabsContent };
+export { Tabs, TabsContent, TabsList, TabsTrigger };

@@ -1,6 +1,6 @@
-import * as Y from 'yjs';
+import * as Y from "yjs";
 
-import { mockFn } from '../__tests__/mockFn';
+import { mockFn } from "../__tests__/mockFn";
 
 type HocuspocusHarnessOptions = {
   connectError?: Error;
@@ -50,21 +50,21 @@ const createHocuspocusHarness = async ({
 
       if (constructorThrows > 0) {
         constructorThrows -= 1;
-        throw new Error('provider ctor failed');
+        throw new Error("provider ctor failed");
       }
 
-      this.awareness = options.awareness ?? { provider: 'awareness' };
-      this.document = options.document ?? { guid: 'generated-doc' };
+      this.awareness = options.awareness ?? { provider: "awareness" };
+      this.document = options.document ?? { guid: "generated-doc" };
       providerInstances.push(this);
     }
   }
 
-  mock.module('@hocuspocus/provider', () => ({
+  mock.module("@hocuspocus/provider", () => ({
     HocuspocusProvider: FakeHocuspocusProvider,
     HocuspocusProviderWebsocket: FakeHocuspocusProviderWebsocket,
   }));
 
-  const module = await import('./hocuspocus-provider');
+  const module = await import("./hocuspocus-provider");
 
   return {
     HocuspocusProviderWrapper: module.HocuspocusProviderWrapper,
@@ -75,24 +75,24 @@ const createHocuspocusHarness = async ({
   };
 };
 
-describe('HocuspocusProviderWrapper', () => {
+describe("HocuspocusProviderWrapper", () => {
   afterEach(() => {
     mock.restore();
   });
 
-  it('passes document and awareness through and wires a websocket when requested', async () => {
+  it("passes document and awareness through and wires a websocket when requested", async () => {
     const { HocuspocusProviderWrapper, providerCalls, websocketCalls } =
       await createHocuspocusHarness();
-    const awareness = { id: 'awareness-1' } as any;
-    const doc = new Y.Doc({ guid: 'doc-1' });
+    const awareness = { id: "awareness-1" } as any;
+    const doc = new Y.Doc({ guid: "doc-1" });
     const wrapper = new HocuspocusProviderWrapper({
       awareness,
       doc,
-      options: { name: 'provider' } as any,
-      wsOptions: { url: 'ws://localhost:1234' } as any,
+      options: { name: "provider" } as any,
+      wsOptions: { url: "ws://localhost:1234" } as any,
     });
 
-    expect(websocketCalls).toEqual([{ url: 'ws://localhost:1234' }]);
+    expect(websocketCalls).toEqual([{ url: "ws://localhost:1234" }]);
     expect(providerCalls).toHaveLength(1);
     expect(providerCalls[0].awareness).toBe(awareness);
     expect(providerCalls[0].document).toBe(doc);
@@ -101,40 +101,38 @@ describe('HocuspocusProviderWrapper', () => {
     expect(wrapper.document).toBe(doc);
   });
 
-  it('surfaces websocket construction errors and still creates the provider', async () => {
+  it("surfaces websocket construction errors and still creates the provider", async () => {
     const onError = mockFn((_: Error) => {});
-    const { HocuspocusProviderWrapper, providerCalls } =
-      await createHocuspocusHarness({
-        websocketError: new Error('bad websocket'),
-      });
+    const { HocuspocusProviderWrapper, providerCalls } = await createHocuspocusHarness({
+      websocketError: new Error("bad websocket"),
+    });
 
     new HocuspocusProviderWrapper({
       onError,
-      options: { name: 'provider' } as any,
-      wsOptions: { url: 'ws://bad-host' } as any,
+      options: { name: "provider" } as any,
+      wsOptions: { url: "ws://bad-host" } as any,
     });
 
     expect(onError).toHaveBeenCalledTimes(1);
-    expect((onError.mock.calls[0] as any[])[0].message).toBe('bad websocket');
+    expect((onError.mock.calls[0] as any[])[0].message).toBe("bad websocket");
     expect(providerCalls).toHaveLength(1);
     expect(providerCalls[0].websocketProvider).toBeUndefined();
   });
 
-  it('tracks connect, sync, and disconnect transitions without duplicate sync notifications', async () => {
+  it("tracks connect, sync, and disconnect transitions without duplicate sync notifications", async () => {
     const onConnect = mockFn(() => {});
     const onDisconnect = mockFn(() => {});
     const onSyncChange = mockFn((_: boolean) => {});
     const optionsOnConnect = mockFn(() => {});
     const optionsOnDisconnect = mockFn(() => {});
     const optionsOnSynced = mockFn((_: { state: boolean }) => {});
-    const { HocuspocusProviderWrapper, getLatestProviderOptions } =
-      await createHocuspocusHarness();
+    const { HocuspocusProviderWrapper, getLatestProviderOptions } = await createHocuspocusHarness();
     const wrapper = new HocuspocusProviderWrapper({
       onConnect,
       onDisconnect,
       onSyncChange,
       options: {
-        name: 'provider',
+        name: "provider",
         onConnect: optionsOnConnect,
         onDisconnect: optionsOnDisconnect,
         onSynced: optionsOnSynced,
@@ -164,33 +162,29 @@ describe('HocuspocusProviderWrapper', () => {
     expect(onSyncChange).toHaveBeenLastCalledWith(false);
   });
 
-  it('creates a non-connecting fallback provider when the constructor throws', async () => {
+  it("creates a non-connecting fallback provider when the constructor throws", async () => {
     const onError = mockFn((_: Error) => {});
-    const { HocuspocusProviderWrapper, providerCalls } =
-      await createHocuspocusHarness({
-        constructorThrows: 1,
-      });
+    const { HocuspocusProviderWrapper, providerCalls } = await createHocuspocusHarness({
+      constructorThrows: 1,
+    });
 
     new HocuspocusProviderWrapper({
       onError,
-      options: { name: 'provider' } as any,
+      options: { name: "provider" } as any,
     });
 
     expect(providerCalls).toHaveLength(2);
     expect(providerCalls[1].connect).toBe(false);
     expect(onError).toHaveBeenCalledTimes(1);
-    expect((onError.mock.calls[0] as any[])[0].message).toBe(
-      'provider ctor failed'
-    );
+    expect((onError.mock.calls[0] as any[])[0].message).toBe("provider ctor failed");
   });
 
-  it('keeps connect, disconnect, and destroy safe around provider failures', async () => {
-    const { HocuspocusProviderWrapper, providerInstances } =
-      await createHocuspocusHarness({
-        connectError: new Error('connect failed'),
-      });
+  it("keeps connect, disconnect, and destroy safe around provider failures", async () => {
+    const { HocuspocusProviderWrapper, providerInstances } = await createHocuspocusHarness({
+      connectError: new Error("connect failed"),
+    });
     const wrapper = new HocuspocusProviderWrapper({
-      options: { name: 'provider' } as any,
+      options: { name: "provider" } as any,
     });
 
     expect(() => wrapper.connect()).not.toThrow();

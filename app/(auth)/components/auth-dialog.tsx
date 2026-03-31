@@ -1,5 +1,8 @@
 "use client";
 
+import { Loader2 } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Github from "@/assets/github.svg";
 import Google from "@/assets/google.svg";
 import { Button } from "@/components/ui/button";
@@ -12,9 +15,6 @@ import {
 } from "@/components/ui/revola";
 import { PostLoginActionType } from "@/hooks/use-post-login-action";
 import { authClient } from "@/lib/auth-client";
-import { Loader2 } from "lucide-react";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
 
 interface AuthDialogProps {
   open: boolean;

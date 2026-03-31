@@ -1,10 +1,6 @@
-import { Search } from "lucide-react"
+import { Search } from "lucide-react";
 
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/styles/radix-nova/ui/input-group"
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/styles/radix-nova/ui/input-group";
 
 export function InputGroupDemo() {
   return (
@@ -15,5 +11,5 @@ export function InputGroupDemo() {
       </InputGroupAddon>
       <InputGroupAddon align="inline-end">12 results</InputGroupAddon>
     </InputGroup>
-  )
+  );
 }

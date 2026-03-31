@@ -1,9 +1,8 @@
-import type { LengthConfig } from '../getCorePlugins';
-
-import { createTSlatePlugin } from '../../plugin';
+import { createTSlatePlugin } from "../../plugin";
+import type { LengthConfig } from "../getCorePlugins";
 
 export const LengthPlugin = createTSlatePlugin<LengthConfig>({
-  key: 'length',
+  key: "length",
 }).overrideEditor(({ editor, getOptions, tf: { apply } }) => ({
   transforms: {
     apply(operation) {
@@ -22,7 +21,7 @@ export const LengthPlugin = createTSlatePlugin<LengthConfig>({
             editor.tf.delete({
               distance: overflowLength,
               reverse: true,
-              unit: 'character',
+              unit: "character",
             });
           }
         }

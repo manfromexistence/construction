@@ -1,8 +1,6 @@
-import type { CollapseWhiteSpaceState } from './types';
+import type { CollapseWhiteSpaceState } from "./types";
 
-export const upsertInlineFormattingContext = (
-  state: CollapseWhiteSpaceState
-) => {
+export const upsertInlineFormattingContext = (state: CollapseWhiteSpaceState) => {
   if (state.inlineFormattingContext) {
     state.inlineFormattingContext.atStart = false;
   } else {

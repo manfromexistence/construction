@@ -1,18 +1,18 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { cn } from "@/lib/utils"
-import { BASES } from "@/registry/bases"
+import { cn } from "@/lib/utils";
+import { BASES } from "@/registry/bases";
 
 export function DocsBaseSwitcher({
   base,
   component,
   className,
 }: {
-  base: string
-  component: string
-  className?: string
+  base: string;
+  component: string;
+  className?: string;
 }) {
-  const activeBase = BASES.find((baseItem) => base === baseItem.name)
+  const activeBase = BASES.find((baseItem) => base === baseItem.name);
 
   return (
     <div className={cn("inline-flex w-full items-center gap-6", className)}>
@@ -35,5 +35,5 @@ export function DocsBaseSwitcher({
         />
       )}
     </div>
-  )
+  );
 }

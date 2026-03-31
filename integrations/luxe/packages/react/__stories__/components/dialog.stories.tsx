@@ -1,6 +1,6 @@
-import type { Meta, StoryObj } from '@storybook/react'
+import type { Meta, StoryObj } from "@storybook/react";
 
-import { Button } from '@/components/button'
+import { Button } from "@/components/button";
 import {
   Dialog,
   DialogClose,
@@ -9,11 +9,11 @@ import {
   DialogFooter,
   DialogTitle,
   DialogTrigger,
-} from '@/components/dialog'
-import { Input } from '@/components/input'
+} from "@/components/dialog";
+import { Input } from "@/components/input";
 
 const meta: Meta = {
-  title: 'components/Dialog',
+  title: "components/Dialog",
   component: Dialog,
   args: {
     children: (
@@ -25,9 +25,7 @@ const meta: Meta = {
           <DialogTitle asChild>
             <span className="block">Change Username</span>
           </DialogTitle>
-          <DialogDescription>
-            Make changes to your username here.
-          </DialogDescription>
+          <DialogDescription>Make changes to your username here.</DialogDescription>
           <div className="mb-[15px] flex items-center gap-4 px-6 py-4">
             <Input placeholder="@guhrodrrigues" className="w-full" />
           </div>
@@ -44,10 +42,10 @@ const meta: Meta = {
     ),
   },
   parameters: {
-    layout: 'centered',
+    layout: "centered",
   },
-}
+};
 
-export default meta
+export default meta;
 
-export const Basic: StoryObj = {}
+export const Basic: StoryObj = {};

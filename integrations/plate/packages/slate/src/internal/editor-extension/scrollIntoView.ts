@@ -1,12 +1,12 @@
-import scrollIntoViewIfNeeded from 'scroll-into-view-if-needed';
+import scrollIntoViewIfNeeded from "scroll-into-view-if-needed";
 
-import type { Editor } from '../../interfaces/editor';
-import { type Point, PointApi } from '../../interfaces/point';
-import type { ScrollIntoViewOptions } from '../../interfaces/scroll';
-import type { DOMRange } from '../../slate-dom';
+import type { Editor } from "../../interfaces/editor";
+import { type Point, PointApi } from "../../interfaces/point";
+import type { ScrollIntoViewOptions } from "../../interfaces/scroll";
+import type { DOMRange } from "../../slate-dom";
 
 const defaultOptions: ScrollIntoViewOptions = {
-  scrollMode: 'if-needed',
+  scrollMode: "if-needed",
 };
 
 // TODO: move to slate
@@ -33,8 +33,7 @@ export function scrollIntoView(
 
     const leafEl = domRange.startContainer.parentElement!;
 
-    leafEl.getBoundingClientRect =
-      domRange.getBoundingClientRect.bind(domRange);
+    leafEl.getBoundingClientRect = domRange.getBoundingClientRect.bind(domRange);
     scrollIntoViewIfNeeded(leafEl, options);
 
     setTimeout(() => {

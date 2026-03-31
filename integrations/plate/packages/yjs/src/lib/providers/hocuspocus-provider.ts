@@ -3,20 +3,12 @@ import type {
   HocuspocusProviderWebsocketConfiguration,
   onDisconnectParameters,
   onSyncedParameters,
-} from '@hocuspocus/provider';
-import type { Awareness } from 'y-protocols/awareness';
-import type * as Y from 'yjs';
+} from "@hocuspocus/provider";
+import { HocuspocusProvider, HocuspocusProviderWebsocket } from "@hocuspocus/provider";
+import type { Awareness } from "y-protocols/awareness";
+import type * as Y from "yjs";
 
-import {
-  HocuspocusProvider,
-  HocuspocusProviderWebsocket,
-} from '@hocuspocus/provider';
-
-import type {
-  ProviderEventHandlers,
-  UnifiedProvider,
-  YjsProviderType,
-} from './types';
+import type { ProviderEventHandlers, UnifiedProvider, YjsProviderType } from "./types";
 
 export class HocuspocusProviderWrapper implements UnifiedProvider {
   private _isConnected = false;
@@ -46,7 +38,7 @@ export class HocuspocusProviderWrapper implements UnifiedProvider {
   };
   provider: HocuspocusProvider;
 
-  type: YjsProviderType = 'hocuspocus';
+  type: YjsProviderType = "hocuspocus";
 
   constructor({
     awareness,
@@ -80,9 +72,7 @@ export class HocuspocusProviderWrapper implements UnifiedProvider {
               websocketProvider: new HocuspocusProviderWebsocket(wsOptions),
             };
           } catch (error) {
-            this.onError?.(
-              error instanceof Error ? error : new Error(String(error))
-            );
+            this.onError?.(error instanceof Error ? error : new Error(String(error)));
             return {};
           }
         })()),

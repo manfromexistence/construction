@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Shine Border Demo 2",
   "description": "Second example showing an animated shining border effect.",
-  "registryDependencies": [
-    "@magicui/shine-border"
-  ],
+  "registryDependencies": ["@magicui/shine-border"],
   "files": [
     {
       "path": "registry/example/shine-border-demo-2.tsx",

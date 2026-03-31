@@ -1,8 +1,8 @@
 "use client";
 
-import { useSubscription } from "@/hooks/use-subscription";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { useSubscription } from "@/hooks/use-subscription";
 
 export function AIAnnouncement() {
   const { subscriptionStatus, isPending } = useSubscription();

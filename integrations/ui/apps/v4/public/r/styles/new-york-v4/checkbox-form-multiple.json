@@ -1,10 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "checkbox-form-multiple",
-  "registryDependencies": [
-    "checkbox",
-    "form"
-  ],
+  "registryDependencies": ["checkbox", "form"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/checkbox-form-multiple.tsx",

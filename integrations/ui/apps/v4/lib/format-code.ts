@@ -1,19 +1,19 @@
-import { promises as fsPromises } from "fs"
-import path from "path"
+import { promises as fsPromises } from "fs";
+import path from "path";
 import {
   createStyleMap,
   transformIcons,
   transformMenu,
   transformRender,
   transformStyle,
-} from "shadcn/utils"
-import { Project, ScriptKind, type SourceFile } from "ts-morph"
+} from "shadcn/utils";
+import { Project, ScriptKind, type SourceFile } from "ts-morph";
 
-import { BASES } from "@/registry/bases"
+import { BASES } from "@/registry/bases";
 
 function getStyleFromStyleName(styleName: string) {
-  const parts = styleName.split("-")
-  return parts.length > 1 ? parts.slice(1).join("-") : styleName
+  const parts = styleName.split("-");
+  return parts.length > 1 ? parts.slice(1).join("-") : styleName;
 }
 
 function buildDisplayConfig(styleName: string) {
@@ -47,92 +47,86 @@ function buildDisplayConfig(styleName: string) {
       hooks: "@/hooks",
       ui: "@/components/ui",
     },
-  }
+  };
 }
 
 type DisplayTransformer = (opts: {
-  filename: string
-  raw: string
-  sourceFile: SourceFile
-  config: ReturnType<typeof buildDisplayConfig>
-}) => Promise<unknown>
+  filename: string;
+  raw: string;
+  sourceFile: SourceFile;
+  config: ReturnType<typeof buildDisplayConfig>;
+}) => Promise<unknown>;
 
-const styleMapCache = new Map<string, Record<string, string>>()
+const styleMapCache = new Map<string, Record<string, string>>();
 
 async function getStyleMap(styleName: string) {
-  const style = getStyleFromStyleName(styleName)
+  const style = getStyleFromStyleName(styleName);
 
   if (styleMapCache.has(style)) {
-    return styleMapCache.get(style)!
+    return styleMapCache.get(style)!;
   }
 
   try {
-    const cssPath = path.join(
-      process.cwd(),
-      `registry/styles/style-${style}.css`
-    )
-    const css = await fsPromises.readFile(cssPath, "utf-8")
-    const styleMap = createStyleMap(css)
-    styleMapCache.set(style, styleMap)
-    return styleMap
+    const cssPath = path.join(process.cwd(), `registry/styles/style-${style}.css`);
+    const css = await fsPromises.readFile(cssPath, "utf-8");
+    const styleMap = createStyleMap(css);
+    styleMapCache.set(style, styleMap);
+    return styleMap;
   } catch {
-    return {}
+    return {};
   }
 }
 
 export async function formatCode(code: string, styleName: string) {
-  code = code.replaceAll(`@/registry/${styleName}/`, "@/components/")
+  code = code.replaceAll(`@/registry/${styleName}/`, "@/components/");
 
   for (const base of BASES) {
-    code = code.replaceAll(`@/registry/bases/${base.name}/`, "@/components/")
-    code = code.replaceAll(
-      `@/examples/${base.name}/ui-rtl/`,
-      "@/components/ui/"
-    )
-    code = code.replaceAll(`@/examples/${base.name}/ui/`, "@/components/ui/")
-    code = code.replaceAll(`@/examples/${base.name}/lib/`, "@/lib/")
-    code = code.replaceAll(`@/examples/${base.name}/hooks/`, "@/hooks/")
+    code = code.replaceAll(`@/registry/bases/${base.name}/`, "@/components/");
+    code = code.replaceAll(`@/examples/${base.name}/ui-rtl/`, "@/components/ui/");
+    code = code.replaceAll(`@/examples/${base.name}/ui/`, "@/components/ui/");
+    code = code.replaceAll(`@/examples/${base.name}/lib/`, "@/lib/");
+    code = code.replaceAll(`@/examples/${base.name}/hooks/`, "@/hooks/");
   }
 
   code = code.replace(
     /@\/styles\/([\w-]+)\/(ui-rtl|ui)\/([\w-]+)/g,
     (match, _styleName, type, component) => {
       if (type === "ui" || type === "ui-rtl") {
-        return `@/components/ui/${component}`
+        return `@/components/ui/${component}`;
       }
 
-      return match
+      return match;
     }
-  )
+  );
 
-  code = code.replaceAll("export default", "export")
+  code = code.replaceAll("export default", "export");
 
   try {
-    const styleMap = await getStyleMap(styleName)
-    const transformed = await transformStyle(code, { styleMap })
-    const config = buildDisplayConfig(styleName)
-    const project = new Project({ compilerOptions: {} })
+    const styleMap = await getStyleMap(styleName);
+    const transformed = await transformStyle(code, { styleMap });
+    const config = buildDisplayConfig(styleName);
+    const project = new Project({ compilerOptions: {} });
     const sourceFile = project.createSourceFile("component.tsx", transformed, {
       scriptKind: ScriptKind.TSX,
-    })
+    });
 
     const transformers: DisplayTransformer[] = [
       transformIcons as DisplayTransformer,
       transformMenu as DisplayTransformer,
       transformRender as DisplayTransformer,
-    ]
+    ];
     for (const transformer of transformers) {
       await transformer({
         filename: "component.tsx",
         raw: transformed,
         sourceFile,
         config,
-      })
+      });
     }
 
-    return sourceFile.getText()
+    return sourceFile.getText();
   } catch (error) {
-    console.error("Transform failed:", error)
-    return code
+    console.error("Transform failed:", error);
+    return code;
   }
 }

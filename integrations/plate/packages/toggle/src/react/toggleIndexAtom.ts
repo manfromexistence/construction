@@ -1,21 +1,13 @@
-import { useMemo } from 'react';
+import type { Atom } from "jotai";
+import type { TIndentElement } from "platejs";
+import { KEYS } from "platejs";
+import { atom, plateStore, usePlateStore, usePluginOption, useStoreAtomValue } from "platejs/react";
+import { useMemo } from "react";
 
-import type { Atom } from 'jotai';
-import type { TIndentElement } from 'platejs';
-
-import { KEYS } from 'platejs';
-import {
-  atom,
-  plateStore,
-  usePlateStore,
-  usePluginOption,
-  useStoreAtomValue,
-} from 'platejs/react';
-
-import { TogglePlugin } from './TogglePlugin';
+import { TogglePlugin } from "./TogglePlugin";
 
 // Duplicate constant instead of importing from "plate-list" to avoid a dependency.
-const ListPluginKey = 'listStyleType';
+const ListPluginKey = "listStyleType";
 
 // Returns, for each child, the enclosing toggle ids
 export const buildToggleIndex = (elements: any[]): Map<string, string[]> => {
@@ -25,9 +17,7 @@ export const buildToggleIndex = (elements: any[]): Map<string, string[]> => {
     const elementIndent = (element[KEYS.indent] as number) || 0;
     // For some reason, indent lists have a min indent of 1, even though they are not indented
     const elementIndentWithListCorrection =
-      element[ListPluginKey] && element[KEYS.indent]
-        ? elementIndent - 1
-        : elementIndent;
+      element[ListPluginKey] && element[KEYS.indent] ? elementIndent - 1 : elementIndent;
 
     const enclosingToggles = currentEnclosingToggles.filter(
       ([_, indent]) => indent < elementIndentWithListCorrection
@@ -55,16 +45,14 @@ export const editorAtom = plateStore.atom.trackedEditor as Atom<{
 // In order minimize re-renders, we subscribe to both separately, but only re-render unnecessarily when opening or closing a toggle,
 //   which is less frequent than changing the editor's children.
 export const useIsVisible = (elementId: string) => {
-  const openIds = usePluginOption(TogglePlugin, 'openIds')!;
+  const openIds = usePluginOption(TogglePlugin, "openIds")!;
   const isVisibleAtom = useMemo(
     () =>
       atom((get) => {
         const toggleIndex = get(toggleIndexAtom);
         const enclosedInToggleIds = toggleIndex.get(elementId) || [];
 
-        return enclosedInToggleIds.every((enclosedId) =>
-          openIds.has(enclosedId)
-        );
+        return enclosedInToggleIds.every((enclosedId) => openIds.has(enclosedId));
       }),
     [elementId, openIds]
   );
@@ -76,5 +64,4 @@ export const toggleIndexAtom: Atom<Map<string, string[]>> = atom((get) =>
   buildToggleIndex(get(editorAtom).editor.children as TIndentElement[])
 );
 
-export const useToggleIndex = () =>
-  useStoreAtomValue(usePlateStore(), toggleIndexAtom);
+export const useToggleIndex = () => useStoreAtomValue(usePlateStore(), toggleIndexAtom);

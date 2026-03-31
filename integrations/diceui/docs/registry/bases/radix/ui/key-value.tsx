@@ -54,17 +54,11 @@ function removeQuotes(string: string, shouldStrip: boolean): string {
 interface Store {
   subscribe: (callback: () => void) => () => void;
   getState: () => KeyValueState;
-  setState: <K extends keyof KeyValueState>(
-    key: K,
-    value: KeyValueState[K],
-  ) => void;
+  setState: <K extends keyof KeyValueState>(key: K, value: KeyValueState[K]) => void;
   notify: () => void;
 }
 
-function useStore<T>(
-  selector: (state: KeyValueState) => T,
-  ogStore?: Store | null,
-): T {
+function useStore<T>(selector: (state: KeyValueState) => T, ogStore?: Store | null): T {
   const contextStore = React.useContext(StoreContext);
 
   const store = ogStore ?? contextStore;
@@ -73,10 +67,7 @@ function useStore<T>(
     throw new Error(`\`useStore\` must be used within \`${ROOT_NAME}\``);
   }
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
@@ -108,11 +99,7 @@ interface KeyValueContextValue {
   onAdd?: (value: ItemData) => void;
   onRemove?: (value: ItemData) => void;
   onKeyValidate?: (key: string, value: ItemData[]) => string | undefined;
-  onValueValidate?: (
-    value: string,
-    key: string,
-    items: ItemData[],
-  ) => string | undefined;
+  onValueValidate?: (value: string, key: string, items: ItemData[]) => string | undefined;
   rootId: string;
   maxItems?: number;
   minItems: number;
@@ -158,11 +145,7 @@ interface KeyValueProps extends Omit<DivProps, "onPaste" | "defaultValue"> {
   onAdd?: (value: ItemData) => void;
   onRemove?: (value: ItemData) => void;
   onKeyValidate?: (key: string, value: ItemData[]) => string | undefined;
-  onValueValidate?: (
-    value: string,
-    key: string,
-    items: ItemData[],
-  ) => string | undefined;
+  onValueValidate?: (value: string, key: string, items: ItemData[]) => string | undefined;
 }
 
 function KeyValue(props: KeyValueProps) {
@@ -197,16 +180,13 @@ function KeyValue(props: KeyValueProps) {
   const instanceId = React.useId();
   const rootId = id ?? instanceId;
 
-  const [formTrigger, setFormTrigger] = React.useState<RootElement | null>(
-    null,
-  );
+  const [formTrigger, setFormTrigger] = React.useState<RootElement | null>(null);
   const composedRef = useComposedRefs(ref, (node) => setFormTrigger(node));
   const isFormControl = formTrigger ? !!formTrigger.closest("form") : true;
 
   const listenersRef = useLazyRef(() => new Set<() => void>());
   const stateRef = useLazyRef<KeyValueState>(() => ({
-    value: valueProp ??
-      defaultValue ?? [{ id: crypto.randomUUID(), key: "", value: "" }],
+    value: valueProp ?? defaultValue ?? [{ id: crypto.randomUUID(), key: "", value: "" }],
     focusedId: null,
     errors: {},
   }));
@@ -287,7 +267,7 @@ function KeyValue(props: KeyValueProps) {
       enablePaste,
       trim,
       stripQuotes,
-    ],
+    ]
   );
 
   const RootPrimitive = asChild ? SlotPrimitive.Slot : "div";
@@ -342,7 +322,7 @@ function KeyValueList(props: KeyValueListProps) {
       className={cn(
         "flex",
         orientation === "vertical" ? "flex-col gap-2" : "flex-row gap-2",
-        className,
+        className
       )}
     >
       {value.map((item) => {
@@ -447,7 +427,7 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
             (item) =>
               item.id !== updatedItemData.id &&
               item.key === updatedItemData.key &&
-              updatedItemData.key !== "",
+              updatedItemData.key !== ""
           );
           if (duplicateKey) {
             errors.key = "Duplicate key";
@@ -458,7 +438,7 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
           const valueError = context.onValueValidate(
             updatedItemData.value,
             updatedItemData.key,
-            newValue,
+            newValue
           );
           if (valueError) errors.value = valueError;
         }
@@ -474,7 +454,7 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
 
       propsRef.current.onChange?.(event);
     },
-    [store, itemData.id, context, propsRef],
+    [store, itemData.id, context, propsRef]
   );
 
   const onPaste = React.useCallback(
@@ -499,24 +479,15 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
           if (line.includes("=")) {
             const parts = line.split("=");
             key = parts[0]?.trim() ?? "";
-            value = removeQuotes(
-              parts.slice(1).join("=").trim(),
-              context.stripQuotes,
-            );
+            value = removeQuotes(parts.slice(1).join("=").trim(), context.stripQuotes);
           } else if (line.includes(":")) {
             const parts = line.split(":");
             key = parts[0]?.trim() ?? "";
-            value = removeQuotes(
-              parts.slice(1).join(":").trim(),
-              context.stripQuotes,
-            );
+            value = removeQuotes(parts.slice(1).join(":").trim(), context.stripQuotes);
           } else if (/\s{2,}|\t/.test(line)) {
             const parts = line.split(/\s{2,}|\t/);
             key = parts[0]?.trim() ?? "";
-            value = removeQuotes(
-              parts.slice(1).join(" ").trim(),
-              context.stripQuotes,
-            );
+            value = removeQuotes(parts.slice(1).join(" ").trim(), context.stripQuotes);
           }
 
           if (key) {
@@ -526,9 +497,7 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
 
         if (parsed.length > 0) {
           const state = store.getState();
-          const currentIndex = state.value.findIndex(
-            (item) => item.id === itemData.id,
-          );
+          const currentIndex = state.value.findIndex((item) => item.id === itemData.id);
 
           let newValue: ItemData[];
           if (itemData.key === "" && itemData.value === "") {
@@ -552,15 +521,12 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
           store.setState("value", newValue);
 
           if (context.onPaste) {
-            context.onPaste(
-              event.nativeEvent as unknown as ClipboardEvent,
-              parsed,
-            );
+            context.onPaste(event.nativeEvent as unknown as ClipboardEvent, parsed);
           }
         }
       }
     },
-    [context, store, itemData, propsRef],
+    [context, store, itemData, propsRef]
   );
 
   const KeyInputPrimitive = asChild ? SlotPrimitive.Slot : Input;
@@ -568,9 +534,7 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
   return (
     <KeyInputPrimitive
       aria-invalid={isInvalid}
-      aria-describedby={
-        isInvalid ? getErrorId(context.rootId, itemData.id, "key") : undefined
-      }
+      aria-describedby={isInvalid ? getErrorId(context.rootId, itemData.id, "key") : undefined}
       data-slot="key-value-key-input"
       autoCapitalize="off"
       autoComplete="off"
@@ -588,8 +552,7 @@ function KeyValueKeyInput(props: KeyValueKeyInputProps) {
   );
 }
 
-interface KeyValueValueInputProps
-  extends Omit<React.ComponentProps<"textarea">, "rows"> {
+interface KeyValueValueInputProps extends Omit<React.ComponentProps<"textarea">, "rows"> {
   maxRows?: number;
   asChild?: boolean;
 }
@@ -650,7 +613,7 @@ function KeyValueValueInput(props: KeyValueValueInputProps) {
             (item) =>
               item.id !== updatedItemData.id &&
               item.key === updatedItemData.key &&
-              updatedItemData.key !== "",
+              updatedItemData.key !== ""
           );
           if (duplicateKey) {
             errors.key = "Duplicate key";
@@ -661,7 +624,7 @@ function KeyValueValueInput(props: KeyValueValueInputProps) {
           const valueError = context.onValueValidate(
             updatedItemData.value,
             updatedItemData.key,
-            newValue,
+            newValue
           );
           if (valueError) errors.value = valueError;
         }
@@ -675,7 +638,7 @@ function KeyValueValueInput(props: KeyValueValueInputProps) {
         store.setState("errors", newErrorsState);
       }
     },
-    [store, itemData.id, context, propsRef],
+    [store, itemData.id, context, propsRef]
   );
 
   const ValueInputPrimitive = asChild ? SlotPrimitive.Slot : Textarea;
@@ -683,9 +646,7 @@ function KeyValueValueInput(props: KeyValueValueInputProps) {
   return (
     <ValueInputPrimitive
       aria-invalid={isInvalid}
-      aria-describedby={
-        isInvalid ? getErrorId(context.rootId, itemData.id, "value") : undefined
-      }
+      aria-describedby={isInvalid ? getErrorId(context.rootId, itemData.id, "value") : undefined}
       data-slot="key-value-value-input"
       autoCapitalize="off"
       autoComplete="off"
@@ -699,7 +660,7 @@ function KeyValueValueInput(props: KeyValueValueInputProps) {
       className={cn(
         "field-sizing-content min-h-9 resize-none",
         maxRows && "overflow-y-auto",
-        className,
+        className
       )}
       style={{
         ...style,
@@ -745,7 +706,7 @@ function KeyValueRemove(props: KeyValueRemoveProps) {
 
       context.onRemove?.(itemToRemove);
     },
-    [store, context, itemData.id, propsRef],
+    [store, context, itemData.id, propsRef]
   );
 
   return (
@@ -774,18 +735,14 @@ function KeyValueAdd(props: React.ComponentProps<typeof Button>) {
   });
   const value = useStore((state) => state.value);
   const isDisabled =
-    context.disabled ||
-    (context.maxItems !== undefined && value.length >= context.maxItems);
+    context.disabled || (context.maxItems !== undefined && value.length >= context.maxItems);
 
   const onClick = React.useCallback(
     (event: React.MouseEvent<AddElement>) => {
       propsRef.current.onClick?.(event);
 
       const state = store.getState();
-      if (
-        context.maxItems !== undefined &&
-        state.value.length >= context.maxItems
-      ) {
+      if (context.maxItems !== undefined && state.value.length >= context.maxItems) {
         return;
       }
 
@@ -801,7 +758,7 @@ function KeyValueAdd(props: React.ComponentProps<typeof Button>) {
 
       context.onAdd?.(newItem);
     },
-    [store, context, propsRef],
+    [store, context, propsRef]
   );
 
   return (

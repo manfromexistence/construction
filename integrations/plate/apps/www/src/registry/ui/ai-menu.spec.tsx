@@ -1,7 +1,7 @@
-import * as React from 'react';
+import { afterAll, beforeEach, describe, expect, it, mock } from "bun:test";
 
-import { render } from '@testing-library/react';
-import { afterAll, beforeEach, describe, expect, it, mock } from 'bun:test';
+import { render } from "@testing-library/react";
+import * as React from "react";
 
 const useEditorChatMock = mock();
 const useEditorPluginMock = mock();
@@ -15,27 +15,27 @@ const toDOMNodeMock = mock();
 
 const Icon = () => <div />;
 
-mock.module('@platejs/ai/react', () => ({
+mock.module("@platejs/ai/react", () => ({
   AIChatPlugin: {},
   AIPlugin: {},
   useEditorChat: useEditorChatMock,
   useLastAssistantMessage: useLastAssistantMessageMock,
 }));
 
-mock.module('@platejs/comment', () => ({
-  getTransientCommentKey: () => 'comment',
+mock.module("@platejs/comment", () => ({
+  getTransientCommentKey: () => "comment",
 }));
 
-mock.module('@platejs/selection/react', () => ({
+mock.module("@platejs/selection/react", () => ({
   BlockSelectionPlugin: {},
   useIsSelecting: useIsSelectingMock,
 }));
 
-mock.module('@platejs/suggestion', () => ({
-  getTransientSuggestionKey: () => 'suggestion',
+mock.module("@platejs/suggestion", () => ({
+  getTransientSuggestionKey: () => "suggestion",
 }));
 
-mock.module('cmdk', () => ({
+mock.module("cmdk", () => ({
   Command: {
     Input: ({
       onValueChange,
@@ -44,16 +44,12 @@ mock.module('cmdk', () => ({
     }: React.InputHTMLAttributes<HTMLInputElement> & {
       onValueChange?: (value: string) => void;
     }) => (
-      <input
-        {...props}
-        value={value}
-        onChange={(event) => onValueChange?.(event.target.value)}
-      />
+      <input {...props} value={value} onChange={(event) => onValueChange?.(event.target.value)} />
     ),
   },
 }));
 
-mock.module('lucide-react', () => ({
+mock.module("lucide-react", () => ({
   Album: Icon,
   BadgeHelp: Icon,
   BookOpenCheck: Icon,
@@ -71,14 +67,14 @@ mock.module('lucide-react', () => ({
   X: Icon,
 }));
 
-mock.module('platejs', () => ({
+mock.module("platejs", () => ({
   KEYS: {},
   NodeApi: {},
   TextApi: {},
   isHotkey: () => () => false,
 }));
 
-mock.module('platejs/react', () => ({
+mock.module("platejs/react", () => ({
   useEditorPlugin: useEditorPluginMock,
   useEditorRef: useEditorRefMock,
   useFocusedLast: useFocusedLastMock,
@@ -86,37 +82,36 @@ mock.module('platejs/react', () => ({
   usePluginOption: usePluginOptionMock,
 }));
 
-mock.module('@/components/ui/button', () => ({
+mock.module("@/components/ui/button", () => ({
   Button: ({ children }: any) => <button>{children}</button>,
 }));
 
-mock.module('@/components/ui/command', () => ({
+mock.module("@/components/ui/command", () => ({
   Command: ({ children }: any) => <div>{children}</div>,
   CommandGroup: ({ children }: any) => <div>{children}</div>,
   CommandItem: ({ children }: any) => <div>{children}</div>,
   CommandList: ({ children }: any) => <div>{children}</div>,
 }));
 
-mock.module('@/components/ui/popover', () => ({
+mock.module("@/components/ui/popover", () => ({
   Popover: ({ children }: any) => <div>{children}</div>,
   PopoverAnchor: () => <div />,
   PopoverContent: ({ children }: any) => <div>{children}</div>,
 }));
 
-mock.module('@/lib/utils', () => ({
-  cn: (...values: Array<string | false | null | undefined>) =>
-    values.filter(Boolean).join(' '),
+mock.module("@/lib/utils", () => ({
+  cn: (...values: Array<string | false | null | undefined>) => values.filter(Boolean).join(" "),
 }));
 
-mock.module('@/registry/components/editor/plugins/comment-kit', () => ({
+mock.module("@/registry/components/editor/plugins/comment-kit", () => ({
   commentPlugin: {},
 }));
 
-mock.module('./ai-chat-editor', () => ({
+mock.module("./ai-chat-editor", () => ({
   AIChatEditor: () => <div />,
 }));
 
-describe('AIMenu', () => {
+describe("AIMenu", () => {
   const originalSetTimeout = globalThis.setTimeout;
 
   beforeEach(() => {
@@ -155,7 +150,7 @@ describe('AIMenu', () => {
       }),
       getOptions: () => ({
         aiEditor: null,
-        mode: 'insert',
+        mode: "insert",
         toolName: null,
       }),
       getTransforms: () => ({
@@ -175,24 +170,22 @@ describe('AIMenu', () => {
       },
     });
 
-    usePluginOptionMock.mockImplementation(
-      (_plugin: unknown, option: string) => {
-        switch (option) {
-          case 'mode':
-            return 'insert';
-          case 'toolName':
-            return null;
-          case 'streaming':
-            return true;
-          case 'open':
-            return false;
-          case 'chat':
-            return { messages: [], status: 'streaming' };
-          default:
-            return;
-        }
+    usePluginOptionMock.mockImplementation((_plugin: unknown, option: string) => {
+      switch (option) {
+        case "mode":
+          return "insert";
+        case "toolName":
+          return null;
+        case "streaming":
+          return true;
+        case "open":
+          return false;
+        case "chat":
+          return { messages: [], status: "streaming" };
+        default:
+          return;
       }
-    );
+    });
 
     useEditorPluginMock.mockReturnValue({
       api: {
@@ -217,10 +210,8 @@ describe('AIMenu', () => {
     mock.restore();
   });
 
-  it('does not crash when streaming starts before the AI anchor exists', async () => {
-    const { AIMenu } = await import(
-      `./ai-menu?test=${Math.random().toString(36).slice(2)}`
-    );
+  it("does not crash when streaming starts before the AI anchor exists", async () => {
+    const { AIMenu } = await import(`./ai-menu?test=${Math.random().toString(36).slice(2)}`);
 
     expect(() => render(<AIMenu />)).not.toThrow();
     expect(toDOMNodeMock).not.toHaveBeenCalled();

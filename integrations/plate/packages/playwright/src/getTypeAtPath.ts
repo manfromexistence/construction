@@ -1,9 +1,9 @@
-import type { Page } from '@playwright/test';
-import type { Path } from 'platejs';
+import type { Page } from "@playwright/test";
+import type { Path } from "platejs";
 
-import { ElementApi } from 'platejs';
-import { getNodeByPath } from './getNodeByPath';
-import type { EditorHandle } from './types';
+import { ElementApi } from "platejs";
+import { getNodeByPath } from "./getNodeByPath";
+import type { EditorHandle } from "./types";
 
 export const getTypeAtPath = async (
   page: Page,
@@ -17,5 +17,5 @@ export const getTypeAtPath = async (
     return node.type;
   }
 
-  return 'text';
+  return "text";
 };

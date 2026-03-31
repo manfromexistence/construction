@@ -1,12 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { IconArrowUpRight } from "@tabler/icons-react"
-
-import { useSearchRegistry } from "@/hooks/use-search-registry"
-import { DirectoryAddButton } from "@/components/directory-add-button"
-import globalRegistries from "@/registry/directory.json"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { IconArrowUpRight } from "@tabler/icons-react";
+import * as React from "react";
+import { DirectoryAddButton } from "@/components/directory-add-button";
+import { useSearchRegistry } from "@/hooks/use-search-registry";
+import globalRegistries from "@/registry/directory.json";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Item,
   ItemActions,
@@ -17,20 +16,20 @@ import {
   ItemMedia,
   ItemSeparator,
   ItemTitle,
-} from "@/registry/new-york-v4/ui/item"
+} from "@/registry/new-york-v4/ui/item";
 
-import { SearchDirectory } from "./search-directory"
+import { SearchDirectory } from "./search-directory";
 
 function getHomepageUrl(homepage: string) {
-  const url = new URL(homepage)
-  url.searchParams.set("utm_source", "ui.shadcn.com")
-  url.searchParams.set("utm_medium", "referral")
-  url.searchParams.set("utm_campaign", "directory")
-  return url.toString()
+  const url = new URL(homepage);
+  url.searchParams.set("utm_source", "ui.shadcn.com");
+  url.searchParams.set("utm_medium", "referral");
+  url.searchParams.set("utm_campaign", "directory");
+  return url.toString();
 }
 
 export function DirectoryList() {
-  const { registries } = useSearchRegistry()
+  const { registries } = useSearchRegistry();
 
   return (
     <div className="mt-6">
@@ -57,9 +56,7 @@ export function DirectoryList() {
                   </a>
                 </ItemTitle>
                 {registry.description && (
-                  <ItemDescription className="text-pretty">
-                    {registry.description}
-                  </ItemDescription>
+                  <ItemDescription className="text-pretty">{registry.description}</ItemDescription>
                 )}
               </ItemContent>
               <ItemActions className="relative z-10 hidden self-start sm:flex">
@@ -72,12 +69,10 @@ export function DirectoryList() {
                 <DirectoryAddButton registry={registry} />
               </ItemFooter>
             </Item>
-            {index < globalRegistries.length - 1 && (
-              <ItemSeparator className="my-1" />
-            )}
+            {index < globalRegistries.length - 1 && <ItemSeparator className="my-1" />}
           </React.Fragment>
         ))}
       </ItemGroup>
     </div>
-  )
+  );
 }

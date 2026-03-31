@@ -1,15 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor, type SlateEditor } from "platejs";
 
-import { BaseLineHeightPlugin } from '../BaseLineHeightPlugin';
-import { setLineHeight } from './setLineHeight';
+import { BaseLineHeightPlugin } from "../BaseLineHeightPlugin";
+import { setLineHeight } from "./setLineHeight";
 
 jsxt;
 
-describe('setLineHeight', () => {
-  it('sets a custom line height on matching blocks', () => {
+describe("setLineHeight", () => {
+  it("sets a custom line height on matching blocks", () => {
     const input = createEditor(
       (
         <editor>
@@ -31,14 +31,14 @@ describe('setLineHeight', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'test' }],
+        children: [{ text: "test" }],
         lineHeight: 2,
-        type: 'p',
+        type: "p",
       },
     ]);
   });
 
-  it('removes the lineHeight prop when resetting to the default value', () => {
+  it("removes the lineHeight prop when resetting to the default value", () => {
     const input = createEditor(
       (
         <editor>
@@ -60,13 +60,13 @@ describe('setLineHeight', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'test' }],
-        type: 'p',
+        children: [{ text: "test" }],
+        type: "p",
       },
     ]);
   });
 
-  it('does nothing for blocks outside the injected target types', () => {
+  it("does nothing for blocks outside the injected target types", () => {
     const input = (
       <editor>
         <hh1>
@@ -86,8 +86,8 @@ describe('setLineHeight', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'test' }],
-        type: 'h1',
+        children: [{ text: "test" }],
+        type: "h1",
       },
     ]);
   });

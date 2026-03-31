@@ -84,18 +84,8 @@ const DrumIcon = forwardRef<DrumIconHandle, DrumIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.path
-            animate={controls}
-            custom={1}
-            d="m2 2 8 8"
-            variants={VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            custom={2}
-            d="m22 2-8 8"
-            variants={VARIANTS}
-          />
+          <motion.path animate={controls} custom={1} d="m2 2 8 8" variants={VARIANTS} />
+          <motion.path animate={controls} custom={2} d="m22 2-8 8" variants={VARIANTS} />
           <ellipse cx="12" cy="9" rx="10" ry="5" />
           <path d="M7 13.4v7.9" />
           <path d="M12 14v8" />

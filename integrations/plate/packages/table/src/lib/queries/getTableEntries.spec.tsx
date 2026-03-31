@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { getTableEntries } from './getTableEntries';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { getTableEntries } from "./getTableEntries";
 
 jsxt;
 
@@ -17,8 +16,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('getTableEntries', () => {
-  it('returns the cell, row, and table entries for the current table selection', () => {
+describe("getTableEntries", () => {
+  it("returns the cell, row, and table entries for the current table selection", () => {
     const input = (
       <editor>
         <htable>
@@ -48,15 +47,15 @@ describe('getTableEntries', () => {
     const editor = createTableEditor(input);
     const entries = getTableEntries(editor)!;
 
-    expect(entries.cell[0].type).toBe('td');
+    expect(entries.cell[0].type).toBe("td");
     expect(entries.cell[1]).toEqual([0, 1, 0]);
-    expect(entries.row[0].type).toBe('tr');
+    expect(entries.row[0].type).toBe("tr");
     expect(entries.row[1]).toEqual([0, 1]);
-    expect(entries.table[0].type).toBe('table');
+    expect(entries.table[0].type).toBe("table");
     expect(entries.table[1]).toEqual([0]);
   });
 
-  it('supports an explicit location even when the current selection is outside the table', () => {
+  it("supports an explicit location even when the current selection is outside the table", () => {
     const input = (
       <editor>
         <htable>
@@ -83,7 +82,7 @@ describe('getTableEntries', () => {
     expect(entries.table[1]).toEqual([0]);
   });
 
-  it('returns undefined when the location is not inside a table cell', () => {
+  it("returns undefined when the location is not inside a table cell", () => {
     const input = (
       <editor>
         <hp>

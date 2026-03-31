@@ -1,8 +1,8 @@
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { Header } from "@/components/header";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 import { SettingsSidebar } from "./components/settings-sidebar";
 
 export default async function SettingsLayout({ children }: { children: React.ReactNode }) {

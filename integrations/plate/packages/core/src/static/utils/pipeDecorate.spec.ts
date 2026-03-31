@@ -1,15 +1,15 @@
-import { createSlateEditor } from '../../lib/editor';
-import { createSlatePlugin } from '../../lib/plugin';
-import { pipeDecorate } from './pipeDecorate';
+import { createSlateEditor } from "../../lib/editor";
+import { createSlatePlugin } from "../../lib/plugin";
+import { pipeDecorate } from "./pipeDecorate";
 
-describe('pipeDecorate', () => {
-  it('returns undefined when there are no decorate hooks', () => {
+describe("pipeDecorate", () => {
+  it("returns undefined when there are no decorate hooks", () => {
     const editor = createSlateEditor();
 
     expect(pipeDecorate(editor)).toBeUndefined();
   });
 
-  it('merges plugin decorations with the decorate prop', () => {
+  it("merges plugin decorations with the decorate prop", () => {
     const rangeFromPlugin = {
       anchor: { offset: 0, path: [0, 0] },
       focus: { offset: 2, path: [0, 0] },
@@ -21,7 +21,7 @@ describe('pipeDecorate', () => {
       comment: true,
     };
     const HighlightPlugin = createSlatePlugin({
-      key: 'highlight',
+      key: "highlight",
       decorate: () => [rangeFromPlugin as any],
     });
     const editor = createSlateEditor({
@@ -29,11 +29,9 @@ describe('pipeDecorate', () => {
     });
     const decorate = pipeDecorate(editor, () => [rangeFromProp as any])!;
 
-    expect(
-      decorate([
-        { children: [{ text: 'alpha' }], type: 'p' } as any,
-        [0],
-      ] as any)
-    ).toEqual([rangeFromPlugin, rangeFromProp]);
+    expect(decorate([{ children: [{ text: "alpha" }], type: "p" } as any, [0]] as any)).toEqual([
+      rangeFromPlugin,
+      rangeFromProp,
+    ]);
   });
 });

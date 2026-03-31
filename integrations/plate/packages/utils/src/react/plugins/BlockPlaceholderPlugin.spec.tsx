@@ -1,11 +1,10 @@
 /// <reference types="@testing-library/jest-dom" />
 
-import React from 'react';
+import { createPlateEditor, PlateTest } from "@platejs/core/react";
+import { render, waitFor } from "@testing-library/react";
+import React from "react";
 
-import { createPlateEditor, PlateTest } from '@platejs/core/react';
-import { render, waitFor } from '@testing-library/react';
-
-import { BlockPlaceholderPlugin } from './BlockPlaceholderPlugin';
+import { BlockPlaceholderPlugin } from "./BlockPlaceholderPlugin";
 
 const createEditor = (options?: {
   className?: string;
@@ -22,12 +21,8 @@ const createEditor = (options?: {
     plugins: [
       BlockPlaceholderPlugin.configure({
         options: {
-          ...(options?.className !== undefined
-            ? { className: options.className }
-            : {}),
-          ...(options?.placeholders !== undefined
-            ? { placeholders: options.placeholders }
-            : {}),
+          ...(options?.className !== undefined ? { className: options.className } : {}),
+          ...(options?.placeholders !== undefined ? { placeholders: options.placeholders } : {}),
           ...(options?.query !== undefined ? { query: options.query } : {}),
         },
       }),
@@ -37,14 +32,14 @@ const createEditor = (options?: {
       focus: { offset: 0, path: [0, 0] },
     },
     value: options?.value ?? [
-      { children: [{ text: '' }], type: 'p' },
-      { children: [{ text: 'filled' }], type: 'p' },
+      { children: [{ text: "" }], type: "p" },
+      { children: [{ text: "filled" }], type: "p" },
     ],
   });
 
-describe('BlockPlaceholderPlugin', () => {
-  it('sets the target for an active empty block and injects placeholder props', async () => {
-    const editor = createEditor({ className: 'placeholder-class' });
+describe("BlockPlaceholderPlugin", () => {
+  it("sets the target for an active empty block and injects placeholder props", async () => {
+    const editor = createEditor({ className: "placeholder-class" });
     const { container } = render(
       <PlateTest editor={editor} suppressInstanceWarning>
         {null}
@@ -56,27 +51,23 @@ describe('BlockPlaceholderPlugin', () => {
     await waitFor(() => {
       expect(editor.getOptions(BlockPlaceholderPlugin)._target).toEqual({
         node: firstNode,
-        placeholder: 'Type something...',
+        placeholder: "Type something...",
       });
     });
 
-    expect(
-      editor.getOption(BlockPlaceholderPlugin, 'placeholder', firstNode)
-    ).toBe('Type something...');
-    expect(
-      editor.getOption(BlockPlaceholderPlugin, 'placeholder', secondNode)
-    ).toBeUndefined();
-
-    const element = container.querySelector(
-      '[placeholder="Type something..."]'
+    expect(editor.getOption(BlockPlaceholderPlugin, "placeholder", firstNode)).toBe(
+      "Type something..."
     );
+    expect(editor.getOption(BlockPlaceholderPlugin, "placeholder", secondNode)).toBeUndefined();
 
-    expect(element).toHaveClass('placeholder-class');
+    const element = container.querySelector('[placeholder="Type something..."]');
+
+    expect(element).toHaveClass("placeholder-class");
   });
 
-  it('clears the target when the editor is globally empty', async () => {
+  it("clears the target when the editor is globally empty", async () => {
     const editor = createEditor({
-      value: [{ children: [{ text: '' }], type: 'p' }],
+      value: [{ children: [{ text: "" }], type: "p" }],
     });
     const { container } = render(
       <PlateTest editor={editor} suppressInstanceWarning>
@@ -88,12 +79,12 @@ describe('BlockPlaceholderPlugin', () => {
       expect(editor.getOptions(BlockPlaceholderPlugin)._target).toBeNull();
     });
 
-    expect(container.querySelector('[placeholder]')).toBeNull();
+    expect(container.querySelector("[placeholder]")).toBeNull();
   });
 
-  it('clears the target when the placeholder map does not match the block type', async () => {
+  it("clears the target when the placeholder map does not match the block type", async () => {
     const editor = createEditor({
-      placeholders: { h1: 'Heading...' },
+      placeholders: { h1: "Heading..." },
     });
     const { container } = render(
       <PlateTest editor={editor} suppressInstanceWarning>
@@ -105,10 +96,10 @@ describe('BlockPlaceholderPlugin', () => {
       expect(editor.getOptions(BlockPlaceholderPlugin)._target).toBeNull();
     });
 
-    expect(container.querySelector('[placeholder]')).toBeNull();
+    expect(container.querySelector("[placeholder]")).toBeNull();
   });
 
-  it('clears the target when the query returns false', async () => {
+  it("clears the target when the query returns false", async () => {
     const editor = createEditor({
       query: () => false,
     });
@@ -122,10 +113,10 @@ describe('BlockPlaceholderPlugin', () => {
       expect(editor.getOptions(BlockPlaceholderPlugin)._target).toBeNull();
     });
 
-    expect(container.querySelector('[placeholder]')).toBeNull();
+    expect(container.querySelector("[placeholder]")).toBeNull();
   });
 
-  it('clears the target when the selection is expanded', async () => {
+  it("clears the target when the selection is expanded", async () => {
     const editor = createEditor({
       selection: {
         anchor: { offset: 0, path: [0, 0] },
@@ -142,10 +133,10 @@ describe('BlockPlaceholderPlugin', () => {
       expect(editor.getOptions(BlockPlaceholderPlugin)._target).toBeNull();
     });
 
-    expect(container.querySelector('[placeholder]')).toBeNull();
+    expect(container.querySelector("[placeholder]")).toBeNull();
   });
 
-  it('clears the target in read-only mode', async () => {
+  it("clears the target in read-only mode", async () => {
     const editor = createEditor();
     const { container } = render(
       <PlateTest editor={editor} readOnly suppressInstanceWarning>
@@ -157,6 +148,6 @@ describe('BlockPlaceholderPlugin', () => {
       expect(editor.getOptions(BlockPlaceholderPlugin)._target).toBeNull();
     });
 
-    expect(container.querySelector('[placeholder]')).toBeNull();
+    expect(container.querySelector("[placeholder]")).toBeNull();
   });
 });

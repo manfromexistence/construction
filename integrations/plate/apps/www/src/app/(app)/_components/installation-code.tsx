@@ -1,15 +1,15 @@
 // Pre is deeply coupled to Contentlayer, so we need a wrapper to make it work
-import * as React from 'react';
-import type { ReactNode } from 'react';
-import { type SyntaxHighlighterProps, Prism } from 'react-syntax-highlighter';
-import { vscDarkPlus as theme } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-import { CopyButton, CopyNpmCommandButton } from '@/components/copy-button';
-import * as Typography from '@/components/typography';
-import { cn } from '@/lib/utils';
+import type { ReactNode } from "react";
+import * as React from "react";
+import { Prism, type SyntaxHighlighterProps } from "react-syntax-highlighter";
+import { vscDarkPlus as theme } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-const SyntaxHighlighter =
-  Prism as unknown as typeof React.Component<SyntaxHighlighterProps>;
+import { CopyButton, CopyNpmCommandButton } from "@/components/copy-button";
+import * as Typography from "@/components/typography";
+import { cn } from "@/lib/utils";
+
+const SyntaxHighlighter = Prism as unknown as typeof React.Component<SyntaxHighlighterProps>;
 
 export function InstallationCode({
   bash,
@@ -20,7 +20,7 @@ export function InstallationCode({
   bash?: boolean;
   children?: ReactNode;
 }) {
-  const npmCommand = code.startsWith('npm install');
+  const npmCommand = code.startsWith("npm install");
 
   return (
     <div>
@@ -30,7 +30,7 @@ export function InstallationCode({
         <SyntaxHighlighter
           className="rounded-lg border py-4!"
           style={theme}
-          language={bash ? 'bash' : 'typescript'}
+          language={bash ? "bash" : "typescript"}
           showLineNumbers={false}
         >
           {code}
@@ -38,15 +38,15 @@ export function InstallationCode({
 
         {npmCommand ? (
           <CopyNpmCommandButton
-            className={cn('absolute top-4 right-4')}
+            className={cn("absolute top-4 right-4")}
             commands={{
-              __bunCommand__: code.replaceAll('npm install', 'bun add'),
+              __bunCommand__: code.replaceAll("npm install", "bun add"),
               __npmCommand__: code,
-              __pnpmCommand__: code.replaceAll('npm install', 'pnpm add'),
+              __pnpmCommand__: code.replaceAll("npm install", "pnpm add"),
             }}
           />
         ) : (
-          <CopyButton className={cn('absolute top-4 right-4')} value={code} />
+          <CopyButton className={cn("absolute top-4 right-4")} value={code} />
         )}
       </div>
     </div>

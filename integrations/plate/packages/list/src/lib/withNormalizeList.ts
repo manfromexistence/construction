@@ -1,9 +1,9 @@
-import type { OverrideEditor, TElement } from 'platejs';
+import type { OverrideEditor, TElement } from "platejs";
 
-import type { BaseListConfig } from './BaseListPlugin';
+import type { BaseListConfig } from "./BaseListPlugin";
 
-import { normalizeListNotIndented } from './normalizers/normalizeListNotIndented';
-import { normalizeListStart } from './normalizers/normalizeListStart';
+import { normalizeListNotIndented } from "./normalizers/normalizeListNotIndented";
+import { normalizeListStart } from "./normalizers/normalizeListStart";
 
 export const withNormalizeList: OverrideEditor<BaseListConfig> = ({
   editor,
@@ -15,11 +15,7 @@ export const withNormalizeList: OverrideEditor<BaseListConfig> = ({
       const normalized = editor.tf.withoutNormalizing(() => {
         if (normalizeListNotIndented(editor, [node, path])) return true;
         if (
-          normalizeListStart(
-            editor,
-            [node as TElement, path],
-            getOptions().getSiblingListOptions
-          )
+          normalizeListStart(editor, [node as TElement, path], getOptions().getSiblingListOptions)
         )
           return true;
       });

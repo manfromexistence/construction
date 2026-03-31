@@ -10,7 +10,7 @@ export const sanitizeUrl = (
   if (!url) return null;
 
   // Allow internal links starting with / or #
-  if (url.startsWith('/') || url.startsWith('#')) {
+  if (url.startsWith("/") || url.startsWith("#")) {
     return url;
   }
 
@@ -22,10 +22,7 @@ export const sanitizeUrl = (
     return permitInvalid ? url : null;
   }
 
-  if (
-    allowedSchemes &&
-    !allowedSchemes.includes(parsedUrl.protocol.slice(0, -1))
-  ) {
+  if (allowedSchemes && !allowedSchemes.includes(parsedUrl.protocol.slice(0, -1))) {
     return null;
   }
 

@@ -1,7 +1,7 @@
-import { UsageStats } from "@/app/settings/components/usage-stats";
-import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { UsageStats } from "@/app/settings/components/usage-stats";
+import { auth } from "@/lib/auth";
 import { SettingsHeader } from "../components/settings-header";
 
 export default async function UsagePage() {

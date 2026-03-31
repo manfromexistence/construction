@@ -1,21 +1,20 @@
 import {
   type Descendant,
-  type TElement,
-  type TText,
   getPluginKey,
   getPluginType,
   KEYS,
+  type TElement,
   TextApi,
-} from 'platejs';
+  type TText,
+} from "platejs";
 
-import type { unistLib } from '../types';
-import type { SerializeMdOptions } from './serializeMd';
-
-import { convertTextsSerialize } from './convertTextsSerialize';
-import { listToMdastTree } from './listToMdastTree';
-import { unreachable } from './utils';
-import { getSerializerByKey } from './utils/getSerializerByKey';
-import { wrapWithBlockId } from './wrapWithBlockId';
+import type { unistLib } from "../types";
+import { convertTextsSerialize } from "./convertTextsSerialize";
+import { listToMdastTree } from "./listToMdastTree";
+import type { SerializeMdOptions } from "./serializeMd";
+import { unreachable } from "./utils";
+import { getSerializerByKey } from "./utils/getSerializerByKey";
+import { wrapWithBlockId } from "./wrapWithBlockId";
 
 export const convertNodesSerialize = (
   nodes: Descendant[],
@@ -37,12 +36,7 @@ export const convertNodesSerialize = (
       }
     } else {
       if (textQueue.length > 0) {
-        mdastNodes.push(
-          ...(convertTextsSerialize(
-            textQueue,
-            options
-          ) as any as unistLib.Node[])
-        );
+        mdastNodes.push(...(convertTextsSerialize(textQueue, options) as any as unistLib.Node[]));
       }
       textQueue = [];
       if (!n) continue;
@@ -54,12 +48,11 @@ export const convertNodesSerialize = (
 
       const pType = getPluginType(options.editor!, KEYS.p) ?? KEYS.p;
 
-      if (n?.type === pType && 'listStyleType' in n) {
+      if (n?.type === pType && "listStyleType" in n) {
         listBlock.push(n);
 
         const next = nodes[i + 1] as TElement;
-        const isNextIndent =
-          next && next.type === pType && 'listStyleType' in next;
+        const isNextIndent = next && next.type === pType && "listStyleType" in next;
         const firstList = listBlock.at(0);
         const hasDifferentListStyle =
           isNextIndent &&
@@ -73,7 +66,7 @@ export const convertNodesSerialize = (
           const result = listToMdastTree(listBlock as any, options, isBlock);
 
           // Handle fragment type (used when list items have IDs)
-          if (result.type === 'fragment') {
+          if (result.type === "fragment") {
             mdastNodes.push(...result.children);
           } else {
             mdastNodes.push(result);
@@ -94,21 +87,17 @@ export const convertNodesSerialize = (
   return mdastNodes;
 };
 
-export const buildMdastNode = (
-  node: any,
-  options: SerializeMdOptions,
-  isBlock = false
-) => {
+export const buildMdastNode = (node: any, options: SerializeMdOptions, isBlock = false) => {
   const editor = options.editor!;
 
   let key = getPluginKey(editor, node.type) ?? node.type;
 
   if (KEYS.heading.includes(key)) {
-    key = 'heading';
+    key = "heading";
   }
 
   if (key === KEYS.olClassic || key === KEYS.ulClassic) {
-    key = 'list';
+    key = "list";
   }
 
   const nodeParser = getSerializerByKey(key, options);
@@ -128,25 +117,17 @@ export const buildMdastNode = (
   unreachable(node);
 };
 
-const shouldIncludeText = (
-  text: TText,
-  options: SerializeMdOptions
-): boolean => {
+const shouldIncludeText = (text: TText, options: SerializeMdOptions): boolean => {
   const { allowedNodes, allowNode, disallowedNodes } = options;
 
   // First check allowedNodes/disallowedNodes
-  if (
-    allowedNodes &&
-    disallowedNodes &&
-    allowedNodes.length > 0 &&
-    disallowedNodes.length > 0
-  ) {
-    throw new Error('Cannot combine allowedNodes with disallowedNodes');
+  if (allowedNodes && disallowedNodes && allowedNodes.length > 0 && disallowedNodes.length > 0) {
+    throw new Error("Cannot combine allowedNodes with disallowedNodes");
   }
 
   // Check text properties against allowedNodes/disallowedNodes
   for (const [key, value] of Object.entries(text)) {
-    if (key === 'text') continue;
+    if (key === "text") continue;
 
     if (allowedNodes) {
       // If allowedNodes is specified, only include if the mark is in allowedNodes
@@ -167,22 +148,14 @@ const shouldIncludeText = (
   return true;
 };
 
-const shouldIncludeNode = (
-  node: TElement,
-  options: SerializeMdOptions
-): boolean => {
+const shouldIncludeNode = (node: TElement, options: SerializeMdOptions): boolean => {
   const { allowedNodes, allowNode, disallowedNodes } = options;
 
   if (!node.type) return true;
 
   // First check allowedNodes/disallowedNodes
-  if (
-    allowedNodes &&
-    disallowedNodes &&
-    allowedNodes.length > 0 &&
-    disallowedNodes.length > 0
-  ) {
-    throw new Error('Cannot combine allowedNodes with disallowedNodes');
+  if (allowedNodes && disallowedNodes && allowedNodes.length > 0 && disallowedNodes.length > 0) {
+    throw new Error("Cannot combine allowedNodes with disallowedNodes");
   }
 
   if (allowedNodes) {

@@ -1,8 +1,6 @@
 {
   "name": "pending-link-demo",
-  "registryDependencies": [
-    "pending"
-  ],
+  "registryDependencies": ["pending"],
   "files": [
     {
       "path": "examples/pending-link-demo.tsx",

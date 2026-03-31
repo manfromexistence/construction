@@ -1,6 +1,6 @@
-import { z } from "zod"
+import { z } from "zod";
 
-import { capturePostHogEvent } from "@/lib/posthog"
+import { capturePostHogEvent } from "@/lib/posthog";
 
 const eventSchema = z.object({
   name: z.enum([
@@ -25,18 +25,15 @@ const eventSchema = z.object({
     "product_hunt_sidebar_cta_clicked",
   ]),
   properties: z
-    .record(
-      z.string(),
-      z.union([z.string(), z.number(), z.boolean(), z.null()])
-    )
+    .record(z.string(), z.union([z.string(), z.number(), z.boolean(), z.null()]))
     .optional(),
-})
+});
 
-export type Event = z.infer<typeof eventSchema>
+export type Event = z.infer<typeof eventSchema>;
 
 export function trackEvent(input: Event): void {
-  const event = eventSchema.parse(input)
+  const event = eventSchema.parse(input);
   if (event) {
-    capturePostHogEvent(event.name, event.properties)
+    capturePostHogEvent(event.name, event.properties);
   }
 }

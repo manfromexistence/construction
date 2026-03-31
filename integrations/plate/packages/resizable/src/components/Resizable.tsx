@@ -1,18 +1,16 @@
-import React from 'react';
+import type { TResizableElement } from "platejs";
+import { useEditorRef, useElement, usePath } from "platejs/react";
+import React from "react";
 
-import type { TResizableElement } from 'platejs';
+import type { ResizeEvent, ResizeLength } from "../types";
 
-import { useEditorRef, useElement, usePath } from 'platejs/react';
-
-import type { ResizeEvent, ResizeLength } from '../types';
-
-import { resizeLengthClamp } from '../utils';
-import { ResizeHandleProvider } from './ResizeHandle';
-import { useResizableSet, useResizableValue } from './useResizableStore';
+import { resizeLengthClamp } from "../utils";
+import { ResizeHandleProvider } from "./ResizeHandle";
+import { useResizableSet, useResizableValue } from "./useResizableStore";
 
 export type ResizableOptions = {
   /** Node alignment. */
-  align?: 'center' | 'left' | 'right';
+  align?: "center" | "left" | "right";
 
   maxWidth?: ResizeLength;
 
@@ -21,18 +19,18 @@ export type ResizableOptions = {
 };
 
 export const useResizableState = ({
-  align = 'center',
-  maxWidth = '100%',
+  align = "center",
+  maxWidth = "100%",
   minWidth = 92,
 }: ResizableOptions = {}) => {
   const editor = useEditorRef();
   const element = useElement<TResizableElement>();
   const path = usePath();
 
-  const nodeWidth = element?.width ?? '100%';
+  const nodeWidth = element?.width ?? "100%";
 
-  const width = useResizableValue('width');
-  const setWidth = useResizableSet('width');
+  const width = useResizableValue("width");
+  const setWidth = useResizableSet("width");
 
   const setNodeWidth = React.useCallback(
     (w: number) => {
@@ -75,8 +73,7 @@ export const useResizable = ({
       onResize: React.useCallback(
         ({ delta, direction, finished, initialSize }: ResizeEvent) => {
           const wrapperStaticWidth = wrapperRef.current!.offsetWidth;
-          const deltaFactor =
-            (align === 'center' ? 2 : 1) * (direction === 'left' ? -1 : 1);
+          const deltaFactor = (align === "center" ? 2 : 1) * (direction === "left" ? -1 : 1);
 
           const newWidth = resizeLengthClamp(
             initialSize + delta * deltaFactor,
@@ -100,13 +97,13 @@ export const useResizable = ({
       style: {
         maxWidth,
         minWidth,
-        position: 'relative',
+        position: "relative",
         width,
       } as React.CSSProperties,
     },
     wrapperProps: {
       style: {
-        position: 'relative',
+        position: "relative",
       } as React.CSSProperties,
     },
     wrapperRef,
@@ -125,13 +122,11 @@ const Resizable = React.forwardRef<
   return (
     <div ref={wrapperRef} {...wrapperProps}>
       <div ref={ref} {...props} {...rest}>
-        <ResizeHandleProvider onResize={context.onResize}>
-          {children}
-        </ResizeHandleProvider>
+        <ResizeHandleProvider onResize={context.onResize}>{children}</ResizeHandleProvider>
       </div>
     </div>
   );
 });
-Resizable.displayName = 'Resizable';
+Resizable.displayName = "Resizable";
 
 export { Resizable };

@@ -1,9 +1,6 @@
-import React from 'react';
+import React from "react";
 
-export const useStableMemo = <T>(
-  producer: () => T,
-  deps?: React.DependencyList
-): T => {
+export const useStableMemo = <T>(producer: () => T, deps?: React.DependencyList): T => {
   const [value, setValue] = React.useState(producer);
 
   React.useLayoutEffect(() => {

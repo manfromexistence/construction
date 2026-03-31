@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -99,9 +99,7 @@ export const createTable = (spanning?: boolean): any => (
 export const tableValue: any = (
   <fragment>
     <hh2>表格</hh2>
-    <hp>
-      创建可自定义的表格，具有可调整大小的列和行，让您能够设计结构化布局。
-    </hp>
+    <hp>创建可自定义的表格，具有可调整大小的列和行，让您能够设计结构化布局。</hp>
     {createTable()}
   </fragment>
 );
@@ -110,8 +108,7 @@ export const tableMergeValue: any = (
   <fragment>
     <hh3>表格合并</hh3>
     <hp>
-      您可以使用 <htext code>enableMerging: true</htext>{' '}
-      选项启用合并功能。试试看：
+      您可以使用 <htext code>enableMerging: true</htext> 选项启用合并功能。试试看：
     </hp>
     {createTable(true)}
   </fragment>

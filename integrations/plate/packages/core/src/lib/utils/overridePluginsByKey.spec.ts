@@ -1,25 +1,25 @@
-import { overridePluginsByKey } from './overridePluginsByKey';
+import { overridePluginsByKey } from "./overridePluginsByKey";
 
-describe('overridePluginsByKey', () => {
-  it('deep merges root overrides and appends extensions', () => {
-    const firstExtension = () => ({ key: 'first' });
-    const secondExtension = () => ({ key: 'second' });
+describe("overridePluginsByKey", () => {
+  it("deep merges root overrides and appends extensions", () => {
+    const firstExtension = () => ({ key: "first" });
+    const secondExtension = () => ({ key: "second" });
 
     const plugin: any = {
       __extensions: [firstExtension],
-      key: 'root',
-      node: { type: 'root' },
+      key: "root",
+      node: { type: "root" },
       options: {
         enabled: true,
         nested: { a: 1 },
       },
-      plugins: [{ key: 'child', options: { child: true } }],
+      plugins: [{ key: "child", options: { child: true } }],
     };
 
     const result = overridePluginsByKey(plugin, {
       root: {
         __extensions: [secondExtension],
-        node: { component: 'custom' },
+        node: { component: "custom" },
         options: {
           nested: { b: 2 },
         },
@@ -27,48 +27,43 @@ describe('overridePluginsByKey', () => {
     } as any);
 
     expect(result.__extensions).toEqual([firstExtension, secondExtension]);
-    expect(result.node).toEqual({ component: 'custom', type: 'root' });
+    expect(result.node).toEqual({ component: "custom", type: "root" });
     expect(result.options).toEqual({
       enabled: true,
       nested: { a: 1, b: 2 },
     });
   });
 
-  it('appends missing top-level nested plugins but not nested override plugin lists', () => {
+  it("appends missing top-level nested plugins but not nested override plugin lists", () => {
     const plugin: any = {
-      key: 'root',
+      key: "root",
       plugins: [
         {
-          key: 'child',
-          plugins: [{ key: 'grandchild' }],
+          key: "child",
+          plugins: [{ key: "grandchild" }],
         },
       ],
     };
 
     const result = overridePluginsByKey(plugin, {
       child: {
-        plugins: [{ key: 'should-not-be-added' }],
+        plugins: [{ key: "should-not-be-added" }],
       },
       root: {
-        plugins: [{ key: 'added' }],
+        plugins: [{ key: "added" }],
       },
     } as any);
 
-    expect(result.plugins.map((child: any) => child.key)).toEqual([
-      'child',
-      'added',
-    ]);
-    expect(result.plugins[0].plugins.map((child: any) => child.key)).toEqual([
-      'grandchild',
-    ]);
+    expect(result.plugins.map((child: any) => child.key)).toEqual(["child", "added"]);
+    expect(result.plugins[0].plugins.map((child: any) => child.key)).toEqual(["grandchild"]);
   });
 
-  it('recursively overrides existing nested plugins by key', () => {
+  it("recursively overrides existing nested plugins by key", () => {
     const plugin: any = {
-      key: 'root',
+      key: "root",
       plugins: [
         {
-          key: 'child',
+          key: "child",
           options: { a: 1 },
         },
       ],

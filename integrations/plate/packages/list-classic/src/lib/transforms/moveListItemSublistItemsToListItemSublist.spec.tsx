@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { moveListItemSublistItemsToListItemSublist } from './moveListItemSublistItemsToListItemSublist';
+import { moveListItemSublistItemsToListItemSublist } from "./moveListItemSublistItemsToListItemSublist";
 
 jsxt;
 
-describe('when there is toListItem sublist', () => {
+describe("when there is toListItem sublist", () => {
   const input = (
     <editor>
       <hul id="1">
@@ -64,14 +64,14 @@ describe('when there is toListItem sublist', () => {
     </editor>
   ) as any as SlateEditor;
 
-  it('moves sublist items into the existing destination sublist', () => {
+  it("moves sublist items into the existing destination sublist", () => {
     const editor = createSlateEditor({
       selection: input.selection,
       value: input.children,
     });
 
-    const fromListItem = editor.api.node({ id: '12', at: [] }) as any;
-    const toListItem = editor.api.node({ id: '11', at: [] }) as any;
+    const fromListItem = editor.api.node({ id: "12", at: [] }) as any;
+    const toListItem = editor.api.node({ id: "11", at: [] }) as any;
 
     if (fromListItem && toListItem) {
       moveListItemSublistItemsToListItemSublist(editor, {
@@ -83,14 +83,14 @@ describe('when there is toListItem sublist', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('can prepend the moved items when start is true', () => {
+  it("can prepend the moved items when start is true", () => {
     const editor = createSlateEditor({
       selection: input.selection,
       value: input.children,
     });
 
-    const fromListItem = editor.api.node({ id: '12', at: [] }) as any;
-    const toListItem = editor.api.node({ id: '11', at: [] }) as any;
+    const fromListItem = editor.api.node({ id: "12", at: [] }) as any;
+    const toListItem = editor.api.node({ id: "11", at: [] }) as any;
 
     if (fromListItem && toListItem) {
       moveListItemSublistItemsToListItemSublist(editor, {
@@ -131,7 +131,7 @@ describe('when there is toListItem sublist', () => {
   });
 });
 
-describe('when there is no list in toListItem', () => {
+describe("when there is no list in toListItem", () => {
   const input = (
     <editor>
       <hul id="1">
@@ -174,14 +174,14 @@ describe('when there is no list in toListItem', () => {
     </editor>
   ) as any as SlateEditor;
 
-  it('creates a destination sublist before moving the items', () => {
+  it("creates a destination sublist before moving the items", () => {
     const editor = createSlateEditor({
       selection: input.selection,
       value: input.children,
     });
 
-    const fromListItem = editor.api.node({ id: '12', at: [] }) as any;
-    const toListItem = editor.api.node({ id: '11', at: [] }) as any;
+    const fromListItem = editor.api.node({ id: "12", at: [] }) as any;
+    const toListItem = editor.api.node({ id: "11", at: [] }) as any;
 
     if (fromListItem && toListItem) {
       moveListItemSublistItemsToListItemSublist(editor, {

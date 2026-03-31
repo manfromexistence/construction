@@ -1,8 +1,8 @@
-import { KEYS, PathApi } from 'platejs';
-import { useElementSelector } from 'platejs/react';
+import { KEYS, PathApi } from "platejs";
+import { useElementSelector } from "platejs/react";
 
-import { getTableOverriddenColSizes } from '../../../lib';
-import { useTableValue } from '../../stores';
+import { getTableOverriddenColSizes } from "../../../lib";
+import { useTableValue } from "../../stores";
 
 /**
  * Returns colSizes with overrides applied. Unset node.colSizes if `colCount`
@@ -15,7 +15,7 @@ export const useTableColSizes = ({
   disableOverrides?: boolean;
   transformColSizes?: (colSizes: number[]) => number[];
 } = {}): number[] => {
-  const colSizeOverrides = useTableValue('colSizeOverrides');
+  const colSizeOverrides = useTableValue("colSizeOverrides");
 
   const overriddenColSizes = useElementSelector(
     ([tableNode]) => {

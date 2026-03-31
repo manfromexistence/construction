@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS } from "platejs";
 
 /** Enables support for block quotes, useful for quotations and passages. */
 export const BaseBlockquotePlugin = createSlatePlugin({
@@ -11,21 +11,21 @@ export const BaseBlockquotePlugin = createSlatePlugin({
       deserializer: {
         rules: [
           {
-            validNodeName: 'BLOCKQUOTE',
+            validNodeName: "BLOCKQUOTE",
           },
         ],
       },
     },
   },
-  render: { as: 'blockquote' },
+  render: { as: "blockquote" },
   rules: {
     break: {
-      default: 'lineBreak',
-      empty: 'reset',
-      emptyLineEnd: 'deleteExit',
+      default: "lineBreak",
+      empty: "reset",
+      emptyLineEnd: "deleteExit",
     },
     delete: {
-      start: 'reset',
+      start: "reset",
     },
   },
 }).extendTransforms(({ editor, type }) => ({

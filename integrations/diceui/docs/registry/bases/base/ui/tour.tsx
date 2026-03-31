@@ -101,14 +101,8 @@ function createFocusGuard() {
 function useFocusGuards() {
   React.useEffect(() => {
     const edgeGuards = document.querySelectorAll("[data-tour-focus-guard]");
-    document.body.insertAdjacentElement(
-      "afterbegin",
-      edgeGuards[0] ?? createFocusGuard(),
-    );
-    document.body.insertAdjacentElement(
-      "beforeend",
-      edgeGuards[1] ?? createFocusGuard(),
-    );
+    document.body.insertAdjacentElement("afterbegin", edgeGuards[0] ?? createFocusGuard());
+    document.body.insertAdjacentElement("beforeend", edgeGuards[1] ?? createFocusGuard());
     focusGuardCount++;
 
     return () => {
@@ -128,7 +122,7 @@ function useFocusTrap(
   enabled: boolean,
   tourOpen: boolean,
   onOpenAutoFocus?: (event: OpenAutoFocusEvent) => void,
-  onCloseAutoFocus?: (event: CloseAutoFocusEvent) => void,
+  onCloseAutoFocus?: (event: CloseAutoFocusEvent) => void
 ) {
   const lastFocusedElementRef = React.useRef<HTMLElement | null>(null);
   const onOpenAutoFocusRef = useAsRef(onOpenAutoFocus);
@@ -141,29 +135,21 @@ function useFocusTrap(
     const container = containerRef.current;
     if (!container) return;
 
-    const previouslyFocusedElement =
-      document.activeElement as HTMLElement | null;
+    const previouslyFocusedElement = document.activeElement as HTMLElement | null;
 
     function getTabbableCandidates() {
       if (!container) return [];
 
       const nodes: HTMLElement[] = [];
-      const walker = document.createTreeWalker(
-        container,
-        NodeFilter.SHOW_ELEMENT,
-        {
-          acceptNode: (node: Element) => {
-            const element = node as HTMLElement;
-            const isHiddenInput =
-              element.tagName === "INPUT" &&
-              (element as HTMLInputElement).type === "hidden";
-            if (element.hidden || isHiddenInput) return NodeFilter.FILTER_SKIP;
-            return element.tabIndex >= 0
-              ? NodeFilter.FILTER_ACCEPT
-              : NodeFilter.FILTER_SKIP;
-          },
+      const walker = document.createTreeWalker(container, NodeFilter.SHOW_ELEMENT, {
+        acceptNode: (node: Element) => {
+          const element = node as HTMLElement;
+          const isHiddenInput =
+            element.tagName === "INPUT" && (element as HTMLInputElement).type === "hidden";
+          if (element.hidden || isHiddenInput) return NodeFilter.FILTER_SKIP;
+          return element.tabIndex >= 0 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP;
         },
-      );
+      });
       while (walker.nextNode()) {
         nodes.push(walker.currentNode as HTMLElement);
       }
@@ -184,15 +170,13 @@ function useFocusTrap(
       if (container.contains(target)) {
         lastFocusedElementRef.current = target;
       } else {
-        const elementToFocus =
-          lastFocusedElementRef.current ?? getTabbableCandidates()[0];
+        const elementToFocus = lastFocusedElementRef.current ?? getTabbableCandidates()[0];
         elementToFocus?.focus({ preventScroll: true });
       }
     }
 
     function onKeyDown(event: KeyboardEvent) {
-      if (event.key !== "Tab" || event.altKey || event.ctrlKey || event.metaKey)
-        return;
+      if (event.key !== "Tab" || event.altKey || event.ctrlKey || event.metaKey) return;
 
       const [first, last] = getTabbableEdges();
       const hasTabbableElements = first && last;
@@ -213,11 +197,9 @@ function useFocusTrap(
 
     const openAutoFocusEvent = new CustomEvent(OPEN_AUTO_FOCUS, EVENT_OPTIONS);
     if (onOpenAutoFocusRef.current) {
-      container.addEventListener(
-        OPEN_AUTO_FOCUS,
-        onOpenAutoFocusRef.current as EventListener,
-        { once: true },
-      );
+      container.addEventListener(OPEN_AUTO_FOCUS, onOpenAutoFocusRef.current as EventListener, {
+        once: true,
+      });
     }
     container.dispatchEvent(openAutoFocusEvent);
 
@@ -239,24 +221,18 @@ function useFocusTrap(
 
       if (!tourOpenRef.current) {
         setTimeout(() => {
-          const closeAutoFocusEvent = new CustomEvent(
-            CLOSE_AUTO_FOCUS,
-            EVENT_OPTIONS,
-          );
+          const closeAutoFocusEvent = new CustomEvent(CLOSE_AUTO_FOCUS, EVENT_OPTIONS);
           if (onCloseAutoFocusRef.current) {
             container.addEventListener(
               CLOSE_AUTO_FOCUS,
               onCloseAutoFocusRef.current as EventListener,
-              { once: true },
+              { once: true }
             );
           }
           container.dispatchEvent(closeAutoFocusEvent);
 
           if (!closeAutoFocusEvent.defaultPrevented) {
-            if (
-              previouslyFocusedElement &&
-              document.body.contains(previouslyFocusedElement)
-            ) {
+            if (previouslyFocusedElement && document.body.contains(previouslyFocusedElement)) {
               previouslyFocusedElement.focus({ preventScroll: true });
             }
           }
@@ -264,19 +240,13 @@ function useFocusTrap(
           if (onCloseAutoFocusRef.current) {
             container.removeEventListener(
               CLOSE_AUTO_FOCUS,
-              onCloseAutoFocusRef.current as EventListener,
+              onCloseAutoFocusRef.current as EventListener
             );
           }
         }, 0);
       }
     };
-  }, [
-    containerRef,
-    enabled,
-    onOpenAutoFocusRef,
-    onCloseAutoFocusRef,
-    tourOpenRef,
-  ]);
+  }, [containerRef, enabled, onOpenAutoFocusRef, onCloseAutoFocusRef, tourOpenRef]);
 }
 
 function getDataState(open: boolean) {
@@ -311,20 +281,13 @@ interface StoreState {
 interface Store {
   subscribe: (callback: () => void) => () => void;
   getState: () => StoreState;
-  setState: <K extends keyof StoreState>(
-    key: K,
-    value: StoreState[K],
-    opts?: unknown,
-  ) => void;
+  setState: <K extends keyof StoreState>(key: K, value: StoreState[K], opts?: unknown) => void;
   notify: () => void;
   addStep: (stepData: StepData) => { id: string; index: number };
   removeStep: (id: string) => void;
 }
 
-function useStore<T>(
-  selector: (state: StoreState) => T,
-  ogStore?: Store | null,
-): T {
+function useStore<T>(selector: (state: StoreState) => T, ogStore?: Store | null): T {
   const contextStore = React.useContext(StoreContext);
 
   const store = ogStore ?? contextStore;
@@ -333,16 +296,13 @@ function useStore<T>(
     throw new Error(`\`useStore\` must be used within \`${ROOT_NAME}\``);
   }
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
 
 function getTargetElement(
-  target: string | React.RefObject<HTMLElement> | HTMLElement,
+  target: string | React.RefObject<HTMLElement> | HTMLElement
 ): HTMLElement | null {
   if (typeof target === "string") {
     return document.querySelector(target);
@@ -358,15 +318,13 @@ function getTargetElement(
 
 function getDefaultScrollBehavior(): ScrollBehavior {
   if (typeof window === "undefined") return "smooth";
-  return window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ? "auto"
-    : "smooth";
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
 }
 
 function onScrollToElement(
   element: HTMLElement,
   scrollBehavior: ScrollBehavior = getDefaultScrollBehavior(),
-  scrollOffset?: ScrollOffset,
+  scrollOffset?: ScrollOffset
 ) {
   const offset: Required<ScrollOffset> = {
     top: 100,
@@ -411,7 +369,7 @@ function getPlacement(side: Side, align: Align): Placement {
 function updateMask(
   store: Store,
   targetElement: HTMLElement,
-  padding: number = DEFAULT_SPOTLIGHT_PADDING,
+  padding: number = DEFAULT_SPOTLIGHT_PADDING
 ) {
   const clientRect = targetElement.getBoundingClientRect();
   const viewportWidth = window.innerWidth;
@@ -503,8 +461,7 @@ function useScrollLock(enabled: boolean) {
     if (!enabled) return;
 
     const originalStyle = window.getComputedStyle(document.body).overflow;
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
     document.body.style.overflow = "hidden";
     if (scrollbarWidth > 0) {
@@ -633,10 +590,7 @@ function Tour(props: TourProps) {
               }
             }
           } else {
-            if (
-              stateRef.current.value <
-              (stateRef.current.steps.length || 0) - 1
-            ) {
+            if (stateRef.current.value < (stateRef.current.steps.length || 0) - 1) {
               propsRef.current.onSkip?.();
             }
           }
@@ -671,7 +625,7 @@ function Tour(props: TourProps) {
               onScrollToElement(
                 targetElement,
                 propsRef.current.scrollBehavior,
-                propsRef.current.scrollOffset,
+                propsRef.current.scrollOffset
               );
             }
           }
@@ -696,9 +650,7 @@ function Tour(props: TourProps) {
         const index = stepIdsMapRef.current.get(id);
         if (index === undefined) return;
 
-        stateRef.current.steps = stateRef.current.steps.filter(
-          (_, i) => i !== index,
-        );
+        stateRef.current.steps = stateRef.current.steps.filter((_, i) => i !== index);
 
         stepIdsMapRef.current.delete(id);
 
@@ -711,7 +663,7 @@ function Tour(props: TourProps) {
         store.notify();
       },
     }),
-    [stateRef, listenersRef, stepIdsMapRef, stepIdCounterRef, propsRef],
+    [stateRef, listenersRef, stepIdsMapRef, stepIdCounterRef, propsRef]
   );
 
   const open = useStore((state) => state.open, store);
@@ -735,21 +687,17 @@ function Tour(props: TourProps) {
     const wasOpen = prevOpenRef.current;
 
     if (open && !wasOpen) {
-      previouslyFocusedElementRef.current =
-        document.activeElement as HTMLElement | null;
+      previouslyFocusedElementRef.current = document.activeElement as HTMLElement | null;
     } else if (!open && wasOpen) {
       setTimeout(() => {
         const container = portal ?? document.body;
-        const closeAutoFocusEvent = new CustomEvent(
-          CLOSE_AUTO_FOCUS,
-          EVENT_OPTIONS,
-        );
+        const closeAutoFocusEvent = new CustomEvent(CLOSE_AUTO_FOCUS, EVENT_OPTIONS);
 
         if (propsRef.current.onCloseAutoFocus) {
           container.addEventListener(
             CLOSE_AUTO_FOCUS,
             propsRef.current.onCloseAutoFocus as EventListener,
-            { once: true },
+            { once: true }
           );
         }
         container.dispatchEvent(closeAutoFocusEvent);
@@ -806,7 +754,7 @@ function Tour(props: TourProps) {
       onInteractOutside,
       onOpenAutoFocus,
       onCloseAutoFocus,
-    ],
+    ]
   );
 
   const portalContextValue = React.useMemo<PortalContextValue>(
@@ -814,7 +762,7 @@ function Tour(props: TourProps) {
       portal,
       onPortalChange: setPortal,
     }),
-    [portal],
+    [portal]
   );
 
   useScrollLock(open && modal);
@@ -831,9 +779,7 @@ function Tour(props: TourProps) {
   return (
     <StoreContext.Provider value={store}>
       <TourContext.Provider value={contextValue}>
-        <PortalContext.Provider value={portalContextValue}>
-          {element}
-        </PortalContext.Provider>
+        <PortalContext.Provider value={portalContextValue}>{element}</PortalContext.Provider>
       </TourContext.Provider>
     </StoreContext.Provider>
   );
@@ -999,10 +945,7 @@ function TourStep(props: TourStepProps) {
     ].filter(Boolean) as Middleware[];
   }, [stepData, resolvedSideOffset, resolvedAlignOffset, arrow]);
 
-  const placement = getPlacement(
-    stepData?.side ?? side,
-    stepData?.align ?? align,
-  );
+  const placement = getPlacement(stepData?.side ?? side, stepData?.align ?? align);
 
   const {
     refs,
@@ -1021,8 +964,7 @@ function TourStep(props: TourStepProps) {
 
   const composedRef = useComposedRefs(refs.setFloating, stepRef);
 
-  const [placedSide, placedAlign] =
-    getSideAndAlignFromPlacement(finalPlacement);
+  const [placedSide, placedAlign] = getSideAndAlignFromPlacement(finalPlacement);
 
   const arrowX = middlewareData.arrow?.x;
   const arrowY = middlewareData.arrow?.y;
@@ -1039,7 +981,7 @@ function TourStep(props: TourStepProps) {
       onArrowChange: setArrow,
       onFooterChange: setFooter,
     }),
-    [arrowX, arrowY, placedSide, placedAlign, cannotCenterArrow],
+    [arrowX, arrowY, placedSide, placedAlign, cannotCenterArrow]
   );
 
   React.useEffect(() => {
@@ -1166,7 +1108,7 @@ function TourStep(props: TourStepProps) {
       onPointerDownCaptureProp?.(event);
       isPointerInsideReactTreeRef.current = true;
     },
-    [onPointerDownCaptureProp],
+    [onPointerDownCaptureProp]
   );
 
   const onFocusCapture = React.useCallback(
@@ -1174,7 +1116,7 @@ function TourStep(props: TourStepProps) {
       onFocusCaptureProp?.(event);
       isFocusInsideReactTreeRef.current = true;
     },
-    [onFocusCaptureProp],
+    [onFocusCaptureProp]
   );
 
   const onBlurCapture = React.useCallback(
@@ -1182,7 +1124,7 @@ function TourStep(props: TourStepProps) {
       onBlurCaptureProp?.(event);
       isFocusInsideReactTreeRef.current = false;
     },
-    [onBlurCaptureProp],
+    [onBlurCaptureProp]
   );
 
   React.useEffect(() => {
@@ -1200,20 +1142,12 @@ function TourStep(props: TourStepProps) {
       isFocusInsideReactTreeRef.current = false;
     }
 
-    targetElement.addEventListener(
-      "pointerdown",
-      onTargetPointerDownCapture,
-      true,
-    );
+    targetElement.addEventListener("pointerdown", onTargetPointerDownCapture, true);
     targetElement.addEventListener("focus", onTargetFocusCapture, true);
     targetElement.addEventListener("blur", onTargetBlurCapture, true);
 
     return () => {
-      targetElement.removeEventListener(
-        "pointerdown",
-        onTargetPointerDownCapture,
-        true,
-      );
+      targetElement.removeEventListener("pointerdown", onTargetPointerDownCapture, true);
       targetElement.removeEventListener("focus", onTargetFocusCapture, true);
       targetElement.removeEventListener("blur", onTargetBlurCapture, true);
     };
@@ -1225,7 +1159,7 @@ function TourStep(props: TourStepProps) {
     open && isCurrentStep,
     open,
     context.onOpenAutoFocus,
-    context.onCloseAutoFocus,
+    context.onCloseAutoFocus
   );
 
   const stepChildren = React.useMemo(
@@ -1239,7 +1173,7 @@ function TourStep(props: TourStepProps) {
         )}
       </>
     ),
-    [children, footer, context.stepFooter],
+    [children, footer, context.stepFooter]
   );
 
   const element = useRender({
@@ -1254,7 +1188,7 @@ function TourStep(props: TourStepProps) {
         onBlurCapture,
         className: cn(
           "fixed z-50 flex w-80 flex-col gap-4 rounded-lg border bg-popover p-4 text-popover-foreground shadow-md outline-none",
-          className,
+          className
         ),
         style: {
           ...style,
@@ -1264,7 +1198,7 @@ function TourStep(props: TourStepProps) {
         },
         children: stepChildren,
       },
-      stepProps,
+      stepProps
     ),
     render,
     state: {
@@ -1278,11 +1212,7 @@ function TourStep(props: TourStepProps) {
     return null;
   }
 
-  return (
-    <StepContext.Provider value={stepContextValue}>
-      {element}
-    </StepContext.Provider>
-  );
+  return <StepContext.Provider value={stepContextValue}>{element}</StepContext.Provider>;
 }
 
 interface TourSpotlightProps extends DivProps {
@@ -1290,13 +1220,7 @@ interface TourSpotlightProps extends DivProps {
 }
 
 function TourSpotlight(props: TourSpotlightProps) {
-  const {
-    render,
-    className,
-    style,
-    forceMount = false,
-    ...backdropProps
-  } = props;
+  const { render, className, style, forceMount = false, ...backdropProps } = props;
 
   const open = useStore((state) => state.open);
   const maskPath = useStore((state) => state.maskPath);
@@ -1307,14 +1231,14 @@ function TourSpotlight(props: TourSpotlightProps) {
       {
         className: cn(
           "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/80 data-[state=closed]:animate-out data-[state=open]:animate-in",
-          className,
+          className
         ),
         style: {
           clipPath: maskPath,
           ...style,
         },
       },
-      backdropProps,
+      backdropProps
     ),
     render,
     state: {
@@ -1344,7 +1268,7 @@ function TourSpotlightRing(props: TourSpotlightRingProps) {
       {
         className: cn(
           "pointer-events-none fixed z-50 border-ring ring-[3px] ring-ring/50",
-          className,
+          className
         ),
         style: spotlightRect
           ? {
@@ -1356,7 +1280,7 @@ function TourSpotlightRing(props: TourSpotlightRingProps) {
             }
           : style,
       },
-      ringProps,
+      ringProps
     ),
     render,
     state: {
@@ -1408,14 +1332,7 @@ interface TourArrowProps extends React.ComponentProps<"svg"> {
 }
 
 function TourArrow(props: TourArrowProps) {
-  const {
-    width = 10,
-    height = 5,
-    className,
-    children,
-    asChild,
-    ...arrowProps
-  } = props;
+  const { width = 10, height = 5, className, children, asChild, ...arrowProps } = props;
 
   const stepContext = useStepContext(ARROW_NAME);
   const baseSide = OPPOSITE_SIDE[stepContext.placedSide];
@@ -1426,8 +1343,7 @@ function TourArrow(props: TourArrowProps) {
       data-slot="tour-arrow"
       style={{
         position: "absolute",
-        left:
-          stepContext.arrowX != null ? `${stepContext.arrowX}px` : undefined,
+        left: stepContext.arrowX != null ? `${stepContext.arrowX}px` : undefined,
         top: stepContext.arrowY != null ? `${stepContext.arrowY}px` : undefined,
         [baseSide]: 0,
         transformOrigin: {
@@ -1469,12 +1385,9 @@ function TourHeader(props: DivProps) {
     props: mergeProps<"div">(
       {
         dir: context.dir,
-        className: cn(
-          "flex flex-col gap-1.5 text-center sm:text-left",
-          className,
-        ),
+        className: cn("flex flex-col gap-1.5 text-center sm:text-left", className),
       },
-      headerProps,
+      headerProps
     ),
     render,
     state: {
@@ -1493,12 +1406,9 @@ function TourTitle(props: DivProps) {
     props: mergeProps<"div">(
       {
         dir: context.dir,
-        className: cn(
-          "font-semibold text-lg leading-none tracking-tight",
-          className,
-        ),
+        className: cn("font-semibold text-lg leading-none tracking-tight", className),
       },
-      titleProps,
+      titleProps
     ),
     render,
     state: {
@@ -1519,7 +1429,7 @@ function TourDescription(props: DivProps) {
         dir: context.dir,
         className: cn("text-muted-foreground text-sm", className),
       },
-      descriptionProps,
+      descriptionProps
     ),
     render,
     state: {
@@ -1533,12 +1443,7 @@ interface TourCloseProps
     useRender.ComponentProps<"button"> {}
 
 function TourClose(props: TourCloseProps) {
-  const {
-    render,
-    className,
-    onClick: onClickProp,
-    ...closeButtonProps
-  } = props;
+  const { render, className, onClick: onClickProp, ...closeButtonProps } = props;
 
   const store = useStoreContext(CLOSE_NAME);
 
@@ -1549,7 +1454,7 @@ function TourClose(props: TourCloseProps) {
 
       store.setState("open", false);
     },
-    [store, onClickProp],
+    [store, onClickProp]
   );
 
   return useRender({
@@ -1560,20 +1465,19 @@ function TourClose(props: TourCloseProps) {
         "aria-label": "Close tour",
         className: cn(
           "absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0",
-          className,
+          className
         ),
         onClick,
         children: <X className="size-4" />,
       },
-      closeButtonProps,
+      closeButtonProps
     ),
     render,
     state: {},
   });
 }
 
-interface TourPrevProps
-  extends Omit<React.ComponentProps<typeof Button>, "onClick"> {
+interface TourPrevProps extends Omit<React.ComponentProps<typeof Button>, "onClick"> {
   onClick?: (event: React.MouseEvent<PrevElement>) => void;
 }
 
@@ -1592,7 +1496,7 @@ function TourPrev(props: TourPrevProps) {
         store.setState("value", value - 1);
       }
     },
-    [value, store, onClickProp],
+    [value, store, onClickProp]
   );
 
   return (
@@ -1615,8 +1519,7 @@ function TourPrev(props: TourPrevProps) {
   );
 }
 
-interface TourNextProps
-  extends Omit<React.ComponentProps<typeof Button>, "onClick"> {
+interface TourNextProps extends Omit<React.ComponentProps<typeof Button>, "onClick"> {
   onClick?: (event: React.MouseEvent<NextElement>) => void;
 }
 
@@ -1635,7 +1538,7 @@ function TourNext(props: TourNextProps) {
 
       store.setState("value", value + 1);
     },
-    [value, store, onClickProp],
+    [value, store, onClickProp]
   );
 
   return (
@@ -1656,8 +1559,7 @@ function TourNext(props: TourNextProps) {
   );
 }
 
-interface TourSkipProps
-  extends Omit<React.ComponentProps<typeof Button>, "onClick"> {
+interface TourSkipProps extends Omit<React.ComponentProps<typeof Button>, "onClick"> {
   onClick?: (event: React.MouseEvent<SkipElement>) => void;
 }
 
@@ -1673,7 +1575,7 @@ function TourSkip(props: TourSkipProps) {
 
       store.setState("open", false);
     },
-    [store, onClickProp],
+    [store, onClickProp]
   );
 
   return (
@@ -1713,7 +1615,7 @@ function TourStepCounter(props: TourStepCounterProps) {
         className: cn("text-muted-foreground text-sm", className),
         children: children ?? format(value + 1, steps.length),
       },
-      stepCounterProps,
+      stepCounterProps
     ),
     render,
     state: {
@@ -1731,7 +1633,7 @@ function TourFooter(props: DivProps) {
 
   const composedRef = useComposedRefs(
     ref,
-    hasDefaultFooter ? undefined : stepContext.onFooterChange,
+    hasDefaultFooter ? undefined : stepContext.onFooterChange
   );
 
   return useRender({
@@ -1740,12 +1642,9 @@ function TourFooter(props: DivProps) {
       {
         ref: composedRef,
         dir: context.dir,
-        className: cn(
-          "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
-          className,
-        ),
+        className: cn("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", className),
       },
-      footerProps,
+      footerProps
     ),
     render,
     state: {

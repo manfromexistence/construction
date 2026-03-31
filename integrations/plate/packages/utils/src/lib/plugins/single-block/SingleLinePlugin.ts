@@ -1,7 +1,7 @@
-import { createSlatePlugin } from '@platejs/core';
+import { createSlatePlugin } from "@platejs/core";
 
-import { TextApi } from '@platejs/slate';
-import { KEYS } from '../../plate-keys';
+import { TextApi } from "@platejs/slate";
+import { KEYS } from "../../plate-keys";
 
 /** Forces editor to only have one line. */
 export const SingleLinePlugin = createSlatePlugin({
@@ -26,7 +26,7 @@ export const SingleLinePlugin = createSlatePlugin({
 
       // Filter out line break characters from text nodes
       if (TextApi.isText(node)) {
-        const filteredText = node.text.replace(/[\r\n\u2028\u2029]/g, '');
+        const filteredText = node.text.replace(/[\r\n\u2028\u2029]/g, "");
         if (filteredText !== node.text) {
           editor.tf.insertText(filteredText, { at: path });
           return;

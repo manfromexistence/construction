@@ -1,13 +1,11 @@
-import * as React from 'react';
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import * as React from "react";
 
-import type { Metadata } from 'next';
-
-import { notFound } from 'next/navigation';
-
-import { siteConfig } from '@/config/site';
-import { getAllBlocks } from '@/lib/blocks';
-import { getRegistryComponent, getRegistryItem } from '@/lib/rehype-utils';
-import { cn } from '@/lib/utils';
+import { siteConfig } from "@/config/site";
+import { getAllBlocks } from "@/lib/blocks";
+import { getRegistryComponent, getRegistryItem } from "@/lib/rehype-utils";
+import { cn } from "@/lib/utils";
 
 const getCachedRegistryItem = React.cache(
   async (name: string) => await getRegistryItem(name, true)
@@ -26,7 +24,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const title = `${item.description ? `${item.description}` : ''}`;
+  const title = `${item.description ? `${item.description}` : ""}`;
   const description = `npx shadcn@latest add ${siteConfig.registryUrl}${item.name}`;
 
   return {
@@ -34,16 +32,16 @@ export async function generateMetadata({
     openGraph: {
       images: [
         {
-          url: `/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description ?? '')}`,
+          url: `/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description ?? "")}`,
         },
       ],
     },
     title,
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       images: [
         {
-          url: `/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description ?? '')}`,
+          url: `/og?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description ?? "")}`,
         },
       ],
     },
@@ -58,11 +56,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlockPage({
-  params,
-}: {
-  params: Promise<{ name: string }>;
-}) {
+export default async function BlockPage({ params }: { params: Promise<{ name: string }> }) {
   const { name } = await params;
   const item = await getCachedRegistryItem(name);
   const Component = getRegistryComponent(name);
@@ -74,8 +68,8 @@ export default async function BlockPage({
   return (
     <div
       className={cn(
-        'themes-wrapper bg-background **:data-block-hide:hidden',
-        item.meta?.containerClassName ?? 'size-full'
+        "themes-wrapper bg-background **:data-block-hide:hidden",
+        item.meta?.containerClassName ?? "size-full"
       )}
     >
       {/* eslint-disable-next-line react-hooks/static-components -- Dynamic block component loading is intentional */}

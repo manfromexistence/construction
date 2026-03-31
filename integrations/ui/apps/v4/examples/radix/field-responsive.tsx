@@ -1,4 +1,4 @@
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Field,
   FieldContent,
@@ -7,8 +7,8 @@ import {
   FieldLabel,
   FieldLegend,
   FieldSet,
-} from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+} from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 
 export function FieldResponsive() {
   return (
@@ -21,9 +21,7 @@ export function FieldResponsive() {
             <Field orientation="responsive">
               <FieldContent>
                 <FieldLabel htmlFor="name">Name</FieldLabel>
-                <FieldDescription>
-                  Provide your full name for identification
-                </FieldDescription>
+                <FieldDescription>Provide your full name for identification</FieldDescription>
               </FieldContent>
               <Input id="name" placeholder="Evil Rabbit" required />
             </Field>
@@ -37,5 +35,5 @@ export function FieldResponsive() {
         </FieldSet>
       </form>
     </div>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import Image from "next/image"
+import Image from "next/image";
 
 import {
   Item,
@@ -7,7 +7,7 @@ import {
   ItemGroup,
   ItemMedia,
   ItemTitle,
-} from "@/styles/radix-nova/ui/item"
+} from "@/styles/radix-nova/ui/item";
 
 const music = [
   {
@@ -28,7 +28,7 @@ const music = [
     album: "Binary Beats",
     duration: "3:30",
   },
-]
+];
 
 export function ItemImage() {
   return (
@@ -48,8 +48,7 @@ export function ItemImage() {
               </ItemMedia>
               <ItemContent>
                 <ItemTitle className="line-clamp-1">
-                  {song.title} -{" "}
-                  <span className="text-muted-foreground">{song.album}</span>
+                  {song.title} - <span className="text-muted-foreground">{song.album}</span>
                 </ItemTitle>
                 <ItemDescription>{song.artist}</ItemDescription>
               </ItemContent>
@@ -61,5 +60,5 @@ export function ItemImage() {
         ))}
       </ItemGroup>
     </div>
-  )
+  );
 }

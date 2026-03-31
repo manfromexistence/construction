@@ -1,15 +1,13 @@
-import { type OverrideEditor, KEYS, RangeApi } from 'platejs';
-
-import type { ListConfig } from './BaseListPlugin';
-
-import { unwrapList } from '.';
-import { moveListItems } from './transforms/index';
-import { withDeleteBackwardList } from './withDeleteBackwardList';
-import { withDeleteForwardList } from './withDeleteForwardList';
-import { withDeleteFragmentList } from './withDeleteFragmentList';
-import { withInsertBreakList } from './withInsertBreakList';
-import { withInsertFragmentList } from './withInsertFragmentList';
-import { withNormalizeList } from './withNormalizeList';
+import { KEYS, type OverrideEditor, RangeApi } from "platejs";
+import { unwrapList } from ".";
+import type { ListConfig } from "./BaseListPlugin";
+import { moveListItems } from "./transforms/index";
+import { withDeleteBackwardList } from "./withDeleteBackwardList";
+import { withDeleteForwardList } from "./withDeleteForwardList";
+import { withDeleteFragmentList } from "./withDeleteFragmentList";
+import { withInsertBreakList } from "./withInsertBreakList";
+import { withInsertFragmentList } from "./withInsertFragmentList";
+import { withNormalizeList } from "./withNormalizeList";
 
 export const withList: OverrideEditor<ListConfig> = (ctx) => {
   const {

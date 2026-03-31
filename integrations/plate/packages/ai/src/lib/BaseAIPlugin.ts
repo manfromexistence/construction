@@ -1,25 +1,24 @@
 import {
-  type OmitFirst,
-  type PluginConfig,
-  type SlateEditor,
   bindFirst,
   createTSlatePlugin,
   KEYS,
-} from 'platejs';
-
+  type OmitFirst,
+  type PluginConfig,
+  type SlateEditor,
+} from "platejs";
+import { removeAIMarks, undoAI } from "./transforms";
 import {
   acceptAIPreview,
   beginAIPreview,
   cancelAIPreview,
   discardAIPreview,
   hasAIPreview,
-} from './transforms/aiStreamSnapshot';
-import { removeAIMarks, undoAI } from './transforms';
-import { insertAINodes } from './transforms/insertAINodes';
-import { removeAINodes } from './transforms/removeAINodes';
+} from "./transforms/aiStreamSnapshot";
+import { insertAINodes } from "./transforms/insertAINodes";
+import { removeAINodes } from "./transforms/removeAINodes";
 
 export type BaseAIPluginConfig = PluginConfig<
-  'ai',
+  "ai",
   {},
   {},
   {
@@ -59,6 +58,6 @@ export const BaseAIPlugin = createTSlatePlugin<BaseAIPluginConfig>({
   node: { isDecoration: false, isLeaf: true },
 })
   .extendTransforms(({ editor }) => getAITransforms(editor))
-  .extendEditorTransforms<BaseAIPluginConfig['transforms']>(({ editor }) => ({
+  .extendEditorTransforms<BaseAIPluginConfig["transforms"]>(({ editor }) => ({
     ai: getAITransforms(editor),
   }));

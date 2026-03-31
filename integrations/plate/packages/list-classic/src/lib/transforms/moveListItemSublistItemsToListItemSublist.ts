@@ -1,13 +1,13 @@
 import {
   type ElementEntry,
+  NodeApi,
   type Path,
+  PathApi,
   type SlateEditor,
   type TElement,
-  NodeApi,
-  PathApi,
-} from 'platejs';
+} from "platejs";
 
-import { getListTypes } from '../queries/getListTypes';
+import { getListTypes } from "../queries/getListTypes";
 
 export type MoveListItemSublistItemsToListItemSublistOptions = {
   /** The list item to merge. */
@@ -26,11 +26,7 @@ export type MoveListItemSublistItemsToListItemSublistOptions = {
  */
 export const moveListItemSublistItemsToListItemSublist = (
   editor: SlateEditor,
-  {
-    fromListItem,
-    start,
-    toListItem,
-  }: MoveListItemSublistItemsToListItemSublistOptions
+  { fromListItem, start, toListItem }: MoveListItemSublistItemsToListItemSublistOptions
 ) => {
   const [, fromListItemPath] = fromListItem;
   const [, toListItemPath] = toListItem;

@@ -1,14 +1,13 @@
-import type { Point } from 'slate';
+import { ElementApi, NodeApi } from "@platejs/slate";
+import type { Point } from "slate";
 
-import { ElementApi, NodeApi } from '@platejs/slate';
-
-import type { SlateEditor } from '../../../editor';
-import type { EdgeNodes } from '../types';
+import type { SlateEditor } from "../../../editor";
+import type { EdgeNodes } from "../types";
 
 export const setAffinitySelection = (
   editor: SlateEditor,
   edgeNodes: EdgeNodes,
-  affinity: 'backward' | 'forward'
+  affinity: "backward" | "forward"
 ) => {
   const setMarks = (marks: typeof editor.marks) => {
     editor.marks = marks;
@@ -21,7 +20,7 @@ export const setAffinitySelection = (
 
   const [before, after] = edgeNodes;
 
-  if (affinity === 'backward') {
+  if (affinity === "backward") {
     if (before === null) {
       setMarks({});
       return;

@@ -33,9 +33,7 @@ type Side = (typeof SIDE_OPTIONS)[number];
 type Align = (typeof ALIGN_OPTIONS)[number];
 type Boundary = Element | null;
 
-interface DivProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {}
+interface DivProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {}
 
 function getSideAndAlignFromPlacement(placement: Placement) {
   const [side, align = "center"] = placement.split("-");
@@ -77,10 +75,7 @@ function useStoreContext(consumerName: string) {
   return context;
 }
 
-function useStore<T>(
-  selector: (state: StoreState) => T,
-  ogStore?: Store | null,
-): T {
+function useStore<T>(selector: (state: StoreState) => T, ogStore?: Store | null): T {
   const contextStore = React.useContext(StoreContext);
 
   const store = ogStore ?? contextStore;
@@ -89,17 +84,12 @@ function useStore<T>(
     throw new Error(`\`useStore\` must be used within \`${ROOT_NAME}\``);
   }
 
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
 
-interface SelectionToolbarProps
-  extends Omit<DivProps, "open">,
-    useRender.ComponentProps<"div"> {
+interface SelectionToolbarProps extends Omit<DivProps, "open">, useRender.ComponentProps<"div"> {
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
   onSelectionChange?: (text: string) => void;
@@ -221,7 +211,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
   const mounted = React.useSyncExternalStore(
     () => () => {},
     () => true,
-    () => false,
+    () => false
   );
 
   const virtualElement = React.useMemo(() => {
@@ -246,11 +236,8 @@ function SelectionToolbar(props: SelectionToolbarProps) {
       name: "transformOrigin",
       fn(data) {
         const { placement, rects } = data;
-        const [placedSide, placedAlign] =
-          getSideAndAlignFromPlacement(placement);
-        const noArrowAlign = { start: "0%", center: "50%", end: "100%" }[
-          placedAlign
-        ];
+        const [placedSide, placedAlign] = getSideAndAlignFromPlacement(placement);
+        const noArrowAlign = { start: "0%", center: "50%", end: "100%" }[placedAlign];
 
         let x = "";
         let y = "";
@@ -271,12 +258,12 @@ function SelectionToolbar(props: SelectionToolbarProps) {
         return { data: { x, y } };
       },
     }),
-    [],
+    []
   );
 
   const desiredPlacement = React.useMemo(
     () => (side + (align !== "center" ? `-${align}` : "")) as Placement,
-    [side, align],
+    [side, align]
   );
 
   const collisionPadding = React.useMemo(
@@ -284,15 +271,12 @@ function SelectionToolbar(props: SelectionToolbarProps) {
       typeof collisionPaddingProp === "number"
         ? collisionPaddingProp
         : { top: 0, right: 0, bottom: 0, left: 0, ...collisionPaddingProp },
-    [collisionPaddingProp],
+    [collisionPaddingProp]
   );
 
   const boundary = React.useMemo(
-    () =>
-      Array.isArray(collisionBoundary)
-        ? collisionBoundary
-        : [collisionBoundary],
-    [collisionBoundary],
+    () => (Array.isArray(collisionBoundary) ? collisionBoundary : [collisionBoundary]),
+    [collisionBoundary]
   );
 
   const hasExplicitBoundaries = boundary.length > 0;
@@ -303,7 +287,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
       boundary: boundary.filter(isNotNull),
       altBoundary: hasExplicitBoundaries,
     }),
-    [collisionPadding, boundary, hasExplicitBoundaries],
+    [collisionPadding, boundary, hasExplicitBoundaries]
   );
 
   const sizeMiddleware = React.useMemo(
@@ -313,25 +297,13 @@ function SelectionToolbar(props: SelectionToolbarProps) {
         apply: ({ elements, rects, availableWidth, availableHeight }) => {
           const { width: anchorWidth, height: anchorHeight } = rects.reference;
           const contentStyle = elements.floating.style;
-          contentStyle.setProperty(
-            "--selection-toolbar-available-width",
-            `${availableWidth}px`,
-          );
-          contentStyle.setProperty(
-            "--selection-toolbar-available-height",
-            `${availableHeight}px`,
-          );
-          contentStyle.setProperty(
-            "--selection-toolbar-anchor-width",
-            `${anchorWidth}px`,
-          );
-          contentStyle.setProperty(
-            "--selection-toolbar-anchor-height",
-            `${anchorHeight}px`,
-          );
+          contentStyle.setProperty("--selection-toolbar-available-width", `${availableWidth}px`);
+          contentStyle.setProperty("--selection-toolbar-available-height", `${availableHeight}px`);
+          contentStyle.setProperty("--selection-toolbar-anchor-width", `${anchorWidth}px`);
+          contentStyle.setProperty("--selection-toolbar-anchor-height", `${anchorHeight}px`);
         },
       }),
-    [detectOverflowOptions],
+    [detectOverflowOptions]
   );
 
   const middleware = React.useMemo<Array<Middleware | false | undefined>>(
@@ -347,8 +319,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
       avoidCollisions && flip({ ...detectOverflowOptions }),
       sizeMiddleware,
       transformOrigin,
-      hideWhenDetached &&
-        hide({ strategy: "referenceHidden", ...detectOverflowOptions }),
+      hideWhenDetached && hide({ strategy: "referenceHidden", ...detectOverflowOptions }),
     ],
     [
       sideOffset,
@@ -359,7 +330,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
       sizeMiddleware,
       transformOrigin,
       hideWhenDetached,
-    ],
+    ]
   );
 
   const { refs, floatingStyles, isPositioned, middlewareData } = useFloating({
@@ -532,7 +503,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
           isPositioned &&
             "fade-in-0 zoom-in-95 animate-in duration-200 [animation-timing-function:cubic-bezier(0.16,1,0.3,1)]",
           "motion-reduce:animate-none motion-reduce:transition-none",
-          className,
+          className
         ),
         style: {
           transformOrigin: middlewareData.transformOrigin
@@ -542,7 +513,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
           ...style,
         },
       },
-      rootProps,
+      rootProps
     ),
     render,
     state: {
@@ -551,8 +522,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
     },
   });
 
-  const portalContainer =
-    portalContainerProp ?? (mounted ? globalThis.document?.body : null);
+  const portalContainer = portalContainerProp ?? (mounted ? globalThis.document?.body : null);
 
   if (!portalContainer || !open) return null;
 
@@ -563,9 +533,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
           ref={refs.setFloating}
           style={{
             ...floatingStyles,
-            transform: isPositioned
-              ? floatingStyles.transform
-              : "translate(0, -200%)",
+            transform: isPositioned ? floatingStyles.transform : "translate(0, -200%)",
             minWidth: "max-content",
             ...(middlewareData.hide?.referenceHidden && {
               visibility: "hidden",
@@ -576,7 +544,7 @@ function SelectionToolbar(props: SelectionToolbarProps) {
         >
           {element}
         </div>,
-        portalContainer,
+        portalContainer
       )}
     </StoreContext.Provider>
   );
@@ -615,8 +583,7 @@ function SelectionToolbarItem(props: SelectionToolbarItemProps) {
 
   const itemRef = React.useRef<ItemElement>(null);
   const composedRef = useComposedRefs(ref, itemRef);
-  const pointerTypeRef =
-    React.useRef<React.PointerEvent["pointerType"]>("touch");
+  const pointerTypeRef = React.useRef<React.PointerEvent["pointerType"]>("touch");
 
   const onSelect = React.useCallback(() => {
     const item = itemRef.current;
@@ -635,7 +602,7 @@ function SelectionToolbarItem(props: SelectionToolbarItemProps) {
       (event) => propsRef.current.onSelect?.(text, event),
       {
         once: true,
-      },
+      }
     );
 
     item.dispatchEvent(selectEvent);
@@ -650,7 +617,7 @@ function SelectionToolbarItem(props: SelectionToolbarItemProps) {
         event.preventDefault();
       }
     },
-    [propsRef],
+    [propsRef]
   );
 
   const onClick = React.useCallback(
@@ -662,7 +629,7 @@ function SelectionToolbarItem(props: SelectionToolbarItemProps) {
         onSelect();
       }
     },
-    [propsRef, onSelect],
+    [propsRef, onSelect]
   );
 
   const onPointerUp = React.useCallback(
@@ -674,7 +641,7 @@ function SelectionToolbarItem(props: SelectionToolbarItemProps) {
         onSelect();
       }
     },
-    [propsRef, onSelect],
+    [propsRef, onSelect]
   );
 
   return (
@@ -707,7 +674,7 @@ function SelectionToolbarSeparator(props: DivProps) {
         "aria-hidden": "true",
         className: cn("mx-0.5 h-6 w-px bg-border", className),
       },
-      separatorProps,
+      separatorProps
     ),
     render,
     state: {

@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { getTableCellBorders } from './getTableCellBorders';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { getTableCellBorders } from "./getTableCellBorders";
 
 jsxt;
 
@@ -16,8 +15,8 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('getTableCellBorders', () => {
-  it('falls back to bottom and right defaults when the cell has no row parent', () => {
+describe("getTableCellBorders", () => {
+  it("falls back to bottom and right defaults when the cell has no row parent", () => {
     const input = (
       <editor>
         <htd>
@@ -31,16 +30,16 @@ describe('getTableCellBorders', () => {
 
     expect(
       getTableCellBorders(editor, {
-        defaultBorder: { color: 'gray', size: 2, style: 'solid' },
+        defaultBorder: { color: "gray", size: 2, style: "solid" },
         element,
       })
     ).toEqual({
-      bottom: { color: 'gray', size: 2, style: 'solid' },
-      right: { color: 'gray', size: 2, style: 'solid' },
+      bottom: { color: "gray", size: 2, style: "solid" },
+      right: { color: "gray", size: 2, style: "solid" },
     });
   });
 
-  it('falls back to bottom and right defaults when the row has no table parent', () => {
+  it("falls back to bottom and right defaults when the row has no table parent", () => {
     const input = (
       <editor>
         <htr>
@@ -56,24 +55,24 @@ describe('getTableCellBorders', () => {
 
     expect(
       getTableCellBorders(editor, {
-        defaultBorder: { color: 'gray', size: 2, style: 'solid' },
+        defaultBorder: { color: "gray", size: 2, style: "solid" },
         element,
       })
     ).toEqual({
-      bottom: { color: 'gray', size: 2, style: 'solid' },
-      right: { color: 'gray', size: 2, style: 'solid' },
+      bottom: { color: "gray", size: 2, style: "solid" },
+      right: { color: "gray", size: 2, style: "solid" },
     });
   });
 
-  it('returns top and left borders only for the first row and first column', () => {
+  it("returns top and left borders only for the first row and first column", () => {
     const input = (
       <editor>
         <htable>
           <htr>
             <htd
               borders={{
-                bottom: { color: 'red', size: 4 },
-                top: { style: 'dashed' },
+                bottom: { color: "red", size: 4 },
+                top: { style: "dashed" },
               }}
             >
               <hp>11</hp>
@@ -95,23 +94,22 @@ describe('getTableCellBorders', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const element = ((editor.children[0] as any).children[0] as any)
-      .children[0];
+    const element = ((editor.children[0] as any).children[0] as any).children[0];
 
     expect(
       getTableCellBorders(editor, {
-        defaultBorder: { color: 'gray', size: 1, style: 'solid' },
+        defaultBorder: { color: "gray", size: 1, style: "solid" },
         element,
       })
     ).toEqual({
-      bottom: { color: 'red', size: 4, style: 'solid' },
-      left: { color: 'gray', size: 1, style: 'solid' },
-      right: { color: 'gray', size: 1, style: 'solid' },
-      top: { color: 'gray', size: 1, style: 'dashed' },
+      bottom: { color: "red", size: 4, style: "solid" },
+      left: { color: "gray", size: 1, style: "solid" },
+      right: { color: "gray", size: 1, style: "solid" },
+      top: { color: "gray", size: 1, style: "dashed" },
     });
   });
 
-  it('omits top and left borders for non-edge cells', () => {
+  it("omits top and left borders for non-edge cells", () => {
     const input = (
       <editor>
         <htable>
@@ -136,8 +134,7 @@ describe('getTableCellBorders', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const element = ((editor.children[0] as any).children[1] as any)
-      .children[1];
+    const element = ((editor.children[0] as any).children[1] as any).children[1];
 
     expect(
       getTableCellBorders(editor, {

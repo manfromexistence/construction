@@ -6,24 +6,14 @@ import type {
   InferTransforms,
   PluginConfig,
   SlatePlugin,
-} from '../../lib';
-import type {
-  PlatePlugin,
-  PlatePluginContext,
-  PlatePluginMethods,
-} from './PlatePlugin';
+} from "../../lib";
+import type { PlatePlugin, PlatePluginContext, PlatePluginMethods } from "./PlatePlugin";
 
-type PlatePluginConfig<
-  C extends AnyPluginConfig,
-  EO = {},
-  EA = {},
-  ET = {},
-  ES = {},
-> = Omit<
+type PlatePluginConfig<C extends AnyPluginConfig, EO = {}, EA = {}, ET = {}, ES = {}> = Omit<
   Partial<
     PlatePlugin<
       PluginConfig<
-        C['key'],
+        C["key"],
         EO & InferOptions<C>,
         EA & InferApi<C>,
         ET & InferTransforms<C>,
@@ -31,26 +21,26 @@ type PlatePluginConfig<
       >
     >
   >,
-  keyof PlatePluginMethods | 'api' | 'node' | 'options' | 'transforms'
+  keyof PlatePluginMethods | "api" | "node" | "options" | "transforms"
 > & {
   api?: EA & Partial<InferApi<C>>;
-  node?: Partial<PlatePlugin<C>['node']>;
+  node?: Partial<PlatePlugin<C>["node"]>;
   options?: EO & Partial<InferOptions<C>>;
   selectors?: ES & Partial<InferSelectors<C>>;
   transforms?: ET & Partial<InferTransforms<C>>;
 };
 
 const methodsToWrap: (keyof SlatePlugin)[] = [
-  'configure',
-  'configurePlugin',
-  'extendEditorApi',
-  'extendSelectors',
-  'extendApi',
-  'extendEditorTransforms',
-  'extendTransforms',
-  'overrideEditor',
-  'extend',
-  'extendPlugin',
+  "configure",
+  "configurePlugin",
+  "extendEditorApi",
+  "extendSelectors",
+  "extendApi",
+  "extendEditorTransforms",
+  "extendTransforms",
+  "overrideEditor",
+  "extend",
+  "extendPlugin",
 ];
 
 /**
@@ -67,20 +57,14 @@ const methodsToWrap: (keyof SlatePlugin)[] = [
  * @returns A new PlatePlugin that combines the base SlatePlugin functionality
  *   with React-specific features defined in the extension configuration.
  */
-export function toPlatePlugin<
-  C extends AnyPluginConfig,
-  EO = {},
-  EA = {},
-  ET = {},
-  ES = {},
->(
+export function toPlatePlugin<C extends AnyPluginConfig, EO = {}, EA = {}, ET = {}, ES = {}>(
   basePlugin: SlatePlugin<C>,
   extendConfig?:
     | ((ctx: PlatePluginContext<C>) => PlatePluginConfig<C, EO, EA, ET>)
     | PlatePluginConfig<C, EO, EA, ET>
 ): PlatePlugin<
   PluginConfig<
-    C['key'],
+    C["key"],
     EO & InferOptions<C>,
     EA & InferApi<C>,
     ET & InferTransforms<C>,
@@ -110,7 +94,7 @@ type ExtendPluginConfig<C extends AnyPluginConfig = PluginConfig> = Omit<
   Partial<
     PlatePlugin<
       PluginConfig<
-        C['key'],
+        C["key"],
         Partial<InferOptions<C>>,
         Partial<InferApi<C>>,
         Partial<InferTransforms<C>>
@@ -142,13 +126,7 @@ export function toTPlatePlugin<
     | ((ctx: PlatePluginContext<TContext>) => ExtendPluginConfig<C>)
     | ExtendPluginConfig<C>
 ): PlatePlugin<
-  PluginConfig<
-    C['key'],
-    InferOptions<C>,
-    InferApi<C>,
-    InferTransforms<C>,
-    InferSelectors<C>
-  >
+  PluginConfig<C["key"], InferOptions<C>, InferApi<C>, InferTransforms<C>, InferSelectors<C>>
 > {
   return toPlatePlugin(basePlugin as any, extendConfig as any);
 }

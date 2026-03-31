@@ -1,18 +1,17 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { Plate, usePlateEditor } from "platejs/react";
+import * as React from "react";
 
-import { Plate, usePlateEditor } from 'platejs/react';
-
-import { Button } from '@/components/ui/button';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { Button } from "@/components/ui/button";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 export default function ControlledEditorDemo() {
   const editor = usePlateEditor({
     value: [
       {
-        children: [{ text: 'Initial Value' }],
-        type: 'p',
+        children: [{ text: "Initial Value" }],
+        type: "p",
       },
     ],
   });
@@ -31,12 +30,12 @@ export default function ControlledEditorDemo() {
             // Replace with HTML string
             editor.tf.setValue([
               {
-                children: [{ text: 'Replaced Value' }],
-                type: 'p',
+                children: [{ text: "Replaced Value" }],
+                type: "p",
               },
             ]);
 
-            editor.tf.focus({ edge: 'endEditor' });
+            editor.tf.focus({ edge: "endEditor" });
           }}
         >
           Replace Value
@@ -73,8 +72,8 @@ function AsyncControlledEditorDemo() {
     setTimeout(() => {
       setInitialValue([
         {
-          children: [{ text: 'Loaded async value!' }],
-          type: 'p',
+          children: [{ text: "Loaded async value!" }],
+          type: "p",
         },
       ]);
       setLoading(false);
@@ -83,7 +82,7 @@ function AsyncControlledEditorDemo() {
 
   React.useEffect(() => {
     if (!loading && initialValue) {
-      editor.tf.init({ autoSelect: 'end', value: initialValue });
+      editor.tf.init({ autoSelect: "end", value: initialValue });
     }
   }, [loading, initialValue, editor]);
 

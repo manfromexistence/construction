@@ -59,10 +59,7 @@ function addInterval(treeNode: TreeNode, high: number, index: number): boolean {
   return true;
 }
 
-function removeInterval(
-  treeNode: TreeNode,
-  index: number,
-): NodeOperation | undefined {
+function removeInterval(treeNode: TreeNode, index: number): NodeOperation | undefined {
   let node: ListNode | null = treeNode.list;
   if (node.index === index) {
     if (node.next === null) return NODE_OPERATION.REMOVE;
@@ -100,12 +97,9 @@ SENTINEL_NODE.right = SENTINEL_NODE;
 
 function updateMax(node: TreeNode) {
   const max = node.high;
-  if (node.left === SENTINEL_NODE && node.right === SENTINEL_NODE)
-    node.max = max;
-  else if (node.left === SENTINEL_NODE)
-    node.max = Math.max(node.right.max, max);
-  else if (node.right === SENTINEL_NODE)
-    node.max = Math.max(node.left.max, max);
+  if (node.left === SENTINEL_NODE && node.right === SENTINEL_NODE) node.max = max;
+  else if (node.left === SENTINEL_NODE) node.max = Math.max(node.right.max, max);
+  else if (node.right === SENTINEL_NODE) node.max = Math.max(node.left.max, max);
   else node.max = Math.max(Math.max(node.left.max, node.right.max), max);
 }
 
@@ -176,10 +170,7 @@ function fixRemove(tree: Tree, node: TreeNode) {
         w = x.parent.right;
       }
 
-      if (
-        w.left.color === NODE_COLOR.BLACK &&
-        w.right.color === NODE_COLOR.BLACK
-      ) {
+      if (w.left.color === NODE_COLOR.BLACK && w.right.color === NODE_COLOR.BLACK) {
         w.color = NODE_COLOR.RED;
         x = x.parent;
       } else {
@@ -206,10 +197,7 @@ function fixRemove(tree: Tree, node: TreeNode) {
         w = x.parent.left;
       }
 
-      if (
-        w.right.color === NODE_COLOR.BLACK &&
-        w.left.color === NODE_COLOR.BLACK
-      ) {
+      if (w.right.color === NODE_COLOR.BLACK && w.left.color === NODE_COLOR.BLACK) {
         w.color = NODE_COLOR.RED;
         x = x.parent;
       } else {
@@ -289,11 +277,7 @@ function fixInsert(tree: Tree, node: TreeNode) {
 interface IntervalTree {
   insert(low: number, high: number, index: number): void;
   remove(index: number): void;
-  search(
-    low: number,
-    high: number,
-    onCallback: (index: number, low: number) => void,
-  ): void;
+  search(low: number, high: number, onCallback: (index: number, low: number) => void): void;
   size: number;
 }
 
@@ -436,7 +420,7 @@ interface Cache<K = CacheKey, V = unknown> {
 
 function onDeepMemo<T extends unknown[], U>(
   constructors: CacheConstructor[],
-  fn: (...args: T) => U,
+  fn: (...args: T) => U
 ): (...args: T) => U {
   if (!constructors.length || !constructors[0]) {
     throw new Error("At least one constructor is required");
@@ -497,9 +481,7 @@ function onDeepMemo<T extends unknown[], U>(
         base = baseCache.get(args[0] as CacheKey) as Cache | undefined;
         if (!base) {
           if (!constructors[1]) {
-            throw new Error(
-              "Second constructor is required for non-single depth cache",
-            );
+            throw new Error("Second constructor is required for non-single depth cache");
           }
           map = createCache(constructors[1]);
           map.set(args[1] as CacheKey, value);
@@ -555,7 +537,7 @@ interface Positioner {
   range: (
     low: number,
     high: number,
-    onItemRender: (index: number, left: number, top: number) => void,
+    onItemRender: (index: number, left: number, top: number) => void
   ) => void;
   size: () => number;
   estimateHeight: (itemCount: number, defaultItemHeight: number) => number;
@@ -590,7 +572,7 @@ function usePositioner(
     maxColumnCount,
     linear = false,
   }: UsePositionerOptions,
-  deps: React.DependencyList = [],
+  deps: React.DependencyList = []
 ): Positioner {
   const initPositioner = React.useCallback((): Positioner => {
     function binarySearch(a: number[], y: number): number {
@@ -612,19 +594,17 @@ function usePositioner(
       columnCount ||
       Math.min(
         Math.floor((width + columnGap) / (columnWidth + columnGap)),
-        maxColumnCount || Number.POSITIVE_INFINITY,
+        maxColumnCount || Number.POSITIVE_INFINITY
       ) ||
       1;
     const computedColumnWidth = Math.floor(
-      (width - columnGap * (computedColumnCount - 1)) / computedColumnCount,
+      (width - columnGap * (computedColumnCount - 1)) / computedColumnCount
     );
 
     const intervalTree = createIntervalTree();
     const columnHeights: number[] = new Array(computedColumnCount).fill(0);
     const items: (PositionerItem | undefined)[] = [];
-    const columnItems: number[][] = new Array(computedColumnCount)
-      .fill(0)
-      .map(() => []);
+    const columnItems: number[][] = new Array(computedColumnCount).fill(0).map(() => []);
 
     for (let i = 0; i < computedColumnCount; i++) {
       columnHeights[i] = 0;
@@ -655,14 +635,10 @@ function usePositioner(
             }
           }
 
-          const preferredHeight =
-            (columnHeights[preferredColumn] ?? 0) + height;
+          const preferredHeight = (columnHeights[preferredColumn] ?? 0) + height;
 
           const maxAllowedHeight = shortestHeight + height * 2.5;
-          columnIndex =
-            preferredHeight <= maxAllowedHeight
-              ? preferredColumn
-              : shortestIndex;
+          columnIndex = preferredHeight <= maxAllowedHeight ? preferredColumn : shortestIndex;
         } else {
           for (let i = 1; i < columnHeights.length; i++) {
             const currentHeight = columnHeights[i];
@@ -717,10 +693,7 @@ function usePositioner(
           columns[item.columnIndex] =
             columns[item.columnIndex] === void 0
               ? currentIndex
-              : Math.min(
-                  currentIndex,
-                  columns[item.columnIndex] ?? currentIndex,
-                );
+              : Math.min(currentIndex, columns[item.columnIndex] ?? currentIndex);
         }
 
         for (i = 0; i < columns.length; i++) {
@@ -742,8 +715,7 @@ function usePositioner(
           const currentHeight = columnHeights[i];
           if (typeof currentHeight !== "number") continue;
 
-          columnHeights[i] =
-            startItem.top + startItem.height + (rowGap ?? columnGap);
+          columnHeights[i] = startItem.top + startItem.height + (rowGap ?? columnGap);
 
           for (j = startIndex + 1; j < itemsInColumn.length; j++) {
             const currentIndex = itemsInColumn[j];
@@ -774,12 +746,10 @@ function usePositioner(
         return itemCount === intervalTree.size
           ? tallestColumn
           : tallestColumn +
-              Math.ceil((itemCount - intervalTree.size) / computedColumnCount) *
-                defaultItemHeight;
+              Math.ceil((itemCount - intervalTree.size) / computedColumnCount) * defaultItemHeight;
       },
       shortestColumn: () => {
-        if (columnHeights.length > 1)
-          return Math.min.apply(null, columnHeights);
+        if (columnHeights.length > 1) return Math.min.apply(null, columnHeights);
         return columnHeights[0] ?? 0;
       },
       size(): number {
@@ -789,36 +759,17 @@ function usePositioner(
         return items.filter(Boolean) as PositionerItem[];
       },
     };
-  }, [
-    width,
-    columnWidth,
-    columnGap,
-    rowGap,
-    columnCount,
-    maxColumnCount,
-    linear,
-  ]);
+  }, [width, columnWidth, columnGap, rowGap, columnCount, maxColumnCount, linear]);
 
   const positionerRef = React.useRef<Positioner | null>(null);
   if (positionerRef.current === null) positionerRef.current = initPositioner();
 
   const prevDepsRef = React.useRef(deps);
-  const opts = [
-    width,
-    columnWidth,
-    columnGap,
-    rowGap,
-    columnCount,
-    maxColumnCount,
-    linear,
-  ];
+  const opts = [width, columnWidth, columnGap, rowGap, columnCount, maxColumnCount, linear];
   const prevOptsRef = React.useRef(opts);
   const optsChanged = !opts.every((item, i) => prevOptsRef.current[i] === item);
 
-  if (
-    optsChanged ||
-    !deps.every((item, i) => prevDepsRef.current[i] === item)
-  ) {
+  if (optsChanged || !deps.every((item, i) => prevDepsRef.current[i] === item)) {
     const prevPositioner = positionerRef.current;
     const positioner = initPositioner();
     prevDepsRef.current = deps;
@@ -846,12 +797,7 @@ interface DebouncedWindowSizeOptions {
 }
 
 function useDebouncedWindowSize(options: DebouncedWindowSizeOptions) {
-  const {
-    containerRef,
-    defaultWidth = 0,
-    defaultHeight = 0,
-    delayMs = DEBOUNCE_DELAY,
-  } = options;
+  const { containerRef, defaultWidth = 0, defaultHeight = 0, delayMs = DEBOUNCE_DELAY } = options;
 
   const getDocumentSize = React.useCallback(() => {
     if (typeof document === "undefined") {
@@ -876,7 +822,7 @@ function useDebouncedWindowSize(options: DebouncedWindowSizeOptions) {
         setSize(value);
       }, delayMs);
     },
-    [delayMs],
+    [delayMs]
   );
 
   React.useEffect(() => {
@@ -912,7 +858,7 @@ type OnRafScheduleReturn<T extends unknown[]> = {
 };
 
 function onRafSchedule<T extends unknown[]>(
-  callback: (...args: T) => void,
+  callback: (...args: T) => void
 ): OnRafScheduleReturn<T> {
   let lastArgs: T = [] as unknown as T;
   let frameId: number | null = null;
@@ -948,69 +894,63 @@ function useResizeObserver(positioner: Positioner) {
       });
     }
 
-    return onDeepMemo(
-      [WeakMap],
-      (positioner: Positioner, onUpdate: () => void) => {
-        const updates: number[] = [];
-        const itemMap = new WeakMap<Element, number>();
+    return onDeepMemo([WeakMap], (positioner: Positioner, onUpdate: () => void) => {
+      const updates: number[] = [];
+      const itemMap = new WeakMap<Element, number>();
 
-        const update = onRafSchedule(() => {
-          if (updates.length > 0) {
-            positioner.update(updates);
-            onUpdate();
-          }
-          updates.length = 0;
-        });
+      const update = onRafSchedule(() => {
+        if (updates.length > 0) {
+          positioner.update(updates);
+          onUpdate();
+        }
+        updates.length = 0;
+      });
 
-        function onItemResize(target: ItemElement) {
-          const height = target.offsetHeight;
-          if (height > 0) {
-            const index = itemMap.get(target);
-            if (index !== void 0) {
-              const position = positioner.get(index);
-              if (position !== void 0 && height !== position.height) {
-                updates.push(index, height);
-              }
+      function onItemResize(target: ItemElement) {
+        const height = target.offsetHeight;
+        if (height > 0) {
+          const index = itemMap.get(target);
+          if (index !== void 0) {
+            const position = positioner.get(index);
+            if (position !== void 0 && height !== position.height) {
+              updates.push(index, height);
             }
           }
-          update();
         }
+        update();
+      }
 
-        const scheduledItemMap = new Map<
-          number,
-          OnRafScheduleReturn<[ItemElement]>
-        >();
-        function onResizeObserver(entries: ResizeObserverEntry[]) {
-          for (const entry of entries) {
-            if (!entry) continue;
-            const index = itemMap.get(entry.target);
+      const scheduledItemMap = new Map<number, OnRafScheduleReturn<[ItemElement]>>();
+      function onResizeObserver(entries: ResizeObserverEntry[]) {
+        for (const entry of entries) {
+          if (!entry) continue;
+          const index = itemMap.get(entry.target);
 
-            if (index === void 0) continue;
-            let handler = scheduledItemMap.get(index);
-            if (!handler) {
-              handler = onRafSchedule(onItemResize);
-              scheduledItemMap.set(index, handler);
-            }
-            handler(entry.target as ItemElement);
+          if (index === void 0) continue;
+          let handler = scheduledItemMap.get(index);
+          if (!handler) {
+            handler = onRafSchedule(onItemResize);
+            scheduledItemMap.set(index, handler);
           }
+          handler(entry.target as ItemElement);
         }
+      }
 
-        const observer = new ResizeObserver(onResizeObserver);
-        const disconnect = observer.disconnect.bind(observer);
-        observer.disconnect = () => {
-          disconnect();
-          for (const [, scheduleItem] of scheduledItemMap) {
-            scheduleItem.cancel();
-          }
-        };
+      const observer = new ResizeObserver(onResizeObserver);
+      const disconnect = observer.disconnect.bind(observer);
+      observer.disconnect = () => {
+        disconnect();
+        for (const [, scheduleItem] of scheduledItemMap) {
+          scheduleItem.cancel();
+        }
+      };
 
-        return observer;
-      },
-    );
+      return observer;
+    });
   }, []);
 
   const resizeObserver = createResizeObserver(positioner, () =>
-    setLayoutVersion((prev) => prev + 1),
+    setLayoutVersion((prev) => prev + 1)
   );
 
   React.useEffect(() => () => resizeObserver.disconnect(), [resizeObserver]);
@@ -1018,24 +958,19 @@ function useResizeObserver(positioner: Positioner) {
   return resizeObserver;
 }
 
-function useScroller({
-  offset = 0,
-  fps = SCROLL_FPS,
-}: {
-  offset?: number;
-  fps?: number;
-} = {}): { scrollTop: number; isScrolling: boolean } {
+function useScroller({ offset = 0, fps = SCROLL_FPS }: { offset?: number; fps?: number } = {}): {
+  scrollTop: number;
+  isScrolling: boolean;
+} {
   const [scrollY, setScrollY] = useThrottle(
     typeof globalThis.window === "undefined"
       ? 0
       : (globalThis.window.scrollY ?? document.documentElement.scrollTop ?? 0),
-    { fps, leading: true },
+    { fps, leading: true }
   );
 
   const onScroll = React.useCallback(() => {
-    setScrollY(
-      globalThis.window.scrollY ?? document.documentElement.scrollTop ?? 0,
-    );
+    setScrollY(globalThis.window.scrollY ?? document.documentElement.scrollTop ?? 0);
   }, [setScrollY]);
 
   React.useEffect(() => {
@@ -1071,7 +1006,7 @@ function useScroller({
         if (didUnsubscribe) return;
         setIsScrolling(false);
       },
-      40 + 1000 / fps,
+      40 + 1000 / fps
     );
     hasMountedRef.current = 1;
     return () => {
@@ -1088,7 +1023,7 @@ function useThrottle<State>(
   options: {
     fps?: number;
     leading?: boolean;
-  } = {},
+  } = {}
 ): [State, React.Dispatch<React.SetStateAction<State>>] {
   const { fps = 30, leading = false } = options;
   const [state, setState] = React.useState(initialState);
@@ -1097,9 +1032,7 @@ function useThrottle<State>(
 
   const ms = 1000 / fps;
   const prevCountRef = React.useRef(0);
-  const trailingTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(
-    null,
-  );
+  const trailingTimeout = React.useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const clearTrailing = React.useCallback(() => {
     if (trailingTimeout.current) {
@@ -1143,7 +1076,7 @@ function useThrottle<State>(
         prevCountRef.current = 0;
       }, ms);
     },
-    [leading, ms, clearTrailing],
+    [leading, ms, clearTrailing]
   );
 
   return [state, throttledSetState];
@@ -1159,9 +1092,7 @@ const MASONRY_ERROR = {
   [ITEM_NAME]: `\`${ITEM_NAME}\` must be within \`${VIEWPORT_NAME}\``,
 } as const;
 
-interface DivProps
-  extends React.ComponentProps<"div">,
-    useRender.ComponentProps<"div"> {}
+interface DivProps extends React.ComponentProps<"div">, useRender.ComponentProps<"div"> {}
 
 type RootElement = HTMLDivElement;
 type ItemElement = HTMLDivElement;
@@ -1293,7 +1224,7 @@ function Masonry(props: MasonryProps) {
         positioner.set(index, node.offsetHeight);
       }
     },
-    [itemMap, positioner, resizeObserver],
+    [itemMap, positioner, resizeObserver]
   );
 
   const contextValue = React.useMemo<MasonryContextValue>(
@@ -1319,7 +1250,7 @@ function Masonry(props: MasonryProps) {
       overscan,
       fallback,
       isScrolling,
-    ],
+    ]
   );
 
   return useRender({
@@ -1339,7 +1270,7 @@ function Masonry(props: MasonryProps) {
           </MasonryContext.Provider>
         ),
       },
-      rootProps,
+      rootProps
     ),
     render,
     state: {
@@ -1368,8 +1299,7 @@ function MasonryViewport(props: DivProps) {
 
   const validChildren = React.Children.toArray(children).filter(
     (child): child is React.ReactElement<MasonryItemPropsWithRef> =>
-      React.isValidElement(child) &&
-      (child.type === MasonryItem || child.type === MasonryItem),
+      React.isValidElement(child) && (child.type === MasonryItem || child.type === MasonryItem)
   );
   const itemCount = validChildren.length;
 
@@ -1378,8 +1308,7 @@ function MasonryViewport(props: DivProps) {
   const overscanPixels = context.windowHeight * context.overscan;
   const rangeStart = Math.max(0, context.scrollTop - overscanPixels / 2);
   const rangeEnd = context.scrollTop + overscanPixels;
-  const layoutOutdated =
-    shortestColumnSize < rangeEnd && measuredCount < itemCount;
+  const layoutOutdated = shortestColumnSize < rangeEnd && measuredCount < itemCount;
 
   const positionedChildren: React.ReactElement[] = [];
 
@@ -1392,7 +1321,7 @@ function MasonryViewport(props: DivProps) {
       transform: context.isScrolling ? "translateZ(0)" : undefined,
       willChange: context.isScrolling ? "transform" : undefined,
     }),
-    [context.columnWidth, context.isScrolling],
+    [context.columnWidth, context.isScrolling]
   );
 
   const hiddenItemStyle = React.useMemo(
@@ -1403,7 +1332,7 @@ function MasonryViewport(props: DivProps) {
       width: context.columnWidth,
       zIndex: -1000,
     }),
-    [context.columnWidth],
+    [context.columnWidth]
   );
 
   context.positioner.range(rangeStart, rangeEnd, (index, left, top) => {
@@ -1422,7 +1351,7 @@ function MasonryViewport(props: DivProps) {
         key: child.key ?? index,
         ref: context.onItemRegister(index),
         style: itemStyle,
-      }),
+      })
     );
 
     if (stopIndex === undefined) {
@@ -1438,17 +1367,12 @@ function MasonryViewport(props: DivProps) {
     const batchSize = Math.min(
       itemCount - measuredCount,
       Math.ceil(
-        ((context.scrollTop + overscanPixels - shortestColumnSize) /
-          context.itemHeight) *
-          context.positioner.columnCount,
-      ),
+        ((context.scrollTop + overscanPixels - shortestColumnSize) / context.itemHeight) *
+          context.positioner.columnCount
+      )
     );
 
-    for (
-      let index = measuredCount;
-      index < measuredCount + batchSize;
-      index++
-    ) {
+    for (let index = measuredCount; index < measuredCount + batchSize; index++) {
       const child = validChildren[index];
       if (!child) continue;
 
@@ -1462,7 +1386,7 @@ function MasonryViewport(props: DivProps) {
           key: child.key ?? index,
           ref: context.onItemRegister(index),
           style: itemStyle,
-        }),
+        })
       );
     }
   }
@@ -1484,16 +1408,13 @@ function MasonryViewport(props: DivProps) {
   }, [layoutOutdated, mounted]);
 
   const estimatedHeight = React.useMemo(() => {
-    const measuredHeight = context.positioner.estimateHeight(
-      measuredCount,
-      context.itemHeight,
-    );
+    const measuredHeight = context.positioner.estimateHeight(measuredCount, context.itemHeight);
     if (measuredCount === itemCount) {
       return measuredHeight;
     }
     const remainingItems = itemCount - measuredCount;
     const estimatedRemainingHeight = Math.ceil(
-      (remainingItems / context.positioner.columnCount) * context.itemHeight,
+      (remainingItems / context.positioner.columnCount) * context.itemHeight
     );
     return measuredHeight + estimatedRemainingHeight;
   }, [context.positioner, context.itemHeight, measuredCount, itemCount]);
@@ -1509,7 +1430,7 @@ function MasonryViewport(props: DivProps) {
       pointerEvents: context.isScrolling ? ("none" as const) : undefined,
       ...style,
     }),
-    [context.isScrolling, estimatedHeight, style],
+    [context.isScrolling, estimatedHeight, style]
   );
 
   if (!mounted && context.fallback) {

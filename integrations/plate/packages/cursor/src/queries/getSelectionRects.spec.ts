@@ -1,18 +1,18 @@
-import { getSelectionRects } from './getSelectionRects';
+import { getSelectionRects } from "./getSelectionRects";
 
 const createRectList = (rects: any[]) => ({
   item: (index: number) => rects[index] ?? null,
   length: rects.length,
 });
 
-describe('getSelectionRects', () => {
+describe("getSelectionRects", () => {
   const originalCreateRange = document.createRange;
 
   afterEach(() => {
     document.createRange = originalCreateRange;
   });
 
-  it('returns an empty array when the editor cannot create a DOM range', () => {
+  it("returns an empty array when the editor cannot create a DOM range", () => {
     const editor = {
       api: {
         toDOMRange: mock(() => null),
@@ -31,8 +31,8 @@ describe('getSelectionRects', () => {
     ).toEqual([]);
   });
 
-  it('returns an empty array when a DOM text node has no parent element', () => {
-    const textNode = { text: 'a' };
+  it("returns an empty array when a DOM text node has no parent element", () => {
+    const textNode = { text: "a" };
     const editor = {
       api: {
         nodes: mock(() => [[textNode, [0, 0]]]),
@@ -58,15 +58,13 @@ describe('getSelectionRects', () => {
     ).toEqual([]);
   });
 
-  it('collects start, middle, and end rects with offsets applied', () => {
-    const startText = { text: 'a' };
-    const middleText = { text: 'b' };
-    const endText = { text: 'c' };
+  it("collects start, middle, and end rects with offsets applied", () => {
+    const startText = { text: "a" };
+    const middleText = { text: "b" };
+    const endText = { text: "c" };
     const startDomNode = { parentElement: {}, getClientRects: mock() };
     const middleDomNode = {
-      getClientRects: mock(() =>
-        createRectList([{ height: 8, left: 30, top: 40, width: 12 }])
-      ),
+      getClientRects: mock(() => createRectList([{ height: 8, left: 30, top: 40, width: 12 }])),
       parentElement: {},
     };
     const endDomNode = { parentElement: {}, getClientRects: mock() };

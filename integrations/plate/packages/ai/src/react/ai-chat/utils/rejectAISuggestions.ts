@@ -1,11 +1,6 @@
-import type { PlateEditor } from 'platejs/react';
-
-import {
-  getSuggestionKey,
-  getTransientSuggestionKey,
-  rejectSuggestion,
-} from '@platejs/suggestion';
-import { SuggestionPlugin } from '@platejs/suggestion/react';
+import { getSuggestionKey, getTransientSuggestionKey, rejectSuggestion } from "@platejs/suggestion";
+import { SuggestionPlugin } from "@platejs/suggestion/react";
+import type { PlateEditor } from "platejs/react";
 
 export const rejectAISuggestions = (editor: PlateEditor) => {
   const suggestions = editor.getApi(SuggestionPlugin).suggestion.nodes({
@@ -32,7 +27,7 @@ export const rejectAISuggestions = (editor: PlateEditor) => {
 
   editor.tf.unsetNodes([getTransientSuggestionKey()], {
     at: [],
-    mode: 'all',
+    mode: "all",
     match: (n) => !!n[getTransientSuggestionKey()],
   });
 };

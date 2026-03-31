@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Marquee 3D",
   "description": "Example showing a 3D infinite scrolling component.",
-  "registryDependencies": [
-    "@magicui/marquee"
-  ],
+  "registryDependencies": ["@magicui/marquee"],
   "files": [
     {
       "path": "registry/example/marquee-3d.tsx",

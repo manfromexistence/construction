@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Pixel Image Demo",
   "description": "Example showing a pixelated image effect.",
-  "registryDependencies": [
-    "@magicui/pixel-image"
-  ],
+  "registryDependencies": ["@magicui/pixel-image"],
   "files": [
     {
       "path": "registry/example/pixel-image-demo.tsx",

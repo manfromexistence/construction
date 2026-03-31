@@ -4,10 +4,7 @@
   "type": "registry:example",
   "title": "Tweet Card Meta Preview",
   "description": "Example showing a tweet card with meta preview.",
-  "registryDependencies": [
-    "@magicui/client-tweet-card",
-    "@magicui/tweet-card"
-  ],
+  "registryDependencies": ["@magicui/client-tweet-card", "@magicui/tweet-card"],
   "files": [
     {
       "path": "registry/example/tweet-card-meta-preview.tsx",

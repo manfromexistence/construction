@@ -1,10 +1,6 @@
 {
   "name": "time-picker-form-demo",
-  "registryDependencies": [
-    "button",
-    "form",
-    "sonner"
-  ],
+  "registryDependencies": ["button", "form", "sonner"],
   "files": [
     {
       "path": "examples/time-picker-form-demo.tsx",

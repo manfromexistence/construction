@@ -2,12 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "tabbable-demo",
   "type": "registry:example",
-  "dependencies": [
-    "@platejs/tabbable"
-  ],
-  "registryDependencies": [
-    "https://platejs.org/r/editor-kit.json"
-  ],
+  "dependencies": ["@platejs/tabbable"],
+  "registryDependencies": ["https://platejs.org/r/editor-kit.json"],
   "files": [
     {
       "path": "src/registry/examples/tabbable-demo.tsx",

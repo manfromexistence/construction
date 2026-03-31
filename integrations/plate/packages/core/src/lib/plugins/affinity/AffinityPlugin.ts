@@ -1,32 +1,25 @@
-import {
-  type Path,
-  type TText,
-  ElementApi,
-  NodeApi,
-  TextApi,
-} from '@platejs/slate';
+import { ElementApi, NodeApi, type Path, TextApi, type TText } from "@platejs/slate";
 
-import type { PluginConfig } from '../../plugin/BasePlugin';
-import type { EdgeNodes } from './types';
-
-import { createTSlatePlugin } from '../../plugin/createSlatePlugin';
-import { getPluginByType } from '../../plugin/getSlatePlugin';
-import { getEdgeNodes } from './queries';
-import { getMarkBoundaryAffinity } from './queries/getMarkBoundaryAffinity';
-import { isNodesAffinity } from './queries/isNodeAffinity';
-import { setAffinitySelection } from './transforms/setAffinitySelection';
+import type { PluginConfig } from "../../plugin/BasePlugin";
+import { createTSlatePlugin } from "../../plugin/createSlatePlugin";
+import { getPluginByType } from "../../plugin/getSlatePlugin";
+import { getEdgeNodes } from "./queries";
+import { getMarkBoundaryAffinity } from "./queries/getMarkBoundaryAffinity";
+import { isNodesAffinity } from "./queries/isNodeAffinity";
+import { setAffinitySelection } from "./transforms/setAffinitySelection";
+import type { EdgeNodes } from "./types";
 
 export type ElementAffinity = {
-  affinity: 'backward' | 'forward';
+  affinity: "backward" | "forward";
   at: Path;
   type: string;
 };
 
-export type AffinityConfig = PluginConfig<'affinity'>;
+export type AffinityConfig = PluginConfig<"affinity">;
 
 // REVIEW: performance
 export const AffinityPlugin = createTSlatePlugin<AffinityConfig>({
-  key: 'affinity',
+  key: "affinity",
 }).overrideEditor(({ editor, tf: { deleteBackward, insertText, move } }) => ({
   transforms: {
     /**
@@ -36,14 +29,11 @@ export const AffinityPlugin = createTSlatePlugin<AffinityConfig>({
      */
     deleteBackward: (unit) => {
       const apply = () => {
-        if (unit === 'character' && editor.api.isCollapsed()) {
+        if (unit === "character" && editor.api.isCollapsed()) {
           const [start] = getEdgeNodes(editor) ?? [null];
 
           const startText =
-            start &&
-            (TextApi.isText(start[0])
-              ? start[0].text
-              : NodeApi.string(start[0]));
+            start && (TextApi.isText(start[0]) ? start[0].text : NodeApi.string(start[0]));
 
           deleteBackward(unit);
 
@@ -51,11 +41,10 @@ export const AffinityPlugin = createTSlatePlugin<AffinityConfig>({
 
           if (
             edgeNodes &&
-            isNodesAffinity(editor, edgeNodes, 'directional') &&
+            isNodesAffinity(editor, edgeNodes, "directional") &&
             !hasElement(edgeNodes)
           ) {
-            const affinity =
-              startText && startText.length > 1 ? 'backward' : 'forward';
+            const affinity = startText && startText.length > 1 ? "backward" : "forward";
             setAffinitySelection(editor, edgeNodes, affinity);
           }
           return true;
@@ -82,15 +71,10 @@ export const AffinityPlugin = createTSlatePlugin<AffinityConfig>({
 
         const marks = Object.keys(NodeApi.extractProps(textNode));
         const outwardMarks = marks.filter(
-          (type) =>
-            getPluginByType(editor, type)?.rules.selection?.affinity ===
-            'outward'
+          (type) => getPluginByType(editor, type)?.rules.selection?.affinity === "outward"
         );
 
-        if (
-          !outwardMarks.length ||
-          !editor.api.isEnd(editor.selection.focus, textPath)
-        ) {
+        if (!outwardMarks.length || !editor.api.isEnd(editor.selection.focus, textPath)) {
           return;
         }
 
@@ -128,36 +112,23 @@ export const AffinityPlugin = createTSlatePlugin<AffinityConfig>({
     },
     move: (options) => {
       const apply = () => {
-        const {
-          distance = 1,
-          reverse = false,
-          unit = 'character',
-        } = options || {};
+        const { distance = 1, reverse = false, unit = "character" } = options || {};
 
-        if (
-          unit === 'character' &&
-          distance === 1 &&
-          editor.api.isCollapsed()
-        ) {
+        if (unit === "character" && distance === 1 && editor.api.isCollapsed()) {
           const preEdgeNodes = getEdgeNodes(editor);
 
-          if (preEdgeNodes && isNodesAffinity(editor, preEdgeNodes, 'hard')) {
+          if (preEdgeNodes && isNodesAffinity(editor, preEdgeNodes, "hard")) {
             if (
               preEdgeNodes &&
               preEdgeNodes[reverse ? 0 : 1] === null &&
-              getMarkBoundaryAffinity(editor, preEdgeNodes) ===
-                (reverse ? 'forward' : 'backward')
+              getMarkBoundaryAffinity(editor, preEdgeNodes) === (reverse ? "forward" : "backward")
             ) {
-              setAffinitySelection(
-                editor,
-                preEdgeNodes,
-                reverse ? 'backward' : 'forward'
-              );
+              setAffinitySelection(editor, preEdgeNodes, reverse ? "backward" : "forward");
 
               return true;
             }
 
-            move({ ...options, unit: 'offset' });
+            move({ ...options, unit: "offset" });
             return true;
           }
 
@@ -171,14 +142,10 @@ export const AffinityPlugin = createTSlatePlugin<AffinityConfig>({
            */
           if (
             postEdgeNodes &&
-            isNodesAffinity(editor, postEdgeNodes, 'directional') &&
+            isNodesAffinity(editor, postEdgeNodes, "directional") &&
             !hasElement(postEdgeNodes)
           ) {
-            setAffinitySelection(
-              editor,
-              postEdgeNodes,
-              reverse ? 'forward' : 'backward'
-            );
+            setAffinitySelection(editor, postEdgeNodes, reverse ? "forward" : "backward");
           }
 
           return true;
@@ -195,8 +162,5 @@ export const AffinityPlugin = createTSlatePlugin<AffinityConfig>({
 const hasElement = (edgeNodes: EdgeNodes) => {
   const [before, after] = edgeNodes;
 
-  return (
-    (before && ElementApi.isElement(before[0])) ||
-    (after && ElementApi.isElement(after[0]))
-  );
+  return (before && ElementApi.isElement(before[0])) || (after && ElementApi.isElement(after[0]));
 };

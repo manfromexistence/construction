@@ -4,8 +4,7 @@ import { useComboboxContext } from "./combobox-root";
 
 const LABEL_NAME = "ComboboxLabel";
 
-interface ComboboxLabelProps
-  extends React.ComponentPropsWithoutRef<typeof Primitive.label> {}
+interface ComboboxLabelProps extends React.ComponentPropsWithoutRef<typeof Primitive.label> {}
 
 const ComboboxLabel = React.forwardRef<HTMLLabelElement, ComboboxLabelProps>(
   (props, forwardedRef) => {
@@ -19,7 +18,7 @@ const ComboboxLabel = React.forwardRef<HTMLLabelElement, ComboboxLabelProps>(
         ref={forwardedRef}
       />
     );
-  },
+  }
 );
 
 ComboboxLabel.displayName = LABEL_NAME;

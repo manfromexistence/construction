@@ -1,5 +1,8 @@
 "use client";
 
+import { Globe, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { TagSelector } from "@/components/tag-selector";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,11 +13,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { TagSelector } from "@/components/tag-selector";
-import { cn } from "@/lib/utils";
-import { Globe, Loader2 } from "lucide-react";
-import { useState } from "react";
 import { usePublishTheme } from "@/hooks/themes";
+import { cn } from "@/lib/utils";
 
 interface PublishButtonProps {
   themeId: string;
@@ -23,12 +23,7 @@ interface PublishButtonProps {
   className?: string;
 }
 
-export function PublishButton({
-  themeId,
-  isPublished,
-  disabled,
-  className,
-}: PublishButtonProps) {
+export function PublishButton({ themeId, isPublished, disabled, className }: PublishButtonProps) {
   const publishMutation = usePublishTheme();
   const [showDialog, setShowDialog] = useState(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
@@ -85,8 +80,8 @@ export function PublishButton({
           <DialogHeader>
             <DialogTitle>Publish to the community?</DialogTitle>
             <DialogDescription>
-              Your theme will be publicly visible on the community page. You can
-              unpublish it at any time.
+              Your theme will be publicly visible on the community page. You can unpublish it at any
+              time.
             </DialogDescription>
           </DialogHeader>
           <TagSelector
@@ -98,10 +93,7 @@ export function PublishButton({
             <Button variant="outline" onClick={() => setShowDialog(false)}>
               Cancel
             </Button>
-            <Button
-              onClick={handleConfirmPublish}
-              disabled={publishMutation.isPending}
-            >
+            <Button onClick={handleConfirmPublish} disabled={publishMutation.isPending}>
               {publishMutation.isPending ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />

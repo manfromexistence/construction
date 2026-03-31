@@ -1,8 +1,6 @@
 {
   "name": "color-picker",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "registryDependencies": [
     "button",
     "input",

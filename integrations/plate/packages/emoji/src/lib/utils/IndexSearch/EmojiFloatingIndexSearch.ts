@@ -1,6 +1,6 @@
-import type { IEmojiLibrary } from '../EmojiLibrary';
+import type { IEmojiLibrary } from "../EmojiLibrary";
 
-import { AIndexSearch } from './IndexSearch';
+import { AIndexSearch } from "./IndexSearch";
 
 export class EmojiFloatingIndexSearch extends AIndexSearch {
   protected static instance?: EmojiFloatingIndexSearch;

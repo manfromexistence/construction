@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Animated List Demo",
   "description": "Example showing a list with sequenced item animations.",
-  "registryDependencies": [
-    "@magicui/animated-list"
-  ],
+  "registryDependencies": ["@magicui/animated-list"],
   "files": [
     {
       "path": "registry/example/animated-list-demo.tsx",

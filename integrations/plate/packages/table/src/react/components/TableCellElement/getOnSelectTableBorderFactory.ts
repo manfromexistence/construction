@@ -1,4 +1,4 @@
-import type { Path, SlateEditor, TElement, TTableCellElement } from 'platejs';
+import type { Path, SlateEditor, TElement, TTableCellElement } from "platejs";
 
 import {
   type BorderDirection,
@@ -12,19 +12,19 @@ import {
   getTopTableCell,
   isSelectedCellBorder,
   setBorderSize,
-} from '../../../lib';
-import { TablePlugin } from '../../TablePlugin';
+} from "../../../lib";
+import { TablePlugin } from "../../TablePlugin";
 
 /** Helper: sets one cell's specific border(s) to `size`. */
 function setCellBorderSize(
   editor: SlateEditor,
   at: Path | null,
-  directions: BorderDirection[] | 'all',
+  directions: BorderDirection[] | "all",
   size: number
 ) {
   if (!at) return;
-  if (directions === 'all') {
-    setBorderSize(editor, size, { at, border: 'all' });
+  if (directions === "all") {
+    setBorderSize(editor, size, { at, border: "all" });
   } else {
     for (const dir of directions) {
       setBorderSize(editor, size, { at, border: dir });
@@ -53,15 +53,11 @@ const getSelectedCellBorderTargets = (
     return {
       cSpan: getColSpan(cell),
       col,
-      leftCellPath: path
-        ? (getLeftTableCell(editor, { at: path })?.[1] ?? null)
-        : null,
+      leftCellPath: path ? (getLeftTableCell(editor, { at: path })?.[1] ?? null) : null,
       path,
       rSpan: getRowSpan(cell),
       row,
-      topCellPath: path
-        ? (getTopTableCell(editor, { at: path })?.[1] ?? null)
-        : null,
+      topCellPath: path ? (getTopTableCell(editor, { at: path })?.[1] ?? null) : null,
     };
   });
 
@@ -77,7 +73,7 @@ export function setSelectedCellsBorder(
     border,
     cells,
   }: {
-    border: BorderDirection | 'none' | 'outer';
+    border: BorderDirection | "none" | "outer";
     cells: TTableCellElement[];
   }
 ) {
@@ -85,7 +81,7 @@ export function setSelectedCellsBorder(
   const targets = getSelectedCellBorderTargets(editor, cells);
 
   // 1) none => toggle all edges vs none
-  if (border === 'none') {
+  if (border === "none") {
     const { none: allNone } = getSelectedCellsBorders(editor, cells);
     const newSize = allNone ? 1 : 0;
 
@@ -95,18 +91,18 @@ export function setSelectedCellsBorder(
       const edges: BorderDirection[] = [];
 
       // For first row or first column cells, we set their top/left borders
-      if (target.row === 0) edges.push('top');
-      if (target.col === 0) edges.push('left');
+      if (target.row === 0) edges.push("top");
+      if (target.col === 0) edges.push("left");
 
       // Always set bottom and right borders
-      edges.push('bottom', 'right');
+      edges.push("bottom", "right");
 
       // For non-first row/column cells, set borders on adjacent cells
       if (target.row > 0) {
-        setCellBorderSize(editor, target.topCellPath, ['bottom'], newSize);
+        setCellBorderSize(editor, target.topCellPath, ["bottom"], newSize);
       }
       if (target.col > 0) {
-        setCellBorderSize(editor, target.leftCellPath, ['right'], newSize);
+        setCellBorderSize(editor, target.leftCellPath, ["right"], newSize);
       }
       if (edges.length > 0) {
         setCellBorderSize(editor, target.path, edges, newSize);
@@ -116,14 +112,11 @@ export function setSelectedCellsBorder(
     return;
   }
   // 2) outer => bounding rectangle edges only
-  if (border === 'outer') {
+  if (border === "outer") {
     const { outer: allOut } = getSelectedCellsBorders(editor, cells);
     const newSize = allOut ? 0 : 1;
 
-    const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(
-      editor,
-      cells
-    );
+    const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(editor, cells);
 
     for (const target of targets) {
       if (!target.path) continue;
@@ -132,10 +125,10 @@ export function setSelectedCellsBorder(
         for (let cc = target.col; cc < target.col + target.cSpan; cc++) {
           const edges: BorderDirection[] = [];
 
-          if (rr === minRow) edges.push('top');
-          if (rr === maxRow) edges.push('bottom');
-          if (cc === minCol) edges.push('left');
-          if (cc === maxCol) edges.push('right');
+          if (rr === minRow) edges.push("top");
+          if (rr === maxRow) edges.push("bottom");
+          if (cc === minCol) edges.push("left");
+          if (cc === maxCol) edges.push("right");
           if (edges.length > 0) {
             setCellBorderSize(editor, target.path, edges, newSize);
           }
@@ -151,39 +144,36 @@ export function setSelectedCellsBorder(
   const newSize = allSet ? 0 : 1;
 
   // bounding box
-  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(
-    editor,
-    cells
-  );
+  const { maxCol, maxRow, minCol, minRow } = getSelectedCellsBoundingBox(editor, cells);
 
   for (const target of targets) {
     if (!target.path) continue;
 
     const edges: BorderDirection[] = [];
 
-    if (border === 'top' && target.row === minRow) {
+    if (border === "top" && target.row === minRow) {
       const isFirstRow = target.row === 0;
 
       if (isFirstRow) {
-        edges.push('top');
+        edges.push("top");
       } else {
-        setCellBorderSize(editor, target.topCellPath, ['bottom'], newSize);
+        setCellBorderSize(editor, target.topCellPath, ["bottom"], newSize);
       }
     }
-    if (border === 'bottom' && target.row + target.rSpan - 1 === maxRow) {
-      edges.push('bottom');
+    if (border === "bottom" && target.row + target.rSpan - 1 === maxRow) {
+      edges.push("bottom");
     }
-    if (border === 'left' && target.col === minCol) {
+    if (border === "left" && target.col === minCol) {
       const isFirstCell = target.col === 0;
 
       if (isFirstCell) {
-        edges.push('left');
+        edges.push("left");
       } else {
-        setCellBorderSize(editor, target.leftCellPath, ['right'], newSize);
+        setCellBorderSize(editor, target.leftCellPath, ["right"], newSize);
       }
     }
-    if (border === 'right' && target.col + target.cSpan - 1 === maxCol) {
-      edges.push('right');
+    if (border === "right" && target.col + target.cSpan - 1 === maxCol) {
+      edges.push("right");
     }
     if (edges.length > 0) {
       setCellBorderSize(editor, target.path, edges, newSize);
@@ -197,12 +187,8 @@ export function setSelectedCellsBorder(
  * rectangle, then decide which edges to flip on/off.
  */
 export const getOnSelectTableBorderFactory =
-  (editor: SlateEditor) =>
-  (border: BorderDirection | 'none' | 'outer') =>
-  () => {
-    let cells = editor.getApi(TablePlugin).table.getSelectedCells() as
-      | TElement[]
-      | null;
+  (editor: SlateEditor) => (border: BorderDirection | "none" | "outer") => () => {
+    let cells = editor.getApi(TablePlugin).table.getSelectedCells() as TElement[] | null;
 
     if (!cells || cells.length === 0) {
       const cell = editor.api.block({ match: { type: getCellTypes(editor) } });

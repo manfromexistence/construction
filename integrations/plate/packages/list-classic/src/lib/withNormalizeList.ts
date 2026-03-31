@@ -1,19 +1,19 @@
 import {
-  type OverrideEditor,
-  type TElement,
   ElementApi,
   KEYS,
   match,
   NodeApi,
+  type OverrideEditor,
   PathApi,
-} from 'platejs';
+  type TElement,
+} from "platejs";
 
-import type { ListConfig } from './BaseListPlugin';
+import type { ListConfig } from "./BaseListPlugin";
 
-import { normalizeListItem } from './normalizers/normalizeListItem';
-import { normalizeNestedList } from './normalizers/normalizeNestedList';
-import { getListTypes, isListRoot } from './queries';
-import { moveListItemsToList } from './transforms';
+import { normalizeListItem } from "./normalizers/normalizeListItem";
+import { normalizeNestedList } from "./normalizers/normalizeNestedList";
+import { getListTypes, isListRoot } from "./queries";
+import { moveListItemsToList } from "./transforms";
 
 /** Normalize list node to force the ul>li>p+ul structure. */
 export const withNormalizeList: OverrideEditor<ListConfig> = ({
@@ -45,9 +45,9 @@ export const withNormalizeList: OverrideEditor<ListConfig> = ({
         // add "checked" prop to list-item nodes if they have a taskList parent but no "checked" prop
         // remove "checked" prop from list-item nodes if they do not have a taskList parent but a "checked" prop
         if (node.type === editor.getType(KEYS.taskList)) {
-          const nonTaskListItems = Array.from(
-            NodeApi.children(editor, path)
-          ).filter(([child]) => child.type === liType && !('checked' in child));
+          const nonTaskListItems = Array.from(NodeApi.children(editor, path)).filter(
+            ([child]) => child.type === liType && !("checked" in child)
+          );
 
           if (nonTaskListItems.length > 0) {
             return editor.tf.withoutNormalizing(() =>
@@ -57,14 +57,14 @@ export const withNormalizeList: OverrideEditor<ListConfig> = ({
             );
           }
         } else {
-          const taskListItems = Array.from(
-            NodeApi.children(editor, path)
-          ).filter(([child]) => child.type === liType && 'checked' in child);
+          const taskListItems = Array.from(NodeApi.children(editor, path)).filter(
+            ([child]) => child.type === liType && "checked" in child
+          );
 
           if (taskListItems.length > 0) {
             return editor.tf.withoutNormalizing(() =>
               taskListItems.forEach(([, itemPath]) => {
-                editor.tf.unsetNodes('checked', { at: itemPath });
+                editor.tf.unsetNodes("checked", { at: itemPath });
               })
             );
           }
@@ -72,10 +72,7 @@ export const withNormalizeList: OverrideEditor<ListConfig> = ({
       }
       // remove empty list
       if (match(node, [], { type: getListTypes(editor) })) {
-        if (
-          node.children.length === 0 ||
-          !node.children.some((item) => item.type === liType)
-        ) {
+        if (node.children.length === 0 || !node.children.some((item) => item.type === liType)) {
           return editor.tf.removeNodes({ at: path });
         }
 

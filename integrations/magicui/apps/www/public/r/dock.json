@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Dock",
   "description": "An implementation of the MacOS dock using react + tailwindcss + motion",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/dock.tsx",

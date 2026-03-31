@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Table,
   TableBody,
@@ -15,7 +12,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/styles/base-nova/ui-rtl/table"
+} from "@/styles/base-nova/ui-rtl/table";
 
 const translations: Translations = {
   en: {
@@ -69,7 +66,7 @@ const translations: Translations = {
       total: 'סה"כ',
     },
   },
-}
+};
 
 const invoices = [
   {
@@ -114,10 +111,10 @@ const invoices = [
     totalAmount: "$300.00",
     paymentMethod: "creditCard" as const,
   },
-]
+];
 
 export function TableRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <Table dir={dir}>
@@ -147,5 +144,5 @@ export function TableRtl() {
         </TableRow>
       </TableFooter>
     </Table>
-  )
+  );
 }

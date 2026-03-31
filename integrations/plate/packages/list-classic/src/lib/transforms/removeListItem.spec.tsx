@@ -1,10 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createEditor } from 'platejs';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor, type SlateEditor } from "platejs";
 
-import { removeListItem } from './removeListItem';
+import { removeListItem } from "./removeListItem";
 
 jsxt;
 
@@ -88,11 +87,11 @@ const output = (
   </editor>
 ) as any;
 
-it('moves the removed item children into the previous sublist', () => {
+it("moves the removed item children into the previous sublist", () => {
   const editor = createSlateEditor({ editor: input });
 
-  const list = input.api.node({ id: '1', at: [] }) as any;
-  const listItem = input.api.node({ id: '13', at: [] }) as any;
+  const list = input.api.node({ id: "1", at: [] }) as any;
+  const listItem = input.api.node({ id: "13", at: [] }) as any;
 
   if (list && listItem) {
     removeListItem(editor, { list, listItem });

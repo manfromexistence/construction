@@ -24,8 +24,7 @@ const getImportsFromIndex = (): Set<string> => {
 
   const imports = new Set<string>();
 
-  const importRegex =
-    /import\s+{\s*(\w+)\s*}\s+from\s+['"](?:@\/icons\/|\.\/)([^'"]+)['"]/g;
+  const importRegex = /import\s+{\s*(\w+)\s*}\s+from\s+['"](?:@\/icons\/|\.\/)([^'"]+)['"]/g;
 
   let match: RegExpExecArray | null = null;
   // biome-ignore lint/suspicious/noAssignInExpressions: ignore

@@ -1,10 +1,10 @@
-import type { OverrideEditor, TIndentElement } from 'platejs';
+import type { OverrideEditor, TIndentElement } from "platejs";
 
-import { getInjectMatch } from 'platejs';
+import { getInjectMatch } from "platejs";
 
-import type { IndentConfig } from './BaseIndentPlugin';
+import type { IndentConfig } from "./BaseIndentPlugin";
 
-import { indent, outdent } from './transforms/index';
+import { indent, outdent } from "./transforms/index";
 
 /**
  * - `node.indent` can not exceed `indentMax`
@@ -33,7 +33,7 @@ export const withIndent: OverrideEditor<IndentConfig> = ({
             return;
           }
         } else if (element.indent) {
-          editor.tf.unsetNodes('indent', { at: path });
+          editor.tf.unsetNodes("indent", { at: path });
 
           return;
         }

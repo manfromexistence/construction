@@ -1,5 +1,5 @@
-import type { Descendant, TElement, TText } from '@platejs/slate';
-import type { UnknownObject } from '@udecode/utils';
+import type { Descendant, TElement, TText } from "@platejs/slate";
+import type { UnknownObject } from "@udecode/utils";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Elements
@@ -8,14 +8,7 @@ import type { UnknownObject } from '@udecode/utils';
 export interface TCalloutElement extends TElement {
   backgroundColor?: string;
   icon?: string;
-  variant?:
-    | (string & {})
-    | 'error'
-    | 'info'
-    | 'note'
-    | 'success'
-    | 'tip'
-    | 'warning';
+  variant?: (string & {}) | "error" | "info" | "note" | "success" | "tip" | "warning";
 }
 
 export type TTagProps = { value: string } & UnknownObject;
@@ -31,14 +24,14 @@ export interface TCodeSyntaxLeaf extends TText {
 }
 
 export interface TColumnElement extends TElement {
-  type: 'column';
+  type: "column";
   width: string;
   id?: string;
 }
 
 export interface TColumnGroupElement extends TElement {
   children: TColumnElement[];
-  type: 'column_group';
+  type: "column_group";
   id?: string;
   layout?: number[];
 }
@@ -131,11 +124,11 @@ export type TIdProps = {
 export type TIdElement = TElement & TIdProps;
 
 export type TTextAlignProps = {
-  align?: React.CSSProperties['textAlign'];
+  align?: React.CSSProperties["textAlign"];
 };
 
 export type TResizableProps = {
-  align?: 'center' | 'left' | 'right';
+  align?: "center" | "left" | "right";
   width?: number;
 };
 
@@ -179,7 +172,7 @@ export type TSuggestionProps = {
 export type TSuggestionElement = TElement & TSuggestionProps;
 
 export type TLineHeightProps = {
-  lineHeight?: React.CSSProperties['lineHeight'];
+  lineHeight?: React.CSSProperties["lineHeight"];
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -196,11 +189,11 @@ export type TBasicMarks = {
 };
 
 export type TFontMarks = {
-  backgroundColor?: React.CSSProperties['backgroundColor'];
-  color?: React.CSSProperties['color'];
-  fontFamily?: React.CSSProperties['fontFamily'];
-  fontSize?: React.CSSProperties['fontSize'];
-  fontWeight?: React.CSSProperties['fontWeight'];
+  backgroundColor?: React.CSSProperties["backgroundColor"];
+  color?: React.CSSProperties["color"];
+  fontFamily?: React.CSSProperties["fontFamily"];
+  fontSize?: React.CSSProperties["fontSize"];
+  fontWeight?: React.CSSProperties["fontWeight"];
 };
 
 export interface TCommentText extends TText {
@@ -210,7 +203,7 @@ export interface TCommentText extends TText {
 export type TSuggestionData = {
   id: string;
   createdAt: number;
-  type: 'insert' | 'remove';
+  type: "insert" | "remove";
   userId: string;
   isLineBreak?: boolean;
 };
@@ -229,28 +222,28 @@ export type TInlineSuggestionData =
 export type TInsertSuggestionData = {
   id: string;
   createdAt: number;
-  type: 'insert';
+  type: "insert";
   userId: string;
 };
 
 export type TRemoveSuggestionData = {
   id: string;
   createdAt: number;
-  type: 'remove';
+  type: "remove";
   userId: string;
 };
 
 export type TUpdateSuggestionData = {
   id: string;
   createdAt: number;
-  type: 'update';
+  type: "update";
   userId: string;
   newProperties?: any;
   properties?: any;
 };
 
 export type EmptyText = {
-  text: '';
+  text: "";
 };
 
 export type PlainText = {

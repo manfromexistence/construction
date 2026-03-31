@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "native-select-example",
   "title": "Native Select",
-  "registryDependencies": [
-    "field",
-    "native-select",
-    "example"
-  ],
+  "registryDependencies": ["field", "native-select", "example"],
   "files": [
     {
       "path": "registry/base-luma/examples/native-select-example.tsx",

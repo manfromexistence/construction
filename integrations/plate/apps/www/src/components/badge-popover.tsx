@@ -1,19 +1,13 @@
-import React, { type ReactNode } from 'react';
+import React, { type ReactNode } from "react";
 
-import { Badge } from './ui/badge';
-import { HoverCard, HoverCardContent, HoverCardTrigger } from './ui/hover-card';
+import { Badge } from "./ui/badge";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 
 export function BadgeList({ children }: { children: ReactNode }) {
   return <div className="flex gap-2">{children}</div>;
 }
 
-export function BadgePopover({
-  children,
-  name,
-}: {
-  children: ReactNode;
-  name: string;
-}) {
+export function BadgePopover({ children, name }: { children: ReactNode; name: string }) {
   return (
     <HoverCard>
       <HoverCardTrigger className="flex items-center gap-2">

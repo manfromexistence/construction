@@ -48,15 +48,11 @@ export function DataGridActionBar<TData>({
         tableMeta.onSelectionClear?.();
       }
     },
-    [table, tableMeta],
+    [table, tableMeta]
   );
 
   return (
-    <ActionBar
-      data-grid-popover
-      open={selectedCellCount > 0}
-      onOpenChange={onOpenChange}
-    >
+    <ActionBar data-grid-popover open={selectedCellCount > 0} onOpenChange={onOpenChange}>
       <ActionBarSelection>
         <span className="font-medium">{selectedCellCount}</span>
         <span>{selectedCellCount === 1 ? "cell" : "cells"} selected</span>
@@ -77,10 +73,7 @@ export function DataGridActionBar<TData>({
             </DropdownMenuTrigger>
             <DropdownMenuContent data-grid-popover>
               {statusOptions.map((option) => (
-                <DropdownMenuItem
-                  key={option.value}
-                  onClick={() => onStatusUpdate(option.value)}
-                >
+                <DropdownMenuItem key={option.value} onClick={() => onStatusUpdate(option.value)}>
                   {option.label}
                 </DropdownMenuItem>
               ))}
@@ -97,10 +90,7 @@ export function DataGridActionBar<TData>({
             </DropdownMenuTrigger>
             <DropdownMenuContent data-grid-popover>
               {styleOptions.map((option) => (
-                <DropdownMenuItem
-                  key={option.value}
-                  onClick={() => onStyleUpdate(option.value)}
-                >
+                <DropdownMenuItem key={option.value} onClick={() => onStyleUpdate(option.value)}>
                   {option.label}
                 </DropdownMenuItem>
               ))}

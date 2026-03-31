@@ -1,6 +1,6 @@
-import { type Editor, type TLocation, type TRange, PathApi } from 'platejs';
+import { type Editor, PathApi, type TLocation, type TRange } from "platejs";
 
-import { mergeClientRects } from './mergeClientRects';
+import { mergeClientRects } from "./mergeClientRects";
 
 export const getBoundingClientRect = (
   editor: Editor,

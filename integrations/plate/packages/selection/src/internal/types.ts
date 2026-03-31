@@ -1,5 +1,5 @@
-import type { SelectionArea } from './SelectionArea';
-import type { Intersection } from './utils';
+import type { SelectionArea } from "./SelectionArea";
+import type { Intersection } from "./utils";
 
 export type AreaLocation = {
   x1: number;
@@ -33,7 +33,7 @@ export type Features = {
   touch: boolean;
 };
 
-export type Modifier = 'alt' | 'ctrl' | 'shift';
+export type Modifier = "alt" | "ctrl" | "shift";
 
 // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/button#value
 export type MouseButton =
@@ -48,11 +48,11 @@ export type MouseButtonWithModifiers = {
   modifiers: Modifier[];
 };
 
-export type OverlapMode = 'drop' | 'invert' | 'keep';
+export type OverlapMode = "drop" | "invert" | "keep";
 
 export type PartialSelectionOptions = {
   document?: Document;
-} & DeepPartial<Omit<SelectionOptions, 'document'>>;
+} & DeepPartial<Omit<SelectionOptions, "document">>;
 
 export type Quantify<T> = T | T[];
 
@@ -110,6 +110,6 @@ export type SingleTap = {
   intersect: TapMode;
 };
 
-export type TapMode = 'native' | 'touch';
+export type TapMode = "native" | "touch";
 
 export type Trigger = MouseButton | MouseButtonWithModifiers;

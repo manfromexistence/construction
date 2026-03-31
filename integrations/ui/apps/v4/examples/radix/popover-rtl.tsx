@@ -1,10 +1,7 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/radix-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/radix-nova/ui-rtl/button";
 import {
   Popover,
   PopoverContent,
@@ -12,7 +9,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@/styles/radix-nova/ui-rtl/popover"
+} from "@/styles/radix-nova/ui-rtl/popover";
 
 const translations: Translations = {
   en: {
@@ -48,12 +45,12 @@ const translations: Translations = {
       right: "ימין",
     },
   },
-}
+};
 
-const physicalSides = ["left", "top", "bottom", "right"] as const
+const physicalSides = ["left", "top", "bottom", "right"] as const;
 
 export function PopoverRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="flex flex-wrap justify-center gap-2">
@@ -71,5 +68,5 @@ export function PopoverRtl() {
         </Popover>
       ))}
     </div>
-  )
+  );
 }

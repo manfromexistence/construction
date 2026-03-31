@@ -1,13 +1,9 @@
-import { select as selectBase } from 'slate';
-import { type Editor, PathApi, type SelectOptions } from '../../interfaces';
-import type { At } from '../../types';
-import { getAt } from '../../utils/getAt';
+import { select as selectBase } from "slate";
+import { type Editor, PathApi, type SelectOptions } from "../../interfaces";
+import type { At } from "../../types";
+import { getAt } from "../../utils/getAt";
 
-export const select = (
-  editor: Editor,
-  target?: At,
-  options: SelectOptions = {}
-) => {
+export const select = (editor: Editor, target?: At, options: SelectOptions = {}) => {
   const { edge, focus, next, previous } = options;
 
   if (focus) {
@@ -39,14 +35,11 @@ export const select = (
 
     if (!at) return;
 
-    const path = PathApi.isPath(at)
-      ? at
-      : editor.api.node({ at, block: true })?.[1];
+    const path = PathApi.isPath(at) ? at : editor.api.node({ at, block: true })?.[1];
 
     if (!path) return;
 
-    const point =
-      edge === 'end' ? editor.api.end(path) : editor.api.start(path);
+    const point = edge === "end" ? editor.api.end(path) : editor.api.start(path);
 
     if (!point) return;
 

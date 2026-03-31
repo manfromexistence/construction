@@ -1,8 +1,6 @@
 {
   "name": "hitbox",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "components/hitbox.tsx",

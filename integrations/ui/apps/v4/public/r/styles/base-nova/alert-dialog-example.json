@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "alert-dialog-example",
   "title": "Alert Dialog",
-  "registryDependencies": [
-    "alert-dialog",
-    "button",
-    "dialog",
-    "example"
-  ],
+  "registryDependencies": ["alert-dialog", "button", "dialog", "example"],
   "files": [
     {
       "path": "registry/base-nova/examples/alert-dialog-example.tsx",

@@ -17,9 +17,7 @@ export function useCopyToClipboard() {
       if (successMessage) {
         toast({
           title: successMessage.title || "Copied to clipboard",
-          description:
-            successMessage.description ||
-            "Text has been copied to your clipboard",
+          description: successMessage.description || "Text has been copied to your clipboard",
         });
       }
 

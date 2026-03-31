@@ -1,10 +1,6 @@
 "use client";
 
-import type {
-  CellContext,
-  ColumnDef,
-  HeaderContext,
-} from "@tanstack/react-table";
+import type { CellContext, ColumnDef, HeaderContext } from "@tanstack/react-table";
 import * as React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
@@ -18,19 +14,14 @@ interface DataGridSelectHitboxProps {
   debug?: boolean;
 }
 
-function DataGridSelectHitbox({
-  htmlFor,
-  children,
-  size,
-  debug,
-}: DataGridSelectHitboxProps) {
+function DataGridSelectHitbox({ htmlFor, children, size, debug }: DataGridSelectHitboxProps) {
   return (
     <div
       className={cn(
         "group relative -my-1.5 h-[calc(100%+0.75rem)] py-1.5",
         size === "default" && "-ms-3 -me-2 ps-3 pe-2",
         size === "sm" && "-ms-3 -me-1.5 ps-3 pe-1.5",
-        size === "lg" && "-mx-3 px-3",
+        size === "lg" && "-mx-3 px-3"
       )}
     >
       {children}
@@ -38,15 +29,14 @@ function DataGridSelectHitbox({
         htmlFor={htmlFor}
         className={cn(
           "absolute inset-0 cursor-pointer",
-          debug && "border border-red-500 border-dashed bg-red-500/20",
+          debug && "border border-red-500 border-dashed bg-red-500/20"
         )}
       />
     </div>
   );
 }
 
-interface DataGridSelectCheckboxProps
-  extends Omit<React.ComponentProps<typeof Checkbox>, "id"> {
+interface DataGridSelectCheckboxProps extends Omit<React.ComponentProps<typeof Checkbox>, "id"> {
   rowNumber?: number;
   hitboxSize?: HitboxSize;
   debug?: boolean;
@@ -69,7 +59,7 @@ function DataGridSelectCheckbox({
           aria-hidden="true"
           className={cn(
             "pointer-events-none absolute start-3 top-1.5 flex size-4 items-center justify-center text-muted-foreground text-xs tabular-nums transition-opacity group-hover:opacity-0",
-            checked && "opacity-0",
+            checked && "opacity-0"
           )}
         >
           {rowNumber}
@@ -79,7 +69,7 @@ function DataGridSelectCheckbox({
           className={cn(
             "relative transition-[shadow,border,opacity] hover:border-primary/40",
             "opacity-0 group-hover:opacity-100 data-[state=checked]:opacity-100",
-            className,
+            className
           )}
           checked={checked}
           {...props}
@@ -92,10 +82,7 @@ function DataGridSelectCheckbox({
     <DataGridSelectHitbox htmlFor={id} size={hitboxSize} debug={debug}>
       <Checkbox
         id={id}
-        className={cn(
-          "relative transition-[shadow,border] hover:border-primary/40",
-          className,
-        )}
+        className={cn("relative transition-[shadow,border] hover:border-primary/40", className)}
         checked={checked}
         {...props}
       />
@@ -103,8 +90,7 @@ function DataGridSelectCheckbox({
   );
 }
 
-interface DataGridSelectHeaderProps<TData>
-  extends Pick<HeaderContext<TData, unknown>, "table"> {
+interface DataGridSelectHeaderProps<TData> extends Pick<HeaderContext<TData, unknown>, "table"> {
   hitboxSize?: HitboxSize;
   readOnly?: boolean;
   debug?: boolean;
@@ -118,23 +104,18 @@ function DataGridSelectHeader<TData>({
 }: DataGridSelectHeaderProps<TData>) {
   const onCheckedChange = React.useCallback(
     (value: boolean) => table.toggleAllPageRowsSelected(value),
-    [table],
+    [table]
   );
 
   if (readOnly) {
-    return (
-      <div className="mt-1 flex items-center ps-1 text-muted-foreground text-sm">
-        #
-      </div>
-    );
+    return <div className="mt-1 flex items-center ps-1 text-muted-foreground text-sm">#</div>;
   }
 
   return (
     <DataGridSelectCheckbox
       aria-label="Select all"
       checked={
-        table.getIsAllPageRowsSelected() ||
-        (table.getIsSomePageRowsSelected() && "indeterminate")
+        table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")
       }
       onCheckedChange={onCheckedChange}
       hitboxSize={hitboxSize}
@@ -172,7 +153,7 @@ function DataGridSelectCell<TData>({
         row.toggleSelected(value);
       }
     },
-    [meta, row],
+    [meta, row]
   );
 
   const onClick = React.useCallback(
@@ -182,7 +163,7 @@ function DataGridSelectCell<TData>({
         meta?.onRowSelect?.(row.id, !row.getIsSelected(), true);
       }
     },
-    [meta, row],
+    [meta, row]
   );
 
   if (readOnly) {

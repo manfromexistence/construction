@@ -1,6 +1,5 @@
-import type { PartialSelectionOptions } from './types';
-
-import { SelectionArea } from './SelectionArea';
+import { SelectionArea } from "./SelectionArea";
+import type { PartialSelectionOptions } from "./types";
 
 const createMouseEvent = ({
   button = 0,
@@ -17,14 +16,14 @@ const createMouseEvent = ({
   shiftKey?: boolean;
   target: HTMLElement;
 }) => {
-  const event = new MouseEvent('mousedown', {
+  const event = new MouseEvent("mousedown", {
     button,
     clientX,
     clientY,
     shiftKey,
   });
 
-  Object.defineProperty(event, 'target', {
+  Object.defineProperty(event, "target", {
     configurable: true,
     value: target,
   });
@@ -34,15 +33,15 @@ const createMouseEvent = ({
 };
 
 const createSelectionHarness = (options: PartialSelectionOptions = {}) => {
-  const container = document.createElement('div');
-  const selectable = document.createElement('div');
+  const container = document.createElement("div");
+  const selectable = document.createElement("div");
 
-  container.dataset.slateEditor = 'true';
+  container.dataset.slateEditor = "true";
   container.scrollLeft = 25;
   container.scrollTop = 15;
   container.getBoundingClientRect = () => new DOMRect(10, 20, 200, 200);
-  selectable.className = 'plate-item';
-  selectable.dataset.plateSelectable = 'true';
+  selectable.className = "plate-item";
+  selectable.dataset.plateSelectable = "true";
   selectable.getBoundingClientRect = () => new DOMRect(20, 30, 20, 20);
   container.append(selectable);
   document.body.append(container);
@@ -51,7 +50,7 @@ const createSelectionHarness = (options: PartialSelectionOptions = {}) => {
     boundaries: [container],
     container,
     document,
-    selectables: '.plate-item',
+    selectables: ".plate-item",
     startAreas: [container],
     ...options,
   });
@@ -59,12 +58,12 @@ const createSelectionHarness = (options: PartialSelectionOptions = {}) => {
   return { container, selectable, selection };
 };
 
-describe('SelectionArea', () => {
+describe("SelectionArea", () => {
   afterEach(() => {
-    document.body.innerHTML = '';
+    document.body.innerHTML = "";
   });
 
-  it('starts drag selection once movement passes the configured threshold', () => {
+  it("starts drag selection once movement passes the configured threshold", () => {
     const { container, selection } = createSelectionHarness({
       behaviour: { startThreshold: 4 },
     });
@@ -92,19 +91,19 @@ describe('SelectionArea', () => {
     (selection as any)._onTapStart(startEvent);
     (selection as any)._delayedTapMove(moveEvent);
 
-    expect(emitEvent).toHaveBeenCalledWith('beforestart', startEvent);
-    expect(emitEvent).toHaveBeenCalledWith('beforedrag', moveEvent);
-    expect(emitEvent).toHaveBeenCalledWith('start', moveEvent);
+    expect(emitEvent).toHaveBeenCalledWith("beforestart", startEvent);
+    expect(emitEvent).toHaveBeenCalledWith("beforedrag", moveEvent);
+    expect(emitEvent).toHaveBeenCalledWith("start", moveEvent);
     expect(setupSelectionArea).toHaveBeenCalledTimes(1);
     expect(onTapMove).toHaveBeenCalledWith(moveEvent);
     expect(selection.getSelectionArea().parentElement).toBe(container);
-    expect(selection.getSelectionArea().style.display).toBe('block');
+    expect(selection.getSelectionArea().style.display).toBe("block");
     expect((selection as any)._singleClick).toBe(false);
 
     selection.destroy();
   });
 
-  it('keeps the interaction as a single click when movement stays below the threshold', () => {
+  it("keeps the interaction as a single click when movement stays below the threshold", () => {
     const { container, selection } = createSelectionHarness({
       behaviour: { startThreshold: 6 },
     });
@@ -130,8 +129,8 @@ describe('SelectionArea', () => {
     (selection as any)._onTapStart(startEvent);
     (selection as any)._delayedTapMove(moveEvent);
 
-    expect(emitEvent).toHaveBeenCalledWith('beforestart', startEvent);
-    expect(emitEvent).not.toHaveBeenCalledWith('start', moveEvent);
+    expect(emitEvent).toHaveBeenCalledWith("beforestart", startEvent);
+    expect(emitEvent).not.toHaveBeenCalledWith("start", moveEvent);
     expect(onTapMove).not.toHaveBeenCalled();
     expect(selection.getSelectionArea().parentElement).toBeNull();
     expect((selection as any)._singleClick).toBe(true);
@@ -139,7 +138,7 @@ describe('SelectionArea', () => {
     selection.destroy();
   });
 
-  it('updates area coordinates and schedules a frame during manual scroll', () => {
+  it("updates area coordinates and schedules a frame during manual scroll", () => {
     const { container, selection } = createSelectionHarness();
     const frameNext = mock();
     const originalSetTimeout = globalThis.setTimeout;
@@ -151,7 +150,7 @@ describe('SelectionArea', () => {
       next: frameNext,
     };
     globalThis.setTimeout = ((fn: TimerHandler) => {
-      if (typeof fn === 'function') {
+      if (typeof fn === "function") {
         fn();
       }
 

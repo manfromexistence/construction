@@ -1,11 +1,7 @@
-import type { TElement } from 'platejs';
-import type { DropTargetMonitor, XYCoord } from 'react-dnd';
+import type { TElement } from "platejs";
+import type { DropTargetMonitor, XYCoord } from "react-dnd";
 
-import type {
-  DragItemNode,
-  DropDirection,
-  ElementDragItemNode,
-} from '../types';
+import type { DragItemNode, DropDirection, ElementDragItemNode } from "../types";
 
 export type GetHoverDirectionOptions = {
   dragItem: DragItemNode;
@@ -19,7 +15,7 @@ export type GetHoverDirectionOptions = {
   nodeRef: any;
 
   /** The orientation of the drag operation. */
-  orientation?: 'horizontal' | 'vertical';
+  orientation?: "horizontal" | "vertical";
 };
 
 /**
@@ -31,7 +27,7 @@ export const getHoverDirection = ({
   element,
   monitor,
   nodeRef,
-  orientation = 'vertical',
+  orientation = "vertical",
 }: GetHoverDirectionOptions): DropDirection => {
   if (!nodeRef.current) return;
   // Don't replace items with themselves
@@ -39,9 +35,7 @@ export const getHoverDirection = ({
 
   // For multiple node drag, don't show drop line if hovering over any selected element
   const elementDragItem = dragItem as ElementDragItemNode;
-  const draggedIds = Array.isArray(elementDragItem.id)
-    ? elementDragItem.id
-    : [elementDragItem.id];
+  const draggedIds = Array.isArray(elementDragItem.id) ? elementDragItem.id : [elementDragItem.id];
   if (draggedIds.includes(element.id as string)) return;
 
   // Determine rectangle on screen
@@ -57,7 +51,7 @@ export const getHoverDirection = ({
   if (!clientOffset) {
     return;
   }
-  if (orientation === 'vertical') {
+  if (orientation === "vertical") {
     // Get vertical middle
     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
 
@@ -70,17 +64,17 @@ export const getHoverDirection = ({
 
     // Dragging downwards
     if (hoverClientY < hoverMiddleY) {
-      return 'top';
+      return "top";
     }
     // Dragging upwards
     if (hoverClientY >= hoverMiddleY) {
-      return 'bottom';
+      return "bottom";
     }
   } else {
     // Horizontal orientation for columns
     const hoverMiddleX = (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
     const hoverClientX = (clientOffset as XYCoord).x - hoverBoundingRect.left;
 
-    return hoverClientX < hoverMiddleX ? 'left' : 'right';
+    return hoverClientX < hoverMiddleX ? "left" : "right";
   }
 };

@@ -1,14 +1,13 @@
-import type React from 'react';
-
 import {
+  KEYS,
   type SlateEditor,
+  sanitizeUrl,
   type TLinkElement,
   type UnknownObject,
-  KEYS,
-  sanitizeUrl,
-} from 'platejs';
+} from "platejs";
+import type React from "react";
 
-import type { BaseLinkConfig } from '../BaseLinkPlugin';
+import type { BaseLinkConfig } from "../BaseLinkPlugin";
 
 export const getLinkAttributes = (editor: SlateEditor, link: TLinkElement) => {
   const { allowedSchemes, dangerouslySkipSanitization, defaultLinkAttributes } =
@@ -24,13 +23,10 @@ export const getLinkAttributes = (editor: SlateEditor, link: TLinkElement) => {
   if (href !== undefined) {
     attributes.href = href;
   }
-  if ('target' in link && link.target !== undefined) {
+  if ("target" in link && link.target !== undefined) {
     attributes.target = link.target;
   }
 
-  return attributes as Pick<
-    React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    'href' | 'target'
-  > &
+  return attributes as Pick<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "target"> &
     UnknownObject;
 };

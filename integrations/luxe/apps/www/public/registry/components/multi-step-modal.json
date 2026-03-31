@@ -1,9 +1,6 @@
 {
   "name": "multi-step-modal",
-  "externalDependencies": [
-    "@radix-ui/react-dialog",
-    "react-use-measure"
-  ],
+  "externalDependencies": ["@radix-ui/react-dialog", "react-use-measure"],
   "internalDependencies": [],
   "file": {
     "name": "multi-step-modal.tsx",

@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../lib/__tests__/getTestTablePlugins';
-import { onKeyDownTable } from './onKeyDownTable';
+import { getTestTablePlugins } from "../lib/__tests__/getTestTablePlugins";
+import { onKeyDownTable } from "./onKeyDownTable";
 
 jsxt;
 
@@ -27,8 +26,8 @@ const createKeyboardEvent = (key: string, which: number) =>
     which,
   }) as any;
 
-describe('onKeyDownTable', () => {
-  it('eagerly expands Shift+Down from one cell into the next cell', () => {
+describe("onKeyDownTable", () => {
+  it("eagerly expands Shift+Down from one cell into the next cell", () => {
     const input = (
       <editor>
         <htable>
@@ -51,7 +50,7 @@ describe('onKeyDownTable', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const event = createKeyboardEvent('ArrowDown', 40);
+    const event = createKeyboardEvent("ArrowDown", 40);
 
     onKeyDownTable({ editor, event } as any);
 
@@ -63,7 +62,7 @@ describe('onKeyDownTable', () => {
     });
   });
 
-  it('keeps Shift+Down native while focus can still extend inside the current cell', () => {
+  it("keeps Shift+Down native while focus can still extend inside the current cell", () => {
     const input = (
       <editor>
         <htable>
@@ -87,7 +86,7 @@ describe('onKeyDownTable', () => {
 
     const editor = createTableEditor(input);
     const initialSelection = editor.selection;
-    const event = createKeyboardEvent('ArrowDown', 40);
+    const event = createKeyboardEvent("ArrowDown", 40);
 
     onKeyDownTable({ editor, event } as any);
 
@@ -96,7 +95,7 @@ describe('onKeyDownTable', () => {
     expect(editor.selection).toEqual(initialSelection);
   });
 
-  it('eagerly expands Shift+Right from one cell into the next cell', () => {
+  it("eagerly expands Shift+Right from one cell into the next cell", () => {
     const input = (
       <editor>
         <htable>
@@ -116,7 +115,7 @@ describe('onKeyDownTable', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const event = createKeyboardEvent('ArrowRight', 39);
+    const event = createKeyboardEvent("ArrowRight", 39);
 
     onKeyDownTable({ editor, event } as any);
 
@@ -128,7 +127,7 @@ describe('onKeyDownTable', () => {
     });
   });
 
-  it('eagerly expands Shift+Up from one cell into the previous cell', () => {
+  it("eagerly expands Shift+Up from one cell into the previous cell", () => {
     const input = (
       <editor>
         <htable>
@@ -150,7 +149,7 @@ describe('onKeyDownTable', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const event = createKeyboardEvent('ArrowUp', 38);
+    const event = createKeyboardEvent("ArrowUp", 38);
 
     onKeyDownTable({ editor, event } as any);
 
@@ -162,7 +161,7 @@ describe('onKeyDownTable', () => {
     });
   });
 
-  it('eagerly expands Shift+Left from one cell into the previous cell', () => {
+  it("eagerly expands Shift+Left from one cell into the previous cell", () => {
     const input = (
       <editor>
         <htable>
@@ -182,7 +181,7 @@ describe('onKeyDownTable', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const event = createKeyboardEvent('ArrowLeft', 37);
+    const event = createKeyboardEvent("ArrowLeft", 37);
 
     onKeyDownTable({ editor, event } as any);
 
@@ -194,7 +193,7 @@ describe('onKeyDownTable', () => {
     });
   });
 
-  it('extends an existing multi-cell selection with Shift+Right', () => {
+  it("extends an existing multi-cell selection with Shift+Right", () => {
     const input = (
       <editor>
         <htable>
@@ -220,7 +219,7 @@ describe('onKeyDownTable', () => {
     ) as any as SlateEditor;
 
     const editor = createTableEditor(input);
-    const event = createKeyboardEvent('ArrowRight', 39);
+    const event = createKeyboardEvent("ArrowRight", 39);
 
     onKeyDownTable({ editor, event } as any);
 

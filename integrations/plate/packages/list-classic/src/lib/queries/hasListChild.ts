@@ -1,6 +1,6 @@
-import { type Ancestor, type SlateEditor, match } from 'platejs';
+import { type Ancestor, match, type SlateEditor } from "platejs";
 
-import { getListTypes } from './getListTypes';
+import { getListTypes } from "./getListTypes";
 
 /** Is there a list child in the node. */
 export const hasListChild = (editor: SlateEditor, node: Ancestor) =>

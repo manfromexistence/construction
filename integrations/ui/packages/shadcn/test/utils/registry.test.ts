@@ -1,8 +1,8 @@
-import { expect, test } from "vitest"
-import { z } from "zod"
+import { expect, test } from "vitest";
+import { z } from "zod";
 
-import { resolveTree } from "../../src/registry/api"
-import { registryItemSchema } from "../../src/registry/schema"
+import { resolveTree } from "../../src/registry/api";
+import { registryItemSchema } from "../../src/registry/schema";
 
 test("resolve tree", async () => {
   const index = [
@@ -38,35 +38,31 @@ test("resolve tree", async () => {
       files: [{ type: "registry:component", path: "example-card.tsx" }],
       registryDependencies: ["button", "dialog", "input"],
     },
-  ] satisfies z.infer<typeof registryItemSchema>[]
+  ] satisfies z.infer<typeof registryItemSchema>[];
+
+  expect((await resolveTree(index, ["button"])).map((entry) => entry.name).sort()).toEqual([
+    "button",
+  ]);
+
+  expect((await resolveTree(index, ["dialog"])).map((entry) => entry.name).sort()).toEqual([
+    "button",
+    "dialog",
+  ]);
 
   expect(
-    (await resolveTree(index, ["button"])).map((entry) => entry.name).sort()
-  ).toEqual(["button"])
+    (await resolveTree(index, ["alert-dialog", "dialog"])).map((entry) => entry.name).sort()
+  ).toEqual(["alert-dialog", "button", "dialog"]);
 
-  expect(
-    (await resolveTree(index, ["dialog"])).map((entry) => entry.name).sort()
-  ).toEqual(["button", "dialog"])
+  expect((await resolveTree(index, ["example-card"])).map((entry) => entry.name).sort()).toEqual([
+    "button",
+    "dialog",
+    "example-card",
+    "input",
+  ]);
 
-  expect(
-    (await resolveTree(index, ["alert-dialog", "dialog"]))
-      .map((entry) => entry.name)
-      .sort()
-  ).toEqual(["alert-dialog", "button", "dialog"])
+  expect((await resolveTree(index, ["foo"])).map((entry) => entry.name).sort()).toEqual([]);
 
-  expect(
-    (await resolveTree(index, ["example-card"]))
-      .map((entry) => entry.name)
-      .sort()
-  ).toEqual(["button", "dialog", "example-card", "input"])
-
-  expect(
-    (await resolveTree(index, ["foo"])).map((entry) => entry.name).sort()
-  ).toEqual([])
-
-  expect(
-    (await resolveTree(index, ["button", "foo"]))
-      .map((entry) => entry.name)
-      .sort()
-  ).toEqual(["button"])
-})
+  expect((await resolveTree(index, ["button", "foo"])).map((entry) => entry.name).sort()).toEqual([
+    "button",
+  ]);
+});

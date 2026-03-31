@@ -1,16 +1,12 @@
-import Image from "next/image"
+import Image from "next/image";
+import { AppSidebar } from "@/app/(app)/examples/dashboard/components/app-sidebar";
+import { ChartAreaInteractive } from "@/app/(app)/examples/dashboard/components/chart-area-interactive";
+import { DataTable } from "@/app/(app)/examples/dashboard/components/data-table";
+import { SectionCards } from "@/app/(app)/examples/dashboard/components/section-cards";
+import { SiteHeader } from "@/app/(app)/examples/dashboard/components/site-header";
+import { SidebarInset, SidebarProvider } from "@/registry/new-york-v4/ui/sidebar";
 
-import {
-  SidebarInset,
-  SidebarProvider,
-} from "@/registry/new-york-v4/ui/sidebar"
-import { AppSidebar } from "@/app/(app)/examples/dashboard/components/app-sidebar"
-import { ChartAreaInteractive } from "@/app/(app)/examples/dashboard/components/chart-area-interactive"
-import { DataTable } from "@/app/(app)/examples/dashboard/components/data-table"
-import { SectionCards } from "@/app/(app)/examples/dashboard/components/section-cards"
-import { SiteHeader } from "@/app/(app)/examples/dashboard/components/site-header"
-
-import data from "./data.json"
+import data from "./data.json";
 
 export default function Page() {
   return (
@@ -59,5 +55,5 @@ export default function Page() {
         </SidebarInset>
       </SidebarProvider>
     </>
-  )
+  );
 }

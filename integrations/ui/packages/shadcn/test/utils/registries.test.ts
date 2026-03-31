@@ -1,17 +1,17 @@
-import { afterEach, describe, expect, test, vi } from "vitest"
+import { afterEach, describe, expect, test, vi } from "vitest";
 
-import type { Config } from "../../src/utils/get-config"
+import type { Config } from "../../src/utils/get-config";
 
 // Mock dependencies.
 vi.mock("../../src/registry/namespaces", () => ({
   resolveRegistryNamespaces: vi.fn().mockResolvedValue(["@foo"]),
-}))
+}));
 
 vi.mock("../../src/registry/api", () => ({
   getRegistriesIndex: vi.fn().mockResolvedValue({
     "@foo": "https://foo.com/r/{name}.json",
   }),
-}))
+}));
 
 vi.mock("../../src/utils/spinner", () => ({
   spinner: vi.fn().mockReturnValue({
@@ -21,20 +21,20 @@ vi.mock("../../src/utils/spinner", () => ({
       stop: vi.fn(),
     }),
   }),
-}))
+}));
 
 vi.mock("fs-extra", () => ({
   default: {
     writeFile: vi.fn().mockResolvedValue(undefined),
   },
-}))
+}));
 
-import { ensureRegistriesInConfig } from "../../src/utils/registries"
-import fs from "fs-extra"
+import fs from "fs-extra";
+import { ensureRegistriesInConfig } from "../../src/utils/registries";
 
 afterEach(() => {
-  vi.clearAllMocks()
-})
+  vi.clearAllMocks();
+});
 
 const baseConfig: Config = {
   $schema: "",
@@ -66,44 +66,40 @@ const baseConfig: Config = {
     hooks: "",
     ui: "",
   },
-}
+};
 
 describe("ensureRegistriesInConfig", () => {
   test("does not write to disk when writeFile is false", async () => {
-    const { config, newRegistries } = await ensureRegistriesInConfig(
-      ["@foo/bar"],
-      baseConfig,
-      { writeFile: false }
-    )
+    const { config, newRegistries } = await ensureRegistriesInConfig(["@foo/bar"], baseConfig, {
+      writeFile: false,
+    });
 
     // Should still return the updated config with new registries.
-    expect(newRegistries).toEqual(["@foo"])
-    expect(config.registries?.["@foo"]).toBe(
-      "https://foo.com/r/{name}.json"
-    )
+    expect(newRegistries).toEqual(["@foo"]);
+    expect(config.registries?.["@foo"]).toBe("https://foo.com/r/{name}.json");
 
     // Should NOT have written to disk.
-    expect(fs.writeFile).not.toHaveBeenCalled()
-  })
+    expect(fs.writeFile).not.toHaveBeenCalled();
+  });
 
   test("writes to disk when writeFile is true", async () => {
     await ensureRegistriesInConfig(["@foo/bar"], baseConfig, {
       writeFile: true,
-    })
+    });
 
-    expect(fs.writeFile).toHaveBeenCalledTimes(1)
+    expect(fs.writeFile).toHaveBeenCalledTimes(1);
     expect(fs.writeFile).toHaveBeenCalledWith(
       expect.stringContaining("components.json"),
       expect.any(String),
       "utf-8"
-    )
-  })
+    );
+  });
 
   test("writes to disk by default (writeFile not specified)", async () => {
-    await ensureRegistriesInConfig(["@foo/bar"], baseConfig)
+    await ensureRegistriesInConfig(["@foo/bar"], baseConfig);
 
-    expect(fs.writeFile).toHaveBeenCalledTimes(1)
-  })
+    expect(fs.writeFile).toHaveBeenCalledTimes(1);
+  });
 
   test("does not write when no new registries are found", async () => {
     const configWithRegistry: Config = {
@@ -111,13 +107,13 @@ describe("ensureRegistriesInConfig", () => {
       registries: {
         "@foo": "https://foo.com/r/{name}.json",
       },
-    }
+    };
 
     await ensureRegistriesInConfig(["@foo/bar"], configWithRegistry, {
       writeFile: true,
-    })
+    });
 
     // No new registries, so no write.
-    expect(fs.writeFile).not.toHaveBeenCalled()
-  })
-})
+    expect(fs.writeFile).not.toHaveBeenCalled();
+  });
+});

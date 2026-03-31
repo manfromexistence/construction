@@ -1,8 +1,6 @@
 {
   "name": "circular-progress",
-  "dependencies": [
-    "@base-ui/react"
-  ],
+  "dependencies": ["@base-ui/react"],
   "files": [
     {
       "path": "ui/circular-progress.tsx",

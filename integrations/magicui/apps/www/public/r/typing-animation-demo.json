@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Typing Animation Demo",
   "description": "Example showing typed character animations.",
-  "registryDependencies": [
-    "@magicui/typing-animation"
-  ],
+  "registryDependencies": ["@magicui/typing-animation"],
   "files": [
     {
       "path": "registry/example/typing-animation-demo.tsx",

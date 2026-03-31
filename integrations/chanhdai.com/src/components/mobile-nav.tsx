@@ -1,33 +1,29 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
-import { useCallback, useState } from "react"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCallback, useState } from "react";
 
-import { Button } from "@/components/ui/button"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import { useMediaQuery } from "@/hooks/use-media-query"
-import { haptic } from "@/registry/lib/haptic"
-import type { NavItem } from "@/types/nav"
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { haptic } from "@/registry/lib/haptic";
+import type { NavItem } from "@/types/nav";
 
 export function MobileNav({ items }: { items: NavItem[] }) {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
-  const isDesktop = useMediaQuery("(min-width: 40rem)") // sm breakpoint
+  const isDesktop = useMediaQuery("(min-width: 40rem)"); // sm breakpoint
 
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   const handleOpenChange = useCallback((open: boolean) => {
-    haptic()
-    setOpen(open)
-  }, [])
+    haptic();
+    setOpen(open);
+  }, []);
 
   if (isDesktop) {
-    return <MobileNavTrigger />
+    return <MobileNavTrigger />;
   }
 
   return (
@@ -49,7 +45,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
               pathname === link.href ||
               (link.href === "/" // Home page
                 ? ["/", "/index"].includes(pathname || "")
-                : pathname?.startsWith(link.href))
+                : pathname?.startsWith(link.href));
 
             return (
               <Link
@@ -61,17 +57,15 @@ export function MobileNav({ items }: { items: NavItem[] }) {
               >
                 {link.title}
               </Link>
-            )
+            );
           })}
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
-function MobileNavTrigger(
-  props: Omit<React.ComponentProps<typeof Button>, "children">
-) {
+function MobileNavTrigger(props: Omit<React.ComponentProps<typeof Button>, "children">) {
   return (
     <Button
       className="group extend-touch-target flex flex-col gap-1 border-none data-open:bg-accent"
@@ -83,5 +77,5 @@ function MobileNavTrigger(
       <span className="flex h-0.5 w-4 transform rounded-[1px] bg-foreground transition-transform group-data-[state=open]:translate-y-0.75 group-data-[state=open]:rotate-45" />
       <span className="flex h-0.5 w-4 transform rounded-[1px] bg-foreground transition-transform group-data-[state=open]:-translate-y-0.75 group-data-[state=open]:-rotate-45" />
     </Button>
-  )
+  );
 }

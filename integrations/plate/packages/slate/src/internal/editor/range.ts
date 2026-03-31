@@ -1,17 +1,12 @@
-import { range as rangeBase } from 'slate';
-import {
-  type EditorBeforeOptions,
-  PointApi,
-  RangeApi,
-  type TRange,
-} from '../../interfaces';
-import type { Editor } from '../../interfaces/editor/editor-type';
-import type { At } from '../../types';
-import { getAt } from '../../utils';
+import { range as rangeBase } from "slate";
+import { type EditorBeforeOptions, PointApi, RangeApi, type TRange } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor/editor-type";
+import type { At } from "../../types";
+import { getAt } from "../../utils";
 
 export const range = (
   editor: Editor,
-  at: At | 'before' | 'start',
+  at: At | "before" | "start",
   to?: At | null,
   options?: { before?: EditorBeforeOptions }
 ): TRange | undefined => {
@@ -20,7 +15,7 @@ export const range = (
   if (RangeApi.isRange(from) && !to) {
     return from;
   }
-  if (from === 'start') {
+  if (from === "start") {
     const path = editor.api.block({ at: to! })?.[1];
 
     if (!path) return;
@@ -35,7 +30,7 @@ export const range = (
 
     return { anchor, focus };
   }
-  if (to && from === 'before') {
+  if (to && from === "before") {
     const anchor = editor.api.before(to, options?.before);
 
     from = anchor ?? getAt(editor, to);

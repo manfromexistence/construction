@@ -1,11 +1,11 @@
-import { fragment, getFragment as getFragmentBase } from 'slate';
+import { fragment, getFragment as getFragmentBase } from "slate";
 
-import type { Editor } from '../../interfaces/editor/editor-type';
-import type { ElementOrTextOf, TElement } from '../../interfaces/element';
-import type { EditorFragmentOptions } from '../../interfaces/index';
-import type { At } from '../../types';
+import type { Editor } from "../../interfaces/editor/editor-type";
+import type { ElementOrTextOf, TElement } from "../../interfaces/element";
+import type { EditorFragmentOptions } from "../../interfaces/index";
+import type { At } from "../../types";
 
-import { getAt } from '../../utils';
+import { getAt } from "../../utils";
 
 const unwrapContainerNodes = (nodes: TElement[], types: string[]) => {
   const unwrap = (nodes: TElement[], acc: TElement[] = []): TElement[] => {

@@ -1,10 +1,6 @@
-import type { NodeEntry, TRange } from '@platejs/slate';
+import type { NodeEntry, TRange } from "@platejs/slate";
 
-import {
-  type EditableProps,
-  type SlateEditor,
-  getEditorPlugin,
-} from '../../lib';
+import { type EditableProps, getEditorPlugin, type SlateEditor } from "../../lib";
 
 /**
  * @see {@link Decorate} .
@@ -12,10 +8,8 @@ import {
  */
 export const pipeDecorate = (
   editor: SlateEditor,
-  decorateProp?:
-    | ((ctx: { editor: SlateEditor; entry: NodeEntry }) => TRange[] | undefined)
-    | null
-): EditableProps['decorate'] => {
+  decorateProp?: ((ctx: { editor: SlateEditor; entry: NodeEntry }) => TRange[] | undefined) | null
+): EditableProps["decorate"] => {
   if (editor.meta.pluginCache.decorate.length === 0 && !decorateProp) return;
 
   return (entry: NodeEntry) => {

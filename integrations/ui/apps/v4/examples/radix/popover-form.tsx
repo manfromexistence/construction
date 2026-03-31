@@ -1,6 +1,6 @@
-import { Button } from "@/styles/radix-nova/ui/button"
-import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 import {
   Popover,
   PopoverContent,
@@ -8,7 +8,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@/styles/radix-nova/ui/popover"
+} from "@/styles/radix-nova/ui/popover";
 
 export function PopoverForm() {
   return (
@@ -19,9 +19,7 @@ export function PopoverForm() {
       <PopoverContent className="w-64" align="start">
         <PopoverHeader>
           <PopoverTitle>Dimensions</PopoverTitle>
-          <PopoverDescription>
-            Set the dimensions for the layer.
-          </PopoverDescription>
+          <PopoverDescription>Set the dimensions for the layer.</PopoverDescription>
         </PopoverHeader>
         <FieldGroup className="gap-4">
           <Field orientation="horizontal">
@@ -39,5 +37,5 @@ export function PopoverForm() {
         </FieldGroup>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import type { SlateEditor, TLinkElement, WrapNodesOptions } from 'platejs';
+import type { SlateEditor, TLinkElement, WrapNodesOptions } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export interface WrapLinkOptions extends WrapNodesOptions {
   url: string;
@@ -8,10 +8,7 @@ export interface WrapLinkOptions extends WrapNodesOptions {
 }
 
 /** Wrap a link node with split. */
-export const wrapLink = (
-  editor: SlateEditor,
-  { target, url, ...options }: WrapLinkOptions
-) => {
+export const wrapLink = (editor: SlateEditor, { target, url, ...options }: WrapLinkOptions) => {
   editor.tf.wrapNodes<TLinkElement>(
     {
       children: [],

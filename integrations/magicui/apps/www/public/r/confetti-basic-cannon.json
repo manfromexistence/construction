@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Confetti Basic Cannon",
   "description": "Example showing basic confetti cannon animation.",
-  "registryDependencies": [
-    "@magicui/confetti"
-  ],
+  "registryDependencies": ["@magicui/confetti"],
   "files": [
     {
       "path": "registry/example/confetti-basic-cannon.tsx",

@@ -1,11 +1,11 @@
-import { type TElement, createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS, type TElement } from "platejs";
 
-import type { ExcalidrawDataState } from './types';
+import type { ExcalidrawDataState } from "./types";
 
 export interface TExcalidrawElement extends TElement {
   data?: {
-    elements: ExcalidrawDataState['elements'];
-    state: ExcalidrawDataState['appState'];
+    elements: ExcalidrawDataState["elements"];
+    state: ExcalidrawDataState["appState"];
   } | null;
 }
 

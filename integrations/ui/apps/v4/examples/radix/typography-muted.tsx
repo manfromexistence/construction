@@ -1,5 +1,3 @@
 export function TypographyMuted() {
-  return (
-    <p className="text-sm text-muted-foreground">Enter your email address.</p>
-  )
+  return <p className="text-sm text-muted-foreground">Enter your email address.</p>;
 }

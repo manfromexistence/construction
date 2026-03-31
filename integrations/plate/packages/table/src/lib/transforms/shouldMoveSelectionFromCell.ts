@@ -1,6 +1,6 @@
-import { PathApi, type SlateEditor } from 'platejs';
+import { PathApi, type SlateEditor } from "platejs";
 
-import { getCellTypes } from '../utils/getCellType';
+import { getCellTypes } from "../utils/getCellType";
 
 const VISUAL_LINE_TOLERANCE = 1;
 
@@ -10,19 +10,14 @@ export type TableMoveSelectionContext = {
   point: { offset: number; path: number[] };
 };
 
-const getRangeClientRects = (domRange?: Pick<Range, 'getClientRects'> | null) =>
-  Array.from(domRange?.getClientRects?.() ?? []).filter(
-    (rect) => rect.height > 0
-  );
+const getRangeClientRects = (domRange?: Pick<Range, "getClientRects"> | null) =>
+  Array.from(domRange?.getClientRects?.() ?? []).filter((rect) => rect.height > 0);
 
 export const getTableMoveSelectionContext = (
   editor: SlateEditor,
   point = editor.selection?.anchor
 ): TableMoveSelectionContext | undefined => {
-  if (
-    !point ||
-    !editor.api.isAt({ block: true, match: { type: getCellTypes(editor) } })
-  ) {
+  if (!point || !editor.api.isAt({ block: true, match: { type: getCellTypes(editor) } })) {
     return;
   }
 
@@ -46,7 +41,7 @@ export const hasAdjacentBlockInCell = (
     blockPath,
     cellPath,
     reverse,
-  }: Pick<TableMoveSelectionContext, 'blockPath' | 'cellPath'> & {
+  }: Pick<TableMoveSelectionContext, "blockPath" | "cellPath"> & {
     reverse: boolean;
   }
 ) => {
@@ -76,9 +71,7 @@ export const shouldMoveSelectionFromCell = (
 
   if (!blockRange) return isAtBlockEdge;
 
-  const caretRects = getRangeClientRects(
-    editor.api.toDOMRange({ anchor: point, focus: point })
-  );
+  const caretRects = getRangeClientRects(editor.api.toDOMRange({ anchor: point, focus: point }));
   const blockRects = getRangeClientRects(editor.api.toDOMRange(blockRange));
 
   if (caretRects.length === 0 || blockRects.length === 0) return isAtBlockEdge;

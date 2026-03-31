@@ -1,15 +1,9 @@
-'use client';
-import { Suspense, useState } from 'react';
+"use client";
 
-import {
-  Plate,
-  PlateContent,
-  PlateController,
-  useEditorRef,
-  usePlateEditor,
-} from 'platejs/react';
+import { Plate, PlateContent, PlateController, useEditorRef, usePlateEditor } from "platejs/react";
+import { Suspense, useState } from "react";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 let nextId = 3;
 
@@ -58,10 +52,7 @@ const Editor = ({ id, onRemove }: { id: number; onRemove: VoidFunction }) => {
   return (
     <div className="mt-5 space-y-2">
       <Plate editor={editor}>
-        <PlateContent
-          className="rounded-lg border p-3"
-          placeholder={`Editor ${id}`}
-        />
+        <PlateContent className="rounded-lg border p-3" placeholder={`Editor ${id}`} />
       </Plate>
       <p>
         <Button onClick={onRemove}>Remove editor {id}</Button>

@@ -4,9 +4,7 @@ import { parseTsv } from "@/lib/data-grid";
 describe("parseTsv", () => {
   describe("basic parsing", () => {
     it("should parse simple single-row TSV", () => {
-      expect(parseTsv("Alice\tKickflip\t95", 3)).toEqual([
-        ["Alice", "Kickflip", "95"],
-      ]);
+      expect(parseTsv("Alice\tKickflip\t95", 3)).toEqual([["Alice", "Kickflip", "95"]]);
     });
 
     it("should parse multiple rows", () => {
@@ -17,11 +15,7 @@ describe("parseTsv", () => {
     });
 
     it("should handle single-column paste", () => {
-      expect(parseTsv("Alice\nBob\nCharlie", 1)).toEqual([
-        ["Alice"],
-        ["Bob"],
-        ["Charlie"],
-      ]);
+      expect(parseTsv("Alice\nBob\nCharlie", 1)).toEqual([["Alice"], ["Bob"], ["Charlie"]]);
     });
 
     it("should skip empty rows", () => {
@@ -34,8 +28,7 @@ describe("parseTsv", () => {
 
   describe("quoted fields (standard TSV)", () => {
     it("should handle quoted multiline content", () => {
-      const text =
-        'Alice\tKickflip\t95\nBob\t"Trick with\nmultiple\nlines"\t98';
+      const text = 'Alice\tKickflip\t95\nBob\t"Trick with\nmultiple\nlines"\t98';
       expect(parseTsv(text, 3)).toEqual([
         ["Alice", "Kickflip", "95"],
         ["Bob", "Trick with\nmultiple\nlines", "98"],
@@ -68,8 +61,7 @@ describe("parseTsv", () => {
     });
 
     it("should handle multiline in middle column", () => {
-      const text =
-        "Alice\tShort note\t95\nBob\tLine 1\nLine 2\nLine 3\t88\nCharlie\tSimple\t77";
+      const text = "Alice\tShort note\t95\nBob\tLine 1\nLine 2\nLine 3\t88\nCharlie\tSimple\t77";
       expect(parseTsv(text, 3)).toEqual([
         ["Alice", "Short note", "95"],
         ["Bob", "Line 1\nLine 2\nLine 3", "88"],
@@ -130,11 +122,7 @@ describe("parseTsv", () => {
     });
 
     it("should fallback to simple split when no tabs detected", () => {
-      expect(parseTsv("line1\nline2\nline3", 1)).toEqual([
-        ["line1"],
-        ["line2"],
-        ["line3"],
-      ]);
+      expect(parseTsv("line1\nline2\nline3", 1)).toEqual([["line1"], ["line2"], ["line3"]]);
     });
   });
 });

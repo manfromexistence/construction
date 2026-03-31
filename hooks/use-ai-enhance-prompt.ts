@@ -1,15 +1,15 @@
 "use client";
 
+import { useCompletion } from "@ai-sdk/react";
+import { JSONContent } from "@tiptap/react";
+import posthog from "posthog-js";
+import { useCallback, useMemo, useRef } from "react";
 import { toast } from "@/hooks/use-toast";
 import { parseAiSdkTransportError } from "@/lib/ai/parse-ai-sdk-transport-error";
 import { useAILocalDraftStore } from "@/store/ai-local-draft-store";
 import { useGetProDialogStore } from "@/store/get-pro-dialog-store";
 import { AIPromptData } from "@/types/ai";
 import { convertPromptDataToJSONContent } from "@/utils/ai/ai-prompt";
-import { useCompletion } from "@ai-sdk/react";
-import { JSONContent } from "@tiptap/react";
-import posthog from "posthog-js";
-import { useCallback, useMemo, useRef } from "react";
 
 export function useAIEnhancePrompt() {
   const { openGetProDialog } = useGetProDialogStore();

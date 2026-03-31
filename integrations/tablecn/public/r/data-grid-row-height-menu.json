@@ -3,13 +3,8 @@
   "name": "data-grid-row-height-menu",
   "title": "Data Grid Row Height Menu",
   "description": "A row height menu component for the data grid to adjust row sizes",
-  "dependencies": [
-    "@tanstack/react-table",
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "select"
-  ],
+  "dependencies": ["@tanstack/react-table", "lucide-react"],
+  "registryDependencies": ["select"],
   "files": [
     {
       "path": "src/components/data-grid/data-grid-row-height-menu.tsx",

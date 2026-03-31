@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Text Animate Demo 4",
   "description": "Fourth example showing various text animations.",
-  "registryDependencies": [
-    "@magicui/text-animate"
-  ],
+  "registryDependencies": ["@magicui/text-animate"],
   "files": [
     {
       "path": "registry/example/text-animate-demo-4.tsx",

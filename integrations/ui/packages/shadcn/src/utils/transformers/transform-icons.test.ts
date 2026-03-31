@@ -1,8 +1,8 @@
-import { type Config } from "@/src/utils/get-config"
-import { transformIcons } from "@/src/utils/transformers/transform-icons"
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
+import { type Config } from "@/src/utils/get-config";
+import { transformIcons } from "@/src/utils/transformers/transform-icons";
 
-import { transform } from "."
+import { transform } from ".";
 
 const testConfig: Config = {
   style: "new-york",
@@ -28,7 +28,7 @@ const testConfig: Config = {
     tailwindConfig: "",
     tailwindCss: "tailwind.css",
   },
-}
+};
 
 describe("transformIconPlaceholder", () => {
   describe("lucide library", () => {
@@ -57,8 +57,8 @@ export function Component() {
         export function Component() {
           return <div><CheckIcon /></div>
         }"
-      `)
-    })
+      `);
+    });
 
     test("preserves className and other props", async () => {
       expect(
@@ -85,8 +85,8 @@ export function Component() {
         export function Component() {
           return <CheckIcon className="size-4" aria-label="check" />
         }"
-      `)
-    })
+      `);
+    });
 
     test("handles multiple icons", async () => {
       expect(
@@ -123,8 +123,8 @@ export function Component() {
             </div>
           )
         }"
-      `)
-    })
+      `);
+    });
 
     test("preserves semicolons", async () => {
       expect(
@@ -151,9 +151,9 @@ export function Component() {
         export function Component() {
           return <CheckIcon />;
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("tabler library", () => {
     test("transforms IconPlaceholder to icon component", async () => {
@@ -181,8 +181,8 @@ export function Component() {
         export function Component() {
           return <div><IconCheck /></div>
         }"
-      `)
-    })
+      `);
+    });
 
     test("preserves className and other props", async () => {
       expect(
@@ -209,8 +209,8 @@ export function Component() {
         export function Component() {
           return <IconCheck className="size-4" aria-label="check" />
         }"
-      `)
-    })
+      `);
+    });
 
     test("handles multiple icons", async () => {
       expect(
@@ -247,8 +247,8 @@ export function Component() {
             </div>
           )
         }"
-      `)
-    })
+      `);
+    });
 
     test("preserves semicolons", async () => {
       expect(
@@ -275,9 +275,9 @@ export function Component() {
         export function Component() {
           return <IconCheck />;
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   describe("hugeicons library", () => {
     test("transforms IconPlaceholder to HugeiconsIcon wrapper", async () => {
@@ -306,8 +306,8 @@ export function Component() {
         export function Component() {
           return <div><HugeiconsIcon icon={Tick02Icon} strokeWidth={2} /></div>
         }"
-      `)
-    })
+      `);
+    });
 
     test("preserves className and other props", async () => {
       expect(
@@ -335,8 +335,8 @@ export function Component() {
         export function Component() {
           return <HugeiconsIcon icon={Tick02Icon} strokeWidth={2} className="size-4" />
         }"
-      `)
-    })
+      `);
+    });
 
     test("does not add strokeWidth if already present", async () => {
       expect(
@@ -364,8 +364,8 @@ export function Component() {
         export function Component() {
           return <HugeiconsIcon icon={Tick02Icon} strokeWidth={4} />
         }"
-      `)
-    })
+      `);
+    });
 
     test("handles multiple icons", async () => {
       expect(
@@ -403,9 +403,9 @@ export function Component() {
             </div>
           )
         }"
-      `)
-    })
-  })
+      `);
+    });
+  });
 
   test("does not transform when iconLibrary is not set", async () => {
     expect(
@@ -429,8 +429,8 @@ export function Component() {
       export function Component() {
         return <IconPlaceholder lucide="CheckIcon" />
       }"
-    `)
-  })
+    `);
+  });
 
   test("skips icons when library prop is not provided", async () => {
     expect(
@@ -456,8 +456,8 @@ export function Component() {
       export function Component() {
         return <IconPlaceholder tabler="IconCheck" />
       }"
-    `)
-  })
+    `);
+  });
 
   test("handles props with spaces in values", async () => {
     expect(
@@ -484,8 +484,8 @@ export function Component() {
       export function Component() {
         return <CheckIcon aria-label="check icon here" className="size-4" />
       }"
-    `)
-  })
+    `);
+  });
 
   test("no extra spacing when no user props - lucide", async () => {
     expect(
@@ -512,8 +512,8 @@ export function Component() {
       export function Component() {
         return <CheckIcon />
       }"
-    `)
-  })
+    `);
+  });
 
   test("no extra spacing when no user props - hugeicons", async () => {
     expect(
@@ -541,8 +541,8 @@ export function Component() {
       export function Component() {
         return <HugeiconsIcon icon={Tick02Icon} strokeWidth={2} />
       }"
-    `)
-  })
+    `);
+  });
 
   test("removes IconPlaceholder import after transformation", async () => {
     const result = await transform(
@@ -560,7 +560,7 @@ export function Component() {
         },
       },
       [transformIcons]
-    )
+    );
 
     expect(result).toMatchInlineSnapshot(`
       "import * as React from "react"
@@ -569,8 +569,8 @@ export function Component() {
       export function Component() {
         return <CheckIcon />
       }"
-    `)
-  })
+    `);
+  });
 
   test("does not transform for invalid icon library", async () => {
     expect(
@@ -597,8 +597,8 @@ export function Component() {
       export function Component() {
         return <IconPlaceholder lucide="CheckIcon" />
       }"
-    `)
-  })
+    `);
+  });
 
   test("does not forward library-specific props (lucide)", async () => {
     expect(
@@ -625,8 +625,8 @@ export function Component() {
       export function Component() {
         return <CheckIcon className="size-4" />
       }"
-    `)
-  })
+    `);
+  });
 
   test("does not forward library-specific props (tabler)", async () => {
     expect(
@@ -653,8 +653,8 @@ export function Component() {
       export function Component() {
         return <IconCheck className="size-4" />
       }"
-    `)
-  })
+    `);
+  });
 
   test("does not forward library-specific props (hugeicons)", async () => {
     expect(
@@ -682,6 +682,6 @@ export function Component() {
       export function Component() {
         return <HugeiconsIcon icon={Tick02Icon} strokeWidth={2} className="size-4" />
       }"
-    `)
-  })
-})
+    `);
+  });
+});

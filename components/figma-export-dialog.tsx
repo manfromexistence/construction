@@ -1,5 +1,7 @@
 "use client";
 
+import { ArrowUpRight, Cable, Check, Figma, Paintbrush, X } from "lucide-react";
+import Link from "next/link";
 import FigmaIcon from "@/assets/figma.svg";
 import Logo from "@/assets/logo.svg";
 import Shadcraft from "@/assets/shadcraft.svg";
@@ -15,8 +17,7 @@ import {
 } from "@/components/ui/revola";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { FIGMA_CONSTANTS, redirectToShadcraft } from "@/lib/figma-constants";
-import { ArrowUpRight, Cable, Check, Figma, Paintbrush, X } from "lucide-react";
-import Link from "next/link";
+
 interface FigmaExportDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;

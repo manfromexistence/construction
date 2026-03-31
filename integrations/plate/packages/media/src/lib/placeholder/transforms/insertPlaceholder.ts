@@ -1,10 +1,6 @@
-import type {
-  InsertNodesOptions,
-  SlateEditor,
-  TPlaceholderElement,
-} from 'platejs';
+import type { InsertNodesOptions, SlateEditor, TPlaceholderElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const insertPlaceholder = (
   editor: SlateEditor,
@@ -14,7 +10,7 @@ export const insertPlaceholder = (
   editor.tf.withoutNormalizing(() =>
     editor.tf.insertNodes<TPlaceholderElement>(
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         mediaType,
         type: editor.getType(KEYS.placeholder),
       },
@@ -23,22 +19,14 @@ export const insertPlaceholder = (
   );
 };
 
-export const insertImagePlaceholder = (
-  editor: SlateEditor,
-  options?: InsertNodesOptions
-) => insertPlaceholder(editor, KEYS.img, options);
+export const insertImagePlaceholder = (editor: SlateEditor, options?: InsertNodesOptions) =>
+  insertPlaceholder(editor, KEYS.img, options);
 
-export const insertVideoPlaceholder = (
-  editor: SlateEditor,
-  options?: InsertNodesOptions
-) => insertPlaceholder(editor, KEYS.video, options);
+export const insertVideoPlaceholder = (editor: SlateEditor, options?: InsertNodesOptions) =>
+  insertPlaceholder(editor, KEYS.video, options);
 
-export const insertAudioPlaceholder = (
-  editor: SlateEditor,
-  options?: InsertNodesOptions
-) => insertPlaceholder(editor, KEYS.audio, options);
+export const insertAudioPlaceholder = (editor: SlateEditor, options?: InsertNodesOptions) =>
+  insertPlaceholder(editor, KEYS.audio, options);
 
-export const insertFilePlaceholder = (
-  editor: SlateEditor,
-  options?: InsertNodesOptions
-) => insertPlaceholder(editor, KEYS.file, options);
+export const insertFilePlaceholder = (editor: SlateEditor, options?: InsertNodesOptions) =>
+  insertPlaceholder(editor, KEYS.file, options);

@@ -1,14 +1,13 @@
-import { Suspense } from 'react';
+import type { Metadata } from "next";
+import { Suspense } from "react";
 
-import type { Metadata } from 'next';
-
-import { EditorDescription } from './editor-description';
+import { EditorDescription } from "./editor-description";
 
 // SYNC
 
-const title = 'Building Editors for the Web';
+const title = "Building Editors for the Web";
 const description =
-  'Clean, modern building editors. Copy and paste into your apps. Works with all React frameworks.';
+  "Clean, modern building editors. Copy and paste into your apps. Works with all React frameworks.";
 
 export const metadata: Metadata = {
   description,
@@ -23,7 +22,7 @@ export const metadata: Metadata = {
   },
   title,
   twitter: {
-    card: 'summary_large_image',
+    card: "summary_large_image",
     images: [
       {
         url: `/og?title=${encodeURIComponent(
@@ -34,11 +33,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlocksLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function BlocksLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="container relative">
       <Suspense fallback={null}>

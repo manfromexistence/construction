@@ -1,19 +1,11 @@
-import type {
-  CollapseWhiteSpaceState,
-  TrimEndRule,
-  TrimStartRule,
-} from './types';
+import { collapseString } from "./collapseString";
+import { isLastNonEmptyTextOfInlineFormattingContext } from "./isLastNonEmptyTextOfInlineFormattingContext";
+import { upsertInlineFormattingContext } from "./stateTransforms";
+import type { CollapseWhiteSpaceState, TrimEndRule, TrimStartRule } from "./types";
 
-import { collapseString } from './collapseString';
-import { isLastNonEmptyTextOfInlineFormattingContext } from './isLastNonEmptyTextOfInlineFormattingContext';
-import { upsertInlineFormattingContext } from './stateTransforms';
-
-export const collapseWhiteSpaceText = (
-  text: Text,
-  state: CollapseWhiteSpaceState
-) => {
-  const textContent = text.textContent || '';
-  const isWhiteSpaceOnly = textContent.trim() === '';
+export const collapseWhiteSpaceText = (text: Text, state: CollapseWhiteSpaceState) => {
+  const textContent = text.textContent || "";
+  const isWhiteSpaceOnly = textContent.trim() === "";
 
   /**
    * Do not start an inline formatting context with a text node containing only
@@ -33,34 +25,33 @@ export const collapseWhiteSpaceText = (
    * CSS property.
    */
   const trimStart: TrimStartRule = (() => {
-    if (whiteSpaceRule !== 'normal') return 'collapse';
+    if (whiteSpaceRule !== "normal") return "collapse";
     if (
       !state.inlineFormattingContext ||
       state.inlineFormattingContext.atStart ||
       state.inlineFormattingContext.lastHasTrailingWhiteSpace
     )
-      return 'all';
+      return "all";
 
-    return 'collapse';
+    return "collapse";
   })();
 
   const trimEnd: TrimEndRule = (() => {
-    if (whiteSpaceRule === 'normal') return 'collapse';
-    if (isLastNonEmptyTextOfInlineFormattingContext(text))
-      return 'single-newline';
+    if (whiteSpaceRule === "normal") return "collapse";
+    if (isLastNonEmptyTextOfInlineFormattingContext(text)) return "single-newline";
 
-    return 'collapse';
+    return "collapse";
   })();
 
   const shouldCollapseWhiteSpace: boolean = {
     normal: true,
     pre: false,
-    'pre-line': true,
+    "pre-line": true,
   }[whiteSpaceRule];
 
-  const whiteSpaceIncludesNewlines = whiteSpaceRule !== 'pre-line';
+  const whiteSpaceIncludesNewlines = whiteSpaceRule !== "pre-line";
 
-  const collapsedTextContent = collapseString(textContent || '', {
+  const collapsedTextContent = collapseString(textContent || "", {
     shouldCollapseWhiteSpace,
     trimEnd,
     trimStart,
@@ -68,8 +59,7 @@ export const collapseWhiteSpaceText = (
   });
 
   if (state.inlineFormattingContext && shouldCollapseWhiteSpace) {
-    state.inlineFormattingContext.lastHasTrailingWhiteSpace =
-      collapsedTextContent.endsWith(' ');
+    state.inlineFormattingContext.lastHasTrailingWhiteSpace = collapsedTextContent.endsWith(" ");
   }
 
   text.textContent = collapsedTextContent;

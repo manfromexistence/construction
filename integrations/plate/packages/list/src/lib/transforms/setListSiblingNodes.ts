@@ -1,18 +1,13 @@
-import type { Editor, ElementEntryOf, ElementOf } from 'platejs';
+import type { Editor, ElementEntryOf, ElementOf } from "platejs";
 
-import { KEYS } from 'platejs';
-
-import type { GetSiblingListOptions } from '../queries/getSiblingList';
-
-import { getListSiblings } from '../queries/getListSiblings';
-import { ListStyleType } from '../types';
-import { setIndentTodoNode, setListNode } from './setListNode';
+import { KEYS } from "platejs";
+import { getListSiblings } from "../queries/getListSiblings";
+import type { GetSiblingListOptions } from "../queries/getSiblingList";
+import { ListStyleType } from "../types";
+import { setIndentTodoNode, setListNode } from "./setListNode";
 
 /** Set indent list to entry + siblings. */
-export const setListSiblingNodes = <
-  N extends ElementOf<E>,
-  E extends Editor = Editor,
->(
+export const setListSiblingNodes = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,
   entry: ElementEntryOf<E>,
   {

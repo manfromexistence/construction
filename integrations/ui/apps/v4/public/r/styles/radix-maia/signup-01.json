@@ -3,12 +3,7 @@
   "name": "signup-01",
   "title": "Signup 01",
   "description": "A simple signup form.",
-  "registryDependencies": [
-    "button",
-    "card",
-    "input",
-    "label"
-  ],
+  "registryDependencies": ["button", "card", "input", "label"],
   "files": [
     {
       "path": "registry/radix-maia/blocks/signup-01/page.tsx",
@@ -22,9 +17,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "signup"
-  ],
+  "categories": ["authentication", "signup"],
   "type": "registry:block"
 }

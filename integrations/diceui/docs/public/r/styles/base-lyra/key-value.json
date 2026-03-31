@@ -1,9 +1,6 @@
 {
   "name": "key-value",
-  "dependencies": [
-    "@base-ui/react",
-    "lucide-react"
-  ],
+  "dependencies": ["@base-ui/react", "lucide-react"],
   "registryDependencies": [
     "button",
     "input",

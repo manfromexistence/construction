@@ -3,13 +3,7 @@
   "name": "sidebar-05",
   "title": "Sidebar 05",
   "description": "A sidebar with collapsible submenus.",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb",
-    "separator",
-    "label",
-    "collapsible"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb", "separator", "label", "collapsible"],
   "files": [
     {
       "path": "registry/radix-vega/blocks/sidebar-05/page.tsx",
@@ -28,9 +22,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "sidebar",
-    "dashboard"
-  ],
+  "categories": ["sidebar", "dashboard"],
   "type": "registry:block"
 }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Sidebar,
@@ -12,7 +12,7 @@ import {
   SidebarMenuSubButton,
   SidebarMenuSubItem,
   SidebarProvider,
-} from "@/styles/base-nova/ui/sidebar"
+} from "@/styles/base-nova/ui/sidebar";
 
 const items = [
   {
@@ -140,7 +140,7 @@ const items = [
       },
     ],
   },
-]
+];
 
 export default function AppSidebar() {
   return (
@@ -158,9 +158,7 @@ export default function AppSidebar() {
                     <SidebarMenuSub>
                       {item.items.map((subItem, subIndex) => (
                         <SidebarMenuSubItem key={subIndex}>
-                          <SidebarMenuSubButton
-                            render={<a href={subItem.url} />}
-                          >
+                          <SidebarMenuSubButton render={<a href={subItem.url} />}>
                             <span>{subItem.title}</span>
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
@@ -174,5 +172,5 @@ export default function AppSidebar() {
         </SidebarContent>
       </Sidebar>
     </SidebarProvider>
-  )
+  );
 }

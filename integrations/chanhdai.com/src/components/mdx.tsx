@@ -1,18 +1,12 @@
-import type { MDXRemoteProps } from "next-mdx-remote/rsc"
-import { MDXRemote } from "next-mdx-remote/rsc"
-import rehypeExternalLinks from "rehype-external-links"
-import rehypeSlug from "rehype-slug"
-import remarkGfm from "remark-gfm"
+import type { MDXRemoteProps } from "next-mdx-remote/rsc";
+import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypeExternalLinks from "rehype-external-links";
+import rehypeSlug from "rehype-slug";
+import remarkGfm from "remark-gfm";
 
-import {
-  Tabs,
-  TabsContent,
-  TabsIndicator,
-  TabsList,
-  TabsTrigger,
-} from "@/components/base/ui/tabs"
-import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
-import { ComponentSource } from "@/components/component-source"
+import { Tabs, TabsContent, TabsIndicator, TabsList, TabsTrigger } from "@/components/base/ui/tabs";
+import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
+import { ComponentSource } from "@/components/component-source";
 import {
   Table,
   TableBody,
@@ -20,28 +14,28 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { Code, Heading } from "@/components/ui/typography"
-import { UTM_PARAMS } from "@/config/site"
-import { generator } from "@/lib/auto-type-table"
-import { rehypeAddQueryParams } from "@/lib/rehype-add-query-params"
+} from "@/components/ui/table";
+import { Code, Heading } from "@/components/ui/typography";
+import { UTM_PARAMS } from "@/config/site";
+import { generator } from "@/lib/auto-type-table";
+import { rehypeAddQueryParams } from "@/lib/rehype-add-query-params";
 import {
   rehypeCodeRawString,
   rehypeHighlightCode,
   rehypeHighlightCodeRawString,
-} from "@/lib/rehype-code-block"
-import { rehypeComponent } from "@/lib/rehype-component"
-import { rehypeNpmCommand } from "@/lib/rehype-npm-command"
-import { remarkCodeImport } from "@/lib/remark-code-import"
-import { cn } from "@/lib/utils"
-import { AutoTypeTable } from "@/registry/components/auto-type-table"
+} from "@/lib/rehype-code-block";
+import { rehypeComponent } from "@/lib/rehype-component";
+import { rehypeNpmCommand } from "@/lib/rehype-npm-command";
+import { remarkCodeImport } from "@/lib/remark-code-import";
+import { cn } from "@/lib/utils";
+import { AutoTypeTable } from "@/registry/components/auto-type-table";
 
-import { Callout } from "./callout"
-import { CodeTabs } from "./code-tabs"
-import { ComponentPreviewV2 as ComponentPreview } from "./component-preview-v2"
-import { FramedImage, IframeEmbed, YouTubeEmbed } from "./embed"
-import { mdxCodeBlockComponents } from "./mdx-code-block"
-import { Testimonial } from "./testimonial"
+import { Callout } from "./callout";
+import { CodeTabs } from "./code-tabs";
+import { ComponentPreviewV2 as ComponentPreview } from "./component-preview-v2";
+import { FramedImage, IframeEmbed, YouTubeEmbed } from "./embed";
+import { mdxCodeBlockComponents } from "./mdx-code-block";
+import { Testimonial } from "./testimonial";
 
 const components: MDXRemoteProps["components"] = {
   h1: (props: React.ComponentProps<"h1">) => <Heading as="h1" {...props} />,
@@ -156,7 +150,7 @@ const components: MDXRemoteProps["components"] = {
   FramedImage,
   Testimonial,
   AutoTypeTable: (props) => <AutoTypeTable {...props} generator={generator} />,
-}
+};
 
 const options: MDXRemoteProps["options"] = {
   mdxOptions: {
@@ -219,8 +213,8 @@ const options: MDXRemoteProps["options"] = {
       [rehypeAddQueryParams, UTM_PARAMS],
     ],
   },
-}
+};
 
 export function MDX({ code }: { code: string }) {
-  return <MDXRemote source={code} components={components} options={options} />
+  return <MDXRemote source={code} components={components} options={options} />;
 }

@@ -33,15 +33,15 @@ export type {
   Text as MdText,
   ThematicBreak as MdThematicBreak,
   Yaml as MdYaml,
-} from 'mdast';
+} from "mdast";
 
 // Export math related types from mdast-util-math
 export type {
   InlineMath as MdInlineMath,
   Math as MdMath,
-} from 'mdast-util-math';
+} from "mdast-util-math";
 
 export type {
   MdxJsxFlowElement as MdMdxJsxFlowElement,
   MdxJsxTextElement as MdMdxJsxTextElement,
-} from 'mdast-util-mdx';
+} from "mdast-util-mdx";

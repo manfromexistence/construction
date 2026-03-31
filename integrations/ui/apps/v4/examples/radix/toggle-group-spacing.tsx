@@ -1,17 +1,8 @@
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/radix-nova/ui/toggle-group"
+import { ToggleGroup, ToggleGroupItem } from "@/styles/radix-nova/ui/toggle-group";
 
 export function ToggleGroupSpacing() {
   return (
-    <ToggleGroup
-      type="single"
-      size="sm"
-      defaultValue="top"
-      variant="outline"
-      spacing={2}
-    >
+    <ToggleGroup type="single" size="sm" defaultValue="top" variant="outline" spacing={2}>
       <ToggleGroupItem value="top" aria-label="Toggle top">
         Top
       </ToggleGroupItem>
@@ -25,5 +16,5 @@ export function ToggleGroupSpacing() {
         Right
       </ToggleGroupItem>
     </ToggleGroup>
-  )
+  );
 }

@@ -1,4 +1,4 @@
-import { cn } from "@/registry/bases/base/lib/utils"
+import { cn } from "@/registry/bases/base/lib/utils";
 
 function ExampleWrapper({ className, ...props }: React.ComponentProps<"div">) {
   return (
@@ -13,7 +13,7 @@ function ExampleWrapper({ className, ...props }: React.ComponentProps<"div">) {
         {...props}
       />
     </div>
-  )
+  );
 }
 
 function Example({
@@ -23,8 +23,8 @@ function Example({
   containerClassName,
   ...props
 }: React.ComponentProps<"div"> & {
-  title?: string
-  containerClassName?: string
+  title?: string;
+  containerClassName?: string;
 }) {
   return (
     <div
@@ -36,9 +36,7 @@ function Example({
       {...props}
     >
       {title && (
-        <div className="px-1.5 py-2 text-xs font-medium text-muted-foreground">
-          {title}
-        </div>
+        <div className="px-1.5 py-2 text-xs font-medium text-muted-foreground">{title}</div>
       )}
       <div
         data-slot="example-content"
@@ -50,7 +48,7 @@ function Example({
         {children}
       </div>
     </div>
-  )
+  );
 }
 
-export { ExampleWrapper, Example }
+export { Example, ExampleWrapper };

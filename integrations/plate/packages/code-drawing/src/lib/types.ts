@@ -1,4 +1,4 @@
-import type { CodeDrawingType, ViewMode } from './constants';
+import type { CodeDrawingType, ViewMode } from "./constants";
 
 export type CodeDrawingData = {
   drawingType?: CodeDrawingType;

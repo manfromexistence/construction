@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 export type GlowCardProps = {
-  name: string
-  handle: string
-  avatar: string
-  className?: string
-}
+  name: string;
+  handle: string;
+  avatar: string;
+  className?: string;
+};
 
 export function GlowCard({ name, handle, avatar, className }: GlowCardProps) {
   return (
@@ -32,9 +32,7 @@ export function GlowCard({ name, handle, avatar, className }: GlowCardProps) {
           <img className="size-20 rounded-full" src={avatar} alt={name} />
 
           <div className="flex flex-col items-center gap-1">
-            <h2 className="text-base leading-none font-semibold text-foreground">
-              {name}
-            </h2>
+            <h2 className="text-base leading-none font-semibold text-foreground">{name}</h2>
             <p className="text-sm leading-none text-foreground/50">{handle}</p>
           </div>
         </div>
@@ -49,8 +47,7 @@ export function GlowCard({ name, handle, avatar, className }: GlowCardProps) {
         )}
         style={
           {
-            maskImage:
-              "linear-gradient(#fff 0 100%), linear-gradient(#fff 0 100%)",
+            maskImage: "linear-gradient(#fff 0 100%), linear-gradient(#fff 0 100%)",
             maskOrigin: "border-box, padding-box",
             maskClip: "border-box, padding-box",
             maskComposite: "exclude",
@@ -59,5 +56,5 @@ export function GlowCard({ name, handle, avatar, className }: GlowCardProps) {
         }
       />
     </div>
-  )
+  );
 }

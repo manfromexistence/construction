@@ -1,17 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form-rhf-select",
-  "dependencies": [
-    "react-hook-form",
-    "@hookform/resolvers",
-    "zod"
-  ],
-  "registryDependencies": [
-    "field",
-    "select",
-    "button",
-    "card"
-  ],
+  "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
+  "registryDependencies": ["field", "select", "button", "card"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/form-rhf-select.tsx",

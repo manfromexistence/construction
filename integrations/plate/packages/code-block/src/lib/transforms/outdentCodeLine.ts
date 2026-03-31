@@ -1,6 +1,6 @@
-import type { Editor, ElementEntry } from 'platejs';
+import type { Editor, ElementEntry } from "platejs";
 
-import { deleteStartSpace } from './deleteStartSpace';
+import { deleteStartSpace } from "./deleteStartSpace";
 
 export type OutdentCodeLineOptions = {
   codeBlock: ElementEntry;

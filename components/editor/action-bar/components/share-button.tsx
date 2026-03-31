@@ -1,7 +1,7 @@
+import { Loader2, Share2 } from "lucide-react";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Loader2, Share2 } from "lucide-react";
 
 interface ShareButtonProps extends React.ComponentProps<typeof Button> {
   isSharing?: boolean;

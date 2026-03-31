@@ -1,13 +1,12 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import { moveSelectionFromCell } from './moveSelectionFromCell';
-import { setTableColSize } from './setTableColSize';
-import { setTableRowSize } from './setTableRowSize';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import { moveSelectionFromCell } from "./moveSelectionFromCell";
+import { setTableColSize } from "./setTableColSize";
+import { setTableRowSize } from "./setTableRowSize";
 
 jsxt;
 
@@ -19,9 +18,9 @@ const createTableEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('table sizing and selection helpers', () => {
-  describe('setTableColSize', () => {
-    it('creates a colSizes array when the table does not have one yet', () => {
+describe("table sizing and selection helpers", () => {
+  describe("setTableColSize", () => {
+    it("creates a colSizes array when the table does not have one yet", () => {
       const input = (
         <editor>
           <htable>
@@ -55,12 +54,12 @@ describe('table sizing and selection helpers', () => {
       expect(editor.children).toMatchObject([
         {
           colSizes: [0, 120],
-          type: 'table',
+          type: "table",
         },
       ]);
     });
 
-    it('updates only the requested column width when colSizes already exist', () => {
+    it("updates only the requested column width when colSizes already exist", () => {
       const input = (
         <editor>
           <htable colSizes={[20, 30]}>
@@ -86,14 +85,14 @@ describe('table sizing and selection helpers', () => {
       expect(editor.children).toMatchObject([
         {
           colSizes: [64, 30],
-          type: 'table',
+          type: "table",
         },
       ]);
     });
   });
 
-  describe('setTableRowSize', () => {
-    it('sets the size on the requested table row', () => {
+  describe("setTableRowSize", () => {
+    it("sets the size on the requested table row", () => {
       const input = (
         <editor>
           <htable>
@@ -127,14 +126,14 @@ describe('table sizing and selection helpers', () => {
       expect(editor.children).toMatchObject([
         {
           children: [{ size: 48 }, {}],
-          type: 'table',
+          type: "table",
         },
       ]);
     });
   });
 
-  describe('moveSelectionFromCell', () => {
-    it('moves a collapsed selection to the next cell', () => {
+  describe("moveSelectionFromCell", () => {
+    it("moves a collapsed selection to the next cell", () => {
       const input = (
         <editor>
           <htable>
@@ -194,7 +193,7 @@ describe('table sizing and selection helpers', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('expands the current cell range to the right edge', () => {
+    it("expands the current cell range to the right edge", () => {
       const input = (
         <editor>
           <htable>
@@ -255,12 +254,12 @@ describe('table sizing and selection helpers', () => {
 
       const editor = createTableEditor(input);
 
-      moveSelectionFromCell(editor, { edge: 'right' });
+      moveSelectionFromCell(editor, { edge: "right" });
 
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('moves forward out of the table when there is no next cell', () => {
+    it("moves forward out of the table when there is no next cell", () => {
       const input = (
         <editor>
           <hp>before</hp>
@@ -302,7 +301,7 @@ describe('table sizing and selection helpers', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('moves backward out of the table when there is no previous cell', () => {
+    it("moves backward out of the table when there is no previous cell", () => {
       const input = (
         <editor>
           <hp>before</hp>
@@ -344,7 +343,7 @@ describe('table sizing and selection helpers', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('handles ArrowDown through moveLine without relying on browser default movement', () => {
+    it("handles ArrowDown through moveLine without relying on browser default movement", () => {
       const input = (
         <editor>
           <htable>

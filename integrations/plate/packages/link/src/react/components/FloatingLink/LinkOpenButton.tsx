@@ -1,13 +1,8 @@
-import React from 'react';
+import { KEYS, type TLinkElement } from "platejs";
+import { createPrimitiveComponent, useEditorRef, useEditorSelection } from "platejs/react";
+import React from "react";
 
-import { type TLinkElement, KEYS } from 'platejs';
-import {
-  createPrimitiveComponent,
-  useEditorRef,
-  useEditorSelection,
-} from 'platejs/react';
-
-import { getLinkAttributes } from '../../../lib/utils/getLinkAttributes';
+import { getLinkAttributes } from "../../../lib/utils/getLinkAttributes";
 
 // @deprecated
 export const useLinkOpenButtonState = () => {
@@ -49,8 +44,8 @@ export const useLinkOpenButton = ({ element }: { element?: TLinkElement }) => {
   return {
     props: {
       ...linkAttributes,
-      'aria-label': 'Open link in a new tab',
-      target: '_blank',
+      "aria-label": "Open link in a new tab",
+      target: "_blank",
       onMouseOver: (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         e.stopPropagation();
       },
@@ -58,7 +53,7 @@ export const useLinkOpenButton = ({ element }: { element?: TLinkElement }) => {
   };
 };
 
-export const LinkOpenButton = createPrimitiveComponent('a')({
+export const LinkOpenButton = createPrimitiveComponent("a")({
   propsHook: useLinkOpenButton,
   stateHook: useLinkOpenButtonState,
 });

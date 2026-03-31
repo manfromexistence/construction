@@ -1,3 +1,4 @@
+import { Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -8,7 +9,6 @@ import {
   ResponsiveDialogTitle,
 } from "@/components/ui/revola";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
-import { Check, Copy } from "lucide-react";
 
 interface ShareDialogProps {
   open: boolean;

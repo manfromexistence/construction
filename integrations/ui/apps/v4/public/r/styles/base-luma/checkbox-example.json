@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "checkbox-example",
   "title": "Checkbox",
-  "registryDependencies": [
-    "checkbox",
-    "field",
-    "table",
-    "example"
-  ],
+  "registryDependencies": ["checkbox", "field", "table", "example"],
   "files": [
     {
       "path": "registry/base-luma/examples/checkbox-example.tsx",

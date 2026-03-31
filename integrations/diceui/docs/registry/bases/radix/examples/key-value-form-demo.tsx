@@ -34,7 +34,7 @@ const formSchema = z.object({
         id: z.string(),
         key: z.string().min(1, "Key is required"),
         value: z.string(),
-      }),
+      })
     )
     .min(1, "At least one environment variable is required"),
 });
@@ -62,10 +62,7 @@ export default function KeyValueFormDemo() {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-6"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <FormField
           control={form.control}
           name="projectName"
@@ -113,8 +110,8 @@ export default function KeyValueFormDemo() {
                 </KeyValue>
               </FormControl>
               <FormDescription>
-                Add environment variables for your project. Supports pasting
-                multiple lines in KEY=VALUE format.
+                Add environment variables for your project. Supports pasting multiple lines in
+                KEY=VALUE format.
               </FormDescription>
               <FormMessage />
             </FormItem>

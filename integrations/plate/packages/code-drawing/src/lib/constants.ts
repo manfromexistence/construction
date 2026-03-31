@@ -1,8 +1,8 @@
 export const CODE_DRAWING_TYPE = {
-  PlantUml: 'PlantUml',
-  Graphviz: 'Graphviz',
-  Flowchart: 'Flowchart',
-  Mermaid: 'Mermaid',
+  PlantUml: "PlantUml",
+  Graphviz: "Graphviz",
+  Flowchart: "Flowchart",
+  Mermaid: "Mermaid",
 } as const;
 
 export const CODE_DRAWING_TYPE_ARRAY = [
@@ -24,14 +24,13 @@ export const CODE_DRAWING_TYPE_ARRAY = [
   },
 ] as const;
 
-export type CodeDrawingType =
-  (typeof CODE_DRAWING_TYPE)[keyof typeof CODE_DRAWING_TYPE];
+export type CodeDrawingType = (typeof CODE_DRAWING_TYPE)[keyof typeof CODE_DRAWING_TYPE];
 
 // View mode constants
 export const VIEW_MODE = {
-  Both: 'Both',
-  Code: 'Code',
-  Image: 'Image',
+  Both: "Both",
+  Code: "Code",
+  Image: "Image",
 } as const;
 
 export const VIEW_MODE_ARRAY = [
@@ -54,4 +53,4 @@ export type ViewMode = (typeof VIEW_MODE)[keyof typeof VIEW_MODE];
 // UI constants
 export const DEFAULT_MIN_HEIGHT = 300;
 export const RENDER_DEBOUNCE_DELAY = 500;
-export const DOWNLOAD_FILENAME = 'code-drawing.png';
+export const DOWNLOAD_FILENAME = "code-drawing.png";

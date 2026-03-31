@@ -11,10 +11,7 @@ interface TestItemData {
 
 describe("useListHighlighting", () => {
   // Helper to create test items
-  function createTestItems(
-    count: number,
-    options: { selectedIndexes?: number[] } = {},
-  ) {
+  function createTestItems(count: number, options: { selectedIndexes?: number[] } = {}) {
     return Array.from({ length: count }, (_, i) => {
       const div = document.createElement("div");
       div.scrollIntoView = vi.fn();
@@ -32,11 +29,10 @@ describe("useListHighlighting", () => {
       items?: CollectionItem<HTMLDivElement, TestItemData>[];
       initialHighlightedIndex?: number;
       loop?: boolean;
-    } = {},
+    } = {}
   ) {
     const items = options.items ?? createTestItems(5);
-    let highlightedItem: CollectionItem<HTMLDivElement, TestItemData> | null =
-      null;
+    let highlightedItem: CollectionItem<HTMLDivElement, TestItemData> | null = null;
 
     if (options.initialHighlightedIndex !== undefined) {
       const item = items[options.initialHighlightedIndex];
@@ -56,7 +52,7 @@ describe("useListHighlighting", () => {
         getItems,
         getIsItemSelected,
         loop: options.loop,
-      }),
+      })
     );
 
     return {

@@ -1,17 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { CheckCircle2Icon, InfoIcon } from "lucide-react"
+import { CheckCircle2Icon, InfoIcon } from "lucide-react";
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/styles/radix-nova/ui-rtl/alert"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Alert, AlertDescription, AlertTitle } from "@/styles/radix-nova/ui-rtl/alert";
 
 const translations: Translations = {
   en: {
@@ -32,22 +25,19 @@ const translations: Translations = {
       paymentDescription:
         "تمت معالجة دفعتك البالغة 29.99 دولارًا. تم إرسال إيصال إلى عنوان بريدك الإلكتروني.",
       featureTitle: "ميزة جديدة متاحة",
-      featureDescription:
-        "لقد أضفنا دعم الوضع الداكن. يمكنك تفعيله في إعدادات حسابك.",
+      featureDescription: "لقد أضفنا دعم الوضع الداكن. يمكنك تفعيله في إعدادات حسابك.",
     },
   },
   he: {
     dir: "rtl",
     values: {
       paymentTitle: "התשלום בוצע בהצלחה",
-      paymentDescription:
-        "התשלום שלך בסך 29.99 דולר עובד. קבלה נשלחה לכתובת האימייל שלך.",
+      paymentDescription: "התשלום שלך בסך 29.99 דולר עובד. קבלה נשלחה לכתובת האימייל שלך.",
       featureTitle: "תכונה חדשה זמינה",
-      featureDescription:
-        "הוספנו תמיכה במצב כהה. אתה יכול להפעיל אותו בהגדרות החשבון שלך.",
+      featureDescription: "הוספנו תמיכה במצב כהה. אתה יכול להפעיל אותו בהגדרות החשבון שלך.",
     },
   },
-}
+};
 
 const alerts = [
   {
@@ -60,23 +50,23 @@ const alerts = [
     titleKey: "featureTitle" as const,
     descriptionKey: "featureDescription" as const,
   },
-] as const
+] as const;
 
 export function AlertRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="grid w-full max-w-md items-start gap-4" dir={dir}>
       {alerts.map((alert, index) => {
-        const Icon = alert.icon
+        const Icon = alert.icon;
         return (
           <Alert key={index}>
             <Icon />
             <AlertTitle>{t[alert.titleKey]}</AlertTitle>
             <AlertDescription>{t[alert.descriptionKey]}</AlertDescription>
           </Alert>
-        )
+        );
       })}
     </div>
-  )
+  );
 }

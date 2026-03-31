@@ -1,6 +1,6 @@
-import { ExpandableMasonarySection } from "@/components/sections/expandable-masonary-section"
-import { TestimonialTweetLink } from "@/components/sections/testimonial-tweet-link"
-import { TweetCard } from "@/registry/magicui/tweet-card"
+import { ExpandableMasonarySection } from "@/components/sections/expandable-masonary-section";
+import { TestimonialTweetLink } from "@/components/sections/testimonial-tweet-link";
+import { TweetCard } from "@/registry/magicui/tweet-card";
 
 const allTweets = [
   "https://x.com/steventey/status/1722659583464968612",
@@ -51,7 +51,7 @@ const allTweets = [
   // "https://x.com/Star_Knight12/status/1861814034363981989",
   // "https://x.com/mohamedzamakhan/status/1859810055924895904",
   // "https://x.com/DutchEngIishman/status/1795888864202043645",
-].map((t) => t.split("/").slice(-1)[0])
+].map((t) => t.split("/").slice(-1)[0]);
 
 export function Testimonials() {
   return (
@@ -61,10 +61,7 @@ export function Testimonials() {
       </h2>
       <ExpandableMasonarySection>
         {allTweets.map((id) => (
-          <TestimonialTweetLink
-            key={id}
-            tweetUrl={`https://x.com/i/status/${id}`}
-          >
+          <TestimonialTweetLink key={id} tweetUrl={`https://x.com/i/status/${id}`}>
             <TweetCard
               id={id}
               className="border-border bg-card break-inside-avoid overflow-hidden rounded-xl border transition-[border-color,background-color,box-shadow] duration-200 ease-in-out hover:shadow-md"
@@ -73,5 +70,5 @@ export function Testimonials() {
         ))}
       </ExpandableMasonarySection>
     </section>
-  )
+  );
 }

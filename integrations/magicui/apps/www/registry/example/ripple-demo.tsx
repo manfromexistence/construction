@@ -1,4 +1,4 @@
-import { Ripple } from "@/registry/magicui/ripple"
+import { Ripple } from "@/registry/magicui/ripple";
 
 export default function RippleDemo() {
   return (
@@ -8,5 +8,5 @@ export default function RippleDemo() {
       </p>
       <Ripple />
     </div>
-  )
+  );
 }

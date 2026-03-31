@@ -1,11 +1,11 @@
-import { levels } from 'slate';
+import { levels } from "slate";
 
-import type { Editor, ValueOf } from '../../interfaces/editor/editor-type';
-import type { EditorLevelsOptions } from '../../interfaces/index';
-import type { NodeOf } from '../../interfaces/node';
-import type { NodeEntry } from '../../interfaces/node-entry';
+import type { Editor, ValueOf } from "../../interfaces/editor/editor-type";
+import type { EditorLevelsOptions } from "../../interfaces/index";
+import type { NodeOf } from "../../interfaces/node";
+import type { NodeEntry } from "../../interfaces/node-entry";
 
-import { getQueryOptions } from '../../utils';
+import { getQueryOptions } from "../../utils";
 
 export const getLevels = <N extends NodeOf<E>, E extends Editor = Editor>(
   editor: E,

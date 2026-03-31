@@ -1,9 +1,9 @@
-import { BaseParagraphPlugin, KEYS, createSlateEditor } from 'platejs';
+import { BaseParagraphPlugin, createSlateEditor, KEYS } from "platejs";
 
-import { BaseLineHeightPlugin } from './BaseLineHeightPlugin';
+import { BaseLineHeightPlugin } from "./BaseLineHeightPlugin";
 
-describe('BaseLineHeightPlugin', () => {
-  it('exposes the injected block contract and bound setNodes transform', () => {
+describe("BaseLineHeightPlugin", () => {
+  it("exposes the injected block contract and bound setNodes transform", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseLineHeightPlugin],
     } as any);
@@ -14,13 +14,13 @@ describe('BaseLineHeightPlugin', () => {
     expect(plugin.inject.targetPlugins).toEqual([KEYS.p]);
     expect(plugin.inject.nodeProps).toMatchObject({
       defaultNodeValue: 1.5,
-      nodeKey: 'lineHeight',
+      nodeKey: "lineHeight",
     });
-    expect(typeof (editor as any).tf.lineHeight?.setNodes).toBe('function');
-    expect(typeof transforms.lineHeight.setNodes).toBe('function');
+    expect(typeof (editor as any).tf.lineHeight?.setNodes).toBe("function");
+    expect(typeof transforms.lineHeight.setNodes).toBe("function");
   });
 
-  it('parses line-height styles through the injected target plugin deserializer', () => {
+  it("parses line-height styles through the injected target plugin deserializer", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseLineHeightPlugin],
     } as any);
@@ -34,11 +34,11 @@ describe('BaseLineHeightPlugin', () => {
     expect(
       parse({
         element: {
-          style: { lineHeight: '2' },
+          style: { lineHeight: "2" },
         },
       } as any)
     ).toEqual({
-      [editor.getType(KEYS.lineHeight)]: '2',
+      [editor.getType(KEYS.lineHeight)]: "2",
     });
   });
 });

@@ -1,22 +1,16 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import {
-  BaseParagraphPlugin,
-  createEditor,
-  createSlateEditor,
-  KEYS,
-} from 'platejs';
-
-import { BaseCodeBlockPlugin } from '../BaseCodeBlockPlugin';
-import { CodeBlockPlugin } from '../../react/CodeBlockPlugin';
-import { insertCodeBlock } from './insertCodeBlock';
+import { jsxt } from "@platejs/test-utils";
+import { BaseParagraphPlugin, createEditor, createSlateEditor, KEYS } from "platejs";
+import { CodeBlockPlugin } from "../../react/CodeBlockPlugin";
+import { BaseCodeBlockPlugin } from "../BaseCodeBlockPlugin";
+import { insertCodeBlock } from "./insertCodeBlock";
 
 jsxt;
 
-describe('insert code block', () => {
-  describe('when selection is at start of block', () => {
-    it('turn line to code block', () => {
+describe("insert code block", () => {
+  describe("when selection is at start of block", () => {
+    it("turn line to code block", () => {
       const input = createEditor(
         (
           <editor>
@@ -55,8 +49,8 @@ describe('insert code block', () => {
     });
   });
 
-  describe('when selection is not at start of block', () => {
-    it('split line at selection and turn latter line to code block', () => {
+  describe("when selection is not at start of block", () => {
+    it("split line at selection and turn latter line to code block", () => {
       const input = createEditor(
         (
           <editor>
@@ -96,8 +90,8 @@ describe('insert code block', () => {
     });
   });
 
-  describe('when selection is expanded', () => {
-    it('keeps the editor unchanged for expanded selections', () => {
+  describe("when selection is expanded", () => {
+    it("keeps the editor unchanged for expanded selections", () => {
       const input = createEditor(
         (
           <editor>
@@ -138,26 +132,24 @@ describe('insert code block', () => {
     });
   });
 
-  it('does nothing when there is no selection', () => {
+  it("does nothing when there is no selection", () => {
     const editor = createSlateEditor({
       plugins: [BaseParagraphPlugin, BaseCodeBlockPlugin],
-      value: [{ type: KEYS.p, children: [{ text: 'line 1' }] }],
+      value: [{ type: KEYS.p, children: [{ text: "line 1" }] }],
     });
-    const insertBreak = spyOn(editor.tf, 'insertBreak');
-    const setNodes = spyOn(editor.tf, 'setNodes');
-    const wrapNodes = spyOn(editor.tf, 'wrapNodes');
+    const insertBreak = spyOn(editor.tf, "insertBreak");
+    const setNodes = spyOn(editor.tf, "setNodes");
+    const wrapNodes = spyOn(editor.tf, "wrapNodes");
 
     insertCodeBlock(editor);
 
-    expect(editor.children).toEqual([
-      { type: KEYS.p, children: [{ text: 'line 1' }] },
-    ]);
+    expect(editor.children).toEqual([{ type: KEYS.p, children: [{ text: "line 1" }] }]);
     expect(insertBreak).not.toHaveBeenCalled();
     expect(setNodes).not.toHaveBeenCalled();
     expect(wrapNodes).not.toHaveBeenCalled();
   });
 
-  it('does nothing when the selection is already in a code block', () => {
+  it("does nothing when the selection is already in a code block", () => {
     const input = createEditor(
       (
         <editor>
@@ -176,9 +168,9 @@ describe('insert code block', () => {
       value: input.children,
     });
     const before = editor.children;
-    const insertBreak = spyOn(editor.tf, 'insertBreak');
-    const setNodes = spyOn(editor.tf, 'setNodes');
-    const wrapNodes = spyOn(editor.tf, 'wrapNodes');
+    const insertBreak = spyOn(editor.tf, "insertBreak");
+    const setNodes = spyOn(editor.tf, "setNodes");
+    const wrapNodes = spyOn(editor.tf, "wrapNodes");
 
     insertCodeBlock(editor);
 

@@ -1,20 +1,15 @@
-import type { ExtendEditor, SlateEditor } from 'platejs';
+import type { ExtendEditor, SlateEditor } from "platejs";
 
-import * as Y from 'yjs';
+import * as Y from "yjs";
 
-import type { YjsConfig } from './providers/types';
+import type { YjsConfig } from "./providers/types";
 
-import { type PlateYjsEditorProps, withTCursors } from './withTCursors';
-import { withTYHistory } from './withTYHistory';
-import { type YjsEditorProps, withTYjs } from './withTYjs';
+import { type PlateYjsEditorProps, withTCursors } from "./withTCursors";
+import { withTYHistory } from "./withTYHistory";
+import { withTYjs, type YjsEditorProps } from "./withTYjs";
 
-export const withPlateYjs: ExtendEditor<YjsConfig> = ({
-  editor: e,
-  getOptions,
-}) => {
-  let editor = e as unknown as PlateYjsEditorProps &
-    SlateEditor &
-    YjsEditorProps;
+export const withPlateYjs: ExtendEditor<YjsConfig> = ({ editor: e, getOptions }) => {
+  let editor = e as unknown as PlateYjsEditorProps & SlateEditor & YjsEditorProps;
 
   const {
     awareness,
@@ -26,8 +21,7 @@ export const withPlateYjs: ExtendEditor<YjsConfig> = ({
   } = getOptions();
 
   // Use custom shared type if provided, otherwise get the default from Y.Doc
-  const sharedType =
-    customSharedType ?? (ydoc!.get('content', Y.XmlText) as Y.XmlText);
+  const sharedType = customSharedType ?? (ydoc!.get("content", Y.XmlText) as Y.XmlText);
 
   // Apply core Yjs binding first
   editor = withTYjs(editor, sharedType, {
@@ -54,7 +48,7 @@ export const withPlateYjs: ExtendEditor<YjsConfig> = ({
     } else {
       // This also shouldn't happen if BaseYjsPlugin ran correctly
       editor.api.debug.error(
-        'Yjs plugin: Internal shared awareness (awareness) is missing but cursors are enabled.'
+        "Yjs plugin: Internal shared awareness (awareness) is missing but cursors are enabled."
       );
     }
   }

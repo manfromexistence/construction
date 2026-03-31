@@ -1,7 +1,7 @@
-import { elementReadOnly } from 'slate';
+import { elementReadOnly } from "slate";
 
-import type { EditorElementReadOnlyOptions } from '../../interfaces';
-import type { Editor } from '../../interfaces/editor/editor-type';
+import type { EditorElementReadOnlyOptions } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor/editor-type";
 
 export const isElementReadOnly = <E extends Editor = Editor>(
   editor: E,

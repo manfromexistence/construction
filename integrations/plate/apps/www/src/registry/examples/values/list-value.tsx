@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -9,8 +9,8 @@ export const listValue: any = (
     <hh2>List</hh2>
 
     <hp>
-      Create indented lists with multiple levels of indentation and customize
-      the list style type for each level.
+      Create indented lists with multiple levels of indentation and customize the list style type
+      for each level.
     </hp>
     <hp checked={true} indent={1} listStyleType="todo">
       Todo 1

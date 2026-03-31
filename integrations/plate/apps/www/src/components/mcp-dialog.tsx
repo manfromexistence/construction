@@ -1,22 +1,22 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { Code } from '@/components/code';
-import { CodeBlock } from '@/components/codeblock';
-import { Icons } from '@/components/icons';
-import { Link } from '@/components/link';
-import { Steps } from '@/components/typography';
-import { Button } from '@/components/ui/button';
+import { Code } from "@/components/code";
+import { CodeBlock } from "@/components/codeblock";
+import { Icons } from "@/components/icons";
+import { Link } from "@/components/link";
+import { Steps } from "@/components/typography";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { siteConfig } from '@/config/site';
+} from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { siteConfig } from "@/config/site";
 
 export function SetupMCPDialog() {
   const [open, setOpen] = useState(false);
@@ -93,22 +93,14 @@ export function SetupMCPDialog() {
 
         <Steps>
           <h3 className="!mt-0">Start from our basic template</h3>
-          <CodeBlock
-            className="overflow-x-auto"
-            value={initCommand}
-            language="bash"
-          />
+          <CodeBlock className="overflow-x-auto" value={initCommand} language="bash" />
 
           <h3>Add MCP config</h3>
           <p>
             Configure your registry in your <Code>components.json</Code> file:
           </p>
 
-          <CodeBlock
-            className="overflow-x-auto"
-            value={componentsConfig}
-            language="json"
-          />
+          <CodeBlock className="overflow-x-auto" value={componentsConfig} language="json" />
 
           <Tabs className="mt-2" defaultValue="cursor">
             <TabsList>
@@ -121,22 +113,13 @@ export function SetupMCPDialog() {
               <p>
                 Copy and paste the code into <Code>.cursor/mcp.json</Code>
               </p>
-              <CodeBlock
-                className="mt-2 overflow-x-auto"
-                value={cursorConfig}
-                language="json"
-              />
+              <CodeBlock className="mt-2 overflow-x-auto" value={cursorConfig} language="json" />
             </TabsContent>
             <TabsContent className="mt-0" value="vscode">
               <p>
-                Copy and paste the code into <Code>.vscode/mcp.json</Code> in
-                your workspace
+                Copy and paste the code into <Code>.vscode/mcp.json</Code> in your workspace
               </p>
-              <CodeBlock
-                className="mt-2 overflow-x-auto"
-                value={vscodeConfig}
-                language="json"
-              />
+              <CodeBlock className="mt-2 overflow-x-auto" value={vscodeConfig} language="json" />
             </TabsContent>
             <TabsContent className="mt-0" value="claude">
               <p>
@@ -155,18 +138,14 @@ export function SetupMCPDialog() {
 
               <p className="mt-2">2. Add the following configuration:</p>
 
-              <CodeBlock
-                className="mt-2 overflow-x-auto"
-                value={codeXConfig}
-                language="bash"
-              />
+              <CodeBlock className="mt-2 overflow-x-auto" value={codeXConfig} language="bash" />
 
               <p>3. Restart Codex to load the MCP server</p>
             </TabsContent>
           </Tabs>
 
           <h3 className="!mb-0">
-            That's it! You can now ask anything about Plate.{' '}
+            That's it! You can now ask anything about Plate.{" "}
             <Link
               className="ml-auto font-semibold"
               href="https://github.com/udecode/plate/discussions/new?category=mcp"

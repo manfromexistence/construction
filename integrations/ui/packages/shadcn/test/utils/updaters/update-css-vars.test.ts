@@ -1,10 +1,10 @@
-import { describe, expect, test } from "vitest"
+import { describe, expect, test } from "vitest";
 
 import {
   isColorValue,
   isLocalHSLValue,
   transformCssVars,
-} from "../../../src/utils/updaters/update-css-vars"
+} from "../../../src/utils/updaters/update-css-vars";
 
 describe("transformCssVars", () => {
   test("should add light and dark css vars if not present", async () => {
@@ -46,8 +46,8 @@ describe("transformCssVars", () => {
         }
       }
         "
-    `)
-  })
+    `);
+  });
 
   test("should update light and dark css vars if present", async () => {
     expect(
@@ -98,8 +98,8 @@ describe("transformCssVars", () => {
         }
       }
         "
-    `)
-  })
+    `);
+  });
 
   test("should not add the base layer if it is already present", async () => {
     expect(
@@ -158,9 +158,9 @@ describe("transformCssVars", () => {
         }
       }
         "
-    `)
-  })
-})
+    `);
+  });
+});
 
 describe("transformCssVarsV4", () => {
   test("should transform css vars for v4", async () => {
@@ -201,8 +201,8 @@ describe("transformCssVarsV4", () => {
           --color-foreground: var(--foreground);
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("should update light and dark css vars if present", async () => {
     expect(
@@ -252,8 +252,8 @@ describe("transformCssVarsV4", () => {
                 --color-primary: var(--primary);
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("should update theme vars if present", async () => {
     expect(
@@ -317,8 +317,8 @@ describe("transformCssVarsV4", () => {
                 --color-foreground: var(--foreground);
               }
               "
-    `)
-  })
+    `);
+  });
 
   test("should NOT override theme vars if overwriteCssVars is false", async () => {
     expect(
@@ -379,8 +379,8 @@ describe("transformCssVarsV4", () => {
                 --color-foreground: var(--foreground);
               }
               "
-    `)
-  })
+    `);
+  });
 
   test("should override theme vars if overwriteCssVars is true", async () => {
     expect(
@@ -441,8 +441,8 @@ describe("transformCssVarsV4", () => {
                 --color-foreground: var(--foreground);
               }
               "
-    `)
-  })
+    `);
+  });
 
   test("should only add hsl and color vars if color", async () => {
     expect(
@@ -499,8 +499,8 @@ describe("transformCssVarsV4", () => {
                 --color-foreground: var(--foreground);
               }
               "
-    `)
-  })
+    `);
+  });
 
   test("should not add base layer if it is already present", async () => {
     expect(
@@ -572,8 +572,8 @@ describe("transformCssVarsV4", () => {
                 }
               }
               "
-    `)
-  })
+    `);
+  });
 
   test("it should add the dark @custom-variant if not present", async () => {
     expect(
@@ -613,8 +613,8 @@ describe("transformCssVarsV4", () => {
           --color-foreground: var(--foreground);
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("it should only add hsl() if not already present", async () => {
     expect(
@@ -654,8 +654,8 @@ describe("transformCssVarsV4", () => {
           --color-foreground: var(--foreground);
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("it should only add hsl() for rgb and hex values", async () => {
     expect(
@@ -695,8 +695,8 @@ describe("transformCssVarsV4", () => {
           --color-foreground: var(--foreground);
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("should add --radius-* if radius present", async () => {
     expect(
@@ -737,8 +737,8 @@ describe("transformCssVarsV4", () => {
           --radius-4xl: calc(var(--radius) * 2.6);
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("should NOT add --radius-* if already present", async () => {
     expect(
@@ -779,8 +779,8 @@ describe("transformCssVarsV4", () => {
               --radius-4xl: calc(var(--radius) * 2.6);
             }
               "
-    `)
-  })
+    `);
+  });
 
   test("should use --sidebar for --sidebar-background", async () => {
     expect(
@@ -815,8 +815,8 @@ describe("transformCssVarsV4", () => {
           --color-sidebar: var(--sidebar);
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("should add plugin if not present", async () => {
     expect(
@@ -837,8 +837,8 @@ describe("transformCssVarsV4", () => {
 
       @custom-variant dark (&:is(.dark *));
               "
-    `)
-  })
+    `);
+  });
 
   test("should NOT add plugin if already present", async () => {
     expect(
@@ -851,10 +851,7 @@ describe("transformCssVarsV4", () => {
         {
           tailwindVersion: "v4",
           tailwindConfig: {
-            plugins: [
-              'require("tailwindcss-animate")',
-              'require("@tailwindcss/typography")',
-            ],
+            plugins: ['require("tailwindcss-animate")', 'require("@tailwindcss/typography")'],
           },
         }
       )
@@ -866,8 +863,8 @@ describe("transformCssVarsV4", () => {
 
               @plugin "@tailwindcss/typography";
               "
-    `)
-  })
+    `);
+  });
 
   test("should preserve quotes", async () => {
     expect(
@@ -879,10 +876,7 @@ describe("transformCssVarsV4", () => {
         {
           tailwindVersion: "v4",
           tailwindConfig: {
-            plugins: [
-              'require("tailwindcss-animate")',
-              'require("@tailwindcss/typography")',
-            ],
+            plugins: ['require("tailwindcss-animate")', 'require("@tailwindcss/typography")'],
           },
         }
       )
@@ -895,8 +889,8 @@ describe("transformCssVarsV4", () => {
 
       @custom-variant dark (&:is(.dark *));
               "
-    `)
-  })
+    `);
+  });
 
   test("should add @keyframes if not present", async () => {
     expect(
@@ -951,8 +945,8 @@ describe("transformCssVarsV4", () => {
         }
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("should NOT add @keyframes if already present", async () => {
     expect(
@@ -1017,8 +1011,8 @@ describe("transformCssVarsV4", () => {
                 }
               }
               "
-    `)
-  })
+    `);
+  });
 
   test("should add --animate if not present", async () => {
     expect(
@@ -1079,8 +1073,8 @@ describe("transformCssVarsV4", () => {
         }
       }
               "
-    `)
-  })
+    `);
+  });
 
   test("should NOT add --animate if already present", async () => {
     expect(
@@ -1143,8 +1137,8 @@ describe("transformCssVarsV4", () => {
                 }
               }
               "
-    `)
-  })
+    `);
+  });
 
   test("should handle var(--color-*) references as colors", async () => {
     expect(
@@ -1190,9 +1184,9 @@ describe("transformCssVarsV4", () => {
           --spacing: var(--spacing);
       }
               "
-    `)
-  })
-})
+    `);
+  });
+});
 
 describe("isLocalHSLValue", () => {
   test.each([
@@ -1202,9 +1196,9 @@ describe("isLocalHSLValue", () => {
     ["10 42 98%", false],
     ["hsl(210 40% 98% / 0.5)", false],
   ])("%s -> %s", (value, expected) => {
-    expect(isLocalHSLValue(value)).toBe(expected)
-  })
-})
+    expect(isLocalHSLValue(value)).toBe(expected);
+  });
+});
 
 describe("isColorValue", () => {
   test.each([
@@ -1221,6 +1215,6 @@ describe("isColorValue", () => {
     ["0.5rem", false],
     ["16px", false],
   ])("%s -> %s", (value, expected) => {
-    expect(isColorValue(value)).toBe(expected)
-  })
-})
+    expect(isColorValue(value)).toBe(expected);
+  });
+});

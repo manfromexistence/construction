@@ -1,5 +1,5 @@
-const unitify = (val: number | string, unit = 'px'): string =>
-  typeof val === 'number' ? val + unit : val;
+const unitify = (val: number | string, unit = "px"): string =>
+  typeof val === "number" ? val + unit : val;
 
 /**
  * Add css to a DOM-Element or returns the current value of a property.
@@ -14,7 +14,7 @@ export function css(
   attr: Partial<Record<keyof CSSStyleDeclaration, number | string>> | string,
   val?: number | string
 ): void {
-  if (typeof attr === 'object') {
+  if (typeof attr === "object") {
     for (const [key, value] of Object.entries(attr)) {
       if (value !== undefined) {
         style[key as any] = unitify(value);

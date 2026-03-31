@@ -1,10 +1,10 @@
-import type { Path, SlateEditor, TElement, TTableElement } from 'platejs';
+import type { Path, SlateEditor, TElement, TTableElement } from "platejs";
 
-import { getEditorPlugin, KEYS, NodeApi, PathApi } from 'platejs';
+import { getEditorPlugin, KEYS, NodeApi, PathApi } from "platejs";
 
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { insertTableMergeColumn } from '../merge/insertTableColumn';
-import { getCellTypes } from '../utils/index';
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { insertTableMergeColumn } from "../merge/insertTableColumn";
+import { getCellTypes } from "../utils/index";
 
 export const insertTableColumn = (
   editor: SlateEditor,
@@ -84,9 +84,7 @@ export const insertTableColumn = (
 
       const isHeaderRow =
         header === undefined
-          ? (row as TElement).children.every(
-              (c) => c.type === editor.getType(KEYS.th)
-            )
+          ? (row as TElement).children.every((c) => c.type === editor.getType(KEYS.th))
           : header;
 
       editor.tf.insertNodes(
@@ -103,11 +101,7 @@ export const insertTableColumn = (
     const { colSizes } = tableNode;
 
     if (colSizes) {
-      let newColSizes = [
-        ...colSizes.slice(0, nextColIndex),
-        0,
-        ...colSizes.slice(nextColIndex),
-      ];
+      let newColSizes = [...colSizes.slice(0, nextColIndex), 0, ...colSizes.slice(nextColIndex)];
 
       if (initialTableWidth) {
         newColSizes[nextColIndex] =

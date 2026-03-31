@@ -1,11 +1,11 @@
-import React from 'react';
+import { selectAtom } from "jotai/utils";
 
-import { useStoreAtomValue } from 'jotai-x';
-import { selectAtom } from 'jotai/utils';
+import { useStoreAtomValue } from "jotai-x";
+import React from "react";
 
-import type { PlateEditor } from '../../editor';
+import type { PlateEditor } from "../../editor";
 
-import { plateStore, usePlateStore } from './createPlateStore';
+import { plateStore, usePlateStore } from "./createPlateStore";
 
 export type UseEditorSelectorOptions<T> = {
   id?: string;

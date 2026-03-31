@@ -1,6 +1,6 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
 jsx;
 
@@ -24,8 +24,7 @@ export const copilotValue: any = (
       <htext>Choose from the suggested completions:</htext>
     </hp>
     <hp indent={2} listStyleType="disc">
-      <htext bold>Tab</htext>:
-      <htext>Accept the entire suggested completion</htext>
+      <htext bold>Tab</htext>:<htext>Accept the entire suggested completion</htext>
     </hp>
     <hp indent={2} listStyleType="disc">
       <htext bold>Command + Right Arrow</htext>

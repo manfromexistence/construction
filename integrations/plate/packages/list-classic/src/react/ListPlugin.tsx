@@ -1,4 +1,4 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
 import {
   BaseBulletedListPlugin,
@@ -7,7 +7,7 @@ import {
   BaseListPlugin,
   BaseNumberedListPlugin,
   BaseTaskListPlugin,
-} from '../lib';
+} from "../lib";
 
 export const BulletedListPlugin = toPlatePlugin(BaseBulletedListPlugin);
 

@@ -1,8 +1,4 @@
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/radix-nova/ui/field"
+import { Field, FieldDescription, FieldLabel } from "@/styles/radix-nova/ui/field";
 import {
   Select,
   SelectContent,
@@ -10,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/radix-nova/ui/select"
+} from "@/styles/radix-nova/ui/select";
 
 export default function FieldSelect() {
   return (
@@ -33,9 +29,7 @@ export default function FieldSelect() {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <FieldDescription>
-        Select your department or area of work.
-      </FieldDescription>
+      <FieldDescription>Select your department or area of work.</FieldDescription>
     </Field>
-  )
+  );
 }

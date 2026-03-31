@@ -1,9 +1,9 @@
-import { USER } from "@/features/portfolio/data/user"
-import { TextFlip } from "@/registry/components/text-flip"
+import { USER } from "@/features/portfolio/data/user";
+import { TextFlip } from "@/registry/components/text-flip";
 
-import { AvatarElectricEffect } from "./avatar-electric-effect"
-import { PronounceMyName } from "./pronounce-my-name"
-import { VerifiedIcon } from "./verified-icon"
+import { AvatarElectricEffect } from "./avatar-electric-effect";
+import { PronounceMyName } from "./pronounce-my-name";
+import { VerifiedIcon } from "./verified-icon";
 
 export function ProfileHeader() {
   return (
@@ -43,15 +43,10 @@ export function ProfileHeader() {
               {USER.displayName}
             </h1>
 
-            <VerifiedIcon
-              className="size-4.5 text-info select-none"
-              aria-label="Verified"
-            />
+            <VerifiedIcon className="size-4.5 text-info select-none" aria-label="Verified" />
 
             {USER.namePronunciationUrl && (
-              <PronounceMyName
-                namePronunciationUrl={USER.namePronunciationUrl}
-              />
+              <PronounceMyName namePronunciationUrl={USER.namePronunciationUrl} />
             )}
           </div>
 
@@ -71,5 +66,5 @@ export function ProfileHeader() {
         </div>
       </div>
     </div>
-  )
+  );
 }

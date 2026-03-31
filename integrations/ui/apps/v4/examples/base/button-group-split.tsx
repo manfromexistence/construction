@@ -1,10 +1,7 @@
-import { IconPlus } from "@tabler/icons-react"
+import { IconPlus } from "@tabler/icons-react";
 
-import { Button } from "@/styles/base-nova/ui/button"
-import {
-  ButtonGroup,
-  ButtonGroupSeparator,
-} from "@/styles/base-nova/ui/button-group"
+import { Button } from "@/styles/base-nova/ui/button";
+import { ButtonGroup, ButtonGroupSeparator } from "@/styles/base-nova/ui/button-group";
 
 export default function ButtonGroupSplit() {
   return (
@@ -15,5 +12,5 @@ export default function ButtonGroupSplit() {
         <IconPlus />
       </Button>
     </ButtonGroup>
-  )
+  );
 }

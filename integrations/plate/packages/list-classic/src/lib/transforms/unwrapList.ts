@@ -1,12 +1,6 @@
-import {
-  type Path,
-  type SlateEditor,
-  ElementApi,
-  KEYS,
-  NodeApi,
-} from 'platejs';
+import { ElementApi, KEYS, NodeApi, type Path, type SlateEditor } from "platejs";
 
-import { getListTypes } from '../queries/index';
+import { getListTypes } from "../queries/index";
 
 export const unwrapList = (editor: SlateEditor, { at }: { at?: Path } = {}) => {
   const ancestorListTypeCheck = () => {

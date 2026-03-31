@@ -54,7 +54,7 @@ export default function ComboboxDebouncedDemo() {
       await new Promise((resolve) => setTimeout(resolve, delay));
 
       const results = tricks.filter((trick) =>
-        trick.label.toLowerCase().includes(searchTerm.toLowerCase()),
+        trick.label.toLowerCase().includes(searchTerm.toLowerCase())
       );
 
       setFilteredItems(results);
@@ -62,7 +62,7 @@ export default function ComboboxDebouncedDemo() {
       setIsLoading(false);
       clearInterval(interval);
     }, 300),
-    [],
+    []
   );
 
   const onInputValueChange = React.useCallback(
@@ -70,7 +70,7 @@ export default function ComboboxDebouncedDemo() {
       setSearch(value);
       debouncedSearch(value);
     },
-    [debouncedSearch],
+    [debouncedSearch]
   );
 
   return (
@@ -89,9 +89,7 @@ export default function ComboboxDebouncedDemo() {
         </ComboboxTrigger>
       </ComboboxAnchor>
       <ComboboxContent>
-        {isLoading ? (
-          <ComboboxLoading value={progress} label="Searching tricks..." />
-        ) : null}
+        {isLoading ? <ComboboxLoading value={progress} label="Searching tricks..." /> : null}
         <ComboboxEmpty keepVisible={!isLoading && filteredItems.length === 0}>
           No trick found.
         </ComboboxEmpty>
@@ -108,7 +106,7 @@ export default function ComboboxDebouncedDemo() {
 
 function debounce<TFunction extends (...args: never[]) => unknown>(
   func: TFunction,
-  wait: number,
+  wait: number
 ): (...args: Parameters<TFunction>) => void {
   let timeoutId: ReturnType<typeof setTimeout>;
 

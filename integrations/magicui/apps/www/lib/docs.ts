@@ -1,4 +1,4 @@
-import { getRegistryItem } from "@/lib/registry"
+import { getRegistryItem } from "@/lib/registry";
 
 /**
  * Replaces ComponentSource tags in content with actual source code from the registry.
@@ -20,33 +20,31 @@ import { getRegistryItem } from "@/lib/registry"
 
 export const replaceComponentSource = async (content: string) => {
   // Replace <ComponentSource name="XXXXX" ... > with actual source code
-  const componentSourceMatches = [
-    ...content.matchAll(/<ComponentSource\s+name="([^"]+)"[^>]*>/g),
-  ]
+  const componentSourceMatches = [...content.matchAll(/<ComponentSource\s+name="([^"]+)"[^>]*>/g)];
   if (componentSourceMatches.length === 0) {
-    return content
+    return content;
   }
 
   const replacements = await Promise.all(
     componentSourceMatches.map(async ([fullMatch, name]) => {
-      const component = await getRegistryItem(name)
+      const component = await getRegistryItem(name);
       if (!component?.files?.[0]?.content) {
-        return fullMatch
+        return fullMatch;
       }
 
-      return `\`\`\`tsx\n${component.files[0].content}\n\`\`\``
+      return `\`\`\`tsx\n${component.files[0].content}\n\`\`\``;
     })
-  )
+  );
 
-  let previousIndex = 0
-  let nextContent = ""
+  let previousIndex = 0;
+  let nextContent = "";
 
   for (const [index, match] of componentSourceMatches.entries()) {
-    const startIndex = match.index ?? previousIndex
-    nextContent += content.slice(previousIndex, startIndex)
-    nextContent += replacements[index]
-    previousIndex = startIndex + match[0].length
+    const startIndex = match.index ?? previousIndex;
+    nextContent += content.slice(previousIndex, startIndex);
+    nextContent += replacements[index];
+    previousIndex = startIndex + match[0].length;
   }
 
-  return `${nextContent}${content.slice(previousIndex)}`
-}
+  return `${nextContent}${content.slice(previousIndex)}`;
+};

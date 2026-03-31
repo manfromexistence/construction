@@ -1,8 +1,8 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { AutoformatPlugin } from '../../../../../../packages/autoformat/src/lib/AutoformatPlugin';
+import { AutoformatPlugin } from "../../../../../../packages/autoformat/src/lib/AutoformatPlugin";
 
-import type { AutoformatRule } from '../../../../../../packages/autoformat/src/lib/types';
+import type { AutoformatRule } from "../../../../../../packages/autoformat/src/lib/types";
 
 export const createAutoformatEditor = ({
   enableUndoOnDelete,

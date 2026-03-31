@@ -1,8 +1,8 @@
-import { createPlatePlugin } from 'platejs/react';
+import { createPlatePlugin } from "platejs/react";
 
-import { BlockquotePlugin } from './BlockquotePlugin';
-import { HeadingPlugin } from './HeadingPlugin';
-import { HorizontalRulePlugin } from './HorizontalRulePlugin';
+import { BlockquotePlugin } from "./BlockquotePlugin";
+import { HeadingPlugin } from "./HeadingPlugin";
+import { HorizontalRulePlugin } from "./HorizontalRulePlugin";
 
 /**
  * Enables support for basic elements:

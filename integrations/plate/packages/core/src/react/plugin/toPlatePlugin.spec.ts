@@ -1,19 +1,18 @@
-import type { PlatePlugin } from './PlatePlugin';
-
-import { resolvePluginTest } from '../../internal/plugin/resolveCreatePluginTest';
+import { resolvePluginTest } from "../../internal/plugin/resolveCreatePluginTest";
 import {
+  createSlatePlugin,
+  createTSlatePlugin,
   type ExtendConfig,
   type NodeComponent,
   type PluginConfig,
   type SlatePlugin,
-  createSlatePlugin,
-  createTSlatePlugin,
-} from '../../lib';
-import { createPlateEditor } from '../editor';
-import { toPlatePlugin, toTPlatePlugin } from './toPlatePlugin';
+} from "../../lib";
+import { createPlateEditor } from "../editor";
+import type { PlatePlugin } from "./PlatePlugin";
+import { toPlatePlugin, toTPlatePlugin } from "./toPlatePlugin";
 
 type CodeBlockConfig = PluginConfig<
-  'code_block',
+  "code_block",
   { syntax: boolean; syntaxPopularFirst: boolean },
   {
     plugin: {
@@ -35,33 +34,33 @@ type CodeBlockConfig2 = CodeBlockConfig & {
   options: { hotkey: string[] | string };
 };
 
-describe('toPlatePlugin', () => {
+describe("toPlatePlugin", () => {
   const BaseParagraphPlugin = createSlatePlugin({
-    key: 'p',
+    key: "p",
     node: { isElement: true },
     options: { t: 1 },
     parsers: {
       html: {
         deserializer: {
-          rules: [{ validNodeName: 'P' }],
-          query: ({ element }) => element.style.fontFamily !== 'Consolas',
+          rules: [{ validNodeName: "P" }],
+          query: ({ element }) => element.style.fontFamily !== "Consolas",
         },
       },
     },
   }).extendEditorApi(() => ({
-    baseApiMethod: () => 'base',
+    baseApiMethod: () => "base",
   }));
 
   const MockComponent: NodeComponent = () => null;
   const MockAboveComponent: NodeComponent = () => null;
 
-  it('extend a SlatePlugin with React-specific properties and API', () => {
+  it("extend a SlatePlugin with React-specific properties and API", () => {
     const ParagraphPlugin = toPlatePlugin(BaseParagraphPlugin, {
       handlers: { onKeyDown: () => true },
-      options: { hotkey: ['mod+opt+0', 'mod+shift+0'] },
+      options: { hotkey: ["mod+opt+0", "mod+shift+0"] },
       render: { aboveEditable: MockAboveComponent, node: MockComponent },
     }).extendEditorApi(() => ({
-      someApiMethod: () => 'API method result',
+      someApiMethod: () => "API method result",
     }));
 
     const editor = createPlateEditor({ plugins: [ParagraphPlugin] });
@@ -69,23 +68,20 @@ describe('toPlatePlugin', () => {
 
     expect(resolvedPlugin.render.node).toBe(MockComponent);
     expect(resolvedPlugin.render.aboveEditable).toBe(MockAboveComponent);
-    expect(resolvedPlugin.handlers).toHaveProperty('onKeyDown');
+    expect(resolvedPlugin.handlers).toHaveProperty("onKeyDown");
     expect(resolvedPlugin.options).toEqual({
-      hotkey: ['mod+opt+0', 'mod+shift+0'],
+      hotkey: ["mod+opt+0", "mod+shift+0"],
       t: 1,
     });
-    expect(resolvedPlugin.api.baseApiMethod()).toBe('base');
-    expect(resolvedPlugin.api.someApiMethod()).toBe('API method result');
+    expect(resolvedPlugin.api.baseApiMethod()).toBe("base");
+    expect(resolvedPlugin.api.someApiMethod()).toBe("API method result");
   });
 
-  it('extend with a function configuration', () => {
-    const ParagraphPlugin = toPlatePlugin(
-      BaseParagraphPlugin,
-      ({ editor }) => ({
-        options: { editorId: editor.id },
-        render: { node: MockComponent },
-      })
-    ).extendEditorApi(({ editor }) => ({
+  it("extend with a function configuration", () => {
+    const ParagraphPlugin = toPlatePlugin(BaseParagraphPlugin, ({ editor }) => ({
+      options: { editorId: editor.id },
+      render: { node: MockComponent },
+    })).extendEditorApi(({ editor }) => ({
       getEditorId: () => editor.id,
     }));
 
@@ -93,12 +89,12 @@ describe('toPlatePlugin', () => {
     const resolvedPlugin = editor.plugins.p;
 
     expect(resolvedPlugin.render.node).toBe(MockComponent);
-    expect(resolvedPlugin.options).toHaveProperty('editorId');
+    expect(resolvedPlugin.options).toHaveProperty("editorId");
     expect(resolvedPlugin.options.t).toBe(1);
     expect(resolvedPlugin.api.getEditorId()).toBe(editor.id);
   });
 
-  it('add new handlers and API methods', () => {
+  it("add new handlers and API methods", () => {
     const mockOnKeyDown = mock();
     const mockOnChange = mock();
 
@@ -108,19 +104,19 @@ describe('toPlatePlugin', () => {
         onKeyDown: mockOnKeyDown,
       },
     }).extendEditorApi(() => ({
-      customMethod: () => 'custom result',
+      customMethod: () => "custom result",
     }));
 
     const editor = createPlateEditor({ plugins: [ParagraphPlugin] });
     const resolvedPlugin = editor.plugins.p;
 
-    expect(resolvedPlugin.handlers).toHaveProperty('onKeyDown', mockOnKeyDown);
-    expect(resolvedPlugin.handlers).toHaveProperty('onChange', mockOnChange);
-    expect(resolvedPlugin.api.customMethod()).toBe('custom result');
+    expect(resolvedPlugin.handlers).toHaveProperty("onKeyDown", mockOnKeyDown);
+    expect(resolvedPlugin.handlers).toHaveProperty("onChange", mockOnChange);
+    expect(resolvedPlugin.api.customMethod()).toBe("custom result");
   });
 
-  it('throw an error when extending a non-existent plugin', () => {
-    const NonExistentPlugin = { key: 'nonexistent' };
+  it("throw an error when extending a non-existent plugin", () => {
+    const NonExistentPlugin = { key: "nonexistent" };
 
     expect(() => {
       toPlatePlugin(NonExistentPlugin as any, {
@@ -130,9 +126,9 @@ describe('toPlatePlugin', () => {
   });
 
   // Type checks for toPlatePlugin
-  it('have correct types', () => {
-    type TestConfig = PluginConfig<'test', { foo: string }>;
-    type ExtendedConfig = PluginConfig<'test', { baz: number; foo: string }>;
+  it("have correct types", () => {
+    type TestConfig = PluginConfig<"test", { foo: string }>;
+    type ExtendedConfig = PluginConfig<"test", { baz: number; foo: string }>;
 
     const basePlugin: SlatePlugin<TestConfig> = createTSlatePlugin();
     const extended: PlatePlugin<ExtendedConfig> = toPlatePlugin(basePlugin, {
@@ -145,12 +141,12 @@ describe('toPlatePlugin', () => {
   });
 });
 
-describe('toPlatePlugin type tests', () => {
-  it('work with CodeBlockConfig for toPlatePlugin', () => {
+describe("toPlatePlugin type tests", () => {
+  it("work with CodeBlockConfig for toPlatePlugin", () => {
     const BaseCodeBlockPlugin = createTSlatePlugin<CodeBlockConfig>({
-      key: 'code_block',
+      key: "code_block",
       options: { syntax: true, syntaxPopularFirst: false },
-    }).extendEditorApi<CodeBlockConfig['api']>(() => ({
+    }).extendEditorApi<CodeBlockConfig["api"]>(() => ({
       plugin: {
         getSyntaxState: () => true,
       },
@@ -159,11 +155,11 @@ describe('toPlatePlugin type tests', () => {
 
     const CodeBlockPlugin = toPlatePlugin(BaseCodeBlockPlugin, {
       handlers: {},
-      options: { hotkey: ['mod+opt+8', 'mod+shift+8'] },
+      options: { hotkey: ["mod+opt+8", "mod+shift+8"] },
       extendEditor: ({ editor }) => editor,
     }).extendEditorApi(() => ({
       plugin: {
-        getLanguage: () => 'javascript' as string,
+        getLanguage: () => "javascript" as string,
       },
       plugin2: {
         setLanguage: (_: string) => {},
@@ -178,7 +174,7 @@ describe('toPlatePlugin type tests', () => {
     editor.api.plugin.getLanguage();
 
     expect(editor.getOptions(CodeBlockPlugin)).toEqual({
-      hotkey: ['mod+opt+8', 'mod+shift+8'],
+      hotkey: ["mod+opt+8", "mod+shift+8"],
       syntax: true,
       syntaxPopularFirst: false,
     });
@@ -192,14 +188,14 @@ describe('toPlatePlugin type tests', () => {
     // API type checks
     editor.api.toggleSyntax();
     editor.api.plugin.getSyntaxState();
-    editor.api.plugin2.setLanguage('python');
+    editor.api.plugin2.setLanguage("python");
     editor.api.plugin.getLanguage();
 
     // Plugin API type checks
     const pluginApi = editor.plugins.code_block.api;
     pluginApi.toggleSyntax();
     pluginApi.plugin.getSyntaxState();
-    pluginApi.plugin2.setLanguage('ruby');
+    pluginApi.plugin2.setLanguage("ruby");
     pluginApi.plugin.getLanguage();
 
     // @ts-expect-error - Non-existent method
@@ -209,31 +205,24 @@ describe('toPlatePlugin type tests', () => {
     pluginApi.nonExistentMethod;
   });
 
-  it('work with function-based extension', () => {
+  it("work with function-based extension", () => {
     const BaseCodeBlockPlugin = createTSlatePlugin<CodeBlockConfig>({
-      key: 'code_block',
+      key: "code_block",
       options: { syntax: true, syntaxPopularFirst: false },
     });
 
-    const CodeBlockPlugin = toPlatePlugin(
-      BaseCodeBlockPlugin,
-      ({ getOptions }) => {
-        // Type check: should have access to base options
-        getOptions().syntax;
-        getOptions().syntaxPopularFirst;
+    const CodeBlockPlugin = toPlatePlugin(BaseCodeBlockPlugin, ({ getOptions }) => {
+      // Type check: should have access to base options
+      getOptions().syntax;
+      getOptions().syntaxPopularFirst;
 
-        return {
-          options: { hotkey: ['mod+opt+8', 'mod+shift+8'] },
-        };
-      }
-    );
+      return {
+        options: { hotkey: ["mod+opt+8", "mod+shift+8"] },
+      };
+    });
 
-    expect(
-      createPlateEditor({ plugins: [CodeBlockPlugin] }).getOptions(
-        CodeBlockPlugin
-      )
-    ).toEqual({
-      hotkey: ['mod+opt+8', 'mod+shift+8'],
+    expect(createPlateEditor({ plugins: [CodeBlockPlugin] }).getOptions(CodeBlockPlugin)).toEqual({
+      hotkey: ["mod+opt+8", "mod+shift+8"],
       syntax: true,
       syntaxPopularFirst: false,
     });
@@ -245,12 +234,12 @@ describe('toPlatePlugin type tests', () => {
     extendedOptions.hotkey;
   });
 
-  it('allow partial extension of options', () => {
-    type TestConfig = PluginConfig<'test', { bar: number; foo: string }>;
+  it("allow partial extension of options", () => {
+    type TestConfig = PluginConfig<"test", { bar: number; foo: string }>;
 
     const BasePlugin = createTSlatePlugin<TestConfig>({
-      key: 'test',
-      options: { bar: 0, foo: 'initial' },
+      key: "test",
+      options: { bar: 0, foo: "initial" },
     });
 
     const ExtendedPlugin = toPlatePlugin(BasePlugin, {
@@ -259,7 +248,7 @@ describe('toPlatePlugin type tests', () => {
 
     expect(resolvePluginTest(ExtendedPlugin).options).toEqual({
       bar: 42,
-      foo: 'initial',
+      foo: "initial",
     });
 
     // Type checks
@@ -268,25 +257,22 @@ describe('toPlatePlugin type tests', () => {
     options.bar;
   });
 
-  it('allow adding new properties', () => {
-    type BaseConfig = PluginConfig<'test', { foo: string }>;
+  it("allow adding new properties", () => {
+    type BaseConfig = PluginConfig<"test", { foo: string }>;
     type ExtendedConfig = ExtendConfig<BaseConfig, { bar: number }>;
 
     const BasePlugin = createTSlatePlugin<BaseConfig>({
-      key: 'test',
-      options: { foo: 'initial' },
+      key: "test",
+      options: { foo: "initial" },
     });
 
-    const ExtendedPlugin = toPlatePlugin<BaseConfig, { bar: number }>(
-      BasePlugin,
-      {
-        options: { bar: 42 },
-      }
-    );
+    const ExtendedPlugin = toPlatePlugin<BaseConfig, { bar: number }>(BasePlugin, {
+      options: { bar: 42 },
+    });
 
     expect(resolvePluginTest(ExtendedPlugin).options).toEqual({
       bar: 42,
-      foo: 'initial',
+      foo: "initial",
     });
 
     // Type checks
@@ -300,7 +286,7 @@ describe('toPlatePlugin type tests', () => {
 
     expect(resolvePluginTest(ExtendedTPlugin).options).toEqual({
       bar: 42,
-      foo: 'initial',
+      foo: "initial",
     });
 
     // Type checks
@@ -311,29 +297,26 @@ describe('toPlatePlugin type tests', () => {
 });
 
 // Type tests for toTPlatePlugin
-describe('toTPlatePlugin type tests', () => {
-  it('work with CodeBlockConfig for toTPlatePlugin', () => {
+describe("toTPlatePlugin type tests", () => {
+  it("work with CodeBlockConfig for toTPlatePlugin", () => {
     const BaseCodeBlockPlugin = createTSlatePlugin<CodeBlockConfig>({
-      key: 'code_block',
+      key: "code_block",
       options: { syntax: true, syntaxPopularFirst: false },
-    }).extendEditorApi<CodeBlockConfig['api']>(() => ({
+    }).extendEditorApi<CodeBlockConfig["api"]>(() => ({
       plugin: {
         getSyntaxState: () => true,
       },
       toggleSyntax: () => {},
     }));
 
-    const CodeBlockPlugin = toTPlatePlugin<CodeBlockConfig2, CodeBlockConfig>(
-      BaseCodeBlockPlugin,
-      {
-        options: {
-          hotkey: ['mod+opt+8', 'mod+shift+8'],
-        },
-      }
-    )
+    const CodeBlockPlugin = toTPlatePlugin<CodeBlockConfig2, CodeBlockConfig>(BaseCodeBlockPlugin, {
+      options: {
+        hotkey: ["mod+opt+8", "mod+shift+8"],
+      },
+    })
       .extendEditorApi(() => ({
         plugin: {
-          getLanguage: () => 'javascript',
+          getLanguage: () => "javascript",
         },
         plugin2: {
           setLanguage: (_: string) => {},
@@ -350,7 +333,7 @@ describe('toTPlatePlugin type tests', () => {
     editor.api.plugin.getLanguage();
 
     expect(editor.getOptions(CodeBlockPlugin)).toEqual({
-      hotkey: ['mod+opt+8', 'mod+shift+8'],
+      hotkey: ["mod+opt+8", "mod+shift+8"],
       syntax: true,
       syntaxPopularFirst: false,
     });
@@ -364,14 +347,14 @@ describe('toTPlatePlugin type tests', () => {
     // API type checks
     editor.api.toggleSyntax();
     editor.api.plugin.getSyntaxState();
-    editor.api.plugin2.setLanguage('python');
+    editor.api.plugin2.setLanguage("python");
     editor.api.plugin.getLanguage();
 
     // Plugin API type checks
     const pluginApi = editor.plugins.code_block.api;
     pluginApi.toggleSyntax();
     pluginApi.plugin.getSyntaxState();
-    pluginApi.plugin2.setLanguage('ruby');
+    pluginApi.plugin2.setLanguage("ruby");
     pluginApi.plugin.getLanguage();
 
     // @ts-expect-error - Non-existent method
@@ -381,15 +364,15 @@ describe('toTPlatePlugin type tests', () => {
     pluginApi.nonExistentMethod;
   });
 
-  it('work with function-based extension and explicit typing', () => {
+  it("work with function-based extension and explicit typing", () => {
     type CodeBlockConfig = PluginConfig<
-      'code_block',
+      "code_block",
       { syntax: boolean; syntaxPopularFirst: boolean }
     >;
     type CodeBlockConfig2 = ExtendConfig<CodeBlockConfig, { hotkey: string[] }>;
 
     const BaseCodeBlockPlugin = createTSlatePlugin<CodeBlockConfig>({
-      key: 'code_block',
+      key: "code_block",
       options: { syntax: true, syntaxPopularFirst: false },
     });
 
@@ -401,42 +384,35 @@ describe('toTPlatePlugin type tests', () => {
         getOptions().syntax;
 
         return {
-          options: { hotkey: ['mod+opt+8', 'mod+shift+8'] },
+          options: { hotkey: ["mod+opt+8", "mod+shift+8"] },
         };
       }
     );
 
-    expect(
-      createPlateEditor({ plugins: [CodeBlockPlugin2] }).getOptions(
-        CodeBlockPlugin2
-      )
-    ).toEqual({
-      hotkey: ['mod+opt+8', 'mod+shift+8'],
-      syntax: true,
-      syntaxPopularFirst: false,
-    });
+    expect(createPlateEditor({ plugins: [CodeBlockPlugin2] }).getOptions(CodeBlockPlugin2)).toEqual(
+      {
+        hotkey: ["mod+opt+8", "mod+shift+8"],
+        syntax: true,
+        syntaxPopularFirst: false,
+      }
+    );
   });
 });
 
-describe('toPlatePlugin with extendPlugin', () => {
-  it('correctly type extendPlugin with SlatePlugin', () => {
-    type BaseConfig = PluginConfig<'base', { foo: string }>;
-    type ChildConfig = PluginConfig<
-      'child',
-      { bar: number },
-      { child: () => void }
-    >;
+describe("toPlatePlugin with extendPlugin", () => {
+  it("correctly type extendPlugin with SlatePlugin", () => {
+    type BaseConfig = PluginConfig<"base", { foo: string }>;
+    type ChildConfig = PluginConfig<"child", { bar: number }, { child: () => void }>;
 
     const BasePlugin = createTSlatePlugin<BaseConfig>({
-      key: 'base',
-      options: { foo: 'initial' },
+      key: "base",
+      options: { foo: "initial" },
     });
 
-    const ChildPlugin: SlatePlugin<ChildConfig> =
-      createTSlatePlugin<ChildConfig>({
-        key: 'child',
-        options: { bar: 42 },
-      });
+    const ChildPlugin: SlatePlugin<ChildConfig> = createTSlatePlugin<ChildConfig>({
+      key: "child",
+      options: { bar: 42 },
+    });
 
     const ExtendedPlugin = toPlatePlugin(BasePlugin, {
       plugins: [ChildPlugin],
@@ -455,18 +431,18 @@ describe('toPlatePlugin with extendPlugin', () => {
     options.bar;
   });
 
-  it('correctly type extendPlugin with PlatePlugin', () => {
-    type BaseConfig = PluginConfig<'base', { foo: string }>;
-    type ChildConfig = PluginConfig<'child', { bar: number }>;
+  it("correctly type extendPlugin with PlatePlugin", () => {
+    type BaseConfig = PluginConfig<"base", { foo: string }>;
+    type ChildConfig = PluginConfig<"child", { bar: number }>;
 
     const BasePlugin = createTSlatePlugin<BaseConfig>({
-      key: 'base',
-      options: { foo: 'initial' },
+      key: "base",
+      options: { foo: "initial" },
     });
 
     const ChildPlatePlugin: PlatePlugin<ChildConfig> = toPlatePlugin(
       createTSlatePlugin<ChildConfig>({
-        key: 'child',
+        key: "child",
         options: { bar: 42 },
       }),
       {
@@ -493,52 +469,52 @@ describe('toPlatePlugin with extendPlugin', () => {
   });
 });
 
-describe('toPlatePlugin with direct merge for object configs', () => {
-  it('directly merge object configs without pushing to __extensions', () => {
+describe("toPlatePlugin with direct merge for object configs", () => {
+  it("directly merge object configs without pushing to __extensions", () => {
     type LinkConfig = PluginConfig<
-      'link',
+      "link",
       {
         allowedSchemes: string[];
         isUrl: (text: string) => boolean;
       }
     >;
 
-    const isUrl = (text: string) => text.startsWith('http');
+    const isUrl = (text: string) => text.startsWith("http");
 
     const BaseLinkPlugin = createTSlatePlugin<LinkConfig>({
-      key: 'link',
+      key: "link",
       options: {
-        allowedSchemes: ['http', 'https'],
+        allowedSchemes: ["http", "https"],
         isUrl,
       },
     }).extend(() => ({
       options: {
-        allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+        allowedSchemes: ["http", "https", "mailto", "tel"],
       },
     }));
 
     const LinkPlugin = toPlatePlugin(BaseLinkPlugin, {
       options: {
-        allowedSchemes: ['http', 'https', 'mailto'],
+        allowedSchemes: ["http", "https", "mailto"],
       },
     });
 
     expect(LinkPlugin.options).toEqual({
-      allowedSchemes: ['http', 'https', 'mailto'],
+      allowedSchemes: ["http", "https", "mailto"],
       isUrl,
     });
 
     expect(resolvePluginTest(LinkPlugin).options).toEqual({
-      allowedSchemes: ['http', 'https', 'mailto', 'tel'],
+      allowedSchemes: ["http", "https", "mailto", "tel"],
       isUrl,
     });
   });
 
-  it('override an existing component', () => {
+  it("override an existing component", () => {
     const NewComponent: NodeComponent = () => null;
 
     const basePlugin = createSlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
     });
 
     const plugin = toPlatePlugin(basePlugin);

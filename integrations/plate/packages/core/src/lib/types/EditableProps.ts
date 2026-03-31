@@ -1,11 +1,10 @@
-import type { JSX } from 'react';
+import type { DOMRange, Editor, NodeEntry, TRange } from "@platejs/slate";
+import type { JSX } from "react";
 
-import type { DOMRange, Editor, NodeEntry, TRange } from '@platejs/slate';
-
-import type { RenderChunkFn } from './RenderChunkProps';
-import type { RenderElementFn } from './RenderElementProps';
-import type { RenderLeafFn } from './RenderLeafProps';
-import type { RenderTextFn } from './RenderTextProps';
+import type { RenderChunkFn } from "./RenderChunkProps";
+import type { RenderElementFn } from "./RenderElementProps";
+import type { RenderLeafFn } from "./RenderLeafProps";
+import type { RenderTextFn } from "./RenderTextProps";
 
 /** `EditableProps` are passed to the <Editable> component. */
 export type EditableProps = {
@@ -23,10 +22,10 @@ export type EditableProps = {
   renderPlaceholder?: (props: {
     attributes: {
       contentEditable: boolean;
-      'data-slate-placeholder': boolean;
+      "data-slate-placeholder": boolean;
       ref: React.RefCallback<any>;
       style: React.CSSProperties;
-      dir?: 'rtl';
+      dir?: "rtl";
     };
     children: any;
   }) => JSX.Element;

@@ -1,62 +1,59 @@
-import type { Metadata } from "next"
-import Link from "next/link"
-import { notFound } from "next/navigation"
-import { mdxComponents } from "@/mdx-components"
-import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react"
-import type { BreadcrumbItem } from "fumadocs-core/breadcrumb"
-import { getBreadcrumbItems } from "fumadocs-core/breadcrumb"
-import { findNeighbour } from "fumadocs-core/server"
-import type { BreadcrumbList, TechArticle, WithContext } from "schema-dts"
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import type { BreadcrumbItem } from "fumadocs-core/breadcrumb";
+import { getBreadcrumbItems } from "fumadocs-core/breadcrumb";
+import { findNeighbour } from "fumadocs-core/server";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import type { BreadcrumbList, TechArticle, WithContext } from "schema-dts";
+import { Contribute } from "@/components/contribute";
+import { DocsCopyPage } from "@/components/docs-copy-page";
+import { DocsTableOfContents } from "@/components/docs-toc";
+import { SidebarCTA } from "@/components/sidebar-cta";
+import { Button } from "@/components/ui/button";
+import { getNeighboursFromConfig } from "@/config/docs";
+import { siteConfig } from "@/config/site";
+import { replaceComponentSource } from "@/lib/docs";
+import { source } from "@/lib/source";
+import { absoluteUrl } from "@/lib/utils";
+import { mdxComponents } from "@/mdx-components";
 
-import { getNeighboursFromConfig } from "@/config/docs"
-import { siteConfig } from "@/config/site"
-import { replaceComponentSource } from "@/lib/docs"
-import { source } from "@/lib/source"
-import { absoluteUrl } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Contribute } from "@/components/contribute"
-import { DocsCopyPage } from "@/components/docs-copy-page"
-import { DocsTableOfContents } from "@/components/docs-toc"
-import { SidebarCTA } from "@/components/sidebar-cta"
-
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return source.generateParams()
+  return source.generateParams();
 }
 
 interface DocPageProps {
   params: Promise<{
-    slug: string[]
-  }>
+    slug: string[];
+  }>;
 }
 
 async function getDocFromParams({ params }: DocPageProps) {
-  const { slug } = await params
-  const page = source.getPage(slug)
-  if (!page) notFound()
-  const doc = page.data
+  const { slug } = await params;
+  const page = source.getPage(slug);
+  if (!page) notFound();
+  const doc = page.data;
   if (!doc.title || !doc.description) {
-    notFound()
+    notFound();
   }
 
-  return { doc, page }
+  return { doc, page };
 }
 
-export async function generateMetadata({
-  params,
-}: DocPageProps): Promise<Metadata> {
-  const { doc, page } = await getDocFromParams({ params })
+export async function generateMetadata({ params }: DocPageProps): Promise<Metadata> {
+  const { doc, page } = await getDocFromParams({ params });
 
   if (!doc) {
-    return {}
+    return {};
   }
 
-  const ogUrl = new URL(absoluteUrl("/og"))
-  ogUrl.searchParams.set("title", doc.title ?? "")
-  ogUrl.searchParams.set("description", doc.description ?? "")
+  const ogUrl = new URL(absoluteUrl("/og"));
+  ogUrl.searchParams.set("title", doc.title ?? "");
+  ogUrl.searchParams.set("description", doc.description ?? "");
 
   return {
     title: `${doc.title} | React Components & Templates`,
@@ -81,36 +78,36 @@ export async function generateMetadata({
       images: [ogUrl.toString()],
       creator: "@dillionverma",
     },
-  }
+  };
 }
 
 export default async function DocPage({ params }: DocPageProps) {
-  const { doc, page } = await getDocFromParams({ params })
-  const MDX = doc.body
-  const content = await doc.getText("raw")
-  const configNeighbours = getNeighboursFromConfig(page.url)
-  const treeNeighbours = findNeighbour(source.pageTree, page.url)
+  const { doc, page } = await getDocFromParams({ params });
+  const MDX = doc.body;
+  const content = await doc.getText("raw");
+  const configNeighbours = getNeighboursFromConfig(page.url);
+  const treeNeighbours = findNeighbour(source.pageTree, page.url);
   const neighbours = {
     previous: configNeighbours.previous ?? treeNeighbours.previous,
     next: configNeighbours.next ?? treeNeighbours.next,
-  }
+  };
   const breadcrumbs = getBreadcrumbItems(page.url, source.pageTree, {
     includeRoot: { url: "/docs" },
     includePage: true,
-  })
-  const lastBreadcrumb = breadcrumbs.at(-1)
+  });
+  const lastBreadcrumb = breadcrumbs.at(-1);
 
   const resolveBreadcrumbName = (item: BreadcrumbItem): string => {
     if (typeof item.name === "string") {
-      return item.name
+      return item.name;
     }
 
     if (typeof item.name === "number") {
-      return `${item.name}`
+      return `${item.name}`;
     }
 
-    return doc.title
-  }
+    return doc.title;
+  };
 
   const breadcrumbStructuredData: WithContext<BreadcrumbList> = {
     "@context": "https://schema.org",
@@ -121,7 +118,7 @@ export default async function DocPage({ params }: DocPageProps) {
       name: resolveBreadcrumbName(item),
       item: absoluteUrl(item.url ?? page.url),
     })),
-  }
+  };
 
   const docStructuredData: WithContext<TechArticle> = {
     "@context": "https://schema.org",
@@ -154,15 +151,13 @@ export default async function DocPage({ params }: DocPageProps) {
       url: absoluteUrl("/docs"),
     },
     wordCount: content ? content.split(/\s+/).length : 0,
-  }
+  };
 
-  const serializedDocStructuredData = JSON.stringify(docStructuredData).replace(
+  const serializedDocStructuredData = JSON.stringify(docStructuredData).replace(/</g, "\\u003c");
+  const serializedBreadcrumbStructuredData = JSON.stringify(breadcrumbStructuredData).replace(
     /</g,
     "\\u003c"
-  )
-  const serializedBreadcrumbStructuredData = JSON.stringify(
-    breadcrumbStructuredData
-  ).replace(/</g, "\\u003c")
+  );
 
   return (
     <>
@@ -176,32 +171,23 @@ export default async function DocPage({ params }: DocPageProps) {
           __html: serializedBreadcrumbStructuredData,
         }}
       />
-      <div
-        data-slot="docs"
-        className="flex items-stretch text-[1.05rem] sm:text-[15px] xl:w-full"
-      >
+      <div data-slot="docs" className="flex items-stretch text-[1.05rem] sm:text-[15px] xl:w-full">
         <div className="flex min-w-0 flex-1 flex-col">
           <div className="mx-auto flex w-full max-w-3xl min-w-0 flex-1 flex-col gap-8 px-4 py-6 text-neutral-800 md:px-0 lg:py-8 dark:text-neutral-300">
             <div className="flex flex-col gap-2">
               <div className="flex flex-col gap-2">
                 {breadcrumbs.length > 1 ? (
-                  <nav
-                    aria-label="Breadcrumb"
-                    className="text-muted-foreground"
-                  >
+                  <nav aria-label="Breadcrumb" className="text-muted-foreground">
                     <ol className="flex flex-wrap items-center gap-1 text-sm">
                       {breadcrumbs.map((item) => {
-                        const label = resolveBreadcrumbName(item)
-                        const key = item.url ?? label
-                        const isLast = item === lastBreadcrumb
+                        const label = resolveBreadcrumbName(item);
+                        const key = item.url ?? label;
+                        const isLast = item === lastBreadcrumb;
 
                         return (
                           <li key={key} className="flex items-center gap-1">
                             {isLast ? (
-                              <span
-                                aria-current="page"
-                                className="text-foreground font-medium"
-                              >
+                              <span aria-current="page" className="text-foreground font-medium">
                                 {label}
                               </span>
                             ) : item.url ? (
@@ -216,7 +202,7 @@ export default async function DocPage({ params }: DocPageProps) {
                             )}
                             {!isLast ? <span aria-hidden="true">/</span> : null}
                           </li>
-                        )
+                        );
                       })}
                     </ol>
                   </nav>
@@ -271,24 +257,14 @@ export default async function DocPage({ params }: DocPageProps) {
           </div>
           <div className="mx-auto hidden h-16 w-full max-w-3xl items-center gap-2 px-4 sm:flex md:px-0">
             {neighbours.previous && (
-              <Button
-                variant="secondary"
-                size="sm"
-                asChild
-                className="shadow-none"
-              >
+              <Button variant="secondary" size="sm" asChild className="shadow-none">
                 <Link href={neighbours.previous.url}>
                   <IconArrowLeft /> {neighbours.previous.name}
                 </Link>
               </Button>
             )}
             {neighbours.next && (
-              <Button
-                variant="secondary"
-                size="sm"
-                className="ml-auto shadow-none"
-                asChild
-              >
+              <Button variant="secondary" size="sm" className="ml-auto shadow-none" asChild>
                 <Link href={neighbours.next.url}>
                   {neighbours.next.name} <IconArrowRight />
                 </Link>
@@ -309,5 +285,5 @@ export default async function DocPage({ params }: DocPageProps) {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import type { AnyObject, EditorNodesOptions, SlateEditor } from 'platejs';
+import type { AnyObject, EditorNodesOptions, SlateEditor } from "platejs";
 
-import { BaseIndentPlugin } from '../BaseIndentPlugin';
+import { BaseIndentPlugin } from "../BaseIndentPlugin";
 
 export type SetIndentOptions = {
   /** GetNodeEntries options */
@@ -23,18 +23,13 @@ export type SetIndentOptions = {
 /** Add offset to the indentation of the selected blocks. */
 export const setIndent = (
   editor: SlateEditor,
-  {
-    getNodesOptions,
-    offset = 1,
-    setNodesProps,
-    unsetNodesProps = [],
-  }: SetIndentOptions
+  { getNodesOptions, offset = 1, setNodesProps, unsetNodesProps = [] }: SetIndentOptions
 ) => {
   const { nodeKey } = editor.getInjectProps(BaseIndentPlugin);
 
   const _nodes = editor.api.nodes({
     block: true,
-    mode: 'lowest',
+    mode: "lowest",
     ...getNodesOptions,
   });
   const nodes = Array.from(_nodes);

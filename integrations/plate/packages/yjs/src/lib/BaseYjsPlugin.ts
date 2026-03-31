@@ -1,31 +1,21 @@
-import { slateNodesToInsertDelta, YjsEditor } from '@slate-yjs/core';
-import {
-  type InitOptions,
-  type Value,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
-import { Awareness } from 'y-protocols/awareness';
-import * as Y from 'yjs';
+import { slateNodesToInsertDelta, YjsEditor } from "@slate-yjs/core";
+import { createTSlatePlugin, type InitOptions, KEYS, type Value } from "platejs";
+import { Awareness } from "y-protocols/awareness";
+import * as Y from "yjs";
 
-import { slateToDeterministicYjsState } from '../utils/slateToDeterministicYjsState';
+import { slateToDeterministicYjsState } from "../utils/slateToDeterministicYjsState";
 import {
+  createProvider,
   type UnifiedProvider,
   type YjsConfig,
   type YjsProviderConfig,
   type YjsProviderType,
-  createProvider,
-} from './providers';
-import { withPlateYjs } from './withPlateYjs';
+} from "./providers";
+import { withPlateYjs } from "./withPlateYjs";
 
 // Helper to check if an object is a provider config
-const isProviderConfig = (
-  item: UnifiedProvider | YjsProviderConfig
-): item is YjsProviderConfig =>
-  typeof item === 'object' &&
-  item !== null &&
-  'type' in item &&
-  'options' in item;
+const isProviderConfig = (item: UnifiedProvider | YjsProviderConfig): item is YjsProviderConfig =>
+  typeof item === "object" && item !== null && "type" in item && "options" in item;
 
 export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
   key: KEYS.yjs,
@@ -78,11 +68,7 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
     connect: (type?: YjsProviderType | YjsProviderType[]) => {
       const { getOptions } = ctx;
       const { _providers } = getOptions();
-      const typesToConnect = type
-        ? Array.isArray(type)
-          ? type
-          : [type]
-        : null;
+      const typesToConnect = type ? (Array.isArray(type) ? type : [type]) : null;
 
       _providers.forEach((provider) => {
         if (!typesToConnect || typesToConnect.includes(provider.type)) {
@@ -117,10 +103,7 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
             provider.destroy();
           }
         } catch (error) {
-          console.warn(
-            `[yjs] Error disconnecting provider (${provider.type}):`,
-            error
-          );
+          console.warn(`[yjs] Error disconnecting provider (${provider.type}):`, error);
         }
       }
 
@@ -141,26 +124,18 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
       const { editor: _editor, getOptions } = ctx;
       const { _providers } = getOptions();
 
-      const typesToDisconnect = type
-        ? Array.isArray(type)
-          ? type
-          : [type]
-        : null;
+      const typesToDisconnect = type ? (Array.isArray(type) ? type : [type]) : null;
 
       for (const provider of [..._providers].reverse()) {
         try {
           if (
             provider.isConnected &&
-            (typesToDisconnect === null ||
-              typesToDisconnect.includes(provider.type))
+            (typesToDisconnect === null || typesToDisconnect.includes(provider.type))
           ) {
             provider.disconnect();
           }
         } catch (error) {
-          console.warn(
-            `[yjs] Error disconnecting provider (${provider.type}):`,
-            error
-          );
+          console.warn(`[yjs] Error disconnecting provider (${provider.type}):`, error);
         }
       }
     },
@@ -186,7 +161,7 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
        * @default true
        */
       autoConnect?: boolean;
-    } & Omit<InitOptions, 'shouldNormalizeEditor'> = {}) => {
+    } & Omit<InitOptions, "shouldNormalizeEditor"> = {}) => {
       const { editor, getOptions, setOption } = ctx;
 
       const options = getOptions();
@@ -200,7 +175,7 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
       // Validate configuration
       if (providerConfigsOrInstances.length === 0) {
         throw new Error(
-          'No providers specified. Please provide provider configurations or instances in the `providers` array.'
+          "No providers specified. Please provide provider configurations or instances in the `providers` array."
         );
       }
 
@@ -230,18 +205,16 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
               type,
               onConnect: () => {
                 getOptions().onConnect?.({ type });
-                setOption('_isConnected', true);
+                setOption("_isConnected", true);
               },
               onDisconnect: () => {
                 getOptions().onDisconnect?.({ type });
 
                 const { _providers } = getOptions();
-                const hasConnectedProvider = _providers.some(
-                  (p) => p.isConnected
-                );
+                const hasConnectedProvider = _providers.some((p) => p.isConnected);
 
                 if (!hasConnectedProvider) {
-                  setOption('_isConnected', false);
+                  setOption("_isConnected", false);
                 }
               },
               onError: (error) => {
@@ -249,7 +222,7 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
               },
               onSyncChange: (isSynced) => {
                 getOptions().onSyncChange?.({ isSynced, type });
-                setOption('_isSynced', isSynced);
+                setOption("_isSynced", isSynced);
 
                 // Resolve sync promise on first sync
                 if (isSynced && syncResolve) {
@@ -267,7 +240,7 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
         }
       }
 
-      setOption('_providers', finalProviders);
+      setOption("_providers", finalProviders);
 
       // Connect providers to start sync
       if (autoConnect && finalProviders.length > 0) {
@@ -297,18 +270,17 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
 
       // After sync, check if ydoc has content from server
       // Use custom sharedType if provided, otherwise use default 'content' key
-      const sharedRoot =
-        customSharedType ?? (ydoc.get('content', Y.XmlText) as Y.XmlText);
+      const sharedRoot = customSharedType ?? (ydoc.get("content", Y.XmlText) as Y.XmlText);
 
       // Only apply initial value if ydoc is empty (no content from server)
       if (sharedRoot.length === 0 && value !== null) {
         let initialNodes = value as Value;
 
-        if (typeof value === 'string') {
+        if (typeof value === "string") {
           initialNodes = editor.api.html.deserialize({
             element: value,
           }) as Value;
-        } else if (typeof value === 'function') {
+        } else if (typeof value === "function") {
           initialNodes = await value(editor);
         } else if (value) {
           initialNodes = value;
@@ -322,10 +294,7 @@ export const BaseYjsPlugin = createTSlatePlugin<YjsConfig>({
             customSharedType.applyDelta(delta);
           });
         } else {
-          const initialDelta = await slateToDeterministicYjsState(
-            id ?? editor.id,
-            initialNodes
-          );
+          const initialDelta = await slateToDeterministicYjsState(id ?? editor.id, initialNodes);
           ydoc.transact(() => {
             Y.applyUpdate(ydoc, initialDelta);
           });

@@ -1,6 +1,6 @@
-import type { Descendant, TTableRowElement } from 'platejs';
+import type { Descendant, TTableRowElement } from "platejs";
 
-export type BorderDirection = 'bottom' | 'left' | 'right' | 'top';
+export type BorderDirection = "bottom" | "left" | "right" | "top";
 
 export type CreateCellOptions = {
   children?: Descendant[];

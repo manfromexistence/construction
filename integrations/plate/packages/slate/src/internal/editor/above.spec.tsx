@@ -1,13 +1,13 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
+import { jsx } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsx;
 
-describe('above', () => {
-  it('returns the highest matching block ancestor', () => {
+describe("above", () => {
+  it("returns the highest matching block ancestor", () => {
     const editor = createEditor(
       (
         <editor>
@@ -21,13 +21,13 @@ describe('above', () => {
     const above = editor.api.above({
       at: [0, 0, 0],
       block: true,
-      mode: 'highest',
+      mode: "highest",
     });
 
     expect(above).toEqual([editor.children[0], [0]]);
   });
 
-  it('returns the lowest matching block ancestor', () => {
+  it("returns the lowest matching block ancestor", () => {
     const editor = createEditor(
       (
         <editor>
@@ -41,17 +41,14 @@ describe('above', () => {
     const above = editor.api.above({
       at: [0, 0, 0],
       block: true,
-      mode: 'lowest',
+      mode: "lowest",
     });
-    const expected: [any, number[]] = [
-      editor.children[0].children[0] as any,
-      [0, 0],
-    ];
+    const expected: [any, number[]] = [editor.children[0].children[0] as any, [0, 0]];
 
     expect(above).toEqual(expected);
   });
 
-  it('matches inline ancestors', () => {
+  it("matches inline ancestors", () => {
     const editor = createEditor(
       (
         <editor>
@@ -65,29 +62,28 @@ describe('above', () => {
     ) as any;
     const { isInline } = editor;
 
-    editor.isInline = (element: any) =>
-      element.type === 'a' || isInline(element);
+    editor.isInline = (element: any) => element.type === "a" || isInline(element);
 
     const above = editor.api.above({
       at: [0, 1, 0],
-      match: (node: any) => 'type' in node && editor.isInline(node),
+      match: (node: any) => "type" in node && editor.isInline(node),
     });
 
     expect(above).toEqual([editor.children[0].children[1], [0, 1]]);
   });
 
-  it('returns the parent block even when the exact path does not exist', () => {
+  it("returns the parent block even when the exact path does not exist", () => {
     const editor = createEditor({
       children: [
         {
           children: [
             {
-              children: [{ children: [{ text: 'one' }], type: 'code' }],
-              type: 'blockquote',
+              children: [{ children: [{ text: "one" }], type: "code" }],
+              type: "blockquote",
             },
-            { children: [{ text: 'two' }], type: 'blockquote' },
+            { children: [{ text: "two" }], type: "blockquote" },
           ],
-          type: 'p',
+          type: "p",
         },
       ] as any,
     });
@@ -100,7 +96,7 @@ describe('above', () => {
     expect(above).toEqual([editor.children[0].children[0], [0, 0]]);
   });
 
-  it('returns undefined instead of throwing for an invalid path', () => {
+  it("returns undefined instead of throwing for an invalid path", () => {
     const editor = createEditor(
       (
         <editor>

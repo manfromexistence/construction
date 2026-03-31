@@ -1,16 +1,16 @@
-import { type ComputeDiffOptions, computeDiff } from '@platejs/diff';
+import { type ComputeDiffOptions, computeDiff } from "@platejs/diff";
 import {
   type Descendant,
-  type SlateEditor,
-  type ValueOf,
   ElementApi,
   KEYS,
+  type SlateEditor,
   TextApi,
-} from 'platejs';
+  type ValueOf,
+} from "platejs";
 
-import { BaseSuggestionPlugin } from './BaseSuggestionPlugin';
-import { getSuggestionProps } from './transforms';
-import { getSuggestionKey } from './utils';
+import { BaseSuggestionPlugin } from "./BaseSuggestionPlugin";
+import { getSuggestionProps } from "./transforms";
+import { getSuggestionKey } from "./utils";
 
 export function diffToSuggestions<E extends SlateEditor>(
   editor: E,
@@ -41,7 +41,7 @@ export function diffToSuggestions<E extends SlateEditor>(
   // Recursively traverse all nodes to process elements and their children
   const traverseNodes = (nodes: Descendant[]): Descendant[] => {
     return nodes.map((node, index) => {
-      if (ElementApi.isElement(node) && 'children' in node) {
+      if (ElementApi.isElement(node) && "children" in node) {
         // If the node is an element with children, recursively process its children
         return {
           ...node,
@@ -74,14 +74,14 @@ function unifyAdjacentSuggestionIds<E extends SlateEditor>(
   const api = editor.getApi(BaseSuggestionPlugin);
   const currentNodeData = api.suggestion.suggestionData(node as any);
 
-  if (currentNodeData?.type === 'insert') {
+  if (currentNodeData?.type === "insert") {
     // Get the previous node if it exists
     const previousNode = index > 0 ? nodes[index - 1] : null;
 
     if (previousNode?.[KEYS.suggestion]) {
       const previousData = api.suggestion.suggestionData(previousNode as any);
 
-      if (previousData?.type === 'remove') {
+      if (previousData?.type === "remove") {
         // Create a new node with the updated suggestion data
         const updatedNode = {
           ...node,

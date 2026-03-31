@@ -1,13 +1,10 @@
-import type { ClientRectObject } from '@floating-ui/core';
-import type { Editor, TRange } from 'platejs';
+import type { ClientRectObject } from "@floating-ui/core";
+import type { Editor, TRange } from "platejs";
 
-import { getDefaultBoundingClientRect } from '../createVirtualElement';
+import { getDefaultBoundingClientRect } from "../createVirtualElement";
 
 /** Get bounding client rect by slate range */
-export const getRangeBoundingClientRect = (
-  editor: Editor,
-  at: TRange | null
-): ClientRectObject => {
+export const getRangeBoundingClientRect = (editor: Editor, at: TRange | null): ClientRectObject => {
   if (!at) return getDefaultBoundingClientRect();
 
   const domRange = editor.api.toDOMRange(at);

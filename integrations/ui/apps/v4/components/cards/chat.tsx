@@ -1,21 +1,12 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { ArrowUpIcon, CheckIcon, PlusIcon } from "lucide-react"
+import { ArrowUpIcon, CheckIcon, PlusIcon } from "lucide-react";
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/registry/new-york-v4/ui/avatar"
-import { Button } from "@/registry/new-york-v4/ui/button"
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/registry/new-york-v4/ui/card"
+import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/new-york-v4/ui/avatar";
+import { Button } from "@/registry/new-york-v4/ui/button";
+import { Card, CardContent, CardFooter, CardHeader } from "@/registry/new-york-v4/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -23,7 +14,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/registry/new-york-v4/ui/command"
+} from "@/registry/new-york-v4/ui/command";
 import {
   Dialog,
   DialogContent,
@@ -31,19 +22,19 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/registry/new-york-v4/ui/dialog"
+} from "@/registry/new-york-v4/ui/dialog";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/registry/new-york-v4/ui/input-group"
+} from "@/registry/new-york-v4/ui/input-group";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/registry/new-york-v4/ui/tooltip"
+} from "@/registry/new-york-v4/ui/tooltip";
 
 const users = [
   {
@@ -71,13 +62,13 @@ const users = [
     email: "will@email.com",
     avatar: "/avatars/04.png",
   },
-] as const
+] as const;
 
-type User = (typeof users)[number]
+type User = (typeof users)[number];
 
 export function CardsChat() {
-  const [open, setOpen] = React.useState(false)
-  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([])
+  const [open, setOpen] = React.useState(false);
+  const [selectedUsers, setSelectedUsers] = React.useState<User[]>([]);
 
   const [messages, setMessages] = React.useState([
     {
@@ -96,9 +87,9 @@ export function CardsChat() {
       role: "user",
       content: "I can't log in.",
     },
-  ])
-  const [input, setInput] = React.useState("")
-  const inputLength = input.trim().length
+  ]);
+  const [input, setInput] = React.useState("");
+  const inputLength = input.trim().length;
 
   return (
     <>
@@ -151,16 +142,16 @@ export function CardsChat() {
         <CardFooter>
           <form
             onSubmit={(event) => {
-              event.preventDefault()
-              if (inputLength === 0) return
+              event.preventDefault();
+              if (inputLength === 0) return;
               setMessages([
                 ...messages,
                 {
                   role: "user",
                   content: input,
                 },
-              ])
-              setInput("")
+              ]);
+              setInput("");
             }}
             className="relative w-full"
           >
@@ -173,11 +164,7 @@ export function CardsChat() {
                 onChange={(event) => setInput(event.target.value)}
               />
               <InputGroupAddon align="inline-end">
-                <InputGroupButton
-                  type="submit"
-                  size="icon-xs"
-                  className="rounded-full"
-                >
+                <InputGroupButton type="submit" size="icon-xs" className="rounded-full">
                   <ArrowUpIcon />
                   <span className="sr-only">Send</span>
                 </InputGroupButton>
@@ -191,8 +178,7 @@ export function CardsChat() {
           <DialogHeader className="px-4 pt-5 pb-4">
             <DialogTitle>New message</DialogTitle>
             <DialogDescription>
-              Invite a user to this thread. This will create a new group
-              message.
+              Invite a user to this thread. This will create a new group message.
             </DialogDescription>
           </DialogHeader>
           <Command className="overflow-hidden rounded-t-none border-t bg-transparent">
@@ -208,17 +194,13 @@ export function CardsChat() {
                     onSelect={() => {
                       if (selectedUsers.includes(user)) {
                         return setSelectedUsers(
-                          selectedUsers.filter(
-                            (selectedUser) => selectedUser !== user
-                          )
-                        )
+                          selectedUsers.filter((selectedUser) => selectedUser !== user)
+                        );
                       }
 
                       return setSelectedUsers(
-                        [...users].filter((u) =>
-                          [...selectedUsers, user].includes(u)
-                        )
-                      )
+                        [...users].filter((u) => [...selectedUsers, user].includes(u))
+                      );
                     }}
                   >
                     <Avatar className="border">
@@ -226,12 +208,8 @@ export function CardsChat() {
                       <AvatarFallback>{user.name[0]}</AvatarFallback>
                     </Avatar>
                     <div className="ml-2">
-                      <p className="text-sm leading-none font-medium">
-                        {user.name}
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        {user.email}
-                      </p>
+                      <p className="text-sm leading-none font-medium">{user.name}</p>
+                      <p className="text-sm text-muted-foreground">{user.email}</p>
                     </div>
                     {selectedUsers.includes(user) ? (
                       <CheckIcon className="ml-auto flex size-4 text-primary" />
@@ -252,15 +230,13 @@ export function CardsChat() {
                 ))}
               </div>
             ) : (
-              <p className="text-sm text-muted-foreground">
-                Select users to add to this thread.
-              </p>
+              <p className="text-sm text-muted-foreground">Select users to add to this thread.</p>
             )}
             <Button
               disabled={selectedUsers.length < 2}
               size="sm"
               onClick={() => {
-                setOpen(false)
+                setOpen(false);
               }}
             >
               Continue
@@ -269,5 +245,5 @@ export function CardsChat() {
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }

@@ -1,25 +1,17 @@
-import {
-  type PluginConfig,
-  bindFirst,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
+import { bindFirst, createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
 import {
   insertAudioPlaceholder,
   insertFilePlaceholder,
   insertImagePlaceholder,
   insertVideoPlaceholder,
-} from './transforms';
+} from "./transforms";
 
 export type MediaPlaceholderOptions = {
   rules?: PlaceholderRule[];
 };
 
-export type PlaceholderConfig = PluginConfig<
-  'placeholder',
-  MediaPlaceholderOptions
->;
+export type PlaceholderConfig = PluginConfig<"placeholder", MediaPlaceholderOptions>;
 
 export type PlaceholderRule = {
   mediaType: string;

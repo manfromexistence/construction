@@ -1,8 +1,7 @@
-import React from 'react';
+import { atom, createAtomStore } from "platejs/react";
+import React from "react";
 
-import { atom, createAtomStore } from 'platejs/react';
-
-import type { TableStoreSizeOverrides } from '../../lib';
+import type { TableStoreSizeOverrides } from "../../lib";
 
 export const {
   TableProvider,
@@ -17,13 +16,11 @@ export const {
     marginLeftOverride: null as number | null,
     rowSizeOverrides: atom(new Map() as TableStoreSizeOverrides),
   },
-  { name: 'table' as const }
+  { name: "table" as const }
 ) as any;
 
 const useOverrideSizeFactory = (
-  setOverrides: (
-    fn: (overrides: TableStoreSizeOverrides) => TableStoreSizeOverrides
-  ) => void
+  setOverrides: (fn: (overrides: TableStoreSizeOverrides) => TableStoreSizeOverrides) => void
 ) =>
   React.useCallback(
     (index: number, size: number | null) => {
@@ -43,15 +40,15 @@ const useOverrideSizeFactory = (
   );
 
 export const useOverrideColSize = () => {
-  const setColSizeOverrides = useTableSet('colSizeOverrides');
+  const setColSizeOverrides = useTableSet("colSizeOverrides");
 
   return useOverrideSizeFactory(setColSizeOverrides);
 };
 
 export const useOverrideRowSize = () => {
-  const setRowSizeOverrides = useTableSet('rowSizeOverrides');
+  const setRowSizeOverrides = useTableSet("rowSizeOverrides");
 
   return useOverrideSizeFactory(setRowSizeOverrides);
 };
 
-export const useOverrideMarginLeft = () => useTableSet('marginLeftOverride');
+export const useOverrideMarginLeft = () => useTableSet("marginLeftOverride");

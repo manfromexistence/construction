@@ -1,15 +1,8 @@
 {
   "name": "qr-code",
-  "dependencies": [
-    "@base-ui/react",
-    "qrcode"
-  ],
-  "devDependencies": [
-    "@types/qrcode"
-  ],
-  "registryDependencies": [
-    "@diceui/use-lazy-ref"
-  ],
+  "dependencies": ["@base-ui/react", "qrcode"],
+  "devDependencies": ["@types/qrcode"],
+  "registryDependencies": ["@diceui/use-lazy-ref"],
   "files": [
     {
       "path": "ui/qr-code.tsx",

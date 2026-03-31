@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Ripple Button Demo",
   "description": "Example showing an animated button with ripple effect.",
-  "registryDependencies": [
-    "@magicui/ripple-button"
-  ],
+  "registryDependencies": ["@magicui/ripple-button"],
   "files": [
     {
       "path": "registry/example/ripple-button-demo.tsx",

@@ -1,8 +1,6 @@
-import type { Emoji } from '@emoji-mart/data';
-
-import type { IEmojiLibrary } from '../EmojiLibrary';
-
-import { EMOJI_MAX_SEARCH_RESULT } from '../../constants';
+import type { Emoji } from "@emoji-mart/data";
+import { EMOJI_MAX_SEARCH_RESULT } from "../../constants";
+import type { IEmojiLibrary } from "../EmojiLibrary";
 
 type IIndexSearch = {
   get: () => Emoji[];

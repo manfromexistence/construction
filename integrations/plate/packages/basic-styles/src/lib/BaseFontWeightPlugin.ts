@@ -1,10 +1,10 @@
-import { type SlateEditor, createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS, type SlateEditor } from "platejs";
 
 export const BaseFontWeightPlugin = createSlatePlugin({
   key: KEYS.fontWeight,
   inject: {
     nodeProps: {
-      nodeKey: 'fontWeight',
+      nodeKey: "fontWeight",
     },
   },
   parsers: {
@@ -14,7 +14,7 @@ export const BaseFontWeightPlugin = createSlatePlugin({
         rules: [
           {
             validStyle: {
-              fontWeight: '*',
+              fontWeight: "*",
             },
           },
         ],

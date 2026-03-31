@@ -3,12 +3,7 @@
   "name": "signup-02",
   "title": "Signup 02",
   "description": "A two column signup page with a cover image.",
-  "registryDependencies": [
-    "button",
-    "input",
-    "label",
-    "field"
-  ],
+  "registryDependencies": ["button", "input", "label", "field"],
   "files": [
     {
       "path": "registry/base-lyra/blocks/signup-02/page.tsx",
@@ -22,9 +17,6 @@
       "type": "registry:component"
     }
   ],
-  "categories": [
-    "authentication",
-    "signup"
-  ],
+  "categories": ["authentication", "signup"],
   "type": "registry:block"
 }

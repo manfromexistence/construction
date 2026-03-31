@@ -1,29 +1,22 @@
-"use client"
+"use client";
 
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
-import {
-  Field,
-  FieldGroup,
-  FieldLabel,
-  FieldSeparator,
-} from "@/registry/new-york-v4/ui/field"
-import { Input } from "@/registry/new-york-v4/ui/input"
+} from "@/registry/new-york-v4/ui/card";
+import { Field, FieldGroup, FieldLabel, FieldSeparator } from "@/registry/new-york-v4/ui/field";
+import { Input } from "@/registry/new-york-v4/ui/input";
 
 export function CardsCreateAccount() {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="text-2xl">Create an account</CardTitle>
-        <CardDescription>
-          Enter your email below to create your account
-        </CardDescription>
+        <CardDescription>Enter your email below to create your account</CardDescription>
       </CardHeader>
       <CardContent>
         <FieldGroup>
@@ -52,11 +45,7 @@ export function CardsCreateAccount() {
           </FieldSeparator>
           <Field>
             <FieldLabel htmlFor="email-create-account">Email</FieldLabel>
-            <Input
-              id="email-create-account"
-              type="email"
-              placeholder="m@example.com"
-            />
+            <Input id="email-create-account" type="email" placeholder="m@example.com" />
           </Field>
           <Field>
             <FieldLabel htmlFor="password-create-account">Password</FieldLabel>
@@ -68,5 +57,5 @@ export function CardsCreateAccount() {
         </FieldGroup>
       </CardContent>
     </Card>
-  )
+  );
 }

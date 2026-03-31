@@ -1,6 +1,6 @@
-import { ChevronRightIcon } from "lucide-react"
+import { ChevronRightIcon } from "lucide-react";
 
-import { Button } from "@/styles/base-nova/ui/button"
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   Card,
   CardContent,
@@ -8,18 +8,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/styles/base-nova/ui/card"
+} from "@/styles/base-nova/ui/card";
 
 export function CardSmall() {
-  const featureName = "Scheduled reports"
+  const featureName = "Scheduled reports";
 
   return (
     <Card size="sm" className="mx-auto w-full max-w-xs">
       <CardHeader>
         <CardTitle>{featureName}</CardTitle>
-        <CardDescription>
-          Weekly snapshots. No more manual exports.
-        </CardDescription>
+        <CardDescription>Weekly snapshots. No more manual exports.</CardDescription>
       </CardHeader>
       <CardContent>
         <ul className="grid gap-2 py-2 text-sm">
@@ -46,5 +44,5 @@ export function CardSmall() {
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

@@ -1,16 +1,16 @@
-'use client';
-import { type HTMLAttributes, useCallback, useRef, useState } from 'react';
+"use client";
 
-import { AIChatPlugin, streamInsertChunk } from '@platejs/ai/react';
-import { getPluginType, KEYS } from 'platejs';
-import { Plate, usePlateEditor } from 'platejs/react';
+import { AIChatPlugin, streamInsertChunk } from "@platejs/ai/react";
+import { getPluginType, KEYS } from "platejs";
+import { Plate, usePlateEditor } from "platejs/react";
+import { type HTMLAttributes, useCallback, useRef, useState } from "react";
 
-import { Button } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
-import { EditorKit } from '@/registry/components/editor/editor-kit';
-import { CopilotKit } from '@/registry/components/editor/plugins/copilot-kit';
-import { MarkdownJoiner } from '@/registry/lib/markdown-joiner-transform';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { EditorKit } from "@/registry/components/editor/editor-kit";
+import { CopilotKit } from "@/registry/components/editor/plugins/copilot-kit";
+import { MarkdownJoiner } from "@/registry/lib/markdown-joiner-transform";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 const CAPITALIZE_REGEX = /([A-Z])/g;
 const TRAILING_NEWLINES_REGEX = /(\n+)$/;
@@ -19,273 +19,272 @@ const FIRST_CHAR_REGEX = /^./;
 const testScenarios = {
   // Basic markdown with complete elements
   columns: [
-    'paragraph\n\n<column',
-    '_group',
-    '>\n',
-    ' ',
-    ' <',
-    'column',
-    ' width',
+    "paragraph\n\n<column",
+    "_group",
+    ">\n",
+    " ",
+    " <",
+    "column",
+    " width",
     '="',
-    '33',
-    '.',
-    '333',
-    '333',
-    '333',
-    '333',
-    '336',
+    "33",
+    ".",
+    "333",
+    "333",
+    "333",
+    "333",
+    "336",
     '%">\n',
-    '   ',
-    ' ',
-    '1',
-    '\n',
-    ' ',
-    ' </',
-    'column',
-    '>\n',
-    ' ',
-    ' <',
-    'column',
-    ' width',
+    "   ",
+    " ",
+    "1",
+    "\n",
+    " ",
+    " </",
+    "column",
+    ">\n",
+    " ",
+    " <",
+    "column",
+    " width",
     '="',
-    '33',
-    '.',
-    '333',
-    '333',
-    '333',
-    '333',
-    '336',
+    "33",
+    ".",
+    "333",
+    "333",
+    "333",
+    "333",
+    "336",
     '%">\n',
-    '   ',
-    ' ',
-    '2',
-    '\n',
-    ' ',
-    ' </',
-    'column',
-    '>\n',
-    ' ',
-    ' <',
-    'column',
-    ' width',
+    "   ",
+    " ",
+    "2",
+    "\n",
+    " ",
+    " </",
+    "column",
+    ">\n",
+    " ",
+    " <",
+    "column",
+    " width",
     '="',
-    '33',
-    '.',
-    '333',
-    '333',
-    '333',
-    '333',
-    '336',
+    "33",
+    ".",
+    "333",
+    "333",
+    "333",
+    "333",
+    "336",
     '%">\n',
-    '   ',
-    ' ',
-    '3',
-    '\n',
-    ' ',
-    ' </',
-    'column',
-    '>\n',
-    '</',
-    'column',
-    '_group',
-    '>\n\nparagraph',
+    "   ",
+    " ",
+    "3",
+    "\n",
+    " ",
+    " </",
+    "column",
+    ">\n",
+    "</",
+    "column",
+    "_group",
+    ">\n\nparagraph",
   ],
   links: [
-    '[Link ',
-    'to OpenA',
-    'I](https://www.openai.com)\n\n',
-    '[Link ',
-    'to Google',
-    'I](https://ww',
-    'w.google.com/1',
-    '11',
-    '22',
-    'xx',
-    'yy',
-    'zz',
-    'aa',
-    'bb',
-    'cc',
-    'dd',
-    'ee',
-    '33)\n\n',
-    '[False Positive',
-    '11',
-    '22',
-    '33',
-    '44',
-    '55',
-    '66',
-    '77',
-    '88',
-    '99',
-    '100',
+    "[Link ",
+    "to OpenA",
+    "I](https://www.openai.com)\n\n",
+    "[Link ",
+    "to Google",
+    "I](https://ww",
+    "w.google.com/1",
+    "11",
+    "22",
+    "xx",
+    "yy",
+    "zz",
+    "aa",
+    "bb",
+    "cc",
+    "dd",
+    "ee",
+    "33)\n\n",
+    "[False Positive",
+    "11",
+    "22",
+    "33",
+    "44",
+    "55",
+    "66",
+    "77",
+    "88",
+    "99",
+    "100",
   ],
-  lists: ['1.', ' number 1\n', '- ', 'List B\n', '-', ' [x] ', 'Task C'],
+  lists: ["1.", " number 1\n", "- ", "List B\n", "-", " [x] ", "Task C"],
   listWithImage: [
-    '## ',
-    'Links ',
-    'and ',
-    'Images\n\n',
-    '- [Link ',
-    'to OpenA',
-    'I](https://www.openai.com)\n',
-    '- ![Sample Image](https://via.placeholder.com/150)\n\n',
+    "## ",
+    "Links ",
+    "and ",
+    "Images\n\n",
+    "- [Link ",
+    "to OpenA",
+    "I](https://www.openai.com)\n",
+    "- ![Sample Image](https://via.placeholder.com/150)\n\n",
   ],
   nestedStructureBlock: [
-    '```',
-    'javascript',
-    '\n',
-    'import',
-    ' React',
-    ' from',
+    "```",
+    "javascript",
+    "\n",
+    "import",
+    " React",
+    " from",
     " '",
-    'react',
+    "react",
     "';\n",
-    'import',
-    ' {',
-    ' Plate',
-    ' }',
-    ' from',
+    "import",
+    " {",
+    " Plate",
+    " }",
+    " from",
     " '@",
-    'ud',
-    'ecode',
-    '/',
-    'plate',
+    "ud",
+    "ecode",
+    "/",
+    "plate",
     "';\n\n",
-    'const',
-    ' Basic',
-    'Editor',
-    ' =',
-    ' ()',
-    ' =>',
-    ' {\n',
-    ' ',
-    ' return',
-    ' (\n',
-    '   ',
-    ' <',
-    'Plate',
-    '>\n',
-    '     ',
-    ' {/*',
-    ' Add',
-    ' your',
-    ' plugins',
-    ' and',
-    ' components',
-    ' here',
-    ' */}\n',
-    '   ',
-    ' </',
-    'Plate',
-    '>\n',
-    ' ',
-    ' );\n',
-    '};\n\n',
-    'export',
-    ' default',
-    ' Basic',
-    'Editor',
-    ';\n',
-    '```',
+    "const",
+    " Basic",
+    "Editor",
+    " =",
+    " ()",
+    " =>",
+    " {\n",
+    " ",
+    " return",
+    " (\n",
+    "   ",
+    " <",
+    "Plate",
+    ">\n",
+    "     ",
+    " {/*",
+    " Add",
+    " your",
+    " plugins",
+    " and",
+    " components",
+    " here",
+    " */}\n",
+    "   ",
+    " </",
+    "Plate",
+    ">\n",
+    " ",
+    " );\n",
+    "};\n\n",
+    "export",
+    " default",
+    " Basic",
+    "Editor",
+    ";\n",
+    "```",
   ],
   table: [
-    '| Feature          |',
-    ' Plate',
-    '.js',
-    '                                     ',
-    ' ',
-    '| Slate.js                                     ',
-    ' ',
-    '|\n|------------------',
-    '|--------------------------------',
-    '---------------',
-    '|--------------------------------',
-    '---------------',
-    '|\n| Purpose         ',
-    ' ',
-    '| Rich text editor framework',
-    '                   ',
-    ' ',
-    '| Rich text editor framework',
-    '                   ',
-    ' ',
-    '|\n| Flexibility     ',
-    ' ',
-    '| Highly customizable',
-    ' with',
-    ' plugins',
-    '             ',
-    ' ',
-    '| Highly customizable',
-    ' with',
-    ' plugins',
-    '             ',
-    ' ',
-    '|\n| Community       ',
-    ' ',
-    '| Growing community support',
-    '                    ',
-    ' ',
-    '| Established community',
-    ' support',
-    '                ',
-    ' ',
-    '|\n| Documentation   ',
-    ' ',
-    '| Comprehensive documentation',
-    ' available',
-    '        ',
-    ' ',
-    '| Comprehensive documentation',
-    ' available',
-    '        ',
-    ' ',
-    '|\n| Performance     ',
-    ' ',
-    '| Optimized for performance',
-    ' with',
-    ' large',
-    ' documents',
-    '| Good performance, but',
-    ' may',
-    ' require',
-    ' optimization',
-    '|\n| Integration     ',
-    ' ',
-    '| Easy integration with',
-    ' React',
-    '                  ',
-    ' ',
-    '| Easy integration with',
-    ' React',
-    '                  ',
-    ' ',
-    '|\n| Use Cases       ',
-    ' ',
-    '| Suitable for complex',
-    ' editing',
-    ' needs',
-    '           ',
-    ' ',
-    '| Suitable for complex',
-    ' editing',
-    ' needs',
-    '           ',
-    ' ',
-    '\n\n',
-    'Paragraph ',
-    'should ',
-    'exist ',
-    'from ',
-    'table',
+    "| Feature          |",
+    " Plate",
+    ".js",
+    "                                     ",
+    " ",
+    "| Slate.js                                     ",
+    " ",
+    "|\n|------------------",
+    "|--------------------------------",
+    "---------------",
+    "|--------------------------------",
+    "---------------",
+    "|\n| Purpose         ",
+    " ",
+    "| Rich text editor framework",
+    "                   ",
+    " ",
+    "| Rich text editor framework",
+    "                   ",
+    " ",
+    "|\n| Flexibility     ",
+    " ",
+    "| Highly customizable",
+    " with",
+    " plugins",
+    "             ",
+    " ",
+    "| Highly customizable",
+    " with",
+    " plugins",
+    "             ",
+    " ",
+    "|\n| Community       ",
+    " ",
+    "| Growing community support",
+    "                    ",
+    " ",
+    "| Established community",
+    " support",
+    "                ",
+    " ",
+    "|\n| Documentation   ",
+    " ",
+    "| Comprehensive documentation",
+    " available",
+    "        ",
+    " ",
+    "| Comprehensive documentation",
+    " available",
+    "        ",
+    " ",
+    "|\n| Performance     ",
+    " ",
+    "| Optimized for performance",
+    " with",
+    " large",
+    " documents",
+    "| Good performance, but",
+    " may",
+    " require",
+    " optimization",
+    "|\n| Integration     ",
+    " ",
+    "| Easy integration with",
+    " React",
+    "                  ",
+    " ",
+    "| Easy integration with",
+    " React",
+    "                  ",
+    " ",
+    "|\n| Use Cases       ",
+    " ",
+    "| Suitable for complex",
+    " editing",
+    " needs",
+    "           ",
+    " ",
+    "| Suitable for complex",
+    " editing",
+    " needs",
+    "           ",
+    " ",
+    "\n\n",
+    "Paragraph ",
+    "should ",
+    "exist ",
+    "from ",
+    "table",
   ],
 };
 
 export const MarkdownStreamDemo = () => {
-  const [selectedScenario, setSelectedScenario] =
-    useState<keyof typeof testScenarios>('columns');
+  const [selectedScenario, setSelectedScenario] = useState<keyof typeof testScenarios>("columns");
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [isPaused, setIsPaused] = useState(false);
   const isPauseRef = useRef(false);
@@ -311,9 +310,9 @@ export const MarkdownStreamDemo = () => {
     setActiveIndex(0);
     // editor.tf.setValue([]);
 
-    editor.setOption(AIChatPlugin, 'streaming', false);
-    editor.setOption(AIChatPlugin, '_blockChunks', '');
-    editor.setOption(AIChatPlugin, '_blockPath', null);
+    editor.setOption(AIChatPlugin, "streaming", false);
+    editor.setOption(AIChatPlugin, "_blockChunks", "");
+    editor.setOption(AIChatPlugin, "_blockPath", null);
 
     for (let i = 0; i < transformedCurrentChunks.length; i++) {
       while (isPauseRef.current) {
@@ -357,7 +356,7 @@ export const MarkdownStreamDemo = () => {
             {Object.entries(testScenarios).map(([key]) => (
               <option key={key} value={key}>
                 {key
-                  .replace(CAPITALIZE_REGEX, ' $1')
+                  .replace(CAPITALIZE_REGEX, " $1")
                   .replace(FIRST_CHAR_REGEX, (str) => str.toUpperCase())}
               </option>
             ))}
@@ -375,7 +374,7 @@ export const MarkdownStreamDemo = () => {
               setIsPaused(newPauseState);
             }}
           >
-            {isPaused ? 'Resume' : 'Pause'}
+            {isPaused ? "Resume" : "Pause"}
           </Button>
 
           <Button
@@ -383,14 +382,11 @@ export const MarkdownStreamDemo = () => {
               if (activeIndex > 0) {
                 editor.tf.setValue([]);
 
-                editor.setOption(AIChatPlugin, 'streaming', false);
-                editor.setOption(AIChatPlugin, '_blockChunks', '');
-                editor.setOption(AIChatPlugin, '_blockPath', null);
+                editor.setOption(AIChatPlugin, "streaming", false);
+                editor.setOption(AIChatPlugin, "_blockChunks", "");
+                editor.setOption(AIChatPlugin, "_blockPath", null);
 
-                for (const chunk of transformedCurrentChunks.slice(
-                  0,
-                  activeIndex - 1
-                )) {
+                for (const chunk of transformedCurrentChunks.slice(0, activeIndex - 1)) {
                   streamInsertChunk(editor, chunk.chunk, {
                     textProps: {
                       [getPluginType(editor, KEYS.ai)]: true,
@@ -409,23 +405,18 @@ export const MarkdownStreamDemo = () => {
               if (activeIndex < transformedCurrentChunks.length) {
                 editor.tf.setValue([]);
 
-                editor.setOption(AIChatPlugin, 'streaming', false);
-                editor.setOption(AIChatPlugin, '_blockChunks', '');
-                editor.setOption(AIChatPlugin, '_blockPath', null);
+                editor.setOption(AIChatPlugin, "streaming", false);
+                editor.setOption(AIChatPlugin, "_blockChunks", "");
+                editor.setOption(AIChatPlugin, "_blockPath", null);
 
-                for (const chunk of transformedCurrentChunks.slice(
-                  0,
-                  activeIndex + 1
-                )) {
+                for (const chunk of transformedCurrentChunks.slice(0, activeIndex + 1)) {
                   streamInsertChunk(editor, chunk.chunk, {
                     textProps: {
                       [getPluginType(editor, KEYS.ai)]: true,
                     },
                   });
                 }
-                setActiveIndex((prev) =>
-                  Math.min(transformedCurrentChunks.length, prev + 1)
-                );
+                setActiveIndex((prev) => Math.min(transformedCurrentChunks.length, prev + 1));
               }
             }}
           >
@@ -434,11 +425,11 @@ export const MarkdownStreamDemo = () => {
 
           <Button
             onClick={() => {
-              editor.setOption(AIChatPlugin, 'streaming', false);
-              editor.setOption(AIChatPlugin, '_blockChunks', '');
-              editor.setOption(AIChatPlugin, '_blockPath', null);
+              editor.setOption(AIChatPlugin, "streaming", false);
+              editor.setOption(AIChatPlugin, "_blockChunks", "");
+              editor.setOption(AIChatPlugin, "_blockPath", null);
 
-              streamInsertChunk(editor, 'test', {
+              streamInsertChunk(editor, "test", {
                 textProps: {
                   [getPluginType(editor, KEYS.ai)]: true,
                 },
@@ -457,9 +448,7 @@ export const MarkdownStreamDemo = () => {
           </h3>
           <Tokens
             activeIndex={activeIndex}
-            chunks={splitChunksByLinebreak(
-              transformedCurrentChunks.map((c) => c.chunk)
-            )}
+            chunks={splitChunksByLinebreak(transformedCurrentChunks.map((c) => c.chunk))}
           />
         </div>
 
@@ -482,20 +471,15 @@ export const MarkdownStreamDemo = () => {
       <div className="my-2 flex gap-10">
         <div className="w-1/2">
           <h3 className="mb-2 font-semibold">Original Chunks</h3>
-          <Tokens
-            activeIndex={0}
-            chunks={splitChunksByLinebreak(currentChunks)}
-          />
+          <Tokens activeIndex={0} chunks={splitChunksByLinebreak(currentChunks)} />
         </div>
 
         <div className="w-1/2">
           <h3 className="mb-2 font-semibold">Raw Markdown Text</h3>
           <textarea
-            className={cn(
-              'h-[500px] w-full overflow-y-auto rounded border p-4 font-mono text-sm'
-            )}
+            className={cn("h-[500px] w-full overflow-y-auto rounded border p-4 font-mono text-sm")}
             readOnly
-            value={currentChunks.join('')}
+            value={currentChunks.join("")}
           />
         </div>
       </div>
@@ -566,22 +550,19 @@ const Tokens = ({
   activeIndex: number;
   chunks: TChunks[];
 } & HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className="my-1 h-[500px] overflow-y-auto rounded bg-gray-100 p-4 font-mono"
-    {...props}
-  >
+  <div className="my-1 h-[500px] overflow-y-auto rounded bg-gray-100 p-4 font-mono" {...props}>
     {chunks.map((chunk, index) => (
       <div key={index} className="py-1">
         {chunk.chunks.map((c, j) => {
-          const lineBreak = c.text.replaceAll('\n', '⤶');
-          const space = lineBreak.replaceAll(' ', '␣');
+          const lineBreak = c.text.replaceAll("\n", "⤶");
+          const space = lineBreak.replaceAll(" ", "␣");
 
           return (
             <span
               key={j}
               className={cn(
-                'mx-1 inline-block rounded border p-1',
-                activeIndex && c.index < activeIndex && 'bg-amber-500'
+                "mx-1 inline-block rounded border p-1",
+                activeIndex && c.index < activeIndex && "bg-amber-500"
               )}
             >
               {space}

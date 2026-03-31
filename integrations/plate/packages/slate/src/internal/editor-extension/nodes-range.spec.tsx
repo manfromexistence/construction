@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('nodesRange', () => {
-  it('returns undefined for an empty node entry list', () => {
+describe("nodesRange", () => {
+  it("returns undefined for an empty node entry list", () => {
     const editor = createEditor(
       (
         <editor>
@@ -19,7 +19,7 @@ describe('nodesRange', () => {
     expect(editor.api.nodesRange([] as any)).toBeUndefined();
   });
 
-  it('returns the range spanning the first and last node entries', () => {
+  it("returns the range spanning the first and last node entries", () => {
     const editor = createEditor(
       (
         <editor>
@@ -35,8 +35,6 @@ describe('nodesRange', () => {
       [editor.children[2], [2]],
     ];
 
-    expect(editor.api.nodesRange(blocks as any)).toEqual(
-      editor.api.range([0], [2])
-    );
+    expect(editor.api.nodesRange(blocks as any)).toEqual(editor.api.range([0], [2]));
   });
 });

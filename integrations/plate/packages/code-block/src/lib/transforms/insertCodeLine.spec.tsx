@@ -1,15 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, createSlateEditor, type SlateEditor } from "platejs";
 
-import { CodeBlockPlugin } from '../../react/CodeBlockPlugin';
-import { insertCodeLine } from './insertCodeLine';
+import { CodeBlockPlugin } from "../../react/CodeBlockPlugin";
+import { insertCodeLine } from "./insertCodeLine";
 
 jsxt;
 
-describe('insert code line', () => {
-  it('insert code line below selected line', () => {
+describe("insert code line", () => {
+  it("insert code line below selected line", () => {
     const input = createEditor(
       (
         <editor>
@@ -28,7 +28,7 @@ describe('insert code line', () => {
         <hcodeblock>
           <hcodeline>line 1</hcodeline>
           <hcodeline>
-            {'    '}
+            {"    "}
             <cursor />
           </hcodeline>
           <hcodeline>line 2</hcodeline>

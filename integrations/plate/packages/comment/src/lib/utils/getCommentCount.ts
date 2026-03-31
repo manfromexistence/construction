@@ -1,7 +1,7 @@
-import type { TCommentText } from 'platejs';
+import type { TCommentText } from "platejs";
 
-import { getDraftCommentKey } from './getDraftCommentKey';
-import { isCommentKey } from './isCommentKey';
+import { getDraftCommentKey } from "./getDraftCommentKey";
+import { isCommentKey } from "./isCommentKey";
 
 export const getCommentCount = (node: TCommentText) => {
   let commentCount = 0;

@@ -1,8 +1,7 @@
-import type { SlateEditor } from '../editor';
-import type { ParserOptions } from '../plugin/BasePlugin';
-import type { AnyEditorPlugin } from '../plugin/SlatePlugin';
-
-import { getEditorPlugin } from '../plugin';
+import type { SlateEditor } from "../editor";
+import { getEditorPlugin } from "../plugin";
+import type { ParserOptions } from "../plugin/BasePlugin";
+import type { AnyEditorPlugin } from "../plugin/SlatePlugin";
 
 /** Is the plugin disabled by another plugin. */
 export const pipeInsertDataQuery = (

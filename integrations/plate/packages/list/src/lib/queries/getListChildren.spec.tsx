@@ -1,20 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import {
-  type Descendant,
-  type SlateEditor,
-  type TElement,
-  createEditor,
-} from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor, type Descendant, type SlateEditor, type TElement } from "platejs";
 
-import { getListChildren } from './getListChildren';
+import { getListChildren } from "./getListChildren";
 
 jsxt;
 
-describe('getListChildren', () => {
-  describe('when node is not a list item', () => {
-    it('returns empty array when node has no listType', () => {
+describe("getListChildren", () => {
+  describe("when node is not a list item", () => {
+    it("returns empty array when node has no listType", () => {
       const input = (
         <fragment>
           <hp indent={1}>
@@ -27,9 +22,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -37,7 +30,7 @@ describe('getListChildren', () => {
       expect(children).toEqual([]);
     });
 
-    it('returns empty array when node has no indent', () => {
+    it("returns empty array when node has no indent", () => {
       const input = (
         <fragment>
           <hp listStyleType="disc">
@@ -50,9 +43,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -61,8 +52,8 @@ describe('getListChildren', () => {
     });
   });
 
-  describe('when node is a list item', () => {
-    it('get all direct children with bigger indent', () => {
+  describe("when node is a list item", () => {
+    it("get all direct children with bigger indent", () => {
       const input = (
         <fragment>
           <hp indent={1} listStyleType="disc">
@@ -92,9 +83,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -105,7 +94,7 @@ describe('getListChildren', () => {
       ] as any);
     });
 
-    it('get nested children with multiple indent levels', () => {
+    it("get nested children with multiple indent levels", () => {
       const input = (
         <fragment>
           <hp indent={1} listStyleType="disc">
@@ -141,9 +130,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -155,7 +142,7 @@ describe('getListChildren', () => {
       ] as any);
     });
 
-    it('stop at item with equal indent', () => {
+    it("stop at item with equal indent", () => {
       const input = (
         <fragment>
           <hp indent={2} listStyleType="disc">
@@ -188,9 +175,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -201,7 +186,7 @@ describe('getListChildren', () => {
       ] as any);
     });
 
-    it('stop at item with lower indent', () => {
+    it("stop at item with lower indent", () => {
       const input = (
         <fragment>
           <hp indent={3} listStyleType="disc">
@@ -234,9 +219,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -247,7 +230,7 @@ describe('getListChildren', () => {
       ] as any);
     });
 
-    it('stop at non-list item', () => {
+    it("stop at non-list item", () => {
       const input = (
         <fragment>
           <hp indent={1} listStyleType="disc">
@@ -272,9 +255,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -282,7 +263,7 @@ describe('getListChildren', () => {
       expect(children).toEqual([[output[0], [1]]] as any);
     });
 
-    it('returns empty array when no children exist', () => {
+    it("returns empty array when no children exist", () => {
       const input = (
         <fragment>
           <hp indent={1} listStyleType="disc">
@@ -295,9 +276,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -305,7 +284,7 @@ describe('getListChildren', () => {
       expect(children).toEqual([]);
     });
 
-    it('returns empty array when at last position', () => {
+    it("returns empty array when at last position", () => {
       const input = (
         <fragment>
           <hp indent={1} listStyleType="disc">
@@ -318,9 +297,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -328,7 +305,7 @@ describe('getListChildren', () => {
       expect(children).toEqual([]);
     });
 
-    it('work with mixed list types', () => {
+    it("work with mixed list types", () => {
       const input = (
         <fragment>
           <hp indent={1} listStyleType="disc">
@@ -364,9 +341,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);
@@ -378,7 +353,7 @@ describe('getListChildren', () => {
       ] as any);
     });
 
-    it('work with todo lists', () => {
+    it("work with todo lists", () => {
       const input = (
         <fragment>
           <hp indent={1} listChecked={false} listStyleType="disc">
@@ -408,9 +383,7 @@ describe('getListChildren', () => {
         </fragment>
       ) as any as Descendant[];
 
-      const editor = createEditor(
-        (<editor>{input}</editor>) as any as SlateEditor
-      );
+      const editor = createEditor((<editor>{input}</editor>) as any as SlateEditor);
 
       const entry = editor.api.block<TElement>();
       const children = getListChildren(editor, entry!);

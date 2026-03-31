@@ -1,10 +1,8 @@
-import type { SlateEditor } from 'platejs';
-
-import type { DeserializeMdOptions } from '../deserializeMd';
-
-import { MarkdownPlugin } from '../../MarkdownPlugin';
-import { buildRules } from '../../rules';
-import { getRemarkPluginsWithoutMdx } from '../../utils/getRemarkPluginsWithoutMdx';
+import type { SlateEditor } from "platejs";
+import { MarkdownPlugin } from "../../MarkdownPlugin";
+import { buildRules } from "../../rules";
+import { getRemarkPluginsWithoutMdx } from "../../utils/getRemarkPluginsWithoutMdx";
+import type { DeserializeMdOptions } from "../deserializeMd";
 
 /**
  * Merges Markdown configurations, following the principle that options take
@@ -40,9 +38,7 @@ export const getMergedOptionsDeserialize = (
     editor,
     memoize: options?.memoize,
     parser: options?.parser,
-    remarkPlugins: options?.withoutMdx
-      ? getRemarkPluginsWithoutMdx(remarkPlugins)
-      : remarkPlugins,
+    remarkPlugins: options?.withoutMdx ? getRemarkPluginsWithoutMdx(remarkPlugins) : remarkPlugins,
     rules: mergedRules,
     splitLineBreaks: options?.splitLineBreaks,
   };

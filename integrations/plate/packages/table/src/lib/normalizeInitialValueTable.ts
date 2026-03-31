@@ -1,8 +1,8 @@
-import type { NormalizeInitialValue, TTableElement } from 'platejs';
+import type { NormalizeInitialValue, TTableElement } from "platejs";
 
-import type { TableConfig } from './BaseTablePlugin';
+import type { TableConfig } from "./BaseTablePlugin";
 
-import { computeCellIndices } from './utils';
+import { computeCellIndices } from "./utils";
 
 export const normalizeInitialValueTable: NormalizeInitialValue<TableConfig> = ({
   editor,

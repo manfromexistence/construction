@@ -1,13 +1,12 @@
-import fs from "node:fs/promises"
-import path from "node:path"
-import * as React from "react"
-
-import { highlightCode } from "@/lib/highlight-code"
-import { getRegistryItem } from "@/lib/registry"
-import { cn } from "@/lib/utils"
-import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
-import { CopyButton } from "@/components/copy-button"
-import { getIconForLanguageExtension } from "@/components/icons"
+import fs from "node:fs/promises";
+import path from "node:path";
+import * as React from "react";
+import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
+import { CopyButton } from "@/components/copy-button";
+import { getIconForLanguageExtension } from "@/components/icons";
+import { highlightCode } from "@/lib/highlight-code";
+import { getRegistryItem } from "@/lib/registry";
+import { cn } from "@/lib/utils";
 
 export async function ComponentSource({
   name,
@@ -17,56 +16,46 @@ export async function ComponentSource({
   collapsible = true,
   className,
 }: React.ComponentProps<"div"> & {
-  name?: string
-  src?: string
-  title?: string
-  language?: string
-  collapsible?: boolean
+  name?: string;
+  src?: string;
+  title?: string;
+  language?: string;
+  collapsible?: boolean;
 }) {
   if (!name && !src) {
-    return null
+    return null;
   }
 
-  let code: string | undefined
+  let code: string | undefined;
 
   if (name) {
-    const item = await getRegistryItem(name)
-    code = item?.files?.[0]?.content
+    const item = await getRegistryItem(name);
+    code = item?.files?.[0]?.content;
   }
 
   if (src) {
-    const file = await fs.readFile(path.join(process.cwd(), src), "utf-8")
-    code = file
+    const file = await fs.readFile(path.join(process.cwd(), src), "utf-8");
+    code = file;
   }
 
   if (!code) {
-    return null
+    return null;
   }
 
-  const lang = language ?? title?.split(".").pop() ?? "tsx"
-  const highlightedCode = await highlightCode(code, lang)
+  const lang = language ?? title?.split(".").pop() ?? "tsx";
+  const highlightedCode = await highlightCode(code, lang);
 
   if (!collapsible) {
     return (
-      <ComponentCode
-        code={code}
-        highlightedCode={highlightedCode}
-        language={lang}
-        title={title}
-      />
-    )
+      <ComponentCode code={code} highlightedCode={highlightedCode} language={lang} title={title} />
+    );
   }
 
   return (
     <CodeCollapsibleWrapper className={className}>
-      <ComponentCode
-        code={code}
-        highlightedCode={highlightedCode}
-        language={lang}
-        title={title}
-      />
+      <ComponentCode code={code} highlightedCode={highlightedCode} language={lang} title={title} />
     </CodeCollapsibleWrapper>
-  )
+  );
 }
 
 function ComponentCode({
@@ -75,10 +64,10 @@ function ComponentCode({
   language,
   title,
 }: {
-  code: string
-  highlightedCode: string
-  language: string
-  title: string | undefined
+  code: string;
+  highlightedCode: string;
+  language: string;
+  title: string | undefined;
 }) {
   return (
     <figure data-rehype-pretty-code-figure="" className="h-full">
@@ -93,10 +82,7 @@ function ComponentCode({
         </figcaption>
       )}
       <CopyButton value={code} className={cn(!title && "top-1.5")} />
-      <div
-        dangerouslySetInnerHTML={{ __html: highlightedCode }}
-        className="h-full"
-      />
+      <div dangerouslySetInnerHTML={{ __html: highlightedCode }} className="h-full" />
     </figure>
-  )
+  );
 }

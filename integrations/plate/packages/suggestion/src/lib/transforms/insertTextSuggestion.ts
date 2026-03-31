@@ -1,16 +1,16 @@
-import type { SlateEditor, TSuggestionText } from 'platejs';
+import type { SlateEditor, TSuggestionText } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { findSuggestionProps } from '../queries';
-import { getSuggestionKey } from '../utils';
-import { deleteFragmentSuggestion } from './deleteFragmentSuggestion';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { findSuggestionProps } from "../queries";
+import { getSuggestionKey } from "../utils";
+import { deleteFragmentSuggestion } from "./deleteFragmentSuggestion";
 
 export const insertTextSuggestion = (editor: SlateEditor, text: string) => {
   editor.tf.withoutNormalizing(() => {
     let resId: string | undefined;
     const { id, createdAt } = findSuggestionProps(editor, {
       at: editor.selection!,
-      type: 'insert',
+      type: "insert",
     });
 
     if (editor.api.isExpanded()) {
@@ -23,7 +23,7 @@ export const insertTextSuggestion = (editor: SlateEditor, text: string) => {
           [getSuggestionKey(resId ?? id)]: {
             id: resId ?? id,
             createdAt,
-            type: 'insert',
+            type: "insert",
             userId: editor.getOptions(BaseSuggestionPlugin).currentUserId!,
           },
           suggestion: true,

@@ -1,11 +1,8 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
+import { type Translations, useTranslation } from "@/components/language-selector";
 import {
   Avatar,
   AvatarBadge,
@@ -13,7 +10,7 @@ import {
   AvatarGroup,
   AvatarGroupCount,
   AvatarImage,
-} from "@/styles/base-nova/ui-rtl/avatar"
+} from "@/styles/base-nova/ui-rtl/avatar";
 
 const translations: Translations = {
   en: {
@@ -34,29 +31,19 @@ const translations: Translations = {
       moreUsers: "+3",
     },
   },
-}
+};
 
 export function AvatarRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
-    <div
-      className="flex flex-row flex-wrap items-center gap-6 md:gap-12"
-      dir={dir}
-    >
+    <div className="flex flex-row flex-wrap items-center gap-6 md:gap-12" dir={dir}>
       <Avatar>
-        <AvatarImage
-          src="https://github.com/shadcn.png"
-          alt="@shadcn"
-          className="grayscale"
-        />
+        <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" className="grayscale" />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarImage
-          src="https://github.com/evilrabbit.png"
-          alt="@evilrabbit"
-        />
+        <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
         <AvatarFallback>ER</AvatarFallback>
         <AvatarBadge className="bg-green-600 dark:bg-green-800" />
       </Avatar>
@@ -66,21 +53,15 @@ export function AvatarRtl() {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <Avatar>
-          <AvatarImage
-            src="https://github.com/maxleiter.png"
-            alt="@maxleiter"
-          />
+          <AvatarImage src="https://github.com/maxleiter.png" alt="@maxleiter" />
           <AvatarFallback>LR</AvatarFallback>
         </Avatar>
         <Avatar>
-          <AvatarImage
-            src="https://github.com/evilrabbit.png"
-            alt="@evilrabbit"
-          />
+          <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
           <AvatarFallback>ER</AvatarFallback>
         </Avatar>
         <AvatarGroupCount>{t.moreUsers}</AvatarGroupCount>
       </AvatarGroup>
     </div>
-  )
+  );
 }

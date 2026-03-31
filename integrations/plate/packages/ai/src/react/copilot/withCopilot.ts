@@ -1,30 +1,24 @@
-import type { OverrideEditor, PlateEditor } from 'platejs/react';
+import { serializeInlineMd } from "@platejs/markdown";
+import { type Operation, RangeApi, type SlateEditor, type TRange } from "platejs";
+import type { OverrideEditor, PlateEditor } from "platejs/react";
 
-import { serializeInlineMd } from '@platejs/markdown';
-import {
-  type Operation,
-  type SlateEditor,
-  type TRange,
-  RangeApi,
-} from 'platejs';
+import type { CopilotPluginConfig } from "./CopilotPlugin";
 
-import type { CopilotPluginConfig } from './CopilotPlugin';
+import { withoutAbort } from "./utils/withoutAbort";
 
-import { withoutAbort } from './utils/withoutAbort';
-
-type CopilotBatch = PlateEditor['history']['undos'][number] & {
+type CopilotBatch = PlateEditor["history"]["undos"][number] & {
   shouldAbort: boolean;
 };
 
 const getPatchString = (editor: SlateEditor, operations: Operation[]) => {
-  let string = '';
+  let string = "";
 
   for (const operation of operations) {
-    if (operation.type === 'insert_node') {
+    if (operation.type === "insert_node") {
       const node = operation.node;
       const text = serializeInlineMd(editor, { value: [node] });
       string += text;
-    } else if (operation.type === 'insert_text') {
+    } else if (operation.type === "insert_text") {
       string += operation.text;
     }
   }
@@ -60,7 +54,7 @@ export const withCopilot: OverrideEditor<CopilotPluginConfig> = ({
           withoutAbort(editor, () => {
             editor.tf.withoutMerging(() => {
               const newText = suggestionText?.slice(text.length);
-              setOption('suggestionText', newText);
+              setOption("suggestionText", newText);
               insertText(text);
             });
           });
@@ -82,7 +76,7 @@ export const withCopilot: OverrideEditor<CopilotPluginConfig> = ({
             const shouldRemoveText = getPatchString(editor, topRedo.operations);
 
             const newText = prevSuggestion.slice(shouldRemoveText.length);
-            setOption('suggestionText', newText);
+            setOption("suggestionText", newText);
 
             redo();
           });
@@ -98,8 +92,7 @@ export const withCopilot: OverrideEditor<CopilotPluginConfig> = ({
 
         if (
           editor.selection &&
-          (!prevSelection ||
-            !RangeApi.equals(prevSelection, editor.selection)) &&
+          (!prevSelection || !RangeApi.equals(prevSelection, editor.selection)) &&
           getOptions().autoTriggerQuery!({ editor }) &&
           editor.api.isFocused()
         ) {
@@ -117,13 +110,10 @@ export const withCopilot: OverrideEditor<CopilotPluginConfig> = ({
 
         if (lastUndos && lastUndos.shouldAbort === false && oldText) {
           withoutAbort(editor, () => {
-            const shouldInsertText = getPatchString(
-              editor,
-              lastUndos.operations
-            );
+            const shouldInsertText = getPatchString(editor, lastUndos.operations);
 
             const newText = shouldInsertText + oldText;
-            setOption('suggestionText', newText);
+            setOption("suggestionText", newText);
 
             undo();
           });

@@ -1,9 +1,9 @@
-import { type Descendant, type SlateEditor, KEYS, TextApi } from 'platejs';
+import { type Descendant, KEYS, type SlateEditor, TextApi } from "platejs";
 
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { findSuggestionProps } from '../queries';
-import { getSuggestionKey, getSuggestionKeys } from '../utils/index';
-import { deleteFragmentSuggestion } from './deleteFragmentSuggestion';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { findSuggestionProps } from "../queries";
+import { getSuggestionKey, getSuggestionKeys } from "../utils/index";
+import { deleteFragmentSuggestion } from "./deleteFragmentSuggestion";
 
 export const insertFragmentSuggestion = (
   editor: SlateEditor,
@@ -19,7 +19,7 @@ export const insertFragmentSuggestion = (
 
     const { id, createdAt } = findSuggestionProps(editor, {
       at: editor.selection!,
-      type: 'insert',
+      type: "insert",
     });
 
     fragment.forEach((n) => {
@@ -38,14 +38,14 @@ export const insertFragmentSuggestion = (
         n[getSuggestionKey(id)] = {
           id,
           createdAt,
-          type: 'insert',
+          type: "insert",
           userId: editor.getOptions(BaseSuggestionPlugin).currentUserId!,
         };
       } else {
         n[KEYS.suggestion] = {
           id,
           createdAt,
-          type: 'insert',
+          type: "insert",
           userId: editor.getOptions(BaseSuggestionPlugin).currentUserId!,
         };
       }

@@ -1,8 +1,8 @@
-import { expect, test } from "vitest"
+import { expect, test } from "vitest";
 
-import { transform } from "../../src/utils/transformers"
-import { applyPrefixesCss } from "../../src/utils/transformers/transform-tw-prefix"
-import stone from "../fixtures/colors/stone.json"
+import { transform } from "../../src/utils/transformers";
+import { applyPrefixesCss } from "../../src/utils/transformers/transform-tw-prefix";
+import stone from "../fixtures/colors/stone.json";
 
 test("transform tailwind prefix", async () => {
   expect(
@@ -25,7 +25,7 @@ test("transform tailwind prefix", async () => {
       },
       baseColor: "stone",
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -48,7 +48,7 @@ export function Foo() {
       },
       baseColor: stone,
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -71,7 +71,7 @@ export function Foo() {
       },
       baseColor: stone,
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     await transform({
@@ -94,7 +94,7 @@ export function Foo() {
       },
       baseColor: stone,
     })
-  ).toMatchSnapshot()
+  ).toMatchSnapshot();
 
   expect(
     applyPrefixesCss(
@@ -102,5 +102,5 @@ export function Foo() {
       "tw:",
       "v4"
     )
-  ).toMatchSnapshot()
-})
+  ).toMatchSnapshot();
+});

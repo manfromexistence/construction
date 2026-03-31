@@ -2,9 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "calendar-02",
   "description": "Multiple months with single selection.",
-  "registryDependencies": [
-    "calendar"
-  ],
+  "registryDependencies": ["calendar"],
   "files": [
     {
       "path": "registry/new-york-v4/blocks/calendar-02.tsx",
@@ -17,9 +15,6 @@
     "container": "w-full bg-surface min-h-svh flex px-4 py-12 items-start md:py-20 justify-center min-w-0",
     "mobile": "component"
   },
-  "categories": [
-    "calendar",
-    "date"
-  ],
+  "categories": ["calendar", "date"],
   "type": "registry:block"
 }

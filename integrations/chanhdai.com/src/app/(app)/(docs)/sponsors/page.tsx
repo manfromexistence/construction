@@ -1,18 +1,18 @@
-import { ArrowUpRightIcon } from "lucide-react"
-import type { Metadata } from "next"
+import { ArrowUpRightIcon } from "lucide-react";
+import type { Metadata } from "next";
 
-import { Button } from "@/components/base/ui/button"
-import { SPONSORSHIP_URL, X_USERNAME } from "@/config/site"
-import { SponsorItem } from "@/features/sponsor/components/sponsor-item"
-import { SPONSORS } from "@/features/sponsor/data"
-import type { Sponsor, SponsorTier } from "@/features/sponsor/types"
-import { SPONSOR_TIERS } from "@/features/sponsor/types"
+import { Button } from "@/components/base/ui/button";
+import { SPONSORSHIP_URL, X_USERNAME } from "@/config/site";
+import { SponsorItem } from "@/features/sponsor/components/sponsor-item";
+import { SPONSORS } from "@/features/sponsor/data";
+import type { Sponsor, SponsorTier } from "@/features/sponsor/types";
+import { SPONSOR_TIERS } from "@/features/sponsor/types";
 
-const title = "Sponsors"
+const title = "Sponsors";
 const description =
-  "Grateful for the support that helps me grow and maintain high-quality projects."
+  "Grateful for the support that helps me grow and maintain high-quality projects.";
 
-const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`
+const ogImage = `/og/simple?title=${encodeURIComponent(title)}&description=${encodeURIComponent(description)}`;
 
 export const metadata: Metadata = {
   title,
@@ -36,32 +36,28 @@ export const metadata: Metadata = {
     creator: X_USERNAME,
     images: [ogImage],
   },
-}
+};
 
 const SPONSORS_BY_TIER = SPONSORS.reduce(
   (acc, sponsor) => {
     if (!acc[sponsor.tier]) {
-      acc[sponsor.tier] = []
+      acc[sponsor.tier] = [];
     }
-    acc[sponsor.tier].push(sponsor)
-    return acc
+    acc[sponsor.tier].push(sponsor);
+    return acc;
   },
   {} as Record<SponsorTier, Sponsor[]>
-)
+);
 
 export default function Page() {
   return (
     <div>
       <div className="screen-line-bottom px-4">
-        <h1 className="text-3xl leading-none font-semibold tracking-tight">
-          {title}
-        </h1>
+        <h1 className="text-3xl leading-none font-semibold tracking-tight">{title}</h1>
       </div>
 
       <div className="p-4">
-        <p className="font-mono text-sm text-balance text-muted-foreground">
-          {description}
-        </p>
+        <p className="font-mono text-sm text-balance text-muted-foreground">{description}</p>
       </div>
 
       <div className="screen-line-top screen-line-bottom flex h-4" />
@@ -88,26 +84,18 @@ export default function Page() {
 
       <div className="screen-line-top h-4" />
     </div>
-  )
+  );
 }
 
-function SponsorsGroup({
-  title,
-  sponsors,
-}: {
-  title: string
-  sponsors: Sponsor[]
-}) {
+function SponsorsGroup({ title, sponsors }: { title: string; sponsors: Sponsor[] }) {
   if (sponsors.length === 0) {
-    return null
+    return null;
   }
 
   return (
     <div>
       <div className="p-4">
-        <h2 className="font-heading text-lg leading-none font-medium">
-          {title}
-        </h2>
+        <h2 className="font-heading text-lg leading-none font-medium">{title}</h2>
       </div>
 
       <div className="screen-line-bottom relative pb-4">
@@ -123,5 +111,5 @@ function SponsorsGroup({
         </div>
       </div>
     </div>
-  )
+  );
 }

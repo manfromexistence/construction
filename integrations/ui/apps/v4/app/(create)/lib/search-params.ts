@@ -1,1 +1,1 @@
-export * from "@/app/(app)/create/lib/search-params"
+export * from "@/app/(app)/create/lib/search-params";

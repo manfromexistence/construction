@@ -1,40 +1,34 @@
-import type { TSelection } from '@platejs/slate';
-
-import { createSlateEditor } from '../../../editor';
-import { createSlatePlugin } from '../../../plugin/createSlatePlugin';
-import { init } from './init';
-import * as pipeNormalizeModule from '../../../../internal/plugin/pipeNormalizeInitialValue';
+import type { TSelection } from "@platejs/slate";
+import * as pipeNormalizeModule from "../../../../internal/plugin/pipeNormalizeInitialValue";
+import { createSlateEditor } from "../../../editor";
+import { createSlatePlugin } from "../../../plugin/createSlatePlugin";
+import { init } from "./init";
 
 let mockPipeNormalizeInitialValue: ReturnType<typeof mock>;
 let pipeNormalizeSpy: ReturnType<typeof spyOn>;
 
-describe('init', () => {
+describe("init", () => {
   let editor: any;
 
   beforeEach(() => {
     // Set up spy for pipeNormalizeInitialValue
     mockPipeNormalizeInitialValue = mock();
-    pipeNormalizeSpy = spyOn(
-      pipeNormalizeModule,
-      'pipeNormalizeInitialValue'
-    ).mockImplementation(mockPipeNormalizeInitialValue);
+    pipeNormalizeSpy = spyOn(pipeNormalizeModule, "pipeNormalizeInitialValue").mockImplementation(
+      mockPipeNormalizeInitialValue
+    );
 
     editor = createSlateEditor({
-      plugins: [createSlatePlugin({ key: 'test' })],
+      plugins: [createSlatePlugin({ key: "test" })],
     });
 
     // Mock editor methods
     editor.api = {
       create: {
-        value: mock().mockReturnValue([
-          { children: [{ text: '' }], type: 'p' },
-        ]),
+        value: mock().mockReturnValue([{ children: [{ text: "" }], type: "p" }]),
       },
       end: mock().mockReturnValue({ offset: 0, path: [0, 0] }),
       html: {
-        deserialize: mock().mockReturnValue([
-          { children: [{ text: 'deserialized' }], type: 'p' },
-        ]),
+        deserialize: mock().mockReturnValue([{ children: [{ text: "deserialized" }], type: "p" }]),
       },
       start: mock().mockReturnValue({ offset: 0, path: [0, 0] }),
     };
@@ -51,38 +45,34 @@ describe('init', () => {
     pipeNormalizeSpy?.mockRestore();
   });
 
-  describe('when value is null', () => {
-    it('call onValueLoaded without setting children', () => {
-      const createValueSpy = spyOn(editor.api.create, 'value');
+  describe("when value is null", () => {
+    it("call onValueLoaded without setting children", () => {
+      const createValueSpy = spyOn(editor.api.create, "value");
 
       init(editor, { value: null });
 
       // Should create default value since children is empty
       expect(createValueSpy).toHaveBeenCalled();
-      expect(editor.children).toEqual([
-        { children: [{ text: '' }], type: 'p' },
-      ]);
+      expect(editor.children).toEqual([{ children: [{ text: "" }], type: "p" }]);
     });
   });
 
-  describe('when value is a string', () => {
-    it('deserialize HTML string and call onValueLoaded', () => {
-      const htmlString = '<p>test content</p>';
-      const deserializeSpy = spyOn(editor.api.html, 'deserialize');
+  describe("when value is a string", () => {
+    it("deserialize HTML string and call onValueLoaded", () => {
+      const htmlString = "<p>test content</p>";
+      const deserializeSpy = spyOn(editor.api.html, "deserialize");
 
       init(editor, { value: htmlString });
 
       expect(deserializeSpy).toHaveBeenCalledWith({ element: htmlString });
-      expect(editor.children).toEqual([
-        { children: [{ text: 'deserialized' }], type: 'p' },
-      ]);
+      expect(editor.children).toEqual([{ children: [{ text: "deserialized" }], type: "p" }]);
       expect(mockPipeNormalizeInitialValue).toHaveBeenCalledWith(editor);
     });
   });
 
-  describe('when value is a synchronous function', () => {
-    it('call the function and set children immediately', () => {
-      const syncValue = [{ children: [{ text: 'sync result' }], type: 'p' }];
+  describe("when value is a synchronous function", () => {
+    it("call the function and set children immediately", () => {
+      const syncValue = [{ children: [{ text: "sync result" }], type: "p" }];
       const syncFunction = mock().mockReturnValue(syncValue);
 
       init(editor, { value: syncFunction });
@@ -92,23 +82,21 @@ describe('init', () => {
       expect(mockPipeNormalizeInitialValue).toHaveBeenCalledWith(editor);
     });
 
-    it('handle sync function returning undefined', () => {
+    it("handle sync function returning undefined", () => {
       const syncFunction = mock().mockReturnValue(undefined);
-      const createValueSpy = spyOn(editor.api.create, 'value');
+      const createValueSpy = spyOn(editor.api.create, "value");
 
       init(editor, { value: syncFunction });
 
       expect(syncFunction).toHaveBeenCalledWith(editor);
       expect(createValueSpy).toHaveBeenCalled();
-      expect(editor.children).toEqual([
-        { children: [{ text: '' }], type: 'p' },
-      ]);
+      expect(editor.children).toEqual([{ children: [{ text: "" }], type: "p" }]);
     });
   });
 
-  describe('when value is an asynchronous function', () => {
-    it('handle async function and call onValueLoaded after resolution', async () => {
-      const asyncValue = [{ children: [{ text: 'async result' }], type: 'p' }];
+  describe("when value is an asynchronous function", () => {
+    it("handle async function and call onValueLoaded after resolution", async () => {
+      const asyncValue = [{ children: [{ text: "async result" }], type: "p" }];
       const asyncFunction = mock().mockResolvedValue(asyncValue);
 
       init(editor, { value: asyncFunction });
@@ -122,9 +110,9 @@ describe('init', () => {
       expect(mockPipeNormalizeInitialValue).toHaveBeenCalledWith(editor);
     });
 
-    it('handle async function returning empty array', async () => {
+    it("handle async function returning empty array", async () => {
       const asyncFunction = mock().mockResolvedValue([]);
-      const createValueSpy = spyOn(editor.api.create, 'value');
+      const createValueSpy = spyOn(editor.api.create, "value");
 
       init(editor, { value: asyncFunction });
 
@@ -132,33 +120,28 @@ describe('init', () => {
       await new Promise(process.nextTick);
 
       expect(createValueSpy).toHaveBeenCalled();
-      expect(editor.children).toEqual([
-        { children: [{ text: '' }], type: 'p' },
-      ]);
+      expect(editor.children).toEqual([{ children: [{ text: "" }], type: "p" }]);
     });
 
-    it('properly detect promise using duck typing', () => {
+    it("properly detect promise using duck typing", () => {
       const promiseLikeObject = {
         then: mock().mockImplementation((callback) => {
-          callback([{ children: [{ text: 'promise-like' }], type: 'p' }]);
+          callback([{ children: [{ text: "promise-like" }], type: "p" }]);
         }),
       };
 
-      const functionReturningPromiseLike =
-        mock().mockReturnValue(promiseLikeObject);
+      const functionReturningPromiseLike = mock().mockReturnValue(promiseLikeObject);
 
       init(editor, { value: functionReturningPromiseLike });
 
       expect(promiseLikeObject.then).toHaveBeenCalled();
-      expect(editor.children).toEqual([
-        { children: [{ text: 'promise-like' }], type: 'p' },
-      ]);
+      expect(editor.children).toEqual([{ children: [{ text: "promise-like" }], type: "p" }]);
     });
   });
 
-  describe('when value is a direct object/array', () => {
-    it('set the value directly', () => {
-      const directValue = [{ children: [{ text: 'direct value' }], type: 'p' }];
+  describe("when value is a direct object/array", () => {
+    it("set the value directly", () => {
+      const directValue = [{ children: [{ text: "direct value" }], type: "p" }];
 
       init(editor, { value: directValue });
 
@@ -166,24 +149,22 @@ describe('init', () => {
       expect(mockPipeNormalizeInitialValue).toHaveBeenCalledWith(editor);
     });
 
-    it('handle falsy values', () => {
-      const createValueSpy = spyOn(editor.api.create, 'value');
+    it("handle falsy values", () => {
+      const createValueSpy = spyOn(editor.api.create, "value");
 
       init(editor, { value: false });
 
       expect(createValueSpy).toHaveBeenCalled();
-      expect(editor.children).toEqual([
-        { children: [{ text: '' }], type: 'p' },
-      ]);
+      expect(editor.children).toEqual([{ children: [{ text: "" }], type: "p" }]);
     });
   });
 
-  describe('selection handling', () => {
+  describe("selection handling", () => {
     beforeEach(() => {
-      editor.children = [{ children: [{ text: 'content' }], type: 'p' }];
+      editor.children = [{ children: [{ text: "content" }], type: "p" }];
     });
 
-    it('set explicit selection when provided', () => {
+    it("set explicit selection when provided", () => {
       const selection: TSelection = {
         anchor: { offset: 0, path: [0, 0] },
         focus: { offset: 5, path: [0, 0] },
@@ -195,8 +176,8 @@ describe('init', () => {
       expect(editor.tf.select).not.toHaveBeenCalled();
     });
 
-    it('auto-select at end when autoSelect is true', () => {
-      const endSpy = spyOn(editor.api, 'end');
+    it("auto-select at end when autoSelect is true", () => {
+      const endSpy = spyOn(editor.api, "end");
 
       init(editor, { autoSelect: true, value: null });
 
@@ -205,30 +186,30 @@ describe('init', () => {
     });
 
     it('auto-select at end when autoSelect is "end"', () => {
-      const endSpy = spyOn(editor.api, 'end');
+      const endSpy = spyOn(editor.api, "end");
 
-      init(editor, { autoSelect: 'end', value: null });
+      init(editor, { autoSelect: "end", value: null });
 
       expect(endSpy).toHaveBeenCalledWith([]);
       expect(editor.tf.select).toHaveBeenCalled();
     });
 
     it('auto-select at start when autoSelect is "start"', () => {
-      const startSpy = spyOn(editor.api, 'start');
+      const startSpy = spyOn(editor.api, "start");
 
-      init(editor, { autoSelect: 'start', value: null });
+      init(editor, { autoSelect: "start", value: null });
 
       expect(startSpy).toHaveBeenCalledWith([]);
       expect(editor.tf.select).toHaveBeenCalled();
     });
 
-    it('does not auto-select when autoSelect is false', () => {
+    it("does not auto-select when autoSelect is false", () => {
       init(editor, { autoSelect: false, value: null });
 
       expect(editor.tf.select).not.toHaveBeenCalled();
     });
 
-    it('prioritize explicit selection over autoSelect', () => {
+    it("prioritize explicit selection over autoSelect", () => {
       const selection: TSelection = {
         anchor: { offset: 2, path: [0, 0] },
         focus: { offset: 2, path: [0, 0] },
@@ -241,20 +222,20 @@ describe('init', () => {
     });
   });
 
-  describe('normalization handling', () => {
+  describe("normalization handling", () => {
     beforeEach(() => {
-      editor.children = [{ children: [{ text: 'content' }], type: 'p' }];
+      editor.children = [{ children: [{ text: "content" }], type: "p" }];
     });
 
-    it('calls pipeNormalizeInitialValue when children exist', () => {
+    it("calls pipeNormalizeInitialValue when children exist", () => {
       init(editor, { value: null });
 
       expect(mockPipeNormalizeInitialValue).toHaveBeenCalledWith(editor);
     });
 
-    it('creates a default value and normalizes when children are empty', () => {
+    it("creates a default value and normalizes when children are empty", () => {
       editor.children = [];
-      const createValueSpy = spyOn(editor.api.create, 'value');
+      const createValueSpy = spyOn(editor.api.create, "value");
 
       init(editor, { value: null });
 
@@ -263,16 +244,16 @@ describe('init', () => {
       expect(mockPipeNormalizeInitialValue).toHaveBeenCalled();
     });
 
-    it('forces normalization when editor normalization is enabled', () => {
-      const normalizeSpy = spyOn(editor.tf, 'normalize');
+    it("forces normalization when editor normalization is enabled", () => {
+      const normalizeSpy = spyOn(editor.tf, "normalize");
 
       init(editor, { shouldNormalizeEditor: true, value: null });
 
       expect(normalizeSpy).toHaveBeenCalledWith({ force: true });
     });
 
-    it('skips normalization when editor normalization is disabled', () => {
-      const normalizeSpy = spyOn(editor.tf, 'normalize');
+    it("skips normalization when editor normalization is disabled", () => {
+      const normalizeSpy = spyOn(editor.tf, "normalize");
 
       init(editor, { shouldNormalizeEditor: false, value: null });
 
@@ -280,16 +261,16 @@ describe('init', () => {
     });
   });
 
-  describe('async function with selection and normalization', () => {
-    it('handle all options correctly after async resolution', async () => {
-      const asyncValue = [{ children: [{ text: 'async content' }], type: 'p' }];
+  describe("async function with selection and normalization", () => {
+    it("handle all options correctly after async resolution", async () => {
+      const asyncValue = [{ children: [{ text: "async content" }], type: "p" }];
       const asyncFunction = mock().mockResolvedValue(asyncValue);
       const selection: TSelection = {
         anchor: { offset: 1, path: [0, 0] },
         focus: { offset: 3, path: [0, 0] },
       };
 
-      const normalizeSpy = spyOn(editor.tf, 'normalize');
+      const normalizeSpy = spyOn(editor.tf, "normalize");
 
       init(editor, {
         autoSelect: true, // Should be ignored due to explicit selection
@@ -309,10 +290,10 @@ describe('init', () => {
     });
   });
 
-  describe('onReady callback', () => {
-    it('call onReady with isAsync: false for sync initialization', () => {
+  describe("onReady callback", () => {
+    it("call onReady with isAsync: false for sync initialization", () => {
       const onReadySpy = mock();
-      const directValue = [{ children: [{ text: 'direct value' }], type: 'p' }];
+      const directValue = [{ children: [{ text: "direct value" }], type: "p" }];
 
       init(editor, { value: directValue, onReady: onReadySpy });
 
@@ -323,9 +304,9 @@ describe('init', () => {
       });
     });
 
-    it('call onReady with isAsync: false for sync function', () => {
+    it("call onReady with isAsync: false for sync function", () => {
       const onReadySpy = mock();
-      const syncValue = [{ children: [{ text: 'sync result' }], type: 'p' }];
+      const syncValue = [{ children: [{ text: "sync result" }], type: "p" }];
       const syncFunction = mock().mockReturnValue(syncValue);
 
       init(editor, { value: syncFunction, onReady: onReadySpy });
@@ -337,22 +318,22 @@ describe('init', () => {
       });
     });
 
-    it('call onReady with isAsync: false for string value', () => {
+    it("call onReady with isAsync: false for string value", () => {
       const onReadySpy = mock();
-      const htmlString = '<p>test content</p>';
+      const htmlString = "<p>test content</p>";
 
       init(editor, { value: htmlString, onReady: onReadySpy });
 
       expect(onReadySpy).toHaveBeenCalledWith({
         editor,
         isAsync: false,
-        value: [{ children: [{ text: 'deserialized' }], type: 'p' }],
+        value: [{ children: [{ text: "deserialized" }], type: "p" }],
       });
     });
 
-    it('call onReady with isAsync: true for async function', async () => {
+    it("call onReady with isAsync: true for async function", async () => {
       const onReadySpy = mock();
-      const asyncValue = [{ children: [{ text: 'async result' }], type: 'p' }];
+      const asyncValue = [{ children: [{ text: "async result" }], type: "p" }];
       const asyncFunction = mock().mockResolvedValue(asyncValue);
 
       init(editor, { value: asyncFunction, onReady: onReadySpy });
@@ -367,18 +348,15 @@ describe('init', () => {
       });
     });
 
-    it('call onReady with isAsync: true for promise-like object', () => {
+    it("call onReady with isAsync: true for promise-like object", () => {
       const onReadySpy = mock();
-      const promiseValue = [
-        { children: [{ text: 'promise result' }], type: 'p' },
-      ];
+      const promiseValue = [{ children: [{ text: "promise result" }], type: "p" }];
       const promiseLikeObject = {
         then: mock().mockImplementation((callback) => {
           callback(promiseValue);
         }),
       };
-      const functionReturningPromise =
-        mock().mockReturnValue(promiseLikeObject);
+      const functionReturningPromise = mock().mockReturnValue(promiseLikeObject);
 
       init(editor, { value: functionReturningPromise, onReady: onReadySpy });
 
@@ -389,8 +367,8 @@ describe('init', () => {
       });
     });
 
-    it('does not call onReady when not provided', () => {
-      const directValue = [{ children: [{ text: 'direct value' }], type: 'p' }];
+    it("does not call onReady when not provided", () => {
+      const directValue = [{ children: [{ text: "direct value" }], type: "p" }];
 
       // Should not throw when onReady is not provided
       expect(() => {
@@ -398,7 +376,7 @@ describe('init', () => {
       }).not.toThrow();
     });
 
-    it('call onReady with isAsync: false for null value', () => {
+    it("call onReady with isAsync: false for null value", () => {
       const onReadySpy = mock();
 
       init(editor, { value: null, onReady: onReadySpy });
@@ -406,15 +384,15 @@ describe('init', () => {
       expect(onReadySpy).toHaveBeenCalledWith({
         editor,
         isAsync: false,
-        value: [{ children: [{ text: '' }], type: 'p' }], // Default value
+        value: [{ children: [{ text: "" }], type: "p" }], // Default value
       });
     });
   });
 
-  describe('edge cases', () => {
-    it('handle value function that returns null', () => {
+  describe("edge cases", () => {
+    it("handle value function that returns null", () => {
       const nullFunction = mock().mockReturnValue(null);
-      const createValueSpy = spyOn(editor.api.create, 'value');
+      const createValueSpy = spyOn(editor.api.create, "value");
 
       init(editor, { value: nullFunction });
 
@@ -422,23 +400,21 @@ describe('init', () => {
       expect(createValueSpy).toHaveBeenCalled();
     });
 
-    it('handle value function that throws an error', () => {
+    it("handle value function that throws an error", () => {
       const errorFunction = mock().mockImplementation(() => {
-        throw new Error('Test error');
+        throw new Error("Test error");
       });
 
       expect(() => {
         init(editor, { value: errorFunction });
-      }).toThrow('Test error');
+      }).toThrow("Test error");
     });
 
-    it('work with minimal options', () => {
+    it("work with minimal options", () => {
       init(editor, {});
 
       // Should create default value since no value provided
-      expect(editor.children).toEqual([
-        { children: [{ text: '' }], type: 'p' },
-      ]);
+      expect(editor.children).toEqual([{ children: [{ text: "" }], type: "p" }]);
     });
   });
 });

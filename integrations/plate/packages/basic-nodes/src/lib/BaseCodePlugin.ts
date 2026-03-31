@@ -1,4 +1,4 @@
-import { createSlatePlugin, findHtmlParentElement, KEYS } from 'platejs';
+import { createSlatePlugin, findHtmlParentElement, KEYS } from "platejs";
 
 /** Enables support for code formatting */
 export const BaseCodePlugin = createSlatePlugin({
@@ -7,22 +7,19 @@ export const BaseCodePlugin = createSlatePlugin({
   parsers: {
     html: {
       deserializer: {
-        rules: [
-          { validNodeName: ['CODE'] },
-          { validStyle: { fontFamily: 'Consolas' } },
-        ],
+        rules: [{ validNodeName: ["CODE"] }, { validStyle: { fontFamily: "Consolas" } }],
         query({ element }) {
-          const blockAbove = findHtmlParentElement(element, 'P');
+          const blockAbove = findHtmlParentElement(element, "P");
 
-          if (blockAbove?.style.fontFamily === 'Consolas') return false;
+          if (blockAbove?.style.fontFamily === "Consolas") return false;
 
-          return !findHtmlParentElement(element, 'PRE');
+          return !findHtmlParentElement(element, "PRE");
         },
       },
     },
   },
-  render: { as: 'code' },
-  rules: { selection: { affinity: 'hard' } },
+  render: { as: "code" },
+  rules: { selection: { affinity: "hard" } },
 }).extendTransforms(({ editor, type }) => ({
   toggle: () => {
     editor.tf.toggleMark(type);

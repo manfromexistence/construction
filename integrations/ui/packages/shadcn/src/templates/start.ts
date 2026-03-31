@@ -1,7 +1,7 @@
-import dedent from "dedent"
+import dedent from "dedent";
 
-import { createTemplate } from "./create-template"
-import { fontsourceMonorepoInit } from "./monorepo"
+import { createTemplate } from "./create-template";
+import { fontsourceMonorepoInit } from "./monorepo";
 
 export const start = createTemplate({
   name: "start",
@@ -52,4 +52,4 @@ function App() {
       },
     ],
   },
-})
+});

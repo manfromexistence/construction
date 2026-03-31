@@ -1,13 +1,13 @@
-import * as actualPlatejs from 'platejs';
-import * as actualPlatejsReact from 'platejs/react';
+import * as actualPlatejs from "platejs";
+import * as actualPlatejsReact from "platejs/react";
 
-import * as actualGetHeadingListModule from '../../../internal/getHeadingList';
-import * as actualUtils from '../../utils';
+import * as actualGetHeadingListModule from "../../../internal/getHeadingList";
+import * as actualUtils from "../../utils";
 
 export const checkInMock = mock(() => false);
 export const getHeadingListMock = mock(() => []);
 export const heightToTopMock = mock(() => 40);
-export const nodeGetMock = mock(() => ({ id: 'node' }));
+export const nodeGetMock = mock(() => ({ id: "node" }));
 export const useContentControllerMock = mock();
 export const useContentObserverMock = mock();
 export const useEditorPluginMock = mock();
@@ -17,11 +17,11 @@ export const useScrollRefMock = mock();
 export const useTocControllerMock = mock();
 
 export const registerSharedTocHookMocks = () => {
-  mock.module('platejs', () => ({
+  mock.module("platejs", () => ({
     ...actualPlatejs,
     KEYS: {
       ...actualPlatejs.KEYS,
-      blockSelection: 'blockSelection',
+      blockSelection: "blockSelection",
     },
     NodeApi: {
       ...actualPlatejs.NodeApi,
@@ -29,7 +29,7 @@ export const registerSharedTocHookMocks = () => {
     },
   }));
 
-  mock.module('platejs/react', () => ({
+  mock.module("platejs/react", () => ({
     ...actualPlatejsReact,
     useEditorPlugin: useEditorPluginMock,
     useEditorRef: useEditorRefMock,
@@ -37,12 +37,12 @@ export const registerSharedTocHookMocks = () => {
     useScrollRef: useScrollRefMock,
   }));
 
-  mock.module('../../../internal/getHeadingList', () => ({
+  mock.module("../../../internal/getHeadingList", () => ({
     ...actualGetHeadingListModule,
     getHeadingList: getHeadingListMock,
   }));
 
-  mock.module('../../utils', () => ({
+  mock.module("../../utils", () => ({
     ...actualUtils,
     checkIn: checkInMock,
     heightToTop: heightToTopMock,
@@ -57,7 +57,7 @@ export const resetSharedTocHookMocks = () => {
   heightToTopMock.mockReset();
   heightToTopMock.mockReturnValue(40);
   nodeGetMock.mockReset();
-  nodeGetMock.mockImplementation(() => ({ id: 'node' }));
+  nodeGetMock.mockImplementation(() => ({ id: "node" }));
   useContentControllerMock.mockReset();
   useContentObserverMock.mockReset();
   useEditorPluginMock.mockReset();

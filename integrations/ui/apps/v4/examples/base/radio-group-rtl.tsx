@@ -1,21 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import {
-  Field,
-  FieldContent,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/base-nova/ui-rtl/field"
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/styles/base-nova/ui-rtl/radio-group"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Field, FieldContent, FieldDescription, FieldLabel } from "@/styles/base-nova/ui-rtl/field";
+import { RadioGroup, RadioGroupItem } from "@/styles/base-nova/ui-rtl/radio-group";
 
 const translations: Translations = {
   en: {
@@ -51,10 +40,10 @@ const translations: Translations = {
       compactDescription: "ריווח מינימלי לפריסות צפופות.",
     },
   },
-}
+};
 
 export function RadioGroupRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <RadioGroup defaultValue="comfortable" className="w-fit" dir={dir}>
@@ -73,9 +62,7 @@ export function RadioGroupRtl() {
           <FieldLabel htmlFor="r2-rtl" dir={dir}>
             {t.comfortable}
           </FieldLabel>
-          <FieldDescription dir={dir}>
-            {t.comfortableDescription}
-          </FieldDescription>
+          <FieldDescription dir={dir}>{t.comfortableDescription}</FieldDescription>
         </FieldContent>
       </Field>
       <Field orientation="horizontal">
@@ -88,5 +75,5 @@ export function RadioGroupRtl() {
         </FieldContent>
       </Field>
     </RadioGroup>
-  )
+  );
 }

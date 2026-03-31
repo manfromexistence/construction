@@ -1,14 +1,14 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import * as utilsModule from './utils';
-import { withApplyTable } from './withApplyTable';
+import * as utilsModule from "./utils";
+import { withApplyTable } from "./withApplyTable";
 
-describe('withApplyTable', () => {
+describe("withApplyTable", () => {
   afterEach(() => {
     mock.restore();
   });
 
-  it('moves focus to the table end when the anchor is inside the table and selection extends forward', () => {
+  it("moves focus to the table end when the anchor is inside the table and selection extends forward", () => {
     const apply = mock();
     const editor = {
       api: {
@@ -39,7 +39,7 @@ describe('withApplyTable', () => {
         anchor: { offset: 0, path: [1, 0, 0] },
         focus: { offset: 0, path: [2, 0, 0] },
       },
-      type: 'set_selection',
+      type: "set_selection",
     } as any;
 
     transforms.apply(op);
@@ -48,7 +48,7 @@ describe('withApplyTable', () => {
     expect(apply).toHaveBeenCalledWith(op);
   });
 
-  it('moves focus before the table when the focus is inside the table in a backward selection', () => {
+  it("moves focus before the table when the focus is inside the table in a backward selection", () => {
     const apply = mock();
     const editor = {
       api: {
@@ -82,7 +82,7 @@ describe('withApplyTable', () => {
         anchor: { offset: 0, path: [2, 0, 0] },
         focus: { offset: 0, path: [1, 0, 0] },
       },
-      type: 'set_selection',
+      type: "set_selection",
     } as any;
 
     transforms.apply(op);
@@ -91,13 +91,12 @@ describe('withApplyTable', () => {
     expect(apply).toHaveBeenCalledWith(op);
   });
 
-  it('cleans removed cell indices and recomputes indices for affected tables', () => {
+  it("cleans removed cell indices and recomputes indices for affected tables", () => {
     const apply = mock();
-    const computeSpy = spyOn(
-      utilsModule,
-      'computeCellIndices'
-    ).mockImplementation(() => ({}) as any);
-    spyOn(utilsModule, 'getCellTypes').mockReturnValue(['td'] as any);
+    const computeSpy = spyOn(utilsModule, "computeCellIndices").mockImplementation(
+      () => ({}) as any
+    );
+    spyOn(utilsModule, "getCellTypes").mockReturnValue(["td"] as any);
     const cellIndices = {
       keep: { col: 0, row: 0 },
       removeA: { col: 1, row: 0 },
@@ -108,8 +107,8 @@ describe('withApplyTable', () => {
       api: {
         node: mock(() => [tableNode, [0]]),
         nodes: mock(() => [
-          [{ id: 'removeA', type: 'td' }, [0, 0]],
-          [{ id: 'removeB', type: 'td' }, [0, 1]],
+          [{ id: "removeA", type: "td" }, [0, 0]],
+          [{ id: "removeB", type: "td" }, [0, 1]],
         ]),
       },
       getType: (key: string) => key,
@@ -127,9 +126,9 @@ describe('withApplyTable', () => {
     ).transforms;
 
     transforms.apply({
-      node: { type: 'td' },
+      node: { type: "td" },
       path: [0, 0],
-      type: 'remove_node',
+      type: "remove_node",
     } as any);
 
     expect(cellIndices).toEqual({

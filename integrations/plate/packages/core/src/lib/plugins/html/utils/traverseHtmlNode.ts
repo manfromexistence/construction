@@ -45,9 +45,7 @@ export const traverseHtmlNode = (node: Node, callback: Callback): void => {
       !child.parentNode
     ) {
       if (previousChild) {
-        child = previousChild.nextSibling
-          ? previousChild.nextSibling.nextSibling
-          : null;
+        child = previousChild.nextSibling ? previousChild.nextSibling.nextSibling : null;
       } else if (node.firstChild) {
         child = node.firstChild.nextSibling;
       }

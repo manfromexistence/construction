@@ -1,5 +1,5 @@
-import type { ClientRectObject } from '@floating-ui/core';
-import type { VirtualElement } from '@floating-ui/react';
+import type { ClientRectObject } from "@floating-ui/core";
+import type { VirtualElement } from "@floating-ui/react";
 
 export const getDefaultBoundingClientRect = (): ClientRectObject => ({
   bottom: 9999,

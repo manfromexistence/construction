@@ -1,10 +1,10 @@
-import { deserializeInlineMd } from '@platejs/markdown';
-import { KEYS } from 'platejs';
-import { type PlateEditor, getEditorPlugin } from 'platejs/react';
+import { deserializeInlineMd } from "@platejs/markdown";
+import { KEYS } from "platejs";
+import { getEditorPlugin, type PlateEditor } from "platejs/react";
 
-import type { CopilotPluginConfig } from '../CopilotPlugin';
+import type { CopilotPluginConfig } from "../CopilotPlugin";
 
-import { withoutAbort } from '../utils';
+import { withoutAbort } from "../utils";
 
 export const acceptCopilotNextWord = (editor: PlateEditor) => {
   const { api, getOptions } = getEditorPlugin<CopilotPluginConfig>(editor, {

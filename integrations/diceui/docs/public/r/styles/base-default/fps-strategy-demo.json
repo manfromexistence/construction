@@ -1,8 +1,6 @@
 {
   "name": "fps-strategy-demo",
-  "registryDependencies": [
-    "fps"
-  ],
+  "registryDependencies": ["fps"],
   "files": [
     {
       "path": "examples/fps-strategy-demo.tsx",

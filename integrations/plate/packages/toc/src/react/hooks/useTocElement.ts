@@ -1,17 +1,10 @@
-import React from 'react';
-
-import { KEYS, NodeApi } from 'platejs';
-import {
-  useEditorPlugin,
-  useEditorSelector,
-  useScrollRef,
-} from 'platejs/react';
-
-import type { Heading } from '../../lib/types';
-
-import { getHeadingList } from '../../internal/getHeadingList';
-import { TocPlugin } from '../TocPlugin';
-import { heightToTop } from '../utils';
+import { KEYS, NodeApi } from "platejs";
+import { useEditorPlugin, useEditorSelector, useScrollRef } from "platejs/react";
+import React from "react";
+import { getHeadingList } from "../../internal/getHeadingList";
+import type { Heading } from "../../lib/types";
+import { TocPlugin } from "../TocPlugin";
+import { heightToTop } from "../utils";
 
 export const useTocElementState = () => {
   const { editor, getOptions } = useEditorPlugin(TocPlugin);
@@ -22,7 +15,7 @@ export const useTocElementState = () => {
   const containerRef = useScrollRef();
 
   const onContentScroll = React.useCallback(
-    (el: HTMLElement, id: string, behavior: ScrollBehavior = 'instant') => {
+    (el: HTMLElement, id: string, behavior: ScrollBehavior = "instant") => {
       if (!containerRef.current) return;
       if (isScroll) {
         containerRef.current?.scrollTo({
@@ -35,9 +28,7 @@ export const useTocElementState = () => {
       }
 
       setTimeout(() => {
-        editor
-          .getApi({ key: KEYS.blockSelection })
-          .blockSelection?.addSelectedRow?.(id);
+        editor.getApi({ key: KEYS.blockSelection }).blockSelection?.addSelectedRow?.(id);
       }, 0);
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

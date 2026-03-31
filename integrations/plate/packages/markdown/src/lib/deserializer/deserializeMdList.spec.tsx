@@ -1,16 +1,17 @@
 /** @jsx jsxt */
 
-import { BaseListPlugin } from '@platejs/list';
-import { jsxt } from '@platejs/test-utils';
+import { BaseListPlugin } from "@platejs/list";
+import { jsxt } from "@platejs/test-utils";
 
-import { createTestEditor } from '../__tests__/createTestEditor';
-import { deserializeMd } from './deserializeMd';
+import { createTestEditor } from "../__tests__/createTestEditor";
+import { deserializeMd } from "./deserializeMd";
+
 jsxt;
 
-describe('deserializeMdList - comprehensive coverage', () => {
+describe("deserializeMdList - comprehensive coverage", () => {
   const editor = createTestEditor([BaseListPlugin]);
 
-  it('preserves ordered-list starts after setValue normalizes the value', () => {
+  it("preserves ordered-list starts after setValue normalizes the value", () => {
     const editor = createTestEditor([BaseListPlugin]);
     const input = `
 1. First list item
@@ -25,29 +26,29 @@ Break between lists.
 
     expect(value).toMatchObject([
       {
-        children: [{ text: 'First list item' }],
+        children: [{ text: "First list item" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'Break between lists.' }],
-        type: 'p',
+        children: [{ text: "Break between lists." }],
+        type: "p",
       },
       {
-        children: [{ text: 'Second list item' }],
+        children: [{ text: "Second list item" }],
         indent: 1,
         listStart: 2,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'Third list item' }],
+        children: [{ text: "Third list item" }],
         indent: 1,
         listStart: 3,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
     ]);
 
@@ -55,33 +56,33 @@ Break between lists.
 
     expect(editor.children).toMatchObject([
       {
-        children: [{ text: 'First list item' }],
+        children: [{ text: "First list item" }],
         indent: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'Break between lists.' }],
-        type: 'p',
+        children: [{ text: "Break between lists." }],
+        type: "p",
       },
       {
-        children: [{ text: 'Second list item' }],
+        children: [{ text: "Second list item" }],
         indent: 1,
         listStart: 2,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'Third list item' }],
+        children: [{ text: "Third list item" }],
         indent: 1,
         listStart: 3,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
     ]);
   });
 
-  it('deserializes a single Markdown string containing all list edge cases', () => {
+  it("deserializes a single Markdown string containing all list edge cases", () => {
     /**
      * Explanation of this Markdown:
      *
@@ -132,165 +133,165 @@ Break between lists.
     const output = [
       // 1) Ordered list: #1, #2
       {
-        children: [{ text: 'Item A' }],
+        children: [{ text: "Item A" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'Item B' }],
+        children: [{ text: "Item B" }],
         indent: 1,
         listStart: 2,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
 
       // 2) Blank line
 
       // 3) Ordered list with custom start=3
       {
-        children: [{ text: 'Custom start item' }],
+        children: [{ text: "Custom start item" }],
         indent: 1,
         listStart: 3,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'Another item' }],
+        children: [{ text: "Another item" }],
         indent: 1,
         listStart: 4,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
 
       // 4) Blank line
 
       // 5) Mixed bullet -> sub-bullet -> sub-ordered
       {
-        children: [{ text: 'Bullet outer' }],
+        children: [{ text: "Bullet outer" }],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'Nested bullet' }],
+        children: [{ text: "Nested bullet" }],
         indent: 2,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'Nested ordered' }],
+        children: [{ text: "Nested ordered" }],
         indent: 3,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
 
       // 6) Blank line
 
       // 7) Bullet item with indented blockquote
       {
-        children: [{ text: 'A bullet with a blockquote:' }],
+        children: [{ text: "A bullet with a blockquote:" }],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       // The blockquote lines become paragraphs at indent + 1 (if your parser merges them),
       // or in some implementations, they might remain at indent 1. Adapt if needed.
       // If your logic doesn't treat blockquotes as separate paragraphs inside the list,
       // you'll see them in a single paragraph. Tweak as needed.
       {
-        children: [{ text: 'This is inside blockquote\nAnd so on' }],
+        children: [{ text: "This is inside blockquote\nAnd so on" }],
         // Might become indent: 2, or remain indent: 1, depending on how your parser merges them.
         // We'll guess indent: 2 for demonstration.
         indent: 2,
-        type: 'blockquote',
+        type: "blockquote",
       },
 
       // 8) Blank line
 
       // 9) Star bullet item + empty item
       {
-        children: [{ text: 'Star bullet' }],
+        children: [{ text: "Star bullet" }],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       // Extra blank lines produce no tokens
 
       {
-        children: [{ text: 'Some item' }],
+        children: [{ text: "Some item" }],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
 
       // 10) Another bullet with sub bullet + code fence
       {
-        children: [{ text: 'Another bullet' }],
+        children: [{ text: "Another bullet" }],
         indent: 1,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
-        children: [{ text: 'Sub bullet' }],
+        children: [{ text: "Sub bullet" }],
         indent: 2,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
       {
         children: [
           {
             children: [{ text: 'console.info("code fence");' }],
-            type: 'code_line',
+            type: "code_line",
           },
         ],
         indent: 3,
-        type: 'code_block',
+        type: "code_block",
       },
 
       // 11) Deeply nested ordered list
       {
-        children: [{ text: 'a' }],
+        children: [{ text: "a" }],
         indent: 1,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'b' }],
+        children: [{ text: "b" }],
         indent: 2,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: 'c' }],
+        children: [{ text: "c" }],
         indent: 3,
         listStart: 1,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       // followed by sibling bullet at indent 2
       {
-        children: [{ text: 'sibling bullet' }],
+        children: [{ text: "sibling bullet" }],
         indent: 2,
-        listStyleType: 'disc',
-        type: 'p',
+        listStyleType: "disc",
+        type: "p",
       },
     ];
 
     expect(deserializeMd(editor, input)).toEqual(output);
   });
 
-  it('deserializes an empty list', () => {
+  it("deserializes an empty list", () => {
     const input = `
     - list
       - list
@@ -302,7 +303,7 @@ Break between lists.
     expect(deserializeMd(editor, input)).toMatchSnapshot();
   });
 
-  it('deserializes a todo list', () => {
+  it("deserializes a todo list", () => {
     const input = `
     - [ ] todo list
     - [x] todo list

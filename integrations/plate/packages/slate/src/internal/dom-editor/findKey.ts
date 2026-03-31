@@ -1,7 +1,7 @@
-import { DOMEditor } from 'slate-dom';
+import { DOMEditor } from "slate-dom";
 
-import type { TNode } from '../../interfaces';
-import type { Editor } from '../../interfaces/editor';
+import type { TNode } from "../../interfaces";
+import type { Editor } from "../../interfaces/editor";
 
 export const findKey = (editor: Editor, node: TNode) => {
   try {

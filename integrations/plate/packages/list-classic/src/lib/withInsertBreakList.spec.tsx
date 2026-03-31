@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseListPlugin } from './BaseListPlugin';
+import { BaseListPlugin } from "./BaseListPlugin";
 
 jsxt;
 
@@ -16,8 +15,8 @@ const createListEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('withInsertBreakList', () => {
-  it('moves an empty list item up and exits the list', () => {
+describe("withInsertBreakList", () => {
+  it("moves an empty list item up and exits the list", () => {
     const input = (
       <editor>
         <hul>
@@ -45,7 +44,7 @@ describe('withInsertBreakList', () => {
     expect(editor.selection).toEqual(expected.selection);
   });
 
-  it('resets an orphan empty list item into a paragraph', () => {
+  it("resets an orphan empty list item into a paragraph", () => {
     const input = (
       <editor>
         <hli>
@@ -71,7 +70,7 @@ describe('withInsertBreakList', () => {
     expect(editor.selection).toEqual(expected.selection);
   });
 
-  it('inserts a sibling list item for non-empty content', () => {
+  it("inserts a sibling list item for non-empty content", () => {
     const input = (
       <editor>
         <hul>
@@ -107,7 +106,7 @@ describe('withInsertBreakList', () => {
     expect(editor.selection).toEqual(expected.selection);
   });
 
-  it('falls back to normal insertBreak outside lists', () => {
+  it("falls back to normal insertBreak outside lists", () => {
     const input = (
       <editor>
         <hp>

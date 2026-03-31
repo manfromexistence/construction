@@ -20,7 +20,7 @@ describe("Primitive", () => {
     render(
       <Primitive.div asChild>
         <button data-testid="button">Click me</button>
-      </Primitive.div>,
+      </Primitive.div>
     );
 
     const button = screen.getByTestId("button");
@@ -29,15 +29,11 @@ describe("Primitive", () => {
 
   it("merges props when using asChild", () => {
     render(
-      <Primitive.div
-        className="primitive-class"
-        data-testid="primitive"
-        asChild
-      >
+      <Primitive.div className="primitive-class" data-testid="primitive" asChild>
         <button className="button-class" data-testid="button">
           Click me
         </button>
-      </Primitive.div>,
+      </Primitive.div>
     );
 
     const button = screen.getByTestId("button");
@@ -49,7 +45,7 @@ describe("Primitive", () => {
     render(
       <Primitive.button onClick={onClick} data-testid="button">
         Click me
-      </Primitive.button>,
+      </Primitive.button>
     );
 
     const button = screen.getByTestId("button");
@@ -63,7 +59,7 @@ describe("Primitive", () => {
         <Primitive.span data-testid="span">Span</Primitive.span>
         <Primitive.p data-testid="p">Paragraph</Primitive.p>
         <Primitive.button data-testid="button">Button</Primitive.button>
-      </div>,
+      </div>
     );
 
     expect(screen.getByTestId("span").tagName).toBe("SPAN");
@@ -81,23 +77,17 @@ describe("Primitive", () => {
     render(
       <Primitive.div data-testid="outer">
         <Primitive.div data-testid="inner">Nested Content</Primitive.div>
-      </Primitive.div>,
+      </Primitive.div>
     );
 
-    expect(screen.getByTestId("outer")).toContainElement(
-      screen.getByTestId("inner"),
-    );
+    expect(screen.getByTestId("outer")).toContainElement(screen.getByTestId("inner"));
   });
 
   it("handles custom data attributes", () => {
     render(
-      <Primitive.div
-        data-testid="test-div"
-        data-custom="value"
-        aria-label="test label"
-      >
+      <Primitive.div data-testid="test-div" data-custom="value" aria-label="test label">
         Content
-      </Primitive.div>,
+      </Primitive.div>
     );
 
     const element = screen.getByTestId("test-div");

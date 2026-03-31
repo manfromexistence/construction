@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
 
-import { getListItemEntry } from './getListItemEntry';
+import { getListItemEntry } from "./getListItemEntry";
 
 jsxt;
 
-it('returns the current list and list item for a top-level list selection', () => {
+it("returns the current list and list item for a top-level list selection", () => {
   const input = (
     <editor>
       <hul>
@@ -53,7 +53,7 @@ it('returns the current list and list item for a top-level list selection', () =
   });
 });
 
-it('returns the nearest nested list and list item for a nested selection', () => {
+it("returns the nearest nested list and list item for a nested selection", () => {
   const input = (
     <editor>
       <hul>
@@ -104,7 +104,7 @@ it('returns the nearest nested list and list item for a nested selection', () =>
   });
 });
 
-it('uses the focus path for expanded selections', () => {
+it("uses the focus path for expanded selections", () => {
   const input = (
     <editor>
       <hul>
@@ -172,7 +172,7 @@ it('uses the focus path for expanded selections', () => {
   });
 });
 
-it('returns undefined when the selection is outside of a list item', () => {
+it("returns undefined when the selection is outside of a list item", () => {
   const input = (
     <editor>
       <hul>

@@ -1,12 +1,12 @@
-import type { ScrollIntoViewOptions } from '@platejs/slate';
+import type { ScrollIntoViewOptions } from "@platejs/slate";
 
-import isUndefined from 'lodash/isUndefined.js';
-import omitBy from 'lodash/omitBy.js';
+import isUndefined from "lodash/isUndefined.js";
+import omitBy from "lodash/omitBy.js";
 
-import type { SlateEditor } from '../../editor';
-import type { AutoScrollOperationsMap, ScrollMode } from './DOMPlugin';
+import type { SlateEditor } from "../../editor";
+import type { AutoScrollOperationsMap, ScrollMode } from "./DOMPlugin";
 
-import { AUTO_SCROLL, DOMPlugin } from './DOMPlugin';
+import { AUTO_SCROLL, DOMPlugin } from "./DOMPlugin";
 
 export type WithAutoScrollOptions = {
   mode?: ScrollMode;
@@ -24,11 +24,9 @@ export const withScrolling = (
 
   if (options) {
     const scrollOptions =
-      typeof options.scrollOptions === 'object' && options.scrollOptions
+      typeof options.scrollOptions === "object" && options.scrollOptions
         ? {
-            ...(typeof prevOptions.scrollOptions === 'object'
-              ? prevOptions.scrollOptions
-              : {}),
+            ...(typeof prevOptions.scrollOptions === "object" ? prevOptions.scrollOptions : {}),
             ...omitBy(options.scrollOptions, isUndefined),
           }
         : (options.scrollOptions ?? prevOptions.scrollOptions);

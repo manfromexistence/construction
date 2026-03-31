@@ -3,12 +3,8 @@
   "name": "data-grid-select-column",
   "title": "Data Grid Select Column",
   "description": "A reusable select column definition for the data grid with checkbox selection and shift-click support",
-  "dependencies": [
-    "@tanstack/react-table"
-  ],
-  "registryDependencies": [
-    "checkbox"
-  ],
+  "dependencies": ["@tanstack/react-table"],
+  "registryDependencies": ["checkbox"],
   "files": [
     {
       "path": "src/components/data-grid/data-grid-select-column.tsx",

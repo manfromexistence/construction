@@ -1,8 +1,4 @@
-import type {
-  Editor,
-  EditorNodesOptions,
-  ValueOf,
-} from '../../interfaces/index';
+import type { Editor, EditorNodesOptions, ValueOf } from "../../interfaces/index";
 
 /**
  * Iterate through all of the nodes in the editor and break early for the first

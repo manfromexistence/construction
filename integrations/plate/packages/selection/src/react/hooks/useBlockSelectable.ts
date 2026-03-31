@@ -1,17 +1,8 @@
-import type React from 'react';
+import { KEYS, PathApi, type TElement } from "platejs";
+import { type PlateEditor, useEditorPlugin, useElement, usePath } from "platejs/react";
+import type React from "react";
 
-import { type TElement, KEYS, PathApi } from 'platejs';
-import {
-  type PlateEditor,
-  useEditorPlugin,
-  useElement,
-  usePath,
-} from 'platejs/react';
-
-import {
-  type BlockSelectionConfig,
-  BlockSelectionPlugin,
-} from '../BlockSelectionPlugin';
+import { type BlockSelectionConfig, BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 /** Add block selection when right click on a block. */
 export const addOnContextMenu = (
@@ -30,8 +21,7 @@ export const addOnContextMenu = (
     disabledWhenFocused?: boolean;
   }
 ) => {
-  const { enableContextMenu, selectedIds } =
-    editor.getOptions(BlockSelectionPlugin);
+  const { enableContextMenu, selectedIds } = editor.getOptions(BlockSelectionPlugin);
 
   if (!enableContextMenu) return;
 
@@ -39,19 +29,10 @@ export const addOnContextMenu = (
     const nodeEntry = editor.api.above<TElement>();
     const elementPath = editor.api.findPath(element);
 
-    if (
-      nodeEntry &&
-      elementPath &&
-      PathApi.isCommon(elementPath, nodeEntry[1])
-    ) {
+    if (nodeEntry && elementPath && PathApi.isCommon(elementPath, nodeEntry[1])) {
       const id = nodeEntry[0].id as string | undefined;
-      const isSelected = editor.getOption(
-        BlockSelectionPlugin,
-        'isSelected',
-        id
-      );
-      const isOpenAlways =
-        (event.target as HTMLElement).dataset?.plateOpenContextMenu === 'true';
+      const isSelected = editor.getOption(BlockSelectionPlugin, "isSelected", id);
+      const isOpenAlways = (event.target as HTMLElement).dataset?.plateOpenContextMenu === "true";
 
       /**
        * When "block selected or is void or has openContextMenu props", right
@@ -72,7 +53,7 @@ export const addOnContextMenu = (
       const clickAlreadySelected = selectedIds?.has(id);
 
       if (!clickAlreadySelected) {
-        editor.setOption(BlockSelectionPlugin, 'selectedIds', new Set([id]));
+        editor.setOption(BlockSelectionPlugin, "selectedIds", new Set([id]));
       }
     }
   }
@@ -88,10 +69,8 @@ export const useBlockSelectable = () => {
   return {
     props: api.blockSelection?.isSelectable(element, path)
       ? {
-          className: 'slate-selectable',
-          onContextMenu: (
-            event: React.MouseEvent<HTMLDivElement, MouseEvent>
-          ) =>
+          className: "slate-selectable",
+          onContextMenu: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) =>
             addOnContextMenu(editor, {
               element,
               event,

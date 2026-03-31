@@ -4,13 +4,8 @@
   "type": "registry:example",
   "title": "Dock Demo",
   "description": "Example showing a MacOS-style dock implementation.",
-  "dependencies": [
-    "next-themes"
-  ],
-  "registryDependencies": [
-    "button",
-    "@magicui/dock"
-  ],
+  "dependencies": ["next-themes"],
+  "registryDependencies": ["button", "@magicui/dock"],
   "files": [
     {
       "path": "registry/example/dock-demo.tsx",

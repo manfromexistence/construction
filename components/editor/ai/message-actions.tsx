@@ -1,10 +1,10 @@
+import { Edit, RefreshCw } from "lucide-react";
 import { CopyButton } from "@/components/copy-button";
 import { DebugButton } from "@/components/debug-button";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { type ChatMessage } from "@/types/ai";
-import { Edit, RefreshCw } from "lucide-react";
 
 type MessageActionsProps = {
   message: ChatMessage;

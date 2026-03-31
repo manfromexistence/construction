@@ -1,18 +1,12 @@
-import {
-  type Descendant,
-  type Editor,
-  ElementApi,
-  TextApi,
-} from '@platejs/slate';
+import { type Descendant, type Editor, ElementApi, TextApi } from "@platejs/slate";
 
-import type { SlateEditor } from '../editor';
-import type { WithRequiredKey } from '../plugin';
+import type { SlateEditor } from "../editor";
+import type { WithRequiredKey } from "../plugin";
 
-import { BaseParagraphPlugin } from '../plugins';
+import { BaseParagraphPlugin } from "../plugins";
 
 const isInlineNode = (editor: Editor) => (node: Descendant) =>
-  TextApi.isText(node) ||
-  (ElementApi.isElement(node) && editor.api.isInline(node));
+  TextApi.isText(node) || (ElementApi.isElement(node) && editor.api.isInline(node));
 
 const makeBlockLazy = (type: string) => (): Descendant => ({
   children: [],
@@ -78,7 +72,7 @@ const normalizeDifferentNodeTypes = (
  */
 const normalizeEmptyChildren = (descendants: Descendant[]): Descendant[] => {
   if (descendants.length === 0) {
-    return [{ text: '' } as Descendant];
+    return [{ text: "" } as Descendant];
   }
 
   return descendants;
@@ -92,22 +86,14 @@ const normalize = (
   // biome-ignore lint/style/noParameterAssign: Sequential transformation pipeline pattern
   descendants = normalizeEmptyChildren(descendants);
   // biome-ignore lint/style/noParameterAssign: Sequential transformation pipeline pattern
-  descendants = normalizeDifferentNodeTypes(
-    descendants,
-    isInline,
-    makeDefaultBlock
-  );
+  descendants = normalizeDifferentNodeTypes(descendants, isInline, makeDefaultBlock);
 
   // biome-ignore lint/style/noParameterAssign: Sequential transformation pipeline pattern
   descendants = descendants.map((node) => {
     if (ElementApi.isElement(node)) {
       return {
         ...node,
-        children: normalize(
-          node.children as Descendant[],
-          isInline,
-          makeDefaultBlock
-        ),
+        children: normalize(node.children as Descendant[], isInline, makeDefaultBlock),
       };
     }
 

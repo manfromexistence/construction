@@ -1,21 +1,21 @@
 import {
   type ElementEntry,
+  getEditorPlugin,
   type SlateEditor,
   type TElement,
   type TRange,
   type TTableCellElement,
   type TTableElement,
   type TTableRowElement,
-  getEditorPlugin,
-} from 'platejs';
+} from "platejs";
 
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { getCellTypes } from '../utils';
-import { getCellIndices } from '../utils/getCellIndices';
-import { findCellByIndexes } from './findCellByIndexes';
-import { getCellIndicesWithSpans } from './getCellIndicesWithSpans';
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { getCellTypes } from "../utils";
+import { getCellIndices } from "../utils/getCellIndices";
+import { findCellByIndexes } from "./findCellByIndexes";
+import { getCellIndicesWithSpans } from "./getCellIndicesWithSpans";
 
-type FormatType = 'all' | 'cell' | 'table';
+type FormatType = "all" | "cell" | "table";
 
 type GetTableGridByRangeOptions<T extends FormatType> = {
   at: TRange;
@@ -29,9 +29,7 @@ type GetTableGridByRangeOptions<T extends FormatType> = {
   format?: T;
 };
 
-type GetTableGridReturnType<T> = T extends 'all'
-  ? TableGridEntries
-  : ElementEntry[];
+type GetTableGridReturnType<T> = T extends "all" ? TableGridEntries : ElementEntry[];
 
 type TableGridEntries = {
   cellEntries: ElementEntry[];
@@ -107,8 +105,7 @@ export const getTableMergeGridByRange = <T extends FormatType>(
     }
 
     const indicies = getCellIndices(editor, cell);
-    const { col: cellColWithSpan, row: cellRowWithSpan } =
-      getCellIndicesWithSpans(indicies, cell);
+    const { col: cellColWithSpan, row: cellRowWithSpan } = getCellIndicesWithSpans(indicies, cell);
     const { col: cellCol, row: cellRow } = indicies;
 
     // check if cell is still in range
@@ -117,12 +114,7 @@ export const getTableMergeGridByRange = <T extends FormatType>(
     const hasOverflowLeft = cellCol < startColIndex;
     const hasOverflowRight = cellColWithSpan > endColIndex;
 
-    if (
-      hasOverflowTop ||
-      hasOverflowBottom ||
-      hasOverflowLeft ||
-      hasOverflowRight
-    ) {
+    if (hasOverflowTop || hasOverflowBottom || hasOverflowLeft || hasOverflowRight) {
       // reset the cycle if has overflow
       cellsSet = new WeakSet();
       cellEntries = [];
@@ -145,8 +137,7 @@ export const getTableMergeGridByRange = <T extends FormatType>(
     if (!cellsSet.has(cell)) {
       cellsSet.add(cell);
 
-      const rows = table.children[rowIndex - startRowIndex]
-        .children as TElement[];
+      const rows = table.children[rowIndex - startRowIndex].children as TElement[];
       rows[colIndex - startColIndex] = cell;
 
       const cellPath = editor.api.findPath(cell)!;
@@ -163,9 +154,9 @@ export const getTableMergeGridByRange = <T extends FormatType>(
     }
   }
 
-  const formatType = (format as string) || 'table';
+  const formatType = (format as string) || "table";
 
-  if (formatType === 'cell') {
+  if (formatType === "cell") {
     return cellEntries as GetTableGridReturnType<T>;
   }
 
@@ -182,7 +173,7 @@ export const getTableMergeGridByRange = <T extends FormatType>(
     rowElement.children = filteredChildren;
   });
 
-  if (formatType === 'table') {
+  if (formatType === "table") {
     return [[table, tablePath]] as GetTableGridReturnType<T>;
   }
 

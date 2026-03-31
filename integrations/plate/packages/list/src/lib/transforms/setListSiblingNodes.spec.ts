@@ -1,30 +1,23 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import * as getListSiblingsModule from '../queries/getListSiblings';
-import * as setListNodeModule from './setListNode';
-import { setListSiblingNodes } from './setListSiblingNodes';
+import * as getListSiblingsModule from "../queries/getListSiblings";
+import * as setListNodeModule from "./setListNode";
+import { setListSiblingNodes } from "./setListSiblingNodes";
 
-describe('setListSiblingNodes', () => {
+describe("setListSiblingNodes", () => {
   afterEach(() => {
     mock.restore();
   });
 
-  it('retypes sibling list items and clears todo metadata', () => {
-    const getListSiblingsSpy = spyOn(
-      getListSiblingsModule,
-      'getListSiblings'
-    ).mockReturnValue([
+  it("retypes sibling list items and clears todo metadata", () => {
+    const getListSiblingsSpy = spyOn(getListSiblingsModule, "getListSiblings").mockReturnValue([
       [{ [KEYS.indent]: 2 }, [0]],
       [{ [KEYS.indent]: 3 }, [1]],
     ] as any);
-    const setListNodeSpy = spyOn(
-      setListNodeModule,
-      'setListNode'
-    ).mockImplementation(() => {});
-    const setIndentTodoNodeSpy = spyOn(
-      setListNodeModule,
-      'setIndentTodoNode'
-    ).mockImplementation(() => {});
+    const setListNodeSpy = spyOn(setListNodeModule, "setListNode").mockImplementation(() => {});
+    const setIndentTodoNodeSpy = spyOn(setListNodeModule, "setIndentTodoNode").mockImplementation(
+      () => {}
+    );
     const unsetNodes = mock();
     const editor = {
       tf: {
@@ -35,7 +28,7 @@ describe('setListSiblingNodes', () => {
 
     setListSiblingNodes(editor, [{ type: KEYS.p }, [0]] as any, {
       getSiblingListOptions: { breakOnEqIndentNeqListStyleType: false } as any,
-      listStyleType: 'decimal',
+      listStyleType: "decimal",
     });
 
     expect(getListSiblingsSpy).toHaveBeenCalled();
@@ -48,28 +41,24 @@ describe('setListSiblingNodes', () => {
     expect(setListNodeSpy).toHaveBeenNthCalledWith(1, editor, {
       at: [0],
       indent: 2,
-      listStyleType: 'decimal',
+      listStyleType: "decimal",
     });
     expect(setListNodeSpy).toHaveBeenNthCalledWith(2, editor, {
       at: [1],
       indent: 3,
-      listStyleType: 'decimal',
+      listStyleType: "decimal",
     });
     expect(setIndentTodoNodeSpy).not.toHaveBeenCalled();
   });
 
-  it('uses todo helpers when retyping sibling todo items', () => {
-    spyOn(getListSiblingsModule, 'getListSiblings').mockReturnValue([
+  it("uses todo helpers when retyping sibling todo items", () => {
+    spyOn(getListSiblingsModule, "getListSiblings").mockReturnValue([
       [{ [KEYS.indent]: 4 }, [3]],
     ] as any);
-    const setListNodeSpy = spyOn(
-      setListNodeModule,
-      'setListNode'
-    ).mockImplementation(() => {});
-    const setIndentTodoNodeSpy = spyOn(
-      setListNodeModule,
-      'setIndentTodoNode'
-    ).mockImplementation(() => {});
+    const setListNodeSpy = spyOn(setListNodeModule, "setListNode").mockImplementation(() => {});
+    const setIndentTodoNodeSpy = spyOn(setListNodeModule, "setIndentTodoNode").mockImplementation(
+      () => {}
+    );
     const unsetNodes = mock();
     const editor = {
       tf: {

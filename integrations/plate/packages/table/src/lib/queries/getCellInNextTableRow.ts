@@ -1,10 +1,4 @@
-import {
-  type Editor,
-  type NodeEntry,
-  type Path,
-  type TElement,
-  PathApi,
-} from 'platejs';
+import { type Editor, type NodeEntry, type Path, PathApi, type TElement } from "platejs";
 
 export const getCellInNextTableRow = (
   editor: Editor,

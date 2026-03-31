@@ -1,16 +1,11 @@
-import type { TEqualityChecker } from 'zustand-x';
+import type { TEqualityChecker } from "zustand-x";
 
-import { useStoreSelect, useStoreValue } from 'zustand-x';
+import { useStoreSelect, useStoreValue } from "zustand-x";
 
-import type {
-  AnyPluginConfig,
-  InferOptions,
-  InferSelectors,
-  WithRequiredKey,
-} from '../../../lib';
-import type { PlateEditor } from '../../editor';
+import type { AnyPluginConfig, InferOptions, InferSelectors, WithRequiredKey } from "../../../lib";
+import type { PlateEditor } from "../../editor";
 
-import { useEditorRef } from './createPlateStore';
+import { useEditorRef } from "./createPlateStore";
 
 /**
  * Hook to access plugin options. For usage outside `<Plate>`, use
@@ -24,14 +19,14 @@ export function usePluginOption<
   C extends AnyPluginConfig,
   StateType extends InferOptions<C>,
   TSelectors extends InferSelectors<C>,
-  K extends keyof StateType | keyof TSelectors | 'state',
+  K extends keyof StateType | keyof TSelectors | "state",
 >(
   plugin: WithRequiredKey<C>,
   key: K,
   ...args: [
     ...(K extends keyof TSelectors ? Parameters<TSelectors[K]> : unknown[]),
     TEqualityChecker<
-      K extends 'state'
+      K extends "state"
         ? StateType
         : K extends keyof TSelectors
           ? ReturnType<TSelectors[K]>
@@ -40,7 +35,7 @@ export function usePluginOption<
             : never
     >?,
   ]
-): K extends 'state'
+): K extends "state"
   ? StateType
   : K extends keyof TSelectors
     ? ReturnType<TSelectors[K]>
@@ -56,7 +51,7 @@ export function useEditorPluginOption<
   C extends AnyPluginConfig,
   StateType extends InferOptions<C>,
   TSelectors extends InferSelectors<C>,
-  K extends keyof StateType | keyof TSelectors | 'state',
+  K extends keyof StateType | keyof TSelectors | "state",
 >(
   editor: PlateEditor,
   plugin: WithRequiredKey<C>,
@@ -64,7 +59,7 @@ export function useEditorPluginOption<
   ...args: [
     ...(K extends keyof TSelectors ? Parameters<TSelectors[K]> : unknown[]),
     TEqualityChecker<
-      K extends 'state'
+      K extends "state"
         ? StateType
         : K extends keyof TSelectors
           ? ReturnType<TSelectors[K]>
@@ -73,7 +68,7 @@ export function useEditorPluginOption<
             : never
     >?,
   ]
-): K extends 'state'
+): K extends "state"
   ? StateType
   : K extends keyof TSelectors
     ? ReturnType<TSelectors[K]>
@@ -86,19 +81,15 @@ export function useEditorPluginOption<
     return undefined as any;
   }
 
-  if (
-    key !== 'state' &&
-    !(key in store.get('state')) &&
-    !(key in store.selectors)
-  ) {
+  if (key !== "state" && !(key in store.get("state")) && !(key in store.selectors)) {
     editor.api.debug.error(
       `usePluginOption: ${key as any} option is not defined in plugin ${plugin.key}`,
-      'OPTION_UNDEFINED'
+      "OPTION_UNDEFINED"
     );
     return undefined as any;
   }
 
-  if (key === 'state') {
+  if (key === "state") {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     return useStoreSelect(
       store,

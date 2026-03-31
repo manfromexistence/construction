@@ -1,12 +1,7 @@
 {
   "name": "action-bar-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "action-bar",
-    "checkbox"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["action-bar", "checkbox"],
   "files": [
     {
       "path": "examples/action-bar-demo.tsx",

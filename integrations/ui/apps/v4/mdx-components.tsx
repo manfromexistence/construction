@@ -1,67 +1,49 @@
-import * as React from "react"
-import Image from "next/image"
-import Link from "next/link"
-
-import { type PageTreeFolder } from "@/lib/page-tree"
-import { source } from "@/lib/source"
-import { cn } from "@/lib/utils"
-import { Callout } from "@/components/callout"
-import { CodeBlockCommand } from "@/components/code-block-command"
-import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
-import { CodeTabs } from "@/components/code-tabs"
-import { ComponentPreview } from "@/components/component-preview"
-import { ComponentSource } from "@/components/component-source"
-import { ComponentsList } from "@/components/components-list"
-import { CopyButton } from "@/components/copy-button"
-import { DirectoryList } from "@/components/directory-list"
-import { getIconForLanguageExtension } from "@/components/icons"
+import Image from "next/image";
+import Link from "next/link";
+import * as React from "react";
+import { Callout } from "@/components/callout";
+import { CodeBlockCommand } from "@/components/code-block-command";
+import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
+import { CodeTabs } from "@/components/code-tabs";
+import { ComponentPreview } from "@/components/component-preview";
+import { ComponentSource } from "@/components/component-source";
+import { ComponentsList } from "@/components/components-list";
+import { CopyButton } from "@/components/copy-button";
+import { DirectoryList } from "@/components/directory-list";
+import { getIconForLanguageExtension } from "@/components/icons";
+import { type PageTreeFolder } from "@/lib/page-tree";
+import { source } from "@/lib/source";
+import { cn } from "@/lib/utils";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/registry/new-york-v4/ui/accordion"
-import {
-  Alert,
-  AlertDescription,
-  AlertTitle,
-} from "@/registry/new-york-v4/ui/alert"
-import { AspectRatio } from "@/registry/new-york-v4/ui/aspect-ratio"
-import { Button } from "@/registry/new-york-v4/ui/button"
-import { Kbd } from "@/registry/new-york-v4/ui/kbd"
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/registry/new-york-v4/ui/tabs"
+} from "@/registry/new-york-v4/ui/accordion";
+import { Alert, AlertDescription, AlertTitle } from "@/registry/new-york-v4/ui/alert";
+import { AspectRatio } from "@/registry/new-york-v4/ui/aspect-ratio";
+import { Button } from "@/registry/new-york-v4/ui/button";
+import { Kbd } from "@/registry/new-york-v4/ui/kbd";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/registry/new-york-v4/ui/tabs";
 
 // Wrapper component that passes the components folder from the server.
 // This is only used on /docs/components/ index page, so default to radix.
 function ComponentsListWrapper() {
-  const componentsFolder = source.pageTree.children.find(
-    (page) => page.$id === "components"
-  )
+  const componentsFolder = source.pageTree.children.find((page) => page.$id === "components");
 
   if (componentsFolder?.type !== "folder") {
-    return null
+    return null;
   }
 
   return (
-    <ComponentsList
-      componentsFolder={componentsFolder as PageTreeFolder}
-      currentBase="radix"
-    />
-  )
+    <ComponentsList componentsFolder={componentsFolder as PageTreeFolder} currentBase="radix" />
+  );
 }
 
 export const mdxComponents = {
   h1: ({ className, ...props }: React.ComponentProps<"h1">) => (
     <h1
-      className={cn(
-        "mt-2 scroll-m-28 font-heading text-3xl font-bold tracking-tight",
-        className
-      )}
+      className={cn("mt-2 scroll-m-28 font-heading text-3xl font-bold tracking-tight", className)}
       {...props}
     />
   ),
@@ -80,7 +62,7 @@ export const mdxComponents = {
         )}
         {...props}
       />
-    )
+    );
   },
   h3: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
@@ -102,33 +84,21 @@ export const mdxComponents = {
   ),
   h5: ({ className, ...props }: React.ComponentProps<"h5">) => (
     <h5
-      className={cn(
-        "mt-8 scroll-m-28 text-base font-medium tracking-tight",
-        className
-      )}
+      className={cn("mt-8 scroll-m-28 text-base font-medium tracking-tight", className)}
       {...props}
     />
   ),
   h6: ({ className, ...props }: React.ComponentProps<"h6">) => (
     <h6
-      className={cn(
-        "mt-8 scroll-m-28 text-base font-medium tracking-tight",
-        className
-      )}
+      className={cn("mt-8 scroll-m-28 text-base font-medium tracking-tight", className)}
       {...props}
     />
   ),
   a: ({ className, ...props }: React.ComponentProps<"a">) => (
-    <a
-      className={cn("font-medium underline underline-offset-4", className)}
-      {...props}
-    />
+    <a className={cn("font-medium underline underline-offset-4", className)} {...props} />
   ),
   p: ({ className, ...props }: React.ComponentProps<"p">) => (
-    <p
-      className={cn("leading-relaxed [&:not(:first-child)]:mt-6", className)}
-      {...props}
-    />
+    <p className={cn("leading-relaxed [&:not(:first-child)]:mt-6", className)} {...props} />
   ),
   strong: ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => (
     <strong className={cn("font-medium", className)} {...props} />
@@ -143,17 +113,12 @@ export const mdxComponents = {
     <li className={cn("mt-2", className)} {...props} />
   ),
   blockquote: ({ className, ...props }: React.ComponentProps<"blockquote">) => (
-    <blockquote
-      className={cn("mt-6 border-l-2 pl-6 italic", className)}
-      {...props}
-    />
+    <blockquote className={cn("mt-6 border-l-2 pl-6 italic", className)} {...props} />
   ),
   img: ({ className, alt, ...props }: React.ComponentProps<"img">) => (
     <img className={cn("rounded-md", className)} alt={alt} {...props} />
   ),
-  hr: ({ ...props }: React.ComponentProps<"hr">) => (
-    <hr className="my-4 md:my-8" {...props} />
-  ),
+  hr: ({ ...props }: React.ComponentProps<"hr">) => <hr className="my-4 md:my-8" {...props} />,
   table: ({ className, ...props }: React.ComponentProps<"table">) => (
     <div className="my-6 no-scrollbar w-full overflow-y-auto rounded-xl border">
       <table
@@ -197,20 +162,16 @@ export const mdxComponents = {
       >
         {children}
       </pre>
-    )
+    );
   },
   figure: ({ className, ...props }: React.ComponentProps<"figure">) => {
-    return <figure className={cn(className)} {...props} />
+    return <figure className={cn(className)} {...props} />;
   },
-  figcaption: ({
-    className,
-    children,
-    ...props
-  }: React.ComponentProps<"figcaption">) => {
+  figcaption: ({ className, children, ...props }: React.ComponentProps<"figcaption">) => {
     const iconExtension =
       "data-language" in props && typeof props["data-language"] === "string"
         ? getIconForLanguageExtension(props["data-language"])
-        : null
+        : null;
 
     return (
       <figcaption
@@ -223,7 +184,7 @@ export const mdxComponents = {
         {iconExtension}
         {children}
       </figcaption>
-    )
+    );
   },
   code: ({
     className,
@@ -235,12 +196,12 @@ export const mdxComponents = {
     __bun__,
     ...props
   }: React.ComponentProps<"code"> & {
-    __raw__?: string
-    __src__?: string
-    __npm__?: string
-    __yarn__?: string
-    __pnpm__?: string
-    __bun__?: string
+    __raw__?: string;
+    __src__?: string;
+    __npm__?: string;
+    __yarn__?: string;
+    __pnpm__?: string;
+    __bun__?: string;
   }) => {
     // Inline Code.
     if (typeof props.children === "string") {
@@ -252,11 +213,11 @@ export const mdxComponents = {
           )}
           {...props}
         />
-      )
+      );
     }
 
     // npm command.
-    const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__
+    const isNpmCommand = __npm__ && __yarn__ && __pnpm__ && __bun__;
     if (isNpmCommand) {
       return (
         <CodeBlockCommand
@@ -265,7 +226,7 @@ export const mdxComponents = {
           __pnpm__={__pnpm__}
           __bun__={__bun__}
         />
-      )
+      );
     }
 
     // Default codeblock.
@@ -274,14 +235,11 @@ export const mdxComponents = {
         {__raw__ && <CopyButton value={__raw__} src={__src__} />}
         <code {...props} />
       </>
-    )
+    );
   },
   Step: ({ className, ...props }: React.ComponentProps<"h3">) => (
     <h3
-      className={cn(
-        "mt-8 scroll-m-32 font-heading text-lg font-medium tracking-tight",
-        className
-      )}
+      className={cn("mt-8 scroll-m-32 font-heading text-lg font-medium tracking-tight", className)}
       {...props}
     />
   ),
@@ -294,14 +252,7 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  Image: ({
-    src,
-    className,
-    width,
-    height,
-    alt,
-    ...props
-  }: React.ComponentProps<"img">) => (
+  Image: ({ src, className, width, height, alt, ...props }: React.ComponentProps<"img">) => (
     <Image
       className={cn("mt-6 rounded-md border", className)}
       src={(src as string) || ""}
@@ -312,24 +263,15 @@ export const mdxComponents = {
     />
   ),
   Tabs: ({ className, ...props }: React.ComponentProps<typeof Tabs>) => {
-    return <Tabs className={cn("relative mt-6 w-full", className)} {...props} />
+    return <Tabs className={cn("relative mt-6 w-full", className)} {...props} />;
   },
-  TabsList: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsList>) => (
+  TabsList: ({ className, ...props }: React.ComponentProps<typeof TabsList>) => (
     <TabsList
-      className={cn(
-        "justify-start gap-4 rounded-none bg-transparent px-0",
-        className
-      )}
+      className={cn("justify-start gap-4 rounded-none bg-transparent px-0", className)}
       {...props}
     />
   ),
-  TabsTrigger: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsTrigger>) => (
+  TabsTrigger: ({ className, ...props }: React.ComponentProps<typeof TabsTrigger>) => (
     <TabsTrigger
       className={cn(
         "rounded-none border-0 border-b-2 border-transparent bg-transparent px-0 pb-3 text-base text-muted-foreground hover:text-primary data-[state=active]:border-primary data-[state=active]:bg-transparent data-[state=active]:text-foreground data-[state=active]:shadow-none! dark:data-[state=active]:border-primary dark:data-[state=active]:bg-transparent",
@@ -338,10 +280,7 @@ export const mdxComponents = {
       {...props}
     />
   ),
-  TabsContent: ({
-    className,
-    ...props
-  }: React.ComponentProps<typeof TabsContent>) => (
+  TabsContent: ({ className, ...props }: React.ComponentProps<typeof TabsContent>) => (
     <TabsContent
       className={cn(
         "relative [&_h3.font-heading]:text-base [&_h3.font-heading]:font-medium *:[figure]:first:mt-0 [&>.steps]:mt-6",
@@ -370,10 +309,7 @@ export const mdxComponents = {
   ComponentsList: ComponentsListWrapper,
   DirectoryList,
   Link: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
-    <Link
-      className={cn("font-medium underline underline-offset-4", className)}
-      {...props}
-    />
+    <Link className={cn("font-medium underline underline-offset-4", className)} {...props} />
   ),
   LinkedCard: ({ className, ...props }: React.ComponentProps<typeof Link>) => (
     <Link
@@ -385,4 +321,4 @@ export const mdxComponents = {
     />
   ),
   Kbd,
-}
+};

@@ -1,6 +1,6 @@
+import { ComponentProps } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { ComponentProps } from "react";
 
 export interface AIPillActionButtonProps extends ComponentProps<typeof Button> {}
 

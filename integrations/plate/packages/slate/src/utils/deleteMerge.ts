@@ -1,6 +1,6 @@
-import { Editor as EditorInterface } from 'slate';
+import { Editor as EditorInterface } from "slate";
 
-import type { Editor } from '../interfaces/editor/editor-type';
+import type { Editor } from "../interfaces/editor/editor-type";
 import {
   type LegacyEditorMethods,
   type Path,
@@ -9,20 +9,20 @@ import {
   RangeApi,
   type TLocation,
   type TRange,
-} from '../interfaces/index';
-import type { NodeEntry } from '../interfaces/node-entry';
-import { createPathRef } from '../internal/editor/createPathRef';
-import { createPointRef } from '../internal/editor/createPointRef';
-import { getEndPoint } from '../internal/editor/getEndPoint';
-import { getLeafNode } from '../internal/editor/getLeafNode';
-import { getPointAfter } from '../internal/editor/getPointAfter';
-import { getPointBefore } from '../internal/editor/getPointBefore';
-import { getStartPoint } from '../internal/editor/getStartPoint';
-import { getVoidNode } from '../internal/editor/getVoidNode';
-import { isBlock } from '../internal/editor/isBlock';
-import { nodes } from '../internal/editor/nodes';
-import { withoutNormalizing } from '../internal/editor/withoutNormalizing';
-import { select } from '../internal/transforms/select';
+} from "../interfaces/index";
+import type { NodeEntry } from "../interfaces/node-entry";
+import { createPathRef } from "../internal/editor/createPathRef";
+import { createPointRef } from "../internal/editor/createPointRef";
+import { getEndPoint } from "../internal/editor/getEndPoint";
+import { getLeafNode } from "../internal/editor/getLeafNode";
+import { getPointAfter } from "../internal/editor/getPointAfter";
+import { getPointBefore } from "../internal/editor/getPointBefore";
+import { getStartPoint } from "../internal/editor/getStartPoint";
+import { getVoidNode } from "../internal/editor/getVoidNode";
+import { isBlock } from "../internal/editor/isBlock";
+import { nodes } from "../internal/editor/nodes";
+import { withoutNormalizing } from "../internal/editor/withoutNormalizing";
+import { select } from "../internal/transforms/select";
 
 export const deleteMerge = (
   editor: Editor,
@@ -32,19 +32,14 @@ export const deleteMerge = (
     hanging?: boolean;
     reverse?: boolean;
     test?: any;
-    unit?: 'block' | 'character' | 'line' | 'word';
+    unit?: "block" | "character" | "line" | "word";
     voids?: boolean;
   } = {}
 ): void => {
   const e = editor as Editor & LegacyEditorMethods;
 
   withoutNormalizing(e as any, () => {
-    const {
-      distance = 1,
-      reverse = false,
-      unit = 'character',
-      voids = false,
-    } = options;
+    const { distance = 1, reverse = false, unit = "character", voids = false } = options;
     let { at = e.selection!, hanging = false } = options;
 
     if (!at) {
@@ -54,7 +49,7 @@ export const deleteMerge = (
       at = at.anchor;
     }
     if (PointApi.isPoint(at)) {
-      const furthestVoid = getVoidNode(e as any, { at, mode: 'highest' });
+      const furthestVoid = getVoidNode(e as any, { at, mode: "highest" });
 
       if (!voids && furthestVoid) {
         const [, voidPath] = furthestVoid;
@@ -91,25 +86,16 @@ export const deleteMerge = (
       voids,
       match: (n) => isBlock(e as any, n),
     });
-    const isAcrossBlocks =
-      startBlock && endBlock && !PathApi.equals(startBlock[1], endBlock[1]);
+    const isAcrossBlocks = startBlock && endBlock && !PathApi.equals(startBlock[1], endBlock[1]);
     const isSingleText = PathApi.equals(start.path, end.path);
-    const startVoid = voids
-      ? null
-      : getVoidNode(e as any, { at: start, mode: 'highest' });
-    const endVoid = voids
-      ? null
-      : getVoidNode(e as any, { at: end, mode: 'highest' });
+    const startVoid = voids ? null : getVoidNode(e as any, { at: start, mode: "highest" });
+    const endVoid = voids ? null : getVoidNode(e as any, { at: end, mode: "highest" });
 
     // If the start or end points are inside an inline void, nudge them out.
     if (startVoid) {
       const before = getPointBefore(e as any, start);
 
-      if (
-        before &&
-        startBlock &&
-        PathApi.isAncestor(startBlock[1], before.path)
-      ) {
+      if (before && startBlock && PathApi.isAncestor(startBlock[1], before.path)) {
         start = before;
       }
     }
@@ -136,8 +122,7 @@ export const deleteMerge = (
       }
       if (
         (!voids && e.api.isVoid(node as any)) ||
-        (!PathApi.isCommon(path, start.path) &&
-          !PathApi.isCommon(path, end.path))
+        (!PathApi.isCommon(path, start.path) && !PathApi.isCommon(path, end.path))
       ) {
         matches.push(entry as any);
         lastPath = path;
@@ -154,7 +139,7 @@ export const deleteMerge = (
       const { path } = point;
       const { offset } = start;
       const text = node.text.slice(offset);
-      e.apply({ offset, path, text, type: 'remove_text' });
+      e.apply({ offset, path, text, type: "remove_text" });
     }
 
     for (const pathRef of pathRefs) {
@@ -168,7 +153,7 @@ export const deleteMerge = (
       const { path } = point;
       const offset = isSingleText ? start.offset : 0;
       const text = node.text.slice(offset, end.offset);
-      e.apply({ offset, path, text, type: 'remove_text' });
+      e.apply({ offset, path, text, type: "remove_text" });
     }
     if (!isSingleText && isAcrossBlocks && endRef.current && startRef.current) {
       // DIFF: allow custom mergeNodes

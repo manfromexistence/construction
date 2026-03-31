@@ -3,29 +3,20 @@
  * contributors. See /packages/diff/LICENSE for more information.
  */
 
-import type { Descendant, EditorApi, TElement } from 'platejs';
-
-import type { DiffProps } from './types';
-
-import { transformDiffDescendants } from '../internal/transforms/transformDiffDescendants';
-import { dmp } from '../internal/utils/dmp';
-import { StringCharMapping } from '../internal/utils/string-char-mapping';
+import type { Descendant, EditorApi, TElement } from "platejs";
+import { transformDiffDescendants } from "../internal/transforms/transformDiffDescendants";
+import { dmp } from "../internal/utils/dmp";
+import { StringCharMapping } from "../internal/utils/string-char-mapping";
+import type { DiffProps } from "./types";
 
 export type ComputeDiffOptions = {
-  isInline: EditorApi['isInline'];
+  isInline: EditorApi["isInline"];
   getDeleteProps: (node: Descendant) => any;
   getInsertProps: (node: Descendant) => any;
-  getUpdateProps: (
-    node: Descendant,
-    properties: any,
-    newProperties: any
-  ) => any;
+  getUpdateProps: (node: Descendant, properties: any, newProperties: any) => any;
   ignoreProps?: string[];
   lineBreakChar?: string;
-  elementsAreRelated?: (
-    element: TElement,
-    nextElement: TElement
-  ) => boolean | null;
+  elementsAreRelated?: (element: TElement, nextElement: TElement) => boolean | null;
 };
 
 export const computeDiff = (
@@ -57,10 +48,7 @@ export const computeDiff = (
     stringCharMapping,
     getUpdateProps: (node, properties, newProperties) => {
       // Ignore the update if only ignored props have changed
-      if (
-        ignoreProps &&
-        Object.keys(newProperties).every((key) => ignoreProps.includes(key))
-      )
+      if (ignoreProps && Object.keys(newProperties).every((key) => ignoreProps.includes(key)))
         return {};
 
       return getUpdateProps(node, properties, newProperties);
@@ -72,14 +60,14 @@ export const computeDiff = (
 export const defaultGetInsertProps = (): DiffProps => ({
   diff: true,
   diffOperation: {
-    type: 'insert',
+    type: "insert",
   },
 });
 
 export const defaultGetDeleteProps = (): DiffProps => ({
   diff: true,
   diffOperation: {
-    type: 'delete',
+    type: "delete",
   },
 });
 
@@ -92,6 +80,6 @@ export const defaultGetUpdateProps = (
   diffOperation: {
     newProperties,
     properties,
-    type: 'update',
+    type: "update",
   },
 });

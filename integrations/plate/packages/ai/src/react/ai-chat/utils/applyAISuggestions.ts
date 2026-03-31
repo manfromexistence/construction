@@ -1,34 +1,29 @@
-import { deserializeMd } from '@platejs/markdown';
-import { BlockSelectionPlugin } from '@platejs/selection/react';
+import { deserializeMd } from "@platejs/markdown";
+import { BlockSelectionPlugin } from "@platejs/selection/react";
 import {
   diffToSuggestions,
   getTransientSuggestionKey,
   SkipSuggestionDeletes,
-} from '@platejs/suggestion';
+} from "@platejs/suggestion";
 import {
   type Descendant,
-  type SlateEditor,
-  type TElement,
-  type TIdElement,
-  type TSuggestionData,
-  type TSuggestionElement,
   ElementApi,
   KEYS,
   nanoid,
+  type SlateEditor,
+  type TElement,
   TextApi,
-} from 'platejs';
+  type TIdElement,
+  type TSuggestionData,
+  type TSuggestionElement,
+} from "platejs";
 
-import { AIChatPlugin } from '../AIChatPlugin';
-import {
-  getTableCellChildren as withoutTable,
-  isSingleCellTable,
-} from './nestedContainerUtils';
+import { AIChatPlugin } from "../AIChatPlugin";
+import { isSingleCellTable, getTableCellChildren as withoutTable } from "./nestedContainerUtils";
 
 export const applyAISuggestions = (editor: SlateEditor, content: string) => {
   /** Conflict with block selection */
-  editor
-    .getApi({ key: KEYS.cursorOverlay })
-    ?.cursorOverlay?.removeCursor('selection');
+  editor.getApi({ key: KEYS.cursorOverlay })?.cursorOverlay?.removeCursor("selection");
 
   const { chatNodes } = editor.getOptions(AIChatPlugin);
 
@@ -36,10 +31,10 @@ export const applyAISuggestions = (editor: SlateEditor, content: string) => {
   // instead of checking current selection state (which may have changed)
   if (chatNodes.length > 1) {
     const setReplaceIds = (ids: string[]) => {
-      editor.setOption(AIChatPlugin, '_replaceIds', ids);
+      editor.setOption(AIChatPlugin, "_replaceIds", ids);
     };
 
-    if (editor.getOption(AIChatPlugin, '_replaceIds').length === 0) {
+    if (editor.getOption(AIChatPlugin, "_replaceIds").length === 0) {
       setReplaceIds(chatNodes.map((node) => node.id as string));
     }
 
@@ -49,8 +44,7 @@ export const applyAISuggestions = (editor: SlateEditor, content: string) => {
       editor.api.nodes<TIdElement>({
         at: [],
         match: (n: TIdElement) =>
-          ElementApi.isElement(n) &&
-          editor.getOption(AIChatPlugin, '_replaceIds').includes(n.id),
+          ElementApi.isElement(n) && editor.getOption(AIChatPlugin, "_replaceIds").includes(n.id),
       })
     );
 
@@ -59,17 +53,13 @@ export const applyAISuggestions = (editor: SlateEditor, content: string) => {
       const diffNode = diffNodes[index] as unknown as TSuggestionElement;
 
       const isSameString =
-        SkipSuggestionDeletes(editor, replaceNode) ===
-        SkipSuggestionDeletes(editor, diffNode);
+        SkipSuggestionDeletes(editor, replaceNode) === SkipSuggestionDeletes(editor, diffNode);
 
       const isSameSuggestion =
         (replaceNode.suggestion as TSuggestionData | undefined)?.type ===
         (diffNode.suggestion as TSuggestionData | undefined)?.type;
 
-      if (
-        index === replaceNodes.length - 1 &&
-        diffNodes.length > replaceNodes.length
-      ) {
+      if (index === replaceNodes.length - 1 && diffNodes.length > replaceNodes.length) {
         editor.tf.replaceNodes(diffNodes.slice(index), {
           at: path,
         });
@@ -96,7 +86,7 @@ export const applyAISuggestions = (editor: SlateEditor, content: string) => {
     const nodes = Array.from(
       editor.api.nodes({
         at: [],
-        mode: 'lowest',
+        mode: "lowest",
         match: (n) => TextApi.isText(n) && !!n[getTransientSuggestionKey()],
       })
     );
@@ -109,10 +99,7 @@ export const applyAISuggestions = (editor: SlateEditor, content: string) => {
   }
 };
 
-const withProps = (
-  diffNodes: Descendant[],
-  chatNodes: Descendant[]
-): Descendant[] =>
+const withProps = (diffNodes: Descendant[], chatNodes: Descendant[]): Descendant[] =>
   diffNodes.map((node, index) => {
     if (!ElementApi.isElement(node)) return node;
 
@@ -140,9 +127,7 @@ export const withTransient = (diffNodes: Descendant[]): Descendant[] =>
     };
   });
 
-export const withoutSuggestionAndComments = (
-  nodes: Descendant[]
-): Descendant[] =>
+export const withoutSuggestionAndComments = (nodes: Descendant[]): Descendant[] =>
   nodes.map((node) => {
     if (TextApi.isText(node)) {
       if (node[KEYS.suggestion] || node[KEYS.comment]) {
@@ -180,7 +165,7 @@ export const withoutSuggestionAndComments = (
 
 const getDiffNodes = (editor: SlateEditor, aiContent: string) => {
   /** Original document nodes */
-  const rawChatNodes = editor.getOption(AIChatPlugin, 'chatNodes');
+  const rawChatNodes = editor.getOption(AIChatPlugin, "chatNodes");
 
   let chatNodes = withoutSuggestionAndComments(rawChatNodes);
 
@@ -193,7 +178,7 @@ const getDiffNodes = (editor: SlateEditor, aiContent: string) => {
 
   const diffNodes = withTransient(
     diffToSuggestions(editor, chatNodes, aiNodes, {
-      ignoreProps: ['id', 'listStart'],
+      ignoreProps: ["id", "listStart"],
     })
   );
 

@@ -4,11 +4,7 @@
   "type": "registry:example",
   "title": "Lens Demo",
   "description": "Example showing a lens effect component",
-  "registryDependencies": [
-    "button",
-    "card",
-    "@magicui/lens"
-  ],
+  "registryDependencies": ["button", "card", "@magicui/lens"],
   "files": [
     {
       "path": "registry/example/lens-demo.tsx",

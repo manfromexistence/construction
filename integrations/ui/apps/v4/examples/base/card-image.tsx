@@ -1,5 +1,5 @@
-import { Badge } from "@/styles/base-nova/ui/badge"
-import { Button } from "@/styles/base-nova/ui/button"
+import { Badge } from "@/styles/base-nova/ui/badge";
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   Card,
   CardAction,
@@ -7,7 +7,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/styles/base-nova/ui/card"
+} from "@/styles/base-nova/ui/card";
 
 export function CardImage() {
   return (
@@ -24,13 +24,12 @@ export function CardImage() {
         </CardAction>
         <CardTitle>Design systems meetup</CardTitle>
         <CardDescription>
-          A practical talk on component APIs, accessibility, and shipping
-          faster.
+          A practical talk on component APIs, accessibility, and shipping faster.
         </CardDescription>
       </CardHeader>
       <CardFooter>
         <Button className="w-full">View Event</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

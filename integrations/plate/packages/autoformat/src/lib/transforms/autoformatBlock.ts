@@ -1,9 +1,9 @@
-import castArray from 'lodash/castArray.js';
-import { type SlateEditor, type TRange, ElementApi, KEYS } from 'platejs';
+import castArray from "lodash/castArray.js";
+import { ElementApi, KEYS, type SlateEditor, type TRange } from "platejs";
 
-import type { AutoformatBlockRule } from '../types';
+import type { AutoformatBlockRule } from "../types";
 
-import { getMatchRange } from '../utils/getMatchRange';
+import { getMatchRange } from "../utils/getMatchRange";
 
 export interface AutoformatBlockOptions extends AutoformatBlockRule {
   text: string;
@@ -27,17 +27,17 @@ export const autoformatBlock = (
 
   for (const match of matches) {
     const { end, triggers } = getMatchRange({
-      match: { end: match, start: '' },
+      match: { end: match, start: "" },
       trigger,
     });
 
     if (!triggers.includes(text)) continue;
 
     let matchRange: TRange | undefined;
-    let textFromBlockStart = '';
+    let textFromBlockStart = "";
 
     if (triggerAtBlockStart) {
-      matchRange = editor.api.range('start', editor.selection);
+      matchRange = editor.api.range("start", editor.selection);
 
       // Don't autoformat if there is void nodes.
       const hasVoidNode = editor.api.some({
@@ -49,13 +49,11 @@ export const autoformatBlock = (
 
       textFromBlockStart = editor.api.string(matchRange);
 
-      const isMatched = matchByRegex
-        ? !!textFromBlockStart.match(end)
-        : end === textFromBlockStart;
+      const isMatched = matchByRegex ? !!textFromBlockStart.match(end) : end === textFromBlockStart;
 
       if (!isMatched) continue;
     } else {
-      matchRange = editor.api.range('before', editor.selection!, {
+      matchRange = editor.api.range("before", editor.selection!, {
         before: {
           matchByRegex,
           matchString: end,

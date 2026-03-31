@@ -1,20 +1,18 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import type { PlateElementProps } from "platejs/react";
+import { createPlatePlugin, Plate, usePlateEditor } from "platejs/react";
+import * as React from "react";
 
-import type { PlateElementProps } from 'platejs/react';
-
-import { createPlatePlugin, Plate, usePlateEditor } from 'platejs/react';
-
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { EditorKit } from '@/registry/components/editor/editor-kit';
-import { editableVoidsValue } from '@/registry/examples/values/editable-voids-value';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { EditorKit } from "@/registry/components/editor/editor-kit";
+import { editableVoidsValue } from "@/registry/examples/values/editable-voids-value";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 export const EditableVoidPlugin = createPlatePlugin({
-  key: 'editable-void',
+  key: "editable-void",
   node: {
     component: EditableVoidElement,
     isElement: true,
@@ -22,11 +20,8 @@ export const EditableVoidPlugin = createPlatePlugin({
   },
 });
 
-export function EditableVoidElement({
-  attributes,
-  children,
-}: PlateElementProps) {
-  const [inputValue, setInputValue] = React.useState('');
+export function EditableVoidElement({ attributes, children }: PlateElementProps) {
+  const [inputValue, setInputValue] = React.useState("");
 
   const editor = usePlateEditor({
     plugins: EditorKit,
@@ -63,9 +58,7 @@ export function EditableVoidElement({
         </div>
 
         <div className="grid gap-2">
-          <Label htmlFor="editable-void-basic-blocks">
-            Tell us about yourself:
-          </Label>
+          <Label htmlFor="editable-void-basic-blocks">Tell us about yourself:</Label>
 
           <Plate
             editor={editor}

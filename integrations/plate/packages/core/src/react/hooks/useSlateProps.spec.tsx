@@ -1,26 +1,20 @@
-import React from 'react';
+import type { TRange } from "@platejs/slate";
+import { act, renderHook } from "@testing-library/react";
+import React from "react";
 
-import type { TRange } from '@platejs/slate';
+import { TestPlate as Plate } from "../__tests__/TestPlate";
+import { createPlateEditor } from "../editor";
+import { createPlatePlugin } from "../plugin";
+import { useEditorVersion, useSelectionVersion, useValueVersion } from "../stores";
+import { useSlateProps } from "./useSlateProps";
 
-import { act, renderHook } from '@testing-library/react';
-
-import { TestPlate as Plate } from '../__tests__/TestPlate';
-import { createPlateEditor } from '../editor';
-import { createPlatePlugin } from '../plugin';
-import {
-  useEditorVersion,
-  useSelectionVersion,
-  useValueVersion,
-} from '../stores';
-import { useSlateProps } from './useSlateProps';
-
-describe('useSlateProps', () => {
-  it('routes slate callbacks through the matching plate callbacks and versions', () => {
+describe("useSlateProps", () => {
+  it("routes slate callbacks through the matching plate callbacks and versions", () => {
     const onChange = mock();
     const onSelectionChange = mock();
     const onValueChange = mock();
     const editor = createPlateEditor({
-      value: [{ children: [{ text: 'one' }], type: 'p' }],
+      value: [{ children: [{ text: "one" }], type: "p" }],
     });
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <Plate
@@ -41,7 +35,7 @@ describe('useSlateProps', () => {
       }),
       { wrapper }
     );
-    const nextValue = [{ children: [{ text: 'two' }], type: 'p' }];
+    const nextValue = [{ children: [{ text: "two" }], type: "p" }];
     const nextSelection: TRange = {
       anchor: { offset: 1, path: [0, 0] },
       focus: { offset: 1, path: [0, 0] },
@@ -86,17 +80,17 @@ describe('useSlateProps', () => {
     });
   });
 
-  it('increments the editor version without forwarding handled changes', () => {
+  it("increments the editor version without forwarding handled changes", () => {
     const handledChange = mock(() => true);
     const onChange = mock();
     const editor = createPlateEditor({
       plugins: [
         createPlatePlugin({
           handlers: { onChange: handledChange },
-          key: 'handled',
+          key: "handled",
         }),
       ],
-      value: [{ children: [{ text: 'one' }], type: 'p' }],
+      value: [{ children: [{ text: "one" }], type: "p" }],
     });
     const wrapper = ({ children }: { children: React.ReactNode }) => (
       <Plate editor={editor} onChange={onChange}>
@@ -115,9 +109,7 @@ describe('useSlateProps', () => {
     onChange.mockClear();
 
     act(() => {
-      result.current.props.onChange([
-        { children: [{ text: 'two' }], type: 'p' },
-      ] as any);
+      result.current.props.onChange([{ children: [{ text: "two" }], type: "p" }] as any);
     });
 
     expect(result.current.editorVersion).toBe(2);

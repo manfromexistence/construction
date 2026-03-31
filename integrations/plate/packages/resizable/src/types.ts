@@ -1,4 +1,4 @@
-export type ResizeDirection = 'bottom' | 'left' | 'right' | 'top';
+export type ResizeDirection = "bottom" | "left" | "right" | "top";
 
 export type ResizeEvent = {
   delta: ResizeLengthStatic;

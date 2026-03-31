@@ -5,9 +5,7 @@ interface Config {
   selected: Mail["id"] | null;
 }
 
-const useMailStore = create<
-  Config & { setState: (newState: Partial<Config>) => void }
->((set) => ({
+const useMailStore = create<Config & { setState: (newState: Partial<Config>) => void }>((set) => ({
   selected: mails[0].id,
   setState: (newState) => set((state) => ({ ...state, ...newState })),
 }));

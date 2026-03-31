@@ -1,14 +1,14 @@
-import type { AutoformatRule } from '../types';
+import type { AutoformatRule } from "../types";
 
 export const autoformatSmartQuotes: AutoformatRule[] = [
   {
-    format: ['“', '”'],
+    format: ["“", "”"],
     match: '"',
-    mode: 'text',
+    mode: "text",
   },
   {
-    format: ['‘', '’'],
+    format: ["‘", "’"],
     match: "'",
-    mode: 'text',
+    mode: "text",
   },
 ];

@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { ExternalLink } from "lucide-react"
+import { ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 export function DealBanner() {
   return (
@@ -26,5 +26,5 @@ export function DealBanner() {
       </div>
       <hr className="absolute bottom-0 m-0 h-px w-full bg-neutral-200/30" />
     </div>
-  )
+  );
 }

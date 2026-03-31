@@ -14,9 +14,9 @@ import {
   ToggleLeftIcon,
   VibrateIcon,
   ZapIcon,
-} from "lucide-react"
+} from "lucide-react";
 
-type IconProps = React.HTMLAttributes<SVGElement>
+type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
   // Source: https://simpleicons.org
@@ -131,10 +131,7 @@ export const Icons = {
   ),
   accenture: (props: IconProps) => (
     <svg viewBox="0 0 24 24" aria-hidden {...props}>
-      <path
-        d="m3 16.125 11.093-4.105L3 7.71V2l19 7.61v4.735L3 22v-5.875Z"
-        fill="currentColor"
-      />
+      <path d="m3 16.125 11.093-4.105L3 7.71V2l19 7.61v4.735L3 22v-5.875Z" fill="currentColor" />
     </svg>
   ),
   coursera: (props: IconProps) => (
@@ -321,13 +318,7 @@ export const Icons = {
 
   // Source: hugeicons.com
   smartPhone: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M13.5 2H10.5C8.14298 2 6.96447 2 6.23223 2.73223C5.5 3.46447 5.5 4.64298 5.5 7V17C5.5 19.357 5.5 20.5355 6.23223 21.2678C6.96447 22 8.14298 22 10.5 22H13.5C15.857 22 17.0355 22 17.7678 21.2678C18.5 20.5355 18.5 19.357 18.5 17V7C18.5 4.64298 18.5 3.46447 17.7678 2.73223C17.0355 2 15.857 2 13.5 2Z"
         stroke="currentColor"
@@ -345,35 +336,18 @@ export const Icons = {
     </svg>
   ),
   tablet: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M14.5 2H9.5C6.67157 2 5.25736 2 4.37868 2.87868C3.5 3.75736 3.5 5.17157 3.5 8V16C3.5 18.8284 3.5 20.2426 4.37868 21.1213C5.25736 22 6.67157 22 9.5 22H14.5C17.3284 22 18.7426 22 19.6213 21.1213C20.5 20.2426 20.5 18.8284 20.5 16V8C20.5 5.17157 20.5 3.75736 19.6213 2.87868C18.7426 2 17.3284 2 14.5 2Z"
         stroke="currentColor"
         strokeWidth="1.5"
         strokeLinecap="round"
       />
-      <path
-        d="M12 19H12.01"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <path d="M12 19H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
     </svg>
   ),
   desktop: (props: IconProps) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M14 21H16M14 21C13.1716 21 12.5 20.3284 12.5 19.5V17L12 17M14 21H10M10 21H8M10 21C10.8284 21 11.5 20.3284 11.5 19.5V17L12 17M12 17V21"
         stroke="currentColor"
@@ -391,13 +365,7 @@ export const Icons = {
     </svg>
   ),
   fullScreen: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M15.5 21C16.8956 21 17.5933 21 18.1611 20.8278C19.4395 20.44 20.44 19.4395 20.8278 18.1611C21 17.5933 21 16.8956 21 15.5M21 8.5C21 7.10444 21 6.40666 20.8278 5.83886C20.44 4.56046 19.4395 3.56004 18.1611 3.17224C17.5933 3 16.8956 3 15.5 3M8.5 21C7.10444 21 6.40666 21 5.83886 20.8278C4.56046 20.44 3.56004 19.4395 3.17224 18.1611C3 17.5933 3 16.8956 3 15.5M3 8.5C3 7.10444 3 6.40666 3.17224 5.83886C3.56004 4.56046 4.56046 3.56004 5.83886 3.17224C6.40666 3 7.10444 3 8.5 3"
         stroke="currentColor"
@@ -408,13 +376,7 @@ export const Icons = {
     </svg>
   ),
   refresh: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M20.4879 15C19.2524 18.4956 15.9187 21 12 21C7.02943 21 3 16.9706 3 12C3 7.02943 7.02943 3 12 3C15.7292 3 18.9286 5.26806 20.2941 8.5"
         stroke="currentColor"
@@ -432,13 +394,7 @@ export const Icons = {
     </svg>
   ),
   folder: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M8 7H16.75C18.8567 7 19.91 7 20.6667 7.50559C20.9943 7.72447 21.2755 8.00572 21.4944 8.33329C22 9.08996 22 10.1433 22 12.25C22 15.7612 22 17.5167 21.1573 18.7779C20.7926 19.3238 20.3238 19.7926 19.7779 20.1573C18.5167 21 16.7612 21 13.25 21H12C7.28595 21 4.92893 21 3.46447 19.5355C2 18.0711 2 15.714 2 11V7.94427C2 6.1278 2 5.21956 2.38032 4.53806C2.65142 4.05227 3.05227 3.65142 3.53806 3.38032C4.21956 3 5.1278 3 6.94427 3C8.10802 3 8.6899 3 9.19926 3.19101C10.3622 3.62712 10.8418 4.68358 11.3666 5.73313L12 7"
         stroke="currentColor"
@@ -448,13 +404,7 @@ export const Icons = {
     </svg>
   ),
   folderOpen: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M2 19V7.54902C2 6.10516 2 5.38322 2.24332 4.81647C2.5467 4.10985 3.10985 3.5467 3.81647 3.24332C4.38322 3 5.09805 3 6.54902 3H7.04311C7.64819 3 8.22075 3.27394 8.60041 3.74509L10.4175 6M10.4175 6H16C17.4001 6 18.1002 6 18.635 6.27248C19.1054 6.51217 19.4878 6.89462 19.7275 7.36502C20 7.8998 20 8.59987 20 10V11M10.4175 6H7"
         stroke="currentColor"
@@ -471,13 +421,7 @@ export const Icons = {
     </svg>
   ),
   terminal: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M3.29301 4.29301C3.68354 3.90249 4.31655 3.90249 4.70708 4.29301L10.7071 10.293C11.0976 10.6835 11.0976 11.3166 10.7071 11.7071L4.70708 17.7071C4.31655 18.0976 3.68353 18.0976 3.29301 17.7071C2.90252 17.3166 2.90252 16.6835 3.29301 16.293L8.58598 11L3.29301 5.70708C2.90249 5.31655 2.90249 4.68354 3.29301 4.29301Z"
         fill="currentColor"
@@ -489,13 +433,7 @@ export const Icons = {
     </svg>
   ),
   gridView: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M3.88884 9.66294C4.39329 10 5.09552 10 6.49998 10C7.90445 10 8.60668 10 9.11113 9.66294C9.32951 9.51702 9.51701 9.32952 9.66292 9.11114C9.99998 8.60669 9.99998 7.90446 9.99998 6.5C9.99998 5.09554 9.99998 4.39331 9.66292 3.88886C9.51701 3.67048 9.32951 3.48298 9.11113 3.33706C8.60668 3 7.90445 3 6.49998 3C5.09552 3 4.39329 3 3.88884 3.33706C3.67046 3.48298 3.48296 3.67048 3.33705 3.88886C2.99998 4.39331 2.99998 5.09554 2.99998 6.5C2.99998 7.90446 2.99998 8.60669 3.33705 9.11114C3.48296 9.32952 3.67046 9.51702 3.88884 9.66294Z"
         stroke="currentColor"
@@ -523,13 +461,7 @@ export const Icons = {
     </svg>
   ),
   news: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M18 15V9C18 6.17157 18 4.75736 17.1213 3.87868C16.2426 3 14.8284 3 12 3H8C5.17157 3 3.75736 3 2.87868 3.87868C2 4.75736 2 6.17157 2 9V15C2 17.8284 2 19.2426 2.87868 20.1213C3.75736 21 5.17157 21 8 21H20"
         stroke="currentColor"
@@ -568,13 +500,7 @@ export const Icons = {
     </svg>
   ),
   favourite: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M10.4107 19.9677C7.58942 17.858 2 13.0348 2 8.69444C2 5.82563 4.10526 3.5 7 3.5C8.5 3.5 10 4 12 6C14 4 15.5 3.5 17 3.5C19.8947 3.5 22 5.82563 22 8.69444C22 13.0348 16.4106 17.858 13.5893 19.9677C12.6399 20.6776 11.3601 20.6776 10.4107 19.9677Z"
         stroke="currentColor"
@@ -585,13 +511,7 @@ export const Icons = {
     </svg>
   ),
   bookHeart: (props: React.SVGProps<SVGSVGElement>) => (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      fill="none"
-      aria-hidden
-      {...props}
-    >
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <path
         d="M20 22H6C4.89543 22 4 21.1046 4 20M4 20C4 18.8954 4.89543 18 6 18H20V6C20 4.11438 20 3.17157 19.4142 2.58579C18.8284 2 17.8856 2 16 2H10C7.17157 2 5.75736 2 4.87868 2.87868C4 3.75736 4 5.17157 4 8V20Z"
         stroke="currentColor"
@@ -615,114 +535,104 @@ export const Icons = {
       />
     </svg>
   ),
-}
+};
 
 export function getIconForLanguageExtension(language: string) {
   switch (language) {
     case "json":
-      return <Icons.json />
+      return <Icons.json />;
     case "css":
-      return <Icons.css />
+      return <Icons.css />;
     case "js":
-      return <Icons.js />
+      return <Icons.js />;
     case "ts":
     case "typescript":
-      return <Icons.ts />
+      return <Icons.ts />;
     case "jsx":
     case "tsx":
-      return <Icons.react />
+      return <Icons.react />;
     default:
-      return <FileIcon />
+      return <FileIcon />;
   }
 }
 
 export function getIconForPackageManager(manager: string) {
   switch (manager) {
     case "pnpm":
-      return <Icons.pnpm />
+      return <Icons.pnpm />;
     case "yarn":
-      return <Icons.yarn />
+      return <Icons.yarn />;
     case "npm":
-      return <Icons.npm />
+      return <Icons.npm />;
     case "bun":
-      return <Icons.bun />
+      return <Icons.bun />;
     default:
-      return <TerminalSquareIcon />
+      return <TerminalSquareIcon />;
   }
 }
 
 export function getIcon(name: string | undefined) {
-  if (!name || !(name in Icons)) return null
-  const Icon = Icons[name as keyof typeof Icons]
-  return <Icon />
+  if (!name || !(name in Icons)) return null;
+  const Icon = Icons[name as keyof typeof Icons];
+  return <Icon />;
 }
 
 type ComponentIconProps = React.ComponentProps<"svg"> & {
-  variant?: string
-}
+  variant?: string;
+};
 
 export function ComponentIcon({ variant, ...props }: ComponentIconProps) {
   switch (variant) {
     case "work-experience-component": {
-      return <BriefcaseBusinessIcon {...props} />
+      return <BriefcaseBusinessIcon {...props} />;
     }
 
     case "react-wheel-picker": {
       return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 256 256"
-          aria-hidden
-          {...props}
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" aria-hidden {...props}>
           <path
             d="M144,16H112A64.07,64.07,0,0,0,48,80v96a64.07,64.07,0,0,0,64,64h32a64.07,64.07,0,0,0,64-64V80A64.07,64.07,0,0,0,144,16Zm2.34,146.34a8,8,0,0,1,11.32,11.32l-24,24a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L120,172.69V83.31L109.66,93.66A8,8,0,0,1,98.34,82.34l24-24a8,8,0,0,1,11.32,0l24,24a8,8,0,0,1-11.32,11.32L136,83.31v89.38Z"
             fill="currentColor"
           />
         </svg>
-      )
+      );
     }
 
     case "theme-switcher": {
-      return <MoonStarIcon {...props} />
+      return <MoonStarIcon {...props} />;
     }
 
     case "apple-hello-effect": {
-      return <Icons.apple {...props} />
+      return <Icons.apple {...props} />;
     }
 
     case "shimmering-text": {
-      return <ZapIcon {...props} />
+      return <ZapIcon {...props} />;
     }
 
     case "slide-to-unlock": {
-      return <ToggleLeftIcon {...props} />
+      return <ToggleLeftIcon {...props} />;
     }
 
     case "testimonial": {
-      return <QuoteIcon {...props} />
+      return <QuoteIcon {...props} />;
     }
 
     case "testimonials-marquee": {
-      return <GalleryHorizontalEndIcon {...props} />
+      return <GalleryHorizontalEndIcon {...props} />;
     }
 
     case "github-stars": {
-      return <Icons.github {...props} />
+      return <Icons.github {...props} />;
     }
 
     case "scroll-fade-effect": {
-      return <MouseIcon {...props} />
+      return <MouseIcon {...props} />;
     }
 
     case "consent-manager": {
       return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          aria-hidden
-          {...props}
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden {...props}>
           <path
             d="M12 2.182a1.636 1.636 0 1 0 0 3.273 1.636 1.636 0 0 0 0-3.273ZM8.182 3.818a3.818 3.818 0 1 1 2.002 3.36l-3.006 3.006c.125.23.226.474.3.725h9.044A3.82 3.82 0 0 1 24 12a3.818 3.818 0 0 1-7.478 1.092H7.478c-.098.33-.241.647-.425.939l2.917 2.917a3.818 3.818 0 1 1-1.442 1.644L5.41 15.47a3.818 3.818 0 1 1 .225-6.831l3.007-3.005a3.801 3.801 0 0 1-.46-1.817ZM18.546 12v.004a1.636 1.636 0 1 0 0-.008V12ZM3.818 10.364a1.636 1.636 0 1 0 0 3.272 1.636 1.636 0 0 0 0-3.272Zm6.546 9.818a1.636 1.636 0 1 1 3.272 0 1.636 1.636 0 0 1-3.272 0Z"
             fill="currentColor"
@@ -730,35 +640,35 @@ export function ComponentIcon({ variant, ...props }: ComponentIconProps) {
             clipRule="evenodd"
           />
         </svg>
-      )
+      );
     }
 
     case "copy-button": {
-      return <CopyIcon {...props} />
+      return <CopyIcon {...props} />;
     }
 
     case "code-block-command": {
-      return <SquareTerminalIcon {...props} />
+      return <SquareTerminalIcon {...props} />;
     }
 
     case "text-flip": {
-      return <SeparatorHorizontalIcon {...props} />
+      return <SeparatorHorizontalIcon {...props} />;
     }
 
     case "haptic": {
-      return <VibrateIcon {...props} />
+      return <VibrateIcon {...props} />;
     }
 
     case "testimonial-spotlight": {
-      return <SpotlightIcon {...props} />
+      return <SpotlightIcon {...props} />;
     }
 
     case "glow-card-grid": {
-      return <LayoutGridIcon {...props} />
+      return <LayoutGridIcon {...props} />;
     }
 
     default: {
-      return <Icons.react {...props} />
+      return <Icons.react {...props} />;
     }
   }
 }

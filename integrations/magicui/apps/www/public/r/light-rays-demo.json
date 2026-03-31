@@ -3,9 +3,7 @@
   "name": "light-rays-demo",
   "type": "registry:example",
   "description": "Demo of the light-rays component showcasing animated light rays",
-  "registryDependencies": [
-    "@magicui/light-rays"
-  ],
+  "registryDependencies": ["@magicui/light-rays"],
   "files": [
     {
       "path": "registry/example/light-rays-demo.tsx",

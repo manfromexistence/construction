@@ -1,9 +1,9 @@
-import { useState, useRef, useCallback } from "react";
+import { useCallback, useRef, useState } from "react";
 import {
-  InspectorState,
   areInspectorStatesEqual,
   createInspectorState,
   getEmptyInspectorState,
+  InspectorState,
 } from "../../lib/inspector/inspector-state-utils";
 
 export const useInspectorState = () => {

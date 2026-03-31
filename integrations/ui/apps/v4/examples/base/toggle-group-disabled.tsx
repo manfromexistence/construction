@@ -1,9 +1,6 @@
-import { Bold, Italic, Underline } from "lucide-react"
+import { Bold, Italic, Underline } from "lucide-react";
 
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/base-nova/ui/toggle-group"
+import { ToggleGroup, ToggleGroupItem } from "@/styles/base-nova/ui/toggle-group";
 
 export function ToggleGroupDisabled() {
   return (
@@ -18,5 +15,5 @@ export function ToggleGroupDisabled() {
         <Underline />
       </ToggleGroupItem>
     </ToggleGroup>
-  )
+  );
 }

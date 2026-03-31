@@ -1,19 +1,14 @@
-import React from 'react';
+import type { TRange, UnknownObject } from "platejs";
+import { useEditorRef, useIsomorphicLayoutEffect } from "platejs/react";
+import React from "react";
 
-import type { TRange, UnknownObject } from 'platejs';
+import type { CursorOverlayProps } from "../components/CursorOverlay";
+import { getCursorOverlayState } from "../queries/getCursorOverlayState";
+import { getSelectionRects } from "../queries/getSelectionRects";
+import type { CursorState, SelectionRect } from "../types";
+import { useRefreshOnResize } from "./useRefreshOnResize";
 
-import { useEditorRef, useIsomorphicLayoutEffect } from 'platejs/react';
-
-import type { CursorOverlayProps } from '../components/CursorOverlay';
-import type { CursorState, SelectionRect } from '../types';
-
-import { getCursorOverlayState } from '../queries/getCursorOverlayState';
-import { getSelectionRects } from '../queries/getSelectionRects';
-import { useRefreshOnResize } from './useRefreshOnResize';
-
-export const FROZEN_EMPTY_ARRAY = Object.freeze(
-  []
-) as unknown as SelectionRect[];
+export const FROZEN_EMPTY_ARRAY = Object.freeze([]) as unknown as SelectionRect[];
 
 export const useCursorOverlayPositions = <TCursorData extends UnknownObject>({
   containerRef,
@@ -22,13 +17,9 @@ export const useCursorOverlayPositions = <TCursorData extends UnknownObject>({
 }: CursorOverlayProps<TCursorData> = {}) => {
   const editor = useEditorRef();
 
-  const selectionRectCache = React.useRef<WeakMap<TRange, SelectionRect[]>>(
-    new WeakMap()
-  );
+  const selectionRectCache = React.useRef<WeakMap<TRange, SelectionRect[]>>(new WeakMap());
 
-  const [selectionRects, setSelectionRects] = React.useState<
-    Record<string, SelectionRect[]>
-  >({});
+  const [selectionRects, setSelectionRects] = React.useState<Record<string, SelectionRect[]>>({});
 
   const updateSelectionRects = React.useCallback(() => {
     // We have a container ref but the ref is null => container
@@ -49,11 +40,7 @@ export const useCursorOverlayPositions = <TCursorData extends UnknownObject>({
     let selectionRectsChanged =
       Object.keys(selectionRects).length !== Object.keys(cursorStates).length;
 
-    const getCachedSelectionRects = ({
-      cursor,
-    }: {
-      cursor: CursorState<TCursorData>;
-    }) => {
+    const getCachedSelectionRects = ({ cursor }: { cursor: CursorState<TCursorData> }) => {
       const range = cursor.selection;
 
       if (!range) {

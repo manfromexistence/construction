@@ -1,48 +1,45 @@
-import { Metadata } from "next"
-import { notFound } from "next/navigation"
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { ShowcaseCard } from "@/components/sections/showcase";
+import { showcaseSource } from "@/lib/source";
+import { absoluteUrl } from "@/lib/utils";
 
-import { showcaseSource } from "@/lib/source"
-import { absoluteUrl } from "@/lib/utils"
-import { ShowcaseCard } from "@/components/sections/showcase"
-
-export const revalidate = false
-export const dynamic = "force-static"
-export const dynamicParams = false
+export const revalidate = false;
+export const dynamic = "force-static";
+export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return showcaseSource.generateParams()
+  return showcaseSource.generateParams();
 }
 
 interface PageProps {
   params: Promise<{
-    slug: string[]
-  }>
+    slug: string[];
+  }>;
 }
 
 async function getDocFromParams({ params }: PageProps) {
-  const { slug } = await params
-  const page = showcaseSource.getPage(slug)
-  if (!page) notFound()
-  const doc = page.data
+  const { slug } = await params;
+  const page = showcaseSource.getPage(slug);
+  if (!page) notFound();
+  const doc = page.data;
   if (!doc.title || !doc.description) {
-    notFound()
+    notFound();
   }
 
-  return { doc, page }
+  return { doc, page };
 }
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { doc, page } = await getDocFromParams({ params })
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { doc, page } = await getDocFromParams({ params });
 
   if (!page) {
-    return {}
+    return {};
   }
 
-  const ogUrl = new URL(absoluteUrl("/og"))
-  ogUrl.searchParams.set("title", doc.title ?? "")
-  ogUrl.searchParams.set("description", doc.description ?? "")
+  const ogUrl = new URL(absoluteUrl("/og"));
+  ogUrl.searchParams.set("title", doc.title ?? "");
+  ogUrl.searchParams.set("description", doc.description ?? "");
 
   return {
     title: doc.title,
@@ -66,11 +63,11 @@ export async function generateMetadata({
       description: doc.description,
       images: [ogUrl.toString()],
     },
-  }
+  };
 }
 
 export default async function PagePage({ params }: PageProps) {
-  const { doc, page } = await getDocFromParams({ params })
+  const { doc, page } = await getDocFromParams({ params });
 
   return (
     <article className="container max-w-2xl py-14">
@@ -87,5 +84,5 @@ export default async function PagePage({ params }: PageProps) {
         affiliation={doc.affiliation ?? ""}
       />
     </article>
-  )
+  );
 }

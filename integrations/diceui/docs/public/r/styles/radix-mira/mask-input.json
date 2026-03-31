@@ -1,8 +1,6 @@
 {
   "name": "mask-input",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "ui/mask-input.tsx",

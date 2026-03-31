@@ -1,4 +1,4 @@
-import { Path as SlatePath } from 'slate';
+import { Path as SlatePath } from "slate";
 
 import type {
   InsertNodeOperation,
@@ -7,9 +7,9 @@ import type {
   Operation,
   RemoveNodeOperation,
   SplitNodeOperation,
-} from '../interfaces/operation';
-import type { TextDirection } from '../types';
-import type { Descendant } from './node';
+} from "../interfaces/operation";
+import type { TextDirection } from "../types";
+import type { Descendant } from "./node";
 
 /**
  * `Path` arrays are a list of indexes that describe a node's exact position in
@@ -104,11 +104,7 @@ export const PathApi: {
   /** Get a path relative to an ancestor. */
   relative: (path: Path, ancestor: Path) => Path;
   /** Transform a path by an operation. */
-  transform: (
-    path: Path,
-    operation: Operation,
-    options?: PathTransformOptions
-  ) => Path | null;
+  transform: (path: Path, operation: Operation, options?: PathTransformOptions) => Path | null;
 } = {
   ...(SlatePath as any),
   child: (path, index) => path.concat([index]),

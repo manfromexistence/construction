@@ -1,1 +1,1 @@
-export * from '@platejs/core/static';
+export * from "@platejs/core/static";

@@ -7,15 +7,12 @@ import {
   PathApi,
   PointApi,
   RangeApi,
-} from '../../interfaces';
-import { getAt } from '../../utils';
+} from "../../interfaces";
+import { getAt } from "../../utils";
 
 const THAI_SCRIPT_REGEX = /[\u0E00-\u0E7F]+/;
 
-export const deleteText = <E extends Editor>(
-  editor: E,
-  options: DeleteTextOptions = {}
-) => {
+export const deleteText = <E extends Editor>(editor: E, options: DeleteTextOptions = {}) => {
   // deleteTextBase(editor as any, {
   //   ...options,
   //   at: getAt(editor, options?.at),
@@ -24,12 +21,7 @@ export const deleteText = <E extends Editor>(
   let at: any = getAt(editor, options?.at) ?? editor.selection;
 
   editor.tf.withoutNormalizing(() => {
-    const {
-      distance = 1,
-      reverse = false,
-      unit = 'character',
-      voids = false,
-    } = options;
+    const { distance = 1, reverse = false, unit = "character", voids = false } = options;
     let { hanging = false } = options;
 
     if (!at) {
@@ -43,7 +35,7 @@ export const deleteText = <E extends Editor>(
     }
 
     if (PointApi.isPoint(at)) {
-      const furthestVoid = editor.api.void({ at, mode: 'highest' });
+      const furthestVoid = editor.api.void({ at, mode: "highest" });
 
       if (!voids && furthestVoid) {
         const [, voidPath] = furthestVoid;
@@ -87,27 +79,22 @@ export const deleteText = <E extends Editor>(
       voids,
       match: (n) => ElementApi.isElement(n) && editor.api.isBlock(n),
     });
-    const isAcrossBlocks =
-      startBlock && endBlock && !PathApi.equals(startBlock[1], endBlock[1]);
+    const isAcrossBlocks = startBlock && endBlock && !PathApi.equals(startBlock[1], endBlock[1]);
     const isSingleText = PathApi.equals(start.path, end.path);
     const startNonEditable = voids
       ? null
-      : (editor.api.void({ at: start, mode: 'highest' }) ??
-        editor.api.elementReadOnly({ at: start, mode: 'highest' }));
+      : (editor.api.void({ at: start, mode: "highest" }) ??
+        editor.api.elementReadOnly({ at: start, mode: "highest" }));
     const endNonEditable = voids
       ? null
-      : (editor.api.void({ at: end, mode: 'highest' }) ??
-        editor.api.elementReadOnly({ at: end, mode: 'highest' }));
+      : (editor.api.void({ at: end, mode: "highest" }) ??
+        editor.api.elementReadOnly({ at: end, mode: "highest" }));
 
     // If the start or end points are inside an inline void, nudge them out.
     if (startNonEditable) {
       const before = editor.api.before(start);
 
-      if (
-        before &&
-        startBlock &&
-        PathApi.isAncestor(startBlock[1], before.path)
-      ) {
+      if (before && startBlock && PathApi.isAncestor(startBlock[1], before.path)) {
         start = before;
       }
     }
@@ -138,8 +125,7 @@ export const deleteText = <E extends Editor>(
           // !PATCH: DO NOT remove void blocks
           // (editor.api.isVoid(node) ||
           editor.api.isElementReadOnly(node)) ||
-        (!PathApi.isCommon(path, start.path) &&
-          !PathApi.isCommon(path, end.path))
+        (!PathApi.isCommon(path, start.path) && !PathApi.isCommon(path, end.path))
       ) {
         matches.push(entry);
         lastPath = path;
@@ -150,7 +136,7 @@ export const deleteText = <E extends Editor>(
     const startRef = editor.api.pointRef(start);
     const endRef = editor.api.pointRef(end);
 
-    let removedText = '';
+    let removedText = "";
 
     if (!isSingleText && !startNonEditable) {
       const point = startRef.current!;
@@ -159,7 +145,7 @@ export const deleteText = <E extends Editor>(
       const { offset } = start;
       const text = node.text.slice(offset);
       if (text.length > 0) {
-        editor.tf.apply({ offset, path, text, type: 'remove_text' });
+        editor.tf.apply({ offset, path, text, type: "remove_text" });
         removedText = text;
       }
     }
@@ -180,7 +166,7 @@ export const deleteText = <E extends Editor>(
       const offset = isSingleText ? start.offset : 0;
       const text = node.text.slice(offset, end.offset);
       if (text.length > 0) {
-        editor.tf.apply({ offset, path, text, type: 'remove_text' });
+        editor.tf.apply({ offset, path, text, type: "remove_text" });
         removedText = text;
       }
     }
@@ -200,7 +186,7 @@ export const deleteText = <E extends Editor>(
     if (
       isCollapsed &&
       reverse &&
-      unit === 'character' &&
+      unit === "character" &&
       removedText.length > 1 &&
       THAI_SCRIPT_REGEX.exec(removedText)
     ) {

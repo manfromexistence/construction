@@ -1,20 +1,14 @@
-export const isSlateVoid = (element: HTMLElement) =>
-  element.dataset.slateVoid === 'true';
+export const isSlateVoid = (element: HTMLElement) => element.dataset.slateVoid === "true";
 
-export const isSlateElement = (element: HTMLElement) =>
-  element.dataset.slateNode === 'element';
+export const isSlateElement = (element: HTMLElement) => element.dataset.slateNode === "element";
 
-export const isSlateText = (element: HTMLElement) =>
-  element.dataset.slateNode === 'text';
+export const isSlateText = (element: HTMLElement) => element.dataset.slateNode === "text";
 
-export const isSlateString = (element: HTMLElement) =>
-  element.dataset.slateString === 'true';
+export const isSlateString = (element: HTMLElement) => element.dataset.slateString === "true";
 
-export const isSlateLeaf = (element: HTMLElement) =>
-  element.dataset.slateLeaf === 'true';
+export const isSlateLeaf = (element: HTMLElement) => element.dataset.slateLeaf === "true";
 
-export const isSlateEditor = (element: HTMLElement) =>
-  element.dataset.slateEditor === 'true';
+export const isSlateEditor = (element: HTMLElement) => element.dataset.slateEditor === "true";
 
 export const isSlateNode = (element: HTMLElement) =>
   isSlateLeaf(element) ||
@@ -24,8 +18,7 @@ export const isSlateNode = (element: HTMLElement) =>
   isSlateText(element);
 
 export const isSlatePluginElement = (element: HTMLElement, pluginKey: string) =>
-  element.dataset.slateNode === 'element' &&
-  element.classList.contains(`slate-${pluginKey}`);
+  element.dataset.slateNode === "element" && element.classList.contains(`slate-${pluginKey}`);
 
 export const isSlatePluginNode = (element: HTMLElement, pluginKey: string) =>
   element.classList.contains(`slate-${pluginKey}`);

@@ -1,22 +1,22 @@
-import { afterEach, describe, expect, test, vi } from "vitest"
+import { afterEach, describe, expect, test, vi } from "vitest";
 
-import type { Config } from "../../src/utils/get-config"
+import type { Config } from "../../src/utils/get-config";
 
 // Mock all external dependencies.
 vi.mock("../../src/registry/resolver", () => ({
   resolveRegistryTree: vi.fn(),
-}))
+}));
 
 vi.mock("../../src/utils/get-config", async () => {
   const actual = (await vi.importActual(
     "../../src/utils/get-config"
-  )) as typeof import("../../src/utils/get-config")
+  )) as typeof import("../../src/utils/get-config");
   return {
     ...actual,
     getWorkspaceConfig: vi.fn(),
     findPackageRoot: vi.fn(),
-  }
-})
+  };
+});
 
 vi.mock("../../src/utils/updaters/update-files", () => ({
   updateFiles: vi.fn().mockResolvedValue({
@@ -24,32 +24,32 @@ vi.mock("../../src/utils/updaters/update-files", () => ({
     filesUpdated: [],
     filesSkipped: [],
   }),
-}))
+}));
 
 vi.mock("../../src/utils/updaters/update-dependencies", () => ({
   updateDependencies: vi.fn().mockResolvedValue(undefined),
-}))
+}));
 
 vi.mock("../../src/utils/updaters/update-tailwind-config", () => ({
   updateTailwindConfig: vi.fn().mockResolvedValue(undefined),
-}))
+}));
 
 vi.mock("../../src/utils/updaters/update-env-vars", () => ({
   updateEnvVars: vi.fn().mockResolvedValue(undefined),
-}))
+}));
 
 vi.mock("../../src/utils/updaters/update-fonts", () => ({
   updateFonts: vi.fn().mockResolvedValue(undefined),
   massageTreeForFonts: vi.fn().mockImplementation((tree) => tree),
-}))
+}));
 
 vi.mock("../../src/utils/updaters/update-css", () => ({
   updateCss: vi.fn().mockResolvedValue(undefined),
-}))
+}));
 
 vi.mock("../../src/utils/get-project-info", () => ({
   getProjectTailwindVersionFromConfig: vi.fn().mockResolvedValue("4"),
-}))
+}));
 
 vi.mock("../../src/utils/spinner", () => ({
   spinner: vi.fn().mockReturnValue({
@@ -58,7 +58,7 @@ vi.mock("../../src/utils/spinner", () => ({
     fail: vi.fn().mockReturnThis(),
     info: vi.fn().mockReturnThis(),
   }),
-}))
+}));
 
 vi.mock("../../src/utils/logger", () => ({
   logger: {
@@ -67,20 +67,17 @@ vi.mock("../../src/utils/logger", () => ({
     warn: vi.fn(),
     error: vi.fn(),
   },
-}))
+}));
 
-import { addComponents } from "../../src/utils/add-components"
-import { resolveRegistryTree } from "../../src/registry/resolver"
-import {
-  findPackageRoot,
-  getWorkspaceConfig,
-} from "../../src/utils/get-config"
-import { updateFiles } from "../../src/utils/updaters/update-files"
-import { updateFonts } from "../../src/utils/updaters/update-fonts"
+import { resolveRegistryTree } from "../../src/registry/resolver";
+import { addComponents } from "../../src/utils/add-components";
+import { findPackageRoot, getWorkspaceConfig } from "../../src/utils/get-config";
+import { updateFiles } from "../../src/utils/updaters/update-files";
+import { updateFonts } from "../../src/utils/updaters/update-fonts";
 
 afterEach(() => {
-  vi.clearAllMocks()
-})
+  vi.clearAllMocks();
+});
 
 function createMockConfig(overrides: Partial<Config> = {}): Config {
   return {
@@ -111,12 +108,12 @@ function createMockConfig(overrides: Partial<Config> = {}): Config {
       ui: "/apps/web/components/ui",
     },
     ...overrides,
-  } as Config
+  } as Config;
 }
 
 describe("addComponents workspace routing", () => {
   test("should route registry:hook files to workspaceConfig.hooks", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -128,7 +125,7 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     // Hooks config resolves to the same package but is a distinct config object.
     // getWorkspaceConfig builds one config per alias key.
@@ -143,12 +140,12 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
       hooks: hooksConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "sidebar",
@@ -166,14 +163,14 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["sidebar"], appConfig, { silent: true })
+    await addComponents(["sidebar"], appConfig, { silent: true });
 
     // updateFiles should be called twice: once for registry:ui, once for registry:hook.
-    expect(updateFiles).toHaveBeenCalledTimes(2)
+    expect(updateFiles).toHaveBeenCalledTimes(2);
 
     // First call: registry:ui files with the UI workspace config.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -186,7 +183,7 @@ describe("addComponents workspace routing", () => {
       ],
       uiConfig,
       expect.any(Object)
-    )
+    );
 
     // Second call: registry:hook files with the hooks workspace config.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -199,11 +196,11 @@ describe("addComponents workspace routing", () => {
       ],
       hooksConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should route registry:lib files to workspaceConfig.lib", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -215,7 +212,7 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
     const libConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -227,12 +224,12 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
       lib: libConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "button",
@@ -250,13 +247,13 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["button"], appConfig, { silent: true })
+    await addComponents(["button"], appConfig, { silent: true });
 
-    expect(updateFiles).toHaveBeenCalledTimes(2)
+    expect(updateFiles).toHaveBeenCalledTimes(2);
 
     // First call: registry:ui files with the UI workspace config.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -264,7 +261,7 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:ui" })],
       uiConfig,
       expect.any(Object)
-    )
+    );
 
     // Second call: registry:lib files with the lib workspace config.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -272,11 +269,11 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:lib" })],
       libConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should fall back to app config for unmapped types like registry:component", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -288,11 +285,11 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "login-01",
@@ -305,13 +302,13 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/apps/web")
+    vi.mocked(findPackageRoot).mockResolvedValue("/apps/web");
 
-    await addComponents(["login-01"], appConfig, { silent: true })
+    await addComponents(["login-01"], appConfig, { silent: true });
 
-    expect(updateFiles).toHaveBeenCalledTimes(1)
+    expect(updateFiles).toHaveBeenCalledTimes(1);
 
     // registry:component should fall back to the app config.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -319,11 +316,11 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:component" })],
       appConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should fall back to app config when workspace key is missing", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -335,12 +332,12 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     // Workspace config only has ui — no hooks or lib.
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "sidebar",
@@ -358,13 +355,13 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["sidebar"], appConfig, { silent: true })
+    await addComponents(["sidebar"], appConfig, { silent: true });
 
-    expect(updateFiles).toHaveBeenCalledTimes(2)
+    expect(updateFiles).toHaveBeenCalledTimes(2);
 
     // registry:ui → workspaceConfig.ui.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -372,7 +369,7 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:ui" })],
       uiConfig,
       expect.any(Object)
-    )
+    );
 
     // registry:hook with no workspaceConfig.hooks → falls back to app config.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -380,11 +377,11 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:hook" })],
       appConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should route all three mapped types to their workspace configs", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -396,13 +393,13 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
       hooks: uiConfig,
       lib: uiConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "sidebar",
@@ -425,37 +422,37 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["sidebar"], appConfig, { silent: true })
+    await addComponents(["sidebar"], appConfig, { silent: true });
 
     // Three calls: one per type.
-    expect(updateFiles).toHaveBeenCalledTimes(3)
+    expect(updateFiles).toHaveBeenCalledTimes(3);
 
     expect(updateFiles).toHaveBeenNthCalledWith(
       1,
       [expect.objectContaining({ type: "registry:ui" })],
       uiConfig,
       expect.any(Object)
-    )
+    );
     expect(updateFiles).toHaveBeenNthCalledWith(
       2,
       [expect.objectContaining({ type: "registry:hook" })],
       uiConfig,
       expect.any(Object)
-    )
+    );
     expect(updateFiles).toHaveBeenNthCalledWith(
       3,
       [expect.objectContaining({ type: "registry:lib" })],
       uiConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should fall back to app config for registry:file", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -467,11 +464,11 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "some-component",
@@ -490,13 +487,13 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["some-component"], appConfig, { silent: true })
+    await addComponents(["some-component"], appConfig, { silent: true });
 
-    expect(updateFiles).toHaveBeenCalledTimes(2)
+    expect(updateFiles).toHaveBeenCalledTimes(2);
 
     // registry:ui → workspace.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -504,7 +501,7 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:ui" })],
       uiConfig,
       expect.any(Object)
-    )
+    );
 
     // registry:file → app config.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -512,11 +509,11 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:file" })],
       appConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should default files with no type to registry:ui", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -528,11 +525,11 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "button",
@@ -545,25 +542,20 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["button"], appConfig, { silent: true })
+    await addComponents(["button"], appConfig, { silent: true });
 
-    expect(updateFiles).toHaveBeenCalledTimes(1)
+    expect(updateFiles).toHaveBeenCalledTimes(1);
 
     // Should route to workspace UI config.
-    expect(updateFiles).toHaveBeenNthCalledWith(
-      1,
-      expect.any(Array),
-      uiConfig,
-      expect.any(Object)
-    )
-  })
+    expect(updateFiles).toHaveBeenNthCalledWith(1, expect.any(Array), uiConfig, expect.any(Object));
+  });
 
   test("should group multiple files of the same type into one updateFiles call", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -575,11 +567,11 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "sidebar",
@@ -602,14 +594,14 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["sidebar"], appConfig, { silent: true })
+    await addComponents(["sidebar"], appConfig, { silent: true });
 
     // All three files are registry:ui — should be one call, not three.
-    expect(updateFiles).toHaveBeenCalledTimes(1)
+    expect(updateFiles).toHaveBeenCalledTimes(1);
     expect(updateFiles).toHaveBeenCalledWith(
       expect.arrayContaining([
         expect.objectContaining({ path: "registry/ui/sidebar.tsx" }),
@@ -618,8 +610,8 @@ describe("addComponents workspace routing", () => {
       ]),
       uiConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should route hooks to separate package when aliases differ", async () => {
     const appConfig = createMockConfig({
@@ -630,7 +622,7 @@ describe("addComponents workspace routing", () => {
         lib: "~foo/ui/lib",
         ui: "~foo/ui/components",
       },
-    })
+    });
 
     const uiPackageConfig = createMockConfig({
       resolvedPaths: {
@@ -643,7 +635,7 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     const hooksPackageConfig = createMockConfig({
       resolvedPaths: {
@@ -656,13 +648,13 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/hooks/src/hooks",
         ui: "/packages/hooks/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiPackageConfig,
       hooks: hooksPackageConfig,
       lib: uiPackageConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "sidebar",
@@ -680,20 +672,18 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockImplementation(
-      async (_cwd, resolvedPath) => {
-        if (resolvedPath.startsWith("/packages/hooks")) {
-          return "/packages/hooks"
-        }
-        return "/packages/ui"
+    vi.mocked(findPackageRoot).mockImplementation(async (_cwd, resolvedPath) => {
+      if (resolvedPath.startsWith("/packages/hooks")) {
+        return "/packages/hooks";
       }
-    )
+      return "/packages/ui";
+    });
 
-    await addComponents(["sidebar"], appConfig, { silent: true })
+    await addComponents(["sidebar"], appConfig, { silent: true });
 
-    expect(updateFiles).toHaveBeenCalledTimes(2)
+    expect(updateFiles).toHaveBeenCalledTimes(2);
 
     // registry:ui → UI package.
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -701,7 +691,7 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:ui" })],
       uiPackageConfig,
       expect.any(Object)
-    )
+    );
 
     // registry:hook → hooks package (separate from UI).
     expect(updateFiles).toHaveBeenNthCalledWith(
@@ -709,11 +699,11 @@ describe("addComponents workspace routing", () => {
       [expect.objectContaining({ type: "registry:hook" })],
       hooksPackageConfig,
       expect.any(Object)
-    )
-  })
+    );
+  });
 
   test("should call updateFonts with app config, not workspace config", async () => {
-    const appConfig = createMockConfig()
+    const appConfig = createMockConfig();
     const uiConfig = createMockConfig({
       resolvedPaths: {
         cwd: "/packages/ui",
@@ -725,11 +715,11 @@ describe("addComponents workspace routing", () => {
         hooks: "/packages/ui/src/hooks",
         ui: "/packages/ui/src/components/ui",
       },
-    })
+    });
 
     vi.mocked(getWorkspaceConfig).mockResolvedValue({
       ui: uiConfig,
-    })
+    });
 
     vi.mocked(resolveRegistryTree).mockResolvedValue({
       name: "button",
@@ -757,24 +747,16 @@ describe("addComponents workspace routing", () => {
       ],
       dependencies: [],
       devDependencies: [],
-    })
+    });
 
-    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui")
+    vi.mocked(findPackageRoot).mockResolvedValue("/packages/ui");
 
-    await addComponents(["button"], appConfig, { silent: true })
+    await addComponents(["button"], appConfig, { silent: true });
 
     // updateFonts should use the app config (layout lives in the app).
-    expect(updateFonts).toHaveBeenCalledWith(
-      expect.any(Array),
-      appConfig,
-      expect.any(Object)
-    )
+    expect(updateFonts).toHaveBeenCalledWith(expect.any(Array), appConfig, expect.any(Object));
 
     // Verify it was NOT called with the workspace UI config.
-    expect(updateFonts).not.toHaveBeenCalledWith(
-      expect.anything(),
-      uiConfig,
-      expect.anything()
-    )
-  })
-})
+    expect(updateFonts).not.toHaveBeenCalledWith(expect.anything(), uiConfig, expect.anything());
+  });
+});

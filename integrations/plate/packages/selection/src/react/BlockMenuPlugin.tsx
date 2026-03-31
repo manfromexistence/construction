@@ -1,14 +1,14 @@
-import type { PluginConfig } from 'platejs';
+import type { PluginConfig } from "platejs";
 
-import { KEYS } from 'platejs';
-import { createTPlatePlugin } from 'platejs/react';
+import { KEYS } from "platejs";
+import { createTPlatePlugin } from "platejs/react";
 
-import type { BlockSelectionConfig } from './BlockSelectionPlugin';
+import type { BlockSelectionConfig } from "./BlockSelectionPlugin";
 
-export const BLOCK_CONTEXT_MENU_ID = 'context';
+export const BLOCK_CONTEXT_MENU_ID = "context";
 
 export type BlockMenuConfig = PluginConfig<
-  'blockMenu',
+  "blockMenu",
   {
     openId: OpenId | null;
     position: {
@@ -20,10 +20,7 @@ export type BlockMenuConfig = PluginConfig<
     blockMenu: {
       hide: () => void;
       show: (id: OpenId, position?: { x: number; y: number }) => void;
-      showContextMenu: (
-        blockId: string,
-        position: { x: number; y: number }
-      ) => void;
+      showContextMenu: (blockId: string, position: { x: number; y: number }) => void;
     };
   }
 >;
@@ -41,39 +38,35 @@ export const BlockMenuPlugin = createTPlatePlugin<BlockMenuConfig>({
     },
   },
 })
-  .extendApi<Partial<BlockMenuConfig['api']['blockMenu']>>(
-    ({ setOption, setOptions }) => ({
-      hide: () => {
+  .extendApi<Partial<BlockMenuConfig["api"]["blockMenu"]>>(({ setOption, setOptions }) => ({
+    hide: () => {
+      setOptions({
+        openId: null,
+        position: {
+          x: -10_000,
+          y: -10_000,
+        },
+      });
+    },
+    show: (id, position) => {
+      if (position) {
         setOptions({
-          openId: null,
-          position: {
-            x: -10_000,
-            y: -10_000,
-          },
+          openId: id,
+          position,
         });
-      },
-      show: (id, position) => {
-        if (position) {
-          setOptions({
-            openId: id,
-            position,
-          });
-        } else {
-          setOption('openId', id);
-        }
-      },
-    })
-  )
-  .extendApi<Partial<BlockMenuConfig['api']['blockMenu']>>(
-    ({ api, editor }) => ({
-      showContextMenu: (blockId, position) => {
-        editor
-          .getApi<BlockSelectionConfig>({ key: KEYS.blockSelection })
-          .blockSelection?.set(blockId);
-        api.blockMenu.show(BLOCK_CONTEXT_MENU_ID, position);
-      },
-    })
-  )
+      } else {
+        setOption("openId", id);
+      }
+    },
+  }))
+  .extendApi<Partial<BlockMenuConfig["api"]["blockMenu"]>>(({ api, editor }) => ({
+    showContextMenu: (blockId, position) => {
+      editor
+        .getApi<BlockSelectionConfig>({ key: KEYS.blockSelection })
+        .blockSelection?.set(blockId);
+      api.blockMenu.show(BLOCK_CONTEXT_MENU_ID, position);
+    },
+  }))
   .extend(({ api }) => ({
     handlers: {
       onMouseDown: ({ event, getOptions }) => {

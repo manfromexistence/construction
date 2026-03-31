@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { TabbablePlugin } from '@platejs/tabbable/react';
-import { KEYS } from 'platejs';
+import { TabbablePlugin } from "@platejs/tabbable/react";
+import { KEYS } from "platejs";
 
 export const TabbableKit = TabbablePlugin.configure(({ editor }) => ({
   node: {
@@ -9,19 +9,15 @@ export const TabbableKit = TabbablePlugin.configure(({ editor }) => ({
   },
   options: {
     query: () => {
-      if (editor.api.isAt({ start: true }) || editor.api.isAt({ end: true }))
-        return false;
+      if (editor.api.isAt({ start: true }) || editor.api.isAt({ end: true })) return false;
 
       return !editor.api.some({
         match: (n) =>
           !!(
             (n.type &&
-              [
-                KEYS.codeBlock,
-                KEYS.li,
-                KEYS.listTodoClassic,
-                KEYS.table,
-              ].includes(n.type as any)) ||
+              [KEYS.codeBlock, KEYS.li, KEYS.listTodoClassic, KEYS.table].includes(
+                n.type as any
+              )) ||
             n.listStyleType
           ),
       });

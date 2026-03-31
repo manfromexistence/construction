@@ -1,36 +1,38 @@
-import { promises as fs } from "fs"
-import path from "path"
-import { preFlightInit } from "@/src/preflights/preflight-init"
-import { decodePreset, isPresetCode } from "@/src/preset/preset"
+import { Command } from "commander";
+import deepmerge from "deepmerge";
+import { promises as fs } from "fs";
+import fsExtra from "fs-extra";
+import path from "path";
+import prompts from "prompts";
+import { z } from "zod";
+import { preFlightInit } from "@/src/preflights/preflight-init";
+import { decodePreset, isPresetCode } from "@/src/preset/preset";
 import {
   DEFAULT_PRESETS,
   promptForBase,
   promptForPreset,
   resolveInitUrl,
   resolveRegistryBaseConfig,
-} from "@/src/preset/presets"
-import { getRegistryBaseColors, getRegistryStyles } from "@/src/registry/api"
-import { BUILTIN_REGISTRIES, SHADCN_URL } from "@/src/registry/constants"
-import { clearRegistryContext } from "@/src/registry/context"
-import { registryConfigSchema } from "@/src/registry/schema"
-import { isUrl } from "@/src/registry/utils"
-import { rawConfigSchema } from "@/src/schema"
-import {
-  getTemplateForFramework,
-  resolveTemplate,
-  templates,
-} from "@/src/templates/index"
-import { addComponents } from "@/src/utils/add-components"
-import { createProject } from "@/src/utils/create-project"
-import { loadEnvFiles } from "@/src/utils/env-loader"
-import * as ERRORS from "@/src/utils/errors"
+} from "@/src/preset/presets";
+import { getRegistryBaseColors, getRegistryStyles } from "@/src/registry/api";
+import { BUILTIN_REGISTRIES, SHADCN_URL } from "@/src/registry/constants";
+import { clearRegistryContext } from "@/src/registry/context";
+import { registryConfigSchema } from "@/src/registry/schema";
+import { isUrl } from "@/src/registry/utils";
+import { rawConfigSchema } from "@/src/schema";
+import { getTemplateForFramework, resolveTemplate, templates } from "@/src/templates/index";
+import { addComponents } from "@/src/utils/add-components";
+import { createProject } from "@/src/utils/create-project";
+import { loadEnvFiles } from "@/src/utils/env-loader";
+import * as ERRORS from "@/src/utils/errors";
 import {
   createFileBackup,
   deleteFileBackup,
   FILE_BACKUP_SUFFIX,
   restoreFileBackup,
-} from "@/src/utils/file-helper"
+} from "@/src/utils/file-helper";
 import {
+  type Config,
   DEFAULT_COMPONENTS,
   DEFAULT_TAILWIND_CONFIG,
   DEFAULT_TAILWIND_CSS,
@@ -39,29 +41,23 @@ import {
   getConfig,
   getWorkspaceConfig,
   resolveConfigPaths,
-  type Config,
-} from "@/src/utils/get-config"
+} from "@/src/utils/get-config";
 import {
   formatMonorepoMessage,
   getMonorepoTargets,
   isMonorepoRoot,
-} from "@/src/utils/get-monorepo-info"
+} from "@/src/utils/get-monorepo-info";
 import {
   getProjectComponents,
   getProjectConfig,
   getProjectInfo,
   getProjectTailwindVersionFromConfig,
-} from "@/src/utils/get-project-info"
-import { handleError } from "@/src/utils/handle-error"
-import { highlighter } from "@/src/utils/highlighter"
-import { logger } from "@/src/utils/logger"
-import { ensureRegistriesInConfig } from "@/src/utils/registries"
-import { spinner } from "@/src/utils/spinner"
-import { Command } from "commander"
-import deepmerge from "deepmerge"
-import fsExtra from "fs-extra"
-import prompts from "prompts"
-import { z } from "zod"
+} from "@/src/utils/get-project-info";
+import { handleError } from "@/src/utils/handle-error";
+import { highlighter } from "@/src/utils/highlighter";
+import { logger } from "@/src/utils/logger";
+import { ensureRegistriesInConfig } from "@/src/utils/registries";
+import { spinner } from "@/src/utils/spinner";
 
 export const initOptionsSchema = z.object({
   cwd: z.string(),
@@ -83,16 +79,11 @@ export const initOptionsSchema = z.object({
   installStyleIndex: z.boolean().default(true),
   registryBaseConfig: rawConfigSchema.deepPartial().optional(),
   menuColor: z
-    .enum([
-      "default",
-      "inverted",
-      "default-translucent",
-      "inverted-translucent",
-    ])
+    .enum(["default", "inverted", "default-translucent", "inverted-translucent"])
     .optional(),
   menuAccent: z.enum(["subtle", "bold"]).optional(),
   iconLibrary: z.string().optional(),
-})
+});
 
 export const init = new Command()
   .name("init")
@@ -108,11 +99,7 @@ export const init = new Command()
   .option("--no-monorepo", "skip the monorepo prompt.")
   .option("-p, --preset [name]", "use a preset configuration")
   .option("-y, --yes", "skip confirmation prompt.", true)
-  .option(
-    "-d, --defaults",
-    "use default configuration: --template=next --preset=base-nova",
-    false
-  )
+  .option("-d, --defaults", "use default configuration: --template=next --preset=base-nova", false)
   .option("-f, --force", "force overwrite of existing configuration.", false)
   .option(
     "-c, --cwd <cwd>",
@@ -128,33 +115,31 @@ export const init = new Command()
   .option("--reinstall", "re-install existing UI components.")
   .option("--no-reinstall", "do not re-install existing UI components.")
   .action(async (components, opts) => {
-    let componentsJsonBackupPath: string | undefined
-    let reinstallComponents: string[] = []
+    let componentsJsonBackupPath: string | undefined;
+    let reinstallComponents: string[] = [];
 
     // Restore components.json backup on unexpected exit (e.g. process.exit in preflight).
     const restoreBackupOnExit = () => {
       if (componentsJsonBackupPath) {
-        restoreFileBackup(
-          componentsJsonBackupPath.replace(FILE_BACKUP_SUFFIX, "")
-        )
+        restoreFileBackup(componentsJsonBackupPath.replace(FILE_BACKUP_SUFFIX, ""));
       }
-    }
-    process.on("exit", restoreBackupOnExit)
+    };
+    process.on("exit", restoreBackupOnExit);
 
     try {
       const options = initOptionsSchema.parse({
         ...opts,
         reinstall: opts.reinstall,
         cwd: path.resolve(opts.cwd),
-      })
-      const presetsByName = new Map(Object.entries(DEFAULT_PRESETS))
+      });
+      const presetsByName = new Map(Object.entries(DEFAULT_PRESETS));
 
-      let presetBase: string | undefined
+      let presetBase: string | undefined;
 
       if (options.defaults) {
-        options.template = options.template || "next"
-        options.base = options.base || "base"
-        options.reinstall = options.reinstall ?? false
+        options.template = options.template || "next";
+        options.base = options.base || "base";
+        options.reinstall = options.reinstall ?? false;
       }
 
       if (options.template && !(options.template in templates)) {
@@ -164,9 +149,9 @@ export const init = new Command()
           )}. Available templates: ${Object.keys(templates)
             .map((t) => highlighter.info(t))
             .join(", ")}.`
-        )
-        logger.break()
-        process.exit(1)
+        );
+        logger.break();
+        process.exit(1);
       }
 
       if (
@@ -174,38 +159,32 @@ export const init = new Command()
         !isUrl(options.preset) &&
         !isPresetCode(options.preset)
       ) {
-        const knownPresetNames = Array.from(presetsByName.keys())
+        const knownPresetNames = Array.from(presetsByName.keys());
 
         if (!presetsByName.has(options.preset)) {
           logger.error(
             `Invalid preset: ${highlighter.info(
               options.preset
             )}. Available presets: ${knownPresetNames.join(", ")}`
-          )
-          logger.break()
-          process.exit(1)
+          );
+          logger.break();
+          process.exit(1);
         }
       }
 
-      const cwd = options.cwd
-      const hasExistingConfig = fsExtra.existsSync(
-        path.resolve(cwd, "components.json")
-      )
+      const cwd = options.cwd;
+      const hasExistingConfig = fsExtra.existsSync(path.resolve(cwd, "components.json"));
 
       // Check if we're in a monorepo root before proceeding.
       // Skip this check when --monorepo is set, since the template
       // handler knows how to initialize each workspace.
-      if (
-        !options.monorepo &&
-        !hasExistingConfig &&
-        (await isMonorepoRoot(cwd))
-      ) {
-        const projectInfo = await getProjectInfo(cwd)
+      if (!options.monorepo && !hasExistingConfig && (await isMonorepoRoot(cwd))) {
+        const projectInfo = await getProjectInfo(cwd);
         if (!projectInfo || projectInfo.framework.name === "manual") {
-          const targets = await getMonorepoTargets(cwd)
+          const targets = await getMonorepoTargets(cwd);
           if (targets.length > 0) {
-            formatMonorepoMessage("init", targets)
-            process.exit(1)
+            formatMonorepoMessage("init", targets);
+            process.exit(1);
           }
         }
       }
@@ -218,37 +197,35 @@ export const init = new Command()
             "components.json"
           )} file already exists. Would you like to overwrite it?`,
           initial: false,
-        })
+        });
 
         if (!overwrite) {
           logger.info(
             `  To start over, remove the ${highlighter.info(
               "components.json"
             )} file and run ${highlighter.info("init")} again.`
-          )
-          logger.break()
-          process.exit(1)
+          );
+          logger.break();
+          process.exit(1);
         }
 
-        options.force = true
+        options.force = true;
       }
 
-      let existingConfig: Record<string, unknown> | undefined
+      let existingConfig: Record<string, unknown> | undefined;
       if (hasExistingConfig) {
         try {
-          existingConfig = await fsExtra.readJson(
-            path.resolve(cwd, "components.json")
-          )
+          existingConfig = await fsExtra.readJson(path.resolve(cwd, "components.json"));
         } catch {
           // Ignore read errors.
         }
 
         // Pass existing config so preflight can use it (e.g. tailwind.css path in monorepos).
         if (existingConfig) {
-          options.existingConfig = existingConfig
+          options.existingConfig = existingConfig;
         }
 
-        let shouldReinstall = options.reinstall
+        let shouldReinstall = options.reinstall;
 
         if (shouldReinstall === undefined) {
           const { reinstall } = await prompts({
@@ -256,36 +233,26 @@ export const init = new Command()
             name: "reinstall",
             message: `Would you like to re-install existing UI components?`,
             initial: false,
-          })
-          shouldReinstall = reinstall
+          });
+          shouldReinstall = reinstall;
         }
 
         if (shouldReinstall) {
-          reinstallComponents = await getProjectComponents(cwd)
+          reinstallComponents = await getProjectComponents(cwd);
           if (reinstallComponents.length) {
-            logger.break()
-            logger.log(
-              "  The following components will be re-installed and overwritten:"
-            )
+            logger.break();
+            logger.log("  The following components will be re-installed and overwritten:");
             for (let i = 0; i < reinstallComponents.length; i += 8) {
-              logger.log(
-                `  - ${reinstallComponents.slice(i, i + 8).join(", ")}`
-              )
+              logger.log(`  - ${reinstallComponents.slice(i, i + 8).join(", ")}`);
             }
-            logger.break()
+            logger.break();
           }
         }
       }
 
-      if (
-        options.preset === undefined &&
-        components.length === 0 &&
-        !options.defaults
-      ) {
+      if (options.preset === undefined && components.length === 0 && !options.defaults) {
         // Determine template for the create URL.
-        const hasPackageJson = fsExtra.existsSync(
-          path.resolve(cwd, "package.json")
-        )
+        const hasPackageJson = fsExtra.existsSync(path.resolve(cwd, "package.json"));
 
         // Prompt for template only for new projects without -t flag.
         if (!options.template && !hasPackageJson) {
@@ -299,41 +266,39 @@ export const init = new Command()
               description: t.description,
               disabled: options.monorepo && value === "laravel",
             })),
-          })
+          });
 
           if (!template) {
-            process.exit(1)
+            process.exit(1);
           }
 
-          options.template = template
+          options.template = template;
         }
 
         // Try to infer template for existing projects.
         if (!options.template && hasPackageJson) {
-          const projectInfo = await getProjectInfo(cwd)
-          const detectedTemplate = getTemplateForFramework(
-            projectInfo?.framework.name
-          )
+          const projectInfo = await getProjectInfo(cwd);
+          const detectedTemplate = getTemplateForFramework(projectInfo?.framework.name);
           if (detectedTemplate) {
-            options.template = detectedTemplate
+            options.template = detectedTemplate;
           }
         }
 
         // Laravel cannot be scaffolded — exit early with instructions.
         if (options.template === "laravel" && !hasPackageJson) {
-          logger.break()
+          logger.break();
           logger.log(
             `  Please create a new app with ${highlighter.info(
               "laravel new --react"
             )} first then run ${highlighter.info("shadcn init")}.`
-          )
+          );
           logger.log(
             `  See ${highlighter.info(
               `${SHADCN_URL}/docs/installation/laravel`
             )} for more information.`
-          )
-          logger.break()
-          process.exit(0)
+          );
+          logger.break();
+          process.exit(0);
         }
 
         // Prompt for monorepo if the template supports it (new projects only).
@@ -348,55 +313,53 @@ export const init = new Command()
             name: "monorepo",
             message: "Would you like to set up a monorepo?",
             initial: false,
-          })
-          options.monorepo = monorepo
+          });
+          options.monorepo = monorepo;
         }
 
         // Prompt for base if not provided.
         if (!options.base) {
-          options.base = await promptForBase()
+          options.base = await promptForBase();
         }
 
         // Show interactive preset list.
-        options.preset = true
+        options.preset = true;
       }
 
       if (options.preset !== undefined) {
-        const presetArg = options.preset === true ? true : options.preset
+        const presetArg = options.preset === true ? true : options.preset;
 
         if (presetArg === true) {
           const result = await promptForPreset({
             rtl: options.rtl ?? false,
             template: options.template,
             base: options.base!,
-          })
-          components = [result.url, ...components]
-          presetBase = result.base
+          });
+          components = [result.url, ...components];
+          presetBase = result.base;
         }
 
         if (typeof presetArg === "string") {
-          let initUrl: string
+          let initUrl: string;
 
           if (isUrl(presetArg)) {
-            const url = new URL(presetArg)
+            const url = new URL(presetArg);
             if (options.rtl) {
-              url.searchParams.set("rtl", "true")
+              url.searchParams.set("rtl", "true");
             } else if (options.rtl === false) {
-              url.searchParams.delete("rtl")
+              url.searchParams.delete("rtl");
             }
             if (url.pathname === "/init" && presetArg.startsWith(SHADCN_URL)) {
-              url.searchParams.set("track", "1")
+              url.searchParams.set("track", "1");
             }
-            initUrl = url.toString()
-            presetBase = url.searchParams.get("base") ?? undefined
+            initUrl = url.toString();
+            presetBase = url.searchParams.get("base") ?? undefined;
           } else if (isPresetCode(presetArg)) {
-            const decoded = decodePreset(presetArg)
+            const decoded = decodePreset(presetArg);
             if (!decoded) {
-              logger.error(
-                `Invalid preset code: ${highlighter.info(presetArg)}`
-              )
-              logger.break()
-              process.exit(1)
+              logger.error(`Invalid preset code: ${highlighter.info(presetArg)}`);
+              logger.break();
+              process.exit(1);
             }
             // Preset codes no longer carry base — use "radix" as placeholder.
             // The correct base is set in the URL after resolution below.
@@ -407,12 +370,12 @@ export const init = new Command()
                 rtl: options.rtl ?? false,
               },
               { template: options.template, preset: presetArg }
-            )
-            presetBase = undefined
+            );
+            presetBase = undefined;
           } else {
-            const preset = presetsByName.get(presetArg)
+            const preset = presetsByName.get(presetArg);
             if (!preset) {
-              throw new Error(`Unknown preset: ${presetArg}`)
+              throw new Error(`Unknown preset: ${presetArg}`);
             }
             initUrl = resolveInitUrl(
               {
@@ -421,11 +384,11 @@ export const init = new Command()
                 rtl: options.rtl ?? preset.rtl,
               },
               { template: options.template }
-            )
-            presetBase = undefined
+            );
+            presetBase = undefined;
           }
 
-          components = [initUrl, ...components]
+          components = [initUrl, ...components];
         }
       }
 
@@ -437,17 +400,17 @@ export const init = new Command()
           ? (existingConfig.style as string).startsWith("base-")
             ? "base"
             : "radix"
-          : "")
+          : "");
 
       if (!resolvedBase) {
         if (components.length > 0) {
           // When initializing from a registry item, default to radix.
           // The registry:base config will override this.
-          resolvedBase = "radix"
+          resolvedBase = "radix";
         } else {
-          const base = await promptForBase()
-          resolvedBase = base
-          options.base = base
+          const base = await promptForBase();
+          resolvedBase = base;
+          options.base = base;
         }
       }
 
@@ -460,41 +423,38 @@ export const init = new Command()
             rtl: options.rtl ?? false,
           },
           { template: options.template }
-        )
-        components = [initUrl, ...components]
+        );
+        components = [initUrl, ...components];
       }
 
       // Ensure the init URL has the correct base.
       if (components.length > 0 && isUrl(components[0])) {
-        const url = new URL(components[0])
-        url.searchParams.set("base", resolvedBase)
-        components[0] = url.toString()
+        const url = new URL(components[0]);
+        url.searchParams.set("base", resolvedBase);
+        components[0] = url.toString();
       }
 
       // Confirm if the user is switching bases during reinit.
       if (existingConfig?.style) {
-        const confirmedBase = await confirmBaseSwitch(
-          existingConfig.style as string,
-          resolvedBase
-        )
+        const confirmedBase = await confirmBaseSwitch(existingConfig.style as string, resolvedBase);
         if (confirmedBase !== resolvedBase) {
-          resolvedBase = confirmedBase
+          resolvedBase = confirmedBase;
           if (components.length > 0 && isUrl(components[0])) {
-            const url = new URL(components[0])
-            url.searchParams.set("base", confirmedBase)
-            components[0] = url.toString()
+            const url = new URL(components[0]);
+            url.searchParams.set("base", confirmedBase);
+            components[0] = url.toString();
           }
         }
       }
 
       // Add re-install components after preset selection.
       if (reinstallComponents.length) {
-        components = [...components, ...reinstallComponents]
+        components = [...components, ...reinstallComponents];
       }
 
-      options.components = components
+      options.components = components;
 
-      await loadEnvFiles(options.cwd)
+      await loadEnvFiles(options.cwd);
 
       // We need to check if we're initializing with a new style.
       // This will allow us to determine if we need to install the base style.
@@ -502,15 +462,12 @@ export const init = new Command()
         // Back up existing components.json if it exists.
         // Since components.json might not be valid at this point,
         // temporarily rename it to allow preflight to run.
-        const componentsJsonPath = path.resolve(cwd, "components.json")
+        const componentsJsonPath = path.resolve(cwd, "components.json");
 
         if (hasExistingConfig) {
-          componentsJsonBackupPath =
-            createFileBackup(componentsJsonPath) ?? undefined
+          componentsJsonBackupPath = createFileBackup(componentsJsonPath) ?? undefined;
           if (!componentsJsonBackupPath) {
-            logger.warn(
-              `Could not back up ${highlighter.info("components.json")}.`
-            )
+            logger.warn(`Could not back up ${highlighter.info("components.json")}.`);
           }
         }
 
@@ -523,59 +480,55 @@ export const init = new Command()
           registries: existingConfig?.registries as
             | z.infer<typeof registryConfigSchema>
             | undefined,
-        })
+        });
 
         // Use the clean URL (track param stripped) for subsequent fetches.
-        components[0] = cleanUrl
+        components[0] = cleanUrl;
 
         if (!installStyleIndex) {
-          options.installStyleIndex = false
+          options.installStyleIndex = false;
         }
 
         if (registryBaseConfig) {
-          options.registryBaseConfig = registryBaseConfig
+          options.registryBaseConfig = registryBaseConfig;
         }
       }
 
-      await runInit(options)
+      await runInit(options);
 
-      logger.break()
-      logger.log(
-        `Project initialization completed.\nYou may now add components.`
-      )
+      logger.break();
+      logger.log(`Project initialization completed.\nYou may now add components.`);
 
       // Success — remove the backup and exit listener.
-      process.removeListener("exit", restoreBackupOnExit)
-      deleteFileBackup(path.resolve(cwd, "components.json"))
-      logger.break()
+      process.removeListener("exit", restoreBackupOnExit);
+      deleteFileBackup(path.resolve(cwd, "components.json"));
+      logger.break();
     } catch (error) {
       // Restore handled by exit listener, but also do it here for non-exit errors.
-      process.removeListener("exit", restoreBackupOnExit)
-      restoreBackupOnExit()
-      logger.break()
-      handleError(error)
+      process.removeListener("exit", restoreBackupOnExit);
+      restoreBackupOnExit();
+      logger.break();
+      handleError(error);
     } finally {
-      clearRegistryContext()
+      clearRegistryContext();
     }
-  })
+  });
 
 export async function runInit(
   options: z.infer<typeof initOptionsSchema> & {
-    skipPreflight?: boolean
+    skipPreflight?: boolean;
   }
 ) {
-  let projectInfo
-  let newProjectTemplate: keyof typeof templates | undefined
+  let projectInfo;
+  let newProjectTemplate: keyof typeof templates | undefined;
 
   // Resolve the effective template if --monorepo is set.
-  const explicitTemplate = options.template as
-    | keyof typeof templates
-    | undefined
+  const explicitTemplate = options.template as keyof typeof templates | undefined;
   const resolvedTemplateConfig = explicitTemplate
     ? resolveTemplate(templates[explicitTemplate], {
         monorepo: options.monorepo,
       })
-    : undefined
+    : undefined;
 
   // When a monorepo template with an init handler is explicitly provided
   // and the project already exists, skip the standard preflight
@@ -583,42 +536,42 @@ export async function runInit(
   const hasExplicitMonorepoInit =
     options.monorepo &&
     resolvedTemplateConfig?.init &&
-    fsExtra.existsSync(path.resolve(options.cwd, "package.json"))
+    fsExtra.existsSync(path.resolve(options.cwd, "package.json"));
 
   if (hasExplicitMonorepoInit) {
-    projectInfo = await getProjectInfo(options.cwd)
+    projectInfo = await getProjectInfo(options.cwd);
   } else if (!options.skipPreflight) {
-    const preflight = await preFlightInit(options)
+    const preflight = await preFlightInit(options);
     if (preflight.errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT]) {
-      const { projectPath, template } = await createProject(options)
+      const { projectPath, template } = await createProject(options);
       if (!projectPath) {
-        process.exit(1)
+        process.exit(1);
       }
-      options.cwd = projectPath
-      options.isNewProject = true
-      newProjectTemplate = template
+      options.cwd = projectPath;
+      options.isNewProject = true;
+      newProjectTemplate = template;
       // Re-get project info for the newly created project.
-      projectInfo = await getProjectInfo(options.cwd)
+      projectInfo = await getProjectInfo(options.cwd);
     } else {
-      projectInfo = preflight.projectInfo
+      projectInfo = preflight.projectInfo;
     }
   } else {
-    projectInfo = await getProjectInfo(options.cwd)
+    projectInfo = await getProjectInfo(options.cwd);
   }
 
   // Use the template from project creation if available,
   // or fall back to the explicit --template flag.
-  const templateKey = newProjectTemplate ?? explicitTemplate
+  const templateKey = newProjectTemplate ?? explicitTemplate;
   const selectedTemplate = templateKey
     ? resolveTemplate(templates[templateKey], { monorepo: options.monorepo })
-    : undefined
+    : undefined;
 
   const components = [
     ...(options.installStyleIndex ? ["index"] : []),
     ...(options.components ?? []),
     // Add button component for new template-based projects.
     ...(selectedTemplate ? ["button"] : []),
-  ]
+  ];
 
   if (selectedTemplate?.init) {
     const result = await selectedTemplate.init({
@@ -630,85 +583,83 @@ export async function runInit(
       menuAccent: options.menuAccent,
       iconLibrary: options.iconLibrary,
       silent: options.silent,
-    })
+    });
 
     // Run postInit for new projects (e.g. git init).
-    await selectedTemplate.postInit({ projectPath: options.cwd })
+    await selectedTemplate.postInit({ projectPath: options.cwd });
 
-    return result
+    return result;
   }
 
   // Standard init path for existing projects.
-  const projectConfig = await getProjectConfig(options.cwd, projectInfo)
+  const projectConfig = await getProjectConfig(options.cwd, projectInfo);
 
   let config = projectConfig
     ? await promptForMinimalConfig(projectConfig, options)
-    : await promptForConfig(await getConfig(options.cwd))
+    : await promptForConfig(await getConfig(options.cwd));
 
   if (!options.yes) {
     const { proceed } = await prompts({
       type: "confirm",
       name: "proceed",
-      message: `Write configuration to ${highlighter.info(
-        "components.json"
-      )}. Proceed?`,
+      message: `Write configuration to ${highlighter.info("components.json")}. Proceed?`,
       initial: true,
-    })
+    });
 
     if (!proceed) {
-      process.exit(1)
+      process.exit(1);
     }
   }
 
   // Ensure registries are configured for the components we're about to add.
-  const fullConfigForRegistry = await resolveConfigPaths(options.cwd, config)
+  const fullConfigForRegistry = await resolveConfigPaths(options.cwd, config);
   const { config: configWithRegistries } = await ensureRegistriesInConfig(
     components,
     fullConfigForRegistry,
     {
       silent: true,
     }
-  )
+  );
 
   // Update config with any new registries found.
   if (configWithRegistries.registries) {
-    config.registries = configWithRegistries.registries
+    config.registries = configWithRegistries.registries;
   }
 
-  const componentSpinner = spinner(`Writing components.json.`).start()
-  const targetPath = path.resolve(options.cwd, "components.json")
-  const backupPath = `${targetPath}${FILE_BACKUP_SUFFIX}`
+  const componentSpinner = spinner(`Writing components.json.`).start();
+  const targetPath = path.resolve(options.cwd, "components.json");
+  const backupPath = `${targetPath}${FILE_BACKUP_SUFFIX}`;
 
   // Merge and keep registries at the end.
   const mergeConfig = (base: typeof config, override: object) => {
-    const { registries, ...merged } = deepmerge(base, override)
-    return { ...merged, registries } as typeof config
-  }
+    const { registries, ...merged } = deepmerge(base, override);
+    return { ...merged, registries } as typeof config;
+  };
 
   // Merge with backup config if it exists.
   if (fsExtra.existsSync(backupPath)) {
-    const existingConfig = await fsExtra.readJson(backupPath)
+    const existingConfig = await fsExtra.readJson(backupPath);
     if (options.force) {
       // With --force, only preserve registries from existing config.
       if (existingConfig.registries) {
         config.registries = {
           ...existingConfig.registries,
           ...(config.registries || {}),
-        }
+        };
       }
     } else {
-      config = mergeConfig(existingConfig, config)
+      config = mergeConfig(existingConfig, config);
     }
   }
 
   // Merge config from registry:base item.
   if (options.registryBaseConfig) {
-    config = mergeConfig(config, options.registryBaseConfig)
+    config = mergeConfig(config, options.registryBaseConfig);
   }
 
   // Ensure rtl is set from CLI option (takes priority over registryBaseConfig).
   if (options.rtl !== undefined) {
-    config.rtl = options.rtl
+    config.rtl = options.rtl;
   }
 
   // Make sure to filter out built-in registries.
@@ -717,47 +668,44 @@ export async function runInit(
     Object.entries(config.registries || {}).filter(
       ([key]) => !Object.keys(BUILTIN_REGISTRIES).includes(key)
     )
-  )
+  );
 
   // Write components.json.
-  await fs.writeFile(targetPath, `${JSON.stringify(config, null, 2)}\n`, "utf8")
-  componentSpinner.succeed()
+  await fs.writeFile(targetPath, `${JSON.stringify(config, null, 2)}\n`, "utf8");
+  componentSpinner.succeed();
 
   // Propagate design settings to workspace components.json files.
-  const fullConfig = await resolveConfigPaths(options.cwd, config)
-  const workspaceConfig = await getWorkspaceConfig(fullConfig)
+  const fullConfig = await resolveConfigPaths(options.cwd, config);
+  const workspaceConfig = await getWorkspaceConfig(fullConfig);
   if (workspaceConfig) {
-    const designSettings: Record<string, unknown> = {}
-    if (config.menuColor) designSettings.menuColor = config.menuColor
-    if (config.menuAccent) designSettings.menuAccent = config.menuAccent
-    if (config.rtl !== undefined) designSettings.rtl = config.rtl
-    if (config.iconLibrary) designSettings.iconLibrary = config.iconLibrary
+    const designSettings: Record<string, unknown> = {};
+    if (config.menuColor) designSettings.menuColor = config.menuColor;
+    if (config.menuAccent) designSettings.menuAccent = config.menuAccent;
+    if (config.rtl !== undefined) designSettings.rtl = config.rtl;
+    if (config.iconLibrary) designSettings.iconLibrary = config.iconLibrary;
 
     if (Object.keys(designSettings).length > 0) {
       for (const key of Object.keys(workspaceConfig)) {
-        const wsConfig = workspaceConfig[key]
+        const wsConfig = workspaceConfig[key];
         if (wsConfig.resolvedPaths.cwd === fullConfig.resolvedPaths.cwd) {
-          continue
+          continue;
         }
 
-        const wsConfigPath = path.resolve(
-          wsConfig.resolvedPaths.cwd,
-          "components.json"
-        )
+        const wsConfigPath = path.resolve(wsConfig.resolvedPaths.cwd, "components.json");
         if (fsExtra.existsSync(wsConfigPath)) {
-          const wsRawConfig = await fsExtra.readJson(wsConfigPath)
+          const wsRawConfig = await fsExtra.readJson(wsConfigPath);
           await fsExtra.writeJson(
             wsConfigPath,
             { ...wsRawConfig, ...designSettings },
             { spaces: 2 }
-          )
+          );
         }
       }
     }
   }
 
   // Clear cosmiconfig cache so addComponents re-reads the updated workspace configs.
-  explorer.clearCaches()
+  explorer.clearCaches();
 
   // Add components.
   await addComponents(components, fullConfig, {
@@ -766,32 +714,26 @@ export async function runInit(
     // Reinstall should overwrite existing CSS variables.
     overwriteCssVars: options.reinstall || undefined,
     silent: options.silent,
-    isNewProject:
-      options.isNewProject || projectInfo?.framework.name === "next-app",
-  })
+    isNewProject: options.isNewProject || projectInfo?.framework.name === "next-app",
+  });
 
   // Run postInit for new projects without a custom init (e.g. git init).
   if (selectedTemplate) {
-    await selectedTemplate.postInit({ projectPath: options.cwd })
+    await selectedTemplate.postInit({ projectPath: options.cwd });
   }
 
-  return fullConfig
+  return fullConfig;
 }
 
 async function promptForConfig(defaultConfig: Config | null = null) {
-  const [styles, baseColors] = await Promise.all([
-    getRegistryStyles(),
-    getRegistryBaseColors(),
-  ])
+  const [styles, baseColors] = await Promise.all([getRegistryStyles(), getRegistryBaseColors()]);
 
-  logger.info("")
+  logger.info("");
   const options = await prompts([
     {
       type: "toggle",
       name: "typescript",
-      message: `Would you like to use ${highlighter.info(
-        "TypeScript"
-      )} (recommended)?`,
+      message: `Would you like to use ${highlighter.info("TypeScript")} (recommended)?`,
       initial: defaultConfig?.tsx ?? true,
       active: "yes",
       inactive: "no",
@@ -808,9 +750,7 @@ async function promptForConfig(defaultConfig: Config | null = null) {
     {
       type: "select",
       name: "tailwindBaseColor",
-      message: `Which color would you like to use as the ${highlighter.info(
-        "base color"
-      )}?`,
+      message: `Which color would you like to use as the ${highlighter.info("base color")}?`,
       choices: baseColors.map((color) => ({
         title: color.label,
         value: color.name,
@@ -825,9 +765,7 @@ async function promptForConfig(defaultConfig: Config | null = null) {
     {
       type: "toggle",
       name: "tailwindCssVariables",
-      message: `Would you like to use ${highlighter.info(
-        "CSS variables"
-      )} for theming?`,
+      message: `Would you like to use ${highlighter.info("CSS variables")} for theming?`,
       initial: defaultConfig?.tailwind.cssVariables ?? true,
       active: "yes",
       inactive: "no",
@@ -843,17 +781,13 @@ async function promptForConfig(defaultConfig: Config | null = null) {
     {
       type: "text",
       name: "tailwindConfig",
-      message: `Where is your ${highlighter.info(
-        "tailwind.config.js"
-      )} located?`,
+      message: `Where is your ${highlighter.info("tailwind.config.js")} located?`,
       initial: defaultConfig?.tailwind.config ?? DEFAULT_TAILWIND_CONFIG,
     },
     {
       type: "text",
       name: "components",
-      message: `Configure the import alias for ${highlighter.info(
-        "components"
-      )}:`,
+      message: `Configure the import alias for ${highlighter.info("components")}:`,
       initial: defaultConfig?.aliases["components"] ?? DEFAULT_COMPONENTS,
     },
     {
@@ -870,10 +804,10 @@ async function promptForConfig(defaultConfig: Config | null = null) {
       active: "yes",
       inactive: "no",
     },
-  ])
+  ]);
 
   if (!options.style) {
-    process.exit(1)
+    process.exit(1);
   }
 
   return rawConfigSchema.parse({
@@ -895,23 +829,23 @@ async function promptForConfig(defaultConfig: Config | null = null) {
       lib: options.components.replace(/\/components$/, "lib"),
       hooks: options.components.replace(/\/components$/, "hooks"),
     },
-  })
+  });
 }
 
 async function promptForMinimalConfig(
   defaultConfig: Config,
   opts: z.infer<typeof initOptionsSchema>
 ) {
-  let style = defaultConfig.style
-  let baseColor = "neutral"
-  let cssVariables = defaultConfig.tailwind.cssVariables
-  let iconLibrary = defaultConfig.iconLibrary ?? "lucide"
+  let style = defaultConfig.style;
+  const baseColor = "neutral";
+  let cssVariables = defaultConfig.tailwind.cssVariables;
+  const iconLibrary = defaultConfig.iconLibrary ?? "lucide";
 
   if (!opts.defaults) {
     const [styles, tailwindVersion] = await Promise.all([
       getRegistryStyles(),
       getProjectTailwindVersionFromConfig(defaultConfig),
-    ])
+    ]);
 
     const options = await prompts([
       {
@@ -920,19 +854,18 @@ async function promptForMinimalConfig(
         name: "style",
         message: `Which ${highlighter.info("style")} would you like to use?`,
         choices: styles.map((style) => ({
-          title:
-            style.name === "new-york" ? "New York (Recommended)" : style.label,
+          title: style.name === "new-york" ? "New York (Recommended)" : style.label,
           value: style.name,
         })),
         initial: 0,
       },
-    ])
+    ]);
 
-    style = options.style ?? style ?? "new-york"
+    style = options.style ?? style ?? "new-york";
   }
 
   // Always respect the explicit --css-variables / --no-css-variables flag.
-  cssVariables = opts.cssVariables
+  cssVariables = opts.cssVariables;
 
   return rawConfigSchema.parse({
     $schema: defaultConfig?.$schema,
@@ -947,34 +880,30 @@ async function promptForMinimalConfig(
     iconLibrary,
     rtl: opts.rtl ?? defaultConfig?.rtl ?? false,
     aliases: defaultConfig?.aliases,
-  })
+  });
 }
 
 async function confirmBaseSwitch(existingStyle: string, resolvedBase: string) {
   // Styles prefixed with "base-" use Base UI. Everything else is Radix.
-  const oldBase = existingStyle.startsWith("base-") ? "base" : "radix"
-  if (resolvedBase === oldBase) return resolvedBase
+  const oldBase = existingStyle.startsWith("base-") ? "base" : "radix";
+  if (resolvedBase === oldBase) return resolvedBase;
 
   logger.warn(
-    `  You are switching from ${highlighter.info(
-      oldBase
-    )} to ${highlighter.info(resolvedBase)}.`
-  )
+    `  You are switching from ${highlighter.info(oldBase)} to ${highlighter.info(resolvedBase)}.`
+  );
   logger.warn(
-    `  Components outside the ${highlighter.info(
-      "ui"
-    )} directory that depend on ${highlighter.info(
+    `  Components outside the ${highlighter.info("ui")} directory that depend on ${highlighter.info(
       oldBase
     )} primitives may need manual updates.`
-  )
-  logger.break()
+  );
+  logger.break();
 
   const { proceed } = await prompts({
     type: "confirm",
     name: "proceed",
     message: "Would you like to continue?",
     initial: false,
-  })
+  });
 
-  return proceed ? resolvedBase : oldBase
+  return proceed ? resolvedBase : oldBase;
 }

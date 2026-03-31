@@ -1,5 +1,5 @@
-import { DottedMap } from "@/registry/magicui/dotted-map"
-import type { Marker } from "@/registry/magicui/dotted-map"
+import type { Marker } from "@/registry/magicui/dotted-map";
+import { DottedMap } from "@/registry/magicui/dotted-map";
 
 const markers: Marker[] = [
   {
@@ -13,7 +13,7 @@ const markers: Marker[] = [
     size: 0.3,
     pulse: false,
   },
-]
+];
 
 export default function Component() {
   return (
@@ -21,5 +21,5 @@ export default function Component() {
       <div className="to-background absolute inset-0 bg-radial from-transparent to-200%" />
       <DottedMap markers={markers} pulse />
     </div>
-  )
+  );
 }

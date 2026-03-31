@@ -1,5 +1,5 @@
-import { Button } from "@/styles/base-nova/ui/button"
-import { Checkbox } from "@/styles/base-nova/ui/checkbox"
+import { Button } from "@/styles/base-nova/ui/button";
+import { Checkbox } from "@/styles/base-nova/ui/checkbox";
 import {
   Field,
   FieldDescription,
@@ -8,8 +8,8 @@ import {
   FieldLegend,
   FieldSeparator,
   FieldSet,
-} from "@/styles/base-nova/ui/field"
-import { Input } from "@/styles/base-nova/ui/input"
+} from "@/styles/base-nova/ui/field";
+import { Input } from "@/styles/base-nova/ui/input";
 import {
   Select,
   SelectContent,
@@ -17,8 +17,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/base-nova/ui/select"
-import { Textarea } from "@/styles/base-nova/ui/textarea"
+} from "@/styles/base-nova/ui/select";
+import { Textarea } from "@/styles/base-nova/ui/textarea";
 
 const months = [
   { label: "MM", value: null },
@@ -34,7 +34,7 @@ const months = [
   { label: "10", value: "10" },
   { label: "11", value: "11" },
   { label: "12", value: "12" },
-]
+];
 
 const years = [
   { label: "YYYY", value: null },
@@ -44,7 +44,7 @@ const years = [
   { label: "2027", value: "2027" },
   { label: "2028", value: "2028" },
   { label: "2029", value: "2029" },
-]
+];
 
 export default function FieldDemo() {
   return (
@@ -53,38 +53,24 @@ export default function FieldDemo() {
         <FieldGroup>
           <FieldSet>
             <FieldLegend>Payment Method</FieldLegend>
-            <FieldDescription>
-              All transactions are secure and encrypted
-            </FieldDescription>
+            <FieldDescription>All transactions are secure and encrypted</FieldDescription>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="checkout-7j9-card-name-43j">
-                  Name on Card
-                </FieldLabel>
-                <Input
-                  id="checkout-7j9-card-name-43j"
-                  placeholder="Evil Rabbit"
-                  required
-                />
+                <FieldLabel htmlFor="checkout-7j9-card-name-43j">Name on Card</FieldLabel>
+                <Input id="checkout-7j9-card-name-43j" placeholder="Evil Rabbit" required />
               </Field>
               <Field>
-                <FieldLabel htmlFor="checkout-7j9-card-number-uw1">
-                  Card Number
-                </FieldLabel>
+                <FieldLabel htmlFor="checkout-7j9-card-number-uw1">Card Number</FieldLabel>
                 <Input
                   id="checkout-7j9-card-number-uw1"
                   placeholder="1234 5678 9012 3456"
                   required
                 />
-                <FieldDescription>
-                  Enter your 16-digit card number
-                </FieldDescription>
+                <FieldDescription>Enter your 16-digit card number</FieldDescription>
               </Field>
               <div className="grid grid-cols-3 gap-4">
                 <Field>
-                  <FieldLabel htmlFor="checkout-exp-month-ts6">
-                    Month
-                  </FieldLabel>
+                  <FieldLabel htmlFor="checkout-exp-month-ts6">Month</FieldLabel>
                   <Select items={months}>
                     <SelectTrigger id="checkout-exp-month-ts6">
                       <SelectValue />
@@ -101,9 +87,7 @@ export default function FieldDemo() {
                   </Select>
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="checkout-7j9-exp-year-f59">
-                    Year
-                  </FieldLabel>
+                  <FieldLabel htmlFor="checkout-7j9-exp-year-f59">Year</FieldLabel>
                   <Select items={years}>
                     <SelectTrigger id="checkout-7j9-exp-year-f59">
                       <SelectValue />
@@ -134,14 +118,8 @@ export default function FieldDemo() {
             </FieldDescription>
             <FieldGroup>
               <Field orientation="horizontal">
-                <Checkbox
-                  id="checkout-7j9-same-as-shipping-wgm"
-                  defaultChecked
-                />
-                <FieldLabel
-                  htmlFor="checkout-7j9-same-as-shipping-wgm"
-                  className="font-normal"
-                >
+                <Checkbox id="checkout-7j9-same-as-shipping-wgm" defaultChecked />
+                <FieldLabel htmlFor="checkout-7j9-same-as-shipping-wgm" className="font-normal">
                   Same as shipping address
                 </FieldLabel>
               </Field>
@@ -150,9 +128,7 @@ export default function FieldDemo() {
           <FieldSet>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="checkout-7j9-optional-comments">
-                  Comments
-                </FieldLabel>
+                <FieldLabel htmlFor="checkout-7j9-optional-comments">Comments</FieldLabel>
                 <Textarea
                   id="checkout-7j9-optional-comments"
                   placeholder="Add any additional comments"
@@ -170,5 +146,5 @@ export default function FieldDemo() {
         </FieldGroup>
       </form>
     </div>
-  )
+  );
 }

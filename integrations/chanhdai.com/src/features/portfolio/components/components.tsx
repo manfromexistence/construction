@@ -1,15 +1,15 @@
-import { ArrowRightIcon } from "lucide-react"
-import Link from "next/link"
+import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 
-import { Button } from "@/components/base/ui/button"
-import { ComponentIcon } from "@/components/icons"
-import { getDocsByCategory } from "@/features/doc/data/documents"
-import { cn } from "@/lib/utils"
+import { Button } from "@/components/base/ui/button";
+import { ComponentIcon } from "@/components/icons";
+import { getDocsByCategory } from "@/features/doc/data/documents";
+import { cn } from "@/lib/utils";
 
-import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel"
+import { Panel, PanelHeader, PanelTitle, PanelTitleSup } from "./panel";
 
 export function Components() {
-  const components = getDocsByCategory("components")
+  const components = getDocsByCategory("components");
 
   return (
     <Panel id="components">
@@ -52,9 +52,7 @@ export function Components() {
                 )}
               </div>
 
-              <h3 className="leading-snug font-medium text-balance">
-                {component.metadata.title}
-              </h3>
+              <h3 className="leading-snug font-medium text-balance">{component.metadata.title}</h3>
             </Link>
           ))}
         </div>
@@ -72,5 +70,5 @@ export function Components() {
         </Button>
       </div>
     </Panel>
-  )
+  );
 }

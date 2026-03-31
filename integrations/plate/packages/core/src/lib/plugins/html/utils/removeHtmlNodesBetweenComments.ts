@@ -1,5 +1,5 @@
-import { isHtmlComment } from './isHtmlComment';
-import { traverseHtmlComments } from './traverseHtmlComments';
+import { isHtmlComment } from "./isHtmlComment";
+import { traverseHtmlComments } from "./traverseHtmlComments";
 
 /** Removes HTML nodes between HTML comments. */
 export const removeHtmlNodesBetweenComments = (
@@ -7,8 +7,7 @@ export const removeHtmlNodesBetweenComments = (
   start: string,
   end: string
 ): void => {
-  const isClosingComment = (node: Node) =>
-    isHtmlComment(node) && node.data === end;
+  const isClosingComment = (node: Node) => isHtmlComment(node) && node.data === end;
 
   traverseHtmlComments(rootNode, (comment) => {
     if (comment.data === start) {

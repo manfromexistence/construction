@@ -1,9 +1,5 @@
-import {
-  Field,
-  FieldDescription,
-  FieldLabel,
-} from "@/styles/base-nova/ui/field"
-import { Textarea } from "@/styles/base-nova/ui/textarea"
+import { Field, FieldDescription, FieldLabel } from "@/styles/base-nova/ui/field";
+import { Textarea } from "@/styles/base-nova/ui/textarea";
 
 export function TextareaField() {
   return (
@@ -12,5 +8,5 @@ export function TextareaField() {
       <FieldDescription>Enter your message below.</FieldDescription>
       <Textarea id="textarea-message" placeholder="Type your message here." />
     </Field>
-  )
+  );
 }

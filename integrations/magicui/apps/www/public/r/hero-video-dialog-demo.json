@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Hero Video Dialog Demo",
   "description": "Example showing a hero video dialog component.",
-  "registryDependencies": [
-    "@magicui/hero-video-dialog"
-  ],
+  "registryDependencies": ["@magicui/hero-video-dialog"],
   "files": [
     {
       "path": "registry/example/hero-video-dialog-demo.tsx",

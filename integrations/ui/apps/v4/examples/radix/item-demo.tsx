@@ -1,6 +1,6 @@
-import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react"
+import { BadgeCheckIcon, ChevronRightIcon } from "lucide-react";
 
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Item,
   ItemActions,
@@ -8,7 +8,7 @@ import {
   ItemDescription,
   ItemMedia,
   ItemTitle,
-} from "@/styles/radix-nova/ui/item"
+} from "@/styles/radix-nova/ui/item";
 
 export function ItemDemo() {
   return (
@@ -16,9 +16,7 @@ export function ItemDemo() {
       <Item variant="outline">
         <ItemContent>
           <ItemTitle>Basic Item</ItemTitle>
-          <ItemDescription>
-            A simple item with title and description.
-          </ItemDescription>
+          <ItemDescription>A simple item with title and description.</ItemDescription>
         </ItemContent>
         <ItemActions>
           <Button variant="outline" size="sm">
@@ -40,5 +38,5 @@ export function ItemDemo() {
         </a>
       </Item>
     </div>
-  )
+  );
 }

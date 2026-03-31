@@ -1,6 +1,6 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const someTodoList = (editor: SlateEditor) =>
   editor.api.some({
@@ -9,6 +9,6 @@ export const someTodoList = (editor: SlateEditor) =>
       const list = n[KEYS.listType];
       const isHasProperty = Object.hasOwn(n, KEYS.listChecked);
 
-      return n.type === 'p' && isHasProperty && list === KEYS.listTodo;
+      return n.type === "p" && isHasProperty && list === KEYS.listTodo;
     },
   });

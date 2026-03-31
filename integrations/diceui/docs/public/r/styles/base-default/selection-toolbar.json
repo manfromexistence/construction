@@ -1,9 +1,6 @@
 {
   "name": "selection-toolbar",
-  "dependencies": [
-    "@base-ui/react",
-    "@floating-ui/react-dom"
-  ],
+  "dependencies": ["@base-ui/react", "@floating-ui/react-dom"],
   "registryDependencies": [
     "button",
     "@diceui/use-as-ref",

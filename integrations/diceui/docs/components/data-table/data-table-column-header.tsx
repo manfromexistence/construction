@@ -1,13 +1,7 @@
 "use client";
 
 import type { Column } from "@tanstack/react-table";
-import {
-  ChevronDown,
-  ChevronsUpDown,
-  ChevronUp,
-  EyeOff,
-  X,
-} from "lucide-react";
+import { ChevronDown, ChevronsUpDown, ChevronUp, EyeOff, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
@@ -38,7 +32,7 @@ export function DataTableColumnHeader<TData, TValue>({
       <DropdownMenuTrigger
         className={cn(
           "-ml-1.5 flex h-8 items-center gap-1.5 rounded-md px-2 py-1.5 hover:bg-accent focus:outline-none focus:ring-1 focus:ring-ring data-[state=open]:bg-accent [&_svg]:size-4 [&_svg]:shrink-0 [&_svg]:text-muted-foreground",
-          className,
+          className
         )}
         {...props}
       >

@@ -1,9 +1,9 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import { BaseInlineEquationPlugin } from './BaseInlineEquationPlugin';
+import { BaseInlineEquationPlugin } from "./BaseInlineEquationPlugin";
 
-describe('BaseInlineEquationPlugin', () => {
-  it('configures inlineEquation as an inline void element and exposes insert.inlineEquation', () => {
+describe("BaseInlineEquationPlugin", () => {
+  it("configures inlineEquation as an inline void element and exposes insert.inlineEquation", () => {
     const editor = createSlateEditor({
       plugins: [BaseInlineEquationPlugin],
     } as any);
@@ -14,6 +14,6 @@ describe('BaseInlineEquationPlugin', () => {
       isInline: true,
       isVoid: true,
     });
-    expect(typeof (editor as any).tf.insert.inlineEquation).toBe('function');
+    expect(typeof (editor as any).tf.insert.inlineEquation).toBe("function");
   });
 });

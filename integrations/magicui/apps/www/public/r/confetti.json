@@ -4,13 +4,8 @@
   "type": "registry:ui",
   "title": "Confetti",
   "description": "Confetti animations are best used to delight your users when something special happens",
-  "dependencies": [
-    "canvas-confetti",
-    "@types/canvas-confetti"
-  ],
-  "registryDependencies": [
-    "button"
-  ],
+  "dependencies": ["canvas-confetti", "@types/canvas-confetti"],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "registry/magicui/confetti.tsx",

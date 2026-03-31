@@ -1,12 +1,7 @@
 {
   "name": "file-upload",
-  "dependencies": [
-    "radix-ui"
-  ],
-  "registryDependencies": [
-    "@diceui/use-as-ref",
-    "@diceui/use-lazy-ref"
-  ],
+  "dependencies": ["radix-ui"],
+  "registryDependencies": ["@diceui/use-as-ref", "@diceui/use-lazy-ref"],
   "files": [
     {
       "path": "ui/file-upload.tsx",

@@ -19,9 +19,7 @@ const PackageNameContext = createContext<PackageNameContextType>({
 });
 
 const PackageNameProvider = ({ children }: { children: React.ReactNode }) => {
-  const [packageName, setPackageName] = useState<PackageManager>(
-    PACKAGE_MANAGER.PNPM
-  );
+  const [packageName, setPackageName] = useState<PackageManager>(PACKAGE_MANAGER.PNPM);
 
   return (
     <PackageNameContext.Provider value={{ packageName, setPackageName }}>
@@ -34,9 +32,7 @@ const usePackageNameContext = () => {
   const context = useContext(PackageNameContext);
 
   if (!context) {
-    throw new Error(
-      "usePackageNameContext must be used within a PackageNameProvider"
-    );
+    throw new Error("usePackageNameContext must be used within a PackageNameProvider");
   }
 
   return context;

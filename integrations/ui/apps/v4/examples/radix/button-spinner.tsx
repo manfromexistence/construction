@@ -1,5 +1,5 @@
-import { Button } from "@/styles/radix-nova/ui/button"
-import { Spinner } from "@/styles/radix-nova/ui/spinner"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Spinner } from "@/styles/radix-nova/ui/spinner";
 
 export default function ButtonSpinner() {
   return (
@@ -13,5 +13,5 @@ export default function ButtonSpinner() {
         <Spinner data-icon="inline-start" />
       </Button>
     </div>
-  )
+  );
 }

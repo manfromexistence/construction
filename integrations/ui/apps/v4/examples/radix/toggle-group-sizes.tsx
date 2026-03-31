@@ -1,7 +1,4 @@
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/radix-nova/ui/toggle-group"
+import { ToggleGroup, ToggleGroupItem } from "@/styles/radix-nova/ui/toggle-group";
 
 export function ToggleGroupSizes() {
   return (
@@ -35,5 +32,5 @@ export function ToggleGroupSizes() {
         </ToggleGroupItem>
       </ToggleGroup>
     </div>
-  )
+  );
 }

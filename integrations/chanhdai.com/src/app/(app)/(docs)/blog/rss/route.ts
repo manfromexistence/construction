@@ -1,11 +1,11 @@
-import { SITE_INFO } from "@/config/site"
-import { getAllDocs } from "@/features/doc/data/documents"
+import { SITE_INFO } from "@/config/site";
+import { getAllDocs } from "@/features/doc/data/documents";
 
-export const revalidate = false
-export const dynamic = "force-static"
+export const revalidate = false;
+export const dynamic = "force-static";
 
 export function GET() {
-  const allPosts = getAllDocs()
+  const allPosts = getAllDocs();
 
   const itemsXml = allPosts
     .map(
@@ -17,7 +17,7 @@ export function GET() {
           <pubDate>${new Date(post.metadata.createdAt).toISOString()}</pubDate>
         </item>`
     )
-    .join("\n")
+    .join("\n");
 
   const rssFeed = `<?xml version="1.0" encoding="UTF-8" ?>
   <rss version="2.0">
@@ -27,11 +27,11 @@ export function GET() {
       <description>${SITE_INFO.description}</description>
       ${itemsXml}
     </channel>
-  </rss>`
+  </rss>`;
 
   return new Response(rssFeed, {
     headers: {
       "Content-Type": "text/xml",
     },
-  })
+  });
 }

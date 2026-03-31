@@ -1,11 +1,7 @@
 {
   "name": "stat-variants-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "stat"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["stat"],
   "files": [
     {
       "path": "examples/stat-variants-demo.tsx",

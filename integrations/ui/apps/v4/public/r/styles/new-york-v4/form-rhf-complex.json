@@ -1,11 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "form-rhf-complex",
-  "dependencies": [
-    "react-hook-form",
-    "@hookform/resolvers",
-    "zod"
-  ],
+  "dependencies": ["react-hook-form", "@hookform/resolvers", "zod"],
   "registryDependencies": [
     "field",
     "button",

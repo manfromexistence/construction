@@ -1,21 +1,21 @@
-import { renderHook } from '@testing-library/react';
+import { renderHook } from "@testing-library/react";
 
 const useEditorPluginMock = mock();
 const getEditorPluginMock = mock();
 const usePluginOptionMock = mock();
 
-mock.module('@platejs/markdown', () => ({
-  MarkdownPlugin: { key: 'markdown' },
+mock.module("@platejs/markdown", () => ({
+  MarkdownPlugin: { key: "markdown" },
   deserializeMd: mock(),
 }));
 
-mock.module('../AIChatPlugin', () => ({
-  AIChatPlugin: { key: 'aiChat' },
+mock.module("../AIChatPlugin", () => ({
+  AIChatPlugin: { key: "aiChat" },
 }));
 
-mock.module('platejs/react', async () => {
+mock.module("platejs/react", async () => {
   const actual = await import(
-    new URL('../../../../../plate/dist/react/index.js', import.meta.url).href
+    new URL("../../../../../plate/dist/react/index.js", import.meta.url).href
   );
   const getEditorPlugin = actual.getEditorPlugin as any;
   const useEditorPlugin = actual.useEditorPlugin as any;
@@ -35,7 +35,7 @@ mock.module('platejs/react', async () => {
 const loadModule = async () =>
   import(`./useAIChatEditor?test=${Math.random().toString(36).slice(2)}`);
 
-describe('useAIChatEditor', () => {
+describe("useAIChatEditor", () => {
   beforeEach(() => {
     getEditorPluginMock.mockReset();
     useEditorPluginMock.mockReset();
@@ -46,9 +46,9 @@ describe('useAIChatEditor', () => {
     mock.restore();
   });
 
-  it('deserializes markdown with memoization, writes editor children, and registers the ai editor', async () => {
+  it("deserializes markdown with memoization, writes editor children, and registers the ai editor", async () => {
     const setOption = mock();
-    const deserialize = mock(() => [{ type: 'p', children: [{ text: 'hi' }] }]);
+    const deserialize = mock(() => [{ type: "p", children: [{ text: "hi" }] }]);
 
     useEditorPluginMock.mockReturnValue({ setOption });
 
@@ -63,14 +63,14 @@ describe('useAIChatEditor', () => {
 
     const { useAIChatEditor } = await loadModule();
     const { result } = renderHook(() =>
-      useAIChatEditor(editor, '# hi', { parser: 'parser' as any })
+      useAIChatEditor(editor, "# hi", { parser: "parser" as any })
     );
 
-    expect(deserialize).toHaveBeenCalledWith('# hi', {
+    expect(deserialize).toHaveBeenCalledWith("# hi", {
       memoize: true,
-      parser: 'parser',
+      parser: "parser",
     });
     expect(editor.children).toEqual(result.current);
-    expect(setOption).toHaveBeenCalledWith('aiEditor', editor);
+    expect(setOption).toHaveBeenCalledWith("aiEditor", editor);
   });
 });

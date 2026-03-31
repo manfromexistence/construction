@@ -1,28 +1,27 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseSuggestionPlugin } from '../BaseSuggestionPlugin';
-import { rejectSuggestion } from './rejectSuggestion';
+import { BaseSuggestionPlugin } from "../BaseSuggestionPlugin";
+import { rejectSuggestion } from "./rejectSuggestion";
 
 jsxt;
 
 const suggestionPlugin = BaseSuggestionPlugin.configure({
   options: {
-    currentUserId: 'testId',
+    currentUserId: "testId",
   },
 });
 
-describe('rejectSuggestion', () => {
-  it('reject insert suggestion', () => {
+describe("rejectSuggestion", () => {
+  it("reject insert suggestion", () => {
     const insertData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -49,19 +48,19 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('reject remove suggestion', () => {
+  it("reject remove suggestion", () => {
     const removeData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'remove',
-      userId: 'testId',
+      type: "remove",
+      userId: "testId",
     };
 
     const input = (
@@ -88,22 +87,22 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('reject update suggestion', () => {
+  it("reject update suggestion", () => {
     const updateData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
       newProperties: {
         bold: true,
       },
-      type: 'update',
-      userId: 'testId',
+      type: "update",
+      userId: "testId",
     };
 
     const input = (
@@ -130,22 +129,22 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('restores falsy removed properties from update suggestions', () => {
+  it("restores falsy removed properties from update suggestions", () => {
     const updateData = {
       createdAt: Date.now(),
-      id: '1',
+      id: "1",
       properties: {
         italic: false,
       },
-      type: 'update',
-      userId: 'testId',
+      type: "update",
+      userId: "testId",
     };
 
     const input = (
@@ -166,29 +165,25 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual([
       {
-        children: [
-          { text: 'test' },
-          { italic: true, text: 'updated' },
-          { text: 'text' },
-        ],
-        type: 'p',
+        children: [{ text: "test" }, { italic: true, text: "updated" }, { text: "text" }],
+        type: "p",
       },
     ]);
   });
 
-  it('reject line break suggestion', () => {
+  it("reject line break suggestion", () => {
     const lineBreakData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
       isLineBreak: true,
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -210,20 +205,20 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('merge nodes when rejecting line break insert suggestion', () => {
+  it("merge nodes when rejecting line break insert suggestion", () => {
     const lineBreakData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
       isLineBreak: true,
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -245,28 +240,28 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('reject node with both remove and insert suggestions', () => {
+  it("reject node with both remove and insert suggestions", () => {
     const time = Date.now();
 
     const removeData = {
-      id: '1',
+      id: "1",
       createdAt: time,
-      type: 'remove',
-      userId: 'testId',
+      type: "remove",
+      userId: "testId",
     };
 
     const insertData = {
-      id: '1',
+      id: "1",
       createdAt: time,
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -297,19 +292,19 @@ describe('rejectSuggestion', () => {
 
     // Reject should keep the remove suggestion and remove the insert suggestion
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('reject remove nodes', () => {
+  it("reject remove nodes", () => {
     const removeData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'remove',
-      userId: 'testId',
+      type: "remove",
+      userId: "testId",
     };
 
     const input = (
@@ -332,19 +327,19 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);
   });
 
-  it('reject insert nodes', () => {
+  it("reject insert nodes", () => {
     const insertData = {
-      id: '1',
+      id: "1",
       createdAt: Date.now(),
-      type: 'insert',
-      userId: 'testId',
+      type: "insert",
+      userId: "testId",
     };
 
     const input = (
@@ -366,8 +361,8 @@ describe('rejectSuggestion', () => {
     });
 
     rejectSuggestion(editor, {
-      keyId: 'suggestion_1',
-      suggestionId: '1',
+      keyId: "suggestion_1",
+      suggestionId: "1",
     } as any);
 
     expect(editor.children).toEqual(output.children);

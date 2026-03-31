@@ -1,5 +1,6 @@
-"use client"
+"use client";
 
+import { useReset } from "@/app/(app)/create/hooks/use-reset";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,11 +10,10 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/styles/base-nova/ui/alert-dialog"
-import { useReset } from "@/app/(app)/create/hooks/use-reset"
+} from "@/styles/base-nova/ui/alert-dialog";
 
 export function ResetDialog() {
-  const { showResetDialog, setShowResetDialog, confirmReset } = useReset()
+  const { showResetDialog, setShowResetDialog, confirmReset } = useReset();
 
   return (
     <AlertDialog open={showResetDialog} onOpenChange={setShowResetDialog}>
@@ -30,5 +30,5 @@ export function ResetDialog() {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  )
+  );
 }

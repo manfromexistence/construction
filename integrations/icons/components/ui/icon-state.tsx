@@ -19,10 +19,7 @@ const IconState = ({ children, status = "idle" }: IconStateProps) => {
 
   useEffect(() => {
     if (status === "loading") {
-      const timeout = setTimeout(
-        () => setShowLoading(true),
-        DEFAULT_LOADING_DELAY
-      );
+      const timeout = setTimeout(() => setShowLoading(true), DEFAULT_LOADING_DELAY);
       return () => clearTimeout(timeout);
     }
 
@@ -73,5 +70,5 @@ const IconState = ({ children, status = "idle" }: IconStateProps) => {
   );
 };
 
+export type { IconStateProps, IconStatus };
 export { IconState };
-export type { IconStatus, IconStateProps };

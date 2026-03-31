@@ -6,7 +6,7 @@ export const getSelectedDomNode = () => {
   const range = selection.getRangeAt(0);
 
   const htmlFragment = range.cloneContents();
-  const div = document.createElement('div');
+  const div = document.createElement("div");
   div.append(htmlFragment);
 
   return div;

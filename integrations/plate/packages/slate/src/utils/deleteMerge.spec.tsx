@@ -1,40 +1,38 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../create-editor';
-import type { Editor, LegacyEditorMethods } from '../interfaces';
-import { syncLegacyMethods } from './assignLegacyTransforms';
-import { deleteMerge } from './deleteMerge';
+import { createEditor } from "../create-editor";
+import type { Editor, LegacyEditorMethods } from "../interfaces";
+import { syncLegacyMethods } from "./assignLegacyTransforms";
+import { deleteMerge } from "./deleteMerge";
 
 jsxt;
 
 const withInlineVoid = (editor: Editor & LegacyEditorMethods) => {
   const { isInline, isVoid } = editor;
 
-  editor.isInline = (element) => element.type === 'img' || isInline(element);
-  editor.isVoid = (element) => element.type === 'img' || isVoid(element);
+  editor.isInline = (element) => element.type === "img" || isInline(element);
+  editor.isVoid = (element) => element.type === "img" || isVoid(element);
   syncLegacyMethods(editor);
 
   return editor;
 };
 
-describe('deleteMerge', () => {
-  it('returns early when there is no selection and no explicit location', () => {
+describe("deleteMerge", () => {
+  it("returns early when there is no selection and no explicit location", () => {
     const editor: any = createEditor({
-      children: [{ children: [{ text: 'one' }], type: 'p' }] as any,
+      children: [{ children: [{ text: "one" }], type: "p" }] as any,
     });
 
     editor.selection = null;
 
     deleteMerge(editor);
 
-    expect(editor.children).toEqual([
-      { children: [{ text: 'one' }], type: 'p' },
-    ]);
+    expect(editor.children).toEqual([{ children: [{ text: "one" }], type: "p" }]);
   });
 
-  it('removes the node at a path location', () => {
+  it("removes the node at a path location", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -55,7 +53,7 @@ describe('deleteMerge', () => {
     );
   });
 
-  it('deletes the next character from a collapsed point and keeps the cursor in place', () => {
+  it("deletes the next character from a collapsed point and keeps the cursor in place", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -83,7 +81,7 @@ describe('deleteMerge', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('deletes the previous character when reverse is true', () => {
+  it("deletes the previous character when reverse is true", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -112,7 +110,7 @@ describe('deleteMerge', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('merges blocks when deleting an expanded cross-block selection', () => {
+  it("merges blocks when deleting an expanded cross-block selection", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -146,7 +144,7 @@ describe('deleteMerge', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('treats an explicitly collapsed range like its anchor point', () => {
+  it("treats an explicitly collapsed range like its anchor point", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -161,16 +159,14 @@ describe('deleteMerge', () => {
 
     deleteMerge(editor, { at: editor.selection });
 
-    expect(editor.children).toEqual([
-      { children: [{ text: 'wod' }], type: 'p' },
-    ]);
+    expect(editor.children).toEqual([{ children: [{ text: "wod" }], type: "p" }]);
     expect(editor.selection).toEqual({
       anchor: { offset: 2, path: [0, 0] },
       focus: { offset: 2, path: [0, 0] },
     });
   });
 
-  it('removes fully covered middle blocks before merging the edges', () => {
+  it("removes fully covered middle blocks before merging the edges", () => {
     const editor: any = createEditor(
       (
         <editor>
@@ -203,7 +199,7 @@ describe('deleteMerge', () => {
     expect(editor.selection).toEqual(output.selection);
   });
 
-  it('removes an inline void when given a point inside it', () => {
+  it("removes an inline void when given a point inside it", () => {
     const editor = withInlineVoid(
       createEditor(
         (
@@ -224,24 +220,24 @@ describe('deleteMerge', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'onetwo' }],
-        type: 'p',
+        children: [{ text: "onetwo" }],
+        type: "p",
       },
     ]);
   });
 
-  it('nudges a start point out of an inline void before deleting', () => {
+  it("nudges a start point out of an inline void before deleting", () => {
     const editor = withInlineVoid(
       createEditor({
         children: [
           {
             children: [
-              { text: 'one' },
-              { children: [{ text: '' }], type: 'img' },
-              { text: 'two' },
-              { text: 'three' },
+              { text: "one" },
+              { children: [{ text: "" }], type: "img" },
+              { text: "two" },
+              { text: "three" },
             ],
-            type: 'p',
+            type: "p",
           },
         ] as any,
         selection: {
@@ -255,8 +251,8 @@ describe('deleteMerge', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'onethree' }],
-        type: 'p',
+        children: [{ text: "onethree" }],
+        type: "p",
       },
     ]);
     expect(editor.selection).toEqual({
@@ -265,18 +261,18 @@ describe('deleteMerge', () => {
     });
   });
 
-  it('nudges an end point out of an inline void before deleting', () => {
+  it("nudges an end point out of an inline void before deleting", () => {
     const editor = withInlineVoid(
       createEditor({
         children: [
           {
             children: [
-              { text: 'one' },
-              { text: 'two' },
-              { children: [{ text: '' }], type: 'img' },
-              { text: 'three' },
+              { text: "one" },
+              { text: "two" },
+              { children: [{ text: "" }], type: "img" },
+              { text: "three" },
             ],
-            type: 'p',
+            type: "p",
           },
         ] as any,
         selection: {
@@ -290,8 +286,8 @@ describe('deleteMerge', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: 'onethree' }],
-        type: 'p',
+        children: [{ text: "onethree" }],
+        type: "p",
       },
     ]);
     expect(editor.selection).toEqual({

@@ -1,8 +1,6 @@
 {
   "name": "navigation-menu",
-  "externalDependencies": [
-    "@radix-ui/react-navigation-menu"
-  ],
+  "externalDependencies": ["@radix-ui/react-navigation-menu"],
   "internalDependencies": [],
   "file": {
     "name": "navigation-menu.tsx",

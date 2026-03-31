@@ -1,9 +1,9 @@
 export type DiffDeletion = {
-  type: 'delete';
+  type: "delete";
 };
 
 export type DiffInsertion = {
-  type: 'insert';
+  type: "insert";
 };
 
 export type DiffOperation = DiffDeletion | DiffInsertion | DiffUpdate;
@@ -16,5 +16,5 @@ export type DiffProps = {
 export type DiffUpdate = {
   newProperties: Record<string, any>;
   properties: Record<string, any>;
-  type: 'update';
+  type: "update";
 };

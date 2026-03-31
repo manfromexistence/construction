@@ -1,7 +1,7 @@
-import { getTheme } from "@/actions/themes";
-import { getCommunityDataForTheme } from "@/actions/community-themes";
-import ThemeView from "@/components/theme-view";
 import { Metadata } from "next";
+import { getCommunityDataForTheme } from "@/actions/community-themes";
+import { getTheme } from "@/actions/themes";
+import ThemeView from "@/components/theme-view";
 
 interface ThemePageProps {
   params: Promise<{

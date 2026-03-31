@@ -1,7 +1,6 @@
-import type { TElement } from 'platejs';
-import type { PlateEditor } from 'platejs/react';
-
-import { KEYS } from 'platejs';
+import type { TElement } from "platejs";
+import { KEYS } from "platejs";
+import type { PlateEditor } from "platejs/react";
 
 const historyMarks = new WeakMap<PlateEditor, boolean>();
 
@@ -12,8 +11,7 @@ export const withHistoryMark = (editor: PlateEditor, fn: () => void) => {
   historyMarks.set(editor, prev);
 };
 
-export const isHistoryMarking = (editor: PlateEditor): boolean =>
-  historyMarks.get(editor) ?? false;
+export const isHistoryMarking = (editor: PlateEditor): boolean => historyMarks.get(editor) ?? false;
 
 export const updateUploadHistory = (editor: PlateEditor, node: TElement) => {
   const index = editor.history.undos.findLastIndex(
@@ -21,8 +19,7 @@ export const updateUploadHistory = (editor: PlateEditor, node: TElement) => {
       batch[KEYS.placeholder] &&
       batch.operations.some(
         (operation: any) =>
-          operation.type === 'insert_node' &&
-          operation.node.id === node.placeholderId
+          operation.type === "insert_node" && operation.node.id === node.placeholderId
       )
   );
 
@@ -33,10 +30,7 @@ export const updateUploadHistory = (editor: PlateEditor, node: TElement) => {
   const newOperations: any[] = [];
 
   for (const operation of batch.operations) {
-    if (
-      (operation.type === 'insert_node' && (operation.node as any)).id ===
-      node.placeholderId
-    ) {
+    if ((operation.type === "insert_node" && (operation.node as any)).id === node.placeholderId) {
       newOperations.push({
         ...operation,
         node,

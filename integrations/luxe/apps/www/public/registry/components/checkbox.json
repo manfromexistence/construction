@@ -1,8 +1,6 @@
 {
   "name": "checkbox",
-  "externalDependencies": [
-    "@radix-ui/react-checkbox"
-  ],
+  "externalDependencies": ["@radix-ui/react-checkbox"],
   "internalDependencies": [],
   "file": {
     "name": "checkbox.tsx",

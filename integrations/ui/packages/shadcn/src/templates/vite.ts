@@ -1,7 +1,7 @@
-import dedent from "dedent"
+import dedent from "dedent";
 
-import { createTemplate } from "./create-template"
-import { fontsourceMonorepoInit } from "./monorepo"
+import { createTemplate } from "./create-template";
+import { fontsourceMonorepoInit } from "./monorepo";
 
 export const vite = createTemplate({
   name: "vite",
@@ -46,4 +46,4 @@ export default App;
       },
     ],
   },
-})
+});

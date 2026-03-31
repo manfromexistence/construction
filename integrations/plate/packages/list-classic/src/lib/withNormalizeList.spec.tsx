@@ -1,9 +1,9 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { BaseListPlugin } from './BaseListPlugin';
+import { BaseListPlugin } from "./BaseListPlugin";
 
 jsxt;
 
@@ -20,8 +20,8 @@ const testNormalize = (input: SlateEditor, output: SlateEditor): void => {
   expect(editor.children).toEqual(output.children);
 };
 
-describe('merge lists', () => {
-  it('does not merge lists with different type', () => {
+describe("merge lists", () => {
+  it("does not merge lists with different type", () => {
     const input = (
       <editor>
         <hul>
@@ -55,7 +55,7 @@ describe('merge lists', () => {
     testNormalize(input, output);
   });
 
-  it('merge the next list if it has the same type', () => {
+  it("merge the next list if it has the same type", () => {
     const input = (
       <editor>
         <hul>
@@ -87,7 +87,7 @@ describe('merge lists', () => {
     testNormalize(input, output);
   });
 
-  it('merge the previous list if it has the same type', () => {
+  it("merge the previous list if it has the same type", () => {
     const input = (
       <editor>
         <hul>
@@ -120,8 +120,8 @@ describe('merge lists', () => {
   });
 });
 
-describe('clean up lists', () => {
-  it('remove list without list items', () => {
+describe("clean up lists", () => {
+  it("remove list without list items", () => {
     const input = (
       <editor>
         <hul />
@@ -133,7 +133,7 @@ describe('clean up lists', () => {
     testNormalize(input, output);
   });
 
-  it('only allow li to be child of ul', () => {
+  it("only allow li to be child of ul", () => {
     const input = (
       <editor>
         <hul>
@@ -166,16 +166,16 @@ describe('clean up lists', () => {
   });
 });
 
-describe('task list normalization', () => {
-  it('adds checked=false to task-list items that are missing it', () => {
+describe("task list normalization", () => {
+  it("adds checked=false to task-list items that are missing it", () => {
     const input = {
       children: [
         {
           children: [
-            { children: [{ text: 'a' }], type: 'lic' },
-            { children: [{ text: 'b' }], type: 'lic' },
-          ].map((child) => ({ children: [child], type: 'li' })),
-          type: 'taskList',
+            { children: [{ text: "a" }], type: "lic" },
+            { children: [{ text: "b" }], type: "lic" },
+          ].map((child) => ({ children: [child], type: "li" })),
+          type: "taskList",
         },
       ],
     } as any as SlateEditor;
@@ -186,16 +186,16 @@ describe('task list normalization', () => {
           children: [
             {
               checked: false,
-              children: [{ children: [{ text: 'a' }], type: 'lic' }],
-              type: 'li',
+              children: [{ children: [{ text: "a" }], type: "lic" }],
+              type: "li",
             },
             {
               checked: false,
-              children: [{ children: [{ text: 'b' }], type: 'lic' }],
-              type: 'li',
+              children: [{ children: [{ text: "b" }], type: "lic" }],
+              type: "li",
             },
           ],
-          type: 'taskList',
+          type: "taskList",
         },
       ],
     } as any as SlateEditor;
@@ -203,18 +203,18 @@ describe('task list normalization', () => {
     testNormalize(input, output);
   });
 
-  it('removes checked from list items outside task lists', () => {
+  it("removes checked from list items outside task lists", () => {
     const input = {
       children: [
         {
           children: [
             {
               checked: true,
-              children: [{ children: [{ text: 'a' }], type: 'lic' }],
-              type: 'li',
+              children: [{ children: [{ text: "a" }], type: "lic" }],
+              type: "li",
             },
           ],
-          type: 'ul',
+          type: "ul",
         },
       ],
     } as any as SlateEditor;
@@ -224,11 +224,11 @@ describe('task list normalization', () => {
         {
           children: [
             {
-              children: [{ children: [{ text: 'a' }], type: 'lic' }],
-              type: 'li',
+              children: [{ children: [{ text: "a" }], type: "lic" }],
+              type: "li",
             },
           ],
-          type: 'ul',
+          type: "ul",
         },
       ],
     } as any as SlateEditor;
@@ -237,27 +237,27 @@ describe('task list normalization', () => {
   });
 });
 
-describe('nested list normalization', () => {
-  it('moves direct nested lists into the previous list item', () => {
+describe("nested list normalization", () => {
+  it("moves direct nested lists into the previous list item", () => {
     const input = {
       children: [
         {
           children: [
             {
-              children: [{ children: [{ text: 'one' }], type: 'lic' }],
-              type: 'li',
+              children: [{ children: [{ text: "one" }], type: "lic" }],
+              type: "li",
             },
             {
               children: [
                 {
-                  children: [{ children: [{ text: 'two' }], type: 'lic' }],
-                  type: 'li',
+                  children: [{ children: [{ text: "two" }], type: "lic" }],
+                  type: "li",
                 },
               ],
-              type: 'ul',
+              type: "ul",
             },
           ],
-          type: 'ul',
+          type: "ul",
         },
       ],
     } as any as SlateEditor;
@@ -268,21 +268,21 @@ describe('nested list normalization', () => {
           children: [
             {
               children: [
-                { children: [{ text: 'one' }], type: 'lic' },
+                { children: [{ text: "one" }], type: "lic" },
                 {
                   children: [
                     {
-                      children: [{ children: [{ text: 'two' }], type: 'lic' }],
-                      type: 'li',
+                      children: [{ children: [{ text: "two" }], type: "lic" }],
+                      type: "li",
                     },
                   ],
-                  type: 'ul',
+                  type: "ul",
                 },
               ],
-              type: 'li',
+              type: "li",
             },
           ],
-          type: 'ul',
+          type: "ul",
         },
       ],
     } as any as SlateEditor;

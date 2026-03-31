@@ -1,20 +1,20 @@
 import {
   type Descendant,
   type ElementEntry,
-  type NodeEntry,
-  type PathRef,
-  type SlateEditor,
-  type TElement,
   KEYS,
   match,
   NodeApi,
+  type NodeEntry,
   PathApi,
-} from 'platejs';
+  type PathRef,
+  type SlateEditor,
+  type TElement,
+} from "platejs";
 
-import type { ListConfig } from '../BaseListPlugin';
+import type { ListConfig } from "../BaseListPlugin";
 
-import { getListTypes } from '../queries/index';
-import { moveListItemUp } from '../transforms/index';
+import { getListTypes } from "../queries/index";
+import { moveListItemUp } from "../transforms/index";
 
 /**
  * Recursively get all the:
@@ -53,10 +53,7 @@ export const getDeepInlineChildren = (
  */
 export const normalizeListItem = (
   editor: SlateEditor,
-  {
-    listItem,
-    validLiChildrenTypes = [],
-  }: { listItem: ElementEntry } & ListConfig['options']
+  { listItem, validLiChildrenTypes = [] }: { listItem: ElementEntry } & ListConfig["options"]
 ) => {
   let changed = false;
 
@@ -69,9 +66,7 @@ export const normalizeListItem = (
   ]);
 
   const [, liPath] = listItem;
-  const liChildren = Array.from(
-    NodeApi.children<TElement>(editor, listItem[1])
-  );
+  const liChildren = Array.from(NodeApi.children<TElement>(editor, listItem[1]));
 
   // Get invalid (type) li children path refs to be moved
   const invalidLiChildrenPathRefs = liChildren
@@ -109,9 +104,7 @@ export const normalizeListItem = (
       // the listItem has no lic so we move the children up a level
       const parent = editor.api.parent(listItem[1]);
       const sublist = firstLiChild;
-      const children = Array.from(
-        NodeApi.children<TElement>(editor, firstLiChild[1])
-      ).reverse();
+      const children = Array.from(NodeApi.children<TElement>(editor, firstLiChild[1])).reverse();
       children.forEach((c) => {
         moveListItemUp(editor, {
           list: sublist,

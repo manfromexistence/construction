@@ -1,14 +1,14 @@
-import Link from "next/link"
-import { mdxComponents } from "@/mdx-components"
-import { IconRss } from "@tabler/icons-react"
+import { IconRss } from "@tabler/icons-react";
+import Link from "next/link";
+import { OpenInV0Cta } from "@/components/open-in-v0-cta";
 
-import { getChangelogPages, type ChangelogPageData } from "@/lib/changelog"
-import { absoluteUrl } from "@/lib/utils"
-import { OpenInV0Cta } from "@/components/open-in-v0-cta"
-import { Button } from "@/styles/radix-nova/ui/button"
+import { type ChangelogPageData, getChangelogPages } from "@/lib/changelog";
+import { absoluteUrl } from "@/lib/utils";
+import { mdxComponents } from "@/mdx-components";
+import { Button } from "@/styles/radix-nova/ui/button";
 
-export const revalidate = false
-export const dynamic = "force-static"
+export const revalidate = false;
+export const dynamic = "force-static";
 
 export function generateMetadata() {
   return {
@@ -21,21 +21,19 @@ export function generateMetadata() {
       url: absoluteUrl("/docs/changelog"),
       images: [
         {
-          url: `/og?title=${encodeURIComponent(
-            "Changelog"
-          )}&description=${encodeURIComponent(
+          url: `/og?title=${encodeURIComponent("Changelog")}&description=${encodeURIComponent(
             "Latest updates and announcements."
           )}`,
         },
       ],
     },
-  }
+  };
 }
 
 export default function ChangelogPage() {
-  const pages = getChangelogPages()
-  const latestPages = pages.slice(0, 5)
-  const olderPages = pages.slice(5)
+  const pages = getChangelogPages();
+  const latestPages = pages.slice(0, 5);
+  const olderPages = pages.slice(5);
 
   return (
     <div
@@ -63,8 +61,8 @@ export default function ChangelogPage() {
           </div>
           <div className="w-full flex-1 pb-16 sm:pb-0">
             {latestPages.map((page) => {
-              const data = page.data as ChangelogPageData
-              const MDX = page.data.body
+              const data = page.data as ChangelogPageData;
+              const MDX = page.data.body;
 
               return (
                 <article key={page.url} className="mb-12 border-b pb-12">
@@ -75,7 +73,7 @@ export default function ChangelogPage() {
                     <MDX components={mdxComponents} />
                   </div>
                 </article>
-              )
+              );
             })}
             {olderPages.length > 0 && (
               <div id="more-updates" className="mb-24 scroll-mt-24">
@@ -84,21 +82,19 @@ export default function ChangelogPage() {
                 </h2>
                 <div className="grid auto-rows-fr gap-3 sm:grid-cols-2">
                   {olderPages.map((page) => {
-                    const data = page.data as ChangelogPageData
-                    const [date, ...titleParts] = data.title.split(" - ")
-                    const title = titleParts.join(" - ")
+                    const data = page.data as ChangelogPageData;
+                    const [date, ...titleParts] = data.title.split(" - ");
+                    const title = titleParts.join(" - ");
                     return (
                       <Link
                         key={page.url}
                         href={page.url}
                         className="flex w-full flex-col rounded-xl bg-surface px-4 py-3 text-surface-foreground transition-colors hover:bg-surface/80"
                       >
-                        <span className="text-xs text-muted-foreground">
-                          {date}
-                        </span>
+                        <span className="text-xs text-muted-foreground">{date}</span>
                         <span className="text-sm font-medium">{title}</span>
                       </Link>
-                    )
+                    );
                   })}
                 </div>
               </div>
@@ -114,7 +110,7 @@ export default function ChangelogPage() {
               On This Page
             </p>
             {latestPages.map((page) => {
-              const data = page.data as ChangelogPageData
+              const data = page.data as ChangelogPageData;
               return (
                 <Link
                   key={page.url}
@@ -123,7 +119,7 @@ export default function ChangelogPage() {
                 >
                   {data.title}
                 </Link>
-              )
+              );
             })}
             {olderPages.length > 0 && (
               <a
@@ -140,5 +136,5 @@ export default function ChangelogPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

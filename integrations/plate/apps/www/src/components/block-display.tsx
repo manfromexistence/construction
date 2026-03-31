@@ -1,14 +1,14 @@
-import * as React from 'react';
+import * as React from "react";
 
-import type { RegistryItem } from 'shadcn/registry';
+import type { RegistryItem } from "shadcn/registry";
 
-import { BlockViewer } from '@/components/block-viewer';
+import { BlockViewer } from "@/components/block-viewer";
 import {
   getCachedDependencies,
   getCachedFileTree,
   getCachedHighlightedFiles,
   getCachedRegistryItem,
-} from '@/lib/registry-cache';
+} from "@/lib/registry-cache";
 
 export async function BlockDisplay({
   item: block,
@@ -22,14 +22,7 @@ export async function BlockDisplay({
   };
 }) {
   if (block.meta?.src) {
-    return (
-      <BlockViewer
-        dependencies={[]}
-        highlightedFiles={[]}
-        item={block}
-        tree={[]}
-      />
-    );
+    return <BlockViewer dependencies={[]} highlightedFiles={[]} item={block} tree={[]} />;
   }
 
   const item = await getCachedRegistryItem(block.name, true);

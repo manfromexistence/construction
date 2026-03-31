@@ -1,6 +1,6 @@
-import dedent from 'dedent';
-import type { SlateEditor } from 'platejs';
-import type { ChatMessage } from '@/components/editor/use-chat';
+import dedent from "dedent";
+import type { SlateEditor } from "platejs";
+import type { ChatMessage } from "@/components/editor/use-chat";
 
 import {
   addSelection,
@@ -9,8 +9,8 @@ import {
   getLastUserInstruction,
   getMarkdownWithSelection,
   isMultiBlocks,
-} from '../utils';
-import { commonGenerateRules } from './common';
+} from "../utils";
+import { commonGenerateRules } from "./common";
 
 function buildGenerateFreeformPrompt(messages: ChatMessage[]) {
   return buildStructuredPrompt({
@@ -56,10 +56,7 @@ function buildGenerateFreeformPrompt(messages: ChatMessage[]) {
   });
 }
 
-function buildGenerateContextPrompt(
-  editor: SlateEditor,
-  messages: ChatMessage[]
-) {
+function buildGenerateContextPrompt(editor: SlateEditor, messages: ChatMessage[]) {
   if (!isMultiBlocks(editor)) {
     addSelection(editor);
   }

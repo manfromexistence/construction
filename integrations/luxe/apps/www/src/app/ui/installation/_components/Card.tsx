@@ -1,10 +1,8 @@
 "use client";
 
-import Link from "next/link";
-
-import { useEffect, useRef, useState } from "react";
-
 import { AnimatePresence, motion } from "motion/react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 type CardProps = {
   slug: string;
@@ -31,9 +29,7 @@ export function Card({ slug, icon, name }: CardProps) {
           <Illustration icon={icon} />
         </div>
         <div className="space-y-1.5">
-          <h1 className="text-2xl font-semibold tracking-tight text-primary">
-            {name}
-          </h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-primary">{name}</h1>
         </div>
       </div>
     </Link>
@@ -50,9 +46,7 @@ export const Illustration = ({ icon }: { icon: JSX.Element }) => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      highlightedStars.current = Array.from({ length: 5 }, () =>
-        Math.floor(Math.random() * stars),
-      );
+      highlightedStars.current = Array.from({ length: 5 }, () => Math.floor(Math.random() * stars));
 
       setGlowingStars([...highlightedStars.current]);
     }, 3000);
@@ -74,14 +68,9 @@ export const Illustration = ({ icon }: { icon: JSX.Element }) => {
         const glowDelay = (index % 10) * 0.1;
 
         return (
-          <div
-            key={index}
-            className="relative flex items-center justify-center"
-          >
+          <div key={index} className="relative flex items-center justify-center">
             <Star isGlowing={isGlowing} delay={startDelay} />
-            <AnimatePresence mode="wait">
-              {isGlowing && <Glow delay={glowDelay} />}
-            </AnimatePresence>
+            <AnimatePresence mode="wait">{isGlowing && <Glow delay={glowDelay} />}</AnimatePresence>
           </div>
         );
       })}

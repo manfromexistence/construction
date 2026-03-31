@@ -1,10 +1,9 @@
-import type { TListElement } from 'platejs';
+import type { TListElement } from "platejs";
 
-import type { MdList, MdListItem, MdParagraph } from '../mdast';
-import type { SerializeMdOptions } from './serializeMd';
-
-import { convertNodesSerialize } from './convertNodesSerialize';
-import { wrapWithBlockId } from './wrapWithBlockId';
+import type { MdList, MdListItem, MdParagraph } from "../mdast";
+import { convertNodesSerialize } from "./convertNodesSerialize";
+import type { SerializeMdOptions } from "./serializeMd";
+import { wrapWithBlockId } from "./wrapWithBlockId";
 
 export function listToMdastTree(
   nodes: TListElement[],
@@ -12,7 +11,7 @@ export function listToMdastTree(
   isBlock = false
 ): any {
   if (nodes.length === 0) {
-    throw new Error('Cannot create a list from empty nodes');
+    throw new Error("Cannot create a list from empty nodes");
   }
 
   // If withBlockId is enabled, isBlock is true, and any node has an ID,
@@ -24,10 +23,10 @@ export function listToMdastTree(
   // Normal list processing
   const root: MdList = {
     children: [],
-    ordered: nodes[0].listStyleType === 'decimal',
+    ordered: nodes[0].listStyleType === "decimal",
     spread: options.spread ?? false,
     start: nodes[0].listStart,
-    type: 'list',
+    type: "list",
   };
 
   // Stack to track parent nodes at different indentation levels
@@ -35,7 +34,7 @@ export function listToMdastTree(
     indent: number;
     list: MdList;
     parent: MdListItem | null;
-    styleType: TListElement['listStyleType'];
+    styleType: TListElement["listStyleType"];
   }[] = [
     {
       indent: nodes[0].indent,
@@ -50,16 +49,13 @@ export function listToMdastTree(
     const currentIndent = node.indent;
 
     // Find the appropriate parent list for the current indentation level
-    while (
-      indentStack.length > 1 &&
-      indentStack.at(-1)!.indent > currentIndent
-    ) {
+    while (indentStack.length > 1 && indentStack.at(-1)!.indent > currentIndent) {
       indentStack.pop();
     }
 
     let stackTop = indentStack.at(-1);
     if (!stackTop) {
-      throw new Error('Stack should never be empty');
+      throw new Error("Stack should never be empty");
     }
 
     const hasSameIndentStyleChange =
@@ -71,10 +67,10 @@ export function listToMdastTree(
       // Split sibling list when style switches at same indent
       const siblingList: MdList = {
         children: [],
-        ordered: node.listStyleType === 'decimal',
+        ordered: node.listStyleType === "decimal",
         spread: options.spread ?? false,
         start: node.listStart,
-        type: 'list',
+        type: "list",
       };
 
       // Attach sibling list under the same parent item
@@ -95,19 +91,16 @@ export function listToMdastTree(
       checked: null,
       children: [
         {
-          children: convertNodesSerialize(
-            node.children,
-            options
-          ) as MdParagraph['children'],
-          type: 'paragraph',
+          children: convertNodesSerialize(node.children, options) as MdParagraph["children"],
+          type: "paragraph",
         },
       ],
       spread: options.spread ?? false,
-      type: 'listItem',
+      type: "listItem",
     } as any;
 
     // Add checked property for todo lists
-    if (node.listStyleType === 'todo' && node.checked !== undefined) {
+    if (node.listStyleType === "todo" && node.checked !== undefined) {
       listItem.checked = node.checked;
     }
 
@@ -120,10 +113,10 @@ export function listToMdastTree(
       // Create a new nested list for the next indentation level
       const nestedList: MdList = {
         children: [],
-        ordered: nextNode.listStyleType === 'decimal',
+        ordered: nextNode.listStyleType === "decimal",
         spread: options.spread ?? false,
         start: nextNode.listStart,
-        type: 'list',
+        type: "list",
       };
 
       // Add the nested list to the current list item
@@ -159,11 +152,11 @@ function processListWithBlockIds(
     // Create a single-item list for this node
     const singleList: MdList = {
       children: [],
-      ordered: node.listStyleType === 'decimal',
+      ordered: node.listStyleType === "decimal",
       spread: options.spread ?? false,
       // For ordered lists, preserve the correct number
-      start: node.listStyleType === 'decimal' ? i + 1 : undefined,
-      type: 'list',
+      start: node.listStyleType === "decimal" ? i + 1 : undefined,
+      type: "list",
     };
 
     // Create the list item
@@ -171,19 +164,16 @@ function processListWithBlockIds(
       checked: null,
       children: [
         {
-          children: convertNodesSerialize(
-            node.children,
-            options
-          ) as MdParagraph['children'],
-          type: 'paragraph',
+          children: convertNodesSerialize(node.children, options) as MdParagraph["children"],
+          type: "paragraph",
         },
       ],
       spread: options.spread ?? false,
-      type: 'listItem',
+      type: "listItem",
     } as any;
 
     // Add checked property for todo lists
-    if (node.listStyleType === 'todo' && node.checked !== undefined) {
+    if (node.listStyleType === "todo" && node.checked !== undefined) {
       listItem.checked = node.checked;
     }
 
@@ -200,6 +190,6 @@ function processListWithBlockIds(
   // Return a fragment containing all wrapped lists
   return {
     children: fragments,
-    type: 'fragment',
+    type: "fragment",
   };
 }

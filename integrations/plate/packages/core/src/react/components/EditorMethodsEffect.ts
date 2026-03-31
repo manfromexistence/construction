@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { useEditorRef, useRedecorate } from '../stores';
+import { useEditorRef, useRedecorate } from "../stores";
 
 export const EditorMethodsEffect = ({ id }: { id?: string }) => {
   const editor = useEditorRef(id);

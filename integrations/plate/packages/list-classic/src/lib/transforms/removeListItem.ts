@@ -1,15 +1,15 @@
 import {
-  type ElementEntry,
-  type SlateEditor,
-  type TElement,
   deleteMerge,
+  type ElementEntry,
   KEYS,
   PathApi,
-} from 'platejs';
+  type SlateEditor,
+  type TElement,
+} from "platejs";
 
-import { getPropsIfTaskListLiNode, hasListChild } from '../queries';
-import { moveListItemsToList } from './moveListItemsToList';
-import { moveListItemSublistItemsToListItemSublist } from './moveListItemSublistItemsToListItemSublist';
+import { getPropsIfTaskListLiNode, hasListChild } from "../queries";
+import { moveListItemSublistItemsToListItemSublist } from "./moveListItemSublistItemsToListItemSublist";
+import { moveListItemsToList } from "./moveListItemsToList";
 
 export type RemoveListItemOptions = {
   list: ElementEntry;
@@ -55,7 +55,7 @@ export const removeListItem = (
         {
           children: [
             {
-              children: [{ text: '' }],
+              children: [{ text: "" }],
               type: editor.getType(KEYS.lic),
             },
           ],

@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
-import { Pointer } from "@/registry/magicui/pointer"
+import { Pointer } from "@/registry/magicui/pointer";
 
 export default function PointerDemo1() {
   return (
@@ -50,9 +50,7 @@ export default function PointerDemo1() {
       <div className="border-border rounded-lg border p-4">
         <div className="relative flex h-40 flex-col items-center justify-center">
           <h3 className="text-xl font-semibold">Colored Pointer</h3>
-          <p className="text-muted-foreground text-sm">
-            A custom pointer with different color
-          </p>
+          <p className="text-muted-foreground text-sm">A custom pointer with different color</p>
         </div>
         <Pointer className="fill-blue-500" />
       </div>
@@ -60,9 +58,7 @@ export default function PointerDemo1() {
       <div className="border-border rounded-lg border p-4">
         <div className="relative flex h-40 flex-col items-center justify-center">
           <h3 className="text-xl font-semibold">Custom Shape</h3>
-          <p className="text-muted-foreground text-sm">
-            A pointer with a custom SVG shape
-          </p>
+          <p className="text-muted-foreground text-sm">A pointer with a custom SVG shape</p>
         </div>
         <Pointer>
           <svg
@@ -81,14 +77,12 @@ export default function PointerDemo1() {
       <div className="border-border rounded-lg border p-4">
         <div className="relative flex h-40 flex-col items-center justify-center">
           <h3 className="text-xl font-semibold">Emoji Pointer</h3>
-          <p className="text-muted-foreground text-sm">
-            Using an emoji as a custom pointer
-          </p>
+          <p className="text-muted-foreground text-sm">Using an emoji as a custom pointer</p>
         </div>
         <Pointer>
           <div className="text-2xl">👆</div>
         </Pointer>
       </div>
     </div>
-  )
+  );
 }

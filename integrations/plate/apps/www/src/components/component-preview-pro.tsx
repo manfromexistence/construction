@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import * as React from "react";
 
-import { BlockViewer } from '@/components/block-viewer';
-import { Markdown } from '@/components/markdown';
-import { siteConfig } from '@/config/site';
-import { cn } from '@/lib/utils';
+import { BlockViewer } from "@/components/block-viewer";
+import { Markdown } from "@/components/markdown";
+import { siteConfig } from "@/config/site";
+import { cn } from "@/lib/utils";
 
 interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
   id: string;
@@ -22,14 +22,11 @@ export function ComponentPreviewPro({
   ...props
 }: ComponentPreviewProps) {
   if (!id && name) {
-    id = name?.replace('-pro', '');
+    id = name?.replace("-pro", "");
   }
 
   return (
-    <div
-      className={cn('relative mt-4 mb-12 flex flex-col space-y-2', className)}
-      {...props}
-    >
+    <div className={cn("relative mt-4 mb-12 flex flex-col space-y-2", className)} {...props}>
       {description && <Markdown>{description}</Markdown>}
 
       <BlockViewer
@@ -43,7 +40,7 @@ export function ComponentPreviewPro({
             src: `${siteConfig.links.plateProIframe}/${id}`,
           },
           name: id,
-          type: 'registry:example',
+          type: "registry:example",
         }}
         tree={[]}
       />

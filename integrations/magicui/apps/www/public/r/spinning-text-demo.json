@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Spinning Text Demo",
   "description": "Example showing spinning text animation.",
-  "registryDependencies": [
-    "@magicui/spinning-text"
-  ],
+  "registryDependencies": ["@magicui/spinning-text"],
   "files": [
     {
       "path": "registry/example/spinning-text-demo.tsx",

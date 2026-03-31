@@ -1,27 +1,22 @@
-import React from 'react';
-
-import type { Emoji } from '@emoji-mart/data';
-
-import { useEditorRef } from 'platejs/react';
+import type { Emoji } from "@emoji-mart/data";
+import { useEditorRef } from "platejs/react";
+import React from "react";
 
 import {
   type AIndexSearch,
   type EmojiCategoryList,
   type EmojiIconList,
   type EmojiSettingsType,
-  type i18nProps,
   i18n,
+  type i18nProps,
   insertEmoji,
-} from '../../lib';
+} from "../../lib";
 import {
   type IEmojiFloatingLibrary,
-  type SetFocusedAndVisibleSectionsType,
   observeCategories,
-} from '../utils';
-import {
-  useEmojiPickerState,
-  type MapEmojiCategoryList,
-} from './useEmojiPickerState';
+  type SetFocusedAndVisibleSectionsType,
+} from "../utils";
+import { type MapEmojiCategoryList, useEmojiPickerState } from "./useEmojiPickerState";
 
 export type MutableRefs = React.MutableRefObject<{
   content: React.RefObject<HTMLDivElement | null> | undefined;
@@ -34,9 +29,7 @@ export type UseEmojiPickerProps = {
   indexSearch: AIndexSearch;
 };
 
-export type UseEmojiPickerType<
-  T extends React.ReactElement<any> = React.ReactElement<any>,
-> = {
+export type UseEmojiPickerType<T extends React.ReactElement<any> = React.ReactElement<any>> = {
   emojiLibrary: IEmojiFloatingLibrary;
   hasFound: boolean;
   i18n: i18nProps;
@@ -63,7 +56,7 @@ export const useEmojiPicker = ({
   closeOnSelect,
   emojiLibrary,
   indexSearch,
-}: UseEmojiPickerProps): Omit<UseEmojiPickerType, 'icons' | 'settings'> => {
+}: UseEmojiPickerProps): Omit<UseEmojiPickerType, "icons" | "settings"> => {
   const editor = useEditorRef();
 
   const [state, dispatch] = useEmojiPickerState();
@@ -75,32 +68,31 @@ export const useEmojiPicker = ({
   const setIsOpen = React.useCallback(
     (isOpen: boolean) => {
       dispatch({
-        type: isOpen ? 'SET_OPEN' : 'SET_CLOSE',
+        type: isOpen ? "SET_OPEN" : "SET_CLOSE",
       });
     },
     [dispatch]
   );
 
-  const setFocusedAndVisibleSections =
-    React.useCallback<SetFocusedAndVisibleSectionsType>(
-      (visibleSections, categoryId) => {
-        dispatch({
-          payload: {
-            focusedCategory: categoryId,
-            visibleCategories: visibleSections,
-          },
-          type: 'SET_FOCUSED_AND_VISIBLE_CATEGORIES',
-        });
-      },
-      [dispatch]
-    );
+  const setFocusedAndVisibleSections = React.useCallback<SetFocusedAndVisibleSectionsType>(
+    (visibleSections, categoryId) => {
+      dispatch({
+        payload: {
+          focusedCategory: categoryId,
+          visibleCategories: visibleSections,
+        },
+        type: "SET_FOCUSED_AND_VISIBLE_CATEGORIES",
+      });
+    },
+    [dispatch]
+  );
 
   const handleSearchInput = React.useCallback(
     (input: string) => {
-      const value = String(input).replaceAll(/\s/g, '');
+      const value = String(input).replaceAll(/\s/g, "");
 
       if (!value && !input) {
-        dispatch({ type: 'CLEAR_SEARCH' });
+        dispatch({ type: "CLEAR_SEARCH" });
 
         return;
       }
@@ -113,7 +105,7 @@ export const useEmojiPicker = ({
           searchResult: indexSearch.get(),
           searchValue: value,
         },
-        type: 'UPDATE_SEARCH_RESULT',
+        type: "UPDATE_SEARCH_RESULT",
       });
     },
     [dispatch, indexSearch]
@@ -124,19 +116,19 @@ export const useEmojiPicker = ({
       if (value) {
         handleSearchInput(value);
       } else {
-        dispatch({ type: 'CLEAR_SEARCH' });
+        dispatch({ type: "CLEAR_SEARCH" });
       }
     },
     [dispatch, handleSearchInput]
   );
 
   const clearSearch = React.useCallback(() => {
-    dispatch({ type: 'CLEAR_SEARCH' });
+    dispatch({ type: "CLEAR_SEARCH" });
   }, [dispatch]);
 
   const onMouseOver = React.useCallback(
     (emoji?: Emoji) => {
-      dispatch({ payload: { emoji }, type: 'SET_EMOJI' });
+      dispatch({ payload: { emoji }, type: "SET_EMOJI" });
     },
     [dispatch]
   );
@@ -150,7 +142,7 @@ export const useEmojiPicker = ({
           frequentEmoji: emojiId,
           isOpen: closeOnSelect ? false : state.isOpen,
         },
-        type: 'UPDATE_FREQUENT_EMOJIS',
+        type: "UPDATE_FREQUENT_EMOJIS",
       });
     },
     [closeOnSelect, dispatch, emojiLibrary, state.isOpen]
@@ -168,31 +160,23 @@ export const useEmojiPicker = ({
     (categoryId: EmojiCategoryList) => {
       dispatch({
         payload: { focusedCategory: categoryId },
-        type: 'SET_FOCUSED_CATEGORY',
+        type: "SET_FOCUSED_CATEGORY",
       });
 
       const getSectionPositionToScrollIntoView = () => {
         const trashHold = 1;
         const section = emojiLibrary.getGrid().section(categoryId);
 
-        const contentRootScrollTop =
-          refs.current.contentRoot.current?.scrollTop ?? 0;
+        const contentRootScrollTop = refs.current.contentRoot.current?.scrollTop ?? 0;
         const contentRootTopPosition =
           refs.current.contentRoot.current?.getBoundingClientRect().top ?? 0;
-        const sectionTopPosition =
-          section?.root.current?.getBoundingClientRect().top ?? 0;
+        const sectionTopPosition = section?.root.current?.getBoundingClientRect().top ?? 0;
 
-        return (
-          trashHold +
-          contentRootScrollTop +
-          sectionTopPosition -
-          contentRootTopPosition
-        );
+        return trashHold + contentRootScrollTop + sectionTopPosition - contentRootTopPosition;
       };
 
       if (refs.current.contentRoot.current) {
-        refs.current.contentRoot.current.scrollTop =
-          getSectionPositionToScrollIntoView();
+        refs.current.contentRoot.current.scrollTop = getSectionPositionToScrollIntoView();
       }
     },
     [dispatch, emojiLibrary]
@@ -209,12 +193,7 @@ export const useEmojiPicker = ({
         });
       }, 0);
     }
-  }, [
-    emojiLibrary,
-    state.isOpen,
-    state.isSearching,
-    setFocusedAndVisibleSections,
-  ]);
+  }, [emojiLibrary, state.isOpen, state.isSearching, setFocusedAndVisibleSections]);
 
   return {
     clearSearch,

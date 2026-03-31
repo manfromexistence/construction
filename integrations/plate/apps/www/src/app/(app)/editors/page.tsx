@@ -1,23 +1,23 @@
-import * as React from 'react';
+import * as React from "react";
 
-import type { RegistryItem } from 'shadcn/registry';
+import type { RegistryItem } from "shadcn/registry";
 
-import { BlockDisplay } from '@/components/block-display';
-import { siteConfig } from '@/config/site';
-import { getAllBlocks } from '@/lib/blocks';
+import { BlockDisplay } from "@/components/block-display";
+import { siteConfig } from "@/config/site";
+import { getAllBlocks } from "@/lib/blocks";
 
 // SYNC
 
 const potionBlock: RegistryItem = {
-  description: 'A Notion-like AI template',
+  description: "A Notion-like AI template",
   meta: {
     descriptionSrc: siteConfig.links.potionTemplate,
     iframeHeight: 800,
     isPro: true,
     src: siteConfig.links.potionIframe,
   },
-  name: 'potion',
-  type: 'registry:block',
+  name: "potion",
+  type: "registry:block",
 };
 
 export default async function BlocksPage() {

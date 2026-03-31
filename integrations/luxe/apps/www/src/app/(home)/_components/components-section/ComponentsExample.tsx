@@ -1,16 +1,14 @@
 import { MultiStepModal } from "@/app/_components/OldMultiStepModal";
 import { AnimatedTabs } from "@/app/_components/ui/animated-tabs";
-import { TooltipExample } from "@/app/ui/_components/examples/TooltipExample";
-import { ComponentView } from "@/app/ui/_components/ComponentView";
-
-import { AnimateEnter } from "../AnimateEnter";
-
-import { cn } from "@/utils/cn";
-import { AccordionExample } from "@/app/ui/_components/examples/AccordionExample";
 import { Button } from "@/app/_components/ui/button";
 import { Text } from "@/app/_components/ui/text";
+import { ComponentView } from "@/app/ui/_components/ComponentView";
+import { AccordionExample } from "@/app/ui/_components/examples/AccordionExample";
 import { DropdownMenuExample } from "@/app/ui/_components/examples/DropdownMenuExample";
 import { InputOTPExample } from "@/app/ui/_components/examples/input-otp/InputOTPExample";
+import { TooltipExample } from "@/app/ui/_components/examples/TooltipExample";
+import { cn } from "@/utils/cn";
+import { AnimateEnter } from "../AnimateEnter";
 
 const COMPONENTS_EXAMPLE = [
   { component: <Button variant="shine">Button</Button> },
@@ -40,9 +38,7 @@ const COMPONENTS_EXAMPLE = [
     componentViewClassName: "min-h-[300px]",
   },
   {
-    component: (
-      <AnimatedTabs tabs={["All Posts", "Interactions", "Resources", "Docs"]} />
-    ),
+    component: <AnimatedTabs tabs={["All Posts", "Interactions", "Resources", "Docs"]} />,
     className: "md:col-span-2",
     componentViewClassName: "min-h-[300px]",
   },
@@ -51,20 +47,15 @@ const COMPONENTS_EXAMPLE = [
 export function ComponentsExample() {
   return (
     <div className="grid gap-5 md:grid-cols-3 w-full">
-      {COMPONENTS_EXAMPLE.map(
-        ({ component, className, componentViewClassName }, idx) => (
-          <AnimateEnter key={idx} delay={idx * 0.03} className={className}>
-            <ComponentView
-              className={cn(
-                "flex min-h-[250px] items-center justify-center",
-                componentViewClassName
-              )}
-            >
-              {component}
-            </ComponentView>
-          </AnimateEnter>
-        )
-      )}
+      {COMPONENTS_EXAMPLE.map(({ component, className, componentViewClassName }, idx) => (
+        <AnimateEnter key={idx} delay={idx * 0.03} className={className}>
+          <ComponentView
+            className={cn("flex min-h-[250px] items-center justify-center", componentViewClassName)}
+          >
+            {component}
+          </ComponentView>
+        </AnimateEnter>
+      ))}
     </div>
   );
 }

@@ -1,19 +1,19 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { ParagraphPlugin } from 'platejs/react';
-import { createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor } from "platejs";
+import { ParagraphPlugin } from "platejs/react";
 
-import { normalizeRoot } from '../__tests__/normalizeRoot';
-import { TrailingBlockPlugin } from './TrailingBlockPlugin';
+import { normalizeRoot } from "../__tests__/normalizeRoot";
+import { TrailingBlockPlugin } from "./TrailingBlockPlugin";
 
 jsxt;
 
-describe('TrailingBlockPlugin', () => {
-  it('uses the editor paragraph type as the default trailing block type', () => {
+describe("TrailingBlockPlugin", () => {
+  it("uses the editor paragraph type as the default trailing block type", () => {
     const editor = createSlateEditor({
       plugins: [TrailingBlockPlugin],
-      value: [{ type: 'h1', children: [{ text: 'x' }] }] as any,
+      value: [{ type: "h1", children: [{ text: "x" }] }] as any,
     });
 
     expect(editor.getPlugin(TrailingBlockPlugin).options.type).toBe(
@@ -46,8 +46,7 @@ describe('TrailingBlockPlugin', () => {
           },
         }),
       ],
-      title:
-        'appends a trailing block at the root when the last node is invalid',
+      title: "appends a trailing block at the root when the last node is invalid",
     },
     {
       input: (
@@ -77,7 +76,7 @@ describe('TrailingBlockPlugin', () => {
           },
         }),
       ],
-      title: 'appends the trailing block at the configured depth',
+      title: "appends the trailing block at the configured depth",
     },
     {
       input: (
@@ -95,13 +94,13 @@ describe('TrailingBlockPlugin', () => {
       plugins: [
         TrailingBlockPlugin.configure({
           options: {
-            exclude: ['h1'],
+            exclude: ["h1"],
             level: 0,
             type: ParagraphPlugin.key,
           },
         }),
       ],
-      title: 'skips insertion when the last node is excluded by the query',
+      title: "skips insertion when the last node is excluded by the query",
     },
     {
       input: (
@@ -119,7 +118,7 @@ describe('TrailingBlockPlugin', () => {
         </editor>
       ) as any,
       plugins: [TrailingBlockPlugin],
-      title: 'keeps an existing trailing block unchanged',
+      title: "keeps an existing trailing block unchanged",
     },
     {
       input: (<editor />) as any,
@@ -131,9 +130,9 @@ describe('TrailingBlockPlugin', () => {
         </editor>
       ) as any,
       plugins: [TrailingBlockPlugin],
-      title: 'inserts a trailing block into an empty editor',
+      title: "inserts a trailing block into an empty editor",
     },
-  ])('$title', ({ input, output, plugins }) => {
+  ])("$title", ({ input, output, plugins }) => {
     const editor = normalizeRoot({
       plugins,
       selection: input.selection,

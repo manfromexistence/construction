@@ -1,18 +1,14 @@
-import type { CollapseWhiteSpaceState } from './types';
-
-import { isHtmlInlineElement } from '../isHtmlInlineElement';
-import { collapseWhiteSpaceChildren } from './collapseWhiteSpaceChildren';
-import { inferWhiteSpaceRule } from './inferWhiteSpaceRule';
-import { endInlineFormattingContext } from './stateTransforms';
+import { isHtmlInlineElement } from "../isHtmlInlineElement";
+import { collapseWhiteSpaceChildren } from "./collapseWhiteSpaceChildren";
+import { inferWhiteSpaceRule } from "./inferWhiteSpaceRule";
+import { endInlineFormattingContext } from "./stateTransforms";
+import type { CollapseWhiteSpaceState } from "./types";
 
 /**
  * Note: We do not want to start an inline formatting context until we encounter
  * a text node.
  */
-export const collapseWhiteSpaceElement = (
-  element: HTMLElement,
-  state: CollapseWhiteSpaceState
-) => {
+export const collapseWhiteSpaceElement = (element: HTMLElement, state: CollapseWhiteSpaceState) => {
   const isInlineElement = isHtmlInlineElement(element);
   const previousWhiteSpaceRule = state.whiteSpaceRule;
   const inferredWhiteSpaceRule = inferWhiteSpaceRule(element);

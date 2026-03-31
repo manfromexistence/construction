@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import React from 'react';
+import { KEYS } from "platejs";
+import { getEditorPlugin, type RenderNodeWrapperProps } from "platejs/react";
+import React from "react";
 
-import { KEYS } from 'platejs';
-import { type RenderNodeWrapperProps, getEditorPlugin } from 'platejs/react';
-
-import type { CopilotPluginConfig } from './CopilotPlugin';
+import type { CopilotPluginConfig } from "./CopilotPlugin";
 
 export const renderCopilotBelowNodes = ({
   editor,

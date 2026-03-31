@@ -1,30 +1,28 @@
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from "@testing-library/react";
 
-import { useRequestReRender } from './useRequestReRender';
+import { useRequestReRender } from "./useRequestReRender";
 
-describe('useRequestReRender', () => {
+describe("useRequestReRender", () => {
   let rafSpy: ReturnType<typeof spyOn>;
   let cancelSpy: ReturnType<typeof spyOn>;
   let queued: FrameRequestCallback | null;
 
   beforeEach(() => {
     queued = null;
-    rafSpy = spyOn(globalThis, 'requestAnimationFrame').mockImplementation(((
+    rafSpy = spyOn(globalThis, "requestAnimationFrame").mockImplementation(((
       cb: FrameRequestCallback
     ) => {
       queued = cb;
       return 11;
     }) as any);
-    cancelSpy = spyOn(globalThis, 'cancelAnimationFrame').mockImplementation(
-      (() => {}) as any
-    );
+    cancelSpy = spyOn(globalThis, "cancelAnimationFrame").mockImplementation((() => {}) as any);
   });
 
   afterEach(() => {
     mock.restore();
   });
 
-  it('coalesces async rerenders until the queued frame runs', () => {
+  it("coalesces async rerenders until the queued frame runs", () => {
     const { result } = renderHook(() => useRequestReRender());
 
     act(() => {
@@ -46,7 +44,7 @@ describe('useRequestReRender', () => {
     expect(rafSpy).toHaveBeenCalledTimes(2);
   });
 
-  it('cancels pending async work when forcing a sync rerender', () => {
+  it("cancels pending async work when forcing a sync rerender", () => {
     const { result } = renderHook(() => useRequestReRender());
 
     act(() => {

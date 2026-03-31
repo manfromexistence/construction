@@ -1,18 +1,8 @@
-import {
-  type HTMLAttributes,
-  type RefObject,
-  useCallback,
-  useEffect,
-  useRef,
-} from 'react';
+import { Hotkeys, isHotkey } from "platejs";
+import { useEditorRef, useElement, useSelected } from "platejs/react";
+import { type HTMLAttributes, type RefObject, useCallback, useEffect, useRef } from "react";
 
-import { Hotkeys, isHotkey } from 'platejs';
-import { useEditorRef, useElement, useSelected } from 'platejs/react';
-
-import type {
-  CancelComboboxInputCause,
-  ComboboxInputCursorState,
-} from '../../lib';
+import type { CancelComboboxInputCause, ComboboxInputCursorState } from "../../lib";
 
 export type UseComboboxInputOptions = {
   ref: RefObject<HTMLElement | null>;
@@ -28,11 +18,8 @@ export type UseComboboxInputOptions = {
 };
 
 export type UseComboboxInputResult = {
-  props: Required<Pick<HTMLAttributes<HTMLElement>, 'onBlur' | 'onKeyDown'>>;
-  cancelInput: (
-    cause?: CancelComboboxInputCause,
-    focusEditor?: boolean
-  ) => void;
+  props: Required<Pick<HTMLAttributes<HTMLElement>, "onBlur" | "onKeyDown">>;
+  cancelInput: (cause?: CancelComboboxInputCause, focusEditor?: boolean) => void;
   removeInput: (focusEditor?: boolean) => void;
 };
 
@@ -71,7 +58,7 @@ export const useComboboxInput = ({
   );
 
   const cancelInput = useCallback(
-    (cause: CancelComboboxInputCause = 'manual', shouldFocusEditor = false) => {
+    (cause: CancelComboboxInputCause = "manual", shouldFocusEditor = false) => {
       removeInput(shouldFocusEditor);
       onCancelInput?.(cause);
     },
@@ -98,7 +85,7 @@ export const useComboboxInput = ({
 
   useEffect(() => {
     if (previousSelected.current && !selected && cancelInputOnDeselect) {
-      cancelInput('deselect');
+      cancelInput("deselect");
     }
 
     previousSelected.current = selected;
@@ -109,33 +96,21 @@ export const useComboboxInput = ({
     props: {
       onBlur: () => {
         if (cancelInputOnBlur) {
-          cancelInput('blur');
+          cancelInput("blur");
         }
       },
       onKeyDown: (event) => {
-        if (cancelInputOnEscape && isHotkey('escape', event)) {
-          cancelInput('escape', true);
+        if (cancelInputOnEscape && isHotkey("escape", event)) {
+          cancelInput("escape", true);
         }
-        if (
-          cancelInputOnBackspace &&
-          cursorAtStart &&
-          isHotkey('backspace', event)
-        ) {
-          cancelInput('backspace', true);
+        if (cancelInputOnBackspace && cursorAtStart && isHotkey("backspace", event)) {
+          cancelInput("backspace", true);
         }
-        if (
-          cancelInputOnArrowLeftRight &&
-          cursorAtStart &&
-          isHotkey('arrowleft', event)
-        ) {
-          cancelInput('arrowLeft', true);
+        if (cancelInputOnArrowLeftRight && cursorAtStart && isHotkey("arrowleft", event)) {
+          cancelInput("arrowLeft", true);
         }
-        if (
-          cancelInputOnArrowLeftRight &&
-          cursorAtEnd &&
-          isHotkey('arrowright', event)
-        ) {
-          cancelInput('arrowRight', true);
+        if (cancelInputOnArrowLeftRight && cursorAtEnd && isHotkey("arrowright", event)) {
+          cancelInput("arrowRight", true);
         }
 
         const isUndo = Hotkeys.isUndo(event) && editor.history.undos.length > 0;
@@ -143,7 +118,7 @@ export const useComboboxInput = ({
 
         if (forwardUndoRedoToEditor && (isUndo || isRedo)) {
           event.preventDefault();
-          editor[isUndo ? 'undo' : 'redo']();
+          editor[isUndo ? "undo" : "redo"]();
           editor.tf.focus();
         }
       },

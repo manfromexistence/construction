@@ -1,11 +1,9 @@
-import * as React from "react"
+import * as React from "react";
 
-import { ScrollArea } from "@/styles/radix-nova/ui/scroll-area"
-import { Separator } from "@/styles/radix-nova/ui/separator"
+import { ScrollArea } from "@/styles/radix-nova/ui/scroll-area";
+import { Separator } from "@/styles/radix-nova/ui/separator";
 
-const tags = Array.from({ length: 50 }).map(
-  (_, i, a) => `v1.2.0-beta.${a.length - i}`
-)
+const tags = Array.from({ length: 50 }).map((_, i, a) => `v1.2.0-beta.${a.length - i}`);
 
 export function ScrollAreaDemo() {
   return (
@@ -20,5 +18,5 @@ export function ScrollAreaDemo() {
         ))}
       </div>
     </ScrollArea>
-  )
+  );
 }

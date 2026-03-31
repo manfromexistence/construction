@@ -1,6 +1,6 @@
-import { createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS } from "platejs";
 
-import { withColumn } from './withColumn';
+import { withColumn } from "./withColumn";
 
 export const BaseColumnItemPlugin = createSlatePlugin({
   key: KEYS.column,

@@ -2,12 +2,7 @@
 
 import { useParams } from "next/navigation";
 import * as React from "react";
-import {
-  MdxTabs,
-  MdxTabsContent,
-  MdxTabsList,
-  MdxTabsTrigger,
-} from "@/components/mdx-tabs";
+import { MdxTabs, MdxTabsContent, MdxTabsList, MdxTabsTrigger } from "@/components/mdx-tabs";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/registry/bases/radix/ui/skeleton";
 
@@ -25,14 +20,14 @@ function getExampleComponent(base: string, name: string) {
     return React.lazy(() =>
       import(`@/registry/bases/base/examples/${name}`).then((mod) => ({
         default: mod.default,
-      })),
+      }))
     );
   }
 
   return React.lazy(() =>
     import(`@/registry/bases/radix/examples/${name}`).then((mod) => ({
       default: mod.default,
-    })),
+    }))
   );
 }
 
@@ -50,10 +45,7 @@ export function ComponentTabs({
 
   const code = React.Children.toArray(children)[0] as React.ReactElement;
 
-  const Component = React.useMemo(
-    () => getExampleComponent(base, name),
-    [base, name],
-  );
+  const Component = React.useMemo(() => getExampleComponent(base, name), [base, name]);
 
   return (
     <MdxTabs
@@ -72,8 +64,7 @@ export function ComponentTabs({
         tabIndex={preventPreviewFocus ? -1 : 0}
         className={cn(
           "not-prose relative",
-          preventPreviewFocus &&
-            "focus-visible:outline-hidden focus-visible:ring-0",
+          preventPreviewFocus && "focus-visible:outline-hidden focus-visible:ring-0"
         )}
       >
         <div
@@ -86,7 +77,7 @@ export function ComponentTabs({
               "h-full p-0": fullPreview,
               "sm:p-10": scalePreview,
             },
-            className,
+            className
           )}
         >
           <React.Suspense fallback={<Skeleton className="size-full" />}>

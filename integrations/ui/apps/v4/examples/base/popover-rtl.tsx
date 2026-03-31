@@ -1,10 +1,7 @@
-"use client"
+"use client";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
 import {
   Popover,
   PopoverContent,
@@ -12,7 +9,7 @@ import {
   PopoverHeader,
   PopoverTitle,
   PopoverTrigger,
-} from "@/styles/base-nova/ui-rtl/popover"
+} from "@/styles/base-nova/ui-rtl/popover";
 
 const translations: Translations = {
   en: {
@@ -54,22 +51,20 @@ const translations: Translations = {
       "inline-end": "סוף השורה",
     },
   },
-}
+};
 
-const physicalSides = ["left", "top", "bottom", "right"] as const
-const logicalSides = ["inline-start", "inline-end"] as const
+const physicalSides = ["left", "top", "bottom", "right"] as const;
+const logicalSides = ["inline-start", "inline-end"] as const;
 
 export function PopoverRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   return (
     <div className="grid gap-4">
       <div className="flex flex-wrap justify-center gap-2">
         {physicalSides.map((side) => (
           <Popover key={side}>
-            <PopoverTrigger render={<Button variant="outline" />}>
-              {t[side]}
-            </PopoverTrigger>
+            <PopoverTrigger render={<Button variant="outline" />}>{t[side]}</PopoverTrigger>
             <PopoverContent side={side} dir={dir}>
               <PopoverHeader>
                 <PopoverTitle>{t.title}</PopoverTitle>
@@ -82,9 +77,7 @@ export function PopoverRtl() {
       <div className="flex flex-wrap justify-center gap-2">
         {logicalSides.map((side) => (
           <Popover key={side}>
-            <PopoverTrigger render={<Button variant="outline" />}>
-              {t[side]}
-            </PopoverTrigger>
+            <PopoverTrigger render={<Button variant="outline" />}>{t[side]}</PopoverTrigger>
             <PopoverContent side={side} dir={dir}>
               <PopoverHeader>
                 <PopoverTitle>{t.title}</PopoverTitle>
@@ -95,5 +88,5 @@ export function PopoverRtl() {
         ))}
       </div>
     </div>
-  )
+  );
 }

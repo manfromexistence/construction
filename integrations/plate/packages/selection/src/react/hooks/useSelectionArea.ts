@@ -1,15 +1,13 @@
-import React from 'react';
+import { KEYS, type TElement } from "platejs";
+import { useEditorPlugin } from "platejs/react";
+import React from "react";
 
-import { type TElement, KEYS } from 'platejs';
-import { useEditorPlugin } from 'platejs/react';
-
-import { SelectionArea } from '../../internal';
-import { extractSelectableIds } from '../../lib';
-import { BlockSelectionPlugin } from '../BlockSelectionPlugin';
+import { SelectionArea } from "../../internal";
+import { extractSelectableIds } from "../../lib";
+import { BlockSelectionPlugin } from "../BlockSelectionPlugin";
 
 export const useSelectionArea = () => {
-  const { api, editor, getOption, getOptions, setOption } =
-    useEditorPlugin(BlockSelectionPlugin);
+  const { api, editor, getOption, getOptions, setOption } = useEditorPlugin(BlockSelectionPlugin);
 
   const { areaOptions } = getOptions();
 
@@ -33,7 +31,7 @@ export const useSelectionArea = () => {
       editor.tf.deselect();
     }
 
-    setOption('isSelectionAreaVisible', true);
+    setOption("isSelectionAreaVisible", true);
   };
 
   React.useEffect(() => {
@@ -42,13 +40,13 @@ export const useSelectionArea = () => {
       container: `#${editor.meta.uid}`,
       document: window.document,
       selectables: `#${editor.meta.uid} .slate-selectable`,
-      selectionAreaClass: 'slate-selection-area',
+      selectionAreaClass: "slate-selection-area",
       ...areaOptions,
     })
-      .on('beforestart', () => {
-        setOption('isSelecting', false);
+      .on("beforestart", () => {
+        setOption("isSelecting", false);
       })
-      .on('start', ({ event }) => {
+      .on("start", ({ event }) => {
         onStart();
 
         if (!event?.shiftKey) {
@@ -56,13 +54,12 @@ export const useSelectionArea = () => {
           api.blockSelection.clear();
         }
       })
-      .on('move', ({ store: { changed } }) => {
+      .on("move", ({ store: { changed } }) => {
         if (!getOptions().isSelectionAreaVisible) {
           onStart();
         }
         const apply = () => {
-          if (changed.added.length === 0 && changed.removed.length === 0)
-            return;
+          if (changed.added.length === 0 && changed.removed.length === 0) return;
 
           const next = new Set(getOptions().selectedIds);
           extractSelectableIds(changed.removed).forEach((id) => {
@@ -101,17 +98,15 @@ export const useSelectionArea = () => {
 
           // TODO: support nested blocks
 
-          setOption('selectedIds', next);
+          setOption("selectedIds", next);
         };
 
         const normalize = () => {
-          const next = new Set(getOption('selectedIds'));
+          const next = new Set(getOption("selectedIds"));
           const ids = Array.from(next);
 
           const isTableElement = (element: TElement) =>
-            element.type === KEYS.table ||
-            element.type === KEYS.tr ||
-            element.type === KEYS.th;
+            element.type === KEYS.table || element.type === KEYS.tr || element.type === KEYS.th;
 
           const isTableRowElement = (element: TElement) =>
             element.type === KEYS.tr || element.type === KEYS.th;
@@ -156,9 +151,7 @@ export const useSelectionArea = () => {
               });
               if (!table) return false;
 
-              const tableRowIds = table[0].children.map(
-                (tr) => tr.id as string
-              );
+              const tableRowIds = table[0].children.map((tr) => tr.id as string);
 
               next.add(table[0].id as string);
               tableRowIds.forEach((trId) => {
@@ -172,20 +165,20 @@ export const useSelectionArea = () => {
             });
           }
 
-          setOption('selectedIds', next);
+          setOption("selectedIds", next);
         };
 
         apply();
         normalize();
       })
-      .on('stop', () => {
+      .on("stop", () => {
         areaRef.current = {
           ids: new Set(),
         };
         trsRef.current = {
           ids: new Set(),
         };
-        setOption('isSelectionAreaVisible', false);
+        setOption("isSelectionAreaVisible", false);
       });
 
     return () => selection.destroy();

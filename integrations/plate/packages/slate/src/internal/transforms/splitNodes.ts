@@ -1,10 +1,8 @@
-import { splitNodes as splitNodesBase } from 'slate';
+import { splitNodes as splitNodesBase } from "slate";
 
-import type { Editor, SplitNodesOptions, ValueOf } from '../../interfaces';
+import type { Editor, SplitNodesOptions, ValueOf } from "../../interfaces";
 
-import { getQueryOptions } from '../../utils';
+import { getQueryOptions } from "../../utils";
 
-export const splitNodes = <E extends Editor>(
-  editor: E,
-  options?: SplitNodesOptions<ValueOf<E>>
-) => splitNodesBase(editor as any, getQueryOptions(editor, options));
+export const splitNodes = <E extends Editor>(editor: E, options?: SplitNodesOptions<ValueOf<E>>) =>
+  splitNodesBase(editor as any, getQueryOptions(editor, options));

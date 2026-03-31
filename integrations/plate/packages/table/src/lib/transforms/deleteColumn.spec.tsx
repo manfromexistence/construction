@@ -1,21 +1,20 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from '../__tests__/getTestTablePlugins';
-import * as deleteColumnExpandedModule from '../merge/deleteColumnWhenExpanded';
-import { deleteColumn } from './deleteColumn';
+import { getTestTablePlugins } from "../__tests__/getTestTablePlugins";
+import * as deleteColumnExpandedModule from "../merge/deleteColumnWhenExpanded";
+import { deleteColumn } from "./deleteColumn";
 
 jsxt;
 
-describe('deleteColumn', () => {
-  describe('when 2x2', () => {
+describe("deleteColumn", () => {
+  describe("when 2x2", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('deletes a column (disableMerge: $disableMerge)', ({ disableMerge }) => {
+    ])("deletes a column (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -72,11 +71,11 @@ describe('deleteColumn', () => {
     });
   });
 
-  describe('when first row has 2 cells, second row has 1 cell, focus 12', () => {
+  describe("when first row has 2 cells, second row has 1 cell, focus 12", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('deletes cell 12 (disableMerge: $disableMerge)', ({ disableMerge }) => {
+    ])("deletes cell 12 (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -130,11 +129,11 @@ describe('deleteColumn', () => {
     });
   });
 
-  describe('when first row has 2 cells, second row has 1 cell, focus 11', () => {
+  describe("when first row has 2 cells, second row has 1 cell, focus 11", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('deletes cell 11 (disableMerge: $disableMerge)', ({ disableMerge }) => {
+    ])("deletes cell 11 (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -188,11 +187,11 @@ describe('deleteColumn', () => {
     });
   });
 
-  describe('when first row has 2 cells, second row has 1 cell, focus 21', () => {
+  describe("when first row has 2 cells, second row has 1 cell, focus 21", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('keeps the table unchanged when no second-column match exists (disableMerge: $disableMerge)', ({
+    ])("keeps the table unchanged when no second-column match exists (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -254,7 +253,7 @@ describe('deleteColumn', () => {
     });
   });
 
-  it('shrinks table colSizes when deleting a column', () => {
+  it("shrinks table colSizes when deleting a column", () => {
     const input = (
       <editor>
         <htable colSizes={[40, 60]}>
@@ -293,12 +292,12 @@ describe('deleteColumn', () => {
     expect(editor.children).toMatchObject([
       {
         colSizes: [40],
-        type: 'table',
+        type: "table",
       },
     ]);
   });
 
-  it('delegates expanded selections to deleteColumnWhenExpanded', () => {
+  it("delegates expanded selections to deleteColumnWhenExpanded", () => {
     const input = (
       <editor>
         <htable>
@@ -334,10 +333,9 @@ describe('deleteColumn', () => {
       selection: input.selection,
       value: input.children,
     });
-    const spy = spyOn(
-      deleteColumnExpandedModule,
-      'deleteColumnWhenExpanded'
-    ).mockReturnValue(undefined as any);
+    const spy = spyOn(deleteColumnExpandedModule, "deleteColumnWhenExpanded").mockReturnValue(
+      undefined as any
+    );
 
     deleteColumn(editor);
 

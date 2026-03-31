@@ -1,14 +1,8 @@
-import * as React from "react";
 import { type DialogProps } from "@radix-ui/react-dialog";
 import { Command as CommandPrimitive } from "cmdk";
-
+import * as React from "react";
+import { Dialog, DialogContent, DialogTitle } from "@/app/_components/ui/dialog";
 import { cn } from "@/utils/cn";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "@/app/_components/ui/dialog";
 
 export const Command = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
@@ -53,7 +47,7 @@ export const CommandInput = React.forwardRef<
       ref={ref}
       className={cn(
         "flex h-11 w-full rounded-md bg-transparent pt-2.5 pb-3 text-base outline-none placeholder:text-foreground placeholder:opacity-70 disabled:cursor-not-allowed disabled:opacity-50",
-        className,
+        className
       )}
       {...props}
     />
@@ -79,11 +73,7 @@ export const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
 >((props, ref) => (
-  <CommandPrimitive.Empty
-    ref={ref}
-    className="py-6 text-center text-sm"
-    {...props}
-  />
+  <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />
 ));
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName;
@@ -96,7 +86,7 @@ export const CommandGroup = React.forwardRef<
     ref={ref}
     className={cn(
       "overflow-hidden p-1 text-foreground [&_[cmdk-group-heading]]:px-2.5 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-[13px] [&_[cmdk-group-heading]]:font-medium",
-      className,
+      className
     )}
     {...props}
   />
@@ -125,7 +115,7 @@ export const CommandItem = React.forwardRef<
     className={cn(
       "relative flex cursor-default gap-2 select-none items-center rounded-lg px-3 h-12 text-[15px] leading-none outline-none data-[disabled=true]:pointer-events-none",
       "data-[selected='true']:bg-neutral-200 dark:data-[selected='true']:bg-[#141414] data-[selected=true]:text-primary data-[disabled=true]:opacity-50",
-      className,
+      className
     )}
     {...props}
   />

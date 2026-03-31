@@ -1,15 +1,11 @@
-import {
-  type EditorAboveOptions,
-  combineMatchOptions,
-  PathApi,
-} from '@platejs/slate';
+import { combineMatchOptions, type EditorAboveOptions, PathApi } from "@platejs/slate";
 
-import type { SlateEditor } from '../../../editor';
+import type { SlateEditor } from "../../../editor";
 
-import { getPluginByType } from '../../../plugin/getSlatePlugin';
+import { getPluginByType } from "../../../plugin/getSlatePlugin";
 
 export type InsertExitBreakOptions = {
-  match?: EditorAboveOptions['match'];
+  match?: EditorAboveOptions["match"];
   reverse?: boolean;
 };
 

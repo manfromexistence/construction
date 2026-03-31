@@ -1,7 +1,7 @@
+import { Bug } from "lucide-react";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { Bug } from "lucide-react";
 
 interface DebugButtonProps extends React.ComponentProps<typeof Button> {
   debug?: boolean;

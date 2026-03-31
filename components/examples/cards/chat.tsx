@@ -1,7 +1,7 @@
 "use client";
 
+import { ArrowUpIcon, CheckIcon, PlusIcon } from "lucide-react";
 import * as React from "react";
-
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/revola";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { ArrowUpIcon, CheckIcon, PlusIcon } from "lucide-react";
 
 const users = [
   {

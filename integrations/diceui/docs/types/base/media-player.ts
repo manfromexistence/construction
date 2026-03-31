@@ -1,9 +1,6 @@
 import type { Slider as SliderPrimitive } from "@base-ui/react/slider";
 import type { Button } from "@/registry/bases/radix/ui/button";
-import type {
-  DropdownMenu,
-  DropdownMenuTrigger,
-} from "@/registry/bases/radix/ui/dropdown-menu";
+import type { DropdownMenu, DropdownMenuTrigger } from "@/registry/bases/radix/ui/dropdown-menu";
 import type { EmptyProps, RenderProps } from "@/types";
 
 interface MediaPlayerDropdownMenuProps
@@ -12,10 +9,7 @@ interface MediaPlayerDropdownMenuProps
     Omit<React.ComponentProps<typeof DropdownMenu>, "dir"> {}
 
 export interface MediaPlayerProps
-  extends Omit<
-    RenderProps,
-    "onPlay" | "onPause" | "onEnded" | "onTimeUpdate" | "onVolumeChange"
-  > {
+  extends Omit<RenderProps, "onPlay" | "onPause" | "onEnded" | "onTimeUpdate" | "onVolumeChange"> {
   /**
    * Callback function triggered when the media starts playing.
    *
@@ -434,9 +428,7 @@ export interface MediaPlayerSeekProps
    *
    * @default 10
    */
-  tooltipCollisionPadding?:
-    | number
-    | Partial<Record<"top" | "right" | "bottom" | "left", number>>;
+  tooltipCollisionPadding?: number | Partial<Record<"top" | "right" | "bottom" | "left", number>>;
 }
 
 export interface MediaPlayerVolumeProps
@@ -470,10 +462,7 @@ export interface MediaPlayerTimeProps extends RenderProps {
 }
 
 export interface MediaPlayerPlaybackSpeedProps
-  extends Omit<
-    MediaPlayerDropdownMenuProps,
-    keyof React.ComponentProps<"button">
-  > {
+  extends Omit<MediaPlayerDropdownMenuProps, keyof React.ComponentProps<"button">> {
   /**
    * Whether the dropdown menu is open by default.
    * @default false
@@ -510,8 +499,7 @@ export interface MediaPlayerPlaybackSpeedProps
 
 export interface MediaPlayerLoopProps extends EmptyProps<"button"> {}
 
-export interface MediaPlayerPiPProps
-  extends Pick<MediaPlayerProps, "onPipError"> {
+export interface MediaPlayerPiPProps extends Pick<MediaPlayerProps, "onPipError"> {
   /**
    * The content to render inside the picture-in-picture button.
    * Can be a React node or a function that receives the current PiP state.
@@ -534,9 +522,7 @@ export interface MediaPlayerPiPProps
    *
    * @default PictureInPictureIcon when not in PiP, PictureInPicture2Icon when in PiP
    */
-  children?:
-    | React.ReactNode
-    | ((isPictureInPicture: boolean) => React.ReactNode);
+  children?: React.ReactNode | ((isPictureInPicture: boolean) => React.ReactNode);
 }
 
 export interface MediaPlayerFullscreenProps extends EmptyProps<"button"> {}
@@ -546,10 +532,7 @@ export interface MediaPlayerCaptionsProps extends EmptyProps<"button"> {}
 export interface MediaPlayerDownloadProps extends EmptyProps<"button"> {}
 
 export interface MediaPlayerSettingsProps
-  extends Omit<
-    MediaPlayerPlaybackSpeedProps,
-    keyof React.ComponentProps<"button">
-  > {
+  extends Omit<MediaPlayerPlaybackSpeedProps, keyof React.ComponentProps<"button">> {
   /**
    * The settings menu provides a unified interface for adjusting playback speed,
    * video quality, and captions. It automatically detects available options

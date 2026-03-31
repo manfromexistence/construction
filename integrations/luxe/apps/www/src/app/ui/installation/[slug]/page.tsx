@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
+import { MDX } from "@/app/_components/mdx";
+import { getDocs } from "@/lib/mdx";
 import { Breadcrumbs } from "../../_components/Breadcrumbs";
 import { Pagination } from "../../_components/Pagination";
-import { getDocs } from "@/lib/mdx";
-import { MDX } from "@/app/_components/mdx";
 
 const Docs = getDocs("get-started").filter((docs) => docs.slug !== "cli");
 
@@ -83,12 +82,8 @@ export default async function InstallationSlugPage({
           currentPage={title}
         />
         <div className="space-y-3.5">
-          <h1 className="text-3xl font-semibold tracking-tight text-primary">
-            {title}
-          </h1>
-          <p className="font-normal text-black/80 dark:text-white/90">
-            {description}
-          </p>
+          <h1 className="text-3xl font-semibold tracking-tight text-primary">{title}</h1>
+          <p className="font-normal text-black/80 dark:text-white/90">{description}</p>
         </div>
       </div>
       <MDX source={content} />

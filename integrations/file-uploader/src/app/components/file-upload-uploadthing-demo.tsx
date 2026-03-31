@@ -1,5 +1,10 @@
 "use client";
 
+import { Upload, X } from "lucide-react";
+import Image from "next/image";
+import * as React from "react";
+import { toast } from "sonner";
+import { UploadThingError } from "uploadthing/server";
 import { Button } from "@/components/ui/button";
 import {
   FileUpload,
@@ -14,11 +19,6 @@ import {
 } from "@/components/ui/file-upload";
 import { uploadFiles } from "@/lib/uploadthing";
 import type { UploadedFile } from "@/types";
-import { Upload, X } from "lucide-react";
-import Image from "next/image";
-import * as React from "react";
-import { toast } from "sonner";
-import { UploadThingError } from "uploadthing/server";
 
 export function FileUploadUploadThingDemo() {
   const [isUploading, setIsUploading] = React.useState(false);
@@ -31,7 +31,7 @@ export function FileUploadUploadThingDemo() {
         onProgress,
       }: {
         onProgress: (file: File, progress: number) => void;
-      },
+      }
     ) => {
       try {
         setIsUploading(true);
@@ -50,12 +50,10 @@ export function FileUploadUploadThingDemo() {
               <code>
                 {JSON.stringify(
                   res.map((file) =>
-                    file.name.length > 25
-                      ? `${file.name.slice(0, 25)}...`
-                      : file.name,
+                    file.name.length > 25 ? `${file.name.slice(0, 25)}...` : file.name
                   ),
                   null,
-                  2,
+                  2
                 )}
               </code>
             </pre>
@@ -66,21 +64,17 @@ export function FileUploadUploadThingDemo() {
 
         if (error instanceof UploadThingError) {
           const errorMessage =
-            error.data && "error" in error.data
-              ? error.data.error
-              : "Upload failed";
+            error.data && "error" in error.data ? error.data.error : "Upload failed";
           toast.error(errorMessage);
           return;
         }
 
-        toast.error(
-          error instanceof Error ? error.message : "An unknown error occurred",
-        );
+        toast.error(error instanceof Error ? error.message : "An unknown error occurred");
       } finally {
         setIsUploading(false);
       }
     },
-    [],
+    []
   );
 
   const onFileReject = React.useCallback((file: File, message: string) => {

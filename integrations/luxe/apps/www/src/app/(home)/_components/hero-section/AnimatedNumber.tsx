@@ -1,13 +1,7 @@
 "use client";
 
+import { motion, type SpringOptions, useSpring, useTransform } from "motion/react";
 import { useEffect, useState } from "react";
-
-import {
-  type SpringOptions,
-  motion,
-  useSpring,
-  useTransform,
-} from "motion/react";
 
 import { cn } from "@/utils/cn";
 
@@ -36,15 +30,11 @@ type AnimationProps = {
 
 function Animation({ value, className, springOptions }: AnimationProps) {
   const spring = useSpring(value, springOptions);
-  const view = useTransform(spring, (current) =>
-    Math.round(current).toLocaleString(),
-  );
+  const view = useTransform(spring, (current) => Math.round(current).toLocaleString());
 
   useEffect(() => {
     spring.set(value);
   }, [spring, value]);
 
-  return (
-    <motion.span className={cn("tabular-nums", className)}>{view}</motion.span>
-  );
+  return <motion.span className={cn("tabular-nums", className)}>{view}</motion.span>;
 }

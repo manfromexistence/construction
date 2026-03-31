@@ -1,7 +1,4 @@
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@/styles/base-nova/ui/toggle-group"
+import { ToggleGroup, ToggleGroupItem } from "@/styles/base-nova/ui/toggle-group";
 
 export function ToggleGroupSpacing() {
   return (
@@ -19,5 +16,5 @@ export function ToggleGroupSpacing() {
         Right
       </ToggleGroupItem>
     </ToggleGroup>
-  )
+  );
 }

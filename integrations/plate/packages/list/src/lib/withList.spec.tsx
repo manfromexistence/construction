@@ -1,17 +1,16 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { BaseIndentPlugin } from "@platejs/indent";
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { BaseIndentPlugin } from '@platejs/indent';
-import { jsxt } from '@platejs/test-utils';
-
-import { BaseListPlugin } from './BaseListPlugin';
+import { BaseListPlugin } from "./BaseListPlugin";
 
 jsxt;
 
-describe('normalizeList', () => {
-  describe('when listStyleType without indent', () => {
-    it('remove listStyleType and listStart props', async () => {
+describe("normalizeList", () => {
+  describe("when listStyleType without indent", () => {
+    it("remove listStyleType and listStart props", async () => {
       const input = (
         <editor>
           <hp indent={1} listStyleType="decimal">
@@ -53,8 +52,8 @@ describe('normalizeList', () => {
     });
   });
 
-  describe('when deleting backward on empty paragraph between two lists', () => {
-    it('merge and renumber the lists', () => {
+  describe("when deleting backward on empty paragraph between two lists", () => {
+    it("merge and renumber the lists", () => {
       const input = (
         <editor>
           <hp indent={1} listStyleType="decimal">
@@ -106,8 +105,8 @@ describe('normalizeList', () => {
     });
   });
 
-  describe('when deleting forward on empty paragraph between two lists', () => {
-    it('merge and renumber the lists', () => {
+  describe("when deleting forward on empty paragraph between two lists", () => {
+    it("merge and renumber the lists", () => {
       const input = (
         <editor>
           <hp indent={1} listStyleType="decimal">
@@ -160,9 +159,9 @@ describe('normalizeList', () => {
   });
 });
 
-describe('keyboard handling', () => {
-  describe('when Enter on indented list and empty', () => {
-    it('outdent', () => {
+describe("keyboard handling", () => {
+  describe("when Enter on indented list and empty", () => {
+    it("outdent", () => {
       const input = (
         <editor>
           <hp indent={2} listStyleType="disc">
@@ -191,8 +190,8 @@ describe('keyboard handling', () => {
     });
   });
 
-  describe('when Enter on indented and empty but not list', () => {
-    it('does not outdent', () => {
+  describe("when Enter on indented and empty but not list", () => {
+    it("does not outdent", () => {
       const input = (
         <editor>
           <hp indent={2}>
@@ -225,31 +224,31 @@ describe('keyboard handling', () => {
   });
 });
 
-describe('apply override', () => {
-  it('coerces lower-roman inserts to lower-alpha when the previous sibling is alpha', () => {
+describe("apply override", () => {
+  it("coerces lower-roman inserts to lower-alpha when the previous sibling is alpha", () => {
     const editor = createSlateEditor({
       plugins: [BaseListPlugin, BaseIndentPlugin],
       value: [
         {
-          children: [{ text: 'a' }],
+          children: [{ text: "a" }],
           indent: 1,
-          listStyleType: 'lower-alpha',
-          type: 'p',
+          listStyleType: "lower-alpha",
+          type: "p",
         },
       ],
     } as any);
 
     editor.tf.insertNodes({
-      children: [{ text: 'i' }],
+      children: [{ text: "i" }],
       indent: 1,
-      listStyleType: 'lower-roman',
-      type: 'p',
+      listStyleType: "lower-roman",
+      type: "p",
     } as any);
 
-    expect((editor.children[1] as any).listStyleType).toBe('lower-alpha');
+    expect((editor.children[1] as any).listStyleType).toBe("lower-alpha");
   });
 
-  it('drops list restart props from split list items', () => {
+  it("drops list restart props from split list items", () => {
     const editor = createSlateEditor({
       plugins: [BaseListPlugin, BaseIndentPlugin],
       selection: {
@@ -258,12 +257,12 @@ describe('apply override', () => {
       },
       value: [
         {
-          children: [{ text: '12' }],
+          children: [{ text: "12" }],
           indent: 1,
           listRestart: 5,
           listRestartPolite: true,
-          listStyleType: 'decimal',
-          type: 'p',
+          listStyleType: "decimal",
+          type: "p",
         },
       ],
     } as any);
@@ -272,20 +271,20 @@ describe('apply override', () => {
 
     expect(editor.children).toEqual([
       {
-        children: [{ text: '1' }],
+        children: [{ text: "1" }],
         indent: 1,
         listRestart: 5,
         listRestartPolite: true,
         listStart: 5,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
       {
-        children: [{ text: '2' }],
+        children: [{ text: "2" }],
         indent: 1,
         listStart: 6,
-        listStyleType: 'decimal',
-        type: 'p',
+        listStyleType: "decimal",
+        type: "p",
       },
     ]);
   });

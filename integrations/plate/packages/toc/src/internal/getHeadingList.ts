@@ -1,9 +1,7 @@
-import { type SlateEditor, type TElement, NodeApi } from 'platejs';
-
-import type { Heading } from '../lib/types';
-
-import { BaseTocPlugin } from '../lib';
-import { isHeading } from '../lib/utils/isHeading';
+import { NodeApi, type SlateEditor, type TElement } from "platejs";
+import { BaseTocPlugin } from "../lib";
+import type { Heading } from "../lib/types";
+import { isHeading } from "../lib/utils/isHeading";
 
 const headingDepth: Record<string, number> = {
   h1: 1,

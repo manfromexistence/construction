@@ -1,12 +1,11 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { BaseParagraphPlugin, createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { BaseParagraphPlugin, createSlateEditor } from 'platejs';
-
-import { BaseCodeBlockPlugin } from './BaseCodeBlockPlugin';
-import { CODE_LINE_TO_DECORATIONS } from './setCodeBlockToDecorations';
+import { BaseCodeBlockPlugin } from "./BaseCodeBlockPlugin";
+import { CODE_LINE_TO_DECORATIONS } from "./setCodeBlockToDecorations";
 
 jsxt;
 
@@ -23,14 +22,14 @@ const createEditor = ({
     value: input.children,
   });
 
-describe('insert break', () => {
-  describe('when cursor is inside code line', () => {
-    it('insert a new code line with same indentation', () => {
+describe("insert break", () => {
+  describe("when cursor is inside code line", () => {
+    it("insert a new code line with same indentation", () => {
       const input = (
         <editor>
           <hcodeblock>
             <hcodeline>
-              {'    '}before
+              {"    "}before
               <cursor />
               after
             </hcodeline>
@@ -41,9 +40,9 @@ describe('insert break', () => {
       const output = (
         <editor>
           <hcodeblock>
-            <hcodeline>{'    '}before</hcodeline>
+            <hcodeline>{"    "}before</hcodeline>
             <hcodeline>
-              {'    '}
+              {"    "}
               <cursor />
               after
             </hcodeline>
@@ -60,8 +59,8 @@ describe('insert break', () => {
   });
 });
 
-describe('resetBlock', () => {
-  it('unwraps a code block into paragraphs', () => {
+describe("resetBlock", () => {
+  it("unwraps a code block into paragraphs", () => {
     const input = (
       <editor>
         <hcodeblock>
@@ -92,8 +91,8 @@ describe('resetBlock', () => {
   });
 });
 
-describe('selectAll', () => {
-  it('expands the selection to the whole code block', () => {
+describe("selectAll", () => {
+  it("expands the selection to the whole code block", () => {
     const input = (
       <editor>
         <hcodeblock>
@@ -120,8 +119,8 @@ describe('selectAll', () => {
   });
 });
 
-describe('tab', () => {
-  it('indents every selected code line', () => {
+describe("tab", () => {
+  it("indents every selected code line", () => {
     const input = (
       <editor>
         <hcodeblock>
@@ -141,11 +140,11 @@ describe('tab', () => {
       <editor>
         <hcodeblock>
           <hcodeline>
-            {'  '}
+            {"  "}
             aa
           </hcodeline>
           <hcodeline>
-            {'  '}
+            {"  "}
             bb
           </hcodeline>
         </hcodeblock>
@@ -158,16 +157,16 @@ describe('tab', () => {
     expect(editor.children).toEqual(output.children);
   });
 
-  it('outdents every selected code line when reversed', () => {
+  it("outdents every selected code line when reversed", () => {
     const input = (
       <editor>
         <hcodeblock>
           <hcodeline>
             <anchor />
-            {'  '}aa
+            {"  "}aa
           </hcodeline>
           <hcodeline>
-            {'  '}bb
+            {"  "}bb
             <focus />
           </hcodeline>
         </hcodeblock>
@@ -190,8 +189,8 @@ describe('tab', () => {
   });
 });
 
-describe('apply', () => {
-  it('clears cached decorations and redecorates when the code block language changes', () => {
+describe("apply", () => {
+  it("clears cached decorations and redecorates when the code block language changes", () => {
     const input = (
       <editor>
         <hcodeblock>
@@ -202,7 +201,7 @@ describe('apply', () => {
     const lowlight = {
       highlight: mock(() => ({ value: [] })),
       highlightAuto: mock(() => ({ value: [] })),
-      listLanguages: mock(() => ['json']),
+      listLanguages: mock(() => ["json"]),
     };
 
     const editor = createEditor({
@@ -228,13 +227,13 @@ describe('apply', () => {
       },
     ] as any);
 
-    editor.tf.setNodes({ lang: 'json' }, { at: [0] });
+    editor.tf.setNodes({ lang: "json" }, { at: [0] });
 
     expect(CODE_LINE_TO_DECORATIONS.get(codeLine)).toEqual([]);
     expect(redecorate).toHaveBeenCalledTimes(1);
   });
 
-  it('redecorates when language changes to plaintext', () => {
+  it("redecorates when language changes to plaintext", () => {
     const input = (
       <editor>
         <hcodeblock lang="javascript">
@@ -245,7 +244,7 @@ describe('apply', () => {
     const lowlight = {
       highlight: mock(() => ({ value: [] })),
       highlightAuto: mock(() => ({ value: [] })),
-      listLanguages: mock(() => ['javascript']),
+      listLanguages: mock(() => ["javascript"]),
     };
 
     const editor = createEditor({
@@ -266,18 +265,18 @@ describe('apply', () => {
     CODE_LINE_TO_DECORATIONS.set(codeLine, [
       {
         anchor: { offset: 0, path: [0, 0, 0] },
-        className: 'token keyword',
+        className: "token keyword",
         focus: { offset: 2, path: [0, 0, 0] },
       },
     ] as any);
 
-    editor.tf.setNodes({ lang: 'plaintext' }, { at: [0] });
+    editor.tf.setNodes({ lang: "plaintext" }, { at: [0] });
 
     expect(CODE_LINE_TO_DECORATIONS.get(codeLine)).toEqual([]);
     expect(redecorate).toHaveBeenCalledTimes(1);
   });
 
-  it('does not redecorate for unrelated code block set_node changes', () => {
+  it("does not redecorate for unrelated code block set_node changes", () => {
     const input = (
       <editor>
         <hcodeblock lang="javascript">
@@ -288,7 +287,7 @@ describe('apply', () => {
     const lowlight = {
       highlight: mock(() => ({ value: [] })),
       highlightAuto: mock(() => ({ value: [] })),
-      listLanguages: mock(() => ['javascript']),
+      listLanguages: mock(() => ["javascript"]),
     };
 
     const editor = createEditor({
@@ -306,7 +305,7 @@ describe('apply', () => {
     const existingDecorations = [
       {
         anchor: { offset: 0, path: [0, 0, 0] },
-        className: 'token keyword',
+        className: "token keyword",
         focus: { offset: 2, path: [0, 0, 0] },
       },
     ] as any;
@@ -315,7 +314,7 @@ describe('apply', () => {
     editor.api.redecorate = redecorate;
     CODE_LINE_TO_DECORATIONS.set(codeLine, existingDecorations);
 
-    editor.tf.setNodes({ foo: 'bar' } as any, { at: [0] });
+    editor.tf.setNodes({ foo: "bar" } as any, { at: [0] });
 
     expect(redecorate).not.toHaveBeenCalled();
   });

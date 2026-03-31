@@ -161,9 +161,5 @@
     "is-hotkey@0.2.0": "patches/is-hotkey@0.2.0.patch",
     "react-dnd@16.0.1": "patches/react-dnd@16.0.1.patch"
   },
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "packages/udecode/*"
-  ]
+  "workspaces": ["apps/*", "packages/*", "packages/udecode/*"]
 }

@@ -11,21 +11,13 @@ import { type Task, tasks } from "@/db/schema";
 import { getFiltersStateParser, getSortingStateParser } from "@/lib/parsers";
 
 export const searchParamsCache = createSearchParamsCache({
-  filterFlag: parseAsStringEnum(
-    flagConfig.featureFlags.map((flag) => flag.value),
-  ),
+  filterFlag: parseAsStringEnum(flagConfig.featureFlags.map((flag) => flag.value)),
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(10),
-  sort: getSortingStateParser<Task>().withDefault([
-    { id: "createdAt", desc: true },
-  ]),
+  sort: getSortingStateParser<Task>().withDefault([{ id: "createdAt", desc: true }]),
   title: parseAsString.withDefault(""),
-  status: parseAsArrayOf(
-    parseAsStringEnum(tasks.status.enumValues),
-  ).withDefault([]),
-  priority: parseAsArrayOf(
-    parseAsStringEnum(tasks.priority.enumValues),
-  ).withDefault([]),
+  status: parseAsArrayOf(parseAsStringEnum(tasks.status.enumValues)).withDefault([]),
+  priority: parseAsArrayOf(parseAsStringEnum(tasks.priority.enumValues)).withDefault([]),
   estimatedHours: parseAsArrayOf(parseAsInteger).withDefault([]),
   createdAt: parseAsArrayOf(parseAsInteger).withDefault([]),
   // advanced filter
@@ -49,8 +41,6 @@ export const updateTaskSchema = z.object({
   estimatedHours: z.number().optional(),
 });
 
-export type GetTasksSchema = Awaited<
-  ReturnType<typeof searchParamsCache.parse>
->;
+export type GetTasksSchema = Awaited<ReturnType<typeof searchParamsCache.parse>>;
 export type CreateTaskSchema = z.infer<typeof createTaskSchema>;
 export type UpdateTaskSchema = z.infer<typeof updateTaskSchema>;

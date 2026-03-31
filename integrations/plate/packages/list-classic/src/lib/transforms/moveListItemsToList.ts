@@ -1,12 +1,6 @@
-import {
-  type ElementEntry,
-  type Path,
-  type SlateEditor,
-  NodeApi,
-  PathApi,
-} from 'platejs';
+import { type ElementEntry, NodeApi, type Path, PathApi, type SlateEditor } from "platejs";
 
-import { getListTypes } from '../queries/getListTypes';
+import { getListTypes } from "../queries/getListTypes";
 
 export type MergeListItemIntoListOptions = {
   /**
@@ -77,9 +71,7 @@ export const moveListItemsToList = (
     if (toList) {
       if (toListIndex === null) {
         const lastChildPath = NodeApi.lastChild(editor, toList[1])?.[1];
-        to = lastChildPath
-          ? PathApi.next(lastChildPath)
-          : toList[1].concat([0]);
+        to = lastChildPath ? PathApi.next(lastChildPath) : toList[1].concat([0]);
       } else {
         to = toList[1].concat([toListIndex]);
       }

@@ -6,17 +6,17 @@ import type {
   TRange,
   TSelection,
   ValueOf,
-} from '@platejs/slate';
-import type { Nullable } from '@udecode/utils';
+} from "@platejs/slate";
+import type { Nullable } from "@udecode/utils";
 
-import type { EditableProps } from '../../../lib';
-import type { PlateEditor } from '../../editor';
+import type { EditableProps } from "../../../lib";
+import type { PlateEditor } from "../../editor";
 
 export type PlateChangeKey =
-  | 'versionDecorate'
-  | 'versionEditor'
-  | 'versionSelection'
-  | 'versionValue';
+  | "versionDecorate"
+  | "versionEditor"
+  | "versionSelection"
+  | "versionValue";
 
 export type PlateStoreState<E extends PlateEditor = PlateEditor> = Nullable<{
   composing: boolean;
@@ -32,10 +32,10 @@ export type PlateStoreState<E extends PlateEditor = PlateEditor> = Nullable<{
   primary: boolean;
   //  Whether the editor is read-only.
   readOnly: boolean;
-  renderChunk: NonNullable<EditableProps['renderChunk']>;
-  renderElement: NonNullable<EditableProps['renderElement']>;
-  renderLeaf: NonNullable<EditableProps['renderLeaf']>;
-  renderText: NonNullable<EditableProps['renderText']>;
+  renderChunk: NonNullable<EditableProps["renderChunk"]>;
+  renderElement: NonNullable<EditableProps["renderElement"]>;
+  renderLeaf: NonNullable<EditableProps["renderLeaf"]>;
+  renderText: NonNullable<EditableProps["renderText"]>;
   /**
    * Version incremented when calling `redecorate`. This is a dependency of the
    * `decorate` function.

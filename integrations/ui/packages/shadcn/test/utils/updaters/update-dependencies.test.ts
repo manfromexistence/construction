@@ -1,22 +1,21 @@
-import path from "path"
-import { execa } from "execa"
-import prompts from "prompts"
-import { afterEach, describe, expect, test, vi } from "vitest"
+import { execa } from "execa";
+import path from "path";
+import prompts from "prompts";
+import { afterEach, describe, expect, test, vi } from "vitest";
 
-import { updateDependencies } from "../../../src/utils/updaters/update-dependencies"
+import { updateDependencies } from "../../../src/utils/updaters/update-dependencies";
 
-vi.mock("execa")
-vi.mock("prompts")
+vi.mock("execa");
+vi.mock("prompts");
 
 describe("updateDependencies", () => {
   afterEach(() => {
-    vi.restoreAllMocks()
-  })
+    vi.restoreAllMocks();
+  });
 
   test.each([
     {
-      description:
-        "npm without react-day-picker v8 includes no additional flags",
+      description: "npm without react-day-picker v8 includes no additional flags",
       options: { silent: true },
       dependencies: ["first", "second", "third"],
       devDependencies: ["fourth"],
@@ -30,8 +29,7 @@ describe("updateDependencies", () => {
       expectedDevArgs: ["install", "-D", "fourth"],
     },
     {
-      description:
-        "npm with react-day-picker v8 applies force prompt when silent",
+      description: "npm with react-day-picker v8 applies force prompt when silent",
       options: { silent: true },
       dependencies: ["first", "second", "third"],
       devDependencies: ["fourth"],
@@ -45,8 +43,7 @@ describe("updateDependencies", () => {
       expectedDevArgs: ["install", "--force", "-D", "fourth"],
     },
     {
-      description:
-        "npm with react-day-picker v8 prompts for flag when not silent",
+      description: "npm with react-day-picker v8 prompts for flag when not silent",
       flagPrompt: "legacy-peer-deps",
       dependencies: ["first", "second", "third"],
       devDependencies: ["fourth"],
@@ -56,13 +53,7 @@ describe("updateDependencies", () => {
         },
       },
       expectedPackageManager: "npm",
-      expectedArgs: [
-        "install",
-        "--legacy-peer-deps",
-        "first",
-        "second",
-        "third",
-      ],
+      expectedArgs: ["install", "--legacy-peer-deps", "first", "second", "third"],
       expectedDevArgs: ["install", "--legacy-peer-deps", "-D", "fourth"],
     },
     {
@@ -118,40 +109,30 @@ describe("updateDependencies", () => {
       expectedArgs: ["install", "first"],
       expectedDevArgs: ["install", "-D", "second"],
     },
-  ])(
-    "$description",
-    async ({
-      options,
-      flagPrompt,
-      config,
-      dependencies,
-      devDependencies,
-      expectedPackageManager,
-      expectedArgs,
-      expectedDevArgs,
-    }) => {
-      vi.mocked(prompts).mockResolvedValue({ flag: flagPrompt })
+  ])("$description", async ({
+    options,
+    flagPrompt,
+    config,
+    dependencies,
+    devDependencies,
+    expectedPackageManager,
+    expectedArgs,
+    expectedDevArgs,
+  }) => {
+    vi.mocked(prompts).mockResolvedValue({ flag: flagPrompt });
 
-      await updateDependencies(
-        dependencies,
-        devDependencies,
-        config,
-        options ?? {}
-      )
+    await updateDependencies(dependencies, devDependencies, config, options ?? {});
 
-      if (flagPrompt) {
-        expect(prompts).toHaveBeenCalled()
-      }
-
-      expect(execa).toHaveBeenCalledWith(expectedPackageManager, expectedArgs, {
-        cwd: config?.resolvedPaths.cwd,
-      })
-
-      expect(execa).toHaveBeenCalledWith(
-        expectedPackageManager,
-        expectedDevArgs,
-        { cwd: config?.resolvedPaths.cwd }
-      )
+    if (flagPrompt) {
+      expect(prompts).toHaveBeenCalled();
     }
-  )
-})
+
+    expect(execa).toHaveBeenCalledWith(expectedPackageManager, expectedArgs, {
+      cwd: config?.resolvedPaths.cwd,
+    });
+
+    expect(execa).toHaveBeenCalledWith(expectedPackageManager, expectedDevArgs, {
+      cwd: config?.resolvedPaths.cwd,
+    });
+  });
+});

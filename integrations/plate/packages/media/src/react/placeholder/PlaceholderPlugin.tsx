@@ -1,18 +1,10 @@
-import {
-  type ExtendConfig,
-  type InsertNodesOptions,
-  bindFirst,
-  KEYS,
-  NodeApi,
-} from 'platejs';
-import { toTPlatePlugin } from 'platejs/react';
-
-import type { AllowedFileType } from './internal/mimes';
-import type { MediaItemConfig, UploadError } from './type';
-
-import { type PlaceholderConfig, BasePlaceholderPlugin } from '../../lib';
-import { insertMedia } from './transforms/insertMedia';
-import { isHistoryMarking } from './utils/history';
+import { bindFirst, type ExtendConfig, type InsertNodesOptions, KEYS, NodeApi } from "platejs";
+import { toTPlatePlugin } from "platejs/react";
+import { BasePlaceholderPlugin, type PlaceholderConfig } from "../../lib";
+import type { AllowedFileType } from "./internal/mimes";
+import { insertMedia } from "./transforms/insertMedia";
+import type { MediaItemConfig, UploadError } from "./type";
+import { isHistoryMarking } from "./utils/history";
 
 export type PlaceholderApi = {
   addUploadingFile: (id: string, file: File) => void;
@@ -51,37 +43,37 @@ export const PlaceholderPlugin = toTPlatePlugin<
     uploadConfig: {
       audio: {
         maxFileCount: 1,
-        maxFileSize: '8MB',
+        maxFileSize: "8MB",
         mediaType: KEYS.audio,
         minFileCount: 1,
       },
       blob: {
         maxFileCount: 1,
-        maxFileSize: '8MB',
+        maxFileSize: "8MB",
         mediaType: KEYS.file,
         minFileCount: 1,
       },
       image: {
         maxFileCount: 3,
-        maxFileSize: '4MB',
+        maxFileSize: "4MB",
         mediaType: KEYS.img,
         minFileCount: 1,
       },
       pdf: {
         maxFileCount: 1,
-        maxFileSize: '4MB',
+        maxFileSize: "4MB",
         mediaType: KEYS.file,
         minFileCount: 1,
       },
       text: {
         maxFileCount: 1,
-        maxFileSize: '64KB',
+        maxFileSize: "64KB",
         mediaType: KEYS.file,
         minFileCount: 1,
       },
       video: {
         maxFileCount: 1,
-        maxFileSize: '16MB',
+        maxFileSize: "16MB",
         mediaType: KEYS.video,
         minFileCount: 1,
       },
@@ -114,31 +106,31 @@ export const PlaceholderPlugin = toTPlatePlugin<
   }))
   .extendApi(({ getOption, setOption }) => ({
     addUploadingFile: (id: string, file: File) => {
-      const uploadingFiles = getOption('uploadingFiles');
+      const uploadingFiles = getOption("uploadingFiles");
 
-      setOption('uploadingFiles', {
+      setOption("uploadingFiles", {
         ...uploadingFiles,
         [id]: file,
       });
     },
     getUploadingFile: (id: string) => {
-      const uploadingFiles = getOption('uploadingFiles');
+      const uploadingFiles = getOption("uploadingFiles");
 
       return uploadingFiles[id];
     },
     removeUploadingFile: (id: string) => {
-      const uploadingFiles = getOption('uploadingFiles');
+      const uploadingFiles = getOption("uploadingFiles");
 
       delete uploadingFiles[id];
 
-      setOption('uploadingFiles', uploadingFiles);
+      setOption("uploadingFiles", uploadingFiles);
     },
   }))
   .extend(({ getOption }) => ({
     handlers: {
       onDrop: ({ editor, event, tf }) => {
         // using DnD plugin by default
-        if (!getOption('disableFileDrop')) return;
+        if (!getOption("disableFileDrop")) return;
 
         const { files } = event.dataTransfer;
 
@@ -163,7 +155,7 @@ export const PlaceholderPlugin = toTPlatePlugin<
       },
       onPaste: ({ editor, event, tf }) => {
         const { files, types } = event.clipboardData;
-        const TEXT_HTML = 'text/html';
+        const TEXT_HTML = "text/html";
 
         // If there are files but no HTML, it must be a system file
         if (files.length > 0 && !types.includes(TEXT_HTML)) {

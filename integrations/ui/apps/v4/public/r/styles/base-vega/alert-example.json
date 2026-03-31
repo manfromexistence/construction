@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "alert-example",
   "title": "Alert",
-  "registryDependencies": [
-    "alert",
-    "badge",
-    "example"
-  ],
+  "registryDependencies": ["alert", "badge", "example"],
   "files": [
     {
       "path": "registry/base-vega/examples/alert-example.tsx",

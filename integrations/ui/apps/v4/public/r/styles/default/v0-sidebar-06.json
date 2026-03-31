@@ -3,13 +3,7 @@
   "name": "v0-sidebar-06",
   "type": "registry:internal",
   "author": "shadcn (https://ui.shadcn.com)",
-  "registryDependencies": [
-    "sidebar",
-    "breadcrumb",
-    "separator",
-    "card",
-    "dropdown-menu"
-  ],
+  "registryDependencies": ["sidebar", "breadcrumb", "separator", "card", "dropdown-menu"],
   "files": [
     {
       "path": "internal/sidebar-06.tsx",

@@ -91,16 +91,8 @@ const ArrowLeftIcon = forwardRef<ArrowLeftIconHandle, ArrowLeftIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.path
-            animate={controls}
-            d="m12 19-7-7 7-7"
-            variants={PATH_VARIANTS}
-          />
-          <motion.path
-            animate={controls}
-            d="M19 12H5"
-            variants={SECOND_PATH_VARIANTS}
-          />
+          <motion.path animate={controls} d="m12 19-7-7 7-7" variants={PATH_VARIANTS} />
+          <motion.path animate={controls} d="M19 12H5" variants={SECOND_PATH_VARIANTS} />
         </svg>
       </div>
     );

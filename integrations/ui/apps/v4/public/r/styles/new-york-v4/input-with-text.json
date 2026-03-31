@@ -1,11 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "input-with-text",
-  "registryDependencies": [
-    "input",
-    "button",
-    "label"
-  ],
+  "registryDependencies": ["input", "button", "label"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/input-with-text.tsx",

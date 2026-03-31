@@ -1,14 +1,18 @@
 import {
+  getPluginKey,
+  getPluginType,
+  KEYS,
   type SlateEditor,
   type TElement,
   type TListElement,
   type TMentionElement,
   type TText,
-  getPluginKey,
-  getPluginType,
-  KEYS,
-} from 'platejs';
-
+} from "platejs";
+import {
+  buildSlateNode,
+  convertChildrenDeserialize,
+  convertTextsDeserialize,
+} from "../deserializer";
 import type {
   MdHeading,
   MdImage,
@@ -21,20 +25,14 @@ import type {
   MdTable,
   MdTableCell,
   MdTableRow,
-} from '../mdast';
-import type { MentionNode } from '../plugins/remarkMention';
-import type { MdRules } from '../types';
-
-import {
-  buildSlateNode,
-  convertChildrenDeserialize,
-  convertTextsDeserialize,
-} from '../deserializer';
-import { convertNodesSerialize } from '../serializer';
-import { columnRules } from './columnRules';
-import { fontRules } from './fontRules';
-import { mediaRules } from './mediaRules';
-import { parseAttributes, propsToAttributes } from './utils';
+} from "../mdast";
+import type { MentionNode } from "../plugins/remarkMention";
+import { convertNodesSerialize } from "../serializer";
+import type { MdRules } from "../types";
+import { columnRules } from "./columnRules";
+import { fontRules } from "./fontRules";
+import { mediaRules } from "./mediaRules";
+import { parseAttributes, propsToAttributes } from "./utils";
 
 const LEADING_NEWLINE_REGEX = /^\n/;
 
@@ -43,8 +41,8 @@ function isBoolean(value: any) {
     value === true ||
     value === false ||
     (!!value &&
-      typeof value === 'object' &&
-      Object.prototype.toString.call(value) === '[object Boolean]')
+      typeof value === "object" &&
+      Object.prototype.toString.call(value) === "[object Boolean]")
   );
 }
 
@@ -56,11 +54,8 @@ export const defaultRules: MdRules = {
       url: mdastNode.url,
     }),
     serialize: (node, options) => ({
-      children: convertNodesSerialize(
-        node.children,
-        options
-      ) as MdLink['children'],
-      type: 'link',
+      children: convertNodesSerialize(node.children, options) as MdLink["children"],
+      type: "link",
       url: node.url,
     }),
   },
@@ -69,7 +64,7 @@ export const defaultRules: MdRules = {
       const children =
         mdastNode.children.length > 0
           ? mdastNode.children.flatMap((paragraph, index, children) => {
-              if (paragraph.type === 'paragraph') {
+              if (paragraph.type === "paragraph") {
                 if (children.length > 1 && children.length - 1 !== index) {
                   // add a line break between the paragraphs
                   const paragraphChildren = convertChildrenDeserialize(
@@ -77,30 +72,22 @@ export const defaultRules: MdRules = {
                     deco,
                     options
                   );
-                  paragraphChildren.push({ text: '\n' }, { text: '\n' });
+                  paragraphChildren.push({ text: "\n" }, { text: "\n" });
                   return paragraphChildren;
                 }
-                return convertChildrenDeserialize(
-                  paragraph.children,
-                  deco,
-                  options
-                );
+                return convertChildrenDeserialize(paragraph.children, deco, options);
               }
 
-              if ('children' in paragraph) {
-                return convertChildrenDeserialize(
-                  paragraph.children,
-                  deco,
-                  options
-                );
+              if ("children" in paragraph) {
+                return convertChildrenDeserialize(paragraph.children, deco, options);
               }
 
-              return [{ text: '' }];
+              return [{ text: "" }];
             })
-          : [{ text: '' }];
+          : [{ text: "" }];
 
       const flattenedChildren = children.flatMap((child: any) =>
-        child.type === 'blockquote' ? child.children : [child]
+        child.type === "blockquote" ? child.children : [child]
       );
 
       return {
@@ -112,58 +99,51 @@ export const defaultRules: MdRules = {
       const nodes = [] as any;
 
       for (const child of node.children) {
-        if (child.text === '\n') {
+        if (child.text === "\n") {
           nodes.push({
-            type: 'break',
+            type: "break",
           });
         } else {
           nodes.push(child);
         }
       }
 
-      const paragraphChildren = convertNodesSerialize(
-        nodes,
-        options
-      ) as MdParagraph['children'];
+      const paragraphChildren = convertNodesSerialize(nodes, options) as MdParagraph["children"];
 
-      if (
-        paragraphChildren.length > 0 &&
-        paragraphChildren.at(-1)!.type === 'break'
-      ) {
+      if (paragraphChildren.length > 0 && paragraphChildren.at(-1)!.type === "break") {
         // if the last child of the paragraph is a line break add an additional one
 
-        paragraphChildren.at(-1)!.type = 'html';
+        paragraphChildren.at(-1)!.type = "html";
         // @ts-expect-error -- value is ok
-        paragraphChildren.at(-1)!.value = '\n<br />';
+        paragraphChildren.at(-1)!.value = "\n<br />";
       }
 
       return {
         children: [
           {
             children: paragraphChildren,
-            type: 'paragraph',
+            type: "paragraph",
           },
         ],
-        type: 'blockquote',
+        type: "blockquote",
       };
     },
   },
   bold: {
     mark: true,
-    deserialize: (mdastNode, deco, options) =>
-      convertTextsDeserialize(mdastNode, deco, options),
+    deserialize: (mdastNode, deco, options) => convertTextsDeserialize(mdastNode, deco, options),
   },
   br: {
     deserialize() {
-      return [{ text: '\n' }];
+      return [{ text: "\n" }];
     },
   },
   break: {
     deserialize: (_mdastNode, _deco) => ({
-      text: '\n',
+      text: "\n",
     }),
     serialize: () => ({
-      type: 'break',
+      type: "break",
     }),
   },
   callout: {
@@ -180,8 +160,8 @@ export const defaultRules: MdRules = {
       return {
         attributes: propsToAttributes(rest),
         children: convertNodesSerialize(children, options) as any,
-        name: 'callout',
-        type: 'mdxJsxFlowElement',
+        name: "callout",
+        type: "mdxJsxFlowElement",
       };
     },
   },
@@ -189,13 +169,13 @@ export const defaultRules: MdRules = {
     mark: true,
     deserialize: (mdastNode, deco, options) => ({
       ...deco,
-      [getPluginType(options.editor!, KEYS.code) as 'code']: true,
+      [getPluginType(options.editor!, KEYS.code) as "code"]: true,
       text: mdastNode.value,
     }),
   },
   code_block: {
     deserialize: (mdastNode, _deco, options) => ({
-      children: (mdastNode.value || '').split('\n').map((line) => ({
+      children: (mdastNode.value || "").split("\n").map((line) => ({
         children: [{ text: line } as TText],
         type: getPluginType(options.editor!, KEYS.codeLine),
       })),
@@ -204,14 +184,14 @@ export const defaultRules: MdRules = {
     }),
     serialize: (node) => ({
       lang: node.lang,
-      type: 'code',
+      type: "code",
       value: node.children
         .map((child: any) =>
           child?.children === undefined
             ? child.text
-            : child.children.map((c: any) => c.text).join('')
+            : child.children.map((c: any) => c.text).join("")
         )
-        .join('\n'),
+        .join("\n"),
     }),
   },
   comment: {
@@ -233,17 +213,17 @@ export const defaultRules: MdRules = {
       return {
         // attributes: propsToAttributes(rest),
         attributes: [],
-        children: [{ type: 'text', value: slateNode.text }],
-        name: 'comment',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: slateNode.text }],
+        name: "comment",
+        type: "mdxJsxTextElement",
       };
     },
   },
   date: {
     deserialize(mdastNode, _deco, options) {
-      const dateValue = (mdastNode.children?.[0] as any)?.value || '';
+      const dateValue = (mdastNode.children?.[0] as any)?.value || "";
       return {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         date: dateValue,
         type: getPluginType(options.editor!, KEYS.date),
       };
@@ -251,9 +231,9 @@ export const defaultRules: MdRules = {
     serialize({ date }): MdMdxJsxTextElement {
       return {
         attributes: [],
-        children: [{ type: 'text', value: date ?? '' }],
-        name: 'date',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: date ?? "" }],
+        name: "date",
+        type: "mdxJsxTextElement",
       };
     },
   },
@@ -269,12 +249,12 @@ export const defaultRules: MdRules = {
   },
   equation: {
     deserialize: (mdastNode, _deco, options) => ({
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       texExpression: mdastNode.value,
       type: getPluginType(options.editor!, KEYS.equation),
     }),
     serialize: (node) => ({
-      type: 'math',
+      type: "math",
       value: node.texExpression,
     }),
   },
@@ -282,15 +262,11 @@ export const defaultRules: MdRules = {
   // so we need to convert them to p for now
   footnoteDefinition: {
     deserialize: (mdastNode, deco, options) => {
-      const children = convertChildrenDeserialize(
-        mdastNode.children,
-        deco,
-        options
-      );
+      const children = convertChildrenDeserialize(mdastNode.children, deco, options);
 
       // Flatten nested paragraphs similar to blockquote implementation
       const flattenedChildren = children.flatMap((child: any) =>
-        child.type === 'p' ? child.children : [child]
+        child.type === "p" ? child.children : [child]
       );
 
       return {
@@ -303,12 +279,12 @@ export const defaultRules: MdRules = {
   heading: {
     deserialize: (mdastNode, deco, options) => {
       const headingType = {
-        1: 'h1',
-        2: 'h2',
-        3: 'h3',
-        4: 'h4',
-        5: 'h5',
-        6: 'h6',
+        1: "h1",
+        2: "h2",
+        3: "h3",
+        4: "h4",
+        5: "h5",
+        6: "h6",
       };
 
       const defaultType = headingType[mdastNode.depth];
@@ -332,12 +308,9 @@ export const defaultRules: MdRules = {
       };
 
       return {
-        children: convertNodesSerialize(
-          node.children,
-          options
-        ) as MdHeading['children'],
+        children: convertNodesSerialize(node.children, options) as MdHeading["children"],
         depth: depthMap[key as keyof typeof depthMap] as any,
-        type: 'heading',
+        type: "heading",
       };
     },
   },
@@ -352,36 +325,32 @@ export const defaultRules: MdRules = {
     serialize(slateNode): MdMdxJsxTextElement {
       return {
         attributes: [],
-        children: [{ type: 'text', value: slateNode.text }],
-        name: 'mark',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: slateNode.text }],
+        name: "mark",
+        type: "mdxJsxTextElement",
       };
     },
   },
   hr: {
     deserialize: (_, __, options) => ({
-      children: [{ text: '' } as TText],
+      children: [{ text: "" } as TText],
       type: getPluginType(options.editor!, KEYS.hr),
     }),
-    serialize: () => ({ type: 'thematicBreak' }),
+    serialize: () => ({ type: "thematicBreak" }),
   },
   html: {
     deserialize: (mdastNode, _deco, _options) => ({
-      text: (mdastNode.value || '').replaceAll('<br />', '\n'),
+      text: (mdastNode.value || "").replaceAll("<br />", "\n"),
     }),
   },
   img: {
     deserialize: (mdastNode, _deco, options) => {
       const { alt, attributes, title, url } = mdastNode as any;
-      const {
-        alt: altAttr,
-        src,
-        ...rest
-      } = attributes ? parseAttributes(attributes) : ({} as any);
+      const { alt: altAttr, src, ...rest } = attributes ? parseAttributes(attributes) : ({} as any);
 
       return {
-        caption: [{ text: altAttr || alt || '' } as TText],
-        children: [{ text: '' } as TText],
+        caption: [{ text: altAttr || alt || "" } as TText],
+        children: [{ text: "" } as TText],
         ...(title && { title }),
         type: getPluginType(options.editor!, KEYS.img),
         url: src || url,
@@ -390,35 +359,32 @@ export const defaultRules: MdRules = {
     },
     serialize: ({ caption, url }) => {
       const image: MdImage = {
-        alt: caption ? caption.map((c) => (c as any).text).join('') : undefined,
-        title: caption
-          ? caption.map((c) => (c as any).text).join('')
-          : undefined,
-        type: 'image',
+        alt: caption ? caption.map((c) => (c as any).text).join("") : undefined,
+        title: caption ? caption.map((c) => (c as any).text).join("") : undefined,
+        type: "image",
         url,
       };
 
       // since plate is using block image so we need to wrap it in a paragraph
-      return { children: [image], type: 'paragraph' } as any;
+      return { children: [image], type: "paragraph" } as any;
     },
   },
   inline_equation: {
     deserialize(mdastNode, _, options) {
       return {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         texExpression: mdastNode.value,
         type: getPluginType(options.editor!, KEYS.inlineEquation),
       };
     },
     serialize: (node) => ({
-      type: 'inlineMath',
+      type: "inlineMath",
       value: node.texExpression,
     }),
   },
   italic: {
     mark: true,
-    deserialize: (mdastNode, deco, options) =>
-      convertTextsDeserialize(mdastNode, deco, options),
+    deserialize: (mdastNode, deco, options) => convertTextsDeserialize(mdastNode, deco, options),
   },
   kbd: {
     mark: true,
@@ -431,9 +397,9 @@ export const defaultRules: MdRules = {
     serialize(slateNode): MdMdxJsxTextElement {
       return {
         attributes: [],
-        children: [{ type: 'text', value: slateNode.text }],
-        name: 'kbd',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: slateNode.text }],
+        name: "kbd",
+        type: "mdxJsxTextElement",
       };
     },
   },
@@ -445,25 +411,17 @@ export const defaultRules: MdRules = {
       if (!isIndentList) {
         // For standard lists, we need to ensure each list item is properly structured
         const children = mdastNode.children.map((child) => {
-          if (child.type === 'listItem') {
+          if (child.type === "listItem") {
             // Process each list item
             return {
               children: child.children.map((itemChild) => {
-                if (itemChild.type === 'paragraph') {
+                if (itemChild.type === "paragraph") {
                   return {
-                    children: convertChildrenDeserialize(
-                      itemChild.children,
-                      deco,
-                      options
-                    ),
+                    children: convertChildrenDeserialize(itemChild.children, deco, options),
                     type: getPluginType(options.editor!, KEYS.lic),
                   };
                 }
-                return convertChildrenDeserialize(
-                  [itemChild],
-                  deco,
-                  options
-                )[0];
+                return convertChildrenDeserialize([itemChild], deco, options)[0];
               }),
               type: getPluginType(options.editor!, KEYS.li),
             };
@@ -473,10 +431,7 @@ export const defaultRules: MdRules = {
 
         return {
           children,
-          type: getPluginType(
-            options.editor!,
-            mdastNode.ordered ? KEYS.olClassic : KEYS.ulClassic
-          ),
+          type: getPluginType(options.editor!, mdastNode.ordered ? KEYS.olClassic : KEYS.ulClassic),
         };
       }
 
@@ -488,12 +443,11 @@ export const defaultRules: MdRules = {
           : getPluginType(options.editor!, KEYS.ul);
 
         listNode.children?.forEach((listItem, index) => {
-          if (listItem.type !== 'listItem') return;
+          if (listItem.type !== "listItem") return;
 
           const isTodoList = isBoolean(listItem.checked);
 
-          if (isTodoList)
-            listStyleType = getPluginType(options.editor!, KEYS.listTodo);
+          if (isTodoList) listStyleType = getPluginType(options.editor!, KEYS.listTodo);
 
           // Handle the main content of the list item
           const [paragraph, ...subLists] = listItem.children || [];
@@ -502,7 +456,7 @@ export const defaultRules: MdRules = {
           const result = paragraph
             ? buildSlateNode(paragraph, deco, options)
             : {
-                children: [{ text: '' }],
+                children: [{ text: "" }],
                 type: getPluginType(options.editor!, KEYS.p),
               };
 
@@ -537,14 +491,10 @@ export const defaultRules: MdRules = {
 
           // Process sub-lists and other content
           subLists.forEach((subNode) => {
-            if (subNode.type === 'list') {
+            if (subNode.type === "list") {
               // Recursively process nested lists
               const subListStart = (subNode as any).start || 1;
-              const nestedItems = parseListItems(
-                subNode,
-                indent + 1,
-                subListStart
-              );
+              const nestedItems = parseListItems(subNode, indent + 1, subListStart);
               items.push(...nestedItems);
             } else {
               // Transform any other node type using buildSlateNode
@@ -574,7 +524,7 @@ export const defaultRules: MdRules = {
       const startIndex = (mdastNode as any).start || 1;
       return parseListItems(mdastNode, 1, startIndex);
     },
-    serialize: (node: { type: 'ol' | 'ul' } & TElement, options): MdList => {
+    serialize: (node: { type: "ol" | "ul" } & TElement, options): MdList => {
       const editor = options.editor!;
       const isOrdered = getPluginKey(editor, node.type) === KEYS.olClassic;
 
@@ -583,31 +533,31 @@ export const defaultRules: MdRules = {
         let currentItem: any = null;
 
         for (const child of children) {
-          if (getPluginKey(editor, child.type) === 'li') {
+          if (getPluginKey(editor, child.type) === "li") {
             if (currentItem) {
               items.push(currentItem);
             }
             currentItem = {
               children: [],
               spread: false,
-              type: 'listItem',
+              type: "listItem",
             };
 
             for (const liChild of child.children) {
-              if (getPluginKey(editor, liChild.type) === 'lic') {
+              if (getPluginKey(editor, liChild.type) === "lic") {
                 currentItem.children.push({
                   children: convertNodesSerialize(liChild.children, options),
-                  type: 'paragraph',
+                  type: "paragraph",
                 });
               } else if (
-                getPluginKey(editor, liChild.type) === 'ol' ||
-                getPluginKey(editor, liChild.type) === 'ul'
+                getPluginKey(editor, liChild.type) === "ol" ||
+                getPluginKey(editor, liChild.type) === "ul"
               ) {
                 currentItem.children.push({
                   children: serializeListItems(liChild.children),
-                  ordered: getPluginKey(editor, liChild.type) === 'ol',
+                  ordered: getPluginKey(editor, liChild.type) === "ol",
                   spread: false,
-                  type: 'list',
+                  type: "list",
                 });
               }
             }
@@ -625,7 +575,7 @@ export const defaultRules: MdRules = {
         children: serializeListItems(node.children),
         ordered: isOrdered,
         spread: false,
-        type: 'list',
+        type: "list",
       };
     },
   },
@@ -633,7 +583,7 @@ export const defaultRules: MdRules = {
     deserialize: (mdastNode, deco, options) => {
       // Transform each paragraph in the list item into a 'lic' type
       const children = mdastNode.children.map((child: MdRootContent) => {
-        if (child.type === 'paragraph') {
+        if (child.type === "paragraph") {
           return {
             children: convertChildrenDeserialize(child.children, deco, options),
             type: getPluginType(options.editor!, KEYS.lic),
@@ -649,12 +599,12 @@ export const defaultRules: MdRules = {
     },
     serialize: (node, options) => ({
       children: convertNodesSerialize(node.children, options),
-      type: 'listItem',
+      type: "listItem",
     }),
   },
   mention: {
     deserialize: (node: MentionNode, _deco, options): TMentionElement => ({
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       type: getPluginType(options.editor!, KEYS.mention),
       value: node.displayText || node.username,
       ...(node.displayText && { key: node.username }),
@@ -666,11 +616,11 @@ export const defaultRules: MdRules = {
       // Always use link format for all mentions
       // Encode the mention ID to create a valid URL, manually encoding parentheses
       const encodedId = encodeURIComponent(String(mentionId))
-        .replace(/\(/g, '%28')
-        .replace(/\)/g, '%29');
+        .replace(/\(/g, "%28")
+        .replace(/\)/g, "%29");
       return {
-        children: [{ type: 'text', value: displayText }],
-        type: 'link',
+        children: [{ type: "text", value: displayText }],
+        type: "link",
         url: `mention:${encodedId}`,
       };
     },
@@ -679,7 +629,7 @@ export const defaultRules: MdRules = {
     deserialize: (node, deco, options) => {
       const isKeepLineBreak = options.splitLineBreaks;
       const children = convertChildrenDeserialize(node.children, deco, options);
-      const splitBlockTypes = new Set(['img']);
+      const splitBlockTypes = new Set(["img"]);
 
       const elements: any[] = [];
       let inlineNodes: any[] = [];
@@ -695,8 +645,8 @@ export const defaultRules: MdRules = {
       };
 
       children.forEach((c) => {
-        if (c.text === '\u200B') {
-          c.text = '';
+        if (c.text === "\u200B") {
+          c.text = "";
         }
       });
 
@@ -706,19 +656,14 @@ export const defaultRules: MdRules = {
         if (type && splitBlockTypes.has(type)) {
           flushInlineNodes();
           elements.push(child);
-        } else if (
-          isKeepLineBreak &&
-          'text' in child &&
-          typeof child.text === 'string'
-        ) {
-          const textParts = child.text.split('\n');
+        } else if (isKeepLineBreak && "text" in child && typeof child.text === "string") {
+          const textParts = child.text.split("\n");
 
           // Handle line break generated by <br>
-          const isSingleLineBreak =
-            child.text === '\n' && inlineNodes.length === 0;
+          const isSingleLineBreak = child.text === "\n" && inlineNodes.length === 0;
 
           if (isSingleLineBreak) {
-            inlineNodes.push({ ...child, text: '' });
+            inlineNodes.push({ ...child, text: "" });
             flushInlineNodes();
 
             return;
@@ -741,11 +686,7 @@ export const defaultRules: MdRules = {
               flushInlineNodes();
             }
           });
-        } else if (
-          child.text === '\n' &&
-          children.length > 1 &&
-          index === children.length - 1
-        ) {
+        } else if (child.text === "\n" && children.length > 1 && index === children.length - 1) {
           // remove the last br of the paragraph if the previos element is not a br
           // no op
         } else {
@@ -761,14 +702,14 @@ export const defaultRules: MdRules = {
       let enrichedChildren = node.children;
 
       enrichedChildren = enrichedChildren.map((child) => {
-        if (child.text === '\n') {
+        if (child.text === "\n") {
           return {
-            type: 'break',
+            type: "break",
           } as any;
         }
 
-        if (child.text === '' && options.preserveEmptyParagraphs !== false) {
-          return { ...child, text: '\u200B' };
+        if (child.text === "" && options.preserveEmptyParagraphs !== false) {
+          return { ...child, text: "\u200B" };
         }
 
         return child;
@@ -777,28 +718,24 @@ export const defaultRules: MdRules = {
       const convertedNodes = convertNodesSerialize(
         enrichedChildren,
         options
-      ) as MdParagraph['children'];
+      ) as MdParagraph["children"];
 
-      if (
-        convertedNodes.length > 0 &&
-        enrichedChildren.at(-1)!.type === 'break'
-      ) {
+      if (convertedNodes.length > 0 && enrichedChildren.at(-1)!.type === "break") {
         // if the last child of the paragraph is a line break add an additional one
-        convertedNodes.at(-1)!.type = 'html';
+        convertedNodes.at(-1)!.type = "html";
         // @ts-expect-error -- value is the right property here
-        convertedNodes.at(-1)!.value = '\n<br />';
+        convertedNodes.at(-1)!.value = "\n<br />";
       }
 
       return {
         children: convertedNodes,
-        type: 'paragraph',
+        type: "paragraph",
       };
     },
   },
   strikethrough: {
     mark: true,
-    deserialize: (mdastNode, deco, options) =>
-      convertTextsDeserialize(mdastNode, deco, options),
+    deserialize: (mdastNode, deco, options) => convertTextsDeserialize(mdastNode, deco, options),
   },
   subscript: {
     mark: true,
@@ -811,9 +748,9 @@ export const defaultRules: MdRules = {
     serialize(slateNode, _options): MdMdxJsxTextElement {
       return {
         attributes: [],
-        children: [{ type: 'text', value: slateNode.text }],
-        name: 'sub',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: slateNode.text }],
+        name: "sub",
+        type: "mdxJsxTextElement",
       };
     },
   },
@@ -838,9 +775,9 @@ export const defaultRules: MdRules = {
       return {
         // attributes: propsToAttributes(rest),
         attributes: [],
-        children: [{ type: 'text', value: slateNode.text }],
-        name: 'suggestion',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: slateNode.text }],
+        name: "suggestion",
+        type: "mdxJsxTextElement",
       };
     },
   },
@@ -855,9 +792,9 @@ export const defaultRules: MdRules = {
     serialize(slateNode, _options): MdMdxJsxTextElement {
       return {
         attributes: [],
-        children: [{ type: 'text', value: slateNode.text }],
-        name: 'sup',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: slateNode.text }],
+        name: "sup",
+        type: "mdxJsxTextElement",
       };
     },
   },
@@ -868,13 +805,9 @@ export const defaultRules: MdRules = {
         node.children?.map((row, rowIndex) => ({
           children:
             row.children?.map((cell) => {
-              const cellType = rowIndex === 0 ? 'th' : 'td';
+              const cellType = rowIndex === 0 ? "th" : "td";
 
-              const cellChildren = convertChildrenDeserialize(
-                cell.children,
-                deco,
-                options
-              );
+              const cellChildren = convertChildrenDeserialize(cell.children, deco, options);
               const groupedChildren: any[] = [];
               let currentParagraphChildren: any[] = [];
 
@@ -907,7 +840,7 @@ export const defaultRules: MdRules = {
                 children:
                   groupedChildren.length > 0
                     ? groupedChildren
-                    : [{ children: [{ text: '' }], type: paragraphType }],
+                    : [{ children: [{ text: "" }], type: paragraphType }],
                 type: getPluginType(options.editor!, cellType),
               };
             }) || [],
@@ -920,69 +853,60 @@ export const defaultRules: MdRules = {
       };
     },
     serialize: (node, options) => ({
-      children: convertNodesSerialize(
-        node.children,
-        options
-      ) as MdTable['children'],
-      type: 'table',
+      children: convertNodesSerialize(node.children, options) as MdTable["children"],
+      type: "table",
     }),
   },
   td: {
     serialize: (node, options) => {
-      const children = convertNodesSerialize(
-        node.children,
-        options
-      ) as MdTableCell['children'];
+      const children = convertNodesSerialize(node.children, options) as MdTableCell["children"];
 
       // Insert <br/> between multiple blocks in table cells
       // since markdown tables don't support multiple blocks natively
       if (children.length > 1) {
-        const result: MdTableCell['children'] = [];
+        const result: MdTableCell["children"] = [];
 
         for (let i = 0; i < children.length; i++) {
           result.push(children[i]);
 
           if (i < children.length - 1) {
-            result.push({ type: 'html', value: '<br/>' } as any);
+            result.push({ type: "html", value: "<br/>" } as any);
           }
         }
 
-        return { children: result, type: 'tableCell' };
+        return { children: result, type: "tableCell" };
       }
 
-      return { children, type: 'tableCell' };
+      return { children, type: "tableCell" };
     },
   },
   text: {
     deserialize: (mdastNode, deco) => ({
       ...deco,
-      text: mdastNode.value.replace(LEADING_NEWLINE_REGEX, ''),
+      text: mdastNode.value.replace(LEADING_NEWLINE_REGEX, ""),
     }),
   },
   th: {
     serialize: (node, options) => {
-      const children = convertNodesSerialize(
-        node.children,
-        options
-      ) as MdTableCell['children'];
+      const children = convertNodesSerialize(node.children, options) as MdTableCell["children"];
 
       // Insert <br/> between multiple blocks in table cells
       // since markdown tables don't support multiple blocks natively
       if (children.length > 1) {
-        const result: MdTableCell['children'] = [];
+        const result: MdTableCell["children"] = [];
 
         for (let i = 0; i < children.length; i++) {
           result.push(children[i]);
 
           if (i < children.length - 1) {
-            result.push({ type: 'html', value: '<br/>' } as any);
+            result.push({ type: "html", value: "<br/>" } as any);
           }
         }
 
-        return { children: result, type: 'tableCell' };
+        return { children: result, type: "tableCell" };
       }
 
-      return { children, type: 'tableCell' };
+      return { children, type: "tableCell" };
     },
   },
   toc: {
@@ -993,17 +917,14 @@ export const defaultRules: MdRules = {
     serialize: (node, options): MdMdxJsxFlowElement => ({
       attributes: [],
       children: convertNodesSerialize(node.children, options) as any,
-      name: 'toc',
-      type: 'mdxJsxFlowElement',
+      name: "toc",
+      type: "mdxJsxFlowElement",
     }),
   },
   tr: {
     serialize: (node, options) => ({
-      children: convertNodesSerialize(
-        node.children,
-        options
-      ) as MdTableRow['children'],
-      type: 'tableRow',
+      children: convertNodesSerialize(node.children, options) as MdTableRow["children"],
+      type: "tableRow",
     }),
   },
   underline: {
@@ -1017,9 +938,9 @@ export const defaultRules: MdRules = {
     serialize(slateNode, _options): MdMdxJsxTextElement {
       return {
         attributes: [],
-        children: [{ type: 'text', value: slateNode.text }],
-        name: 'u',
-        type: 'mdxJsxTextElement',
+        children: [{ type: "text", value: slateNode.text }],
+        name: "u",
+        type: "mdxJsxTextElement",
       };
     },
   },

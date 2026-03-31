@@ -1,11 +1,7 @@
 {
   "name": "marquee",
-  "dependencies": [
-    "@base-ui/react"
-  ],
-  "registryDependencies": [
-    "direction"
-  ],
+  "dependencies": ["@base-ui/react"],
+  "registryDependencies": ["direction"],
   "files": [
     {
       "path": "ui/marquee.tsx",

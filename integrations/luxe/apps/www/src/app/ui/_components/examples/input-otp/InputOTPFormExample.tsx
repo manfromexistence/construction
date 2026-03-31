@@ -1,16 +1,15 @@
 "use client";
 
-import { z } from "zod";
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
+import { Controller, useForm } from "react-hook-form";
+import { z } from "zod";
+import { Button } from "@/app/_components/ui/button";
 import {
   InputOTP,
   InputOTPGroup,
-  InputOTPSlot,
   InputOTPSeparator,
+  InputOTPSlot,
 } from "@/app/_components/ui/input-otp";
-import { Button } from "@/app/_components/ui/button";
 import { cn } from "@/utils/cn";
 
 const formSchema = z.object({
@@ -36,12 +35,7 @@ export function InputOTPFormExample() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-2/3">
-      <h1
-        className={cn(
-          "text-primary text-sm mb-2",
-          errors.pin && "text-red-400",
-        )}
-      >
+      <h1 className={cn("text-primary text-sm mb-2", errors.pin && "text-red-400")}>
         One-time Password
       </h1>
       <Controller
@@ -63,9 +57,7 @@ export function InputOTPFormExample() {
           </InputOTP>
         )}
       />
-      {errors.pin && (
-        <p className="text-sm text-red-400 mt-2">{errors.pin.message}</p>
-      )}
+      {errors.pin && <p className="text-sm text-red-400 mt-2">{errors.pin.message}</p>}
       <Button type="submit" className="mt-4">
         Submit
       </Button>

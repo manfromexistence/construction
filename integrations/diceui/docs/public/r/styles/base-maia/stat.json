@@ -1,8 +1,6 @@
 {
   "name": "stat",
-  "registryDependencies": [
-    "separator"
-  ],
+  "registryDependencies": ["separator"],
   "files": [
     {
       "path": "ui/stat.tsx",

@@ -40,10 +40,10 @@ export const iconLibraries = {
     usage: "<ICON />",
     export: "@remixicon/react",
   },
-} as const
+} as const;
 
-export type IconLibraries = typeof iconLibraries
+export type IconLibraries = typeof iconLibraries;
 
-export type IconLibrary = IconLibraries[keyof IconLibraries]
+export type IconLibrary = IconLibraries[keyof IconLibraries];
 
-export type IconLibraryName = keyof IconLibraries
+export type IconLibraryName = keyof IconLibraries;

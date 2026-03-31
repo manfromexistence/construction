@@ -2,13 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "progress-example",
   "title": "Progress",
-  "registryDependencies": [
-    "field",
-    "item",
-    "progress",
-    "slider",
-    "example"
-  ],
+  "registryDependencies": ["field", "item", "progress", "slider", "example"],
   "files": [
     {
       "path": "registry/base-luma/examples/progress-example.tsx",

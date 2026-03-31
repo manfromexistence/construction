@@ -1,8 +1,6 @@
 {
   "name": "gauge",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "ui/gauge.tsx",

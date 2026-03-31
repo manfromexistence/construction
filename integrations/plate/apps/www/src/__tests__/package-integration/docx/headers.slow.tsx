@@ -6,34 +6,26 @@ import {
   FontFamilyPlugin,
   FontSizePlugin,
   FontWeightPlugin,
-} from '@platejs/basic-styles/react';
-import { jsxt } from '@platejs/test-utils';
+} from "@platejs/basic-styles/react";
+import { jsxt } from "@platejs/test-utils";
 
-import { getDocxTestName, testDocxDeserializer } from './testDocxDeserializer';
+import { getDocxTestName, testDocxDeserializer } from "./testDocxDeserializer";
 
 jsxt;
 
-const name = 'headers';
+const name = "headers";
 
 describe(getDocxTestName(name), () => {
   testDocxDeserializer({
     expected: (
       <editor>
         <hh1>
-          <htext
-            color="#345A8A"
-            fontFamily="Calibri, sans-serif"
-            fontSize="16pt"
-          >
+          <htext color="#345A8A" fontFamily="Calibri, sans-serif" fontSize="16pt">
             A Test of Headers
           </htext>
         </hh1>
         <hh2>
-          <htext
-            color="#4F81BD"
-            fontFamily="Calibri, sans-serif"
-            fontSize="16pt"
-          >
+          <htext color="#4F81BD" fontFamily="Calibri, sans-serif" fontSize="16pt">
             Second Level
           </htext>
         </hh2>
@@ -43,11 +35,7 @@ describe(getDocxTestName(name), () => {
           </htext>
         </hp>
         <hh3>
-          <htext
-            color="#4F81BD"
-            fontFamily="Calibri, sans-serif"
-            fontSize="14pt"
-          >
+          <htext color="#4F81BD" fontFamily="Calibri, sans-serif" fontSize="14pt">
             Third level
           </htext>
         </hh3>
@@ -57,11 +45,7 @@ describe(getDocxTestName(name), () => {
           </htext>
         </hp>
         <hh4>
-          <htext
-            color="#4F81BD"
-            fontFamily="Calibri, sans-serif"
-            fontSize="12pt"
-          >
+          <htext color="#4F81BD" fontFamily="Calibri, sans-serif" fontSize="12pt">
             Fourth level
           </htext>
         </hh4>
@@ -71,12 +55,7 @@ describe(getDocxTestName(name), () => {
           </htext>
         </hp>
         <hh5>
-          <htext
-            color="#4F81BD"
-            fontFamily="Calibri, sans-serif"
-            fontSize="12pt"
-            italic
-          >
+          <htext color="#4F81BD" fontFamily="Calibri, sans-serif" fontSize="12pt" italic>
             Fifth level
           </htext>
         </hh5>
@@ -86,11 +65,7 @@ describe(getDocxTestName(name), () => {
           </htext>
         </hp>
         <hh6>
-          <htext
-            color="#4F81BD"
-            fontFamily="Calibri, sans-serif"
-            fontSize="12pt"
-          >
+          <htext color="#4F81BD" fontFamily="Calibri, sans-serif" fontSize="12pt">
             Sixth level
           </htext>
         </hh6>
@@ -106,8 +81,7 @@ describe(getDocxTestName(name), () => {
         </hp>
         <hp>
           <htext fontFamily="Cambria, serif" fontSize="12pt">
-            Since no Heading 7 style exists in styles.xml, this gets converted
-            to Span.
+            Since no Heading 7 style exists in styles.xml, this gets converted to Span.
           </htext>
         </hp>
       </editor>

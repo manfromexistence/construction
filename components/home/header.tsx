@@ -1,14 +1,14 @@
 "use client";
 
+import { ChevronRight, Menu, X } from "lucide-react";
+import { motion } from "motion/react";
+import Link from "next/link";
 import GitHubIcon from "@/assets/github.svg";
 import Logo from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
 import { useGithubStars } from "@/hooks/use-github-stars";
 import { cn } from "@/lib/utils";
 import { formatCompactNumber } from "@/utils/format";
-import { ChevronRight, Menu, X } from "lucide-react";
-import { motion } from "motion/react";
-import Link from "next/link";
 import { ThemeToggle } from "../theme-toggle";
 
 interface HeaderProps {

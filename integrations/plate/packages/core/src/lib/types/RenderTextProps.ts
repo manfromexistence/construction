@@ -1,6 +1,5 @@
-import type React from 'react';
-
-import type { Path, TText } from '@platejs/slate';
+import type { Path, TText } from "@platejs/slate";
+import type React from "react";
 
 export type RenderTextFn = (props: RenderTextProps) => React.ReactElement<any>;
 export type RenderTextProps<N extends TText = TText> = {
@@ -15,7 +14,7 @@ export type RenderTextProps<N extends TText = TText> = {
    * `data-slate-node="text"` and `ref`.
    */
   attributes: {
-    'data-slate-node': 'text';
+    "data-slate-node": "text";
     ref: any;
     className?: string;
     style?: React.CSSProperties;

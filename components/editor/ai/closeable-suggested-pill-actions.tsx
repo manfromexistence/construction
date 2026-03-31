@@ -1,12 +1,12 @@
 "use client";
 
+import { Sparkles, X } from "lucide-react";
 import { HorizontalScrollArea } from "@/components/horizontal-scroll-area";
 import { Button } from "@/components/ui/button";
 import { usePreferencesStore } from "@/store/preferences-store";
 import { AIPromptData } from "@/types/ai";
 import { createCurrentThemePrompt } from "@/utils/ai/ai-prompt";
 import { PROMPTS } from "@/utils/ai/prompts";
-import { Sparkles, X } from "lucide-react";
 import { PillActionButton } from "./pill-action-button";
 
 export function ClosableSuggestedPillActions({

@@ -1,22 +1,22 @@
 "use client";
 
+import { Calendar, Edit, Heart, Moon, Share2, Sun } from "lucide-react";
+import { notFound, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
-import { useEditorStore } from "@/store/editor-store";
 import { useToggleLike } from "@/hooks/themes";
+import { DialogActionsProvider } from "@/hooks/use-dialog-actions";
 import { useSessionGuard } from "@/hooks/use-guards";
 import { usePostLoginAction } from "@/hooks/use-post-login-action";
-import type { Theme } from "@/types/theme";
 import { cn } from "@/lib/utils";
-import { Calendar, Edit, Heart, Moon, Share2, Sun } from "lucide-react";
-import { notFound, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEditorStore } from "@/store/editor-store";
+import type { Theme } from "@/types/theme";
 import { CodeButton } from "./editor/action-bar/components/code-button";
 import { CodePanelDialog } from "./editor/code-panel-dialog";
 import ThemePreviewPanel from "./editor/theme-preview-panel";
-import { DialogActionsProvider } from "@/hooks/use-dialog-actions";
 
 interface CommunityData {
   communityThemeId: string;
@@ -49,7 +49,7 @@ export default function ThemeView({ theme, communityData }: ThemeViewProps) {
       restoreThemeCheckpoint();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [theme, saveThemeCheckpoint, setThemeState, restoreThemeCheckpoint]);
+  }, [theme, saveThemeCheckpoint, setThemeState, restoreThemeCheckpoint, themeState]);
 
   if (!theme) {
     notFound();
@@ -104,8 +104,7 @@ export default function ThemeView({ theme, communityData }: ThemeViewProps) {
                   <div className="flex items-center gap-1.5">
                     <Heart className="size-3.5" />
                     <span>
-                      {communityData.likeCount}{" "}
-                      {communityData.likeCount === 1 ? "like" : "likes"}
+                      {communityData.likeCount} {communityData.likeCount === 1 ? "like" : "likes"}
                     </span>
                   </div>
                 </div>
@@ -124,17 +123,9 @@ export default function ThemeView({ theme, communityData }: ThemeViewProps) {
           <div className="flex shrink-0 flex-wrap items-center gap-2">
             {communityData && <LikeButton communityData={communityData} />}
             <Button variant="outline" size="icon" onClick={toggleTheme}>
-              {currentMode === "dark" ? (
-                <Sun className="size-4" />
-              ) : (
-                <Moon className="size-4" />
-              )}
+              {currentMode === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
             </Button>
-            <CodeButton
-              variant="outline"
-              size="default"
-              onClick={() => setCodePanelOpen(true)}
-            />
+            <CodeButton variant="outline" size="default" onClick={() => setCodePanelOpen(true)} />
             <Button variant="outline" size="default" onClick={handleShare}>
               <Share2 className="size-4" />
               Share
@@ -149,7 +140,12 @@ export default function ThemeView({ theme, communityData }: ThemeViewProps) {
 
       <DialogActionsProvider>
         <div className="-m-4 mt-6 flex h-[min(80svh,900px)] flex-col">
-          <ThemePreviewPanel styles={theme.styles} currentMode={currentMode} themeId={theme.id} themeName={theme.name} />
+          <ThemePreviewPanel
+            styles={theme.styles}
+            currentMode={currentMode}
+            themeId={theme.id}
+            themeName={theme.name}
+          />
         </div>
 
         <CodePanelDialog
@@ -163,11 +159,7 @@ export default function ThemeView({ theme, communityData }: ThemeViewProps) {
   );
 }
 
-function CommunityAuthorInfo({
-  communityData,
-}: {
-  communityData: CommunityData;
-}) {
+function CommunityAuthorInfo({ communityData }: { communityData: CommunityData }) {
   const authorInitials = communityData.author.name
     ?.split(" ")
     .map((n) => n[0])
@@ -179,16 +171,11 @@ function CommunityAuthorInfo({
     <div className="flex items-center gap-1.5">
       <Avatar className="h-5 w-5">
         {communityData.author.image && (
-          <AvatarImage
-            src={communityData.author.image}
-            alt={communityData.author.name}
-          />
+          <AvatarImage src={communityData.author.image} alt={communityData.author.name} />
         )}
         <AvatarFallback className="text-[9px]">{authorInitials}</AvatarFallback>
       </Avatar>
-      <span className="font-medium text-foreground">
-        {communityData.author.name}
-      </span>
+      <span className="font-medium text-foreground">{communityData.author.name}</span>
     </div>
   );
 }

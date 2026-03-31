@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Cool Mode Demo",
   "description": "Example showing cool mode effect for buttons and links.",
-  "registryDependencies": [
-    "@magicui/cool-mode"
-  ],
+  "registryDependencies": ["@magicui/cool-mode"],
   "files": [
     {
       "path": "registry/example/cool-mode-demo.tsx",

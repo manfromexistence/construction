@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import { useDialKit } from "dialkit"
+import { useDialKit } from "dialkit";
 
-import { GlowCard } from "@/registry/components/glow-card-grid/glow-card"
-import { GlowCardGrid } from "@/registry/components/glow-card-grid/glow-card-grid"
+import { GlowCard } from "@/registry/components/glow-card-grid/glow-card";
+import { GlowCardGrid } from "@/registry/components/glow-card-grid/glow-card-grid";
 
 export default function Team01() {
   const params = useDialKit("GlowCard", {
@@ -22,7 +22,7 @@ export default function Team01() {
       brightness: [2.5, 0, 4, 0.1],
       contrast: [2.5, 0, 3, 0.1],
     },
-  })
+  });
 
   return (
     <div className="min-h-svh place-items-center-safe content-center-safe p-4">
@@ -44,17 +44,12 @@ export default function Team01() {
           borderContrast={params.border.contrast}
         >
           {CARDS.map((card) => (
-            <GlowCard
-              key={card.name}
-              name={card.name}
-              handle={card.handle}
-              avatar={card.avatar}
-            />
+            <GlowCard key={card.name} name={card.name} handle={card.handle} avatar={card.avatar} />
           ))}
         </GlowCardGrid>
       </div>
     </div>
-  )
+  );
 }
 
 const CARDS = [
@@ -88,4 +83,4 @@ const CARDS = [
     handle: "@iamncdai",
     avatar: "https://unavatar.io/x/iamncdai",
   },
-]
+];

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-mock.module('../../../lib', () => {
+mock.module("../../../lib", () => {
   class GridSection {
     id: string;
     perLine: number;
@@ -43,21 +43,21 @@ mock.module('../../../lib', () => {
   return {
     AGridSection: GridSection,
     DEFAULT_EMOJI_LIBRARY: {
-      categories: [{ emojis: ['wave'], id: 'people' }],
+      categories: [{ emojis: ["wave"], id: "people" }],
     },
-    EmojiCategory: { Frequent: 'frequent' },
+    EmojiCategory: { Frequent: "frequent" },
     EmojiInlineLibrary,
     Grid,
-    defaultCategories: ['people'],
+    defaultCategories: ["people"],
   };
 });
 
-describe('emoji floating library', () => {
+describe("emoji floating library", () => {
   afterAll(() => {
     mock.restore();
   });
 
-  it('builds floating grids, clamps missing indexes, and updates frequent emojis', async () => {
+  it("builds floating grids, clamps missing indexes, and updates frequent emojis", async () => {
     const { EmojiFloatingLibrary } = await import(
       `./EmojiFloatingLibrary?test=${Math.random().toString(36).slice(2)}`
     );
@@ -70,35 +70,32 @@ describe('emoji floating library', () => {
     (EmojiFloatingLibrary as any).instance = undefined;
 
     const localStorage = {
-      getList: () => ['wave'],
+      getList: () => ["wave"],
       update: mock(),
     };
     const settings = {
-      categories: { value: ['people'] },
+      categories: { value: ["people"] },
       perLine: { value: 8 },
       showFrequent: { value: true },
     };
 
     const grid = new EmojiFloatingGridBuilder(
       localStorage as any,
-      ['people'] as any,
-      { frequent: ['wave'], people: ['wave'] } as any,
+      ["people"] as any,
+      { frequent: ["wave"], people: ["wave"] } as any,
       settings as any
     ).build();
 
     expect(grid.sections()).toHaveLength(2);
 
-    const library = EmojiFloatingLibrary.getInstance(
-      settings as any,
-      localStorage as any
-    );
+    const library = EmojiFloatingLibrary.getInstance(settings as any, localStorage as any);
 
     expect(library.getGrid()).toBeTruthy();
-    expect(library.indexOf('missing' as any)).toBe(0);
+    expect(library.indexOf("missing" as any)).toBe(0);
 
-    library.updateFrequentCategory('wave');
+    library.updateFrequentCategory("wave");
 
-    expect(localStorage.update).toHaveBeenCalledWith('wave');
+    expect(localStorage.update).toHaveBeenCalledWith("wave");
     expect(new EmojiFloatingGrid().createRootRef().current).toBeNull();
   });
 });

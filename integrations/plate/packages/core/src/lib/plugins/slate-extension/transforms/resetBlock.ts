@@ -1,9 +1,9 @@
-import { type Path, NodeApi } from '@platejs/slate';
+import { NodeApi, type Path } from "@platejs/slate";
 
-import type { SlateEditor } from '../../../editor';
+import type { SlateEditor } from "../../../editor";
 
-import { NodeIdPlugin } from '../../node-id/NodeIdPlugin';
-import { BaseParagraphPlugin } from '../../paragraph';
+import { NodeIdPlugin } from "../../node-id/NodeIdPlugin";
+import { BaseParagraphPlugin } from "../../paragraph";
 
 /**
  * Reset the current block to a paragraph, removing all properties except the
@@ -14,7 +14,7 @@ export const resetBlock = (editor: SlateEditor, { at }: { at?: Path } = {}) => {
   if (!entry?.[0]) return;
 
   const [block, path] = entry;
-  const idKey = editor.getOptions(NodeIdPlugin).idKey ?? 'id';
+  const idKey = editor.getOptions(NodeIdPlugin).idKey ?? "id";
 
   editor.tf.withoutNormalizing(() => {
     const { type, ...otherProps } = NodeApi.extractProps(block);

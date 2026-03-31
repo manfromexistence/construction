@@ -1,9 +1,9 @@
-import { PathApi } from '@platejs/slate';
+import { PathApi } from "@platejs/slate";
 
-import type { OverrideEditor } from '../../plugin';
-import type { BreakRules } from '../../plugin/BasePlugin';
+import type { OverrideEditor } from "../../plugin";
+import type { BreakRules } from "../../plugin/BasePlugin";
 
-import { getPluginByType } from '../../plugin/getSlatePlugin';
+import { getPluginByType } from "../../plugin/getSlatePlugin";
 
 export const withBreakRules: OverrideEditor = (ctx) => {
   const {
@@ -33,24 +33,21 @@ export const withBreakRules: OverrideEditor = (ctx) => {
     return null;
   };
 
-  const executeBreakAction = (
-    action: string | undefined,
-    blockPath: any
-  ): boolean => {
-    if (action === 'reset') {
+  const executeBreakAction = (action: string | undefined, blockPath: any): boolean => {
+    if (action === "reset") {
       editor.tf.resetBlock({ at: blockPath });
       return true;
     }
-    if (action === 'exit') {
+    if (action === "exit") {
       editor.tf.insertExitBreak();
       return true;
     }
-    if (action === 'deleteExit') {
-      editor.tf.deleteBackward('character');
+    if (action === "deleteExit") {
+      editor.tf.deleteBackward("character");
       editor.tf.insertExitBreak();
       return true;
     }
-    if (action === 'lineBreak') {
+    if (action === "lineBreak") {
       editor.tf.insertSoftBreak();
       return true;
     }
@@ -75,7 +72,7 @@ export const withBreakRules: OverrideEditor = (ctx) => {
               })
             ) {
               const overrideBreakRules = checkMatchRulesOverride(
-                'break.empty',
+                "break.empty",
                 blockNode,
                 blockPath
               );
@@ -93,12 +90,12 @@ export const withBreakRules: OverrideEditor = (ctx) => {
               }) &&
               editor.api.isAt({ end: true })
             ) {
-              const range = editor.api.range('before', editor.selection!);
+              const range = editor.api.range("before", editor.selection!);
               if (range) {
                 const char = editor.api.string(range);
-                if (char === '\n') {
+                if (char === "\n") {
                   const overrideBreakRules = checkMatchRulesOverride(
-                    'break.emptyLineEnd',
+                    "break.emptyLineEnd",
                     blockNode,
                     blockPath
                   );
@@ -112,23 +109,20 @@ export const withBreakRules: OverrideEditor = (ctx) => {
 
             // Handle 'default' scenario (or fallthrough from 'empty: default' or 'emptyLineEnd: default')
             const overrideDefaultBreakRules = checkMatchRulesOverride(
-              'break.default',
+              "break.default",
               blockNode,
               blockPath
             );
-            const defaultAction = (overrideDefaultBreakRules || breakRules)
-              ?.default;
+            const defaultAction = (overrideDefaultBreakRules || breakRules)?.default;
 
             if (executeBreakAction(defaultAction, blockPath)) return;
 
             const overrideSplitResetBreakRules = checkMatchRulesOverride(
-              'break.splitReset',
+              "break.splitReset",
               blockNode,
               blockPath
             );
-            const splitReset =
-              overrideSplitResetBreakRules?.splitReset ??
-              breakRules?.splitReset;
+            const splitReset = overrideSplitResetBreakRules?.splitReset ?? breakRules?.splitReset;
 
             if (splitReset) {
               const isAtStart = editor.api.isAt({ start: true });

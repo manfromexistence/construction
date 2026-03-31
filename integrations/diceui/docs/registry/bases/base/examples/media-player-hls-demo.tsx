@@ -23,9 +23,7 @@ export default function MediaPlayerHlsDemo() {
   return (
     <MediaPlayer autoHide>
       <MediaPlayerVideo
-        render={
-          <MuxVideo playbackId="A3VXy02VoUinw01pwyomEO3bHnG4P32xzV7u1j1FSzjNg" />
-        }
+        render={<MuxVideo playbackId="A3VXy02VoUinw01pwyomEO3bHnG4P32xzV7u1j1FSzjNg" />}
       />
       <MediaPlayerLoading />
       <MediaPlayerError />

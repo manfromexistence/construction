@@ -1,24 +1,20 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { addDays, format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { type DateRange } from "react-day-picker"
+import { addDays, format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import * as React from "react";
+import { type DateRange } from "react-day-picker";
 
-import { Button } from "@/styles/radix-nova/ui/button"
-import { Calendar } from "@/styles/radix-nova/ui/calendar"
-import { Field, FieldLabel } from "@/styles/radix-nova/ui/field"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/radix-nova/ui/popover"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Calendar } from "@/styles/radix-nova/ui/calendar";
+import { Field, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/radix-nova/ui/popover";
 
 export function DatePickerWithRange() {
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: new Date(new Date().getFullYear(), 0, 20),
     to: addDays(new Date(new Date().getFullYear(), 0, 20), 20),
-  })
+  });
 
   return (
     <Field className="mx-auto w-60">
@@ -34,8 +30,7 @@ export function DatePickerWithRange() {
             {date?.from ? (
               date.to ? (
                 <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
+                  {format(date.from, "LLL dd, y")} - {format(date.to, "LLL dd, y")}
                 </>
               ) : (
                 format(date.from, "LLL dd, y")
@@ -56,5 +51,5 @@ export function DatePickerWithRange() {
         </PopoverContent>
       </Popover>
     </Field>
-  )
+  );
 }

@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-
-import { getDocs } from "@/lib/mdx";
-
-import { MDX } from "@/app/_components/mdx";
 import { BlurImage } from "@/app/_components/BlurImage";
 import { Divider } from "@/app/_components/Divider";
+import { MDX } from "@/app/_components/mdx";
+import { getDocs } from "@/lib/mdx";
 
 const Docs = getDocs("updates").sort((a, b) => a.title.localeCompare(b.title));
 
@@ -65,19 +63,14 @@ export async function generateMetadata({
   };
 }
 
-export default async function ComponentPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ComponentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
   const docs = Docs.find((docs) => docs.slug === slug);
 
   if (!docs) notFound();
 
-  const { title, content, date, author, author_image, author_twitter, banner } =
-    docs;
+  const { title, content, date, author, author_image, author_twitter, banner } = docs;
 
   return (
     <main className="flex flex-col gap-10 w-full max-w-5xl mx-auto px-6 py-32">
@@ -100,9 +93,7 @@ export default async function ComponentPage({
                     height={32}
                   />
                 </div>
-                <span className="text-gradient text-sm font-[460]">
-                  {author}
-                </span>
+                <span className="text-gradient text-sm font-[460]">{author}</span>
               </a>
               <Divider />
               <span className="text-gradient text-sm font-[460]">{date}</span>
@@ -112,11 +103,7 @@ export default async function ComponentPage({
             </h1>
           </div>
           <div className="overflow-hidden border border-transparent dark:border-neutral-900 rounded-2xl">
-            <BlurImage
-              src={banner!}
-              alt={`${title} cover`}
-              className="object-cover"
-            />
+            <BlurImage src={banner!} alt={`${title} cover`} className="object-cover" />
           </div>
         </div>
         <MDX source={content} />

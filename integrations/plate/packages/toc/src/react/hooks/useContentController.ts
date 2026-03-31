@@ -1,14 +1,13 @@
-'use client';
+"use client";
 
-import React from 'react';
+import { KEYS } from "platejs";
+import { useEditorRef } from "platejs/react";
+import React from "react";
 
-import { KEYS } from 'platejs';
-import { useEditorRef } from 'platejs/react';
+import type { UseContentController } from "../types";
 
-import type { UseContentController } from '../types';
-
-import { heightToTop } from '../utils';
-import { useContentObserver } from './useContentObserver';
+import { heightToTop } from "../utils";
+import { useContentObserver } from "./useContentObserver";
 
 export const useContentController = ({
   containerRef,
@@ -22,13 +21,12 @@ export const useContentController = ({
   const isScrollRef = React.useRef(false);
 
   const isScroll =
-    (editorContentRef.current?.scrollHeight || 0) >
-    (editorContentRef.current?.clientHeight || 0);
+    (editorContentRef.current?.scrollHeight || 0) > (editorContentRef.current?.clientHeight || 0);
 
   isScrollRef.current = isScroll;
 
   const scrollContainer = React.useMemo(() => {
-    if (typeof window !== 'object') return;
+    if (typeof window !== "object") return;
 
     return isScroll ? editorContentRef.current : window;
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,7 +46,7 @@ export const useContentController = ({
 
   const onContentScroll = ({
     id,
-    behavior = 'instant',
+    behavior = "instant",
     el,
   }: {
     id: string;
@@ -68,9 +66,7 @@ export const useContentController = ({
       window.scrollTo({ behavior, top });
     }
 
-    editor
-      .getApi({ key: KEYS.blockSelection })
-      .blockSelection?.addSelectedRow?.(id);
+    editor.getApi({ key: KEYS.blockSelection }).blockSelection?.addSelectedRow?.(id);
   };
 
   React.useEffect(() => {
@@ -90,10 +86,10 @@ export const useContentController = ({
       }
     };
 
-    scrollContainer.addEventListener('scroll', scroll);
+    scrollContainer.addEventListener("scroll", scroll);
 
     return () => {
-      scrollContainer.removeEventListener('scroll', scroll);
+      scrollContainer.removeEventListener("scroll", scroll);
     };
   }, [isObserve, scrollContainer]);
 

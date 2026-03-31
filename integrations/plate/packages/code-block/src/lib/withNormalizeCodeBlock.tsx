@@ -1,15 +1,15 @@
 import {
-  type NodeEntry,
-  type OverrideEditor,
-  type TCodeBlockElement,
   ElementApi,
   KEYS,
   NodeApi,
-} from 'platejs';
+  type NodeEntry,
+  type OverrideEditor,
+  type TCodeBlockElement,
+} from "platejs";
 
-import type { CodeBlockConfig } from './BaseCodeBlockPlugin';
+import type { CodeBlockConfig } from "./BaseCodeBlockPlugin";
 
-import { setCodeBlockToDecorations } from './setCodeBlockToDecorations';
+import { setCodeBlockToDecorations } from "./setCodeBlockToDecorations";
 
 /** Normalize code block node to force the pre>code>div.codeline structure. */
 export const withNormalizeCodeBlock: OverrideEditor<CodeBlockConfig> = ({
@@ -22,10 +22,7 @@ export const withNormalizeCodeBlock: OverrideEditor<CodeBlockConfig> = ({
     normalizeNode([node, path]) {
       // Decorate is called on selection change as well, so we prefer to only run this on code block changes.
       if (node.type === type && getOptions().lowlight) {
-        setCodeBlockToDecorations(editor, [
-          node,
-          path,
-        ] as NodeEntry<TCodeBlockElement>);
+        setCodeBlockToDecorations(editor, [node, path] as NodeEntry<TCodeBlockElement>);
       }
 
       normalizeNode([node, path]);

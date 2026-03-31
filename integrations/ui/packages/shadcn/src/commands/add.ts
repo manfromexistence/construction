@@ -1,34 +1,30 @@
-import path from "path"
-import { runInit } from "@/src/commands/init"
-import { preFlightAdd } from "@/src/preflights/preflight-add"
-import {
-  promptForBase,
-  promptForPreset,
-  resolveRegistryBaseConfig,
-} from "@/src/preset/presets"
-import { getRegistryItems, getShadcnRegistryIndex } from "@/src/registry/api"
-import { DEPRECATED_COMPONENTS } from "@/src/registry/constants"
-import { clearRegistryContext } from "@/src/registry/context"
-import { registryItemTypeSchema } from "@/src/registry/schema"
-import { isUniversalRegistryItem } from "@/src/registry/utils"
-import { getTemplateForFramework } from "@/src/templates/index"
-import { addComponents } from "@/src/utils/add-components"
-import { createProject } from "@/src/utils/create-project"
-import { dryRunComponents } from "@/src/utils/dry-run"
-import { formatDryRunResult } from "@/src/utils/dry-run-formatter"
-import { loadEnvFiles } from "@/src/utils/env-loader"
-import * as ERRORS from "@/src/utils/errors"
-import { createConfig, getConfig } from "@/src/utils/get-config"
-import { getProjectInfo } from "@/src/utils/get-project-info"
-import { handleError } from "@/src/utils/handle-error"
-import { highlighter } from "@/src/utils/highlighter"
-import { logger } from "@/src/utils/logger"
-import { ensureRegistriesInConfig } from "@/src/utils/registries"
-import { spinner } from "@/src/utils/spinner"
-import { updateAppIndex } from "@/src/utils/update-app-index"
-import { Command } from "commander"
-import prompts from "prompts"
-import { z } from "zod"
+import { Command } from "commander";
+import path from "path";
+import prompts from "prompts";
+import { z } from "zod";
+import { runInit } from "@/src/commands/init";
+import { preFlightAdd } from "@/src/preflights/preflight-add";
+import { promptForBase, promptForPreset, resolveRegistryBaseConfig } from "@/src/preset/presets";
+import { getRegistryItems, getShadcnRegistryIndex } from "@/src/registry/api";
+import { DEPRECATED_COMPONENTS } from "@/src/registry/constants";
+import { clearRegistryContext } from "@/src/registry/context";
+import { registryItemTypeSchema } from "@/src/registry/schema";
+import { isUniversalRegistryItem } from "@/src/registry/utils";
+import { getTemplateForFramework } from "@/src/templates/index";
+import { addComponents } from "@/src/utils/add-components";
+import { createProject } from "@/src/utils/create-project";
+import { dryRunComponents } from "@/src/utils/dry-run";
+import { formatDryRunResult } from "@/src/utils/dry-run-formatter";
+import { loadEnvFiles } from "@/src/utils/env-loader";
+import * as ERRORS from "@/src/utils/errors";
+import { createConfig, getConfig } from "@/src/utils/get-config";
+import { getProjectInfo } from "@/src/utils/get-project-info";
+import { handleError } from "@/src/utils/handle-error";
+import { highlighter } from "@/src/utils/highlighter";
+import { logger } from "@/src/utils/logger";
+import { ensureRegistriesInConfig } from "@/src/utils/registries";
+import { spinner } from "@/src/utils/spinner";
+import { updateAppIndex } from "@/src/utils/update-app-index";
 
 export const addOptionsSchema = z.object({
   components: z.array(z.string()).optional(),
@@ -41,7 +37,7 @@ export const addOptionsSchema = z.object({
   dryRun: z.boolean(),
   diff: z.union([z.string(), z.literal(true)]).optional(),
   view: z.union([z.string(), z.literal(true)]).optional(),
-})
+});
 
 export const add = new Command()
   .name("add")
@@ -66,55 +62,58 @@ export const add = new Command()
         components,
         ...opts,
         cwd: path.resolve(opts.cwd),
-      })
+      });
 
-      await loadEnvFiles(options.cwd)
+      await loadEnvFiles(options.cwd);
 
-      const isDryRun = options.dryRun || options.diff || options.view
+      const isDryRun = options.dryRun || options.diff || options.view;
 
-      let initialConfig = await getConfig(options.cwd)
+      let initialConfig = await getConfig(options.cwd);
       if (!initialConfig) {
         initialConfig = createConfig({
           style: "new-york",
           resolvedPaths: {
             cwd: options.cwd,
           },
-        })
+        });
       }
 
-      let hasNewRegistries = false
+      let hasNewRegistries = false;
       if (components.length > 0) {
-        const { config: updatedConfig, newRegistries } =
-          await ensureRegistriesInConfig(components, initialConfig, {
+        const { config: updatedConfig, newRegistries } = await ensureRegistriesInConfig(
+          components,
+          initialConfig,
+          {
             silent: options.silent,
             writeFile: false,
-          })
-        initialConfig = updatedConfig
-        hasNewRegistries = newRegistries.length > 0
+          }
+        );
+        initialConfig = updatedConfig;
+        hasNewRegistries = newRegistries.length > 0;
       }
 
-      let itemType: z.infer<typeof registryItemTypeSchema> | undefined
-      let shouldInstallStyleIndex = true
+      let itemType: z.infer<typeof registryItemTypeSchema> | undefined;
+      let shouldInstallStyleIndex = true;
       if (components.length > 0) {
         const [registryItem] = await getRegistryItems([components[0]], {
           config: initialConfig,
-        })
-        itemType = registryItem?.type
+        });
+        itemType = registryItem?.type;
         shouldInstallStyleIndex =
           itemType !== "registry:theme" &&
           itemType !== "registry:style" &&
-          itemType !== "registry:base"
+          itemType !== "registry:base";
 
         if (isUniversalRegistryItem(registryItem) && !isDryRun) {
-          await addComponents(components, initialConfig, options)
-          return
+          await addComponents(components, initialConfig, options);
+          return;
         }
         if (
           !options.yes &&
           !isDryRun &&
           (itemType === "registry:style" || itemType === "registry:theme")
         ) {
-          logger.break()
+          logger.break();
           const { confirm } = await prompts({
             type: "confirm",
             name: "confirm",
@@ -124,40 +123,40 @@ export const add = new Command()
                 ""
               )}. \nExisting CSS variables and components will be overwritten. Continue?`
             ),
-          })
+          });
           if (!confirm) {
-            logger.break()
-            logger.log(`Installation cancelled.`)
-            logger.break()
-            process.exit(1)
+            logger.break();
+            logger.log(`Installation cancelled.`);
+            logger.break();
+            process.exit(1);
           }
         }
       }
 
       if (!options.components?.length) {
-        options.components = await promptForRegistryComponents(options)
+        options.components = await promptForRegistryComponents(options);
       }
 
-      const projectInfo = await getProjectInfo(options.cwd)
+      const projectInfo = await getProjectInfo(options.cwd);
       if (projectInfo?.tailwindVersion === "v4") {
         const deprecatedComponents = DEPRECATED_COMPONENTS.filter((component) =>
           options.components?.includes(component.name)
-        )
+        );
 
         if (deprecatedComponents?.length) {
-          logger.break()
+          logger.break();
           deprecatedComponents.forEach((component) => {
-            logger.warn(highlighter.warn(component.message))
-          })
-          logger.break()
-          process.exit(1)
+            logger.warn(highlighter.warn(component.message));
+          });
+          logger.break();
+          process.exit(1);
         }
       }
 
-      let { errors, config } = await preFlightAdd(options)
+      let { errors, config } = await preFlightAdd(options);
 
       // No components.json file. Prompt the user to run init.
-      let initHasRun = false
+      let initHasRun = false;
       if (errors[ERRORS.MISSING_CONFIG]) {
         const { proceed } = await prompts({
           type: "confirm",
@@ -166,32 +165,30 @@ export const add = new Command()
             "components.json"
           )} file to add components. Proceed?`,
           initial: true,
-        })
+        });
 
         if (!proceed) {
-          logger.break()
-          process.exit(1)
+          logger.break();
+          process.exit(1);
         }
 
         // Infer template from project framework.
-        const inferredTemplate = getTemplateForFramework(
-          projectInfo?.framework.name
-        )
+        const inferredTemplate = getTemplateForFramework(projectInfo?.framework.name);
 
         // Prompt for base and preset.
-        const base = await promptForBase()
+        const base = await promptForBase();
         const { url: initUrl } = await promptForPreset({
           rtl: false,
           base,
           template: inferredTemplate,
-        })
+        });
 
         // Resolve registry:base config.
         const {
           registryBaseConfig,
           installStyleIndex,
           url: cleanInitUrl,
-        } = await resolveRegistryBaseConfig(initUrl, options.cwd)
+        } = await resolveRegistryBaseConfig(initUrl, options.cwd);
 
         config = await runInit({
           cwd: options.cwd,
@@ -206,36 +203,36 @@ export const add = new Command()
           installStyleIndex,
           components: [cleanInitUrl, ...(options.components ?? [])],
           registryBaseConfig,
-        })
-        initHasRun = true
+        });
+        initHasRun = true;
       }
 
-      let shouldUpdateAppIndex = false
+      let shouldUpdateAppIndex = false;
 
       if (errors[ERRORS.MISSING_DIR_OR_EMPTY_PROJECT]) {
         const { projectPath, template } = await createProject({
           cwd: options.cwd,
           force: options.overwrite,
           components: options.components,
-        })
+        });
         if (!projectPath) {
-          logger.break()
-          process.exit(1)
+          logger.break();
+          process.exit(1);
         }
-        options.cwd = projectPath
+        options.cwd = projectPath;
 
         // Prompt for base and preset.
-        const selectedBase = await promptForBase()
+        const selectedBase = await promptForBase();
         const { url: initUrl } = await promptForPreset({
           rtl: false,
           base: selectedBase,
           template,
-        })
+        });
         const {
           registryBaseConfig,
           installStyleIndex,
           url: cleanInitUrl,
-        } = await resolveRegistryBaseConfig(initUrl, options.cwd)
+        } = await resolveRegistryBaseConfig(initUrl, options.cwd);
 
         config = await runInit({
           cwd: options.cwd,
@@ -250,91 +247,76 @@ export const add = new Command()
           installStyleIndex,
           components: [cleanInitUrl, ...(options.components ?? [])],
           registryBaseConfig,
-        })
-        initHasRun = true
+        });
+        initHasRun = true;
 
         shouldUpdateAppIndex =
-          options.components?.length === 1 &&
-          !!options.components[0].match(/\/chat\/b\//)
+          options.components?.length === 1 && !!options.components[0].match(/\/chat\/b\//);
       }
 
       if (!config) {
-        throw new Error(
-          `Failed to read config at ${highlighter.info(options.cwd)}.`
-        )
+        throw new Error(`Failed to read config at ${highlighter.info(options.cwd)}.`);
       }
 
-      const { config: updatedConfig } = await ensureRegistriesInConfig(
-        options.components,
-        config,
-        {
-          silent: options.silent || hasNewRegistries,
-          writeFile: !isDryRun,
-        }
-      )
-      config = updatedConfig
+      const { config: updatedConfig } = await ensureRegistriesInConfig(options.components, config, {
+        silent: options.silent || hasNewRegistries,
+        writeFile: !isDryRun,
+      });
+      config = updatedConfig;
 
       // Dry-run mode: preview changes without writing files.
       // --diff and --view imply --dry-run.
       if (isDryRun) {
         const dryRunSpinner = spinner("Resolving items.", {
           silent: options.silent,
-        }).start()
-        const dryRunResult = await dryRunComponents(
-          options.components,
-          config,
-          {
-            overwrite: options.overwrite,
-          }
-        )
-        dryRunSpinner.stop()
+        }).start();
+        const dryRunResult = await dryRunComponents(options.components, config, {
+          overwrite: options.overwrite,
+        });
+        dryRunSpinner.stop();
 
         logger.log(
           formatDryRunResult(dryRunResult, options.components, {
             diff: options.diff,
             view: options.view,
           })
-        )
-        return
+        );
+        return;
       }
 
       if (!initHasRun) {
-        await addComponents(options.components, config, options)
+        await addComponents(options.components, config, options);
       }
 
       // If we're adding a single component and it's from the v0 registry,
       // let's update the app/page.tsx file to import the component.
       if (shouldUpdateAppIndex) {
-        await updateAppIndex(options.components[0], config)
+        await updateAppIndex(options.components[0], config);
       }
     } catch (error) {
-      logger.break()
-      handleError(error)
+      logger.break();
+      handleError(error);
     } finally {
-      clearRegistryContext()
+      clearRegistryContext();
     }
-  })
+  });
 
-async function promptForRegistryComponents(
-  options: z.infer<typeof addOptionsSchema>
-) {
-  const registryIndex = await getShadcnRegistryIndex()
+async function promptForRegistryComponents(options: z.infer<typeof addOptionsSchema>) {
+  const registryIndex = await getShadcnRegistryIndex();
   if (!registryIndex) {
-    logger.break()
-    handleError(new Error("Failed to fetch registry index."))
-    return []
+    logger.break();
+    handleError(new Error("Failed to fetch registry index."));
+    return [];
   }
 
   if (options.all) {
     return registryIndex
       .map((entry) => entry.name)
-      .filter(
-        (component) => !DEPRECATED_COMPONENTS.some((c) => c.name === component)
-      )
+      .filter((component) => !DEPRECATED_COMPONENTS.some((c) => c.name === component));
   }
 
   if (options.components?.length) {
-    return options.components
+    return options.components;
   }
 
   const { components } = await prompts({
@@ -347,28 +329,26 @@ async function promptForRegistryComponents(
       .filter(
         (entry) =>
           entry.type === "registry:ui" &&
-          !DEPRECATED_COMPONENTS.some(
-            (component) => component.name === entry.name
-          )
+          !DEPRECATED_COMPONENTS.some((component) => component.name === entry.name)
       )
       .map((entry) => ({
         title: entry.name,
         value: entry.name,
         selected: options.all ? true : options.components?.includes(entry.name),
       })),
-  })
+  });
 
   if (!components?.length) {
-    logger.warn("No components selected. Exiting.")
-    logger.info("")
-    process.exit(1)
+    logger.warn("No components selected. Exiting.");
+    logger.info("");
+    process.exit(1);
   }
 
-  const result = z.array(z.string()).safeParse(components)
+  const result = z.array(z.string()).safeParse(components);
   if (!result.success) {
-    logger.error("")
-    handleError(new Error("Something went wrong. Please try again."))
-    return []
+    logger.error("");
+    handleError(new Error("Something went wrong. Please try again."));
+    return [];
   }
-  return result.data
+  return result.data;
 }

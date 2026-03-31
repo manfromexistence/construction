@@ -1,12 +1,12 @@
-import castArray from 'lodash/castArray.js';
-import map from 'lodash/map.js';
-import { before as beforeBase } from 'slate';
+import castArray from "lodash/castArray.js";
+import map from "lodash/map.js";
+import { before as beforeBase } from "slate";
 
-import type { Editor } from '../../interfaces/editor/editor-type';
-import type { EditorBeforeOptions, Point } from '../../interfaces/index';
-import type { At } from '../../types';
+import type { Editor } from "../../interfaces/editor/editor-type";
+import type { EditorBeforeOptions, Point } from "../../interfaces/index";
+import type { At } from "../../types";
 
-import { getAt } from '../../utils';
+import { getAt } from "../../utils";
 
 export const getPointBefore = (
   editor: Editor,
@@ -21,11 +21,9 @@ export const getPointBefore = (
     return;
   }
 
-  const unitOffset = !options.unit || options.unit === 'offset';
+  const unitOffset = !options.unit || options.unit === "offset";
 
-  const matchStrings: string[] = options.matchString
-    ? castArray(options.matchString)
-    : [''];
+  const matchStrings: string[] = options.matchString ? castArray(options.matchString) : [""];
 
   const matchByRegex = options.matchByRegex ?? false;
 
@@ -33,7 +31,7 @@ export const getPointBefore = (
 
   matchStrings.some((matchString) => {
     let beforeAt = at;
-    let previousBeforePoint = editor.api.point(at, { edge: 'end' })!;
+    let previousBeforePoint = editor.api.point(at, { edge: "end" })!;
 
     const stackLength = matchString.length + 1;
     const stack: any[] = Array.from({ length: stackLength });
@@ -41,11 +39,7 @@ export const getPointBefore = (
     let count = 0;
 
     while (true) {
-      const beforePoint = beforeBase(
-        editor as any,
-        getAt(editor, beforeAt)!,
-        options as any
-      );
+      const beforePoint = beforeBase(editor as any, getAt(editor, beforeAt)!, options as any);
 
       // not found
       if (!beforePoint) {
@@ -86,17 +80,14 @@ export const getPointBefore = (
         });
         stack.pop();
 
-        beforeStringToMatch = map(stack.slice(0, -1), 'text').join('');
+        beforeStringToMatch = map(stack.slice(0, -1), "text").join("");
       }
 
       const isMatched = matchByRegex
         ? !!matchString.match(beforeStringToMatch)
         : beforeStringToMatch === matchString;
 
-      if (
-        isMatched ||
-        options.match?.({ at, beforePoint, beforeString: beforeStringToMatch })
-      ) {
+      if (isMatched || options.match?.({ at, beforePoint, beforeString: beforeStringToMatch })) {
         if (options.afterMatch) {
           if (stackLength && unitOffset) {
             point = stack.at(-1)?.point;
@@ -119,10 +110,7 @@ export const getPointBefore = (
 
       count += 1;
 
-      if (
-        !options.skipInvalid &&
-        (!matchString || count >= matchString.length)
-      ) {
+      if (!options.skipInvalid && (!matchString || count >= matchString.length)) {
         return false;
       }
     }

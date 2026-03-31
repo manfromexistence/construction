@@ -1,6 +1,6 @@
-import { createServer } from "http"
-import path from "path"
-import fs from "fs-extra"
+import fs from "fs-extra";
+import { createServer } from "http";
+import path from "path";
 
 export async function createRegistryServer(
   items: Array<{ name: string; type: string } & Record<string, unknown>>,
@@ -8,26 +8,26 @@ export async function createRegistryServer(
     port = 4444,
     path = "/r",
   }: {
-    port?: number
-    path?: string
+    port?: number;
+    path?: string;
   }
 ) {
   const server = createServer((request, response) => {
-    const urlRaw = request.url?.split("?")[0]
+    const urlRaw = request.url?.split("?")[0];
 
     // Handle registries.json endpoint (don't strip .json for this one).
     if (urlRaw?.endsWith("/registries.json")) {
-      response.writeHead(200, { "Content-Type": "application/json" })
+      response.writeHead(200, { "Content-Type": "application/json" });
       // Return empty registry array for tests - we want to test manual configuration.
-      response.end(JSON.stringify([]))
-      return
+      response.end(JSON.stringify([]));
+      return;
     }
 
     // For other endpoints, strip .json extension
-    const urlWithoutQuery = urlRaw?.replace(/\.json$/, "")
+    const urlWithoutQuery = urlRaw?.replace(/\.json$/, "");
 
     if (urlWithoutQuery?.includes("icons/index")) {
-      response.writeHead(200, { "Content-Type": "application/json" })
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(
         JSON.stringify({
           AlertCircle: {
@@ -39,12 +39,12 @@ export async function createRegistryServer(
             radix: "ArrowLeftIcon",
           },
         })
-      )
-      return
+      );
+      return;
     }
 
     if (urlWithoutQuery?.includes("colors/neutral")) {
-      response.writeHead(200, { "Content-Type": "application/json" })
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(
         JSON.stringify({
           inlineColors: {
@@ -77,17 +77,16 @@ export async function createRegistryServer(
               foreground: "oklch(0.985 0 0)",
             },
           },
-          inlineColorsTemplate:
-            "@tailwind base;\n@tailwind components;\n@tailwind utilities;\n  ",
+          inlineColorsTemplate: "@tailwind base;\n@tailwind components;\n@tailwind utilities;\n  ",
           cssVarsTemplate:
             "@tailwind base;\n@tailwind components;\n@tailwind utilities;\n\n@layer ",
         })
-      )
-      return
+      );
+      return;
     }
 
     if (urlWithoutQuery?.includes("styles/index")) {
-      response.writeHead(200, { "Content-Type": "application/json" })
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(
         JSON.stringify([
           {
@@ -99,13 +98,13 @@ export async function createRegistryServer(
             label: "Default",
           },
         ])
-      )
-      return
+      );
+      return;
     }
 
     // Match /styles/{style}/index for the registry style index (e.g., /styles/new-york-v4/index).
     if (urlWithoutQuery?.match(/\/styles\/[^/]+\/index$/)) {
-      response.writeHead(200, { "Content-Type": "application/json" })
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(
         JSON.stringify({
           name: "index",
@@ -114,13 +113,13 @@ export async function createRegistryServer(
           cssVars: {},
           files: [],
         })
-      )
-      return
+      );
+      return;
     }
 
     // Match /r/index for the registry index (but NOT paths like /styles/foo/index).
     if (urlWithoutQuery?.match(/\/r\/index$/)) {
-      response.writeHead(200, { "Content-Type": "application/json" })
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(
         JSON.stringify([
           {
@@ -148,8 +147,8 @@ export async function createRegistryServer(
             ],
           },
         ])
-      )
-      return
+      );
+      return;
     }
 
     // Check if this is a registry.json request
@@ -157,117 +156,105 @@ export async function createRegistryServer(
       // Check if this requires bearer authentication
       if (request.url?.includes("/bearer/")) {
         // Validate bearer token
-        const token = request.headers.authorization?.split(" ")[1]
+        const token = request.headers.authorization?.split(" ")[1];
         if (token !== "EXAMPLE_BEARER_TOKEN") {
-          response.writeHead(401, { "Content-Type": "application/json" })
-          response.end(JSON.stringify({ error: "Unauthorized" }))
-          return
+          response.writeHead(401, { "Content-Type": "application/json" });
+          response.end(JSON.stringify({ error: "Unauthorized" }));
+          return;
         }
       }
 
-      response.writeHead(200, { "Content-Type": "application/json" })
+      response.writeHead(200, { "Content-Type": "application/json" });
       response.end(
         JSON.stringify({
           name: "Test Registry",
           homepage: "https://example.com",
           items: items,
         })
-      )
-      return
+      );
+      return;
     }
 
-    const match = urlWithoutQuery?.match(
-      new RegExp(`^${path}/(?:.*/)?([^/]+)$`)
-    )
-    const itemName = match?.[1]
-    const item = itemName
-      ? items.find((item) => item.name === itemName)
-      : undefined
+    const match = urlWithoutQuery?.match(new RegExp(`^${path}/(?:.*/)?([^/]+)$`));
+    const itemName = match?.[1];
+    const item = itemName ? items.find((item) => item.name === itemName) : undefined;
 
     if (!item) {
-      response.writeHead(404, { "Content-Type": "application/json" })
-      response.end(JSON.stringify({ error: "Item not found" }))
-      return
+      response.writeHead(404, { "Content-Type": "application/json" });
+      response.end(JSON.stringify({ error: "Item not found" }));
+      return;
     }
 
     if (request.url?.includes("/bearer/")) {
       // Validate bearer token
-      const token = request.headers.authorization?.split(" ")[1]
+      const token = request.headers.authorization?.split(" ")[1];
       if (token !== "EXAMPLE_BEARER_TOKEN") {
-        response.writeHead(401, { "Content-Type": "application/json" })
-        response.end(JSON.stringify({ error: "Unauthorized" }))
-        return
+        response.writeHead(401, { "Content-Type": "application/json" });
+        response.end(JSON.stringify({ error: "Unauthorized" }));
+        return;
       }
     }
 
     if (request.url?.includes("/api-key/")) {
       // Validate api key
-      const apiKey = request.headers["x-api-key"]
+      const apiKey = request.headers["x-api-key"];
       if (apiKey !== "EXAMPLE_API_KEY") {
-        response.writeHead(401, { "Content-Type": "application/json" })
-        response.end(JSON.stringify({ error: "Unauthorized" }))
-        return
+        response.writeHead(401, { "Content-Type": "application/json" });
+        response.end(JSON.stringify({ error: "Unauthorized" }));
+        return;
       }
     }
 
     if (request.url?.includes("/client-secret/")) {
       // Validate client secret
-      const clientSecret = request.headers["x-client-secret"]
-      const clientId = request.headers["x-client-id"]
-      if (
-        clientSecret !== "EXAMPLE_CLIENT_SECRET" ||
-        clientId !== "EXAMPLE_CLIENT_ID"
-      ) {
-        response.writeHead(401, { "Content-Type": "application/json" })
-        response.end(JSON.stringify({ error: "Unauthorized" }))
-        return
+      const clientSecret = request.headers["x-client-secret"];
+      const clientId = request.headers["x-client-id"];
+      if (clientSecret !== "EXAMPLE_CLIENT_SECRET" || clientId !== "EXAMPLE_CLIENT_ID") {
+        response.writeHead(401, { "Content-Type": "application/json" });
+        response.end(JSON.stringify({ error: "Unauthorized" }));
+        return;
       }
     }
 
     if (request.url?.includes("/params/")) {
-      const token = request.url.split("?")[1]?.split("=")[1]
+      const token = request.url.split("?")[1]?.split("=")[1];
       if (token !== "EXAMPLE_REGISTRY_TOKEN") {
-        response.writeHead(401, { "Content-Type": "application/json" })
-        response.end(JSON.stringify({ error: "Unauthorized" }))
-        return
+        response.writeHead(401, { "Content-Type": "application/json" });
+        response.end(JSON.stringify({ error: "Unauthorized" }));
+        return;
       }
     }
 
-    response.writeHead(200, { "Content-Type": "application/json" })
-    response.end(JSON.stringify(item))
-  })
+    response.writeHead(200, { "Content-Type": "application/json" });
+    response.end(JSON.stringify(item));
+  });
 
   return {
     start: async () => {
       await new Promise<void>((resolve) => {
         server.listen(port, () => {
-          resolve()
-        })
-      })
+          resolve();
+        });
+      });
     },
     stop: async () => {
       await new Promise<void>((resolve) => {
         server.close(() => {
-          resolve()
-        })
-      })
+          resolve();
+        });
+      });
     },
-  }
+  };
 }
 
-export async function configureRegistries(
-  fixturePath: string,
-  payload: Record<string, any>
-) {
+export async function configureRegistries(fixturePath: string, payload: Record<string, any>) {
   if (!fs.pathExistsSync(path.join(fixturePath, "components.json"))) {
     await fs.writeJSON(path.join(fixturePath, "components.json"), {
       registries: payload,
-    })
+    });
   }
 
-  const componentsJson = await fs.readJSON(
-    path.join(fixturePath, "components.json")
-  )
-  componentsJson.registries = payload
-  await fs.writeJSON(path.join(fixturePath, "components.json"), componentsJson)
+  const componentsJson = await fs.readJSON(path.join(fixturePath, "components.json"));
+  componentsJson.registries = payload;
+  await fs.writeJSON(path.join(fixturePath, "components.json"), componentsJson);
 }

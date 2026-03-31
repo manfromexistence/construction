@@ -1,20 +1,20 @@
-"use client"
+"use client";
 
-import type { TargetAndTransition } from "motion/react"
-import { motion } from "motion/react"
-import type { ComponentProps } from "react"
+import type { TargetAndTransition } from "motion/react";
+import { motion } from "motion/react";
+import type { ComponentProps } from "react";
 
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 
 const initialProps: TargetAndTransition = {
   pathLength: 0,
   opacity: 0,
-}
+};
 
 const animateProps: TargetAndTransition = {
   pathLength: 1,
   opacity: 1,
-}
+};
 
 export type AppleHelloEffectProps = Omit<
   ComponentProps<typeof motion.svg>,
@@ -24,10 +24,10 @@ export type AppleHelloEffectProps = Omit<
    * Animation speed multiplier (higher = faster).
    * @defaultValue 1
    * */
-  speed?: number
+  speed?: number;
   /** Called when the full handwriting animation completes. */
-  onAnimationComplete?: () => void
-}
+  onAnimationComplete?: () => void;
+};
 
 function AppleHelloVietnameseEffect({
   className,
@@ -35,7 +35,7 @@ function AppleHelloVietnameseEffect({
   onAnimationComplete,
   ...props
 }: AppleHelloEffectProps) {
-  const calc = (x: number) => x / speed
+  const calc = (x: number) => x / speed;
 
   return (
     <motion.svg
@@ -193,7 +193,7 @@ function AppleHelloVietnameseEffect({
         onAnimationComplete={onAnimationComplete}
       />
     </motion.svg>
-  )
+  );
 }
 
 function AppleHelloEnglishEffect({
@@ -202,7 +202,7 @@ function AppleHelloEnglishEffect({
   onAnimationComplete,
   ...props
 }: AppleHelloEffectProps) {
-  const calc = (x: number) => x * speed
+  const calc = (x: number) => x * speed;
 
   return (
     <motion.svg
@@ -247,7 +247,7 @@ function AppleHelloEnglishEffect({
         onAnimationComplete={onAnimationComplete}
       />
     </motion.svg>
-  )
+  );
 }
 
-export { AppleHelloEnglishEffect, AppleHelloVietnameseEffect }
+export { AppleHelloEnglishEffect, AppleHelloVietnameseEffect };

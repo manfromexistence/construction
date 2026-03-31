@@ -1,20 +1,19 @@
 /** @jsx jsx */
 
-import { type SlateEditor, type TElement, createSlateEditor } from 'platejs';
+import { jsx } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor, type TElement } from "platejs";
 
-import { jsx } from '@platejs/test-utils';
-
-import * as utilsModule from '../utils';
-import * as getColSpanModule from './getColSpan';
-import * as getRowSpanModule from './getRowSpan';
-import * as getTopTableCellModule from './getTopTableCell';
-import * as getLeftTableCellModule from './getLeftTableCell';
+import * as utilsModule from "../utils";
+import * as getColSpanModule from "./getColSpan";
+import * as getLeftTableCellModule from "./getLeftTableCell";
+import * as getRowSpanModule from "./getRowSpan";
 import {
   getSelectedCellsBorders,
   isSelectedCellBorder,
   isSelectedCellBordersNone,
   isSelectedCellBordersOuter,
-} from './getSelectedCellsBorders';
+} from "./getSelectedCellsBorders";
+import * as getTopTableCellModule from "./getTopTableCell";
 
 jsx;
 
@@ -59,7 +58,7 @@ const mockEditor = (
   </editor>
 ) as any as SlateEditor;
 
-describe('getSelectedCellsBorders', () => {
+describe("getSelectedCellsBorders", () => {
   let editor: SlateEditor;
   let getCellIndicesSpy: ReturnType<typeof spyOn>;
   let getCellTypesSpy: ReturnType<typeof spyOn>;
@@ -73,54 +72,48 @@ describe('getSelectedCellsBorders', () => {
   beforeEach(() => {
     const getCellIndicesMock = mock((_editor, element: any) => {
       switch (element.id) {
-        case 'c11':
+        case "c11":
           return { col: 0, row: 0 };
-        case 'c12':
+        case "c12":
           return { col: 1, row: 0 };
-        case 'c13':
+        case "c13":
           return { col: 2, row: 0 };
-        case 'c21':
+        case "c21":
           return { col: 0, row: 1 };
-        case 'c22':
+        case "c22":
           return { col: 1, row: 1 };
-        case 'c23':
+        case "c23":
           return { col: 2, row: 1 };
-        case 'c31':
+        case "c31":
           return { col: 0, row: 2 };
-        case 'c32':
+        case "c32":
           return { col: 1, row: 2 };
-        case 'c33':
+        case "c33":
           return { col: 2, row: 2 };
         default:
           return { col: 0, row: 0 };
       }
     });
-    const getCellTypesMock = mock().mockReturnValue(['td']);
+    const getCellTypesMock = mock().mockReturnValue(["td"]);
     const getColSpanMock = mock().mockReturnValue(1);
     const getRowSpanMock = mock().mockReturnValue(1);
     getTopTableCellMock = mock();
     getLeftTableCellMock = mock();
 
-    getCellIndicesSpy = spyOn(utilsModule, 'getCellIndices').mockImplementation(
+    getCellIndicesSpy = spyOn(utilsModule, "getCellIndices").mockImplementation(
       getCellIndicesMock as any
     );
-    getCellTypesSpy = spyOn(utilsModule, 'getCellTypes').mockImplementation(
+    getCellTypesSpy = spyOn(utilsModule, "getCellTypes").mockImplementation(
       getCellTypesMock as any
     );
-    getColSpanSpy = spyOn(getColSpanModule, 'getColSpan').mockImplementation(
-      getColSpanMock as any
+    getColSpanSpy = spyOn(getColSpanModule, "getColSpan").mockImplementation(getColSpanMock as any);
+    getRowSpanSpy = spyOn(getRowSpanModule, "getRowSpan").mockImplementation(getRowSpanMock as any);
+    getTopTableCellSpy = spyOn(getTopTableCellModule, "getTopTableCell").mockImplementation(
+      getTopTableCellMock as any
     );
-    getRowSpanSpy = spyOn(getRowSpanModule, 'getRowSpan').mockImplementation(
-      getRowSpanMock as any
+    getLeftTableCellSpy = spyOn(getLeftTableCellModule, "getLeftTableCell").mockImplementation(
+      getLeftTableCellMock as any
     );
-    getTopTableCellSpy = spyOn(
-      getTopTableCellModule,
-      'getTopTableCell'
-    ).mockImplementation(getTopTableCellMock as any);
-    getLeftTableCellSpy = spyOn(
-      getLeftTableCellModule,
-      'getLeftTableCell'
-    ).mockImplementation(getLeftTableCellMock as any);
 
     editor = createSlateEditor({ nodeId: true, value: mockEditor.children });
   });
@@ -134,8 +127,8 @@ describe('getSelectedCellsBorders', () => {
     getLeftTableCellSpy?.mockRestore();
   });
 
-  describe('when no cells are selected', () => {
-    it('returns default values when no current cell found', () => {
+  describe("when no cells are selected", () => {
+    it("returns default values when no current cell found", () => {
       editor.api.block = mock().mockReturnValue(null) as any;
 
       const result = getSelectedCellsBorders(editor);
@@ -150,9 +143,9 @@ describe('getSelectedCellsBorders', () => {
       });
     });
 
-    it('use current cell if available', () => {
+    it("use current cell if available", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 1 },
           right: { size: 1 },
@@ -177,7 +170,7 @@ describe('getSelectedCellsBorders', () => {
       const result = getSelectedCellsBorders(editor);
       const noneResult = isSelectedCellBordersNone(editor, [cell]);
       const outerResult = isSelectedCellBordersOuter(editor, [cell]);
-      const topResult = isSelectedCellBorder(editor, [cell], 'top');
+      const topResult = isSelectedCellBorder(editor, [cell], "top");
 
       expect(result).toEqual({
         bottom: true,
@@ -193,10 +186,10 @@ describe('getSelectedCellsBorders', () => {
     });
   });
 
-  describe('select.none option', () => {
-    it('detect when no borders are set', () => {
+  describe("select.none option", () => {
+    it("detect when no borders are set", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 0 },
           left: { size: 0 },
@@ -217,9 +210,9 @@ describe('getSelectedCellsBorders', () => {
       expect(noneResult).toBe(true);
     });
 
-    it('detect when any border is set', () => {
+    it("detect when any border is set", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: { bottom: { size: 0 }, top: { size: 1 } },
       } as unknown as TElement;
       editor.api.findPath = mock().mockReturnValue([0]) as any;
@@ -235,9 +228,9 @@ describe('getSelectedCellsBorders', () => {
       expect(noneResult).toBe(false);
     });
 
-    it('check adjacent cells borders', () => {
+    it("check adjacent cells borders", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: { bottom: { size: 0 }, top: { size: 0 } },
       } as unknown as TElement;
 
@@ -255,9 +248,9 @@ describe('getSelectedCellsBorders', () => {
       expect(noneResult).toBe(false);
     });
 
-    it('checks the previous cell right border before reporting none', () => {
+    it("checks the previous cell right border before reporting none", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 0 },
           right: { size: 0 },
@@ -276,9 +269,9 @@ describe('getSelectedCellsBorders', () => {
       expect(isSelectedCellBordersNone(editor, [cell])).toBe(false);
     });
 
-    it('skip none check when select.none is false', () => {
+    it("skip none check when select.none is false", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: { bottom: { size: 1 }, top: { size: 1 } },
       } as unknown as TElement;
       editor.api.findPath = mock().mockReturnValue([0]) as any;
@@ -291,10 +284,10 @@ describe('getSelectedCellsBorders', () => {
     });
   });
 
-  describe('select.outer option', () => {
-    it('detect when all outer borders are set', () => {
+  describe("select.outer option", () => {
+    it("detect when all outer borders are set", () => {
       const cell = {
-        id: 'c11',
+        id: "c11",
         borders: {
           bottom: { size: 1 },
           left: { size: 1 },
@@ -315,9 +308,9 @@ describe('getSelectedCellsBorders', () => {
       expect(outerResult).toBe(true);
     });
 
-    it('detect when any outer border is missing', () => {
+    it("detect when any outer border is missing", () => {
       const cell = {
-        id: 'c11',
+        id: "c11",
         borders: {
           bottom: { size: 1 },
           left: { size: 0 },
@@ -338,9 +331,9 @@ describe('getSelectedCellsBorders', () => {
       expect(outerResult).toBe(false);
     });
 
-    it('check adjacent cells for outer borders', () => {
+    it("check adjacent cells for outer borders", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 1 },
           right: { size: 1 },
@@ -366,9 +359,9 @@ describe('getSelectedCellsBorders', () => {
       expect(outerResult).toBe(true);
     });
 
-    it('skip outer check when select.outer is false', () => {
+    it("skip outer check when select.outer is false", () => {
       const cell = {
-        id: 'c11',
+        id: "c11",
         borders: {
           bottom: { size: 0 },
           left: { size: 0 },
@@ -386,10 +379,10 @@ describe('getSelectedCellsBorders', () => {
     });
   });
 
-  describe('select.side option', () => {
-    it('detect individual border states correctly', () => {
+  describe("select.side option", () => {
+    it("detect individual border states correctly", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 1 },
           left: { size: 0 },
@@ -410,10 +403,10 @@ describe('getSelectedCellsBorders', () => {
       getLeftTableCellMock.mockReturnValue([cellLeft]);
 
       const result = getSelectedCellsBorders(editor, [cell]);
-      const topResult = isSelectedCellBorder(editor, [cell], 'top');
-      const bottomResult = isSelectedCellBorder(editor, [cell], 'bottom');
-      const leftResult = isSelectedCellBorder(editor, [cell], 'left');
-      const rightResult = isSelectedCellBorder(editor, [cell], 'right');
+      const topResult = isSelectedCellBorder(editor, [cell], "top");
+      const bottomResult = isSelectedCellBorder(editor, [cell], "bottom");
+      const leftResult = isSelectedCellBorder(editor, [cell], "left");
+      const rightResult = isSelectedCellBorder(editor, [cell], "right");
 
       expect(result).toEqual(
         expect.objectContaining({
@@ -429,9 +422,9 @@ describe('getSelectedCellsBorders', () => {
       expect(rightResult).toBe(true);
     });
 
-    it('handle first row/column borders', () => {
+    it("handle first row/column borders", () => {
       const cell = {
-        id: 'c11', // First row, first column
+        id: "c11", // First row, first column
         borders: {
           bottom: { size: 1 },
           left: { size: 1 },
@@ -442,8 +435,8 @@ describe('getSelectedCellsBorders', () => {
       editor.api.findPath = mock().mockReturnValue([0]) as any;
 
       const result = getSelectedCellsBorders(editor, [cell]);
-      const topResult = isSelectedCellBorder(editor, [cell], 'top');
-      const leftResult = isSelectedCellBorder(editor, [cell], 'left');
+      const topResult = isSelectedCellBorder(editor, [cell], "top");
+      const leftResult = isSelectedCellBorder(editor, [cell], "left");
 
       expect(result).toEqual(
         expect.objectContaining({
@@ -455,9 +448,9 @@ describe('getSelectedCellsBorders', () => {
       expect(leftResult).toBe(true);
     });
 
-    it('check adjacent cells for side borders', () => {
+    it("check adjacent cells for side borders", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 1 },
           right: { size: 1 },
@@ -477,8 +470,8 @@ describe('getSelectedCellsBorders', () => {
       getLeftTableCellMock.mockReturnValue([cellLeft]);
 
       const result = getSelectedCellsBorders(editor, [cell]);
-      const topResult = isSelectedCellBorder(editor, [cell], 'top');
-      const leftResult = isSelectedCellBorder(editor, [cell], 'left');
+      const topResult = isSelectedCellBorder(editor, [cell], "top");
+      const leftResult = isSelectedCellBorder(editor, [cell], "left");
 
       expect(result).toEqual(
         expect.objectContaining({
@@ -490,9 +483,9 @@ describe('getSelectedCellsBorders', () => {
       expect(leftResult).toBe(false);
     });
 
-    it('returns all true when select.side is false', () => {
+    it("returns all true when select.side is false", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 0 },
           left: { size: 0 },
@@ -516,9 +509,9 @@ describe('getSelectedCellsBorders', () => {
       );
     });
 
-    it('treats missing adjacent cells as visible for top and left edge checks', () => {
+    it("treats missing adjacent cells as visible for top and left edge checks", () => {
       const cell = {
-        id: 'c22',
+        id: "c22",
         borders: {
           bottom: { size: 1 },
           right: { size: 1 },
@@ -528,34 +521,34 @@ describe('getSelectedCellsBorders', () => {
       getTopTableCellMock.mockReturnValue(null);
       getLeftTableCellMock.mockReturnValue(null);
 
-      expect(isSelectedCellBorder(editor, [cell], 'top')).toBe(true);
-      expect(isSelectedCellBorder(editor, [cell], 'left')).toBe(true);
+      expect(isSelectedCellBorder(editor, [cell], "top")).toBe(true);
+      expect(isSelectedCellBorder(editor, [cell], "left")).toBe(true);
     });
 
-    it('ignores non-boundary cells before checking the right edge', () => {
+    it("ignores non-boundary cells before checking the right edge", () => {
       const cell1 = {
-        id: 'c21',
+        id: "c21",
         borders: { right: { size: 1 } },
       } as unknown as TElement;
       const cell2 = {
-        id: 'c22',
+        id: "c22",
         borders: { right: { size: 1 } },
       } as unknown as TElement;
 
       editor.api.findPath = mock().mockReturnValue([0]) as any;
 
-      expect(isSelectedCellBorder(editor, [cell1, cell2], 'right')).toBe(true);
+      expect(isSelectedCellBorder(editor, [cell1, cell2], "right")).toBe(true);
     });
   });
 
-  describe('combined selections', () => {
-    it('handle multiple cells in same row', () => {
+  describe("combined selections", () => {
+    it("handle multiple cells in same row", () => {
       const cell1 = {
-        id: 'c11',
+        id: "c11",
         borders: { right: { size: 1 }, top: { size: 1 } },
       } as unknown as TElement;
       const cell2 = {
-        id: 'c12',
+        id: "c12",
         borders: { right: { size: 0 }, top: { size: 1 } },
       } as unknown as TElement;
       editor.api.findPath = mock().mockReturnValue([0]) as any;
@@ -568,27 +561,27 @@ describe('getSelectedCellsBorders', () => {
       expect(result.top).toBe(true);
     });
 
-    it('handle multiple cells in same column', () => {
+    it("handle multiple cells in same column", () => {
       const cell1 = {
-        id: 'c11',
+        id: "c11",
         borders: { bottom: { size: 1 }, right: { size: 1 } },
       } as unknown as TElement;
       const cell2 = {
-        id: 'c21',
+        id: "c21",
         borders: { bottom: { size: 0 }, right: { size: 1 } },
       } as unknown as TElement;
       editor.api.findPath = mock().mockReturnValue([0]) as any;
 
       const result = getSelectedCellsBorders(editor, [cell1, cell2]);
-      const rightResult = isSelectedCellBorder(editor, [cell1, cell2], 'right');
+      const rightResult = isSelectedCellBorder(editor, [cell1, cell2], "right");
 
       expect(result.right).toBe(true);
       expect(rightResult).toBe(true);
     });
   });
 
-  describe('edge cases', () => {
-    it('handle empty cell array', () => {
+  describe("edge cases", () => {
+    it("handle empty cell array", () => {
       const result = getSelectedCellsBorders(editor, []);
 
       expect(result).toEqual({
@@ -601,9 +594,9 @@ describe('getSelectedCellsBorders', () => {
       });
     });
 
-    it('handle missing border properties', () => {
+    it("handle missing border properties", () => {
       const cell = {
-        id: 'c11',
+        id: "c11",
         // No borders property at all
       } as unknown as TElement;
       editor.api.findPath = mock().mockReturnValue([0]) as any;

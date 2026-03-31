@@ -1,5 +1,5 @@
-import { toPlatePlugin } from 'platejs/react';
+import { toPlatePlugin } from "platejs/react";
 
-import { BaseTodoListPlugin } from '../lib/BaseTodoListPlugin';
+import { BaseTodoListPlugin } from "../lib/BaseTodoListPlugin";
 
 export const TodoListPlugin = toPlatePlugin(BaseTodoListPlugin);

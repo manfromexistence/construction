@@ -76,11 +76,7 @@ const BlocksIcon = forwardRef<BlocksIconHandle, BlocksIconProps>(
           xmlns="http://www.w3.org/2000/svg"
         >
           <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3" />
-          <motion.path
-            animate={controls}
-            d="M14 3h7v7h-7z"
-            variants={VARIANTS}
-          />
+          <motion.path animate={controls} d="M14 3h7v7h-7z" variants={VARIANTS} />
         </svg>
       </div>
     );

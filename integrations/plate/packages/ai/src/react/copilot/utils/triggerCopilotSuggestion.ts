@@ -1,17 +1,14 @@
-import { KEYS } from 'platejs';
-import { type PlateEditor, getEditorPlugin } from 'platejs/react';
+import { KEYS } from "platejs";
+import { getEditorPlugin, type PlateEditor } from "platejs/react";
 
-import type { CopilotPluginConfig } from '../CopilotPlugin';
+import type { CopilotPluginConfig } from "../CopilotPlugin";
 
-import { callCompletionApi } from './callCompletionApi';
+import { callCompletionApi } from "./callCompletionApi";
 
 export const triggerCopilotSuggestion = async (editor: PlateEditor) => {
-  const { api, getOptions, setOption } = getEditorPlugin<CopilotPluginConfig>(
-    editor,
-    {
-      key: KEYS.copilot,
-    }
-  );
+  const { api, getOptions, setOption } = getEditorPlugin<CopilotPluginConfig>(editor, {
+    key: KEYS.copilot,
+  });
 
   const { completeOptions, getPrompt, isLoading, triggerQuery } = getOptions();
 
@@ -34,13 +31,12 @@ export const triggerCopilotSuggestion = async (editor: PlateEditor) => {
       api.copilot.setBlockSuggestion({ text: completion });
     },
     ...completeOptions,
-    setAbortController: (controller) =>
-      setOption('abortController', controller),
-    setCompletion: (completion) => setOption('completion', completion),
-    setError: (error) => setOption('error', error),
-    setLoading: (loading) => setOption('isLoading', loading),
+    setAbortController: (controller) => setOption("abortController", controller),
+    setCompletion: (completion) => setOption("completion", completion),
+    setError: (error) => setOption("error", error),
+    setLoading: (loading) => setOption("isLoading", loading),
     onError: (error) => {
-      setOption('error', error);
+      setOption("error", error);
       completeOptions?.onError?.(error);
     },
   });

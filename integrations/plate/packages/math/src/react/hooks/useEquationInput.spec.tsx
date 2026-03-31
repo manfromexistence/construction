@@ -1,6 +1,6 @@
-import { act, renderHook } from '@testing-library/react';
-import * as actualPlatejs from 'platejs';
-import * as actualPlatejsReact from 'platejs/react';
+import { act, renderHook } from "@testing-library/react";
+import * as actualPlatejs from "platejs";
+import * as actualPlatejsReact from "platejs/react";
 
 const useEditorRefMock = mock();
 const useElementMock = mock();
@@ -11,7 +11,7 @@ const usePluginOptionMock = mock();
 const useReadOnlyMock = mock();
 const useSelectedMock = mock();
 
-mock.module('platejs', () => ({
+mock.module("platejs", () => ({
   ...actualPlatejs,
   Hotkeys: {
     isRedo: () => false,
@@ -19,24 +19,24 @@ mock.module('platejs', () => ({
   },
   KEYS: {
     ...actualPlatejs.KEYS,
-    link: 'link',
-    toggle: 'toggle',
-    ulClassic: 'ulClassic',
+    link: "link",
+    toggle: "toggle",
+    ulClassic: "ulClassic",
   },
   getEditorPlugin: getEditorPluginMock,
   isHotkey: (hotkey: string) => (event: any) => {
-    const key = String(event.key || '').toLowerCase();
+    const key = String(event.key || "").toLowerCase();
 
     return (
-      (hotkey === 'enter' && key === 'enter') ||
-      (hotkey === 'escape' && key === 'escape') ||
-      (hotkey === 'ArrowLeft' && key === 'arrowleft') ||
-      (hotkey === 'ArrowRight' && key === 'arrowright')
+      (hotkey === "enter" && key === "enter") ||
+      (hotkey === "escape" && key === "escape") ||
+      (hotkey === "ArrowLeft" && key === "arrowleft") ||
+      (hotkey === "ArrowRight" && key === "arrowright")
     );
   },
 }));
 
-mock.module('platejs/react', () => ({
+mock.module("platejs/react", () => ({
   ...actualPlatejsReact,
   useEditorPlugin: useEditorPluginMock,
   useEditorRef: useEditorRefMock,
@@ -47,7 +47,7 @@ mock.module('platejs/react', () => ({
   useSelected: useSelectedMock,
 }));
 
-describe('useEquationInput', () => {
+describe("useEquationInput", () => {
   beforeEach(() => {
     useEditorRefMock.mockReset();
     useElementMock.mockReset();
@@ -57,7 +57,7 @@ describe('useEquationInput', () => {
     mock.restore();
   });
 
-  it('updates inline equations with merging, restores dismiss state, and navigates at text edges', async () => {
+  it("updates inline equations with merging, restores dismiss state, and navigates at text edges", async () => {
     const { useEquationInput } = await import(
       `./useEquationInput?test=${Math.random().toString(36).slice(2)}`
     );
@@ -66,36 +66,34 @@ describe('useEquationInput', () => {
     const withMerging = mock((fn: Function) => fn());
     const onClose = mock();
 
-    useElementMock.mockReturnValue({ texExpression: 'x+1', type: 'equation' });
+    useElementMock.mockReturnValue({ texExpression: "x+1", type: "equation" });
     useEditorRefMock.mockReturnValue({
       tf: { select, setNodes, withMerging },
     });
 
-    const { result } = renderHook(() =>
-      useEquationInput({ isInline: true, onClose, open: false })
-    );
+    const { result } = renderHook(() => useEquationInput({ isInline: true, onClose, open: false }));
 
     act(() => {
       result.current.props.onChange({
-        target: { value: 'x+2' },
+        target: { value: "x+2" },
       } as any);
     });
 
     result.current.props.onKeyDown({
-      key: 'ArrowLeft',
+      key: "ArrowLeft",
       preventDefault: mock(),
-      target: { selectionEnd: 0, selectionStart: 0, value: 'x+2' },
+      target: { selectionEnd: 0, selectionStart: 0, value: "x+2" },
     } as any);
 
     result.current.onDismiss();
 
     expect(withMerging).toHaveBeenCalled();
     expect(setNodes).toHaveBeenCalledWith(
-      { texExpression: 'x+2' },
-      { at: { texExpression: 'x+1', type: 'equation' } }
+      { texExpression: "x+2" },
+      { at: { texExpression: "x+1", type: "equation" } }
     );
     expect(select).toHaveBeenCalledWith(
-      { texExpression: 'x+1', type: 'equation' },
+      { texExpression: "x+1", type: "equation" },
       { focus: true, previous: true }
     );
     expect(onClose).toHaveBeenCalled();

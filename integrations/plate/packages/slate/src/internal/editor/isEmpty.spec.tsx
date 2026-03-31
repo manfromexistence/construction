@@ -1,14 +1,14 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor } from '../../create-editor';
-import type { Editor, LegacyEditorMethods } from '../../interfaces';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor } from "../../create-editor";
+import type { Editor, LegacyEditorMethods } from "../../interfaces";
 
 jsxt;
 
-describe('isEmpty', () => {
-  describe('when no target (editor)', () => {
-    it('returns true when the editor has one empty element', () => {
+describe("isEmpty", () => {
+  describe("when no target (editor)", () => {
+    it("returns true when the editor has one empty element", () => {
       const editor = createEditor(
         (
           <editor>
@@ -20,7 +20,7 @@ describe('isEmpty', () => {
       expect(editor.api.isEmpty()).toBe(true);
     });
 
-    it('returns false when the editor has multiple elements', () => {
+    it("returns false when the editor has multiple elements", () => {
       const editor = createEditor(
         (
           <editor>
@@ -34,8 +34,8 @@ describe('isEmpty', () => {
     });
   });
 
-  describe('when target is editor', () => {
-    it('returns true when the editor has one empty element', () => {
+  describe("when target is editor", () => {
+    it("returns true when the editor has one empty element", () => {
       const editor = createEditor(
         (
           <editor>
@@ -48,8 +48,8 @@ describe('isEmpty', () => {
     });
   });
 
-  describe('when target is path', () => {
-    it('get block above and check if empty', () => {
+  describe("when target is path", () => {
+    it("get block above and check if empty", () => {
       const editor = createEditor(
         (
           <editor>
@@ -64,48 +64,46 @@ describe('isEmpty', () => {
     });
   });
 
-  describe('when target is a node', () => {
-    it('returns false for a void block target', () => {
+  describe("when target is a node", () => {
+    it("returns false for a void block target", () => {
       const editor = createEditor({
         children: [
           {
-            children: [{ text: '' }],
-            type: 'tag',
+            children: [{ text: "" }],
+            type: "tag",
             void: true,
           },
         ] as any,
       }) as Editor & LegacyEditorMethods;
 
-      editor.isVoid = (element) => element.type === 'tag';
+      editor.isVoid = (element) => element.type === "tag";
 
       expect(editor.api.isEmpty(editor.children[0] as any)).toBe(false);
     });
 
-    it('returns false for a non-empty inline target', () => {
+    it("returns false for a non-empty inline target", () => {
       const editor = createEditor({
         children: [
           {
             children: [
-              { text: 'one' },
-              { children: [{ text: 'two' }], type: 'a' },
-              { text: 'three' },
+              { text: "one" },
+              { children: [{ text: "two" }], type: "a" },
+              { text: "three" },
             ],
-            type: 'p',
+            type: "p",
           },
         ] as any,
       }) as Editor & LegacyEditorMethods;
 
-      editor.isInline = (element) => element.type === 'a';
+      editor.isInline = (element) => element.type === "a";
 
-      expect(editor.api.isEmpty(editor.children[0].children[1] as any)).toBe(
-        false
-      );
+      expect(editor.api.isEmpty(editor.children[0].children[1] as any)).toBe(false);
     });
   });
 
-  describe('when after=true', () => {
-    describe('when no selection', () => {
-      it('returns true', () => {
+  describe("when after=true", () => {
+    describe("when no selection", () => {
+      it("returns true", () => {
         const editor = createEditor(
           (
             <editor>
@@ -117,16 +115,14 @@ describe('isEmpty', () => {
           ) as any
         ) as Editor & LegacyEditorMethods;
 
-        editor.isInline = (element) => element.type === 'a';
+        editor.isInline = (element) => element.type === "a";
 
-        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(
-          true
-        );
+        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(true);
       });
     });
 
-    describe('when cursor not at end', () => {
-      it('returns false', () => {
+    describe("when cursor not at end", () => {
+      it("returns false", () => {
         const editor = createEditor(
           (
             <editor>
@@ -142,14 +138,12 @@ describe('isEmpty', () => {
           ) as any
         ) as Editor & LegacyEditorMethods;
 
-        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(
-          false
-        );
+        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(false);
       });
     });
 
-    describe('when empty text after', () => {
-      it('returns true', () => {
+    describe("when empty text after", () => {
+      it("returns true", () => {
         const editor = createEditor(
           (
             <editor>
@@ -165,16 +159,14 @@ describe('isEmpty', () => {
           ) as any
         ) as Editor & LegacyEditorMethods;
 
-        editor.isInline = (element) => element.type === 'a';
+        editor.isInline = (element) => element.type === "a";
 
-        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(
-          true
-        );
+        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(true);
       });
     });
 
-    describe('when multiple siblings after cursor', () => {
-      it('returns false when any sibling has text', () => {
+    describe("when multiple siblings after cursor", () => {
+      it("returns false when any sibling has text", () => {
         const editor = createEditor(
           (
             <editor>
@@ -192,13 +184,11 @@ describe('isEmpty', () => {
           ) as any
         ) as Editor & LegacyEditorMethods;
 
-        editor.isInline = (element) => element.type === 'a';
-        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(
-          false
-        );
+        editor.isInline = (element) => element.type === "a";
+        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(false);
       });
 
-      it('returns true when all siblings are empty', () => {
+      it("returns true when all siblings are empty", () => {
         const editor = createEditor(
           (
             <editor>
@@ -216,15 +206,13 @@ describe('isEmpty', () => {
           ) as any
         ) as Editor & LegacyEditorMethods;
 
-        editor.isInline = (element) => element.type === 'a';
-        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(
-          true
-        );
+        editor.isInline = (element) => element.type === "a";
+        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(true);
       });
     });
 
-    describe('when cursor is at different positions', () => {
-      it('handle cursor at start of node', () => {
+    describe("when cursor is at different positions", () => {
+      it("handle cursor at start of node", () => {
         const editor = createEditor(
           (
             <editor>
@@ -239,13 +227,11 @@ describe('isEmpty', () => {
           ) as any
         ) as Editor & LegacyEditorMethods;
 
-        editor.isInline = (element) => element.type === 'a';
-        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(
-          false
-        );
+        editor.isInline = (element) => element.type === "a";
+        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(false);
       });
 
-      it('handle cursor at middle of node', () => {
+      it("handle cursor at middle of node", () => {
         const editor = createEditor(
           (
             <editor>
@@ -261,14 +247,12 @@ describe('isEmpty', () => {
           ) as any
         ) as Editor & LegacyEditorMethods;
 
-        editor.isInline = (element) => element.type === 'a';
-        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(
-          false
-        );
+        editor.isInline = (element) => element.type === "a";
+        expect(editor.api.isEmpty(editor.selection, { after: true })).toBe(false);
       });
     });
 
-    it('returns true when the cursor is already at the end of the block', () => {
+    it("returns true when the cursor is already at the end of the block", () => {
       const editor = createEditor(
         (
           <editor>
@@ -284,8 +268,8 @@ describe('isEmpty', () => {
     });
   });
 
-  describe('when block=true', () => {
-    it('check if block above is empty', () => {
+  describe("when block=true", () => {
+    it("check if block above is empty", () => {
       const editor = createEditor(
         (
           <editor>
@@ -300,8 +284,8 @@ describe('isEmpty', () => {
     });
   });
 
-  describe('when target is a location', () => {
-    it('returns false when any matched node is not empty', () => {
+  describe("when target is a location", () => {
+    it("returns false when any matched node is not empty", () => {
       const editor = createEditor(
         (
           <editor>

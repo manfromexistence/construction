@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { NavMain } from "@/registry/bases/base/blocks/sidebar-16/components/nav-main"
-import { NavProjects } from "@/registry/bases/base/blocks/sidebar-16/components/nav-projects"
-import { NavSecondary } from "@/registry/bases/base/blocks/sidebar-16/components/nav-secondary"
-import { NavUser } from "@/registry/bases/base/blocks/sidebar-16/components/nav-user"
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { NavMain } from "@/registry/bases/base/blocks/sidebar-16/components/nav-main";
+import { NavProjects } from "@/registry/bases/base/blocks/sidebar-16/components/nav-projects";
+import { NavSecondary } from "@/registry/bases/base/blocks/sidebar-16/components/nav-secondary";
+import { NavUser } from "@/registry/bases/base/blocks/sidebar-16/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -14,8 +14,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/registry/bases/base/ui/sidebar"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/base/ui/sidebar";
 
 const data = {
   user: {
@@ -211,13 +210,10 @@ const data = {
       ),
     },
   ],
-}
+};
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar
-      className="top-(--header-height) h-[calc(100svh-var(--header-height))]!"
-      {...props}
-    >
+    <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -249,5 +245,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

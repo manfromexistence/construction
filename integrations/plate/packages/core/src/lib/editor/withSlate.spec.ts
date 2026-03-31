@@ -1,13 +1,12 @@
-import { BoldPlugin } from '@platejs/basic-nodes/react';
-import { type Value, createEditor } from '@platejs/slate';
+import { BoldPlugin } from "@platejs/basic-nodes/react";
+import { createEditor, type Value } from "@platejs/slate";
 
-import { ParagraphPlugin, ReactPlugin } from '../../react';
-import { withPlate } from '../../react/editor/withPlate';
-import { createPlatePlugin } from '../../react/plugin/createPlatePlugin';
-import { getPlugin } from '../../react/plugin/getPlugin';
-import { EventEditorPlugin } from '../../react/plugins/event-editor/EventEditorPlugin';
+import { ParagraphPlugin, ReactPlugin } from "../../react";
+import { withPlate } from "../../react/editor/withPlate";
+import { createPlatePlugin } from "../../react/plugin/createPlatePlugin";
+import { getPlugin } from "../../react/plugin/getPlugin";
+import { EventEditorPlugin } from "../../react/plugins/event-editor/EventEditorPlugin";
 import {
-  type SlatePlugin,
   AffinityPlugin,
   AstPlugin,
   ChunkingPlugin,
@@ -20,11 +19,12 @@ import {
   OverridePlugin,
   ParserPlugin,
   SlateExtensionPlugin,
+  type SlatePlugin,
   withSlate,
-} from '../index';
+} from "../index";
 
 const coreKeys = [
-  'root',
+  "root",
   DebugPlugin.key,
   SlateExtensionPlugin.key,
   DOMPlugin.key,
@@ -40,37 +40,31 @@ const coreKeys = [
   EventEditorPlugin.key,
 ];
 
-describe('withPlate', () => {
-  describe('when default plugins', () => {
-    it('have core plugins', () => {
+describe("withPlate", () => {
+  describe("when default plugins", () => {
+    it("have core plugins", () => {
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
       });
 
-      expect(editor.id).toBe('1');
+      expect(editor.id).toBe("1");
       expect(editor.history).toBeDefined();
       expect(editor.meta.key).toBeDefined();
-      expect(editor.meta.pluginList.map((plugin) => plugin.key)).toEqual(
-        coreKeys
-      );
-      expect(editor.meta.pluginList.map((plugin) => plugin.node.type)).toEqual(
-        coreKeys
-      );
+      expect(editor.meta.pluginList.map((plugin) => plugin.key)).toEqual(coreKeys);
+      expect(editor.meta.pluginList.map((plugin) => plugin.node.type)).toEqual(coreKeys);
       expect(Object.keys(editor.plugins)).toEqual(coreKeys);
-      expect(
-        (editor.getPlugin(SlateExtensionPlugin).handlers as any).onKeyDown
-      ).toBeDefined();
+      expect((editor.getPlugin(SlateExtensionPlugin).handlers as any).onKeyDown).toBeDefined();
 
       expect(editor.tf.toggleBlock).toBeDefined();
       expect(editor.dom.prevSelection).toBeNull();
     });
   });
 
-  describe('when plugins is an array', () => {
-    it('add custom plugins to core plugins', () => {
-      const customPlugin = createSlatePlugin({ key: 'custom' });
+  describe("when plugins is an array", () => {
+    it("add custom plugins to core plugins", () => {
+      const customPlugin = createSlatePlugin({ key: "custom" });
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         override: {
           components: {},
           enabled: {},
@@ -78,79 +72,74 @@ describe('withPlate', () => {
         plugins: [customPlugin],
       });
 
-      expect(editor.meta.pluginList.map((plugin) => plugin.key)).toEqual([
-        ...coreKeys,
-        'custom',
-      ]);
-      expect(editor.getPlugin({ key: 'custom' })).toBeDefined();
+      expect(editor.meta.pluginList.map((plugin) => plugin.key)).toEqual([...coreKeys, "custom"]);
+      expect(editor.getPlugin({ key: "custom" })).toBeDefined();
     });
   });
 
-  describe('when plugins is an empty array', () => {
-    it('only have core plugins', () => {
+  describe("when plugins is an empty array", () => {
+    it("only have core plugins", () => {
       const editor = withPlate<Value, SlatePlugin>(createEditor(), {
-        id: '1',
+        id: "1",
         plugins: [],
       });
 
-      expect(editor.meta.pluginList.map((plugin) => plugin.key)).toEqual(
-        coreKeys
-      );
+      expect(editor.meta.pluginList.map((plugin) => plugin.key)).toEqual(coreKeys);
     });
   });
 
-  describe('when extending nested plugins', () => {
-    it('correctly merge and extend nested plugins', () => {
+  describe("when extending nested plugins", () => {
+    it("correctly merge and extend nested plugins", () => {
       const parentPlugin = createSlatePlugin({
-        key: 'parent',
-        node: { type: 'parentOriginal' },
+        key: "parent",
+        node: { type: "parentOriginal" },
         plugins: [
           createSlatePlugin({
-            key: 'child',
-            node: { type: 'childOriginal' },
+            key: "child",
+            node: { type: "childOriginal" },
           }),
         ],
       });
 
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         plugins: [
           parentPlugin
             .extend({
-              node: { type: 'parentExtended' },
+              node: { type: "parentExtended" },
             })
             .extendPlugin(
-              { key: 'child' },
+              { key: "child" },
               {
-                node: { type: 'childExtended' },
+                node: { type: "childExtended" },
               }
             )
             .extendPlugin(
-              { key: 'newChild' },
+              { key: "newChild" },
               {
-                node: { type: 'newChildType' },
+                node: { type: "newChildType" },
               }
             ),
         ],
       });
 
-      const parent = editor.getPlugin({ key: 'parent' });
-      const child = editor.getPlugin({ key: 'child' });
-      const newChild = editor.getPlugin({ key: 'newChild' });
+      const parent = editor.getPlugin({ key: "parent" });
+      const child = editor.getPlugin({ key: "child" });
+      const newChild = editor.getPlugin({ key: "newChild" });
 
-      expect(parent.node.type).toBe('parentExtended');
-      expect(child.node.type).toBe('childExtended');
-      expect(newChild.node.type).toBe('newChildType');
+      expect(parent.node.type).toBe("parentExtended");
+      expect(child.node.type).toBe("childExtended");
+      expect(newChild.node.type).toBe("newChildType");
     });
   });
 
-  describe('when using override', () => {
-    it('merge components', () => {
-      const HeadingPlugin = createPlatePlugin({ key: 'h1' });
+  describe("when using override", () => {
+    it("merge components", () => {
+      const HeadingPlugin = createPlatePlugin({ key: "h1" });
       const customComponent = () => null;
 
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         override: {
           components: {
             h1: customComponent,
@@ -159,22 +148,22 @@ describe('withPlate', () => {
         plugins: [HeadingPlugin],
       });
 
-      const h1Plugin = editor.getPlugin({ key: 'h1' });
+      const h1Plugin = editor.getPlugin({ key: "h1" });
       expect(h1Plugin.render.node).toBe(customComponent);
     });
 
-    it('respect priority when overriding existing components', () => {
+    it("respect priority when overriding existing components", () => {
       const originalComponent = () => null;
       const overrideComponent = () => null;
       const HeadingPlugin = createPlatePlugin({
-        key: 'h1',
+        key: "h1",
         priority: 100,
         render: { node: originalComponent },
       });
 
       // Test with low priority override
       let editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         plugins: [HeadingPlugin],
       });
 
@@ -183,7 +172,7 @@ describe('withPlate', () => {
 
       // Test with high priority override
       editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         override: {
           components: {
             h1: overrideComponent,
@@ -192,51 +181,49 @@ describe('withPlate', () => {
         plugins: [HeadingPlugin],
       });
 
-      h1Plugin = getPlugin<typeof h1Plugin>(editor, { key: 'h1' }) as any;
+      h1Plugin = getPlugin<typeof h1Plugin>(editor, { key: "h1" }) as any;
       expect(h1Plugin.render.node).toBe(overrideComponent);
     });
   });
 
-  describe('when using override.plugins', () => {
-    it('override plugin properties', () => {
+  describe("when using override.plugins", () => {
+    it("override plugin properties", () => {
       const CustomPlugin = createSlatePlugin({
-        key: 'custom',
-        node: { type: 'originalType' },
+        key: "custom",
+        node: { type: "originalType" },
       });
 
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         override: {
           plugins: {
             custom: {
-              node: { type: 'overriddenType' },
+              node: { type: "overriddenType" },
             },
           },
         },
         plugins: [CustomPlugin],
       });
 
-      const customPlugin = editor.getPlugin({ key: 'custom' });
-      expect(customPlugin.node.type).toBe('overriddenType');
+      const customPlugin = editor.getPlugin({ key: "custom" });
+      expect(customPlugin.node.type).toBe("overriddenType");
     });
   });
 
-  describe('when replacing core plugins', () => {
-    it('replace core plugins with custom plugins, maintain order, and add additional plugins', () => {
+  describe("when replacing core plugins", () => {
+    it("replace core plugins with custom plugins, maintain order, and add additional plugins", () => {
       const additionalPlugin = createSlatePlugin({
-        key: 'additional',
-        node: { type: 'additional' },
+        key: "additional",
+        node: { type: "additional" },
       });
 
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         plugins: [ParagraphPlugin, ReactPlugin, additionalPlugin],
       });
 
       const pluginCache = editor.meta.pluginList.map((plugin) => plugin.key);
-      const pluginTypes = editor.meta.pluginList.map(
-        (plugin) => plugin.node.type
-      );
+      const pluginTypes = editor.meta.pluginList.map((plugin) => plugin.node.type);
 
       // Check if ReactPlugin replaced DOMPlugin
       expect(pluginCache).toContain(ReactPlugin.key);
@@ -247,19 +234,19 @@ describe('withPlate', () => {
       expect(pluginTypes).toContain(ParagraphPlugin.node.type);
 
       // Check if additional plugin is added
-      expect(pluginCache).toContain('additional');
-      expect(pluginTypes).toContain('additional');
+      expect(pluginCache).toContain("additional");
+      expect(pluginTypes).toContain("additional");
 
       // Check if the order is correct
       const reactIndex = pluginCache.indexOf(ReactPlugin.key);
       const paragraphIndex = pluginCache.indexOf(ParagraphPlugin.key);
-      const additionalIndex = pluginCache.indexOf('additional');
+      const additionalIndex = pluginCache.indexOf("additional");
 
       expect(reactIndex).toBeLessThan(paragraphIndex);
       expect(paragraphIndex).toBeLessThan(additionalIndex);
 
       // Check if other core plugins are still present (e.g., HistoryPlugin)
-      expect(pluginCache).toContain('history');
+      expect(pluginCache).toContain("history");
 
       // Ensure the total number of plugins is correct
       // This number should be the sum of:
@@ -272,29 +259,29 @@ describe('withPlate', () => {
     });
   });
 
-  describe('when editor already has plugins', () => {
-    it('does not duplicate core plugins', () => {
+  describe("when editor already has plugins", () => {
+    it("does not duplicate core plugins", () => {
       const existingEditor = createEditor();
       existingEditor.plugins = [
-        createSlatePlugin({ key: 'dom' }),
-        createSlatePlugin({ key: 'history' }),
+        createSlatePlugin({ key: "dom" }),
+        createSlatePlugin({ key: "history" }),
       ];
 
-      const editor = withPlate(existingEditor, { id: '1' });
+      const editor = withPlate(existingEditor, { id: "1" });
 
       const pluginCache = editor.meta.pluginList.map((plugin) => plugin.key);
-      expect(pluginCache.filter((key) => key === 'dom')).toHaveLength(1);
-      expect(pluginCache.filter((key) => key === 'history')).toHaveLength(1);
+      expect(pluginCache.filter((key) => key === "dom")).toHaveLength(1);
+      expect(pluginCache.filter((key) => key === "history")).toHaveLength(1);
     });
 
-    it('add missing core plugins', () => {
+    it("add missing core plugins", () => {
       const existingEditor = createEditor();
       existingEditor.pluginList = [
-        createSlatePlugin({ key: 'dom' }),
-        createSlatePlugin({ key: 'history' }),
+        createSlatePlugin({ key: "dom" }),
+        createSlatePlugin({ key: "history" }),
       ];
 
-      const editor = withPlate(existingEditor, { id: '1' });
+      const editor = withPlate(existingEditor, { id: "1" });
 
       const pluginCache = editor.meta.pluginList.map((plugin) => plugin.key);
       coreKeys.forEach((key) => {
@@ -302,27 +289,25 @@ describe('withPlate', () => {
       });
     });
 
-    it('does not preserve custom plugins', () => {
-      const customPlugin = createSlatePlugin({ key: 'custom' });
+    it("does not preserve custom plugins", () => {
+      const customPlugin = createSlatePlugin({ key: "custom" });
       const existingEditor = createEditor();
       existingEditor.plugins = [
-        createSlatePlugin({ key: 'dom' }),
-        createSlatePlugin({ key: 'history' }),
+        createSlatePlugin({ key: "dom" }),
+        createSlatePlugin({ key: "history" }),
         customPlugin,
       ];
 
-      const editor = withPlate(existingEditor, { id: '1' });
+      const editor = withPlate(existingEditor, { id: "1" });
 
-      expect(editor.meta.pluginList.map((plugin) => plugin.key)).not.toContain(
-        'custom'
-      );
+      expect(editor.meta.pluginList.map((plugin) => plugin.key)).not.toContain("custom");
     });
   });
 
-  describe('when using override.enabled', () => {
-    it('disable specified core plugins', () => {
+  describe("when using override.enabled", () => {
+    it("disable specified core plugins", () => {
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         override: {
           enabled: {
             eventEditor: false,
@@ -332,17 +317,17 @@ describe('withPlate', () => {
       });
 
       const pluginCache = editor.meta.pluginList.map((plugin) => plugin.key);
-      expect(pluginCache).not.toContain('history');
-      expect(pluginCache).not.toContain('eventEditor');
+      expect(pluginCache).not.toContain("history");
+      expect(pluginCache).not.toContain("eventEditor");
       expect(pluginCache).toHaveLength(coreKeys.length - 2);
     });
 
-    it('disable specified custom plugins', () => {
-      const customPlugin1 = createSlatePlugin({ key: 'custom1' });
-      const customPlugin2 = createSlatePlugin({ key: 'custom2' });
+    it("disable specified custom plugins", () => {
+      const customPlugin1 = createSlatePlugin({ key: "custom1" });
+      const customPlugin2 = createSlatePlugin({ key: "custom2" });
 
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         override: {
           enabled: {
             custom1: false,
@@ -352,13 +337,13 @@ describe('withPlate', () => {
       });
 
       const pluginCache = editor.meta.pluginList.map((plugin) => plugin.key);
-      expect(pluginCache).not.toContain('custom1');
-      expect(pluginCache).toContain('custom2');
+      expect(pluginCache).not.toContain("custom1");
+      expect(pluginCache).toContain("custom2");
     });
 
-    it('does not affect plugins not specified in override.enabled', () => {
+    it("does not affect plugins not specified in override.enabled", () => {
       const editor = withPlate(createEditor(), {
-        id: '1',
+        id: "1",
         override: {
           enabled: {
             history: false,
@@ -368,17 +353,17 @@ describe('withPlate', () => {
 
       const pluginCache = editor.meta.pluginList.map((plugin) => plugin.key);
       coreKeys.forEach((key) => {
-        if (key !== 'history') {
+        if (key !== "history") {
           expect(pluginCache).toContain(key);
         }
       });
     });
   });
 
-  describe('when configuring core plugins', () => {
-    it('correctly configure the length plugin', () => {
+  describe("when configuring core plugins", () => {
+    it("correctly configure the length plugin", () => {
       const editor = withSlate(createEditor(), {
-        id: '1',
+        id: "1",
         rootPlugin: (plugin) =>
           plugin.configurePlugin(LengthPlugin, {
             options: {
@@ -392,9 +377,9 @@ describe('withPlate', () => {
     });
   });
 
-  it('handle value, selection, and autoSelect options correctly', () => {
+  it("handle value, selection, and autoSelect options correctly", () => {
     const editor = createEditor();
-    const value = [{ children: [{ text: 'Hello' }], type: 'paragraph' }];
+    const value = [{ children: [{ text: "Hello" }], type: "paragraph" }];
     const selection = {
       anchor: { offset: 2, path: [0, 0] },
       focus: { offset: 4, path: [0, 0] },
@@ -411,35 +396,29 @@ describe('withPlate', () => {
 
     // Test autoSelect start
     const editorWithAutoSelectStart = withSlate(createEditor(), {
-      autoSelect: 'start',
+      autoSelect: "start",
       value,
     });
     const expectedStartSelection = {
       anchor: editorWithAutoSelectStart.api.start([]),
       focus: editorWithAutoSelectStart.api.start([]),
     };
-    expect(editorWithAutoSelectStart.selection as any).toEqual(
-      expectedStartSelection
-    );
+    expect(editorWithAutoSelectStart.selection as any).toEqual(expectedStartSelection);
 
     // Test autoSelect end
     const editorWithAutoSelectEnd = withSlate(createEditor(), {
-      autoSelect: 'end',
+      autoSelect: "end",
       value,
     });
     const expectedEndSelection = {
       anchor: editorWithAutoSelectEnd.api.end([]),
       focus: editorWithAutoSelectEnd.api.end([]),
     };
-    expect(editorWithAutoSelectEnd.selection as any).toEqual(
-      expectedEndSelection
-    );
+    expect(editorWithAutoSelectEnd.selection as any).toEqual(expectedEndSelection);
 
     // Test empty children
     const editorWithEmptyChildren = withSlate(createEditor());
-    expect(editorWithEmptyChildren.children).toEqual(
-      editorWithEmptyChildren.api.create.value()
-    );
+    expect(editorWithEmptyChildren.children).toEqual(editorWithEmptyChildren.api.create.value());
 
     // Test pipeNormalizeInitialValue and normalizeEditor
     const editor2 = withSlate(createEditor(), {
@@ -451,53 +430,53 @@ describe('withPlate', () => {
       {
         children: [
           {
-            text: '',
+            text: "",
           },
         ],
-        type: 'p',
+        type: "p",
       },
     ]);
   });
 
-  describe('when value is a string', () => {
-    it('deserialize HTML string into Slate value', () => {
-      const htmlString = '<p>Hello, <b>world!</b></p>';
+  describe("when value is a string", () => {
+    it("deserialize HTML string into Slate value", () => {
+      const htmlString = "<p>Hello, <b>world!</b></p>";
 
       const editor = withSlate(createEditor(), {
-        id: '1',
+        id: "1",
         plugins: [BoldPlugin],
         value: htmlString,
       });
 
       expect(editor.children).toEqual([
         {
-          children: [{ text: 'Hello, ' }, { bold: true, text: 'world!' }],
-          type: 'p',
+          children: [{ text: "Hello, " }, { bold: true, text: "world!" }],
+          type: "p",
         },
       ]);
     });
   });
 
-  describe('when the previous editor has an id', () => {
-    it('reuses that id', () => {
+  describe("when the previous editor has an id", () => {
+    it("reuses that id", () => {
       const oldEditor = withSlate(createEditor());
-      oldEditor.id = 'old';
+      oldEditor.id = "old";
       const editor = withSlate(oldEditor);
-      expect(editor.id).toBe('old');
+      expect(editor.id).toBe("old");
     });
   });
 
-  describe('when the id option is provided', () => {
-    it('uses the provided id', () => {
+  describe("when the id option is provided", () => {
+    it("uses the provided id", () => {
       const oldEditor = withSlate(createEditor());
-      oldEditor.id = 'old';
-      const editor = withSlate(oldEditor, { id: 'new' });
-      expect(editor.id).toBe('new');
+      oldEditor.id = "old";
+      const editor = withSlate(oldEditor, { id: "new" });
+      expect(editor.id).toBe("new");
     });
   });
 
-  describe('when no id is provided', () => {
-    it('use a unique id for each editor', () => {
+  describe("when no id is provided", () => {
+    it("use a unique id for each editor", () => {
       const id1 = withSlate(createEditor()).id;
       const id2 = withSlate(createEditor()).id;
       expect(id1).toBeTruthy();

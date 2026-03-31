@@ -6,7 +6,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/styles/radix-nova/ui/select"
+} from "@/styles/radix-nova/ui/select";
 
 export function SelectScrollable() {
   return (
@@ -40,9 +40,7 @@ export function SelectScrollable() {
           <SelectItem value="cst_china">China Standard Time</SelectItem>
           <SelectItem value="jst">Japan Standard Time</SelectItem>
           <SelectItem value="kst">Korea Standard Time</SelectItem>
-          <SelectItem value="ist_indonesia">
-            Indonesia Central Standard Time
-          </SelectItem>
+          <SelectItem value="ist_indonesia">Indonesia Central Standard Time</SelectItem>
         </SelectGroup>
         <SelectGroup>
           <SelectLabel>Australia & Pacific</SelectLabel>
@@ -61,5 +59,5 @@ export function SelectScrollable() {
         </SelectGroup>
       </SelectContent>
     </Select>
-  )
+  );
 }

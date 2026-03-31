@@ -1,15 +1,11 @@
-'use client';
+"use client";
 
-import { Check, PlusCircle } from 'lucide-react';
+import { Check, PlusCircle } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { useProject } from '@/hooks/use-project';
-import { cn } from '@/lib/utils';
+import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { useProject } from "@/hooks/use-project";
+import { cn } from "@/lib/utils";
 
 export function ProjectAddButton({
   className,
@@ -23,7 +19,7 @@ export function ProjectAddButton({
         <Button
           size="sm"
           variant="ghost"
-          className={cn('rounded-sm', className)}
+          className={cn("rounded-sm", className)}
           onClick={() => {
             addBlock(name);
           }}

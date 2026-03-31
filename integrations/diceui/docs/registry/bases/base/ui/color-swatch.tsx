@@ -19,7 +19,7 @@ const colorSwatchVariants = cva(
     defaultVariants: {
       size: "default",
     },
-  },
+  }
 );
 
 function getIsCssColor(v: string): boolean {
@@ -41,11 +41,7 @@ function getHasAlpha(v: string): boolean {
 
   if (/\b(?:rgba|hsla)\s*\(/i.test(s)) return true;
 
-  if (
-    /\b(?:rgb|hsl|lab|lch|oklab|oklch|color)\s*\([^)]*\/\s*[\d.]+%?\s*\)/i.test(
-      s,
-    )
-  ) {
+  if (/\b(?:rgb|hsl|lab|lch|oklab|oklch|color)\s*\([^)]*\/\s*[\d.]+%?\s*\)/i.test(s)) {
     return true;
   }
 
@@ -94,9 +90,7 @@ function ColorSwatch({
     return { backgroundColor: colorValue };
   }, [colorValue, withoutTransparency]);
 
-  const ariaLabel = !colorValue
-    ? "No color selected"
-    : `Color swatch: ${colorValue}`;
+  const ariaLabel = !colorValue ? "No color selected" : `Color swatch: ${colorValue}`;
 
   return useRender({
     defaultTagName: "div",
@@ -112,7 +106,7 @@ function ColorSwatch({
           ...style,
         },
       },
-      props,
+      props
     ),
     render,
     state: {

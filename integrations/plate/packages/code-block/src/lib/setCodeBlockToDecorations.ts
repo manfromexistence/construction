@@ -1,18 +1,17 @@
 import {
   type DecoratedRange,
+  KEYS,
+  NodeApi,
   type NodeEntry,
   type SlateEditor,
   type TCodeBlockElement,
   type TElement,
-  KEYS,
-  NodeApi,
-} from 'platejs';
+} from "platejs";
 
-import { BaseCodeBlockPlugin } from './BaseCodeBlockPlugin';
+import { BaseCodeBlockPlugin } from "./BaseCodeBlockPlugin";
 
 // Cache for storing decorations per code line element
-export const CODE_LINE_TO_DECORATIONS: WeakMap<TElement, DecoratedRange[]> =
-  new WeakMap();
+export const CODE_LINE_TO_DECORATIONS: WeakMap<TElement, DecoratedRange[]> = new WeakMap();
 
 // Helper function to get highlight nodes from Lowlight result
 function getHighlightNodes(result: any) {
@@ -20,15 +19,9 @@ function getHighlightNodes(result: any) {
 }
 
 // Helper function to parse nodes from Lowlight's hast tree
-function parseNodes(
-  nodes: any[],
-  className: string[] = []
-): { classes: string[]; text: string }[] {
+function parseNodes(nodes: any[], className: string[] = []): { classes: string[]; text: string }[] {
   return nodes.flatMap((node) => {
-    const classes = [
-      ...className,
-      ...(node.properties ? node.properties.className : []),
-    ];
+    const classes = [...className, ...(node.properties ? node.properties.className : [])];
     if (node.children) {
       return parseNodes(node.children, classes);
     }
@@ -42,7 +35,7 @@ function normalizeTokens(tokens: { classes: string[]; text: string }[]) {
   let currentLine = lines[0];
 
   for (const token of tokens) {
-    const tokenLines = token.text.split('\n');
+    const tokenLines = token.text.split("\n");
 
     for (let i = 0; i < tokenLines.length; i++) {
       const content = tokenLines[i];
@@ -67,21 +60,20 @@ export function codeBlockToDecorations(
   editor: SlateEditor,
   [block, blockPath]: NodeEntry<TCodeBlockElement>
 ): Map<TElement, DecoratedRange[]> {
-  const { defaultLanguage, ...options } =
-    editor.getOptions(BaseCodeBlockPlugin);
+  const { defaultLanguage, ...options } = editor.getOptions(BaseCodeBlockPlugin);
   const lowlight = options.lowlight!;
 
   // Get all code lines and combine their text
-  const text = block.children.map((line) => NodeApi.string(line)).join('\n');
+  const text = block.children.map((line) => NodeApi.string(line)).join("\n");
   const language = block.lang;
   const effectiveLanguage = language || defaultLanguage;
 
   let highlighted: any;
   try {
     // Skip highlighting for plaintext or when no language is specified
-    if (!effectiveLanguage || effectiveLanguage === 'plaintext') {
+    if (!effectiveLanguage || effectiveLanguage === "plaintext") {
       highlighted = { value: [] }; // Empty result for plaintext
-    } else if (effectiveLanguage === 'auto') {
+    } else if (effectiveLanguage === "auto") {
       highlighted = lowlight.highlightAuto(text);
     } else {
       highlighted = lowlight.highlight(effectiveLanguage, text);
@@ -92,7 +84,7 @@ export function codeBlockToDecorations(
     const isLanguageRegistered =
       effectiveLanguage && availableLanguages.includes(effectiveLanguage);
     if (isLanguageRegistered) {
-      editor.api.debug.error(error, 'CODE_HIGHLIGHT');
+      editor.api.debug.error(error, "CODE_HIGHLIGHT");
       highlighted = { value: [] }; // Empty result on error
     } else {
       editor.api.debug.warn(
@@ -134,7 +126,7 @@ export function codeBlockToDecorations(
           offset: start,
           path: [...blockPath, index, 0],
         },
-        className: token.classes.join(' '),
+        className: token.classes.join(" "),
         focus: {
           offset: end,
           path: [...blockPath, index, 0],

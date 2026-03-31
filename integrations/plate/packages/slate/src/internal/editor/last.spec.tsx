@@ -1,13 +1,13 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
 
-import { createEditor } from '../../create-editor';
+import { createEditor } from "../../create-editor";
 
 jsxt;
 
-describe('last', () => {
-  describe('when no options', () => {
+describe("last", () => {
+  describe("when no options", () => {
     const input = createEditor(
       (
         <editor>
@@ -17,14 +17,14 @@ describe('last', () => {
       ) as any
     );
 
-    it('get last node', () => {
+    it("get last node", () => {
       const res = input.api.last([]);
 
-      expect(res).toEqual([{ text: '2' }, [1, 0]]);
+      expect(res).toEqual([{ text: "2" }, [1, 0]]);
     });
   });
 
-  describe('when level option', () => {
+  describe("when level option", () => {
     const input = createEditor(
       (
         <editor>
@@ -38,35 +38,32 @@ describe('last', () => {
       ) as any
     );
 
-    it('get last node at level 0', () => {
+    it("get last node at level 0", () => {
       const res = input.api.last([], { level: 0 });
 
       expect(res).toEqual([
         {
-          children: [{ children: [{ text: 'test2' }], type: 'p' }],
-          type: 'h1',
+          children: [{ children: [{ text: "test2" }], type: "p" }],
+          type: "h1",
         },
         [1],
       ]);
     });
 
-    it('get last node at level 1', () => {
+    it("get last node at level 1", () => {
       const res = input.api.last([], { level: 1 });
 
-      expect(res).toEqual([
-        { children: [{ text: 'test2' }], type: 'p' },
-        [1, 0],
-      ]);
+      expect(res).toEqual([{ children: [{ text: "test2" }], type: "p" }, [1, 0]]);
     });
 
-    it('get last node at level 2', () => {
+    it("get last node at level 2", () => {
       const res = input.api.last([], { level: 2 });
 
-      expect(res).toEqual([{ text: 'test2' }, [1, 0, 0]]);
+      expect(res).toEqual([{ text: "test2" }, [1, 0, 0]]);
     });
   });
 
-  describe('when at option', () => {
+  describe("when at option", () => {
     const input = createEditor(
       (
         <editor>
@@ -83,17 +80,17 @@ describe('last', () => {
       ) as any
     );
 
-    it('get last node at path', () => {
+    it("get last node at path", () => {
       const res = input.api.last([0], { level: 1 });
 
       expect(res).toEqual([
-        { children: [{ children: [{ text: '3' }], type: 'p' }], type: 'li' },
+        { children: [{ children: [{ text: "3" }], type: "p" }], type: "li" },
         [0, 1],
       ]);
     });
   });
 
-  describe('when node not found', () => {
+  describe("when node not found", () => {
     const input = createEditor(
       (
         <editor>
@@ -102,24 +99,24 @@ describe('last', () => {
       ) as any
     );
 
-    it('returns undefined for non-existent path', () => {
+    it("returns undefined for non-existent path", () => {
       const res = input.api.last([1]);
 
       expect(res).toBeUndefined();
     });
   });
 
-  describe('when editor has no children', () => {
+  describe("when editor has no children", () => {
     const input = createEditor((<editor />) as any);
 
-    it('returns undefined when level is 0', () => {
+    it("returns undefined when level is 0", () => {
       const res = input.api.last([], { level: 0 });
 
       expect(res).toBeUndefined();
     });
   });
 
-  describe('when element has no children', () => {
+  describe("when element has no children", () => {
     const input = createEditor(
       (
         <editor>
@@ -128,7 +125,7 @@ describe('last', () => {
       ) as any
     );
 
-    it('returns undefined when getting last node in empty element', () => {
+    it("returns undefined when getting last node in empty element", () => {
       const res = input.api.last([1]);
 
       expect(res).toBeUndefined();

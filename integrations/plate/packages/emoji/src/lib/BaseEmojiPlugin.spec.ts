@@ -1,10 +1,10 @@
-import { createSlateEditor, KEYS } from 'platejs';
+import { createSlateEditor, KEYS } from "platejs";
 
-import { BaseEmojiInputPlugin, BaseEmojiPlugin } from './BaseEmojiPlugin';
-import { DEFAULT_EMOJI_LIBRARY } from './constants';
+import { BaseEmojiInputPlugin, BaseEmojiPlugin } from "./BaseEmojiPlugin";
+import { DEFAULT_EMOJI_LIBRARY } from "./constants";
 
-describe('BaseEmojiPlugin', () => {
-  it('configures the emoji input plugin as an inline void edit-only node', () => {
+describe("BaseEmojiPlugin", () => {
+  it("configures the emoji input plugin as an inline void edit-only node", () => {
     const editor = createSlateEditor({
       plugins: [BaseEmojiPlugin],
     } as any);
@@ -17,49 +17,42 @@ describe('BaseEmojiPlugin', () => {
     expect(inputPlugin.node.isVoid).toBe(true);
   });
 
-  it('ships the default trigger, library, and node builders', () => {
+  it("ships the default trigger, library, and node builders", () => {
     const editor = createSlateEditor({
       plugins: [BaseEmojiPlugin],
     } as any);
 
     const plugin = editor.getPlugin(BaseEmojiPlugin);
-    const triggerPreviousCharPattern =
-      plugin.options.triggerPreviousCharPattern;
+    const triggerPreviousCharPattern = plugin.options.triggerPreviousCharPattern;
     const createComboboxInput = plugin.options.createComboboxInput;
     const createEmojiNode = plugin.options.createEmojiNode;
 
-    if (
-      !triggerPreviousCharPattern ||
-      !createComboboxInput ||
-      !createEmojiNode
-    ) {
-      throw new Error('Missing required emoji plugin options');
+    if (!triggerPreviousCharPattern || !createComboboxInput || !createEmojiNode) {
+      throw new Error("Missing required emoji plugin options");
     }
 
     expect(plugin.editOnly).toBe(true);
     expect(plugin.options.data).toBe(DEFAULT_EMOJI_LIBRARY);
-    expect(plugin.options.trigger).toBe(':');
-    expect(triggerPreviousCharPattern.test('')).toBe(true);
-    expect(triggerPreviousCharPattern.test(' ')).toBe(true);
-    expect(triggerPreviousCharPattern.test('x')).toBe(false);
-    expect(createComboboxInput('')).toEqual({
-      children: [{ text: '' }],
+    expect(plugin.options.trigger).toBe(":");
+    expect(triggerPreviousCharPattern.test("")).toBe(true);
+    expect(triggerPreviousCharPattern.test(" ")).toBe(true);
+    expect(triggerPreviousCharPattern.test("x")).toBe(false);
+    expect(createComboboxInput("")).toEqual({
+      children: [{ text: "" }],
       type: KEYS.emojiInput,
     });
-    expect(createEmojiNode({ skins: [{ native: '🔥' }] } as any)).toEqual({
-      text: '🔥',
+    expect(createEmojiNode({ skins: [{ native: "🔥" }] } as any)).toEqual({
+      text: "🔥",
     });
   });
 
-  it('includes the nested emoji input plugin', () => {
+  it("includes the nested emoji input plugin", () => {
     const editor = createSlateEditor({
       plugins: [BaseEmojiPlugin],
     } as any);
 
     const plugin = editor.getPlugin(BaseEmojiPlugin);
 
-    expect(
-      plugin.plugins.some((child: any) => child.key === KEYS.emojiInput)
-    ).toBe(true);
+    expect(plugin.plugins.some((child: any) => child.key === KEYS.emojiInput)).toBe(true);
   });
 });

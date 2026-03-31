@@ -1,13 +1,13 @@
-import { unhangRange as unhangRangeBase } from 'slate';
+import { unhangRange as unhangRangeBase } from "slate";
 
-import type { Editor } from '../../interfaces/editor/editor-type';
+import type { Editor } from "../../interfaces/editor/editor-type";
 
 import {
   type EditorUnhangRangeOptions,
   PathApi,
   RangeApi,
   type TRange,
-} from '../../interfaces/index';
+} from "../../interfaces/index";
 
 export const unhangRange = (
   editor: Editor,

@@ -1,13 +1,8 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "calendar",
-  "dependencies": [
-    "react-day-picker@latest",
-    "date-fns"
-  ],
-  "registryDependencies": [
-    "button"
-  ],
+  "dependencies": ["react-day-picker@latest", "date-fns"],
+  "registryDependencies": ["button"],
   "files": [
     {
       "path": "registry/radix-vega/ui/calendar.tsx",

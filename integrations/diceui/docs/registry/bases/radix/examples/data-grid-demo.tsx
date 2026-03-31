@@ -129,7 +129,7 @@ const skateTricks = {
 function generateTrickData(): SkateTrick[] {
   return Array.from({ length: 30 }, () => {
     const variant = faker.helpers.arrayElement(
-      Object.keys(skateTricks) as Array<keyof typeof skateTricks>,
+      Object.keys(skateTricks) as Array<keyof typeof skateTricks>
     );
     const trickName = faker.helpers.arrayElement(skateTricks[variant]);
     const skaterName = faker.person.fullName();
@@ -137,13 +137,7 @@ function generateTrickData(): SkateTrick[] {
     const landed = faker.datatype.boolean(0.6);
 
     const getDifficulty = (trick: string): SkateTrick["difficulty"] => {
-      const expertTricks = [
-        "Tre Flip",
-        "900",
-        "McTwist",
-        "Laser Flip",
-        "Impossible",
-      ];
+      const expertTricks = ["Tre Flip", "900", "McTwist", "Laser Flip", "Impossible"];
       const advancedTricks = [
         "Hardflip",
         "720",
@@ -161,8 +155,7 @@ function generateTrickData(): SkateTrick[] {
 
       if (expertTricks.some((t) => trick.includes(t))) return "expert";
       if (advancedTricks.some((t) => trick.includes(t))) return "advanced";
-      if (intermediateTricks.some((t) => trick.includes(t)))
-        return "intermediate";
+      if (intermediateTricks.some((t) => trick.includes(t))) return "intermediate";
       return "beginner";
     };
 
@@ -316,7 +309,7 @@ export default function DataGridDemo() {
         minSize: 130,
       },
     ],
-    [],
+    []
   );
 
   const onRowAdd = React.useCallback(() => {

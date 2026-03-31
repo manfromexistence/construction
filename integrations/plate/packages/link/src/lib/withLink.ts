@@ -1,8 +1,8 @@
-import { type OverrideEditor, PathApi } from 'platejs';
+import { type OverrideEditor, PathApi } from "platejs";
 
-import type { BaseLinkConfig } from './BaseLinkPlugin';
+import type { BaseLinkConfig } from "./BaseLinkPlugin";
 
-import { upsertLink } from './transforms/index';
+import { upsertLink } from "./transforms/index";
 
 /**
  * Insert space after a url to wrap a link. Lookup from the block start to the
@@ -25,13 +25,13 @@ export const withLink: OverrideEditor<BaseLinkConfig> = ({
       const selection = editor.selection!;
 
       // get the range from first space before the cursor
-      let beforeWordRange = editor.api.range('before', selection, {
+      let beforeWordRange = editor.api.range("before", selection, {
         before: rangeBeforeOptions,
       });
 
       // if no space found before, get the range from block start
       if (!beforeWordRange) {
-        beforeWordRange = editor.api.range('start', editor.selection);
+        beforeWordRange = editor.api.range("start", editor.selection);
       }
       // if no word found before the cursor, exit
       if (!beforeWordRange) return;
@@ -59,7 +59,7 @@ export const withLink: OverrideEditor<BaseLinkConfig> = ({
       });
 
       // collapse selection
-      editor.tf.collapse({ edge: 'end' });
+      editor.tf.collapse({ edge: "end" });
     });
   };
 
@@ -75,7 +75,7 @@ export const withLink: OverrideEditor<BaseLinkConfig> = ({
       insertData(data) {
         const { getUrlHref, keepSelectedTextOnPaste } = getOptions();
 
-        const text = data.getData('text/plain');
+        const text = data.getData("text/plain");
         const textHref = getUrlHref?.(text);
 
         if (text) {
@@ -93,7 +93,7 @@ export const withLink: OverrideEditor<BaseLinkConfig> = ({
       },
 
       insertText(text, options) {
-        if (text === ' ' && editor.api.isCollapsed()) {
+        if (text === " " && editor.api.isCollapsed()) {
           wrapLink();
         }
 
@@ -103,17 +103,13 @@ export const withLink: OverrideEditor<BaseLinkConfig> = ({
         if (node.type === type) {
           const range = editor.selection;
 
-          if (
-            range &&
-            editor.api.isCollapsed() &&
-            editor.api.isEnd(range.focus, path)
-          ) {
+          if (range && editor.api.isCollapsed() && editor.api.isEnd(range.focus, path)) {
             const nextPoint = editor.api.start(path, { next: true });
 
             // select next text node if any
             if (!nextPoint) {
               const nextPath = PathApi.next(path);
-              editor.tf.insertNodes({ text: '' } as any, { at: nextPath });
+              editor.tf.insertNodes({ text: "" } as any, { at: nextPath });
               editor.tf.select(nextPath);
             }
           }

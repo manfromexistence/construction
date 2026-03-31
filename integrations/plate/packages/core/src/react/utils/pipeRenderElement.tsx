@@ -1,21 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React from 'react';
-
-import type { PlateEditor } from '../editor/PlateEditor';
-
-import { type EditableProps, getPluginByType } from '../../lib';
-import { PlateElement } from '../components';
-import { useNodePath } from '../hooks';
-import { useReadOnly } from '../slate-react';
-import { ElementProvider } from '../stores';
-import { getRenderNodeProps } from './getRenderNodeProps';
-import { BelowRootNodes, pluginRenderElement } from './pluginRenderElement';
+import React from "react";
+import { type EditableProps, getPluginByType } from "../../lib";
+import { PlateElement } from "../components";
+import type { PlateEditor } from "../editor/PlateEditor";
+import { useNodePath } from "../hooks";
+import { useReadOnly } from "../slate-react";
+import { ElementProvider } from "../stores";
+import { getRenderNodeProps } from "./getRenderNodeProps";
+import { BelowRootNodes, pluginRenderElement } from "./pluginRenderElement";
 
 /** @see {@link RenderElement} */
 export const pipeRenderElement = (
   editor: PlateEditor,
-  renderElementProp?: EditableProps['renderElement']
-): EditableProps['renderElement'] => {
+  renderElementProp?: EditableProps["renderElement"]
+): EditableProps["renderElement"] => {
   return function render(props) {
     const readOnly = useReadOnly();
 
@@ -51,7 +49,7 @@ export const pipeRenderElement = (
         element={ctxProps.element}
         entry={[ctxProps.element, path]}
         path={path}
-        scope={ctxProps.element.type ?? 'default'}
+        scope={ctxProps.element.type ?? "default"}
       >
         <PlateElement {...ctxProps}>
           {props.children}

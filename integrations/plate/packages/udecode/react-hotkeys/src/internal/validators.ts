@@ -1,6 +1,6 @@
-import { isHotkeyPressed, isReadonlyArray } from './isHotkeyPressed';
-import { mapKey } from './parseHotkeys';
-import type { FormTags, Hotkey, Scopes, Trigger } from './types';
+import { isHotkeyPressed, isReadonlyArray } from "./isHotkeyPressed";
+import { mapKey } from "./parseHotkeys";
+import type { FormTags, Hotkey, Scopes, Trigger } from "./types";
 
 export function maybePreventDefault(
   e: KeyboardEvent,
@@ -8,19 +8,15 @@ export function maybePreventDefault(
   preventDefault?: Trigger
 ): void {
   if (
-    (typeof preventDefault === 'function' && preventDefault(e, hotkey)) ||
+    (typeof preventDefault === "function" && preventDefault(e, hotkey)) ||
     preventDefault === true
   ) {
     e.preventDefault();
   }
 }
 
-export function isHotkeyEnabled(
-  e: KeyboardEvent,
-  hotkey: Hotkey,
-  enabled?: Trigger
-): boolean {
-  if (typeof enabled === 'function') {
+export function isHotkeyEnabled(e: KeyboardEvent, hotkey: Hotkey, enabled?: Trigger): boolean {
+  if (typeof enabled === "function") {
     return enabled(e, hotkey);
   }
 
@@ -28,7 +24,7 @@ export function isHotkeyEnabled(
 }
 
 export function isKeyboardEventTriggeredByInput(ev: KeyboardEvent): boolean {
-  return isHotkeyEnabledOnTag(ev, ['input', 'textarea', 'select']);
+  return isHotkeyEnabledOnTag(ev, ["input", "textarea", "select"]);
 }
 
 export function isHotkeyEnabledOnTag(
@@ -40,19 +36,14 @@ export function isHotkeyEnabledOnTag(
   if (isReadonlyArray(enabledOnTags)) {
     return Boolean(
       targetTagName &&
-        enabledOnTags?.some(
-          (tag) => tag.toLowerCase() === targetTagName.toLowerCase()
-        )
+        enabledOnTags?.some((tag) => tag.toLowerCase() === targetTagName.toLowerCase())
     );
   }
 
   return Boolean(targetTagName && enabledOnTags && enabledOnTags);
 }
 
-export function isScopeActive(
-  activeScopes: string[],
-  scopes?: Scopes
-): boolean {
+export function isScopeActive(activeScopes: string[], scopes?: Scopes): boolean {
   if (activeScopes.length === 0 && scopes) {
     console.warn(
       'A hotkey has the "scopes" option set, however no active scopes were found. If you want to use the global scopes feature, you need to wrap your app in a <HotkeysProvider>'
@@ -64,10 +55,7 @@ export function isScopeActive(
     return true;
   }
 
-  return (
-    activeScopes.some((scope) => scopes.includes(scope)) ||
-    activeScopes.includes('*')
-  );
+  return activeScopes.some((scope) => scopes.includes(scope)) || activeScopes.includes("*");
 }
 
 export const isHotkeyMatchingKeyboardEvent = (
@@ -85,18 +73,16 @@ export const isHotkeyMatchingKeyboardEvent = (
   }
   if (
     !keys?.includes(mappedCode) &&
-    !['alt', 'control', 'ctrl', 'meta', 'os', 'shift', 'unknown'].includes(
-      mappedCode
-    )
+    !["alt", "control", "ctrl", "meta", "os", "shift", "unknown"].includes(mappedCode)
   ) {
     return false;
   }
   if (!ignoreModifiers) {
     // We check the pressed keys for compatibility with the keyup event. In keyup events the modifier flags are not set.
-    if (alt !== altKey && mappedCode !== 'alt') {
+    if (alt !== altKey && mappedCode !== "alt") {
       return false;
     }
-    if (shift !== shiftKey && mappedCode !== 'shift') {
+    if (shift !== shiftKey && mappedCode !== "shift") {
       return false;
     }
     // Mod is a special key name that is checking for meta on macOS and ctrl on other platforms
@@ -105,14 +91,10 @@ export const isHotkeyMatchingKeyboardEvent = (
         return false;
       }
     } else {
-      if (meta !== metaKey && mappedCode !== 'meta' && mappedCode !== 'os') {
+      if (meta !== metaKey && mappedCode !== "meta" && mappedCode !== "os") {
         return false;
       }
-      if (
-        ctrl !== ctrlKey &&
-        mappedCode !== 'ctrl' &&
-        mappedCode !== 'control'
-      ) {
+      if (ctrl !== ctrlKey && mappedCode !== "ctrl" && mappedCode !== "control") {
         return false;
       }
     }

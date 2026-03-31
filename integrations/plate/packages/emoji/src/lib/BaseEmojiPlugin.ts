@@ -1,20 +1,12 @@
-import type { Emoji, EmojiMartData } from '@emoji-mart/data';
+import type { Emoji, EmojiMartData } from "@emoji-mart/data";
 
-import {
-  type TriggerComboboxPluginOptions,
-  withTriggerCombobox,
-} from '@platejs/combobox';
-import {
-  type PluginConfig,
-  createSlatePlugin,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
+import { type TriggerComboboxPluginOptions, withTriggerCombobox } from "@platejs/combobox";
+import { createSlatePlugin, createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
-import { DEFAULT_EMOJI_LIBRARY } from './constants';
+import { DEFAULT_EMOJI_LIBRARY } from "./constants";
 
 export type EmojiInputConfig = PluginConfig<
-  'emoji',
+  "emoji",
   {
     /**
      * The emoji data.
@@ -38,10 +30,10 @@ export const BaseEmojiPlugin = createTSlatePlugin<EmojiInputConfig>({
   editOnly: true,
   options: {
     data: DEFAULT_EMOJI_LIBRARY,
-    trigger: ':',
+    trigger: ":",
     triggerPreviousCharPattern: /^\s?$/,
     createComboboxInput: () => ({
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       type: KEYS.emojiInput,
     }),
     createEmojiNode: ({ skins }) => ({ text: skins[0].native }),

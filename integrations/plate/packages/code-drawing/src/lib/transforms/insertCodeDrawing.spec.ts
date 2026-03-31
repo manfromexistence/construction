@@ -1,13 +1,10 @@
-import { createSlateEditor } from 'platejs';
+import { createSlateEditor } from "platejs";
 
-import {
-  BaseCodeDrawingPlugin,
-  CODE_DRAWING_KEY,
-} from '../BaseCodeDrawingPlugin';
-import { insertCodeDrawing } from './insertCodeDrawing';
+import { BaseCodeDrawingPlugin, CODE_DRAWING_KEY } from "../BaseCodeDrawingPlugin";
+import { insertCodeDrawing } from "./insertCodeDrawing";
 
-describe('insertCodeDrawing', () => {
-  it('inserts the default code drawing node shape', () => {
+describe("insertCodeDrawing", () => {
+  it("inserts the default code drawing node shape", () => {
     const editor = createSlateEditor({
       plugins: [BaseCodeDrawingPlugin],
       selection: {
@@ -16,8 +13,8 @@ describe('insertCodeDrawing', () => {
       },
       value: [
         {
-          children: [{ text: 'hi' }],
-          type: 'p',
+          children: [{ text: "hi" }],
+          type: "p",
         },
       ],
     });
@@ -26,26 +23,26 @@ describe('insertCodeDrawing', () => {
 
     expect(editor.children).toMatchObject([
       {
-        children: [{ text: 'hi' }],
-        type: 'p',
+        children: [{ text: "hi" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         data: {
-          code: '',
-          drawingMode: 'Both',
-          drawingType: 'Mermaid',
+          code: "",
+          drawingMode: "Both",
+          drawingType: "Mermaid",
         },
         type: CODE_DRAWING_KEY,
       },
     ]);
   });
 
-  it('merges custom data and respects the configured node type', () => {
+  it("merges custom data and respects the configured node type", () => {
     const editor = createSlateEditor({
       plugins: [
         BaseCodeDrawingPlugin.configure({
-          node: { type: 'custom-code-drawing' },
+          node: { type: "custom-code-drawing" },
         }),
       ],
       selection: {
@@ -54,32 +51,32 @@ describe('insertCodeDrawing', () => {
       },
       value: [
         {
-          children: [{ text: 'x' }],
-          type: 'p',
+          children: [{ text: "x" }],
+          type: "p",
         },
       ],
     });
 
     insertCodeDrawing(editor, {
       data: {
-        code: 'graph TD; A-->B',
-        drawingType: 'Graphviz',
+        code: "graph TD; A-->B",
+        drawingType: "Graphviz",
       },
     });
 
     expect(editor.children).toMatchObject([
       {
-        children: [{ text: 'x' }],
-        type: 'p',
+        children: [{ text: "x" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         data: {
-          code: 'graph TD; A-->B',
-          drawingMode: 'Both',
-          drawingType: 'Graphviz',
+          code: "graph TD; A-->B",
+          drawingMode: "Both",
+          drawingType: "Graphviz",
         },
-        type: 'custom-code-drawing',
+        type: "custom-code-drawing",
       },
     ]);
   });

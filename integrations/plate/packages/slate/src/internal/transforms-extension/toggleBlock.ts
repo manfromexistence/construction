@@ -1,14 +1,9 @@
-import type { Editor, TElement, ToggleBlockOptions } from '../../interfaces';
+import type { Editor, TElement, ToggleBlockOptions } from "../../interfaces";
 
 export const toggleBlock = (
   editor: Editor,
   type: string,
-  {
-    defaultType: defaultTypeProp,
-    someOptions,
-    wrap,
-    ...options
-  }: ToggleBlockOptions = {}
+  { defaultType: defaultTypeProp, someOptions, wrap, ...options }: ToggleBlockOptions = {}
 ) => {
   const at = options.at ?? editor.selection;
 
@@ -30,7 +25,7 @@ export const toggleBlock = (
     return;
   }
 
-  const defaultType = defaultTypeProp ?? editor.api.create.block().type ?? 'p';
+  const defaultType = defaultTypeProp ?? editor.api.create.block().type ?? "p";
 
   if (isActive && type === defaultType) return;
 

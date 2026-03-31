@@ -1,6 +1,6 @@
-import type { Plugin } from 'unified';
+import type { Plugin } from "unified";
 
-export const REMARK_MDX_TAG = 'remarkMdx';
+export const REMARK_MDX_TAG = "remarkMdx";
 
 export const tagRemarkPlugin = (pluginFn: any, tag: string) => {
   const wrapped = function (this: any, ...args: any[]) {

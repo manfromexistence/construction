@@ -2,9 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "item-select",
   "type": "registry:example",
-  "registryDependencies": [
-    "item"
-  ],
+  "registryDependencies": ["item"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/item-select.tsx",

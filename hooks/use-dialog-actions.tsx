@@ -1,3 +1,5 @@
+import { usePostHog } from "posthog-js/react";
+import { createContext, ReactNode, useContext, useState } from "react";
 import { CodePanelDialog } from "@/components/editor/code-panel-dialog";
 import CssImportDialog from "@/components/editor/css-import-dialog";
 import { ShareDialog } from "@/components/editor/share-dialog";
@@ -11,8 +13,6 @@ import { useAuthStore } from "@/store/auth-store";
 import { useEditorStore } from "@/store/editor-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 import { parseCssInput } from "@/utils/parse-css-input";
-import { usePostHog } from "posthog-js/react";
-import { createContext, ReactNode, useContext, useState } from "react";
 
 type PendingAction = "share" | "v0" | null;
 
@@ -74,8 +74,13 @@ function useDialogActionsStore(): DialogActionsContextType {
   const [shareUrl, setShareUrl] = useState("");
   const [dialogKey, _setDialogKey] = useState(0);
 
-  const { themeState, setThemeState, applyThemePreset, hasThemeChangedFromCheckpoint, hasUnsavedChanges } =
-    useEditorStore();
+  const {
+    themeState,
+    setThemeState,
+    applyThemePreset,
+    hasThemeChangedFromCheckpoint,
+    hasUnsavedChanges,
+  } = useEditorStore();
   const { getPreset } = useThemePresetStore();
   const { data: session } = authClient.useSession();
   const { openAuthDialog } = useAuthStore();
@@ -85,7 +90,8 @@ function useDialogActionsStore(): DialogActionsContextType {
   const posthog = usePostHog();
 
   const currentPreset = themeState?.preset ? getPreset(themeState.preset) : undefined;
-  const isOnSavedPreset = !!currentPreset && currentPreset.source === "SAVED" && hasUnsavedChanges();
+  const isOnSavedPreset =
+    !!currentPreset && currentPreset.source === "SAVED" && hasUnsavedChanges();
   const existingThemeName = isOnSavedPreset ? currentPreset.label : undefined;
 
   usePostLoginAction("SAVE_THEME", () => {

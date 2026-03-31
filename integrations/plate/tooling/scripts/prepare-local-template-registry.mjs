@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
-import path from 'node:path';
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
 
 const [sourceDir, targetDir] = process.argv.slice(2);
 
 if (!sourceDir || !targetDir) {
   console.error(
-    'Usage: node tooling/scripts/prepare-local-template-registry.mjs <sourceDir> <targetDir>'
+    "Usage: node tooling/scripts/prepare-local-template-registry.mjs <sourceDir> <targetDir>"
   );
   process.exit(1);
 }
@@ -18,11 +18,11 @@ const targetPath = path.resolve(targetDir);
 await mkdir(targetPath, { recursive: true });
 
 for (const entry of await readdir(sourcePath, { withFileTypes: true })) {
-  if (!entry.isFile() || !entry.name.endsWith('.json')) continue;
+  if (!entry.isFile() || !entry.name.endsWith(".json")) continue;
 
   const from = path.join(sourcePath, entry.name);
   const to = path.join(targetPath, entry.name);
-  const content = await readFile(from, 'utf8');
+  const content = await readFile(from, "utf8");
   const parsed = JSON.parse(content);
 
   rewriteRegistryDependencies(parsed);
@@ -38,7 +38,7 @@ function rewriteRegistryDependencies(value) {
     return;
   }
 
-  if (!value || typeof value !== 'object') {
+  if (!value || typeof value !== "object") {
     return;
   }
 
@@ -54,14 +54,14 @@ function rewriteRegistryDependencies(value) {
 }
 
 function toLocalDependency(dependency) {
-  if (typeof dependency !== 'string') return dependency;
+  if (typeof dependency !== "string") return dependency;
 
   try {
     const url = new URL(dependency);
 
     if (
-      (url.hostname === 'localhost' || url.hostname === '127.0.0.1') &&
-      url.pathname.endsWith('.json')
+      (url.hostname === "localhost" || url.hostname === "127.0.0.1") &&
+      url.pathname.endsWith(".json")
     ) {
       return path.basename(url.pathname);
     }

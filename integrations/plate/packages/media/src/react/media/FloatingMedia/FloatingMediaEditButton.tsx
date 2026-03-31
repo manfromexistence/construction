@@ -1,10 +1,8 @@
-import React from 'react';
+import type { TMediaElement } from "platejs";
+import { createPrimitiveComponent, useElement } from "platejs/react";
+import React from "react";
 
-import type { TMediaElement } from 'platejs';
-
-import { createPrimitiveComponent, useElement } from 'platejs/react';
-
-import { FloatingMediaStore } from './FloatingMediaStore';
+import { FloatingMediaStore } from "./FloatingMediaStore";
 
 export const useFloatingMediaEditButton = () => {
   const element = useElement<TMediaElement>();
@@ -12,13 +10,13 @@ export const useFloatingMediaEditButton = () => {
   return {
     props: {
       onClick: React.useCallback(() => {
-        FloatingMediaStore.set('url', element.url);
-        FloatingMediaStore.set('isEditing', true);
+        FloatingMediaStore.set("url", element.url);
+        FloatingMediaStore.set("isEditing", true);
       }, [element.url]),
     },
   };
 };
 
-export const FloatingMediaEditButton = createPrimitiveComponent('button')({
+export const FloatingMediaEditButton = createPrimitiveComponent("button")({
   propsHook: useFloatingMediaEditButton,
 });

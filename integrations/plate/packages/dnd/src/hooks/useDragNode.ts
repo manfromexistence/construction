@@ -1,18 +1,15 @@
-import React from 'react';
+import type { TElement } from "platejs";
+import type { PlateEditor } from "platejs/react";
+import React from "react";
 import {
   type ConnectDragPreview,
   type ConnectDragSource,
   type DragSourceHookSpec,
   useDrag,
-} from 'react-dnd';
-
-import type { TElement } from 'platejs';
-import type { PlateEditor } from 'platejs/react';
-
-import type { DragItemNode } from '../types';
-
-import { DndPlugin } from '../DndPlugin';
-import { canUseDomDnd, noopConnector } from '../utils/dndEnvironment';
+} from "react-dnd";
+import { DndPlugin } from "../DndPlugin";
+import type { DragItemNode } from "../types";
+import { canUseDomDnd, noopConnector } from "../utils/dndEnvironment";
 
 export interface UseDragNodeOptions
   extends DragSourceHookSpec<DragItemNode, unknown, { isDragging: boolean }> {
@@ -39,28 +36,16 @@ export interface UseDragNodeOptions
 export const useDragNode = (
   editor: PlateEditor,
   { element: staleElement, item, ...options }: UseDragNodeOptions
-): [
-  { isAboutToDrag: boolean; isDragging: boolean },
-  ConnectDragSource,
-  ConnectDragPreview,
-] => {
+): [{ isAboutToDrag: boolean; isDragging: boolean }, ConnectDragSource, ConnectDragPreview] => {
   const elementId = staleElement.id as string;
   const [isAboutToDrag, setIsAboutToDrag] = React.useState(false);
 
   if (!canUseDomDnd()) {
-    return [
-      { isAboutToDrag: false, isDragging: false },
-      noopConnector,
-      noopConnector,
-    ];
+    return [{ isAboutToDrag: false, isDragging: false }, noopConnector, noopConnector];
   }
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [collected, dragRef, preview] = useDrag<
-    DragItemNode,
-    unknown,
-    { isDragging: boolean }
-  >(
+  const [collected, dragRef, preview] = useDrag<DragItemNode, unknown, { isDragging: boolean }>(
     () => ({
       canDrag: () => {
         setIsAboutToDrag(true);
@@ -70,20 +55,20 @@ export const useDragNode = (
         isDragging: monitor.isDragging(),
       }),
       end: () => {
-        editor.setOption(DndPlugin, 'isDragging', false);
-        document.body.classList.remove('dragging');
+        editor.setOption(DndPlugin, "isDragging", false);
+        document.body.classList.remove("dragging");
         setIsAboutToDrag(false);
       },
       item(monitor) {
-        editor.setOption(DndPlugin, 'isDragging', true);
-        editor.setOption(DndPlugin, '_isOver', true);
-        document.body.classList.add('dragging');
+        editor.setOption(DndPlugin, "isDragging", true);
+        editor.setOption(DndPlugin, "_isOver", true);
+        document.body.classList.add("dragging");
 
-        const _item = typeof item === 'function' ? item(monitor) : item;
+        const _item = typeof item === "function" ? item(monitor) : item;
         const [element] = editor.api.node<TElement>({ id: elementId, at: [] })!;
 
         // Check if multiple nodes are selected
-        const currentDraggingId = editor.getOption(DndPlugin, 'draggingId');
+        const currentDraggingId = editor.getOption(DndPlugin, "draggingId");
 
         let id: string[] | string;
 
@@ -97,7 +82,7 @@ export const useDragNode = (
         } else {
           // Single element drag
           id = elementId;
-          editor.setOption(DndPlugin, 'draggingId', elementId);
+          editor.setOption(DndPlugin, "draggingId", elementId);
         }
 
         return {

@@ -1,10 +1,16 @@
-import React, { useState } from "react";
 import { ChevronRight } from "lucide-react";
+import React, { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ControlSectionProps } from "@/types";
 import { SectionContext } from "./section-context";
 
-const ControlSection = ({ title, children, expanded = false, className, headerAction }: ControlSectionProps) => {
+const ControlSection = ({
+  title,
+  children,
+  expanded = false,
+  className,
+  headerAction,
+}: ControlSectionProps) => {
   const [isExpanded, setIsExpanded] = useState(expanded);
 
   return (

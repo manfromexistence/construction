@@ -1,15 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { ArrowUpRight, Cable, Check, Figma, Paintbrush, X } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import FigmaIcon from "@/assets/figma.svg";
+import Logo from "@/assets/logo.svg";
+import Shadcraft from "@/assets/shadcraft.svg";
 import { FigmaHeader } from "@/components/figma-header";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Logo from "@/assets/logo.svg";
-import Shadcraft from "@/assets/shadcraft.svg";
-import FigmaIcon from "@/assets/figma.svg";
-import { Check, X, ArrowUpRight, Figma, Cable, Paintbrush } from "lucide-react";
-import Link from "next/link";
 import { FIGMA_CONSTANTS, redirectToShadcraft } from "@/lib/figma-constants";
 
 export default function FigmaPage() {

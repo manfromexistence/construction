@@ -1,22 +1,21 @@
 /** @jsx jsxt */
 
-import type { ElementEntry, SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { ElementEntry, SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { CodeBlockPlugin } from '../../react/CodeBlockPlugin';
-import { outdentCodeLine } from './outdentCodeLine';
+import { CodeBlockPlugin } from "../../react/CodeBlockPlugin";
+import { outdentCodeLine } from "./outdentCodeLine";
 
 jsxt;
 
-describe('outdent code line', () => {
-  describe('when line is indented', () => {
-    it('outdent line', () => {
+describe("outdent code line", () => {
+  describe("when line is indented", () => {
+    it("outdent line", () => {
       const input = (
         <editor>
           <hcodeblock>
-            <hcodeline>{'    '}test</hcodeline>
+            <hcodeline>{"    "}test</hcodeline>
           </hcodeblock>
         </editor>
       ) as any as SlateEditor;
@@ -24,7 +23,7 @@ describe('outdent code line', () => {
       const output = (
         <editor>
           <hcodeblock>
-            <hcodeline>{'  '}test</hcodeline>
+            <hcodeline>{"  "}test</hcodeline>
           </hcodeblock>
         </editor>
       ) as any as SlateEditor;
@@ -44,8 +43,8 @@ describe('outdent code line', () => {
     });
   });
 
-  describe('when line is not indented', () => {
-    it('keeps an unindented line unchanged', () => {
+  describe("when line is not indented", () => {
+    it("keeps an unindented line unchanged", () => {
       const input = (
         <editor>
           <hcodeblock>

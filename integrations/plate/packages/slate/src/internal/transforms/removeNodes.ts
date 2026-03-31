@@ -1,9 +1,9 @@
-import { removeNodes as removeNodesBase } from 'slate';
+import { removeNodes as removeNodesBase } from "slate";
 
-import type { Editor, RemoveNodesOptions, ValueOf } from '../../interfaces';
+import type { Editor, RemoveNodesOptions, ValueOf } from "../../interfaces";
 
-import { NodeApi } from '../../interfaces';
-import { getQueryOptions } from '../../utils';
+import { NodeApi } from "../../interfaces";
+import { getQueryOptions } from "../../utils";
 
 export const removeNodes = <E extends Editor>(
   editor: E,

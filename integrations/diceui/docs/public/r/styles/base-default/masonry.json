@@ -1,12 +1,7 @@
 {
   "name": "masonry",
-  "dependencies": [
-    "@base-ui/react"
-  ],
-  "registryDependencies": [
-    "compose-refs",
-    "use-isomorphic-layout-effect"
-  ],
+  "dependencies": ["@base-ui/react"],
+  "registryDependencies": ["compose-refs", "use-isomorphic-layout-effect"],
   "files": [
     {
       "path": "ui/masonry.tsx",

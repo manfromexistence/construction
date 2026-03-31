@@ -2,13 +2,8 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "use-chat",
   "type": "registry:component",
-  "dependencies": [
-    "@ai-sdk/react@3",
-    "@faker-js/faker"
-  ],
-  "registryDependencies": [
-    "https://platejs.org/r/ai-kit.json"
-  ],
+  "dependencies": ["@ai-sdk/react@3", "@faker-js/faker"],
+  "registryDependencies": ["https://platejs.org/r/ai-kit.json"],
   "files": [
     {
       "path": "src/registry/components/editor/use-chat.ts",

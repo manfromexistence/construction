@@ -1,8 +1,6 @@
 {
   "name": "circular-progress",
-  "dependencies": [
-    "radix-ui"
-  ],
+  "dependencies": ["radix-ui"],
   "files": [
     {
       "path": "ui/circular-progress.tsx",

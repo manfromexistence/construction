@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import * as React from 'react';
+import { Plate, usePlateEditor } from "platejs/react";
+import * as React from "react";
 
-import { Plate, usePlateEditor } from 'platejs/react';
-
-import { createMultiEditorsValue } from '@/registry/examples/values/multi-editors-value';
-import { Editor, EditorContainer } from '@/registry/ui/editor';
+import { createMultiEditorsValue } from "@/registry/examples/values/multi-editors-value";
+import { Editor, EditorContainer } from "@/registry/ui/editor";
 
 const values = createMultiEditorsValue();
 

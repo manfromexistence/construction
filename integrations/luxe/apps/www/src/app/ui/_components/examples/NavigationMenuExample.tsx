@@ -46,13 +46,11 @@ const DOCS = [
   },
   {
     title: "Multi Step Modal",
-    description:
-      "A modal dialog that guides users through a sequence of steps.",
+    description: "A modal dialog that guides users through a sequence of steps.",
   },
   {
     title: "Switch",
-    description:
-      "A toggle control that allows users to turn an option on or off.",
+    description: "A toggle control that allows users to turn an option on or off.",
   },
 ];
 
@@ -67,9 +65,7 @@ export function NavigationMenuExample() {
               {OVERVIEW.map((component) => (
                 <NavigationMenuContentItem key={component.title} href="#">
                   <h3 className="text-primary">{component.title}</h3>
-                  <span className="text-primary-muted">
-                    {component.description}
-                  </span>
+                  <span className="text-primary-muted">{component.description}</span>
                 </NavigationMenuContentItem>
               ))}
             </ul>
@@ -82,9 +78,7 @@ export function NavigationMenuExample() {
               {DOCS.map((component) => (
                 <NavigationMenuContentItem key={component.title} href="#">
                   <h3 className="text-primary">{component.title}</h3>
-                  <span className="text-primary-muted">
-                    {component.description}
-                  </span>
+                  <span className="text-primary-muted">{component.description}</span>
                 </NavigationMenuContentItem>
               ))}
             </ul>

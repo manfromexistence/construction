@@ -1,22 +1,21 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { cn } from "@/lib/utils"
-import { copyToClipboardWithMeta } from "@/components/copy-button"
-import { Button } from "@/styles/base-nova/ui/button"
-import { usePresetCode } from "@/app/(app)/create/hooks/use-design-system"
+import * as React from "react";
+import { usePresetCode } from "@/app/(app)/create/hooks/use-design-system";
+import { copyToClipboardWithMeta } from "@/components/copy-button";
+import { cn } from "@/lib/utils";
+import { Button } from "@/styles/base-nova/ui/button";
 
 export function CopyPreset({ className }: React.ComponentProps<typeof Button>) {
-  const presetCode = usePresetCode()
-  const [hasCopied, setHasCopied] = React.useState(false)
+  const presetCode = usePresetCode();
+  const [hasCopied, setHasCopied] = React.useState(false);
 
   React.useEffect(() => {
     if (hasCopied) {
-      const timer = setTimeout(() => setHasCopied(false), 2000)
-      return () => clearTimeout(timer)
+      const timer = setTimeout(() => setHasCopied(false), 2000);
+      return () => clearTimeout(timer);
     }
-  }, [hasCopied])
+  }, [hasCopied]);
 
   const handleCopy = React.useCallback(() => {
     copyToClipboardWithMeta(`--preset ${presetCode}`, {
@@ -24,9 +23,9 @@ export function CopyPreset({ className }: React.ComponentProps<typeof Button>) {
       properties: {
         preset: presetCode,
       },
-    })
-    setHasCopied(true)
-  }, [presetCode])
+    });
+    setHasCopied(true);
+  }, [presetCode]);
 
   return (
     <Button
@@ -39,5 +38,5 @@ export function CopyPreset({ className }: React.ComponentProps<typeof Button>) {
     >
       <span>{hasCopied ? "Copied" : `--preset ${presetCode}`}</span>
     </Button>
-  )
+  );
 }

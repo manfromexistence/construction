@@ -1,11 +1,9 @@
-import * as moveListItemsModule from './moveListItems';
-import { unindentListItems } from './unindentListItems';
+import * as moveListItemsModule from "./moveListItems";
+import { unindentListItems } from "./unindentListItems";
 
-describe('unindentListItems', () => {
-  it('forwards the options and forces decrease mode', () => {
-    const spy = spyOn(moveListItemsModule, 'moveListItems').mockReturnValue(
-      undefined as any
-    );
+describe("unindentListItems", () => {
+  it("forwards the options and forces decrease mode", () => {
+    const spy = spyOn(moveListItemsModule, "moveListItems").mockReturnValue(undefined as any);
     const editor = {} as any;
 
     unindentListItems(editor, {

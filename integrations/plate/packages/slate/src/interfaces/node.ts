@@ -1,11 +1,11 @@
-import { Node as SlateNode } from 'slate';
-import { NodeExtension } from '../internal/editor-extension/node-extension';
-import type { Editor, Value } from './editor/editor-type';
-import { ElementApi, type ElementOf, type TElement } from './element';
-import type { NodeEntry } from './node-entry';
-import type { Path } from './path';
-import type { TRange } from './range';
-import { TextApi, type TextOf, type TText } from './text';
+import { Node as SlateNode } from "slate";
+import { NodeExtension } from "../internal/editor-extension/node-extension";
+import type { Editor, Value } from "./editor/editor-type";
+import { ElementApi, type ElementOf, type TElement } from "./element";
+import type { NodeEntry } from "./node-entry";
+import type { Path } from "./path";
+import type { TRange } from "./range";
+import { TextApi, type TextOf, type TText } from "./text";
 
 /**
  * The `Ancestor` union type represents nodes that are ancestors in the tree. It
@@ -24,10 +24,10 @@ export type Descendant = TElement | TText;
 
 /** Convenience type for returning the props of a node. */
 export type NodeProps<N extends TNode = TNode> = N extends Editor
-  ? Omit<N, 'children'>
+  ? Omit<N, "children">
   : N extends TElement
-    ? Omit<N, 'children'>
-    : Omit<N, 'text'>;
+    ? Omit<N, "children">
+    : Omit<N, "text">;
 
 /**
  * The `TNode` union type represents all of the different types of nodes that
@@ -53,11 +53,7 @@ export const NodeApi: {
     options?: NodeAncestorsOptions
   ) => Generator<NodeEntry<N>, void, undefined>;
   /** Get the child of a node at a specific index. */
-  child: <
-    N extends ChildOf<R, I>,
-    R extends TNode = TNode,
-    I extends number = number,
-  >(
+  child: <N extends ChildOf<R, I>, R extends TNode = TNode, I extends number = number>(
     root: R,
     index: I
   ) => N | undefined;
@@ -119,10 +115,7 @@ export const NodeApi: {
    * Get the descendant node referred to by a specific path. If the path is an
    * empty array, it refers to the root node itself.
    */
-  get: <N extends NodeOf<R>, R extends TNode = TNode>(
-    root: R,
-    path: Path
-  ) => N | undefined;
+  get: <N extends NodeOf<R>, R extends TNode = TNode>(root: R, path: Path) => N | undefined;
   /** Similar to get, but returns undefined if the node does not exist. */
   getIf: (root: TNode, path: Path) => TNode | undefined;
   /** Check if a descendant node exists at a specific path. */
@@ -152,10 +145,7 @@ export const NodeApi: {
     path: Path
   ) => NodeEntry<N> | undefined;
   /** Get the node at a specific path, ensuring it's a leaf text node. */
-  leaf: <N extends TextOf<R>, R extends TNode = TNode>(
-    root: R,
-    path: Path
-  ) => N | undefined;
+  leaf: <N extends TextOf<R>, R extends TNode = TNode>(root: R, path: Path) => N | undefined;
   /**
    * Return a generator of the in a branch of the tree, from a specific path.
    *
@@ -179,10 +169,7 @@ export const NodeApi: {
     options?: NodeNodesOptions<R>
   ) => Generator<NodeEntry<N>, void, undefined>;
   /** Get the parent of a node at a specific path. */
-  parent: <N extends AncestorOf<R>, R extends TNode = TNode>(
-    root: R,
-    path: Path
-  ) => N | undefined;
+  parent: <N extends AncestorOf<R>, R extends TNode = TNode>(root: R, path: Path) => N | undefined;
   /**
    * Get the concatenated text string of a node's content.
    *
@@ -236,9 +223,7 @@ export const NodeApi: {
   hasSingleChild: (node) => {
     if (TextApi.isText(node)) return true;
 
-    return (
-      node.children.length === 1 && NodeApi.hasSingleChild(node.children[0])
-    );
+    return node.children.length === 1 && NodeApi.hasSingleChild(node.children[0]);
   },
   isDescendant: (node) => ElementApi.isElement(node) || TextApi.isText(node),
   last: (...args) => {
@@ -267,19 +252,16 @@ export type AncestorOf<N extends TNode> = Editor extends N
   : TElement extends N
     ? TElement
     : N extends Editor
-      ? ElementOf<N['children'][number]> | N | N['children'][number]
+      ? ElementOf<N["children"][number]> | N | N["children"][number]
       : N extends TElement
         ? ElementOf<N> | N
         : never;
 
 /** A utility type to get the child node types from a root node type. */
-export type ChildOf<
-  N extends TNode,
-  I extends number = number,
-> = N extends Editor
-  ? N['children'][I]
+export type ChildOf<N extends TNode, I extends number = number> = N extends Editor
+  ? N["children"][I]
   : N extends TElement
-    ? N['children'][I]
+    ? N["children"][I]
     : never;
 
 /** A utility type to get all the descendant node types from a root node type. */
@@ -288,7 +270,7 @@ export type DescendantIn<V extends Value> = DescendantOf<V[number]>;
 export type DescendantOf<N extends TNode> = N extends Editor
   ? ElementOf<N> | TextOf<N>
   : N extends TElement
-    ? ElementOf<N['children'][number]> | TextOf<N>
+    ? ElementOf<N["children"][number]> | TextOf<N>
     : never;
 
 /**

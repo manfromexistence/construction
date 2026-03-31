@@ -1,12 +1,12 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-import { PAGES_NEW } from "@/lib/docs"
-import { showMcpDocs } from "@/lib/flags"
-import { getCurrentBase, getPagesFromFolder } from "@/lib/page-tree"
-import type { source } from "@/lib/source"
+import { PAGES_NEW } from "@/lib/docs";
+import { showMcpDocs } from "@/lib/flags";
+import { getCurrentBase, getPagesFromFolder } from "@/lib/page-tree";
+import type { source } from "@/lib/source";
 import {
   Sidebar,
   SidebarContent,
@@ -16,7 +16,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/registry/new-york-v4/ui/sidebar"
+} from "@/registry/new-york-v4/ui/sidebar";
 
 const TOP_LEVEL_SECTIONS = [
   { name: "Introduction", href: "/docs" },
@@ -60,16 +60,16 @@ const TOP_LEVEL_SECTIONS = [
     name: "Changelog",
     href: "/docs/changelog",
   },
-]
-const EXCLUDED_SECTIONS = ["installation", "dark-mode", "changelog", "rtl"]
-const EXCLUDED_PAGES = ["/docs", "/docs/changelog", "/docs/rtl", "/docs/new"]
+];
+const EXCLUDED_SECTIONS = ["installation", "dark-mode", "changelog", "rtl"];
+const EXCLUDED_PAGES = ["/docs", "/docs/changelog", "/docs/rtl", "/docs/new"];
 
 export function DocsSidebar({
   tree,
   ...props
 }: React.ComponentProps<typeof Sidebar> & { tree: typeof source.pageTree }) {
-  const pathname = usePathname()
-  const currentBase = getCurrentBase(pathname)
+  const pathname = usePathname();
+  const currentBase = getCurrentBase(pathname);
 
   return (
     <Sidebar
@@ -89,39 +89,32 @@ export function DocsSidebar({
             <SidebarMenu>
               {TOP_LEVEL_SECTIONS.map(({ name, href }) => {
                 if (!showMcpDocs && href.includes("/mcp")) {
-                  return null
+                  return null;
                 }
                 return (
                   <SidebarMenuItem key={name}>
                     <SidebarMenuButton
                       asChild
-                      isActive={
-                        href === "/docs"
-                          ? pathname === href
-                          : pathname.startsWith(href)
-                      }
+                      isActive={href === "/docs" ? pathname === href : pathname.startsWith(href)}
                       className="relative h-[30px] w-fit overflow-visible border border-transparent text-[0.8rem] font-medium after:absolute after:inset-x-0 after:-inset-y-1 after:z-0 after:rounded-md data-[active=true]:border-accent data-[active=true]:bg-accent 3xl:fixed:w-full 3xl:fixed:max-w-48"
                     >
                       <Link href={href}>
                         <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
                         {name}
                         {PAGES_NEW.includes(href) && (
-                          <span
-                            className="flex size-2 rounded-full bg-blue-500"
-                            title="New"
-                          />
+                          <span className="flex size-2 rounded-full bg-blue-500" title="New" />
                         )}
                       </Link>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
-                )
+                );
               })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
         {tree.children.map((item) => {
           if (EXCLUDED_SECTIONS.includes(item.$id ?? "")) {
-            return null
+            return null;
           }
 
           return (
@@ -134,11 +127,11 @@ export function DocsSidebar({
                   <SidebarMenu className="gap-0.5">
                     {getPagesFromFolder(item, currentBase).map((page) => {
                       if (!showMcpDocs && page.url.includes("/mcp")) {
-                        return null
+                        return null;
                       }
 
                       if (EXCLUDED_PAGES.includes(page.url)) {
-                        return null
+                        return null;
                       }
 
                       return (
@@ -160,16 +153,16 @@ export function DocsSidebar({
                             </Link>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
-                      )
+                      );
                     })}
                   </SidebarMenu>
                 )}
               </SidebarGroupContent>
             </SidebarGroup>
-          )
+          );
         })}
         <div className="sticky -bottom-1 z-10 h-16 shrink-0 bg-linear-to-t from-background via-background/80 to-background/50 blur-xs" />
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }

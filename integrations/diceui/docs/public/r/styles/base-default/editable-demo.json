@@ -1,8 +1,6 @@
 {
   "name": "editable-demo",
-  "registryDependencies": [
-    "editable"
-  ],
+  "registryDependencies": ["editable"],
   "files": [
     {
       "path": "examples/editable-demo.tsx",

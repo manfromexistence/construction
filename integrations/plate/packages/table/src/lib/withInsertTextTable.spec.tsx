@@ -1,22 +1,19 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { getTestTablePlugins } from './__tests__/getTestTablePlugins';
+import { getTestTablePlugins } from "./__tests__/getTestTablePlugins";
 
 jsxt;
 
-describe('withInsertTextTable', () => {
+describe("withInsertTextTable", () => {
   // https://github.com/udecode/editor-protocol/issues/65
-  describe('cell child is a text', () => {
+  describe("cell child is a text", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('wraps the children into a p (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("wraps the children into a p (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <editor>
           <htable>
@@ -77,7 +74,7 @@ describe('withInsertTextTable', () => {
       });
 
       editor.tf.deleteFragment();
-      editor.tf.insertText('e');
+      editor.tf.insertText("e");
       expect(editor.children).toMatchObject(output.children);
     });
   });

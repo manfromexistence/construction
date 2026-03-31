@@ -1,6 +1,6 @@
-import type { ClientRectObject } from '@floating-ui/core';
+import type { ClientRectObject } from "@floating-ui/core";
 
-import { getDefaultBoundingClientRect } from '../createVirtualElement';
+import { getDefaultBoundingClientRect } from "../createVirtualElement";
 
 /** Get bounding client rect of the editor selection */
 export const getDOMSelectionBoundingClientRect = (): ClientRectObject => {

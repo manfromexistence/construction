@@ -1,13 +1,9 @@
-"use client"
+"use client";
 
-import { REGEXP_ONLY_DIGITS } from "input-otp"
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 
-import { Field, FieldLabel } from "@/styles/radix-nova/ui/field"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/styles/radix-nova/ui/input-otp"
+import { Field, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/styles/radix-nova/ui/input-otp";
 
 export function InputOTPPattern() {
   return (
@@ -24,5 +20,5 @@ export function InputOTPPattern() {
         </InputOTPGroup>
       </InputOTP>
     </Field>
-  )
+  );
 }

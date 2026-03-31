@@ -1,14 +1,11 @@
-"use client"
+"use client";
 
-import { buttonVariants } from "@/styles/base-nova/ui/button"
+import { buttonVariants } from "@/styles/base-nova/ui/button";
 
 export default function ButtonRender() {
   return (
-    <a
-      href="#"
-      className={buttonVariants({ variant: "secondary", size: "sm" })}
-    >
+    <a href="#" className={buttonVariants({ variant: "secondary", size: "sm" })}>
       Login
     </a>
-  )
+  );
 }

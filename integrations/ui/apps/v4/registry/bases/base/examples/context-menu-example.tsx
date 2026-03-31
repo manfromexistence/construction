@@ -1,12 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import {
-  Example,
-  ExampleWrapper,
-} from "@/registry/bases/base/components/example"
-import { Button } from "@/registry/bases/base/ui/button"
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { Example, ExampleWrapper } from "@/registry/bases/base/components/example";
+import { Button } from "@/registry/bases/base/ui/button";
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -22,7 +19,7 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from "@/registry/bases/base/ui/context-menu"
+} from "@/registry/bases/base/ui/context-menu";
 import {
   Dialog,
   DialogContent,
@@ -30,8 +27,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/registry/bases/base/ui/dialog"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/base/ui/dialog";
 
 export default function ContextMenuExample() {
   return (
@@ -48,7 +44,7 @@ export default function ContextMenuExample() {
       <ContextMenuInDialog />
       <ContextMenuWithInset />
     </ExampleWrapper>
-  )
+  );
 }
 
 function ContextMenuBasic() {
@@ -67,7 +63,7 @@ function ContextMenuBasic() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithIcons() {
@@ -126,7 +122,7 @@ function ContextMenuWithIcons() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithShortcuts() {
@@ -165,7 +161,7 @@ function ContextMenuWithShortcuts() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithSubmenu() {
@@ -207,7 +203,7 @@ function ContextMenuWithSubmenu() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithGroups() {
@@ -270,7 +266,7 @@ function ContextMenuWithGroups() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithCheckboxes() {
@@ -282,23 +278,19 @@ function ContextMenuWithCheckboxes() {
         </ContextMenuTrigger>
         <ContextMenuContent>
           <ContextMenuGroup>
-            <ContextMenuCheckboxItem defaultChecked>
-              Show Bookmarks Bar
-            </ContextMenuCheckboxItem>
+            <ContextMenuCheckboxItem defaultChecked>Show Bookmarks Bar</ContextMenuCheckboxItem>
             <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
-            <ContextMenuCheckboxItem defaultChecked>
-              Show Developer Tools
-            </ContextMenuCheckboxItem>
+            <ContextMenuCheckboxItem defaultChecked>Show Developer Tools</ContextMenuCheckboxItem>
           </ContextMenuGroup>
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithRadio() {
-  const [user, setUser] = React.useState("pedro")
-  const [theme, setTheme] = React.useState("light")
+  const [user, setUser] = React.useState("pedro");
+  const [theme, setTheme] = React.useState("light");
 
   return (
     <Example title="With Radio Group">
@@ -310,12 +302,8 @@ function ContextMenuWithRadio() {
           <ContextMenuGroup>
             <ContextMenuLabel>People</ContextMenuLabel>
             <ContextMenuRadioGroup value={user} onValueChange={setUser}>
-              <ContextMenuRadioItem value="pedro">
-                Pedro Duarte
-              </ContextMenuRadioItem>
-              <ContextMenuRadioItem value="colm">
-                Colm Tuite
-              </ContextMenuRadioItem>
+              <ContextMenuRadioItem value="pedro">Pedro Duarte</ContextMenuRadioItem>
+              <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
             </ContextMenuRadioGroup>
           </ContextMenuGroup>
           <ContextMenuSeparator />
@@ -330,7 +318,7 @@ function ContextMenuWithRadio() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithDestructive() {
@@ -389,23 +377,14 @@ function ContextMenuWithDestructive() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithSides() {
   return (
     <Example title="With Sides" containerClassName="col-span-2">
       <div className="flex flex-wrap justify-center gap-2">
-        {(
-          [
-            "inline-start",
-            "left",
-            "top",
-            "bottom",
-            "right",
-            "inline-end",
-          ] as const
-        ).map((side) => (
+        {(["inline-start", "left", "top", "bottom", "right", "inline-end"] as const).map((side) => (
           <ContextMenu key={side}>
             <ContextMenuTrigger className="flex aspect-[2/0.5] items-center justify-center rounded-lg border p-4 text-sm capitalize">
               {side.replace("-", " ")}
@@ -421,16 +400,14 @@ function ContextMenuWithSides() {
         ))}
       </div>
     </Example>
-  )
+  );
 }
 
 function ContextMenuInDialog() {
   return (
     <Example title="In Dialog">
       <Dialog>
-        <DialogTrigger render={<Button variant="outline" />}>
-          Open Dialog
-        </DialogTrigger>
+        <DialogTrigger render={<Button variant="outline" />}>Open Dialog</DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Context Menu Example</DialogTitle>
@@ -508,13 +485,13 @@ function ContextMenuInDialog() {
         </DialogContent>
       </Dialog>
     </Example>
-  )
+  );
 }
 
 function ContextMenuWithInset() {
-  const [showBookmarks, setShowBookmarks] = React.useState(true)
-  const [showUrls, setShowUrls] = React.useState(false)
-  const [theme, setTheme] = React.useState("system")
+  const [showBookmarks, setShowBookmarks] = React.useState(true);
+  const [showUrls, setShowUrls] = React.useState(false);
+  const [theme, setTheme] = React.useState("system");
 
   return (
     <Example title="With Inset">
@@ -557,11 +534,7 @@ function ContextMenuWithInset() {
             >
               Bookmarks
             </ContextMenuCheckboxItem>
-            <ContextMenuCheckboxItem
-              inset
-              checked={showUrls}
-              onCheckedChange={setShowUrls}
-            >
+            <ContextMenuCheckboxItem inset checked={showUrls} onCheckedChange={setShowUrls}>
               Full URLs
             </ContextMenuCheckboxItem>
           </ContextMenuGroup>
@@ -593,5 +566,5 @@ function ContextMenuWithInset() {
         </ContextMenuContent>
       </ContextMenu>
     </Example>
-  )
+  );
 }

@@ -1,12 +1,7 @@
 {
   "name": "hitbox-radii-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "checkbox",
-    "hitbox"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["checkbox", "hitbox"],
   "files": [
     {
       "path": "examples/hitbox-radii-demo.tsx",

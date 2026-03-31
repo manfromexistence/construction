@@ -1,6 +1,5 @@
-import type React from 'react';
-
-import { createAtomStore } from 'platejs/react';
+import { createAtomStore } from "platejs/react";
+import type React from "react";
 
 export const {
   ResizableProvider,
@@ -10,7 +9,7 @@ export const {
   useResizableValue,
 } = createAtomStore(
   {
-    width: 0 as React.CSSProperties['width'],
+    width: 0 as React.CSSProperties["width"],
   },
-  { name: 'resizable' }
+  { name: "resizable" }
 ) as any;

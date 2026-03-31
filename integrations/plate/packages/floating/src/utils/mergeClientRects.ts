@@ -1,8 +1,8 @@
-import { makeClientRect } from './makeClientRect';
+import { makeClientRect } from "./makeClientRect";
 
 export const mergeClientRects = (clientRects: DOMRect[]): DOMRect => {
   if (clientRects.length === 0) {
-    throw new Error('clientRects should not be empty');
+    throw new Error("clientRects should not be empty");
   }
 
   return makeClientRect({

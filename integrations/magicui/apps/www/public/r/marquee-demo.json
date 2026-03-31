@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Marquee Demo",
   "description": "Example showing an infinite scrolling component.",
-  "registryDependencies": [
-    "@magicui/marquee"
-  ],
+  "registryDependencies": ["@magicui/marquee"],
   "files": [
     {
       "path": "registry/example/marquee-demo.tsx",

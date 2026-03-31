@@ -1,19 +1,18 @@
-import type { Descendant } from '@platejs/slate';
+import type { Descendant } from "@platejs/slate";
 
-import { createSlateEditor } from '../../lib/editor';
-import { createSlatePlugin } from '../../lib/plugin';
-import { pipeInsertFragment } from './pipeInsertFragment';
+import { createSlateEditor } from "../../lib/editor";
+import { createSlatePlugin } from "../../lib/plugin";
+import { pipeInsertFragment } from "./pipeInsertFragment";
 
-const createParserEditor = (
-  plugins: Parameters<typeof createSlateEditor>[0]['plugins']
-) => createSlateEditor({ plugins });
+const createParserEditor = (plugins: Parameters<typeof createSlateEditor>[0]["plugins"]) =>
+  createSlateEditor({ plugins });
 
-describe('pipeInsertFragment', () => {
-  it('stops at the first preInsert handler returning true and still inserts the fragment', () => {
+describe("pipeInsertFragment", () => {
+  it("stops at the first preInsert handler returning true and still inserts the fragment", () => {
     const calls: string[] = [];
 
     const firstPlugin = createSlatePlugin({
-      key: 'first',
+      key: "first",
       parser: {
         preInsert: ({ fragment }) => {
           calls.push(`first:${fragment.length}`);
@@ -23,7 +22,7 @@ describe('pipeInsertFragment', () => {
     });
 
     const secondPlugin = createSlatePlugin({
-      key: 'second',
+      key: "second",
       parser: {
         preInsert: ({ fragment }) => {
           calls.push(`second:${fragment.length}`);
@@ -33,10 +32,10 @@ describe('pipeInsertFragment', () => {
     });
 
     const thirdPlugin = createSlatePlugin({
-      key: 'third',
+      key: "third",
       parser: {
         preInsert: () => {
-          calls.push('third');
+          calls.push("third");
           return false;
         },
       },
@@ -47,18 +46,16 @@ describe('pipeInsertFragment', () => {
 
     editor.tf.insertFragment = insertFragment as any;
 
-    const fragment: Descendant[] = [
-      { children: [{ text: 'hello' }], type: 'p' },
-    ];
+    const fragment: Descendant[] = [{ children: [{ text: "hello" }], type: "p" }];
 
     pipeInsertFragment(editor, [firstPlugin, secondPlugin, thirdPlugin], {
-      data: '',
+      data: "",
       dataTransfer: {} as DataTransfer,
       fragment,
-      mimeType: 'text/plain',
+      mimeType: "text/plain",
     });
 
-    expect(calls).toEqual(['first:1', 'second:1']);
+    expect(calls).toEqual(["first:1", "second:1"]);
     expect(insertFragment).toHaveBeenCalledWith(fragment);
   });
 });

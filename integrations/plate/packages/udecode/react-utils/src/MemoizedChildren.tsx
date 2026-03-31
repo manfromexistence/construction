@@ -1,5 +1,5 @@
-import React from 'react';
+import React from "react";
 
-export const MemoizedChildren = React.memo(
-  ({ children }: { children: React.ReactNode }) => <>{children}</>
-);
+export const MemoizedChildren = React.memo(({ children }: { children: React.ReactNode }) => (
+  <>{children}</>
+));

@@ -1,5 +1,5 @@
-describe('callCompletionApi', () => {
-  it('returns completion text and updates loading, completion, and abort controller state', async () => {
+describe("callCompletionApi", () => {
+  it("returns completion text and updates loading, completion, and abort controller state", async () => {
     const { callCompletionApi } = await import(
       `./callCompletionApi?test=${Math.random().toString(36).slice(2)}`
     );
@@ -12,8 +12,8 @@ describe('callCompletionApi', () => {
 
     const fetchMock = mock(
       async () =>
-        new Response(JSON.stringify({ text: 'done' }), {
-          headers: { 'Content-Type': 'application/json' },
+        new Response(JSON.stringify({ text: "done" }), {
+          headers: { "Content-Type": "application/json" },
           status: 200,
         })
     );
@@ -23,19 +23,19 @@ describe('callCompletionApi', () => {
         fetch: fetchMock as any,
         onFinish,
         onResponse,
-        prompt: 'hi',
+        prompt: "hi",
         setAbortController,
         setCompletion,
         setError,
         setLoading,
       })
-    ).resolves.toBe('done');
+    ).resolves.toBe("done");
 
     expect(setLoading).toHaveBeenCalledWith(true);
-    expect(setCompletion).toHaveBeenCalledWith('');
+    expect(setCompletion).toHaveBeenCalledWith("");
     expect(onResponse).toHaveBeenCalled();
-    expect(setCompletion).toHaveBeenCalledWith('done');
-    expect(onFinish).toHaveBeenCalledWith('hi', 'done');
+    expect(setCompletion).toHaveBeenCalledWith("done");
+    expect(onFinish).toHaveBeenCalledWith("hi", "done");
     expect(setAbortController).toHaveBeenLastCalledWith(null);
     expect(setLoading).toHaveBeenLastCalledWith(false);
     expect(setError).toHaveBeenCalledWith(null);

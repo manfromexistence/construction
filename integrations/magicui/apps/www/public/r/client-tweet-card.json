@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Client Tweet Card",
   "description": "A client-side version of the tweet card that displays a tweet with the author's name, handle, and profile picture.",
-  "dependencies": [
-    "react-tweet"
-  ],
+  "dependencies": ["react-tweet"],
   "files": [
     {
       "path": "registry/magicui/client-tweet-card.tsx",

@@ -1,8 +1,6 @@
 {
   "name": "avatar-group",
-  "dependencies": [
-    "@base-ui/react"
-  ],
+  "dependencies": ["@base-ui/react"],
   "files": [
     {
       "path": "ui/avatar-group.tsx",

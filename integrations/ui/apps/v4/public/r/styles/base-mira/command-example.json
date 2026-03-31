@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "command-example",
   "title": "Command",
-  "registryDependencies": [
-    "button",
-    "command",
-    "example"
-  ],
+  "registryDependencies": ["button", "command", "example"],
   "files": [
     {
       "path": "registry/base-mira/examples/command-example.tsx",

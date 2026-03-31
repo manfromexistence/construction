@@ -1,7 +1,7 @@
-import { Transformer } from "@/src/utils/transformers"
-import { Project, ScriptKind, SourceFile, SyntaxKind } from "ts-morph"
+import { Project, ScriptKind, SourceFile, SyntaxKind } from "ts-morph";
+import { Transformer } from "@/src/utils/transformers";
 
-import { splitClassName } from "./transform-css-vars"
+import { splitClassName } from "./transform-css-vars";
 
 // Physical → logical Tailwind class mappings (direct replacement).
 // Order matters to avoid partial matches:
@@ -47,25 +47,25 @@ const RTL_MAPPINGS: [string, string][] = [
   ["origin-bottom-right", "origin-bottom-end"],
   ["origin-left", "origin-start"],
   ["origin-right", "origin-end"],
-]
+];
 
 // Translate-x: adds rtl: variant (negative ↔ positive).
 const RTL_TRANSLATE_X_MAPPINGS: [string, string][] = [
   ["-translate-x-", "translate-x-"],
   ["translate-x-", "-translate-x-"],
-]
+];
 
 // Classes that need rtl:*-reverse (no logical equivalents).
 const RTL_REVERSE_MAPPINGS: [string, string][] = [
   ["space-x-", "space-x-reverse"],
   ["divide-x-", "divide-x-reverse"],
-]
+];
 
 // Classes that need rtl: variant with swapped value.
 const RTL_SWAP_MAPPINGS: [string, string][] = [
   ["cursor-w-resize", "cursor-e-resize"],
   ["cursor-e-resize", "cursor-w-resize"],
-]
+];
 
 // Slide animations inside logical side variants: [variant, physical, logical].
 const RTL_LOGICAL_SIDE_SLIDE_MAPPINGS: [string, string, string][] = [
@@ -73,69 +73,69 @@ const RTL_LOGICAL_SIDE_SLIDE_MAPPINGS: [string, string, string][] = [
   ["data-[side=inline-start]", "slide-out-to-right", "slide-out-to-end"],
   ["data-[side=inline-end]", "slide-in-from-left", "slide-in-from-start"],
   ["data-[side=inline-end]", "slide-out-to-left", "slide-out-to-start"],
-]
+];
 
 // Marker class for icons that should get rtl:rotate-180.
-const RTL_FLIP_MARKER = "cn-rtl-flip"
+const RTL_FLIP_MARKER = "cn-rtl-flip";
 
 // Components with side prop transformed to logical values.
 const RTL_SIDE_PROP_COMPONENTS = [
   "ContextMenuContent",
   "ContextMenuSubContent",
   "DropdownMenuSubContent",
-]
+];
 
 // Side prop value mappings.
 const RTL_SIDE_PROP_MAPPINGS: Record<string, string> = {
   right: "inline-end",
   left: "inline-start",
-}
+};
 
 // Positioning prefixes to skip for physical side variants.
-const POSITIONING_PREFIXES = ["-left-", "-right-", "left-", "right-"]
+const POSITIONING_PREFIXES = ["-left-", "-right-", "left-", "right-"];
 
 export const transformRtl: Transformer = async ({ sourceFile, config }) => {
   if (!config.rtl) {
-    return sourceFile
+    return sourceFile;
   }
 
-  applyRtlTransformToSourceFile(sourceFile)
+  applyRtlTransformToSourceFile(sourceFile);
 
-  return sourceFile
-}
+  return sourceFile;
+};
 
 // Standalone function to transform source code for RTL.
 // This is used by the build script.
 export async function transformDirection(source: string, rtl: boolean) {
   if (!rtl) {
-    return source
+    return source;
   }
 
   const project = new Project({
     useInMemoryFileSystem: true,
-  })
+  });
 
   const sourceFile = project.createSourceFile("component.tsx", source, {
     scriptKind: ScriptKind.TSX,
     overwrite: true,
-  })
+  });
 
-  applyRtlTransformToSourceFile(sourceFile)
+  applyRtlTransformToSourceFile(sourceFile);
 
-  return sourceFile.getText()
+  return sourceFile.getText();
 }
 
 function stripQuotes(str: string) {
-  return str.replace(/^["']|["']$/g, "")
+  return str.replace(/^["']|["']$/g, "");
 }
 
 // Transforms a string literal node by applying RTL mappings.
 function transformStringLiteralNode(node: {
-  getText(): string
-  replaceWithText(text: string): void
+  getText(): string;
+  replaceWithText(text: string): void;
 }) {
-  const text = stripQuotes(node.getText() ?? "")
-  node.replaceWithText(`"${applyRtlMapping(text)}"`)
+  const text = stripQuotes(node.getText() ?? "");
+  node.replaceWithText(`"${applyRtlMapping(text)}"`);
 }
 
 export function applyRtlMapping(input: string) {
@@ -144,106 +144,92 @@ export function applyRtlMapping(input: string) {
     .flatMap((className) => {
       // Skip classes that already have rtl: or ltr: prefix.
       if (className.startsWith("rtl:") || className.startsWith("ltr:")) {
-        return [className]
+        return [className];
       }
 
       // Replace the cn-rtl-flip marker with rtl:rotate-180.
       if (className === RTL_FLIP_MARKER) {
-        return ["rtl:rotate-180"]
+        return ["rtl:rotate-180"];
       }
-      const [variant, value, modifier] = splitClassName(className)
+      const [variant, value, modifier] = splitClassName(className);
 
       if (!value) {
-        return [className]
+        return [className];
       }
 
       // Check for translate-x patterns first (add rtl: variant, don't replace).
       for (const [physical, rtlPhysical] of RTL_TRANSLATE_X_MAPPINGS) {
         if (value.startsWith(physical)) {
-          const rtlValue = value.replace(physical, rtlPhysical)
+          const rtlValue = value.replace(physical, rtlPhysical);
           const rtlClass = variant
             ? `rtl:${variant}:${rtlValue}${modifier ? `/${modifier}` : ""}`
-            : `rtl:${rtlValue}${modifier ? `/${modifier}` : ""}`
-          return [className, rtlClass]
+            : `rtl:${rtlValue}${modifier ? `/${modifier}` : ""}`;
+          return [className, rtlClass];
         }
       }
 
       // Check for space-x/divide-x patterns (add rtl:*-reverse variant).
       for (const [prefix, reverseClass] of RTL_REVERSE_MAPPINGS) {
         if (value.startsWith(prefix)) {
-          const rtlClass = variant
-            ? `rtl:${variant}:${reverseClass}`
-            : `rtl:${reverseClass}`
-          return [className, rtlClass]
+          const rtlClass = variant ? `rtl:${variant}:${reverseClass}` : `rtl:${reverseClass}`;
+          return [className, rtlClass];
         }
       }
 
       // Check for cursor and other swap patterns (add rtl: variant with swapped value).
       for (const [physical, swapped] of RTL_SWAP_MAPPINGS) {
         if (value === physical) {
-          const rtlClass = variant
-            ? `rtl:${variant}:${swapped}`
-            : `rtl:${swapped}`
-          return [className, rtlClass]
+          const rtlClass = variant ? `rtl:${variant}:${swapped}` : `rtl:${swapped}`;
+          return [className, rtlClass];
         }
       }
 
       // Check for slide animations inside logical side variants.
       // e.g., data-[side=inline-start]:slide-in-from-right-2 → data-[side=inline-start]:slide-in-from-end-2
-      for (const [
-        variantPattern,
-        physical,
-        logical,
-      ] of RTL_LOGICAL_SIDE_SLIDE_MAPPINGS) {
+      for (const [variantPattern, physical, logical] of RTL_LOGICAL_SIDE_SLIDE_MAPPINGS) {
         if (variant?.includes(variantPattern) && value.startsWith(physical)) {
-          const mappedValue = value.replace(physical, logical)
+          const mappedValue = value.replace(physical, logical);
           const result = modifier
             ? `${variant}:${mappedValue}/${modifier}`
-            : `${variant}:${mappedValue}`
-          return [result]
+            : `${variant}:${mappedValue}`;
+          return [result];
         }
       }
 
       // Skip positioning transformations for physical side variants.
       // e.g., data-[side=left]:-right-1 should NOT become data-[side=left]:-end-1.
       const isPhysicalSideVariant =
-        variant?.includes("data-[side=left]") ||
-        variant?.includes("data-[side=right]")
+        variant?.includes("data-[side=left]") || variant?.includes("data-[side=right]");
 
       // Find matching RTL mapping for direct replacement.
-      let mappedValue = value
+      let mappedValue = value;
       for (const [physical, logical] of RTL_MAPPINGS) {
-        if (
-          isPhysicalSideVariant &&
-          POSITIONING_PREFIXES.some((p) => physical.startsWith(p))
-        ) {
-          continue
+        if (isPhysicalSideVariant && POSITIONING_PREFIXES.some((p) => physical.startsWith(p))) {
+          continue;
         }
 
         if (value.startsWith(physical)) {
           // For patterns without trailing '-', require exact match to avoid
           // partial matches like border-ring matching border-r.
           if (!physical.endsWith("-") && value !== physical) {
-            continue
+            continue;
           }
-          mappedValue = value.replace(physical, logical)
-          break
+          mappedValue = value.replace(physical, logical);
+          break;
         }
       }
 
       // Reassemble with variant and modifier.
-      let result: string
+      let result: string;
       if (variant) {
-        result = modifier
-          ? `${variant}:${mappedValue}/${modifier}`
-          : `${variant}:${mappedValue}`
+        result = modifier ? `${variant}:${mappedValue}/${modifier}` : `${variant}:${mappedValue}`;
       } else {
-        result = modifier ? `${mappedValue}/${modifier}` : mappedValue
+        result = modifier ? `${mappedValue}/${modifier}` : mappedValue;
       }
 
-      return [result]
+      return [result];
     })
-    .join(" ")
+    .join(" ");
 }
 
 // Core RTL transformation logic that operates on a SourceFile.
@@ -255,9 +241,9 @@ function applyRtlTransformToSourceFile(sourceFile: SourceFile) {
     .filter((node) => node.getExpression().getText() === "cva")
     .forEach((node) => {
       // cva(base, ...).
-      const firstArg = node.getArguments()[0]
+      const firstArg = node.getArguments()[0];
       if (firstArg?.isKind(SyntaxKind.StringLiteral)) {
-        transformStringLiteralNode(firstArg)
+        transformStringLiteralNode(firstArg);
       }
 
       // cva(..., { variants: { ... } }).
@@ -268,27 +254,23 @@ function applyRtlTransformToSourceFile(sourceFile: SourceFile) {
           .find((node) => node.getName() === "variants")
           ?.getDescendantsOfKind(SyntaxKind.PropertyAssignment)
           .forEach((node) => {
-            node
-              .getDescendantsOfKind(SyntaxKind.PropertyAssignment)
-              .forEach((prop) => {
-                const classNames = prop.getInitializerIfKind(
-                  SyntaxKind.StringLiteral
-                )
-                if (classNames) {
-                  transformStringLiteralNode(classNames)
-                }
-              })
-          })
+            node.getDescendantsOfKind(SyntaxKind.PropertyAssignment).forEach((prop) => {
+              const classNames = prop.getInitializerIfKind(SyntaxKind.StringLiteral);
+              if (classNames) {
+                transformStringLiteralNode(classNames);
+              }
+            });
+          });
       }
-    })
+    });
 
   // Find all jsx attributes with the name className.
   sourceFile.getDescendantsOfKind(SyntaxKind.JsxAttribute).forEach((node) => {
     if (node.getNameNode().getText() === "className") {
       // className="...".
-      const initializer = node.getInitializer()
+      const initializer = node.getInitializer();
       if (initializer?.isKind(SyntaxKind.StringLiteral)) {
-        transformStringLiteralNode(initializer)
+        transformStringLiteralNode(initializer);
       }
 
       // className={...}.
@@ -297,21 +279,19 @@ function applyRtlTransformToSourceFile(sourceFile: SourceFile) {
         const callExpression = node
           .getInitializer()
           ?.getDescendantsOfKind(SyntaxKind.CallExpression)
-          .find((node) => node.getExpression().getText() === "cn")
+          .find((node) => node.getExpression().getText() === "cn");
         if (callExpression) {
           callExpression.getArguments().forEach((arg) => {
             if (
               arg.isKind(SyntaxKind.ConditionalExpression) ||
               arg.isKind(SyntaxKind.BinaryExpression)
             ) {
-              arg
-                .getChildrenOfKind(SyntaxKind.StringLiteral)
-                .forEach(transformStringLiteralNode)
+              arg.getChildrenOfKind(SyntaxKind.StringLiteral).forEach(transformStringLiteralNode);
             }
             if (arg.isKind(SyntaxKind.StringLiteral)) {
-              transformStringLiteralNode(arg)
+              transformStringLiteralNode(arg);
             }
-          })
+          });
         }
       }
     }
@@ -319,61 +299,55 @@ function applyRtlTransformToSourceFile(sourceFile: SourceFile) {
     // classNames={...}.
     if (node.getNameNode().getText() === "classNames") {
       if (node.getInitializer()?.isKind(SyntaxKind.JsxExpression)) {
-        node
-          .getDescendantsOfKind(SyntaxKind.PropertyAssignment)
-          .forEach((node) => {
-            if (node.getInitializer()?.isKind(SyntaxKind.CallExpression)) {
-              const callExpression = node.getInitializerIfKind(
-                SyntaxKind.CallExpression
-              )
-              if (callExpression) {
-                callExpression.getArguments().forEach((arg) => {
-                  if (arg.isKind(SyntaxKind.ConditionalExpression)) {
-                    arg
-                      .getChildrenOfKind(SyntaxKind.StringLiteral)
-                      .forEach(transformStringLiteralNode)
-                  }
-                  if (arg.isKind(SyntaxKind.StringLiteral)) {
-                    transformStringLiteralNode(arg)
-                  }
-                })
-              }
+        node.getDescendantsOfKind(SyntaxKind.PropertyAssignment).forEach((node) => {
+          if (node.getInitializer()?.isKind(SyntaxKind.CallExpression)) {
+            const callExpression = node.getInitializerIfKind(SyntaxKind.CallExpression);
+            if (callExpression) {
+              callExpression.getArguments().forEach((arg) => {
+                if (arg.isKind(SyntaxKind.ConditionalExpression)) {
+                  arg
+                    .getChildrenOfKind(SyntaxKind.StringLiteral)
+                    .forEach(transformStringLiteralNode);
+                }
+                if (arg.isKind(SyntaxKind.StringLiteral)) {
+                  transformStringLiteralNode(arg);
+                }
+              });
             }
+          }
 
-            const propInit = node.getInitializer()
-            if (propInit?.isKind(SyntaxKind.StringLiteral)) {
-              if (node.getNameNode().getText() !== "variant") {
-                transformStringLiteralNode(propInit)
-              }
+          const propInit = node.getInitializer();
+          if (propInit?.isKind(SyntaxKind.StringLiteral)) {
+            if (node.getNameNode().getText() !== "variant") {
+              transformStringLiteralNode(propInit);
             }
-          })
+          }
+        });
       }
     }
-  })
+  });
 
   // Find mergeProps calls with className property containing cn().
   sourceFile
     .getDescendantsOfKind(SyntaxKind.CallExpression)
     .filter((node) => node.getExpression().getText() === "mergeProps")
     .forEach((node) => {
-      const firstArg = node.getArguments()[0]
+      const firstArg = node.getArguments()[0];
       if (firstArg?.isKind(SyntaxKind.ObjectLiteralExpression)) {
         // Find className property.
         const classNameProp = firstArg
           .getProperties()
           .find(
-            (prop) =>
-              prop.isKind(SyntaxKind.PropertyAssignment) &&
-              prop.getName() === "className"
-          )
+            (prop) => prop.isKind(SyntaxKind.PropertyAssignment) && prop.getName() === "className"
+          );
         if (classNameProp?.isKind(SyntaxKind.PropertyAssignment)) {
-          const init = classNameProp.getInitializer()
+          const init = classNameProp.getInitializer();
           // Handle cn() call.
           if (init?.isKind(SyntaxKind.CallExpression)) {
             if (init.getExpression().getText() === "cn") {
               init.getArguments().forEach((arg) => {
                 if (arg.isKind(SyntaxKind.StringLiteral)) {
-                  transformStringLiteralNode(arg)
+                  transformStringLiteralNode(arg);
                 }
                 if (
                   arg.isKind(SyntaxKind.ConditionalExpression) ||
@@ -381,79 +355,75 @@ function applyRtlTransformToSourceFile(sourceFile: SourceFile) {
                 ) {
                   arg
                     .getChildrenOfKind(SyntaxKind.StringLiteral)
-                    .forEach(transformStringLiteralNode)
+                    .forEach(transformStringLiteralNode);
                 }
-              })
+              });
             }
           }
           // Handle plain string literal.
           if (init?.isKind(SyntaxKind.StringLiteral)) {
-            transformStringLiteralNode(init)
+            transformStringLiteralNode(init);
           }
         }
       }
-    })
+    });
 
   // Transform side prop to logical values for specific components.
-  ;[
+  [
     ...sourceFile.getDescendantsOfKind(SyntaxKind.JsxSelfClosingElement),
     ...sourceFile.getDescendantsOfKind(SyntaxKind.JsxOpeningElement),
   ].forEach((element) => {
-    const tagName = element.getTagNameNode().getText()
+    const tagName = element.getTagNameNode().getText();
     if (!RTL_SIDE_PROP_COMPONENTS.includes(tagName)) {
-      return
+      return;
     }
 
     const sideAttr = element
       .getAttributes()
       .find(
-        (attr) =>
-          attr.isKind(SyntaxKind.JsxAttribute) &&
-          attr.getNameNode().getText() === "side"
-      )
+        (attr) => attr.isKind(SyntaxKind.JsxAttribute) && attr.getNameNode().getText() === "side"
+      );
 
     if (!sideAttr?.isKind(SyntaxKind.JsxAttribute)) {
-      return
+      return;
     }
 
-    const sideValue = sideAttr.getInitializer()
+    const sideValue = sideAttr.getInitializer();
     if (!sideValue?.isKind(SyntaxKind.StringLiteral)) {
-      return
+      return;
     }
 
-    const currentValue = stripQuotes(sideValue.getText() ?? "")
-    const mappedValue = RTL_SIDE_PROP_MAPPINGS[currentValue]
+    const currentValue = stripQuotes(sideValue.getText() ?? "");
+    const mappedValue = RTL_SIDE_PROP_MAPPINGS[currentValue];
     if (mappedValue) {
-      sideValue.replaceWithText(`"${mappedValue}"`)
+      sideValue.replaceWithText(`"${mappedValue}"`);
     }
-  })
+  });
 
   // Transform default parameter values for side prop (e.g., side = "right").
   // Only for functions whose names are in the whitelist.
   sourceFile.getDescendantsOfKind(SyntaxKind.BindingElement).forEach((node) => {
-    const paramName = node.getNameNode().getText()
+    const paramName = node.getNameNode().getText();
     if (paramName !== "side") {
-      return
+      return;
     }
 
     // Check if this binding element is inside a whitelisted function.
-    const functionDecl = node.getFirstAncestorByKind(
-      SyntaxKind.FunctionDeclaration
-    )
-    const functionName = functionDecl?.getName()
+    const functionDecl = node.getFirstAncestorByKind(SyntaxKind.FunctionDeclaration);
+    const functionName = functionDecl?.getName();
     if (!functionName || !RTL_SIDE_PROP_COMPONENTS.includes(functionName)) {
-      return
+      return;
     }
 
-    const initializer = node.getInitializer()
+    const initializer = node.getInitializer();
     if (!initializer?.isKind(SyntaxKind.StringLiteral)) {
-      return
+      return;
     }
 
-    const currentValue = stripQuotes(initializer.getText() ?? "")
-    const mappedValue = RTL_SIDE_PROP_MAPPINGS[currentValue]
+    const currentValue = stripQuotes(initializer.getText() ?? "");
+    const mappedValue = RTL_SIDE_PROP_MAPPINGS[currentValue];
     if (mappedValue) {
-      initializer.replaceWithText(`"${mappedValue}"`)
+      initializer.replaceWithText(`"${mappedValue}"`);
     }
-  })
+  });
 }

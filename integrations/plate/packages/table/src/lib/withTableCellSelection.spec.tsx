@@ -1,14 +1,13 @@
 /** @jsx jsxt */
 
-import { type SlateEditor, type TElement, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor, type TElement } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-
-import { BaseTablePlugin, type TableConfig } from './BaseTablePlugin';
+import { BaseTablePlugin, type TableConfig } from "./BaseTablePlugin";
 
 jsxt;
 
-const getTestTablePlugins = (options?: Partial<TableConfig['options']>) => [
+const getTestTablePlugins = (options?: Partial<TableConfig["options"]>) => [
   BaseTablePlugin.configure({
     options: {
       disableMerge: true,
@@ -17,19 +16,16 @@ const getTestTablePlugins = (options?: Partial<TableConfig['options']>) => [
   }),
 ];
 
-const createTableEditor = (
-  input: SlateEditor,
-  options?: Partial<TableConfig['options']>
-) =>
+const createTableEditor = (input: SlateEditor, options?: Partial<TableConfig["options"]>) =>
   createSlateEditor({
     plugins: getTestTablePlugins(options),
     selection: input.selection,
     value: input.children,
   });
 
-describe('withTableCellSelection', () => {
-  describe('marks()', () => {
-    it('falls back to the default marks logic for collapsed selections', () => {
+describe("withTableCellSelection", () => {
+  describe("marks()", () => {
+    it("falls back to the default marks logic for collapsed selections", () => {
       const input = (
         <editor>
           <htable>
@@ -88,7 +84,7 @@ describe('withTableCellSelection', () => {
             </htable>
           </editor>
         ) as any as SlateEditor,
-        name: 'returns marks shared by every selected text node',
+        name: "returns marks shared by every selected text node",
       },
       {
         expected: {},
@@ -128,15 +124,15 @@ describe('withTableCellSelection', () => {
             </htable>
           </editor>
         ) as any as SlateEditor,
-        name: 'drops marks that are not shared by every selected text node',
+        name: "drops marks that are not shared by every selected text node",
       },
-    ])('$name', ({ expected, input }) => {
+    ])("$name", ({ expected, input }) => {
       expect(createTableEditor(input).api.marks()).toEqual(expected);
     });
   });
 
-  describe('mark transforms', () => {
-    it('adds a mark to every selected text node across cells', () => {
+  describe("mark transforms", () => {
+    it("adds a mark to every selected text node across cells", () => {
       const input = (
         <editor>
           <htable>
@@ -176,7 +172,7 @@ describe('withTableCellSelection', () => {
       ) as any as SlateEditor;
 
       const editor = createTableEditor(input);
-      editor.tf.addMark('bold', true);
+      editor.tf.addMark("bold", true);
 
       expect(editor.children).toEqual(
         (
@@ -187,7 +183,7 @@ describe('withTableCellSelection', () => {
                   <hp>
                     <htext bold>plain</htext>
                     <htext bold italic>
-                      {' '}
+                      {" "}
                       italic
                     </htext>
                   </hp>
@@ -216,7 +212,7 @@ describe('withTableCellSelection', () => {
       );
     });
 
-    it('removes only the requested mark across selected cells', () => {
+    it("removes only the requested mark across selected cells", () => {
       const input = (
         <editor>
           <htable>
@@ -228,7 +224,7 @@ describe('withTableCellSelection', () => {
                     bold
                   </htext>
                   <htext bold italic>
-                    {' '}
+                    {" "}
                     bold italic
                   </htext>
                 </hp>
@@ -260,7 +256,7 @@ describe('withTableCellSelection', () => {
       ) as any as SlateEditor;
 
       const editor = createTableEditor(input);
-      editor.tf.removeMark('bold');
+      editor.tf.removeMark("bold");
 
       expect(editor.children).toEqual(
         (
@@ -298,8 +294,8 @@ describe('withTableCellSelection', () => {
     });
   });
 
-  describe('setNodes', () => {
-    it('sets properties on every selected cell block', () => {
+  describe("setNodes", () => {
+    it("sets properties on every selected cell block", () => {
       const input = (
         <editor>
           <htable>
@@ -330,10 +326,7 @@ describe('withTableCellSelection', () => {
       ) as any as SlateEditor;
 
       const editor = createTableEditor(input);
-      editor.tf.setNodes(
-        { align: 'center' },
-        { match: (node) => node.type === 'p' }
-      );
+      editor.tf.setNodes({ align: "center" }, { match: (node) => node.type === "p" });
 
       expect(editor.children).toEqual(
         (
@@ -361,7 +354,7 @@ describe('withTableCellSelection', () => {
       );
     });
 
-    it('does not hijack path-targeted writes to unselected cells inside the linear Slate range', () => {
+    it("does not hijack path-targeted writes to unselected cells inside the linear Slate range", () => {
       const input = (
         <editor>
           <htable>
@@ -393,7 +386,7 @@ describe('withTableCellSelection', () => {
 
       const editor = createTableEditor(input);
 
-      editor.tf.setNodes({ background: 'red' }, { at: [0, 1, 0] });
+      editor.tf.setNodes({ background: "red" }, { at: [0, 1, 0] });
 
       expect(editor.children).toEqual(
         (
@@ -421,7 +414,7 @@ describe('withTableCellSelection', () => {
       );
     });
 
-    it('unsets multiple properties on every selected cell block', () => {
+    it("unsets multiple properties on every selected cell block", () => {
       const input = (
         <editor>
           <htable>
@@ -444,8 +437,8 @@ describe('withTableCellSelection', () => {
       ) as any as SlateEditor;
 
       const editor = createTableEditor(input);
-      editor.tf.unsetNodes(['align', 'indent'], {
-        match: (node) => node.type === 'p',
+      editor.tf.unsetNodes(["align", "indent"], {
+        match: (node) => node.type === "p",
       });
 
       expect(editor.children).toEqual(
@@ -467,8 +460,8 @@ describe('withTableCellSelection', () => {
     });
   });
 
-  describe('selection selectors', () => {
-    it('derives multi-cell selection queries from the editor selection', () => {
+  describe("selection selectors", () => {
+    it("derives multi-cell selection queries from the editor selection", () => {
       const input = (
         <editor>
           <htable id="table-1">
@@ -500,29 +493,24 @@ describe('withTableCellSelection', () => {
 
       const editor = createTableEditor(input);
 
+      expect(editor.getOption(BaseTablePlugin, "selectedCellIds")).toStrictEqual([
+        "c11",
+        "c12",
+        "c21",
+        "c22",
+      ]);
       expect(
-        editor.getOption(BaseTablePlugin, 'selectedCellIds')
-      ).toStrictEqual(['c11', 'c12', 'c21', 'c22']);
+        editor.getOption(BaseTablePlugin, "selectedCells")?.map((cell: TElement) => cell.id)
+      ).toStrictEqual(["c11", "c12", "c21", "c22"]);
       expect(
-        editor
-          .getOption(BaseTablePlugin, 'selectedCells')
-          ?.map((cell: TElement) => cell.id)
-      ).toStrictEqual(['c11', 'c12', 'c21', 'c22']);
-      expect(
-        editor
-          .getOption(BaseTablePlugin, 'selectedTables')
-          ?.map((table: TElement) => table.type)
-      ).toStrictEqual(['table']);
-      expect(editor.getOption(BaseTablePlugin, 'isSelectingCell')).toBe(true);
-      expect(editor.getOption(BaseTablePlugin, 'isCellSelected', 'c12')).toBe(
-        true
-      );
-      expect(editor.getOption(BaseTablePlugin, 'selectedCell', 'c21')?.id).toBe(
-        'c21'
-      );
+        editor.getOption(BaseTablePlugin, "selectedTables")?.map((table: TElement) => table.type)
+      ).toStrictEqual(["table"]);
+      expect(editor.getOption(BaseTablePlugin, "isSelectingCell")).toBe(true);
+      expect(editor.getOption(BaseTablePlugin, "isCellSelected", "c12")).toBe(true);
+      expect(editor.getOption(BaseTablePlugin, "selectedCell", "c21")?.id).toBe("c21");
     });
 
-    it('returns empty multi-cell queries when the selection stays inside one cell', () => {
+    it("returns empty multi-cell queries when the selection stays inside one cell", () => {
       const input = (
         <editor>
           <htable id="table-1">
@@ -550,19 +538,15 @@ describe('withTableCellSelection', () => {
 
       const editor = createTableEditor(input);
 
-      expect(editor.getOption(BaseTablePlugin, 'selectedCellIds')).toBeNull();
-      expect(editor.getOption(BaseTablePlugin, 'selectedCells')).toBeNull();
-      expect(editor.getOption(BaseTablePlugin, 'selectedTables')).toBeNull();
-      expect(editor.getOption(BaseTablePlugin, 'isSelectingCell')).toBe(false);
-      expect(editor.getOption(BaseTablePlugin, 'isCellSelected', 'c11')).toBe(
-        false
-      );
-      expect(
-        editor.getOption(BaseTablePlugin, 'selectedCell', 'c11')
-      ).toBeNull();
+      expect(editor.getOption(BaseTablePlugin, "selectedCellIds")).toBeNull();
+      expect(editor.getOption(BaseTablePlugin, "selectedCells")).toBeNull();
+      expect(editor.getOption(BaseTablePlugin, "selectedTables")).toBeNull();
+      expect(editor.getOption(BaseTablePlugin, "isSelectingCell")).toBe(false);
+      expect(editor.getOption(BaseTablePlugin, "isCellSelected", "c11")).toBe(false);
+      expect(editor.getOption(BaseTablePlugin, "selectedCell", "c11")).toBeNull();
     });
 
-    it('reads the latest selected cell nodes after the table changes', () => {
+    it("reads the latest selected cell nodes after the table changes", () => {
       const input = (
         <editor>
           <htable id="table-1">
@@ -586,22 +570,18 @@ describe('withTableCellSelection', () => {
 
       const editor = createTableEditor(input);
 
-      editor.tf.setNodes({ background: 'red' }, { at: [0, 0, 0] });
+      editor.tf.setNodes({ background: "red" }, { at: [0, 0, 0] });
 
-      expect(
-        editor.getOption(BaseTablePlugin, 'selectedCell', 'c11')
-      ).toMatchObject({
-        background: 'red',
-        id: 'c11',
+      expect(editor.getOption(BaseTablePlugin, "selectedCell", "c11")).toMatchObject({
+        background: "red",
+        id: "c11",
       });
       expect(
-        editor
-          .getOption(BaseTablePlugin, 'selectedCells')
-          ?.map((cell: TElement) => cell.id)
-      ).toStrictEqual(['c11', 'c12']);
+        editor.getOption(BaseTablePlugin, "selectedCells")?.map((cell: TElement) => cell.id)
+      ).toStrictEqual(["c11", "c12"]);
     });
 
-    it('updates selected cell ids when the Slate selection changes', () => {
+    it("updates selected cell ids when the Slate selection changes", () => {
       const input = (
         <editor>
           <htable id="table-1">
@@ -627,16 +607,14 @@ describe('withTableCellSelection', () => {
         focus: editor.api.end([0, 0, 1])!,
       });
 
-      expect(
-        editor.getOption(BaseTablePlugin, 'selectedCellIds')
-      ).toStrictEqual(['c11', 'c12']);
+      expect(editor.getOption(BaseTablePlugin, "selectedCellIds")).toStrictEqual(["c11", "c12"]);
 
       editor.tf.select(editor.api.start([0, 0, 0])!);
 
-      expect(editor.getOption(BaseTablePlugin, 'selectedCellIds')).toBeNull();
+      expect(editor.getOption(BaseTablePlugin, "selectedCellIds")).toBeNull();
     });
 
-    it('updates selected cell ids for unmerged tables when merge is enabled', () => {
+    it("updates selected cell ids for unmerged tables when merge is enabled", () => {
       const input = (
         <editor>
           <htable id="table-1">
@@ -670,9 +648,12 @@ describe('withTableCellSelection', () => {
         focus: editor.api.end([0, 1, 1])!,
       });
 
-      expect(
-        editor.getOption(BaseTablePlugin, 'selectedCellIds')
-      ).toStrictEqual(['c11', 'c12', 'c21', 'c22']);
+      expect(editor.getOption(BaseTablePlugin, "selectedCellIds")).toStrictEqual([
+        "c11",
+        "c12",
+        "c21",
+        "c22",
+      ]);
     });
   });
 });

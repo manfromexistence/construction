@@ -1,16 +1,16 @@
-import { getRegistryItems } from "@/src/registry/api"
-import { buildUrlAndHeadersForRegistryItem } from "@/src/registry/builder"
-import { configWithDefaults } from "@/src/registry/config"
-import { REGISTRY_URL, SHADCN_URL } from "@/src/registry/constants"
-import { type registryConfigSchema } from "@/src/registry/schema"
-import { isUrl } from "@/src/registry/utils"
-import { createConfig } from "@/src/utils/get-config"
-import { highlighter } from "@/src/utils/highlighter"
-import { logger } from "@/src/utils/logger"
-import { ensureRegistriesInConfig } from "@/src/utils/registries"
-import open from "open"
-import prompts from "prompts"
-import { type z } from "zod"
+import open from "open";
+import prompts from "prompts";
+import { type z } from "zod";
+import { getRegistryItems } from "@/src/registry/api";
+import { buildUrlAndHeadersForRegistryItem } from "@/src/registry/builder";
+import { configWithDefaults } from "@/src/registry/config";
+import { REGISTRY_URL, SHADCN_URL } from "@/src/registry/constants";
+import { type registryConfigSchema } from "@/src/registry/schema";
+import { isUrl } from "@/src/registry/utils";
+import { createConfig } from "@/src/utils/get-config";
+import { highlighter } from "@/src/utils/highlighter";
+import { logger } from "@/src/utils/logger";
+import { ensureRegistriesInConfig } from "@/src/utils/registries";
 
 export const DEFAULT_PRESETS = {
   nova: {
@@ -103,47 +103,47 @@ export const DEFAULT_PRESETS = {
     radius: "default",
     rtl: false,
   },
-}
+};
 
 export function resolveCreateUrl(
   searchParams?: Partial<{
-    command: "create" | "init"
-    template: string
-    rtl: boolean
-    base: string
+    command: "create" | "init";
+    template: string;
+    rtl: boolean;
+    base: string;
   }>
 ) {
-  const url = new URL(`${SHADCN_URL}/create`)
-  const { rtl, ...params } = searchParams ?? {}
+  const url = new URL(`${SHADCN_URL}/create`);
+  const { rtl, ...params } = searchParams ?? {};
 
   for (const [key, value] of Object.entries(params)) {
     if (value !== undefined) {
-      url.searchParams.set(key, String(value))
+      url.searchParams.set(key, String(value));
     }
   }
 
   // Do not set rtl if it's false.
   if (rtl) {
-    url.searchParams.set("rtl", "true")
+    url.searchParams.set("rtl", "true");
   }
 
-  return url.toString()
+  return url.toString();
 }
 
 export function resolveInitUrl(
   preset: {
-    base: string
-    style: string
-    baseColor: string
-    theme: string
-    chartColor?: string
-    iconLibrary: string
-    font: string
-    fontHeading?: string
-    rtl: boolean
-    menuAccent: string
-    menuColor: string
-    radius: string
+    base: string;
+    style: string;
+    baseColor: string;
+    theme: string;
+    chartColor?: string;
+    iconLibrary: string;
+    font: string;
+    fontHeading?: string;
+    rtl: boolean;
+    menuAccent: string;
+    menuColor: string;
+    radius: string;
   },
   options?: { template?: string; preset?: string }
 ) {
@@ -158,30 +158,30 @@ export function resolveInitUrl(
     menuAccent: preset.menuAccent,
     menuColor: preset.menuColor,
     radius: preset.radius,
-  })
+  });
 
   if (preset.chartColor) {
-    params.set("chartColor", preset.chartColor)
+    params.set("chartColor", preset.chartColor);
   }
 
   if (preset.fontHeading && preset.fontHeading !== "inherit") {
-    params.set("fontHeading", preset.fontHeading)
+    params.set("fontHeading", preset.fontHeading);
   }
 
   // Pass the original preset code so the server can apply
   // version-specific backward-compat fixups.
   if (options?.preset) {
-    params.set("preset", options.preset)
+    params.set("preset", options.preset);
   }
 
   if (options?.template) {
-    params.set("template", options.template)
+    params.set("template", options.template);
   }
 
   // Signal the server to record this init run.
-  params.set("track", "1")
+  params.set("track", "1");
 
-  return `${SHADCN_URL}/init?${params.toString()}`
+  return `${SHADCN_URL}/init?${params.toString()}`;
 }
 
 export async function promptForBase() {
@@ -193,17 +193,13 @@ export async function promptForBase() {
       { title: "Radix", value: "radix" },
       { title: "Base", value: "base" },
     ],
-  })
-  if (!base) process.exit(1)
-  return base as "radix" | "base"
+  });
+  if (!base) process.exit(1);
+  return base as "radix" | "base";
 }
 
-export async function promptForPreset(options: {
-  rtl: boolean
-  base: string
-  template?: string
-}) {
-  const presets = Object.entries(DEFAULT_PRESETS)
+export async function promptForPreset(options: { rtl: boolean; base: string; template?: string }) {
+  const presets = Object.entries(DEFAULT_PRESETS);
 
   const { selectedPreset } = await prompts({
     type: "select",
@@ -221,10 +217,10 @@ export async function promptForPreset(options: {
         value: "custom",
       },
     ],
-  })
+  });
 
   if (!selectedPreset) {
-    process.exit(1)
+    process.exit(1);
   }
 
   if (selectedPreset === "custom") {
@@ -233,33 +229,29 @@ export async function promptForPreset(options: {
       rtl: options.rtl,
       base: options.base,
       ...(options.template && { template: options.template }),
-    })
-    logger.break()
-    logger.log(`  Build your custom preset on ${highlighter.info(createUrl)}`)
-    logger.log(
-      `  Then ${highlighter.info(
-        "copy and run the command"
-      )} from ui.shadcn.com.`
-    )
-    logger.break()
+    });
+    logger.break();
+    logger.log(`  Build your custom preset on ${highlighter.info(createUrl)}`);
+    logger.log(`  Then ${highlighter.info("copy and run the command")} from ui.shadcn.com.`);
+    logger.break();
 
     const { proceed } = await prompts({
       type: "confirm",
       name: "proceed",
       message: "Open in browser?",
       initial: true,
-    })
+    });
 
     if (proceed) {
-      await open(createUrl)
+      await open(createUrl);
     }
 
-    process.exit(0)
+    process.exit(0);
   }
 
-  const preset = DEFAULT_PRESETS[selectedPreset as keyof typeof DEFAULT_PRESETS]
+  const preset = DEFAULT_PRESETS[selectedPreset as keyof typeof DEFAULT_PRESETS];
   if (!preset) {
-    process.exit(1)
+    process.exit(1);
   }
 
   return {
@@ -270,14 +262,14 @@ export async function promptForPreset(options: {
       }
     ),
     base: options.base,
-  }
+  };
 }
 
 export async function resolveRegistryBaseConfig(
   initUrl: string,
   cwd: string,
   options?: {
-    registries?: z.infer<typeof registryConfigSchema>
+    registries?: z.infer<typeof registryConfigSchema>;
   }
 ) {
   // Use a shadow config to fetch the registry:base item.
@@ -288,49 +280,45 @@ export async function resolveRegistryBaseConfig(
       },
       ...(options?.registries && { registries: options.registries }),
     })
-  )
+  );
 
   // Ensure all registries used in the init URL are configured.
-  const { config: updatedConfig } = await ensureRegistriesInConfig(
-    [initUrl],
-    shadowConfig,
-    {
-      silent: true,
-      writeFile: false,
-    }
-  )
-  shadowConfig = updatedConfig
+  const { config: updatedConfig } = await ensureRegistriesInConfig([initUrl], shadowConfig, {
+    silent: true,
+    writeFile: false,
+  });
+  shadowConfig = updatedConfig;
 
   // This forces a shadowConfig validation early in the process.
-  buildUrlAndHeadersForRegistryItem(initUrl, shadowConfig)
+  buildUrlAndHeadersForRegistryItem(initUrl, shadowConfig);
 
   const [item] = await getRegistryItems([initUrl], {
     config: shadowConfig,
     useCache: true,
-  })
+  });
 
   const registryBaseConfig =
-    item?.type === "registry:base" && item.config ? item.config : undefined
+    item?.type === "registry:base" && item.config ? item.config : undefined;
 
   // Strip the track param so subsequent fetches don't re-trigger tracking.
-  let cleanUrl = initUrl
+  let cleanUrl = initUrl;
   if (isShadcnInitUrl(initUrl)) {
-    const url = new URL(initUrl)
-    url.searchParams.delete("track")
-    cleanUrl = url.toString()
+    const url = new URL(initUrl);
+    url.searchParams.delete("track");
+    cleanUrl = url.toString();
   }
 
   return {
     registryBaseConfig,
     installStyleIndex: item?.extends !== "none",
     url: cleanUrl,
-  }
+  };
 }
 
 function isShadcnInitUrl(url: string) {
   try {
-    return new URL(url).pathname === "/init" && url.startsWith(SHADCN_URL)
+    return new URL(url).pathname === "/init" && url.startsWith(SHADCN_URL);
   } catch {
-    return false
+    return false;
   }
 }

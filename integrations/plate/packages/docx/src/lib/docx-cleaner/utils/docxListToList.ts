@@ -1,10 +1,10 @@
-import { parseHtmlElement } from 'platejs';
+import { parseHtmlElement } from "platejs";
 
-import { getDocxListContentHtml } from './getDocxListContentHtml';
-import { getDocxListIndent } from './getDocxListIndent';
-import { isDocxBookmark } from './isDocxBookmark';
-import { isDocxList } from './isDocxList';
-import { isDocxOl } from './isDocxOl';
+import { getDocxListContentHtml } from "./getDocxListContentHtml";
+import { getDocxListIndent } from "./getDocxListIndent";
+import { isDocxBookmark } from "./isDocxBookmark";
+import { isDocxList } from "./isDocxList";
+import { isDocxOl } from "./isDocxOl";
 
 type Result = {
   list: Element | null;
@@ -13,7 +13,7 @@ type Result = {
 
 export const docxListToList = (element: Element): Result => {
   const listLevel = getDocxListIndent(element);
-  let listHtml = '';
+  let listHtml = "";
   let nextSibling: Element | null = element;
 
   while (nextSibling) {
@@ -50,7 +50,7 @@ export const docxListToList = (element: Element): Result => {
     currentElement.remove();
   }
 
-  const listTagName = isDocxOl(element) ? 'ol' : 'ul';
+  const listTagName = isDocxOl(element) ? "ol" : "ul";
   const list = parseHtmlElement(`<${listTagName}>${listHtml}</${listTagName}>`);
 
   return { list, nextSibling };

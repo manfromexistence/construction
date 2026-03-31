@@ -1,4 +1,4 @@
-import { OrbitingCircles } from "@/registry/magicui/orbiting-circles"
+import { OrbitingCircles } from "@/registry/magicui/orbiting-circles";
 
 export default function OrbitingCirclesDemo() {
   return (
@@ -17,7 +17,7 @@ export default function OrbitingCirclesDemo() {
         <Icons.googleDrive />
       </OrbitingCircles>
     </div>
-  )
+  );
 }
 
 const Icons = {
@@ -61,12 +61,7 @@ const Icons = {
     </svg>
   ),
   googleDrive: () => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 87.3 78"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="100" height="100" viewBox="0 0 87.3 78" xmlns="http://www.w3.org/2000/svg">
       <path
         d="m6.6 66.85 3.85 6.65c.8 1.4 1.95 2.5 3.3 3.3l13.75-23.8h-27.5c0 1.55.4 3.1 1.2 4.5z"
         fill="#0066da"
@@ -94,12 +89,7 @@ const Icons = {
     </svg>
   ),
   whatsapp: () => (
-    <svg
-      width="100"
-      height="100"
-      viewBox="0 0 175.216 175.552"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="100" height="100" viewBox="0 0 175.216 175.552" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient
           id="b"
@@ -147,4 +137,4 @@ const Icons = {
       />
     </svg>
   ),
-}
+};

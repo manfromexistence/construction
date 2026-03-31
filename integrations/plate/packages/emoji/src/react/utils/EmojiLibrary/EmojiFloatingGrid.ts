@@ -1,11 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import {
-  type EmojiCategoryList,
-  type IGrid,
-  AGridSection,
-  Grid,
-} from '../../../lib';
+import { AGridSection, type EmojiCategoryList, Grid, type IGrid } from "../../../lib";
 
 export type EmojiFloatingGridType = IGrid<
   React.RefObject<HTMLDivElement | null>,

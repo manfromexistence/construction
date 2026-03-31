@@ -1,20 +1,16 @@
-"use client"
+"use client";
 
-import { ChevronDownIcon } from "lucide-react"
+import { ChevronDownIcon } from "lucide-react";
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/registry/new-york-v4/ui/avatar"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { Avatar, AvatarFallback, AvatarImage } from "@/registry/new-york-v4/ui/avatar";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/registry/new-york-v4/ui/card"
+} from "@/registry/new-york-v4/ui/card";
 import {
   Command,
   CommandEmpty,
@@ -22,7 +18,7 @@ import {
   CommandInput,
   CommandItem,
   CommandList,
-} from "@/registry/new-york-v4/ui/command"
+} from "@/registry/new-york-v4/ui/command";
 import {
   Item,
   ItemActions,
@@ -30,12 +26,8 @@ import {
   ItemDescription,
   ItemGroup,
   ItemTitle,
-} from "@/registry/new-york-v4/ui/item"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/registry/new-york-v4/ui/popover"
+} from "@/registry/new-york-v4/ui/item";
+import { Popover, PopoverContent, PopoverTrigger } from "@/registry/new-york-v4/ui/popover";
 
 const teamMembers = [
   {
@@ -56,7 +48,7 @@ const teamMembers = [
     avatar: "/avatars/03.png",
     role: "Billing",
   },
-]
+];
 
 const roles = [
   {
@@ -75,16 +67,14 @@ const roles = [
     name: "Owner",
     description: "Admin-level access to all resources.",
   },
-]
+];
 
 export function CardsTeamMembers() {
   return (
     <Card className="gap-4">
       <CardHeader>
         <CardTitle>Team Members</CardTitle>
-        <CardDescription>
-          Invite your team members to collaborate.
-        </CardDescription>
+        <CardDescription>Invite your team members to collaborate.</CardDescription>
       </CardHeader>
       <CardContent>
         <ItemGroup>
@@ -101,11 +91,7 @@ export function CardsTeamMembers() {
               <ItemActions>
                 <Popover>
                   <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="ml-auto shadow-none"
-                    >
+                    <Button variant="outline" size="sm" className="ml-auto shadow-none">
                       {member.role} <ChevronDownIcon />
                     </Button>
                   </PopoverTrigger>
@@ -118,9 +104,7 @@ export function CardsTeamMembers() {
                           {roles.map((role) => (
                             <CommandItem key={role.name}>
                               <div className="flex flex-col">
-                                <span className="text-sm font-medium">
-                                  {role.name}
-                                </span>
+                                <span className="text-sm font-medium">{role.name}</span>
                                 <span className="text-sm text-muted-foreground">
                                   {role.description}
                                 </span>
@@ -138,5 +122,5 @@ export function CardsTeamMembers() {
         </ItemGroup>
       </CardContent>
     </Card>
-  )
+  );
 }

@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Striped Pattern Demo",
   "description": "Example showing a background striped pattern made with SVGs.",
-  "registryDependencies": [
-    "@magicui/striped-pattern"
-  ],
+  "registryDependencies": ["@magicui/striped-pattern"],
   "files": [
     {
       "path": "registry/example/striped-pattern-demo.tsx",

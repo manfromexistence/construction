@@ -1,10 +1,8 @@
 import { CodeIcon, TerminalIcon } from "lucide-react";
 
 import { cn } from "@/utils/cn";
-
-import { CopyCode } from "./CopyCode";
-
 import { getFileContent } from "@/utils/get-file-content";
+import { CopyCode } from "./CopyCode";
 
 type CodeBlockProps = {
   fileName?: string;
@@ -27,22 +25,16 @@ export function CodeBlock({
     <div
       className={cn(
         "relative rounded-xl border border-neutral-300/50 bg-neutral-200/30 dark:border-neutral-800/60 dark:bg-neutral-900/40",
-        className,
+        className
       )}
     >
       {fileName && copyCode && (
         <div className="relative flex h-10 items-center justify-between border-b border-neutral-300/50 bg-neutral-200/30 pl-4 pr-2.5 dark:border-neutral-800/60 dark:bg-neutral-900/30">
           <div className="flex items-center gap-2">
             {fileName === "Terminal" ? (
-              <TerminalIcon
-                size={14}
-                className="text-neutral-500 dark:text-neutral-600"
-              />
+              <TerminalIcon size={14} className="text-neutral-500 dark:text-neutral-600" />
             ) : (
-              <CodeIcon
-                size={14}
-                className="text-neutral-500 dark:text-neutral-600"
-              />
+              <CodeIcon size={14} className="text-neutral-500 dark:text-neutral-600" />
             )}
             <span className="text-[13px] font-medium leading-none text-neutral-500">
               {fileName}

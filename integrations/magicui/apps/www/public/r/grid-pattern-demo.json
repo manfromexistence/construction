@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Grid Pattern Demo",
   "description": "Example showing a background grid pattern made with SVGs.",
-  "registryDependencies": [
-    "@magicui/grid-pattern"
-  ],
+  "registryDependencies": ["@magicui/grid-pattern"],
   "files": [
     {
       "path": "registry/example/grid-pattern-demo.tsx",

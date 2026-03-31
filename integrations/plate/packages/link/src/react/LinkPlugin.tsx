@@ -1,10 +1,10 @@
-import { type ExtendConfig, type OmitFirst, bindFirst } from 'platejs';
-import { toTPlatePlugin } from 'platejs/react';
+import { bindFirst, type ExtendConfig, type OmitFirst } from "platejs";
+import { toTPlatePlugin } from "platejs/react";
 
-import { type BaseLinkConfig, BaseLinkPlugin } from '../lib';
-import { getLinkAttributes } from '../lib/utils';
+import { type BaseLinkConfig, BaseLinkPlugin } from "../lib";
+import { getLinkAttributes } from "../lib/utils";
 
-export type FloatingLinkMode = '' | 'edit' | 'insert';
+export type FloatingLinkMode = "" | "edit" | "insert";
 
 export type LinkConfig = ExtendConfig<
   BaseLinkConfig,
@@ -44,44 +44,44 @@ export type LinkConfig = ExtendConfig<
 export const LinkPlugin = toTPlatePlugin<LinkConfig>(BaseLinkPlugin, {
   options: {
     isEditing: false,
-    mode: '' as FloatingLinkMode,
+    mode: "" as FloatingLinkMode,
     mouseDown: false,
     newTab: false,
     openEditorId: null,
-    text: '',
-    triggerFloatingLinkHotkeys: 'meta+k, ctrl+k',
+    text: "",
+    triggerFloatingLinkHotkeys: "meta+k, ctrl+k",
     updated: false,
-    url: '',
+    url: "",
   },
 })
-  .extendEditorApi<Partial<LinkConfig['api']>>(({ editor }) => ({
+  .extendEditorApi<Partial<LinkConfig["api"]>>(({ editor }) => ({
     link: {
       getAttributes: bindFirst(getLinkAttributes, editor),
     },
   }))
-  .extendEditorApi<Partial<LinkConfig['api']>>(({ setOptions }) => ({
+  .extendEditorApi<Partial<LinkConfig["api"]>>(({ setOptions }) => ({
     floatingLink: {
       hide: () => {
         setOptions({
           isEditing: false,
-          mode: '' as FloatingLinkMode,
+          mode: "" as FloatingLinkMode,
           mouseDown: false,
           newTab: false,
           openEditorId: null,
-          text: '',
+          text: "",
           updated: false,
-          url: '',
+          url: "",
         });
       },
       reset: () => {
         setOptions({
           isEditing: false,
-          mode: '' as FloatingLinkMode,
+          mode: "" as FloatingLinkMode,
           mouseDown: false,
           newTab: false,
-          text: '',
+          text: "",
           updated: false,
-          url: '',
+          url: "",
         });
       },
       show: (mode: FloatingLinkMode, editorId: string) => {
@@ -93,6 +93,6 @@ export const LinkPlugin = toTPlatePlugin<LinkConfig>(BaseLinkPlugin, {
       },
     },
   }))
-  .extendSelectors<LinkConfig['selectors']>(({ getOptions }) => ({
+  .extendSelectors<LinkConfig["selectors"]>(({ getOptions }) => ({
     isOpen: (editorId) => getOptions().openEditorId === editorId,
   }));

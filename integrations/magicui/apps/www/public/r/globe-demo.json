@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Globe Demo",
   "description": "Example showing an autorotating, interactive WebGL globe.",
-  "registryDependencies": [
-    "@magicui/globe"
-  ],
+  "registryDependencies": ["@magicui/globe"],
   "files": [
     {
       "path": "registry/example/globe-demo.tsx",

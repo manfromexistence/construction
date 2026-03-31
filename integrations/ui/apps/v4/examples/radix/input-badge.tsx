@@ -1,6 +1,6 @@
-import { Badge } from "@/styles/radix-nova/ui/badge"
-import { Field, FieldLabel } from "@/styles/radix-nova/ui/field"
-import { Input } from "@/styles/radix-nova/ui/input"
+import { Badge } from "@/styles/radix-nova/ui/badge";
+import { Field, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { Input } from "@/styles/radix-nova/ui/input";
 
 export function InputBadge() {
   return (
@@ -11,11 +11,7 @@ export function InputBadge() {
           Beta
         </Badge>
       </FieldLabel>
-      <Input
-        id="input-badge"
-        type="url"
-        placeholder="https://api.example.com/webhook"
-      />
+      <Input id="input-badge" type="url" placeholder="https://api.example.com/webhook" />
     </Field>
-  )
+  );
 }

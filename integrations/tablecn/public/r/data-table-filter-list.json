@@ -3,21 +3,8 @@
   "name": "data-table-filter-list",
   "title": "Data Table Filter List",
   "description": "A filter list component for the data table",
-  "dependencies": [
-    "@tanstack/react-table",
-    "lucide-react",
-    "nanoid",
-    "nuqs"
-  ],
-  "registryDependencies": [
-    "badge",
-    "button",
-    "calendar",
-    "command",
-    "input",
-    "popover",
-    "select"
-  ],
+  "dependencies": ["@tanstack/react-table", "lucide-react", "nanoid", "nuqs"],
+  "registryDependencies": ["badge", "button", "calendar", "command", "input", "popover", "select"],
   "files": [
     {
       "path": "src/components/data-table/data-table-filter-list.tsx",

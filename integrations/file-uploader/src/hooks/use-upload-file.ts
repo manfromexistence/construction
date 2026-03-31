@@ -1,11 +1,11 @@
-import type { UploadedFile } from "@/types";
 import * as React from "react";
 import { toast } from "sonner";
+import { UploadThingError } from "uploadthing/server";
 import type { AnyFileRoute, UploadFilesOptions } from "uploadthing/types";
 
 import type { OurFileRouter } from "@/app/api/uploadthing/core";
 import { uploadFiles } from "@/lib/uploadthing";
-import { UploadThingError } from "uploadthing/server";
+import type { UploadedFile } from "@/types";
 
 interface UseUploadFileOptions<TFileRoute extends AnyFileRoute>
   extends Pick<
@@ -20,13 +20,10 @@ export function useUploadFile(
   {
     defaultUploadedFiles = [],
     ...props
-  }: UseUploadFileOptions<OurFileRouter[keyof OurFileRouter]> = {},
+  }: UseUploadFileOptions<OurFileRouter[keyof OurFileRouter]> = {}
 ) {
-  const [uploadedFiles, setUploadedFiles] =
-    React.useState<UploadedFile[]>(defaultUploadedFiles);
-  const [progresses, setProgresses] = React.useState<Record<string, number>>(
-    {},
-  );
+  const [uploadedFiles, setUploadedFiles] = React.useState<UploadedFile[]>(defaultUploadedFiles);
+  const [progresses, setProgresses] = React.useState<Record<string, number>>({});
   const [isUploading, setIsUploading] = React.useState(false);
 
   async function onUpload(files: File[]) {
@@ -49,16 +46,12 @@ export function useUploadFile(
     } catch (error) {
       if (error instanceof UploadThingError) {
         const errorMessage =
-          error.data && "error" in error.data
-            ? error.data.error
-            : "Upload failed";
+          error.data && "error" in error.data ? error.data.error : "Upload failed";
         toast.error(errorMessage);
         return;
       }
 
-      toast.error(
-        error instanceof Error ? error.message : "An unknown error occurred",
-      );
+      toast.error(error instanceof Error ? error.message : "An unknown error occurred");
     } finally {
       setProgresses({});
       setIsUploading(false);

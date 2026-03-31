@@ -1,4 +1,4 @@
-import type { Path, TNode, TText } from '@platejs/slate';
+import type { Path, TNode, TText } from "@platejs/slate";
 
 /** A weak map to hold anchor tokens. */
 
@@ -59,9 +59,7 @@ export const addAnchorToken = (text: TText, token: AnchorToken) => {
 
 /** Get the offset if a text node has an associated anchor token. */
 
-export const getAnchorOffset = (
-  text: TText
-): [number, AnchorToken] | undefined => ANCHOR.get(text);
+export const getAnchorOffset = (text: TText): [number, AnchorToken] | undefined => ANCHOR.get(text);
 
 /** Add a focus token to the end of a text node. */
 
@@ -72,5 +70,4 @@ export const addFocusToken = (text: TText, token: FocusToken) => {
 
 /** Get the offset if a text node has an associated focus token. */
 
-export const getFocusOffset = (text: TText): [number, FocusToken] | undefined =>
-  FOCUS.get(text);
+export const getFocusOffset = (text: TText): [number, FocusToken] | undefined => FOCUS.get(text);

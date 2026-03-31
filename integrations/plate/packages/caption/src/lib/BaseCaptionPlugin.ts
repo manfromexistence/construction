@@ -1,14 +1,9 @@
-import {
-  type Path,
-  type PluginConfig,
-  createTSlatePlugin,
-  KEYS,
-} from 'platejs';
+import { createTSlatePlugin, KEYS, type Path, type PluginConfig } from "platejs";
 
-import { withCaption } from './withCaption';
+import { withCaption } from "./withCaption";
 
 export type CaptionConfig = PluginConfig<
-  'caption',
+  "caption",
   {
     /** When defined, focus end of caption textarea with the same path. */
     focusEndPath: Path | null;
@@ -38,7 +33,7 @@ export const BaseCaptionPlugin = createTSlatePlugin<CaptionConfig>({
     visibleId: null,
   },
 })
-  .extendSelectors<CaptionConfig['selectors']>(({ getOptions }) => ({
+  .extendSelectors<CaptionConfig["selectors"]>(({ getOptions }) => ({
     isVisible: (elementId) => getOptions().visibleId === elementId,
   }))
   .overrideEditor(withCaption);

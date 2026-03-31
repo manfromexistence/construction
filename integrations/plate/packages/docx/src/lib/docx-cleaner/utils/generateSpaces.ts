@@ -1,7 +1,7 @@
-import { SPACE, TAB } from 'platejs';
+import { SPACE, TAB } from "platejs";
 
 export const generateSpaces = (count: number): string =>
-  Array.from({ length: count }, () => SPACE).join('');
+  Array.from({ length: count }, () => SPACE).join("");
 
 export const generateTabs = (count: number): string =>
-  Array.from({ length: count }, () => TAB).join('');
+  Array.from({ length: count }, () => TAB).join("");

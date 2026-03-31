@@ -4,9 +4,7 @@
   "type": "registry:ui",
   "title": "Scroll Based Velocity",
   "description": "Scrolling text whose speed changes based on scroll speed",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "registry/magicui/scroll-based-velocity.tsx",

@@ -1,8 +1,6 @@
 {
   "name": "angle-slider-range-demo",
-  "registryDependencies": [
-    "angle-slider"
-  ],
+  "registryDependencies": ["angle-slider"],
   "files": [
     {
       "path": "examples/angle-slider-range-demo.tsx",

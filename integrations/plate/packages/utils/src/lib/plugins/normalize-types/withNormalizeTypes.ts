@@ -1,8 +1,8 @@
-import type { OverrideEditor } from '@platejs/core';
+import type { OverrideEditor } from "@platejs/core";
 
-import { ElementApi, NodeApi, type TElement } from '@platejs/slate';
+import { ElementApi, NodeApi, type TElement } from "@platejs/slate";
 
-import type { NormalizeTypesConfig } from './NormalizeTypesPlugin';
+import type { NormalizeTypesConfig } from "./NormalizeTypesPlugin";
 
 export const withNormalizeTypes: OverrideEditor<NormalizeTypesConfig> = ({
   editor,
@@ -14,41 +14,34 @@ export const withNormalizeTypes: OverrideEditor<NormalizeTypesConfig> = ({
       const { rules, onError } = getOptions();
 
       if (currentPath.length === 0) {
-        const endCurrentNormalizationPass = rules!.some(
-          ({ path, strictType, type }) => {
-            const node = NodeApi.get<TElement>(editor, path);
+        const endCurrentNormalizationPass = rules!.some(({ path, strictType, type }) => {
+          const node = NodeApi.get<TElement>(editor, path);
 
-            if (node) {
-              if (
-                strictType &&
-                ElementApi.isElement(node) &&
-                node.type !== strictType
-              ) {
-                const { children, ...props } = editor.api.create.block({
-                  type: strictType,
-                });
-                editor.tf.setNodes(props, {
-                  at: path,
-                });
+          if (node) {
+            if (strictType && ElementApi.isElement(node) && node.type !== strictType) {
+              const { children, ...props } = editor.api.create.block({
+                type: strictType,
+              });
+              editor.tf.setNodes(props, {
+                at: path,
+              });
 
-                return true;
-              }
-            } else {
-              try {
-                editor.tf.insertNodes(
-                  editor.api.create.block({ type: strictType ?? type! }),
-                  { at: path }
-                );
-
-                return true;
-              } catch (error) {
-                onError?.(error);
-              }
+              return true;
             }
+          } else {
+            try {
+              editor.tf.insertNodes(editor.api.create.block({ type: strictType ?? type! }), {
+                at: path,
+              });
 
-            return false;
+              return true;
+            } catch (error) {
+              onError?.(error);
+            }
           }
-        );
+
+          return false;
+        });
 
         if (endCurrentNormalizationPass) {
           return;

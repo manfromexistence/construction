@@ -2,11 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "autoformat-kit",
   "type": "registry:component",
-  "dependencies": [
-    "@platejs/autoformat",
-    "@platejs/code-block",
-    "@platejs/list"
-  ],
+  "dependencies": ["@platejs/autoformat", "@platejs/code-block", "@platejs/list"],
   "files": [
     {
       "path": "src/registry/components/editor/plugins/autoformat-kit.tsx",

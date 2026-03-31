@@ -1,25 +1,10 @@
-import React from 'react';
+import { KEYS, type TMediaElement, type TResizableElement } from "platejs";
+import { useEditorRef, useElement, useFocused, useReadOnly, useSelected } from "platejs/react";
+import React from "react";
+import { type EmbedUrlParser, parseMediaUrl } from "../../lib/media/parseMediaUrl";
+import { VIDEO_PROVIDERS } from "../../lib/media-embed";
 
-import { type TMediaElement, type TResizableElement, KEYS } from 'platejs';
-import {
-  useEditorRef,
-  useElement,
-  useFocused,
-  useReadOnly,
-  useSelected,
-} from 'platejs/react';
-
-import { VIDEO_PROVIDERS } from '../../lib/media-embed';
-import {
-  type EmbedUrlParser,
-  parseMediaUrl,
-} from '../../lib/media/parseMediaUrl';
-
-export const useMediaState = ({
-  urlParsers,
-}: {
-  urlParsers?: EmbedUrlParser[];
-} = {}) => {
+export const useMediaState = ({ urlParsers }: { urlParsers?: EmbedUrlParser[] } = {}) => {
   const editor = useEditorRef();
   const element = useElement<TMediaElement & TResizableElement>();
   const focused = useFocused();
@@ -31,8 +16,7 @@ export const useMediaState = ({
   const embed = React.useMemo(() => {
     if (
       !urlParsers ||
-      (type !== editor.getType(KEYS.video) &&
-        type !== editor.getType(KEYS.mediaEmbed))
+      (type !== editor.getType(KEYS.video) && type !== editor.getType(KEYS.mediaEmbed))
     )
       return;
 
@@ -40,9 +24,9 @@ export const useMediaState = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlParsers, url]);
 
-  const isTweet = embed?.provider === 'twitter';
+  const isTweet = embed?.provider === "twitter";
   const isVideo = !!embed?.provider && VIDEO_PROVIDERS.includes(embed.provider);
-  const isYoutube = embed?.provider === 'youtube';
+  const isYoutube = embed?.provider === "youtube";
 
   return {
     id,

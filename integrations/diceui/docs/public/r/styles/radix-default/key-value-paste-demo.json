@@ -1,11 +1,7 @@
 {
   "name": "key-value-paste-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "key-value"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["key-value"],
   "files": [
     {
       "path": "examples/key-value-paste-demo.tsx",

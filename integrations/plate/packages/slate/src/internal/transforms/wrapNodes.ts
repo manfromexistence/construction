@@ -1,15 +1,9 @@
-import { wrapNodes as wrapNodesBase } from 'slate';
+import { wrapNodes as wrapNodesBase } from "slate";
 
-import type {
-  Editor,
-  ElementOf,
-  TElement,
-  ValueOf,
-  WrapNodesOptions,
-} from '../../interfaces';
+import type { Editor, ElementOf, TElement, ValueOf, WrapNodesOptions } from "../../interfaces";
 
-import { NodeApi, PathApi } from '../../interfaces';
-import { getQueryOptions } from '../../utils';
+import { NodeApi, PathApi } from "../../interfaces";
+import { getQueryOptions } from "../../utils";
 
 export const wrapNodes = <N extends ElementOf<E>, E extends Editor = Editor>(
   editor: E,

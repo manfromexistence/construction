@@ -1,13 +1,13 @@
 import {
   type At,
+  KEYS,
+  NodeApi,
   type SlateEditor,
   type TColumnElement,
   type TColumnGroupElement,
-  NodeApi,
-} from 'platejs';
-import { KEYS } from 'platejs';
+} from "platejs";
 
-import { columnsToWidths } from '../utils/columnsToWidths';
+import { columnsToWidths } from "../utils/columnsToWidths";
 
 export const setColumns = (
   editor: SlateEditor,
@@ -74,10 +74,7 @@ export const setColumns = (
       // Need fewer columns than we have: merge extra columns into the last kept column
       const keepColumnIndex = targetCount - 1;
       const keepColumnPath = path.concat([keepColumnIndex]);
-      const keepColumnNode = NodeApi.get<TColumnElement>(
-        editor,
-        keepColumnPath
-      );
+      const keepColumnNode = NodeApi.get<TColumnElement>(editor, keepColumnPath);
 
       if (!keepColumnNode) return;
 

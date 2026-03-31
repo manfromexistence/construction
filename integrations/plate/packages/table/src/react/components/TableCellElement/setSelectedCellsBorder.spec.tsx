@@ -1,17 +1,16 @@
 /** @jsx jsx */
 
-import { jsx } from '@platejs/test-utils';
-import { type SlateEditor, createSlateEditor } from 'platejs';
-
-import * as setBorderSizeModule from '../../../lib/transforms/setBorderSize';
-import * as utilsModule from '../../../lib/utils';
-import * as getTopTableCellModule from '../../../lib/queries/getTopTableCell';
-import * as getLeftTableCellModule from '../../../lib/queries/getLeftTableCell';
-import { setSelectedCellsBorder } from './getOnSelectTableBorderFactory';
+import { jsx } from "@platejs/test-utils";
+import { createSlateEditor, type SlateEditor } from "platejs";
+import * as getLeftTableCellModule from "../../../lib/queries/getLeftTableCell";
+import * as getTopTableCellModule from "../../../lib/queries/getTopTableCell";
+import * as setBorderSizeModule from "../../../lib/transforms/setBorderSize";
+import * as utilsModule from "../../../lib/utils";
+import { setSelectedCellsBorder } from "./getOnSelectTableBorderFactory";
 
 jsx;
 
-describe('setSelectedCellsBorder', () => {
+describe("setSelectedCellsBorder", () => {
   let editor: SlateEditor;
   let setBorderSizeSpy: ReturnType<typeof spyOn>;
   let getCellIndicesSpy: ReturnType<typeof spyOn>;
@@ -29,16 +28,16 @@ describe('setSelectedCellsBorder', () => {
     setBorderSizeMock = mock();
     getCellIndicesMock = mock((_editor, element: any) => {
       switch (element.id) {
-        case 'c11': {
+        case "c11": {
           return { col: 0, row: 0 };
         }
-        case 'c12': {
+        case "c12": {
           return { col: 1, row: 0 };
         }
-        case 'c21': {
+        case "c21": {
           return { col: 0, row: 1 };
         }
-        case 'c22': {
+        case "c22": {
           return { col: 1, row: 1 };
         }
         default: {
@@ -46,29 +45,26 @@ describe('setSelectedCellsBorder', () => {
         }
       }
     });
-    getCellTypesMock = mock(() => ['td']);
+    getCellTypesMock = mock(() => ["td"]);
     getTopTableCellMock = mock();
     getLeftTableCellMock = mock();
 
     // Create spies
-    setBorderSizeSpy = spyOn(
-      setBorderSizeModule,
-      'setBorderSize'
-    ).mockImplementation(setBorderSizeMock as any);
-    getCellIndicesSpy = spyOn(utilsModule, 'getCellIndices').mockImplementation(
+    setBorderSizeSpy = spyOn(setBorderSizeModule, "setBorderSize").mockImplementation(
+      setBorderSizeMock as any
+    );
+    getCellIndicesSpy = spyOn(utilsModule, "getCellIndices").mockImplementation(
       getCellIndicesMock as any
     );
-    getCellTypesSpy = spyOn(utilsModule, 'getCellTypes').mockImplementation(
+    getCellTypesSpy = spyOn(utilsModule, "getCellTypes").mockImplementation(
       getCellTypesMock as any
     );
-    getTopTableCellSpy = spyOn(
-      getTopTableCellModule,
-      'getTopTableCell'
-    ).mockImplementation(getTopTableCellMock as any);
-    getLeftTableCellSpy = spyOn(
-      getLeftTableCellModule,
-      'getLeftTableCell'
-    ).mockImplementation(getLeftTableCellMock as any);
+    getTopTableCellSpy = spyOn(getTopTableCellModule, "getTopTableCell").mockImplementation(
+      getTopTableCellMock as any
+    );
+    getLeftTableCellSpy = spyOn(getLeftTableCellModule, "getLeftTableCell").mockImplementation(
+      getLeftTableCellMock as any
+    );
 
     editor = createSlateEditor({ nodeId: true });
     const findPathMock = mock(() => [0]);
@@ -84,100 +80,100 @@ describe('setSelectedCellsBorder', () => {
   });
 
   describe('when border is "outer"', () => {
-    it('set outer borders to 1 when not all set', () => {
+    it("set outer borders to 1 when not all set", () => {
       const cell1: any = {
-        id: 'c11',
+        id: "c11",
         borders: { left: { size: 0 }, top: { size: 0 } },
       };
       const cell2: any = {
-        id: 'c12',
+        id: "c12",
         borders: { right: { size: 0 }, top: { size: 0 } },
       };
 
       setSelectedCellsBorder(editor, {
-        border: 'outer',
+        border: "outer",
         cells: [cell1, cell2],
       });
 
       // Should set top borders for both cells
       expect(setBorderSizeMock).toHaveBeenCalledWith(editor, 1, {
         at: [0],
-        border: 'top',
+        border: "top",
       });
       expect(setBorderSizeMock).toHaveBeenCalledWith(editor, 1, {
         at: [0],
-        border: 'left',
+        border: "left",
       });
     });
 
-    it('set outer borders to 0 when all set', () => {
+    it("set outer borders to 0 when all set", () => {
       const cell1: any = {
-        id: 'c11',
+        id: "c11",
         borders: { left: { size: 1 }, top: { size: 1 } },
       };
       const cell2: any = {
-        id: 'c12',
+        id: "c12",
         borders: { right: { size: 1 }, top: { size: 1 } },
       };
 
       setSelectedCellsBorder(editor, {
-        border: 'outer',
+        border: "outer",
         cells: [cell1, cell2],
       });
 
       expect(setBorderSizeMock).toHaveBeenCalledWith(editor, 0, {
         at: [0],
-        border: 'top',
+        border: "top",
       });
     });
   });
 
-  describe('when border is a direction', () => {
-    it('set border to 1 when not all set', () => {
+  describe("when border is a direction", () => {
+    it("set border to 1 when not all set", () => {
       const cell1: any = {
-        id: 'c11',
+        id: "c11",
         borders: { top: { size: 0 } },
       };
       const cell2: any = {
-        id: 'c12',
+        id: "c12",
         borders: { top: { size: 0 } },
       };
 
       setSelectedCellsBorder(editor, {
-        border: 'top',
+        border: "top",
         cells: [cell1, cell2],
       });
 
       expect(setBorderSizeMock).toHaveBeenCalledWith(editor, 1, {
         at: [0],
-        border: 'top',
+        border: "top",
       });
     });
 
-    it('set border to 0 when all set', () => {
+    it("set border to 0 when all set", () => {
       const cell1: any = {
-        id: 'c11',
+        id: "c11",
         borders: { top: { size: 1 } },
       };
       const cell2: any = {
-        id: 'c12',
+        id: "c12",
         borders: { top: { size: 1 } },
       };
 
       setSelectedCellsBorder(editor, {
-        border: 'top',
+        border: "top",
         cells: [cell1, cell2],
       });
 
       expect(setBorderSizeMock).toHaveBeenCalledWith(editor, 0, {
         at: [0],
-        border: 'top',
+        border: "top",
       });
     });
 
-    it('handle adjacent cells for top/left borders', () => {
+    it("handle adjacent cells for top/left borders", () => {
       const cell: any = {
-        id: 'c22',
+        id: "c22",
         borders: { top: { size: 0 } },
       };
       const cellAbove: any = {
@@ -186,13 +182,13 @@ describe('setSelectedCellsBorder', () => {
       getTopTableCellMock.mockReturnValue([cellAbove, [0]]);
 
       setSelectedCellsBorder(editor, {
-        border: 'top',
+        border: "top",
         cells: [cell],
       });
 
       expect(setBorderSizeMock).toHaveBeenCalledWith(editor, 1, {
         at: [0],
-        border: 'bottom',
+        border: "bottom",
       });
     });
   });

@@ -1,12 +1,12 @@
-import type { Descendant } from '@platejs/slate';
+import type { Descendant } from "@platejs/slate";
 
-import { jsx } from 'slate-hyperscript';
+import { jsx } from "slate-hyperscript";
 
-import type { SlateEditor } from '../../../editor';
+import type { SlateEditor } from "../../../editor";
 
-import { isSlateVoid } from '../../../utils/checkUtils';
-import { deserializeHtmlNodeChildren } from './deserializeHtmlNodeChildren';
-import { pipeDeserializeHtmlElement } from './pipeDeserializeHtmlElement';
+import { isSlateVoid } from "../../../utils/checkUtils";
+import { deserializeHtmlNodeChildren } from "./deserializeHtmlNodeChildren";
+import { pipeDeserializeHtmlElement } from "./pipeDeserializeHtmlElement";
 
 /** Deserialize HTML to Element. */
 export const htmlElementToElement = (
@@ -20,13 +20,12 @@ export const htmlElementToElement = (
     const { node, withoutChildren } = deserialized;
 
     let descendants =
-      node.children ??
-      (deserializeHtmlNodeChildren(editor, element, isSlate) as Descendant[]);
+      node.children ?? (deserializeHtmlNodeChildren(editor, element, isSlate) as Descendant[]);
 
     if (descendants.length === 0 || withoutChildren || isSlateVoid(element)) {
-      descendants = [{ text: '' }];
+      descendants = [{ text: "" }];
     }
 
-    return jsx('element', node, descendants) as Descendant;
+    return jsx("element", node, descendants) as Descendant;
   }
 };

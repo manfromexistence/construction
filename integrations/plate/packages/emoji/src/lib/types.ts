@@ -19,16 +19,16 @@ export type EmojiSettingsType = {
 type ReverseMap<T> = T[keyof T];
 
 export const EmojiCategory = {
-  Activity: 'activity',
-  Custom: 'custom',
-  Flags: 'flags',
-  Foods: 'foods',
-  Frequent: 'frequent',
-  Nature: 'nature',
-  Objects: 'objects',
-  People: 'people',
-  Places: 'places',
-  Symbols: 'symbols',
+  Activity: "activity",
+  Custom: "custom",
+  Flags: "flags",
+  Foods: "foods",
+  Frequent: "frequent",
+  Nature: "nature",
+  Objects: "objects",
+  People: "people",
+  Places: "places",
+  Symbols: "symbols",
 } as const;
 
 export type EmojiCategoryList = ReverseMap<typeof EmojiCategory>;
@@ -51,5 +51,5 @@ export type i18nProps = {
   searchNoResultsSubtitle: string;
   searchNoResultsTitle: string;
   searchResult: string;
-  skins: Record<'1' | '2' | '3' | '4' | '5' | '6' | 'choose', string>;
+  skins: Record<"1" | "2" | "3" | "4" | "5" | "6" | "choose", string>;
 };

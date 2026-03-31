@@ -1,8 +1,8 @@
-import type { InsertNodesOptions, SlateEditor } from 'platejs';
+import type { InsertNodesOptions, SlateEditor } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { insertImage, insertMediaEmbed } from '../..';
+import { insertImage, insertMediaEmbed } from "../..";
 
 export interface InsertMediaOptions extends InsertNodesOptions {
   /**
@@ -16,18 +16,12 @@ export interface InsertMediaOptions extends InsertNodesOptions {
 
 export const insertMedia = async <E extends SlateEditor>(
   editor: E,
-  {
-    getUrl,
-    type = editor.getType(KEYS.img),
-    ...options
-  }: InsertMediaOptions = {}
+  { getUrl, type = editor.getType(KEYS.img), ...options }: InsertMediaOptions = {}
 ) => {
   const url = getUrl
     ? await getUrl()
     : // biome-ignore lint/suspicious/noAlert: intentional user input for media URL
-      window.prompt(
-        `Enter the URL of the ${type === KEYS.img ? KEYS.img : KEYS.mediaEmbed}`
-      );
+      window.prompt(`Enter the URL of the ${type === KEYS.img ? KEYS.img : KEYS.mediaEmbed}`);
 
   if (!url) return;
   if (type === editor.getType(KEYS.img)) {

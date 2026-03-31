@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { ThemeEditorState } from "@/types/editor";
 import { defaultThemeState } from "@/config/theme";
-import { getPresetThemeStyles } from "@/utils/theme-preset-helper";
 import { isDeepEqual } from "@/lib/utils";
+import { ThemeEditorState } from "@/types/editor";
+import { getPresetThemeStyles } from "@/utils/theme-preset-helper";
 
 const MAX_HISTORY_COUNT = 30;
 const HISTORY_OVERRIDE_THRESHOLD_MS = 500; // 0.5 seconds
@@ -97,7 +97,7 @@ export const useEditorStore = create<EditorStore>()(
         };
 
         const newHistoryEntry = { state: currentThemeState, timestamp: currentTime };
-        let updatedHistory = [...oldHistory, newHistoryEntry];
+        const updatedHistory = [...oldHistory, newHistoryEntry];
         if (updatedHistory.length > MAX_HISTORY_COUNT) {
           updatedHistory.shift();
         }
@@ -120,7 +120,7 @@ export const useEditorStore = create<EditorStore>()(
           const currentTime = Date.now();
 
           const newHistoryEntry = { state: oldThemeState, timestamp: currentTime };
-          let updatedHistory = [...oldHistory, newHistoryEntry];
+          const updatedHistory = [...oldHistory, newHistoryEntry];
           if (updatedHistory.length > MAX_HISTORY_COUNT) {
             updatedHistory.shift();
           }
@@ -206,7 +206,7 @@ export const useEditorStore = create<EditorStore>()(
         const currentThemeState = get().themeState;
 
         const newHistoryEntry = { state: currentThemeState, timestamp: Date.now() };
-        let updatedHistory = [...history, newHistoryEntry];
+        const updatedHistory = [...history, newHistoryEntry];
         if (updatedHistory.length > MAX_HISTORY_COUNT) {
           updatedHistory.shift();
         }

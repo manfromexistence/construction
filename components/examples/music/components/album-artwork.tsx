@@ -1,6 +1,5 @@
-import * as React from "react";
 import { PlusCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import * as React from "react";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -11,6 +10,7 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
+import { cn } from "@/lib/utils";
 import { Album } from "../data/albums";
 import { playlists } from "../data/playlists";
 

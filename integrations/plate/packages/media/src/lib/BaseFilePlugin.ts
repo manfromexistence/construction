@@ -1,4 +1,4 @@
-import { createSlatePlugin, KEYS } from 'platejs';
+import { createSlatePlugin, KEYS } from "platejs";
 
 export const BaseFilePlugin = createSlatePlugin({
   key: KEYS.file,

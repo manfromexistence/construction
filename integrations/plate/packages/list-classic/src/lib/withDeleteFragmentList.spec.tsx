@@ -1,11 +1,10 @@
 /** @jsx jsxt */
 
-import type { SlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import type { SlateEditor } from "platejs";
+import { createSlateEditor } from "platejs";
 
-import { jsxt } from '@platejs/test-utils';
-import { createSlateEditor } from 'platejs';
-
-import { BaseListPlugin } from './BaseListPlugin';
+import { BaseListPlugin } from "./BaseListPlugin";
 
 jsxt;
 
@@ -16,8 +15,8 @@ const createListEditor = (input: SlateEditor) =>
     value: input.children,
   });
 
-describe('withDeleteFragmentList', () => {
-  it('falls back to normal deleteFragment when the selection is not across list items', () => {
+describe("withDeleteFragmentList", () => {
+  it("falls back to normal deleteFragment when the selection is not across list items", () => {
     const input = (
       <editor>
         <hp>
@@ -40,7 +39,7 @@ describe('withDeleteFragmentList', () => {
     expect(editor.children).toEqual(expected.children);
   });
 
-  it('merges sibling list items and removes the emptied end item', () => {
+  it("merges sibling list items and removes the emptied end item", () => {
     const input = (
       <editor>
         <hul>
@@ -82,7 +81,7 @@ describe('withDeleteFragmentList', () => {
     expect(editor.children).toEqual(expected.children);
   });
 
-  it('removes only the emptied nested list when the outer start list is protected', () => {
+  it("removes only the emptied nested list when the outer start list is protected", () => {
     const input = (
       <editor>
         <hul>

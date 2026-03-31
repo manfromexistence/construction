@@ -1,31 +1,26 @@
-"use client"
+"use client";
 
-import { PhoneIcon } from "lucide-react"
-import { useHotkeys } from "react-hotkeys-hook"
-import { toast } from "sonner"
-import { useWebHaptics } from "web-haptics/react"
+import { PhoneIcon } from "lucide-react";
+import { useHotkeys } from "react-hotkeys-hook";
+import { toast } from "sonner";
+import { useWebHaptics } from "web-haptics/react";
 
-import { useIsClient } from "@/hooks/use-is-client"
-import { trackEvent } from "@/lib/events"
-import { CopyButton } from "@/registry/components/copy-button"
-import { copyToClipboardWithEvent } from "@/utils/copy"
-import { decodePhoneNumber, formatPhoneNumber } from "@/utils/string"
+import { useIsClient } from "@/hooks/use-is-client";
+import { trackEvent } from "@/lib/events";
+import { CopyButton } from "@/registry/components/copy-button";
+import { copyToClipboardWithEvent } from "@/utils/copy";
+import { decodePhoneNumber, formatPhoneNumber } from "@/utils/string";
 
-import {
-  IntroItem,
-  IntroItemContent,
-  IntroItemIcon,
-  IntroItemLink,
-} from "./intro-item"
+import { IntroItem, IntroItemContent, IntroItemIcon, IntroItemLink } from "./intro-item";
 
 type PhoneItemProps = {
-  phoneNumber: string
-}
+  phoneNumber: string;
+};
 
 export function PhoneItem({ phoneNumber }: PhoneItemProps) {
-  const isClient = useIsClient()
-  const phoneNumberDecoded = decodePhoneNumber(phoneNumber)
-  const phoneNumberFormatted = formatPhoneNumber(phoneNumberDecoded)
+  const isClient = useIsClient();
+  const phoneNumberDecoded = decodePhoneNumber(phoneNumber);
+  const phoneNumberFormatted = formatPhoneNumber(phoneNumberDecoded);
 
   useHotkeys("shift+p", () => {
     copyToClipboardWithEvent(phoneNumberDecoded, {
@@ -34,11 +29,11 @@ export function PhoneItem({ phoneNumber }: PhoneItemProps) {
         method: "keyboard",
         key: "shift+p",
       },
-    })
-    toast.success("Phone number copied")
-  })
+    });
+    toast.success("Phone number copied");
+  });
 
-  const { trigger } = useWebHaptics({ debug: true })
+  const { trigger } = useWebHaptics({ debug: true });
 
   return (
     <IntroItem className="group">
@@ -49,9 +44,7 @@ export function PhoneItem({ phoneNumber }: PhoneItemProps) {
       <IntroItemContent>
         <IntroItemLink
           href={isClient ? `tel:${phoneNumberDecoded}` : "#"}
-          aria-label={
-            isClient ? `Call ${phoneNumberFormatted}` : "Phone number"
-          }
+          aria-label={isClient ? `Call ${phoneNumberFormatted}` : "Phone number"}
         >
           {isClient ? phoneNumberFormatted : "[Phone protected]"}
         </IntroItemLink>
@@ -64,17 +57,17 @@ export function PhoneItem({ phoneNumber }: PhoneItemProps) {
           size="icon-xs"
           text={isClient ? phoneNumberDecoded : "[Phone protected]"}
           onCopySuccess={() => {
-            trigger("success")
+            trigger("success");
             trackEvent({
               name: "copy_phone_number",
               properties: {
                 method: "button",
               },
-            })
+            });
           }}
           onCopyError={() => trigger("error")}
         />
       </div>
     </IntroItem>
-  )
+  );
 }

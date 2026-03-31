@@ -9,7 +9,7 @@ interface AuthStore {
   openAuthDialog: (
     mode?: "signin" | "signup",
     postLoginActionType?: PostLoginActionType,
-    postLoginActionData?: any
+    postLoginActionData?: unknown
   ) => void;
   closeAuthDialog: () => void;
   clearPostLoginAction: () => void;
@@ -24,7 +24,7 @@ export const useAuthStore = create<AuthStore>()(
       openAuthDialog: (
         newMode?: "signin" | "signup",
         postLoginActionType?: PostLoginActionType,
-        postLoginActionData?: any
+        postLoginActionData?: unknown
       ) => {
         set((state) => ({
           isOpen: true,

@@ -1,6 +1,6 @@
-import type { TElement } from 'platejs';
+import type { TElement } from "platejs";
 
-import { getColSpan } from '../queries';
+import { getColSpan } from "../queries";
 
 export const getTableMergedColumnCount = (tableNode: TElement) =>
   (tableNode.children as TElement[])?.[0]?.children?.reduce(

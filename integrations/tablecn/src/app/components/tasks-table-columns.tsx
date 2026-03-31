@@ -1,14 +1,7 @@
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
-import {
-  ArrowUpDown,
-  CalendarIcon,
-  CircleDashed,
-  Clock,
-  Ellipsis,
-  Text,
-} from "lucide-react";
+import { ArrowUpDown, CalendarIcon, CircleDashed, Clock, Ellipsis, Text } from "lucide-react";
 import * as React from "react";
 import { toast } from "sonner";
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header";
@@ -39,9 +32,7 @@ interface GetTasksTableColumnsProps {
   statusCounts: Record<Task["status"], number>;
   priorityCounts: Record<Task["priority"], number>;
   estimatedHoursRange: { min: number; max: number };
-  setRowAction: React.Dispatch<
-    React.SetStateAction<DataTableRowAction<Task> | null>
-  >;
+  setRowAction: React.Dispatch<React.SetStateAction<DataTableRowAction<Task> | null>>;
 }
 
 export function getTasksTableColumns({
@@ -79,9 +70,7 @@ export function getTasksTableColumns({
     {
       id: "code",
       accessorKey: "code",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Task" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} label="Task" />,
       cell: ({ row }) => <div className="w-20">{row.getValue("code")}</div>,
       enableSorting: false,
       enableHiding: false,
@@ -89,20 +78,14 @@ export function getTasksTableColumns({
     {
       id: "title",
       accessorKey: "title",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Title" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} label="Title" />,
       cell: ({ row }) => {
-        const label = tasks.label.enumValues.find(
-          (label) => label === row.original.label,
-        );
+        const label = tasks.label.enumValues.find((label) => label === row.original.label);
 
         return (
           <div className="flex items-center gap-2">
             {label && <Badge variant="outline">{label}</Badge>}
-            <span className="max-w-125 truncate font-medium">
-              {row.getValue("title")}
-            </span>
+            <span className="max-w-125 truncate font-medium">{row.getValue("title")}</span>
           </div>
         );
       },
@@ -117,12 +100,10 @@ export function getTasksTableColumns({
     {
       id: "status",
       accessorKey: "status",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Status" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} label="Status" />,
       cell: ({ cell }) => {
         const status = tasks.status.enumValues.find(
-          (status) => status === cell.getValue<Task["status"]>(),
+          (status) => status === cell.getValue<Task["status"]>()
         );
 
         if (!status) return null;
@@ -152,12 +133,10 @@ export function getTasksTableColumns({
     {
       id: "priority",
       accessorKey: "priority",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Priority" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} label="Priority" />,
       cell: ({ cell }) => {
         const priority = tasks.priority.enumValues.find(
-          (priority) => priority === cell.getValue<Task["priority"]>(),
+          (priority) => priority === cell.getValue<Task["priority"]>()
         );
 
         if (!priority) return null;
@@ -187,9 +166,7 @@ export function getTasksTableColumns({
     {
       id: "estimatedHours",
       accessorKey: "estimatedHours",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Est. Hours" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} label="Est. Hours" />,
       cell: ({ cell }) => {
         const estimatedHours = cell.getValue<number>();
         return <div className="w-20 text-right">{estimatedHours}</div>;
@@ -206,9 +183,7 @@ export function getTasksTableColumns({
     {
       id: "createdAt",
       accessorKey: "createdAt",
-      header: ({ column }) => (
-        <DataTableColumnHeader column={column} label="Created At" />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} label="Created At" />,
       cell: ({ cell }) => formatDate(cell.getValue<Date>()),
       meta: {
         label: "Created At",
@@ -234,9 +209,7 @@ export function getTasksTableColumns({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-40">
-              <DropdownMenuItem
-                onSelect={() => setRowAction({ row, variant: "update" })}
-              >
+              <DropdownMenuItem onSelect={() => setRowAction({ row, variant: "update" })}>
                 Edit
               </DropdownMenuItem>
               <DropdownMenuSub>
@@ -255,7 +228,7 @@ export function getTasksTableColumns({
                             loading: "Updating...",
                             success: "Label updated",
                             error: (err) => getErrorMessage(err),
-                          },
+                          }
                         );
                       });
                     }}
@@ -274,9 +247,7 @@ export function getTasksTableColumns({
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                onSelect={() => setRowAction({ row, variant: "delete" })}
-              >
+              <DropdownMenuItem onSelect={() => setRowAction({ row, variant: "delete" })}>
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>

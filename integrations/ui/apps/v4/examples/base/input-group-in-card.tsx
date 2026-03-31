@@ -1,6 +1,6 @@
-import { ExternalLinkIcon, MailIcon } from "lucide-react"
+import { ExternalLinkIcon, MailIcon } from "lucide-react";
 
-import { Button } from "@/styles/base-nova/ui/button"
+import { Button } from "@/styles/base-nova/ui/button";
 import {
   Card,
   CardContent,
@@ -8,16 +8,16 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/styles/base-nova/ui/card"
-import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field"
-import { Input } from "@/styles/base-nova/ui/input"
+} from "@/styles/base-nova/ui/card";
+import { Field, FieldGroup, FieldLabel } from "@/styles/base-nova/ui/field";
+import { Input } from "@/styles/base-nova/ui/input";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
   InputGroupText,
   InputGroupTextarea,
-} from "@/styles/base-nova/ui/input-group"
+} from "@/styles/base-nova/ui/input-group";
 
 export function InputGroupInCard() {
   return (
@@ -31,11 +31,7 @@ export function InputGroupInCard() {
           <Field>
             <FieldLabel htmlFor="email-input">Email Address</FieldLabel>
             <InputGroup>
-              <InputGroupInput
-                id="email-input"
-                type="email"
-                placeholder="you@example.com"
-              />
+              <InputGroupInput id="email-input" type="email" placeholder="you@example.com" />
               <InputGroupAddon align="inline-end">
                 <MailIcon />
               </InputGroupAddon>
@@ -54,9 +50,7 @@ export function InputGroupInCard() {
             </InputGroup>
           </Field>
           <Field>
-            <FieldLabel htmlFor="feedback-textarea">
-              Feedback & Comments
-            </FieldLabel>
+            <FieldLabel htmlFor="feedback-textarea">Feedback & Comments</FieldLabel>
             <InputGroup>
               <InputGroupTextarea
                 id="feedback-textarea"
@@ -75,5 +69,5 @@ export function InputGroupInCard() {
         <Button>Submit</Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

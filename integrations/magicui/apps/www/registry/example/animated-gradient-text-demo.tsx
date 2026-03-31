@@ -1,7 +1,7 @@
-import { ChevronRight } from "lucide-react"
+import { ChevronRight } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { AnimatedGradientText } from "@/registry/magicui/animated-gradient-text"
+import { cn } from "@/lib/utils";
+import { AnimatedGradientText } from "@/registry/magicui/animated-gradient-text";
 
 export default function AnimatedGradientTextDemo() {
   return (
@@ -11,8 +11,7 @@ export default function AnimatedGradientTextDemo() {
           "animate-gradient absolute inset-0 block h-full w-full rounded-[inherit] bg-gradient-to-r from-[#ffaa40]/50 via-[#9c40ff]/50 to-[#ffaa40]/50 bg-[length:300%_100%] p-[1px]"
         )}
         style={{
-          WebkitMask:
-            "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+          WebkitMask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           WebkitMaskComposite: "destination-out",
           mask: "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
           maskComposite: "subtract",
@@ -25,5 +24,5 @@ export default function AnimatedGradientTextDemo() {
       </AnimatedGradientText>
       <ChevronRight className="ml-1 size-4 stroke-neutral-500 transition-transform duration-300 ease-in-out group-hover:translate-x-0.5" />
     </div>
-  )
+  );
 }

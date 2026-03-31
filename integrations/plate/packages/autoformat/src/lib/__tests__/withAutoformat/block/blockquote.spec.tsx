@@ -1,16 +1,16 @@
 /** @jsx jsxt */
 
-import { KEYS } from 'platejs';
-import { jsxt } from '@platejs/test-utils';
+import { jsxt } from "@platejs/test-utils";
+import { KEYS } from "platejs";
 
-import { createAutoformatEditor } from '../createAutoformatEditor';
+import { createAutoformatEditor } from "../createAutoformatEditor";
 
 jsxt;
 
 const input = (
   <fragment>
     <hp>
-      {'>'}
+      {">"}
       <cursor />
       hello
     </hp>
@@ -23,13 +23,13 @@ const output = (
   </fragment>
 ) as any;
 
-it('formats > into a blockquote', () => {
+it("formats > into a blockquote", () => {
   const editor = createAutoformatEditor({
-    rules: [{ match: '> ', mode: 'block', type: KEYS.blockquote }],
+    rules: [{ match: "> ", mode: "block", type: KEYS.blockquote }],
     value: input,
   });
 
-  editor.tf.insertText(' ');
+  editor.tf.insertText(" ");
 
   expect(input.children).toEqual(output.children);
 });

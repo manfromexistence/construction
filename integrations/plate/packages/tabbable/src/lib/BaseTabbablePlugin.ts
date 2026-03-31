@@ -1,9 +1,9 @@
-import { type PluginConfig, createTSlatePlugin, KEYS } from 'platejs';
+import { createTSlatePlugin, KEYS, type PluginConfig } from "platejs";
 
-import type { TabbableEntry } from './types';
+import type { TabbableEntry } from "./types";
 
 export type TabblableConfig = PluginConfig<
-  'tabbable',
+  "tabbable",
   {
     /**
      * When true, the plugin will add its event listener to the document instead

@@ -1,5 +1,5 @@
-import path from "path"
 import { createMDX } from "fumadocs-mdx/next"
+import path from "path"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

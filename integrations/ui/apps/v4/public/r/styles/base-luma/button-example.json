@@ -2,10 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "button-example",
   "title": "Button",
-  "registryDependencies": [
-    "button",
-    "example"
-  ],
+  "registryDependencies": ["button", "example"],
   "files": [
     {
       "path": "registry/base-luma/examples/button-example.tsx",

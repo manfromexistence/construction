@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "toggle-group-example",
   "title": "Toggle Group",
-  "registryDependencies": [
-    "input",
-    "select",
-    "toggle-group",
-    "example"
-  ],
+  "registryDependencies": ["input", "select", "toggle-group", "example"],
   "files": [
     {
       "path": "registry/base-vega/examples/toggle-group-example.tsx",

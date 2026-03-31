@@ -1,7 +1,7 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest"
+import { afterAll, beforeAll, describe, expect, it } from "vitest";
 
-import { createFixtureTestDirectory, npxShadcn } from "../utils/helpers"
-import { configureRegistries, createRegistryServer } from "../utils/registry"
+import { createFixtureTestDirectory, npxShadcn } from "../utils/helpers";
+import { configureRegistries, createRegistryServer } from "../utils/registry";
 
 const registryShadcn = await createRegistryServer(
   [
@@ -14,8 +14,7 @@ const registryShadcn = await createRegistryServer(
       files: [
         {
           path: "components/ui/button.tsx",
-          content:
-            "export function Button() {\n  return <button>Click me</button>\n}",
+          content: "export function Button() {\n  return <button>Click me</button>\n}",
           type: "registry:ui",
         },
       ],
@@ -27,8 +26,7 @@ const registryShadcn = await createRegistryServer(
       files: [
         {
           path: "components/ui/card.tsx",
-          content:
-            "export function Card() {\n  return <div>Card Component</div>\n}",
+          content: "export function Card() {\n  return <div>Card Component</div>\n}",
           type: "registry:ui",
         },
       ],
@@ -40,8 +38,7 @@ const registryShadcn = await createRegistryServer(
       files: [
         {
           path: "components/ui/alert-dialog.tsx",
-          content:
-            "export function AlertDialog() {\n  return <div>AlertDialog Component</div>\n}",
+          content: "export function AlertDialog() {\n  return <div>AlertDialog Component</div>\n}",
           type: "registry:ui",
         },
       ],
@@ -51,7 +48,7 @@ const registryShadcn = await createRegistryServer(
     port: 9080,
     path: "/r",
   }
-)
+);
 
 const registryOne = await createRegistryServer(
   [
@@ -63,8 +60,7 @@ const registryOne = await createRegistryServer(
       files: [
         {
           path: "components/foo.tsx",
-          content:
-            "export function Foo() {\n  return <div>Foo Component from Registry 1</div>\n}",
+          content: "export function Foo() {\n  return <div>Foo Component from Registry 1</div>\n}",
           type: "registry:component",
         },
       ],
@@ -95,8 +91,7 @@ const registryOne = await createRegistryServer(
       files: [
         {
           path: "components/bar.tsx",
-          content:
-            "export function Bar() {\n  return <div>Bar Component from Registry 1</div>\n}",
+          content: "export function Bar() {\n  return <div>Bar Component from Registry 1</div>\n}",
           type: "registry:component",
         },
       ],
@@ -108,8 +103,7 @@ const registryOne = await createRegistryServer(
       files: [
         {
           path: "components/complex.tsx",
-          content:
-            "export function Complex() {\n  return <div>Complex Component</div>\n}",
+          content: "export function Complex() {\n  return <div>Complex Component</div>\n}",
           type: "registry:component",
         },
       ],
@@ -119,7 +113,7 @@ const registryOne = await createRegistryServer(
     port: 9081,
     path: "/r",
   }
-)
+);
 
 const registryTwo = await createRegistryServer(
   [
@@ -144,8 +138,7 @@ const registryTwo = await createRegistryServer(
       files: [
         {
           path: "components/secure-item.tsx",
-          content:
-            "export function SecureItem() {\n  return <div>Secure Item</div>\n}",
+          content: "export function SecureItem() {\n  return <div>Secure Item</div>\n}",
           type: "registry:component",
         },
       ],
@@ -155,29 +148,29 @@ const registryTwo = await createRegistryServer(
     port: 9082,
     path: "/registry",
   }
-)
+);
 
 beforeAll(async () => {
-  await registryShadcn.start()
-  await registryOne.start()
-  await registryTwo.start()
-})
+  await registryShadcn.start();
+  await registryOne.start();
+  await registryTwo.start();
+});
 
 afterAll(async () => {
-  await registryShadcn.stop()
-  await registryOne.stop()
-  await registryTwo.stop()
-})
+  await registryShadcn.stop();
+  await registryOne.stop();
+  await registryTwo.stop();
+});
 
 describe("shadcn view", () => {
   it("should view a single component from shadcn registry", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@shadcn": "http://localhost:9080/r/{name}",
-    })
-    const output = await npxShadcn(fixturePath, ["view", "button"])
+    });
+    const output = await npxShadcn(fixturePath, ["view", "button"]);
 
-    const parsed = JSON.parse(output.stdout)
+    const parsed = JSON.parse(output.stdout);
 
     expect(parsed[0]).toMatchObject({
       name: "button",
@@ -188,21 +181,21 @@ describe("shadcn view", () => {
           type: "registry:ui",
         }),
       ]),
-    })
-  })
+    });
+  });
 
   it("should view multiple components from shadcn registry", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "button", "card"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "button", "card"]);
 
-    const parsed = JSON.parse(output.stdout)
-    expect(parsed).toHaveLength(2)
-    expect(parsed.map((p: any) => p.name)).toEqual(["button", "card"])
-  })
+    const parsed = JSON.parse(output.stdout);
+    expect(parsed).toHaveLength(2);
+    expect(parsed.map((p: any) => p.name)).toEqual(["button", "card"]);
+  });
 
   it("should view component with registry dependencies", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "alert-dialog"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "alert-dialog"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -216,15 +209,12 @@ describe("shadcn view", () => {
           }),
         ]),
       },
-    ])
-  })
+    ]);
+  });
 
   it("should view component from URL without needing config", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
-    const output = await npxShadcn(fixturePath, [
-      "view",
-      "http://localhost:9081/r/foo.json",
-    ])
+    const fixturePath = await createFixtureTestDirectory("next-app");
+    const output = await npxShadcn(fixturePath, ["view", "http://localhost:9081/r/foo.json"]);
 
     expect(JSON.parse(output.stdout)).toMatchInlineSnapshot(`
       [
@@ -266,29 +256,29 @@ describe("shadcn view", () => {
           "type": "registry:component",
         },
       ]
-    `)
-  })
+    `);
+  });
 
   it("should view multiple URLs without needing config", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
+    const fixturePath = await createFixtureTestDirectory("next-app");
     const output = await npxShadcn(fixturePath, [
       "view",
       "http://localhost:9081/r/foo.json",
       "http://localhost:9082/registry/item.json",
-    ])
+    ]);
 
-    const parsed = JSON.parse(output.stdout)
-    expect(parsed).toHaveLength(2)
-    expect(parsed.map((p: any) => p.name)).toEqual(["foo", "item"])
-  })
+    const parsed = JSON.parse(output.stdout);
+    expect(parsed).toHaveLength(2);
+    expect(parsed.map((p: any) => p.name)).toEqual(["foo", "item"]);
+  });
 
   it("should view component from configured registry", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@one/foo"])
+    const output = await npxShadcn(fixturePath, ["view", "@one/foo"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -308,35 +298,30 @@ describe("shadcn view", () => {
           },
         },
       },
-    ])
-  })
+    ]);
+  });
 
   it("should view multiple components from different registries", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
       "@two": "http://localhost:9082/registry/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, [
-      "view",
-      "@one/foo",
-      "@two/item",
-      "button",
-    ])
+    const output = await npxShadcn(fixturePath, ["view", "@one/foo", "@two/item", "button"]);
 
-    const parsed = JSON.parse(output.stdout)
-    expect(parsed).toHaveLength(3)
-    expect(parsed.map((p: any) => p.name)).toEqual(["foo", "item", "button"])
-  })
+    const parsed = JSON.parse(output.stdout);
+    expect(parsed).toHaveLength(3);
+    expect(parsed.map((p: any) => p.name)).toEqual(["foo", "item", "button"]);
+  });
 
   it("should view component with nested registry dependencies", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@one/bar"])
+    const output = await npxShadcn(fixturePath, ["view", "@one/bar"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -350,17 +335,17 @@ describe("shadcn view", () => {
           }),
         ]),
       },
-    ])
-  })
+    ]);
+  });
 
   it("should view component with cross-registry dependencies", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
       "@two": "http://localhost:9082/registry/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@one/complex"])
+    const output = await npxShadcn(fixturePath, ["view", "@one/complex"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -374,11 +359,11 @@ describe("shadcn view", () => {
           }),
         ]),
       },
-    ])
-  })
+    ]);
+  });
 
   it("should handle authentication for secured registries", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@two": {
         url: "http://localhost:9082/registry/bearer/{name}",
@@ -386,9 +371,9 @@ describe("shadcn view", () => {
           Authorization: "Bearer EXAMPLE_BEARER_TOKEN",
         },
       },
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@two/secure-item"])
+    const output = await npxShadcn(fixturePath, ["view", "@two/secure-item"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -402,21 +387,21 @@ describe("shadcn view", () => {
           }),
         ]),
       },
-    ])
-  })
+    ]);
+  });
 
   it("should fail when viewing secured item without authentication", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@two": "http://localhost:9082/registry/bearer/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@two/secure-item"])
-    expect(output.stdout).toContain("Unauthorized")
-  })
+    const output = await npxShadcn(fixturePath, ["view", "@two/secure-item"]);
+    expect(output.stdout).toContain("Unauthorized");
+  });
 
   it("should handle authentication with environment variables", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
       "@two": {
@@ -425,15 +410,11 @@ describe("shadcn view", () => {
           Authorization: "Bearer ${BEARER_TOKEN}",
         },
       },
-    })
+    });
 
-    process.env.BEARER_TOKEN = "EXAMPLE_BEARER_TOKEN"
+    process.env.BEARER_TOKEN = "EXAMPLE_BEARER_TOKEN";
 
-    const output = await npxShadcn(fixturePath, [
-      "view",
-      "@two/secure-item",
-      "@one/foo",
-    ])
+    const output = await npxShadcn(fixturePath, ["view", "@two/secure-item", "@one/foo"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -446,116 +427,104 @@ describe("shadcn view", () => {
         type: "registry:component",
         dependencies: ["clsx", "tailwind-merge"],
       },
-    ])
+    ]);
 
-    delete process.env.BEARER_TOKEN
-  })
+    delete process.env.BEARER_TOKEN;
+  });
 
   it("should mix URLs and named components", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
     const output = await npxShadcn(fixturePath, [
       "view",
       "http://localhost:9082/registry/item.json",
       "@one/foo",
       "button",
-    ])
+    ]);
 
-    const parsed = JSON.parse(output.stdout)
-    expect(parsed).toHaveLength(3)
-    expect(parsed.map((p: any) => p.name)).toEqual(["item", "foo", "button"])
-  })
+    const parsed = JSON.parse(output.stdout);
+    expect(parsed).toHaveLength(3);
+    expect(parsed.map((p: any) => p.name)).toEqual(["item", "foo", "button"]);
+  });
 
   it("should handle non-existent component gracefully", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "non-existent"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "non-existent"]);
 
-    expect(output.stdout).toContain("not found")
-  })
+    expect(output.stdout).toContain("not found");
+  });
 
   it("should handle non-existent registry gracefully", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "@unknown/component"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "@unknown/component"]);
 
-    expect(output.stdout).toContain('Unknown registry "@unknown"')
-  })
+    expect(output.stdout).toContain('Unknown registry "@unknown"');
+  });
 
   it("should work with @shadcn namespace", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, [
-      "view",
-      "@shadcn/button",
-      "@shadcn/card",
-    ])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "@shadcn/button", "@shadcn/card"]);
 
-    const parsed = JSON.parse(output.stdout)
-    expect(parsed).toHaveLength(2)
-    expect(parsed.map((p: any) => p.name)).toEqual(["button", "card"])
-  })
+    const parsed = JSON.parse(output.stdout);
+    expect(parsed).toHaveLength(2);
+    expect(parsed.map((p: any) => p.name)).toEqual(["button", "card"]);
+  });
 
   it("should handle 404 for non-existent URL", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
+    const fixturePath = await createFixtureTestDirectory("next-app");
     const output = await npxShadcn(fixturePath, [
       "view",
       "http://localhost:9081/r/does-not-exist.json",
-    ])
+    ]);
 
-    expect(output.stdout).toContain("not found")
-  })
+    expect(output.stdout).toContain("not found");
+  });
 
   it("should handle multiple errors in batch", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, [
-      "view",
-      "non-existent",
-      "@one/does-not-exist",
-    ])
+    const output = await npxShadcn(fixturePath, ["view", "non-existent", "@one/does-not-exist"]);
 
     // Should fail on first error - non-existent component
-    expect(output.stdout.toLowerCase()).toContain("not found")
-  })
+    expect(output.stdout.toLowerCase()).toContain("not found");
+  });
 
   it("should handle invalid URL format", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
-    const output = await npxShadcn(fixturePath, ["view", "not-a-valid-url"])
+    const fixturePath = await createFixtureTestDirectory("next-app");
+    const output = await npxShadcn(fixturePath, ["view", "not-a-valid-url"]);
 
     // With defaults in place, it will try to fetch as a component and fail
-    expect(output.stdout.toLowerCase()).toContain("not found")
-  })
+    expect(output.stdout.toLowerCase()).toContain("not found");
+  });
 
   it("should handle network timeouts gracefully", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
+    const fixturePath = await createFixtureTestDirectory("next-app");
     const output = await npxShadcn(fixturePath, [
       "view",
       "http://localhost:9999/timeout.json", // Non-existent server
-    ])
+    ]);
 
     // Check for connection error in the output
-    expect(output.stdout.toLowerCase()).toContain("failed, reason:")
-  })
+    expect(output.stdout.toLowerCase()).toContain("failed, reason:");
+  });
 
   it("should handle mixed success and failure", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, [
-      "view",
-      "button",
-      "non-existent-component",
-    ])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "button", "non-existent-component"]);
 
     // Should fail fast on first error
-    expect(output.stdout).not.toContain('"name": "button"')
-    expect(output.stdout).toContain("not found")
-  })
+    expect(output.stdout).not.toContain('"name": "button"');
+    expect(output.stdout).toContain("not found");
+  });
 
   it("should handle missing environment variables for authenticated registry", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     await configureRegistries(fixturePath, {
       "@auth": {
         url: "http://localhost:9082/registry/bearer/{name}",
@@ -563,12 +532,12 @@ describe("shadcn view", () => {
           Authorization: "Bearer ${MISSING_ENV_VAR}",
         },
       },
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@auth/secure-item"])
+    const output = await npxShadcn(fixturePath, ["view", "@auth/secure-item"]);
 
-    expect(output.stdout).toContain("MISSING_ENV_VAR")
-  })
+    expect(output.stdout).toContain("MISSING_ENV_VAR");
+  });
 
   it("should handle validation errors", async () => {
     // Create a server that returns invalid schema
@@ -590,24 +559,24 @@ describe("shadcn view", () => {
         port: 9083,
         path: "/bad",
       }
-    )
+    );
 
-    await badServer.start()
+    await badServer.start();
 
-    const fixturePath = await createFixtureTestDirectory("next-app")
+    const fixturePath = await createFixtureTestDirectory("next-app");
     const output = await npxShadcn(fixturePath, [
       "view",
       "http://localhost:9083/bad/invalid-schema.json",
-    ])
+    ]);
 
     // Should handle validation error
-    expect(output.stdout.toLowerCase()).toContain("failed to parse")
+    expect(output.stdout.toLowerCase()).toContain("failed to parse");
 
-    await badServer.stop()
-  })
+    await badServer.stop();
+  });
 
   it("should handle dependencies that require authentication", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
 
     // Configure both registries - @two requires auth, @one doesn't
     await configureRegistries(fixturePath, {
@@ -618,10 +587,10 @@ describe("shadcn view", () => {
           Authorization: "Bearer EXAMPLE_BEARER_TOKEN",
         },
       },
-    })
+    });
 
     // complex depends on @two/item which requires auth
-    const output = await npxShadcn(fixturePath, ["view", "@one/complex"])
+    const output = await npxShadcn(fixturePath, ["view", "@one/complex"]);
 
     // Should just show the component metadata, not fail on auth
     expect(JSON.parse(output.stdout)).toMatchObject([
@@ -636,21 +605,21 @@ describe("shadcn view", () => {
           }),
         ]),
       },
-    ])
-  })
+    ]);
+  });
 
   it("should fail when viewing component with unauthenticated dependencies", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
 
     // Configure registries - @two requires auth but no token provided
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
       "@two": "http://localhost:9082/registry/bearer/{name}",
-    })
+    });
 
     // Try to view complex which depends on @two/item (requires auth)
     // Note: This should succeed for view command as it just shows metadata
-    const output = await npxShadcn(fixturePath, ["view", "@one/complex"])
+    const output = await npxShadcn(fixturePath, ["view", "@one/complex"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -658,11 +627,11 @@ describe("shadcn view", () => {
         type: "registry:component",
         registryDependencies: expect.arrayContaining(["@two/item"]),
       },
-    ])
-  })
+    ]);
+  });
 
   it("should view authenticated dependencies when directly requested", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
 
     // Configure with proper auth
     await configureRegistries(fixturePath, {
@@ -672,10 +641,10 @@ describe("shadcn view", () => {
           Authorization: "Bearer EXAMPLE_BEARER_TOKEN",
         },
       },
-    })
+    });
 
     // Directly view the authenticated item
-    const output = await npxShadcn(fixturePath, ["view", "@two/item"])
+    const output = await npxShadcn(fixturePath, ["view", "@two/item"]);
 
     expect(JSON.parse(output.stdout)).toMatchObject([
       {
@@ -689,18 +658,18 @@ describe("shadcn view", () => {
           }),
         ]),
       },
-    ])
-  })
+    ]);
+  });
 
   it("should view component with all metadata fields", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
 
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@one/foo"])
-    const parsed = JSON.parse(output.stdout)
+    const output = await npxShadcn(fixturePath, ["view", "@one/foo"]);
+    const parsed = JSON.parse(output.stdout);
 
     expect(parsed[0]).toMatchObject({
       name: "foo",
@@ -732,102 +701,99 @@ describe("shadcn view", () => {
           "foo-color": "#00ff00",
         }),
       }),
-    })
-  })
+    });
+  });
 
   it("should handle namespace with special characters", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "@test-123/component"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "@test-123/component"]);
 
-    expect(output.stdout).toContain('Unknown registry "@test-123"')
-  })
+    expect(output.stdout).toContain('Unknown registry "@test-123"');
+  });
 
   it("should handle empty component name in namespace", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "@shadcn/"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "@shadcn/"]);
 
-    expect(output.stdout).toContain("not found")
-  })
+    expect(output.stdout).toContain("not found");
+  });
 
   it("should handle namespace without @ prefix", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "one/foo"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "one/foo"]);
 
     // Without @ prefix, it's treated as a regular component name
-    expect(output.stdout).toContain("not found")
-  })
+    expect(output.stdout).toContain("not found");
+  });
 
   it("should handle double namespace", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "@@test/component"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "@@test/component"]);
 
-    expect(output.stdout).toContain("not found")
-  })
+    expect(output.stdout).toContain("not found");
+  });
 
   it("should two error for unknown registry", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, ["view", "@test/component"])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "@test/component"]);
 
-    expect(output.stdout).toContain('Unknown registry "@test"')
-  })
+    expect(output.stdout).toContain('Unknown registry "@test"');
+  });
 
   it("should two error for unknown registry not in first position", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
     const output = await npxShadcn(fixturePath, [
       "view",
       "@shadcn/component",
       "@does-not-exist/component",
-    ])
+    ]);
 
-    expect(output.stdout).toContain('Unknown registry "@does-not-exist"')
-  })
+    expect(output.stdout).toContain('Unknown registry "@does-not-exist"');
+  });
 
   it("should handle namespace with multiple slashes", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app-init")
-    const output = await npxShadcn(fixturePath, [
-      "view",
-      "@test/path/to/component",
-    ])
+    const fixturePath = await createFixtureTestDirectory("next-app-init");
+    const output = await npxShadcn(fixturePath, ["view", "@test/path/to/component"]);
 
-    expect(output.stdout).toContain('Unknown registry "@test"')
-  })
+    expect(output.stdout).toContain('Unknown registry "@test"');
+  });
 
   it("should view from components.json with registries config only", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
+    const fixturePath = await createFixtureTestDirectory("next-app");
 
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@one/foo"])
+    const output = await npxShadcn(fixturePath, ["view", "@one/foo"]);
 
-    expect(output.stdout).toContain("Foo component from registry one")
-  })
+    expect(output.stdout).toContain("Foo component from registry one");
+  });
 
   it("should error when viewing from non-existent registry with configured registries", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
+    const fixturePath = await createFixtureTestDirectory("next-app");
 
     // Configure @one registry, but try to view from @two
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
-    const output = await npxShadcn(fixturePath, ["view", "@two/item"])
+    const output = await npxShadcn(fixturePath, ["view", "@two/item"]);
 
-    expect(output.stdout).toContain('Unknown registry "@two"')
-  })
+    expect(output.stdout).toContain('Unknown registry "@two"');
+  });
 
   it("should error when viewing non-existent item from configured registry", async () => {
-    const fixturePath = await createFixtureTestDirectory("next-app")
+    const fixturePath = await createFixtureTestDirectory("next-app");
 
     // Configure @one registry
     await configureRegistries(fixturePath, {
       "@one": "http://localhost:9081/r/{name}",
-    })
+    });
 
     // Try to view an item that doesn't exist in @one registry
-    const output = await npxShadcn(fixturePath, ["view", "@one/does-not-exist"])
+    const output = await npxShadcn(fixturePath, ["view", "@one/does-not-exist"]);
 
-    expect(output.stdout).toContain("not found")
-  })
-})
+    expect(output.stdout).toContain("not found");
+  });
+});

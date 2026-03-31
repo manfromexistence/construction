@@ -1,4 +1,4 @@
-import { type Alert, AlertTitle } from './ui/alert';
+import { type Alert, AlertTitle } from "./ui/alert";
 
 export function Callout({
   children,
@@ -14,9 +14,7 @@ export function Callout({
     >
       {icon && <span className="mr-4 text-2xl">{icon}</span>}
       {title && <AlertTitle className="mb-2">{title}</AlertTitle>}
-      <div className="text-sm [&_p]:leading-relaxed **:[p,ul,ol,li]:first:my-0">
-        {children}
-      </div>
+      <div className="text-sm [&_p]:leading-relaxed **:[p,ul,ol,li]:first:my-0">{children}</div>
     </div>
   );
 }

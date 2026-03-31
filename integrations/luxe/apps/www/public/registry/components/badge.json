@@ -1,8 +1,6 @@
 {
   "name": "badge",
-  "externalDependencies": [
-    "@radix-ui/react-slot"
-  ],
+  "externalDependencies": ["@radix-ui/react-slot"],
   "internalDependencies": [],
   "file": {
     "name": "badge.tsx",

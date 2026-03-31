@@ -1,11 +1,11 @@
-import { createTSlatePlugin, type PluginConfig } from '@platejs/core';
-import type { Path } from '@platejs/slate';
+import { createTSlatePlugin, type PluginConfig } from "@platejs/core";
+import type { Path } from "@platejs/slate";
 
-import { KEYS } from '../../plate-keys';
-import { withNormalizeTypes } from './withNormalizeTypes';
+import { KEYS } from "../../plate-keys";
+import { withNormalizeTypes } from "./withNormalizeTypes";
 
 export type NormalizeTypesConfig = PluginConfig<
-  'normalizeTypes',
+  "normalizeTypes",
   {
     /**
      * Set of rules for the types. For each rule, provide a `path` and either

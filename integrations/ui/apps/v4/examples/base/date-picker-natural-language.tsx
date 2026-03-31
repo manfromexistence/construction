@@ -1,41 +1,35 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { parseDate } from "chrono-node"
-import { CalendarIcon } from "lucide-react"
+import { parseDate } from "chrono-node";
+import { CalendarIcon } from "lucide-react";
+import * as React from "react";
 
-import { Calendar } from "@/styles/base-nova/ui/calendar"
-import { Field, FieldLabel } from "@/styles/base-nova/ui/field"
+import { Calendar } from "@/styles/base-nova/ui/calendar";
+import { Field, FieldLabel } from "@/styles/base-nova/ui/field";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from "@/styles/base-nova/ui/input-group"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/styles/base-nova/ui/popover"
+} from "@/styles/base-nova/ui/input-group";
+import { Popover, PopoverContent, PopoverTrigger } from "@/styles/base-nova/ui/popover";
 
 function formatDate(date: Date | undefined) {
   if (!date) {
-    return ""
+    return "";
   }
 
   return date.toLocaleDateString("en-US", {
     day: "2-digit",
     month: "long",
     year: "numeric",
-  })
+  });
 }
 
 export function DatePickerNaturalLanguage() {
-  const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("In 2 days")
-  const [date, setDate] = React.useState<Date | undefined>(
-    parseDate(value) || undefined
-  )
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState("In 2 days");
+  const [date, setDate] = React.useState<Date | undefined>(parseDate(value) || undefined);
 
   return (
     <Field className="mx-auto max-w-xs">
@@ -46,16 +40,16 @@ export function DatePickerNaturalLanguage() {
           value={value}
           placeholder="Tomorrow or next week"
           onChange={(e) => {
-            setValue(e.target.value)
-            const date = parseDate(e.target.value)
+            setValue(e.target.value);
+            const date = parseDate(e.target.value);
             if (date) {
-              setDate(date)
+              setDate(date);
             }
           }}
           onKeyDown={(e) => {
             if (e.key === "ArrowDown") {
-              e.preventDefault()
-              setOpen(true)
+              e.preventDefault();
+              setOpen(true);
             }
           }}
         />
@@ -74,20 +68,16 @@ export function DatePickerNaturalLanguage() {
               <CalendarIcon />
               <span className="sr-only">Select date</span>
             </PopoverTrigger>
-            <PopoverContent
-              className="w-auto overflow-hidden p-0"
-              align="end"
-              sideOffset={8}
-            >
+            <PopoverContent className="w-auto overflow-hidden p-0" align="end" sideOffset={8}>
               <Calendar
                 mode="single"
                 selected={date}
                 captionLayout="dropdown"
                 defaultMonth={date}
                 onSelect={(date) => {
-                  setDate(date)
-                  setValue(formatDate(date))
-                  setOpen(false)
+                  setDate(date);
+                  setValue(formatDate(date));
+                  setOpen(false);
                 }}
               />
             </PopoverContent>
@@ -95,9 +85,8 @@ export function DatePickerNaturalLanguage() {
         </InputGroupAddon>
       </InputGroup>
       <div className="px-1 text-sm text-muted-foreground">
-        Your post will be published on{" "}
-        <span className="font-medium">{formatDate(date)}</span>.
+        Your post will be published on <span className="font-medium">{formatDate(date)}</span>.
       </div>
     </Field>
-  )
+  );
 }

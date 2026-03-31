@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Hyper Text Demo",
   "description": "Example showing text with scrambling letter animations.",
-  "registryDependencies": [
-    "@magicui/hyper-text"
-  ],
+  "registryDependencies": ["@magicui/hyper-text"],
   "files": [
     {
       "path": "registry/example/hyper-text-demo.tsx",

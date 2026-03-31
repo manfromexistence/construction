@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check, ChevronsUpDown } from "lucide-react"
-import type { Popover as PopoverPrimitive } from "radix-ui"
+import { Check, ChevronsUpDown } from "lucide-react";
+import type { Popover as PopoverPrimitive } from "radix-ui";
+import * as React from "react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/registry/new-york-v4/ui/button";
 import {
   Command,
   CommandEmpty,
@@ -14,23 +14,18 @@ import {
   CommandItem,
   CommandList,
   CommandSeparator,
-} from "@/registry/new-york-v4/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/registry/new-york-v4/ui/popover"
+} from "@/registry/new-york-v4/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/registry/new-york-v4/ui/popover";
 
-import { type Preset } from "../data/presets"
+import { type Preset } from "../data/presets";
 
-interface PresetSelectorProps
-  extends React.ComponentProps<typeof PopoverPrimitive.Root> {
-  presets: Preset[]
+interface PresetSelectorProps extends React.ComponentProps<typeof PopoverPrimitive.Root> {
+  presets: Preset[];
 }
 
 export function PresetSelector({ presets, ...props }: PresetSelectorProps) {
-  const [open, setOpen] = React.useState(false)
-  const [selectedPreset, setSelectedPreset] = React.useState<Preset>()
+  const [open, setOpen] = React.useState(false);
+  const [selectedPreset, setSelectedPreset] = React.useState<Preset>();
 
   return (
     <Popover open={open} onOpenChange={setOpen} {...props}>
@@ -56,17 +51,15 @@ export function PresetSelector({ presets, ...props }: PresetSelectorProps) {
                 <CommandItem
                   key={preset.id}
                   onSelect={() => {
-                    setSelectedPreset(preset)
-                    setOpen(false)
+                    setSelectedPreset(preset);
+                    setOpen(false);
                   }}
                 >
                   {preset.name}
                   <Check
                     className={cn(
                       "ml-auto",
-                      selectedPreset?.id === preset.id
-                        ? "opacity-100"
-                        : "opacity-0"
+                      selectedPreset?.id === preset.id ? "opacity-100" : "opacity-0"
                     )}
                   />
                 </CommandItem>
@@ -80,5 +73,5 @@ export function PresetSelector({ presets, ...props }: PresetSelectorProps) {
         </Command>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

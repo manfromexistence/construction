@@ -2,14 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "sidebar-example",
   "title": "Sidebar",
-  "registryDependencies": [
-    "button",
-    "dropdown-menu",
-    "item",
-    "label",
-    "sidebar",
-    "example"
-  ],
+  "registryDependencies": ["button", "dropdown-menu", "item", "label", "sidebar", "example"],
   "files": [
     {
       "path": "registry/radix-nova/examples/sidebar-example.tsx",

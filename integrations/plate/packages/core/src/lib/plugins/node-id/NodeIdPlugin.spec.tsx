@@ -1,10 +1,10 @@
 /** @jsx jsxt */
 
-import { LinkPlugin } from '@platejs/link/react';
-import { jsxt } from '@platejs/test-utils';
+import { LinkPlugin } from "@platejs/link/react";
+import { jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor } from '../../editor';
-import { NodeIdPlugin, normalizeNodeId } from './NodeIdPlugin';
+import { createSlateEditor } from "../../editor";
+import { NodeIdPlugin, normalizeNodeId } from "./NodeIdPlugin";
 
 jsxt;
 
@@ -14,9 +14,9 @@ const createIdFactory = (start = 1) => {
   return () => id++;
 };
 
-describe('normalizeNodeId', () => {
-  it('adds ids without mutating the input value', () => {
-    const input = [{ children: [{ text: 'test' }], type: 'p' }] as any;
+describe("normalizeNodeId", () => {
+  it("adds ids without mutating the input value", () => {
+    const input = [{ children: [{ text: "test" }], type: "p" }] as any;
 
     const output = normalizeNodeId(input, {
       idCreator: createIdFactory(),
@@ -27,10 +27,10 @@ describe('normalizeNodeId', () => {
     expect(output).not.toBe(input);
   });
 
-  it('preserves existing ids and fills missing ones', () => {
+  it("preserves existing ids and fills missing ones", () => {
     const input = [
-      { children: [{ text: 'first' }], id: 10, type: 'p' },
-      { children: [{ text: 'second' }], type: 'p' },
+      { children: [{ text: "first" }], id: 10, type: "p" },
+      { children: [{ text: "second" }], type: "p" },
     ] as any;
 
     const output = normalizeNodeId(input, {
@@ -41,31 +41,31 @@ describe('normalizeNodeId', () => {
     expect(output[1].id).toBe(1);
   });
 
-  it('supports a custom id key', () => {
-    const input = [{ children: [{ text: 'test' }], type: 'p' }] as any;
+  it("supports a custom id key", () => {
+    const input = [{ children: [{ text: "test" }], type: "p" }] as any;
 
     const output = normalizeNodeId(input, {
       idCreator: createIdFactory(),
-      idKey: 'foo',
+      idKey: "foo",
     }) as any;
 
     expect(output[0].foo).toBe(1);
     expect(output[0].id).toBeUndefined();
   });
 
-  it('skips inline nodes by default and can include them when configured', () => {
+  it("skips inline nodes by default and can include them when configured", () => {
     const input = [
       {
         children: [
-          { text: 'before ' },
+          { text: "before " },
           {
-            children: [{ text: 'link' }],
+            children: [{ text: "link" }],
             inline: true,
-            type: 'a',
+            type: "a",
           },
-          { text: ' after' },
+          { text: " after" },
         ],
-        type: 'p',
+        type: "p",
       },
     ] as any;
 
@@ -83,8 +83,8 @@ describe('normalizeNodeId', () => {
   });
 });
 
-describe('NodeIdPlugin', () => {
-  it('normalizes initial block ids when boundary nodes are missing ids', () => {
+describe("NodeIdPlugin", () => {
+  it("normalizes initial block ids when boundary nodes are missing ids", () => {
     const input = (
       <editor>
         <hp>first</hp>
@@ -109,7 +109,7 @@ describe('NodeIdPlugin', () => {
     expect(editor.children[2].id).toBe(2);
   });
 
-  it('can normalize inline nodes when filterInline is disabled', () => {
+  it("can normalize inline nodes when filterInline is disabled", () => {
     const input = (
       <editor>
         <hp>
@@ -135,7 +135,7 @@ describe('NodeIdPlugin', () => {
     expect((editor.children[0] as any).children[1].id).toBe(2);
   });
 
-  it('renormalizes middle nodes when normalizeInitialValue is enabled', () => {
+  it("renormalizes middle nodes when normalizeInitialValue is enabled", () => {
     const input = (
       <editor>
         <hp id={1}>first</hp>
@@ -161,7 +161,7 @@ describe('NodeIdPlugin', () => {
     expect(editor.children[2].id).toBe(3);
   });
 
-  it('assigns ids to inserted nodes through editor transforms', () => {
+  it("assigns ids to inserted nodes through editor transforms", () => {
     const input = (
       <editor>
         <hp id={10}>
@@ -186,8 +186,8 @@ describe('NodeIdPlugin', () => {
     editor.tf.insertNode((<hp>inserted</hp>) as any);
 
     expect(editor.children).toMatchObject([
-      { id: 10, type: 'p' },
-      { id: 1, type: 'p' },
+      { id: 10, type: "p" },
+      { id: 1, type: "p" },
     ]);
   });
 });

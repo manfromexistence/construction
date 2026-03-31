@@ -1,18 +1,18 @@
 import {
-  type NodeEntry,
-  type OverrideEditor,
-  type TElement,
   deleteMerge,
   KEYS,
+  type NodeEntry,
+  type OverrideEditor,
   PathApi,
-} from 'platejs';
+  type TElement,
+} from "platejs";
 
-import type { ListConfig } from './BaseListPlugin';
+import type { ListConfig } from "./BaseListPlugin";
 
-import { isAcrossListItems, isListNested } from './queries';
-import { getListItemEntry } from './queries/getListItemEntry';
-import { removeFirstListItem } from './transforms/removeFirstListItem';
-import { removeListItem } from './transforms/removeListItem';
+import { isAcrossListItems, isListNested } from "./queries";
+import { getListItemEntry } from "./queries/getListItemEntry";
+import { removeFirstListItem } from "./transforms/removeFirstListItem";
+import { removeListItem } from "./transforms/removeListItem";
 
 export const withDeleteBackwardList: OverrideEditor<ListConfig> = ({
   editor,
@@ -41,10 +41,7 @@ export const withDeleteBackwardList: OverrideEditor<ListConfig> = ({
               moved = removeListItem(editor, { list, listItem });
 
               if (moved) return true;
-              if (
-                !PathApi.hasPrevious(listItem[1]) &&
-                !isListNested(editor, list[1])
-              ) {
+              if (!PathApi.hasPrevious(listItem[1]) && !isListNested(editor, list[1])) {
                 editor.tf.resetBlock({ at: listItem[1] });
 
                 moved = true;
@@ -52,9 +49,7 @@ export const withDeleteBackwardList: OverrideEditor<ListConfig> = ({
                 return;
               }
 
-              const pointBeforeListItem = editor.api.before(
-                editor.selection!.focus
-              );
+              const pointBeforeListItem = editor.api.before(editor.selection!.focus);
 
               let currentLic: NodeEntry<TElement> | undefined;
               let hasMultipleChildren = false;
@@ -69,7 +64,7 @@ export const withDeleteBackwardList: OverrideEditor<ListConfig> = ({
                 const licType = editor.getType(KEYS.lic);
                 const _licNodes = editor.api.nodes<TElement>({
                   at: listItem[1],
-                  mode: 'lowest',
+                  mode: "lowest",
                   match: (node) => node.type === licType,
                 });
                 currentLic = [..._licNodes][0];
@@ -84,14 +79,9 @@ export const withDeleteBackwardList: OverrideEditor<ListConfig> = ({
 
               if (!currentLic || !hasMultipleChildren) return;
 
-              const leftoverListItem = editor.api.node<TElement>(
-                PathApi.parent(currentLic[1])
-              )!;
+              const leftoverListItem = editor.api.node<TElement>(PathApi.parent(currentLic[1]))!;
 
-              if (
-                leftoverListItem &&
-                leftoverListItem[0].children.length === 0
-              ) {
+              if (leftoverListItem && leftoverListItem[0].children.length === 0) {
                 editor.tf.removeNodes({ at: leftoverListItem[1] });
               }
             });

@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "switch-example",
   "title": "Switch",
-  "registryDependencies": [
-    "field",
-    "label",
-    "switch",
-    "example"
-  ],
+  "registryDependencies": ["field", "label", "switch", "example"],
   "files": [
     {
       "path": "registry/radix-luma/examples/switch-example.tsx",

@@ -1,65 +1,65 @@
 // Thanks @fumadocs
 
-"use client"
+"use client";
 
-import { ChevronDownIcon } from "lucide-react"
-import { useMemo, useRef, useState } from "react"
+import { ChevronDownIcon } from "lucide-react";
+import { useMemo, useRef, useState } from "react";
 
-import { Icons } from "@/components/icons"
-import { Button } from "@/components/ui/button"
-import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
+import { Icons } from "@/components/icons";
+import { Button } from "@/components/ui/button";
+import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import type { CopyState } from "@/hooks/use-copy-to-clipboard"
-import { CopyStateIcon } from "@/registry/components/copy-button"
+} from "@/components/ui/dropdown-menu";
+import type { CopyState } from "@/hooks/use-copy-to-clipboard";
+import { CopyStateIcon } from "@/registry/components/copy-button";
 
-const cache = new Map<string, string>()
+const cache = new Map<string, string>();
 
 export function LLMCopyButton({ markdownUrl }: { markdownUrl: string }) {
-  const [state, setState] = useState<CopyState>("idle")
-  const [isCopying, setIsCopying] = useState(false)
-  const operationRef = useRef(false)
+  const [state, setState] = useState<CopyState>("idle");
+  const [isCopying, setIsCopying] = useState(false);
+  const operationRef = useRef(false);
 
   const handleCopy = async () => {
-    if (operationRef.current) return
+    if (operationRef.current) return;
 
-    operationRef.current = true
+    operationRef.current = true;
 
     const loadingTimer = setTimeout(() => {
-      setIsCopying(true)
-    }, 150)
+      setIsCopying(true);
+    }, 150);
 
     try {
-      const cached = cache.get(markdownUrl)
+      const cached = cache.get(markdownUrl);
       if (cached) {
-        await navigator.clipboard.writeText(cached)
+        await navigator.clipboard.writeText(cached);
       } else {
         await navigator.clipboard.write([
           new ClipboardItem({
             "text/plain": fetch(markdownUrl)
               .then((res) => res.text())
               .then((content) => {
-                cache.set(markdownUrl, content)
-                return content
+                cache.set(markdownUrl, content);
+                return content;
               }),
           }),
-        ])
+        ]);
       }
-      setState("done")
+      setState("done");
     } catch {
-      setState("error")
+      setState("error");
     } finally {
-      clearTimeout(loadingTimer)
-      setIsCopying(false)
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      operationRef.current = false
-      setState("idle")
+      clearTimeout(loadingTimer);
+      setIsCopying(false);
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      operationRef.current = false;
+      setState("idle");
     }
-  }
+  };
 
   return (
     <Button
@@ -73,7 +73,7 @@ export function LLMCopyButton({ markdownUrl }: { markdownUrl: string }) {
       <CopyStateIcon state={state} />
       <span className="max-[28rem]:hidden">Copy Page</span>
     </Button>
-  )
+  );
 }
 
 function getPrompt(url: string, isComponent?: boolean) {
@@ -81,26 +81,26 @@ function getPrompt(url: string, isComponent?: boolean) {
     return `I'm looking at this component documentation: ${url}
 I want to use it in a React (TypeScript) project.
 Help me understand how to use it step-by-step, including explaining key concepts, showing practical examples with TypeScript code, and pointing out common pitfalls.
-Be ready to answer follow-up questions and help debug issues based on the documentation.`
+Be ready to answer follow-up questions and help debug issues based on the documentation.`;
   }
 
-  return `Read ${url}, I want to ask questions about it.`
+  return `Read ${url}, I want to ask questions about it.`;
 }
 
 export function ViewOptions({
   markdownUrl,
   isComponent = false,
 }: {
-  markdownUrl: string
-  isComponent?: boolean
+  markdownUrl: string;
+  isComponent?: boolean;
 }) {
   const items = useMemo(() => {
     const fullMarkdownUrl =
       typeof window !== "undefined"
         ? new URL(markdownUrl, window.location.origin).toString()
-        : markdownUrl
+        : markdownUrl;
 
-    const q = getPrompt(fullMarkdownUrl, isComponent)
+    const q = getPrompt(fullMarkdownUrl, isComponent);
 
     const _items = [
       {
@@ -149,7 +149,7 @@ export function ViewOptions({
         })}`,
         icon: Icons.scira,
       },
-    ]
+    ];
 
     if (isComponent) {
       _items.splice(2, 0, {
@@ -158,20 +158,16 @@ export function ViewOptions({
           q,
         })}`,
         icon: Icons.v0,
-      })
+      });
     }
 
-    return _items
-  }, [markdownUrl, isComponent])
+    return _items;
+  }, [markdownUrl, isComponent]);
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          className="size-7 border-none active:scale-none"
-          variant="secondary"
-          size="icon-sm"
-        >
+        <Button className="size-7 border-none active:scale-none" variant="secondary" size="icon-sm">
           <ChevronDownIcon className="mt-0.5 size-4" />
           <span className="sr-only">View Options</span>
         </Button>
@@ -194,15 +190,15 @@ export function ViewOptions({
         ))}
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
 
 export function LLMCopyButtonWithViewOptions({
   markdownUrl,
   isComponent = false,
 }: {
-  markdownUrl: string
-  isComponent?: boolean
+  markdownUrl: string;
+  isComponent?: boolean;
 }) {
   return (
     <ButtonGroup>
@@ -210,5 +206,5 @@ export function LLMCopyButtonWithViewOptions({
       <ButtonGroupSeparator className="border-y-4 border-secondary dark:bg-white/20 data-vertical:my-0" />
       <ViewOptions markdownUrl={markdownUrl} isComponent={isComponent} />
     </ButtonGroup>
-  )
+  );
 }

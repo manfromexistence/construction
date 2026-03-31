@@ -4,9 +4,9 @@ import type {
   TTableCellElement,
   TTableElement,
   TTableRowElement,
-} from 'platejs';
+} from "platejs";
 
-import { getCellIndices } from '../utils/getCellIndices';
+import { getCellIndices } from "../utils/getCellIndices";
 
 export const getCellPath = (
   editor: SlateEditor,

@@ -1,17 +1,17 @@
-import { ElementApi, NodeApi, createEditor } from '@platejs/slate';
+import { createEditor, ElementApi, NodeApi } from "@platejs/slate";
 
-import { mergeDeepToNodes } from './mergeDeepToNodes';
+import { mergeDeepToNodes } from "./mergeDeepToNodes";
 
 const withNestedElement = () => ({
   children: [
-    { text: 'test' },
+    { text: "test" },
     {
-      children: [{ text: 'test' }],
-      type: 'p',
+      children: [{ text: "test" }],
+      type: "p",
     },
-    { text: 'test' },
+    { text: "test" },
   ],
-  type: 'li',
+  type: "li",
 });
 
 const withEditorRoot = () => {
@@ -22,13 +22,13 @@ const withEditorRoot = () => {
   return editor;
 };
 
-describe('mergeDeepToNodes', () => {
-  it('merges props into the root node and all descendants by default', () => {
+describe("mergeDeepToNodes", () => {
+  it("merges props into the root node and all descendants by default", () => {
     const node = {
       children: [
         {
-          children: [{ text: 'test' }],
-          type: 'p',
+          children: [{ text: "test" }],
+          type: "p",
         },
       ],
     };
@@ -43,16 +43,16 @@ describe('mergeDeepToNodes', () => {
       children: [
         {
           a: 1,
-          children: [{ a: 1, text: 'test' }],
-          type: 'p',
+          children: [{ a: 1, text: "test" }],
+          type: "p",
         },
       ],
     });
   });
 
-  describe('descendant queries', () => {
-    it('matches a standalone text node', () => {
-      const node = { text: 'test' };
+  describe("descendant queries", () => {
+    it("matches a standalone text node", () => {
+      const node = { text: "test" };
 
       mergeDeepToNodes({
         node: node as any,
@@ -62,7 +62,7 @@ describe('mergeDeepToNodes', () => {
         source: { a: 1 },
       });
 
-      expect(node).toEqual({ a: 1, text: 'test' });
+      expect(node).toEqual({ a: 1, text: "test" });
     });
 
     it.each([
@@ -70,17 +70,17 @@ describe('mergeDeepToNodes', () => {
         expected: {
           a: 1,
           children: [
-            { a: 1, text: 'test' },
+            { a: 1, text: "test" },
             {
               a: 1,
-              children: [{ a: 1, text: 'test' }],
-              type: 'p',
+              children: [{ a: 1, text: "test" }],
+              type: "p",
             },
-            { a: 1, text: 'test' },
+            { a: 1, text: "test" },
           ],
-          type: 'li',
+          type: "li",
         },
-        label: 'element roots',
+        label: "element roots",
         node: withNestedElement(),
       },
       {
@@ -88,21 +88,21 @@ describe('mergeDeepToNodes', () => {
           {
             a: 1,
             children: [
-              { a: 1, text: 'test' },
+              { a: 1, text: "test" },
               {
                 a: 1,
-                children: [{ a: 1, text: 'test' }],
-                type: 'p',
+                children: [{ a: 1, text: "test" }],
+                type: "p",
               },
-              { a: 1, text: 'test' },
+              { a: 1, text: "test" },
             ],
-            type: 'li',
+            type: "li",
           },
         ],
-        label: 'editor roots',
+        label: "editor roots",
         node: withEditorRoot(),
       },
-    ])('applies props to all descendants for $label', ({ expected, node }) => {
+    ])("applies props to all descendants for $label", ({ expected, node }) => {
       mergeDeepToNodes({
         node: node as any,
         query: {
@@ -111,19 +111,15 @@ describe('mergeDeepToNodes', () => {
         source: { a: 1 },
       });
 
-      if (
-        'children' in node &&
-        Array.isArray(node.children) &&
-        !('type' in node)
-      ) {
-        expect(node).not.toHaveProperty('a');
+      if ("children" in node && Array.isArray(node.children) && !("type" in node)) {
+        expect(node).not.toHaveProperty("a");
         expect(node.children).toEqual(expected);
       } else {
         expect(node).toEqual(expected);
       }
     });
 
-    it('calls the source factory for each matched node', () => {
+    it("calls the source factory for each matched node", () => {
       const node = withNestedElement();
       let calls = 0;
 
@@ -138,23 +134,23 @@ describe('mergeDeepToNodes', () => {
       expect(calls).toBe(5);
       expect(node).toEqual({
         children: [
-          { order: 2, text: 'test' },
+          { order: 2, text: "test" },
           {
-            children: [{ order: 4, text: 'test' }],
+            children: [{ order: 4, text: "test" }],
             order: 3,
-            type: 'p',
+            type: "p",
           },
-          { order: 5, text: 'test' },
+          { order: 5, text: "test" },
         ],
         order: 1,
-        type: 'li',
+        type: "li",
       });
     });
   });
 
-  describe('element queries', () => {
-    it('leaves text nodes untouched', () => {
-      const node = { text: 'test' };
+  describe("element queries", () => {
+    it("leaves text nodes untouched", () => {
+      const node = { text: "test" };
 
       mergeDeepToNodes({
         node: node as any,
@@ -164,7 +160,7 @@ describe('mergeDeepToNodes', () => {
         source: { a: 1 },
       });
 
-      expect(node).toEqual({ text: 'test' });
+      expect(node).toEqual({ text: "test" });
     });
 
     it.each([
@@ -172,17 +168,17 @@ describe('mergeDeepToNodes', () => {
         expected: {
           a: 1,
           children: [
-            { text: 'test' },
+            { text: "test" },
             {
               a: 1,
-              children: [{ text: 'test' }],
-              type: 'p',
+              children: [{ text: "test" }],
+              type: "p",
             },
-            { text: 'test' },
+            { text: "test" },
           ],
-          type: 'li',
+          type: "li",
         },
-        label: 'element roots',
+        label: "element roots",
         node: withNestedElement(),
       },
       {
@@ -190,24 +186,21 @@ describe('mergeDeepToNodes', () => {
           {
             a: 1,
             children: [
-              { text: 'test' },
+              { text: "test" },
               {
                 a: 1,
-                children: [{ text: 'test' }],
-                type: 'p',
+                children: [{ text: "test" }],
+                type: "p",
               },
-              { text: 'test' },
+              { text: "test" },
             ],
-            type: 'li',
+            type: "li",
           },
         ],
-        label: 'editor roots',
+        label: "editor roots",
         node: withEditorRoot(),
       },
-    ])('applies props only to element nodes for $label', ({
-      expected,
-      node,
-    }) => {
+    ])("applies props only to element nodes for $label", ({ expected, node }) => {
       mergeDeepToNodes({
         node: node as any,
         query: {
@@ -216,12 +209,8 @@ describe('mergeDeepToNodes', () => {
         source: { a: 1 },
       });
 
-      if (
-        'children' in node &&
-        Array.isArray(node.children) &&
-        !('type' in node)
-      ) {
-        expect(node).not.toHaveProperty('a');
+      if ("children" in node && Array.isArray(node.children) && !("type" in node)) {
+        expect(node).not.toHaveProperty("a");
         expect(node.children).toEqual(expected);
       } else {
         expect(node).toEqual(expected);

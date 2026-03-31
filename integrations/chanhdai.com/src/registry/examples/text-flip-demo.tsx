@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import { motion } from "motion/react"
+import { motion } from "motion/react";
 
-import { TextFlip } from "@/registry/components/text-flip"
+import { TextFlip } from "@/registry/components/text-flip";
 
 export default function TextFlipDemo() {
   return (
@@ -15,5 +15,5 @@ export default function TextFlipDemo() {
         <span>Builder</span>
       </TextFlip>
     </div>
-  )
+  );
 }

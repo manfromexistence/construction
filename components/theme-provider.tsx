@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext, useContext, useEffect } from "react";
-import { useEditorStore } from "../store/editor-store";
-import { applyThemeToElement } from "@/utils/apply-theme";
 import { useThemePresetFromUrl } from "@/hooks/use-theme-preset-from-url";
+import { applyThemeToElement } from "@/utils/apply-theme";
+import { useEditorStore } from "../store/editor-store";
 
 type Theme = "dark" | "light";
 
@@ -49,9 +49,7 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
     const root = document.documentElement;
     const newMode = themeState.currentMode === "light" ? "dark" : "light";
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (!document.startViewTransition || prefersReducedMotion) {
       handleThemeChange(newMode);

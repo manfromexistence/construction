@@ -1,8 +1,6 @@
 {
   "name": "use-as-ref",
-  "registryDependencies": [
-    "@diceui/use-isomorphic-layout-effect"
-  ],
+  "registryDependencies": ["@diceui/use-isomorphic-layout-effect"],
   "files": [
     {
       "path": "hooks/use-as-ref.ts",

@@ -1,10 +1,5 @@
 export type EventBindingArgs = [
-  (
-    | (EventTarget | undefined)
-    | (EventTarget | undefined)[]
-    | HTMLCollection
-    | NodeList
-  ),
+  (EventTarget | undefined) | (EventTarget | undefined)[] | HTMLCollection | NodeList,
   string[] | string,
   AnyFunction,
   Record<string, unknown>?,
@@ -12,16 +7,12 @@ export type EventBindingArgs = [
 
 type AnyFunction = (...args: any[]) => any;
 
-type Method = 'addEventListener' | 'removeEventListener';
+type Method = "addEventListener" | "removeEventListener";
 
 const eventListener =
   (method: Method) =>
   (
-    items:
-      | (EventTarget | undefined)
-      | (EventTarget | undefined)[]
-      | HTMLCollection
-      | NodeList,
+    items: (EventTarget | undefined) | (EventTarget | undefined)[] | HTMLCollection | NodeList,
     events: string[] | string,
     fn: AnyFunction,
     options = {}
@@ -62,7 +53,7 @@ const eventListener =
  * @param options Optional options
  * @returns Array passed arguments
  */
-export const on = eventListener('addEventListener');
+export const on = eventListener("addEventListener");
 
 /**
  * Remove event(s) from element(s).
@@ -73,7 +64,7 @@ export const on = eventListener('addEventListener');
  * @param options Optional options
  * @returns Array passed arguments
  */
-export const off = eventListener('removeEventListener');
+export const off = eventListener("removeEventListener");
 
 /**
  * Simplifies a touch / mouse-event

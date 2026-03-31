@@ -1,6 +1,6 @@
-import type { SlateEditor } from 'platejs';
+import type { SlateEditor } from "platejs";
 
-import type { TabbableEntry, TabDestination } from './types';
+import type { TabbableEntry, TabDestination } from "./types";
 
 const comparePaths = (a: number[], b: number[]) => {
   const minLength = Math.min(a.length, b.length);
@@ -19,7 +19,7 @@ const isPathEqual = (a: number[], b: number[]) => comparePaths(a, b) === 0;
 
 export type FindTabDestinationOptions = {
   activeTabbableEntry: TabbableEntry | null;
-  direction: 'backward' | 'forward';
+  direction: "backward" | "forward";
   tabbableEntries: TabbableEntry[];
 };
 
@@ -30,10 +30,8 @@ export const findTabDestination = (
   // Case 1: A tabbable entry was active before tab was pressed
   if (activeTabbableEntry) {
     // Find the next tabbable entry after the active one
-    const activeTabbableEntryIndex =
-      tabbableEntries.indexOf(activeTabbableEntry);
-    const nextTabbableEntryIndex =
-      activeTabbableEntryIndex + (direction === 'forward' ? 1 : -1);
+    const activeTabbableEntryIndex = tabbableEntries.indexOf(activeTabbableEntry);
+    const nextTabbableEntryIndex = activeTabbableEntryIndex + (direction === "forward" ? 1 : -1);
     const nextTabbableEntry = tabbableEntries[nextTabbableEntryIndex];
 
     /**
@@ -54,13 +52,10 @@ export const findTabDestination = (
      * - We're in the last tabbable element of a popover.
      * - There is no next tabbable element.
      */
-    if (
-      nextTabbableEntry &&
-      isPathEqual(activeTabbableEntry.path, nextTabbableEntry.path)
-    ) {
+    if (nextTabbableEntry && isPathEqual(activeTabbableEntry.path, nextTabbableEntry.path)) {
       return {
         domNode: nextTabbableEntry.domNode,
-        type: 'dom-node',
+        type: "dom-node",
       };
     }
     /**
@@ -69,20 +64,20 @@ export const findTabDestination = (
      * backward, focus the point of the active tabbable's path. TODO: Let a
      * tabbable entry specify custom before and after points.
      */
-    if (direction === 'forward') {
+    if (direction === "forward") {
       const pointAfter = editor.api.after(activeTabbableEntry.path);
 
       if (!pointAfter) return null;
 
       return {
         path: pointAfter.path,
-        type: 'path',
+        type: "path",
       };
     }
 
     return {
       path: editor.api.point(activeTabbableEntry.path)!.path,
-      type: 'path',
+      type: "path",
     };
   }
 
@@ -92,19 +87,15 @@ export const findTabDestination = (
 
   // Find the first tabbable entry after the selection
   const nextTabbableEntry =
-    direction === 'forward'
-      ? tabbableEntries.find(
-          (entry) => !isPathBefore(entry.path, selectionPath)
-        )
-      : [...tabbableEntries]
-          .reverse()
-          .find((entry) => isPathBefore(entry.path, selectionPath));
+    direction === "forward"
+      ? tabbableEntries.find((entry) => !isPathBefore(entry.path, selectionPath))
+      : [...tabbableEntries].reverse().find((entry) => isPathBefore(entry.path, selectionPath));
 
   // If it exists, focus it
   if (nextTabbableEntry) {
     return {
       domNode: nextTabbableEntry.domNode,
-      type: 'dom-node',
+      type: "dom-node",
     };
   }
 

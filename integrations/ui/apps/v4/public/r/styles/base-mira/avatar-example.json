@@ -2,12 +2,7 @@
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "avatar-example",
   "title": "Avatar",
-  "registryDependencies": [
-    "avatar",
-    "button",
-    "empty",
-    "example"
-  ],
+  "registryDependencies": ["avatar", "button", "empty", "example"],
   "files": [
     {
       "path": "registry/base-mira/examples/avatar-example.tsx",

@@ -3,9 +3,7 @@
   "name": "chevrons-up-down-icon",
   "author": "ncdai <dai@chanhdai.com>",
   "description": "TBD",
-  "dependencies": [
-    "motion"
-  ],
+  "dependencies": ["motion"],
   "files": [
     {
       "path": "src/registry/components/chevrons-up-down-icon/chevrons-up-down-icon.tsx",

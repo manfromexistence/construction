@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "skeleton-card",
-  "registryDependencies": [
-    "skeleton"
-  ],
+  "registryDependencies": ["skeleton"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/skeleton-card.tsx",

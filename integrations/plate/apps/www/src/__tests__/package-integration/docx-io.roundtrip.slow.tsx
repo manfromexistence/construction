@@ -1,18 +1,18 @@
 /** @jsx jsx */
 
-import fs from 'node:fs';
-import path from 'node:path';
+import fs from "node:fs";
+import path from "node:path";
 
-import { cleanDocx } from '@platejs/docx';
-import { htmlToDocxBlob, preprocessMammothHtml } from '@platejs/docx-io';
-import { jsx } from '@platejs/test-utils';
-import mammoth from 'mammoth';
-import type { SlatePlugin, TNode, Value } from 'platejs';
-import { createSlateEditor } from 'platejs';
-import { serializeHtml } from 'platejs/static';
+import { cleanDocx } from "@platejs/docx";
+import { htmlToDocxBlob, preprocessMammothHtml } from "@platejs/docx-io";
+import { jsx } from "@platejs/test-utils";
+import mammoth from "mammoth";
+import type { SlatePlugin, TNode, Value } from "platejs";
+import { createSlateEditor } from "platejs";
+import { serializeHtml } from "platejs/static";
 
-import { BaseEditorKit } from '@/registry/components/editor/editor-base-kit';
-import { DocxExportKit } from '@/registry/components/editor/plugins/docx-export-kit';
+import { BaseEditorKit } from "@/registry/components/editor/editor-base-kit";
+import { DocxExportKit } from "@/registry/components/editor/plugins/docx-export-kit";
 
 jsx;
 
@@ -25,7 +25,7 @@ const createTestEditor = (value?: Value) =>
   });
 
 const readDocxFixture = (filename: string): Buffer => {
-  const docxTestDir = path.resolve(__dirname, './docx');
+  const docxTestDir = path.resolve(__dirname, "./docx");
 
   return fs.readFileSync(path.join(docxTestDir, `${filename}.docx`));
 };
@@ -36,11 +36,11 @@ const importDocxBuffer = async (
 ): Promise<TNode[]> => {
   const mammothResult = await mammoth.convertToHtml(
     { buffer },
-    { styleMap: ['comment-reference => sup'] }
+    { styleMap: ["comment-reference => sup"] }
   );
   const { html: preprocessedHtml } = preprocessMammothHtml(mammothResult.value);
-  const cleanedHtml = cleanDocx(preprocessedHtml, '');
-  const doc = new DOMParser().parseFromString(cleanedHtml, 'text/html');
+  const cleanedHtml = cleanDocx(preprocessedHtml, "");
+  const doc = new DOMParser().parseFromString(cleanedHtml, "text/html");
 
   return editor.api.html.deserialize({ element: doc.body }) as TNode[];
 };
@@ -52,12 +52,8 @@ const exportNodesToDocx = async (nodes: TNode[]): Promise<Buffer> => {
   return Buffer.from(await blob.arrayBuffer());
 };
 
-describe('docx roundtrip', () => {
-  it.each([
-    'headers',
-    'block_quotes',
-    'tables',
-  ])('preserves data for %s', async (name) => {
+describe("docx roundtrip", () => {
+  it.each(["headers", "block_quotes", "tables"])("preserves data for %s", async (name) => {
     const editor = createTestEditor();
     const importedNodes = await importDocxBuffer(editor, readDocxFixture(name));
     const roundtrippedNodes = await importDocxBuffer(
@@ -68,36 +64,23 @@ describe('docx roundtrip', () => {
     expect(roundtrippedNodes).toEqual(importedNodes);
   });
 
-  it('preserves data for links with URL normalization', async () => {
+  it("preserves data for links with URL normalization", async () => {
     const editor = createTestEditor();
-    const importedNodes = await importDocxBuffer(
-      editor,
-      readDocxFixture('links')
-    );
+    const importedNodes = await importDocxBuffer(editor, readDocxFixture("links"));
     const roundtrippedNodes = await importDocxBuffer(
       editor,
       await exportNodesToDocx(importedNodes)
     );
 
     const normalizeUrls = (nodes: TNode[]) =>
-      JSON.parse(
-        JSON.stringify(nodes).replaceAll(
-          /"url":"(https?:\/\/[^"/]+)"/g,
-          '"url":"$1/"'
-        )
-      );
+      JSON.parse(JSON.stringify(nodes).replaceAll(/"url":"(https?:\/\/[^"/]+)"/g, '"url":"$1/"'));
 
-    expect(normalizeUrls(roundtrippedNodes)).toEqual(
-      normalizeUrls(importedNodes)
-    );
+    expect(normalizeUrls(roundtrippedNodes)).toEqual(normalizeUrls(importedNodes));
   });
 
-  it('reimports inline formatting after export without dropping all content', async () => {
+  it("reimports inline formatting after export without dropping all content", async () => {
     const editor = createTestEditor();
-    const importedNodes = await importDocxBuffer(
-      editor,
-      readDocxFixture('inline_formatting')
-    );
+    const importedNodes = await importDocxBuffer(editor, readDocxFixture("inline_formatting"));
     const roundtrippedNodes = await importDocxBuffer(
       editor,
       await exportNodesToDocx(importedNodes)

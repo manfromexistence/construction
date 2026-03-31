@@ -93,12 +93,8 @@
           "name": "account_user_id_user_id_fk",
           "tableFrom": "account",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -164,12 +160,8 @@
           "name": "ai_usage_user_id_user_id_fk",
           "tableFrom": "ai_usage",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -231,12 +223,8 @@
           "name": "community_theme_theme_id_theme_id_fk",
           "tableFrom": "community_theme",
           "tableTo": "theme",
-          "columnsFrom": [
-            "theme_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["theme_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -244,12 +232,8 @@
           "name": "community_theme_user_id_user_id_fk",
           "tableFrom": "community_theme",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -259,9 +243,7 @@
         "community_theme_theme_id_unique": {
           "name": "community_theme_theme_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "theme_id"
-          ]
+          "columns": ["theme_id"]
         }
       },
       "policies": {},
@@ -307,12 +289,8 @@
           "name": "community_theme_tag_community_theme_id_community_theme_id_fk",
           "tableFrom": "community_theme_tag",
           "tableTo": "community_theme",
-          "columnsFrom": [
-            "community_theme_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["community_theme_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -320,10 +298,7 @@
       "compositePrimaryKeys": {
         "community_theme_tag_community_theme_id_tag_pk": {
           "name": "community_theme_tag_community_theme_id_tag_pk",
-          "columns": [
-            "community_theme_id",
-            "tag"
-          ]
+          "columns": ["community_theme_id", "tag"]
         }
       },
       "uniqueConstraints": {},
@@ -404,9 +379,7 @@
         "oauth_app_client_id_unique": {
           "name": "oauth_app_client_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "client_id"
-          ]
+          "columns": ["client_id"]
         }
       },
       "policies": {},
@@ -490,12 +463,8 @@
           "name": "oauth_authorization_code_app_id_oauth_app_id_fk",
           "tableFrom": "oauth_authorization_code",
           "tableTo": "oauth_app",
-          "columnsFrom": [
-            "app_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["app_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -503,12 +472,8 @@
           "name": "oauth_authorization_code_user_id_user_id_fk",
           "tableFrom": "oauth_authorization_code",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -518,9 +483,7 @@
         "oauth_authorization_code_code_unique": {
           "name": "oauth_authorization_code_code_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "code"
-          ]
+          "columns": ["code"]
         }
       },
       "policies": {},
@@ -604,12 +567,8 @@
           "name": "oauth_token_app_id_oauth_app_id_fk",
           "tableFrom": "oauth_token",
           "tableTo": "oauth_app",
-          "columnsFrom": [
-            "app_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["app_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -617,12 +576,8 @@
           "name": "oauth_token_user_id_user_id_fk",
           "tableFrom": "oauth_token",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -632,16 +587,12 @@
         "oauth_token_access_token_hash_unique": {
           "name": "oauth_token_access_token_hash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "access_token_hash"
-          ]
+          "columns": ["access_token_hash"]
         },
         "oauth_token_refresh_token_hash_unique": {
           "name": "oauth_token_refresh_token_hash_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "refresh_token_hash"
-          ]
+          "columns": ["refresh_token_hash"]
         }
       },
       "policies": {},
@@ -707,12 +658,8 @@
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -722,9 +669,7 @@
         "session_token_unique": {
           "name": "session_token_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "token"
-          ]
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -881,12 +826,8 @@
           "name": "subscription_userId_user_id_fk",
           "tableFrom": "subscription",
           "tableTo": "user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["userId"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -944,12 +885,8 @@
           "name": "theme_user_id_user_id_fk",
           "tableFrom": "theme",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -989,12 +926,8 @@
           "name": "theme_like_user_id_user_id_fk",
           "tableFrom": "theme_like",
           "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         },
@@ -1002,12 +935,8 @@
           "name": "theme_like_theme_id_community_theme_id_fk",
           "tableFrom": "theme_like",
           "tableTo": "community_theme",
-          "columnsFrom": [
-            "theme_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["theme_id"],
+          "columnsTo": ["id"],
           "onDelete": "cascade",
           "onUpdate": "no action"
         }
@@ -1015,10 +944,7 @@
       "compositePrimaryKeys": {
         "theme_like_user_id_theme_id_pk": {
           "name": "theme_like_user_id_theme_id_pk",
-          "columns": [
-            "user_id",
-            "theme_id"
-          ]
+          "columns": ["user_id", "theme_id"]
         }
       },
       "uniqueConstraints": {},
@@ -1080,9 +1006,7 @@
         "user_email_unique": {
           "name": "user_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         }
       },
       "policies": {},

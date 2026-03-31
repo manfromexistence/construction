@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Aurora Text Demo",
   "description": "Example showing a beautiful aurora text effect.",
-  "registryDependencies": [
-    "@magicui/aurora-text"
-  ],
+  "registryDependencies": ["@magicui/aurora-text"],
   "files": [
     {
       "path": "registry/example/aurora-text-demo.tsx",

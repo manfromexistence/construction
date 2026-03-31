@@ -1,21 +1,20 @@
-import React from 'react';
+import { act, renderHook } from "@testing-library/react";
+import React from "react";
 
-import { act, renderHook } from '@testing-library/react';
-
-import { TestPlate as Plate } from '../../__tests__/TestPlate';
-import { createPlateEditor } from '../../editor';
-import { createPlatePlugin } from '../../plugin';
+import { TestPlate as Plate } from "../../__tests__/TestPlate";
+import { createPlateEditor } from "../../editor";
+import { createPlatePlugin } from "../../plugin";
 import {
   useEditorPluginOption,
   useEditorPluginOptions,
   usePluginOption,
   usePluginOptions,
-} from './usePluginOption';
+} from "./usePluginOption";
 
-describe('usePluginOption', () => {
-  it('reads plugin options, selectors, and state from the closest plate editor', () => {
+describe("usePluginOption", () => {
+  it("reads plugin options, selectors, and state from the closest plate editor", () => {
     const CounterPlugin = createPlatePlugin({
-      key: 'counter',
+      key: "counter",
       options: {
         value: 1,
       },
@@ -32,13 +31,10 @@ describe('usePluginOption', () => {
 
     const { result, rerender } = renderHook(
       () => ({
-        doubled: usePluginOption(CounterPlugin, 'doubleValue', 3),
-        state: usePluginOption(CounterPlugin, 'state'),
-        value: usePluginOption(CounterPlugin, 'value'),
-        valueBySelector: usePluginOptions(
-          CounterPlugin,
-          (state) => state.value * 10
-        ),
+        doubled: usePluginOption(CounterPlugin, "doubleValue", 3),
+        state: usePluginOption(CounterPlugin, "state"),
+        value: usePluginOption(CounterPlugin, "value"),
+        valueBySelector: usePluginOptions(CounterPlugin, (state) => state.value * 10),
       }),
       { wrapper }
     );
@@ -49,7 +45,7 @@ describe('usePluginOption', () => {
     expect(result.current.valueBySelector).toBe(10);
 
     act(() => {
-      editor.setOption(CounterPlugin, 'value', 2);
+      editor.setOption(CounterPlugin, "value", 2);
     });
     rerender();
 
@@ -59,9 +55,9 @@ describe('usePluginOption', () => {
     expect(result.current.valueBySelector).toBe(20);
   });
 
-  it('logs and returns undefined for missing options, and returns undefined when the store is missing', () => {
+  it("logs and returns undefined for missing options, and returns undefined when the store is missing", () => {
     const CounterPlugin = createPlatePlugin({
-      key: 'counter',
+      key: "counter",
       options: {
         value: 1,
       },
@@ -70,7 +66,7 @@ describe('usePluginOption', () => {
       plugins: [CounterPlugin],
     });
     const externalPlugin = createPlatePlugin({
-      key: 'external',
+      key: "external",
       options: {
         value: 5,
       },
@@ -80,21 +76,17 @@ describe('usePluginOption', () => {
     editor.api.debug.error = debugError as any;
 
     const missingKey = renderHook(() =>
-      useEditorPluginOption(editor, CounterPlugin, 'missing' as any)
+      useEditorPluginOption(editor, CounterPlugin, "missing" as any)
     );
     const missingStore = renderHook(() => ({
-      option: useEditorPluginOption(editor, externalPlugin, 'value'),
-      selected: useEditorPluginOptions(
-        editor,
-        externalPlugin,
-        (state) => state
-      ),
+      option: useEditorPluginOption(editor, externalPlugin, "value"),
+      selected: useEditorPluginOptions(editor, externalPlugin, (state) => state),
     }));
 
     expect(missingKey.result.current).toBeUndefined();
     expect(debugError).toHaveBeenCalledWith(
-      'usePluginOption: missing option is not defined in plugin counter',
-      'OPTION_UNDEFINED'
+      "usePluginOption: missing option is not defined in plugin counter",
+      "OPTION_UNDEFINED"
     );
     expect(missingStore.result.current).toEqual({
       option: undefined,

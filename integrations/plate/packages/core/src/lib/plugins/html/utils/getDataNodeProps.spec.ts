@@ -1,15 +1,15 @@
-import { createSlateEditor, createSlatePlugin } from '../../../index';
-import { getDataNodeProps } from './getDataNodeProps';
+import { createSlateEditor, createSlatePlugin } from "../../../index";
+import { getDataNodeProps } from "./getDataNodeProps";
 
-describe('getDataNodeProps', () => {
-  it('parses default slate data attributes and merges custom node props', () => {
+describe("getDataNodeProps", () => {
+  it("parses default slate data attributes and merges custom node props", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
+      key: "p",
       parsers: {
         html: {
           deserializer: {
             toNodeProps: () => ({
-              custom: 'yes',
+              custom: "yes",
               fontSize: 14,
             }),
           },
@@ -19,13 +19,13 @@ describe('getDataNodeProps', () => {
     const editor = createSlateEditor({
       plugins: [ParagraphPlugin],
     });
-    const element = document.createElement('p');
+    const element = document.createElement("p");
 
-    element.className = 'slate-p';
-    element.dataset.slateNode = 'element';
-    element.dataset.slateChecked = 'true';
-    element.dataset.slateFontSize = '12';
-    element.dataset.slateLevel = '3';
+    element.className = "slate-p";
+    element.dataset.slateNode = "element";
+    element.dataset.slateChecked = "true";
+    element.dataset.slateFontSize = "12";
+    element.dataset.slateLevel = "3";
 
     expect(
       getDataNodeProps({
@@ -35,21 +35,21 @@ describe('getDataNodeProps', () => {
       })
     ).toEqual({
       checked: true,
-      custom: 'yes',
+      custom: "yes",
       fontSize: 14,
       level: 3,
     });
   });
 
-  it('respects disableDefaultNodeProps and skips non-slate nodes', () => {
+  it("respects disableDefaultNodeProps and skips non-slate nodes", () => {
     const DisabledPlugin = createSlatePlugin({
-      key: 'p',
+      key: "p",
       parsers: {
         html: {
           deserializer: {
             disableDefaultNodeProps: true,
             toNodeProps: () => ({
-              custom: 'only',
+              custom: "only",
             }),
           },
         },
@@ -58,12 +58,12 @@ describe('getDataNodeProps', () => {
     const editor = createSlateEditor({
       plugins: [DisabledPlugin],
     });
-    const slateElement = document.createElement('p');
-    const plainElement = document.createElement('p');
+    const slateElement = document.createElement("p");
+    const plainElement = document.createElement("p");
 
-    slateElement.className = 'slate-p';
-    slateElement.dataset.slateNode = 'element';
-    slateElement.dataset.slateLevel = '2';
+    slateElement.className = "slate-p";
+    slateElement.dataset.slateNode = "element";
+    slateElement.dataset.slateLevel = "2";
 
     expect(
       getDataNodeProps({
@@ -71,19 +71,19 @@ describe('getDataNodeProps', () => {
         element: slateElement,
         plugin: editor.getPlugin(DisabledPlugin),
       })
-    ).toEqual({ custom: 'only' });
+    ).toEqual({ custom: "only" });
     expect(
       getDataNodeProps({
         editor,
         element: plainElement,
         plugin: editor.getPlugin(DisabledPlugin),
       })
-    ).toEqual({ custom: 'only' });
+    ).toEqual({ custom: "only" });
   });
 
-  it('returns undefined when no default or custom node props apply', () => {
+  it("returns undefined when no default or custom node props apply", () => {
     const ParagraphPlugin = createSlatePlugin({
-      key: 'p',
+      key: "p",
     });
     const editor = createSlateEditor({
       plugins: [ParagraphPlugin],
@@ -92,7 +92,7 @@ describe('getDataNodeProps', () => {
     expect(
       getDataNodeProps({
         editor,
-        element: document.createElement('p'),
+        element: document.createElement("p"),
         plugin: editor.getPlugin(ParagraphPlugin),
       })
     ).toBeUndefined();

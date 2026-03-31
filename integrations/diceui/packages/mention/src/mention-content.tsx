@@ -101,7 +101,7 @@ const MentionContent = React.forwardRef<ContentElement, MentionContentProps>(
     });
 
     const composedRef = useComposedRefs(forwardedRef, (node) =>
-      positionerContext.refs.setFloating(node),
+      positionerContext.refs.setFloating(node)
     );
     const composedStyle = React.useMemo<React.CSSProperties>(() => {
       return {
@@ -111,13 +111,7 @@ const MentionContent = React.forwardRef<ContentElement, MentionContentProps>(
         // Hide content visually during pasting while keeping items registered
         ...(context.isPasting ? visuallyHidden : {}),
       };
-    }, [
-      style,
-      positionerContext.floatingStyles,
-      forceMount,
-      context.open,
-      context.isPasting,
-    ]);
+    }, [style, positionerContext.floatingStyles, forceMount, context.open, context.isPasting]);
 
     useDismiss({
       enabled: context.open,
@@ -166,7 +160,7 @@ const MentionContent = React.forwardRef<ContentElement, MentionContentProps>(
         </FloatingFocusManager>
       </MentionContentProvider>
     );
-  },
+  }
 );
 
 MentionContent.displayName = CONTENT_NAME;

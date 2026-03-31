@@ -1,13 +1,10 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 
-import {
-  useTranslation,
-  type Translations,
-} from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { Checkbox } from "@/styles/base-nova/ui-rtl/checkbox"
+import { type Translations, useTranslation } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { Checkbox } from "@/styles/base-nova/ui-rtl/checkbox";
 import {
   Field,
   FieldDescription,
@@ -16,8 +13,8 @@ import {
   FieldLegend,
   FieldSeparator,
   FieldSet,
-} from "@/styles/base-nova/ui-rtl/field"
-import { Input } from "@/styles/base-nova/ui-rtl/input"
+} from "@/styles/base-nova/ui-rtl/field";
+import { Input } from "@/styles/base-nova/ui-rtl/input";
 import {
   Select,
   SelectContent,
@@ -25,8 +22,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/styles/base-nova/ui-rtl/select"
-import { Textarea } from "@/styles/base-nova/ui-rtl/textarea"
+} from "@/styles/base-nova/ui-rtl/select";
+import { Textarea } from "@/styles/base-nova/ui-rtl/textarea";
 
 const months = [
   { label: "MM", value: null },
@@ -42,7 +39,7 @@ const months = [
   { label: "10", value: "10" },
   { label: "11", value: "11" },
   { label: "12", value: "12" },
-]
+];
 
 const years = [
   { label: "YYYY", value: null },
@@ -52,7 +49,7 @@ const years = [
   { label: "2027", value: "2027" },
   { label: "2028", value: "2028" },
   { label: "2029", value: "2029" },
-]
+];
 
 const translations: Translations = {
   en: {
@@ -80,8 +77,7 @@ const translations: Translations = {
       month11: "11",
       month12: "12",
       billingAddress: "Billing Address",
-      billingAddressDescription:
-        "The billing address associated with your payment method",
+      billingAddressDescription: "The billing address associated with your payment method",
       sameAsShipping: "Same as shipping address",
       comments: "Comments",
       commentsPlaceholder: "Add any additional comments",
@@ -155,16 +151,16 @@ const translations: Translations = {
       cancel: "בטל",
     },
   },
-}
+};
 
 export function FieldRtl() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   const getMonthLabel = (value: string | null): string => {
-    if (value === null) return t.monthPlaceholder
-    const monthKey = `month${value}` as keyof typeof t
-    return t[monthKey] || value
-  }
+    if (value === null) return t.monthPlaceholder;
+    const monthKey = `month${value}` as keyof typeof t;
+    return t[monthKey] || value;
+  };
 
   return (
     <div className="w-full max-w-md py-6" dir={dir}>
@@ -175,19 +171,11 @@ export function FieldRtl() {
             <FieldDescription>{t.secureTransactions}</FieldDescription>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="checkout-7j9-card-name-43j-rtl">
-                  {t.nameOnCard}
-                </FieldLabel>
-                <Input
-                  id="checkout-7j9-card-name-43j-rtl"
-                  placeholder="Evil Rabbit"
-                  required
-                />
+                <FieldLabel htmlFor="checkout-7j9-card-name-43j-rtl">{t.nameOnCard}</FieldLabel>
+                <Input id="checkout-7j9-card-name-43j-rtl" placeholder="Evil Rabbit" required />
               </Field>
               <Field>
-                <FieldLabel htmlFor="checkout-7j9-card-number-uw1-rtl">
-                  {t.cardNumber}
-                </FieldLabel>
+                <FieldLabel htmlFor="checkout-7j9-card-number-uw1-rtl">{t.cardNumber}</FieldLabel>
                 <Input
                   id="checkout-7j9-card-number-uw1-rtl"
                   placeholder="1234 5678 9012 3456"
@@ -197,9 +185,7 @@ export function FieldRtl() {
               </Field>
               <div className="grid grid-cols-3 gap-4">
                 <Field>
-                  <FieldLabel htmlFor="checkout-exp-month-ts6-rtl">
-                    {t.month}
-                  </FieldLabel>
+                  <FieldLabel htmlFor="checkout-exp-month-ts6-rtl">{t.month}</FieldLabel>
                   <Select items={months}>
                     <SelectTrigger id="checkout-exp-month-ts6-rtl">
                       <SelectValue />
@@ -216,9 +202,7 @@ export function FieldRtl() {
                   </Select>
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="checkout-7j9-exp-year-f59-rtl">
-                    {t.year}
-                  </FieldLabel>
+                  <FieldLabel htmlFor="checkout-7j9-exp-year-f59-rtl">{t.year}</FieldLabel>
                   <Select items={years}>
                     <SelectTrigger id="checkout-7j9-exp-year-f59-rtl">
                       <SelectValue />
@@ -235,9 +219,7 @@ export function FieldRtl() {
                   </Select>
                 </Field>
                 <Field>
-                  <FieldLabel htmlFor="checkout-7j9-cvv-rtl">
-                    {t.cvv}
-                  </FieldLabel>
+                  <FieldLabel htmlFor="checkout-7j9-cvv-rtl">{t.cvv}</FieldLabel>
                   <Input id="checkout-7j9-cvv-rtl" placeholder="123" required />
                 </Field>
               </div>
@@ -249,14 +231,8 @@ export function FieldRtl() {
             <FieldDescription>{t.billingAddressDescription}</FieldDescription>
             <FieldGroup>
               <Field orientation="horizontal">
-                <Checkbox
-                  id="checkout-7j9-same-as-shipping-wgm-rtl"
-                  defaultChecked
-                />
-                <FieldLabel
-                  htmlFor="checkout-7j9-same-as-shipping-wgm-rtl"
-                  className="font-normal"
-                >
+                <Checkbox id="checkout-7j9-same-as-shipping-wgm-rtl" defaultChecked />
+                <FieldLabel htmlFor="checkout-7j9-same-as-shipping-wgm-rtl" className="font-normal">
                   {t.sameAsShipping}
                 </FieldLabel>
               </Field>
@@ -265,9 +241,7 @@ export function FieldRtl() {
           <FieldSet>
             <FieldGroup>
               <Field>
-                <FieldLabel htmlFor="checkout-7j9-optional-comments-rtl">
-                  {t.comments}
-                </FieldLabel>
+                <FieldLabel htmlFor="checkout-7j9-optional-comments-rtl">{t.comments}</FieldLabel>
                 <Textarea
                   id="checkout-7j9-optional-comments-rtl"
                   placeholder={t.commentsPlaceholder}
@@ -285,5 +259,5 @@ export function FieldRtl() {
         </FieldGroup>
       </form>
     </div>
-  )
+  );
 }

@@ -1,13 +1,9 @@
-"use client"
+"use client";
 
-import * as React from "react"
-
-import { Button } from "@/registry/bases/radix/ui/button"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/registry/bases/radix/ui/popover"
+import * as React from "react";
+import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder";
+import { Button } from "@/registry/bases/radix/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/registry/bases/radix/ui/popover";
 import {
   Sidebar,
   SidebarContent,
@@ -16,8 +12,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/registry/bases/radix/ui/sidebar"
-import { IconPlaceholder } from "@/app/(create)/components/icon-placeholder"
+} from "@/registry/bases/radix/ui/sidebar";
 
 const data = [
   [
@@ -184,20 +179,18 @@ const data = [
       ),
     },
   ],
-]
+];
 
 export function NavActions() {
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false);
 
   React.useEffect(() => {
-    setIsOpen(true)
-  }, [])
+    setIsOpen(true);
+  }, []);
 
   return (
     <div className="flex items-center gap-2 text-sm">
-      <div className="hidden font-medium text-muted-foreground md:inline-block">
-        Edit Oct 08
-      </div>
+      <div className="hidden font-medium text-muted-foreground md:inline-block">Edit Oct 08</div>
       <Button variant="ghost" size="icon" className="h-7 w-7">
         <IconPlaceholder
           lucide="StarIcon"
@@ -209,11 +202,7 @@ export function NavActions() {
       </Button>
       <Popover open={isOpen} onOpenChange={setIsOpen}>
         <PopoverTrigger asChild>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-7 w-7 data-[state=open]:bg-accent"
-          >
+          <Button variant="ghost" size="icon" className="h-7 w-7 data-[state=open]:bg-accent">
             <IconPlaceholder
               lucide="MoreHorizontalIcon"
               tabler="IconDots"
@@ -223,10 +212,7 @@ export function NavActions() {
             />
           </Button>
         </PopoverTrigger>
-        <PopoverContent
-          className="w-56 overflow-hidden rounded-lg p-0"
-          align="end"
-        >
+        <PopoverContent className="w-56 overflow-hidden rounded-lg p-0" align="end">
           <Sidebar collapsible="none" className="bg-transparent">
             <SidebarContent>
               {data.map((group, index) => (
@@ -249,5 +235,5 @@ export function NavActions() {
         </PopoverContent>
       </Popover>
     </div>
-  )
+  );
 }

@@ -1,7 +1,7 @@
-import Link from "next/link"
-import { ArrowRightIcon } from "lucide-react"
+import { ArrowRightIcon } from "lucide-react";
+import Link from "next/link";
 
-import { Badge } from "@/registry/new-york-v4/ui/badge"
+import { Badge } from "@/registry/new-york-v4/ui/badge";
 
 export function Announcement() {
   return (
@@ -10,5 +10,5 @@ export function Announcement() {
         Introducing Luma <ArrowRightIcon />
       </Link>
     </Badge>
-  )
+  );
 }

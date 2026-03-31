@@ -1,6 +1,6 @@
-import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials"
-import { cn } from "@/lib/utils"
-import * as TestimonialPrimitive from "@/registry/components/testimonial"
+import type { Testimonial as TestimonialType } from "@/features/portfolio/types/testimonials";
+import { cn } from "@/lib/utils";
+import * as TestimonialPrimitive from "@/registry/components/testimonial";
 
 export function Testimonial({
   className,
@@ -27,10 +27,7 @@ export function Testimonial({
 
         <TestimonialPrimitive.TestimonialAuthor>
           <TestimonialPrimitive.TestimonialAvatar>
-            <TestimonialPrimitive.TestimonialAvatarImg
-              src={authorAvatar}
-              alt={authorName}
-            />
+            <TestimonialPrimitive.TestimonialAvatarImg src={authorAvatar} alt={authorName} />
             <TestimonialPrimitive.TestimonialAvatarRing />
           </TestimonialPrimitive.TestimonialAvatar>
 
@@ -44,5 +41,5 @@ export function Testimonial({
         </TestimonialPrimitive.TestimonialAuthor>
       </TestimonialPrimitive.Testimonial>
     </a>
-  )
+  );
 }

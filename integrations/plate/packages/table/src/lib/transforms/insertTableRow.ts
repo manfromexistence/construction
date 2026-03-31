@@ -1,17 +1,17 @@
 import {
-  type Path,
-  type SlateEditor,
-  type TElement,
-  type TTableElement,
   getEditorPlugin,
   KEYS,
   NodeApi,
+  type Path,
   PathApi,
-} from 'platejs';
+  type SlateEditor,
+  type TElement,
+  type TTableElement,
+} from "platejs";
 
-import { BaseTablePlugin } from '../BaseTablePlugin';
-import { insertTableMergeRow } from '../merge/insertTableRow';
-import { getCellTypes } from '../utils/index';
+import { BaseTablePlugin } from "../BaseTablePlugin";
+import { insertTableMergeRow } from "../merge/insertTableRow";
+import { getCellTypes } from "../utils/index";
 
 export const insertTableRow = (
   editor: SlateEditor,

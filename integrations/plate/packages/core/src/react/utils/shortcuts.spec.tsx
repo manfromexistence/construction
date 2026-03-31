@@ -1,15 +1,16 @@
 /** @jsx jsxt */
 
-import { BoldPlugin } from '@platejs/basic-nodes/react';
-import { jsxt } from '@platejs/test-utils';
+import { BoldPlugin } from "@platejs/basic-nodes/react";
+import { jsxt } from "@platejs/test-utils";
 
-import { createPlateTestEditor } from '../__tests__/createPlateTestEditor';
+import { createPlateTestEditor } from "../__tests__/createPlateTestEditor";
 
 jsxt;
-import { type PlateEditor, createPlateEditor } from '../editor';
-import { createPlatePlugin } from '../plugin';
 
-it('use custom hotkey for bold', async () => {
+import { createPlateEditor, type PlateEditor } from "../editor";
+import { createPlatePlugin } from "../plugin";
+
+it("use custom hotkey for bold", async () => {
   const input = (
     <editor>
       <hp>
@@ -33,8 +34,8 @@ it('use custom hotkey for bold', async () => {
       BoldPlugin.configure({
         handlers: {
           onKeyDown: ({ editor, event }) => {
-            if (event.key === 'b' && event.ctrlKey) {
-              editor.tf.toggleMark('bold');
+            if (event.key === "b" && event.ctrlKey) {
+              editor.tf.toggleMark("bold");
             }
           },
         },
@@ -44,25 +45,25 @@ it('use custom hotkey for bold', async () => {
     value: input.children,
   });
 
-  await triggerKeyboardEvent('mod+b');
+  await triggerKeyboardEvent("mod+b");
 
   expect(editor.children).toEqual(output.children);
 });
 
-describe('extend method with shortcuts', () => {
-  it('add new shortcuts to a plugin', () => {
+describe("extend method with shortcuts", () => {
+  it("add new shortcuts to a plugin", () => {
     const testPlugin = createPlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
       shortcuts: {
         bold: {
-          keys: 'mod+b',
+          keys: "mod+b",
           handler: () => {},
         },
       },
     }).extend({
       shortcuts: {
         italic: {
-          keys: 'mod+i',
+          keys: "mod+i",
           handler: () => {},
         },
       },
@@ -72,26 +73,26 @@ describe('extend method with shortcuts', () => {
       plugins: [testPlugin],
     });
 
-    expect(editor.meta.shortcuts['testPlugin.bold']).toBeDefined();
-    expect(editor.meta.shortcuts['testPlugin.italic']).toBeDefined();
+    expect(editor.meta.shortcuts["testPlugin.bold"]).toBeDefined();
+    expect(editor.meta.shortcuts["testPlugin.italic"]).toBeDefined();
   });
 
-  it('override existing shortcuts in a plugin', () => {
+  it("override existing shortcuts in a plugin", () => {
     const originalCallback = mock();
     const newCallback = mock();
 
     const testPlugin = createPlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
       shortcuts: {
         bold: {
-          keys: 'mod+b',
+          keys: "mod+b",
           handler: originalCallback,
         },
       },
     }).extend({
       shortcuts: {
         bold: {
-          keys: 'mod+b',
+          keys: "mod+b",
           handler: newCallback,
         },
       },
@@ -101,7 +102,7 @@ describe('extend method with shortcuts', () => {
       plugins: [testPlugin],
     });
 
-    editor.meta.shortcuts['testPlugin.bold']?.handler?.({
+    editor.meta.shortcuts["testPlugin.bold"]?.handler?.({
       editor,
       event: {} as KeyboardEvent,
       handler: {} as any,
@@ -111,22 +112,22 @@ describe('extend method with shortcuts', () => {
     expect(newCallback).toHaveBeenCalled();
   });
 
-  it('configure existing shortcuts in a plugin', () => {
+  it("configure existing shortcuts in a plugin", () => {
     const originalCallback = mock();
     const _newCallback = mock();
 
     const testPlugin = createPlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
       shortcuts: {
         bold: {
-          keys: 'mod+b',
+          keys: "mod+b",
           handler: originalCallback,
         },
       },
     }).configure({
       shortcuts: {
         bold: {
-          keys: 'mod+bb',
+          keys: "mod+bb",
         },
       },
     });
@@ -135,19 +136,19 @@ describe('extend method with shortcuts', () => {
       plugins: [testPlugin],
     });
 
-    expect(editor.meta.shortcuts['testPlugin.bold']?.keys).toBe('mod+bb');
+    expect(editor.meta.shortcuts["testPlugin.bold"]?.keys).toBe("mod+bb");
   });
 
-  it('allow removing shortcuts by setting them to null', () => {
+  it("allow removing shortcuts by setting them to null", () => {
     const testPlugin = createPlatePlugin({
-      key: 'testPlugin',
+      key: "testPlugin",
       shortcuts: {
         bold: {
-          keys: 'mod+b',
+          keys: "mod+b",
           handler: () => {},
         },
         italic: {
-          keys: 'mod+i',
+          keys: "mod+i",
           handler: () => {},
         },
       },
@@ -161,7 +162,7 @@ describe('extend method with shortcuts', () => {
       plugins: [testPlugin],
     });
 
-    expect(editor.meta.shortcuts['testPlugin.bold']).toBeUndefined();
-    expect(editor.meta.shortcuts['testPlugin.italic']).toBeDefined();
+    expect(editor.meta.shortcuts["testPlugin.bold"]).toBeUndefined();
+    expect(editor.meta.shortcuts["testPlugin.italic"]).toBeDefined();
   });
 });

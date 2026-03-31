@@ -1,9 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "menubar-demo",
-  "registryDependencies": [
-    "menubar"
-  ],
+  "registryDependencies": ["menubar"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/menubar-demo.tsx",

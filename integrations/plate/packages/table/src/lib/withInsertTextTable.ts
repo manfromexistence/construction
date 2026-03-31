@@ -1,7 +1,7 @@
-import type { OverrideEditor } from 'platejs';
+import type { OverrideEditor } from "platejs";
 
-import { type TableConfig, getTableAbove } from '.';
-import { getTableGridAbove } from './queries';
+import { getTableAbove, type TableConfig } from ".";
+import { getTableGridAbove } from "./queries";
 
 export const withInsertTextTable: OverrideEditor<TableConfig> = ({
   editor,
@@ -16,12 +16,12 @@ export const withInsertTextTable: OverrideEditor<TableConfig> = ({
 
         if (entry) {
           const cellEntries = getTableGridAbove(editor, {
-            format: 'cell',
+            format: "cell",
           });
 
           if (cellEntries.length > 1) {
             editor.tf.collapse({
-              edge: 'focus',
+              edge: "focus",
             });
           }
         }

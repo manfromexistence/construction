@@ -1,22 +1,17 @@
 import {
-  type OmitFirst,
-  type PluginConfig,
   bindFirst,
   createSlatePlugin,
   createTSlatePlugin,
   KEYS,
-} from 'platejs';
+  type OmitFirst,
+  type PluginConfig,
+} from "platejs";
 
-import {
-  toggleBulletedList,
-  toggleList,
-  toggleNumberedList,
-  toggleTaskList,
-} from './transforms';
-import { withList } from './withList';
+import { toggleBulletedList, toggleList, toggleNumberedList, toggleTaskList } from "./transforms";
+import { withList } from "./withList";
 
 export type ListConfig = PluginConfig<
-  'listClassic',
+  "listClassic",
   {
     enableResetOnShiftTab?: boolean;
     /** Inherit the checked state of above node after insert break at the end */
@@ -45,13 +40,13 @@ export const BaseBulletedListPlugin = createSlatePlugin({
       deserializer: {
         rules: [
           {
-            validNodeName: 'UL',
+            validNodeName: "UL",
           },
         ],
       },
     },
   },
-  render: { as: 'ul' },
+  render: { as: "ul" },
 }).extendTransforms(({ editor }) => ({
   toggle: () => {
     toggleBulletedList(editor);
@@ -61,8 +56,8 @@ export const BaseBulletedListPlugin = createSlatePlugin({
 export const BaseNumberedListPlugin = createSlatePlugin({
   key: KEYS.olClassic,
   node: { isContainer: true, isElement: true },
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'OL' }] } } },
-  render: { as: 'ol' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "OL" }] } } },
+  render: { as: "ol" },
 }).extendTransforms(({ editor }) => ({
   toggle: () => {
     toggleNumberedList(editor);
@@ -76,7 +71,7 @@ export const BaseTaskListPlugin = createSlatePlugin({
     inheritCheckStateOnLineEndBreak: false,
     inheritCheckStateOnLineStartBreak: false,
   },
-  render: { as: 'ul' },
+  render: { as: "ul" },
 }).extendTransforms(({ editor }) => ({
   toggle: () => {
     toggleTaskList(editor);
@@ -95,8 +90,8 @@ export const BaseListItemPlugin = createSlatePlugin({
     },
   },
   node: { isContainer: true, isElement: true, isStrictSiblings: true },
-  parsers: { html: { deserializer: { rules: [{ validNodeName: 'LI' }] } } },
-  render: { as: 'li' },
+  parsers: { html: { deserializer: { rules: [{ validNodeName: "LI" }] } } },
+  render: { as: "li" },
 });
 
 export const BaseListItemContentPlugin = createSlatePlugin({

@@ -1,14 +1,13 @@
-import * as React from "react"
-
-import { getRegistryComponent } from "@/lib/registry"
-import { ComponentPreviewTabs } from "@/components/component-preview-tabs"
-import { ComponentSource } from "@/components/component-source"
+import * as React from "react";
+import { ComponentPreviewTabs } from "@/components/component-preview-tabs";
+import { ComponentSource } from "@/components/component-source";
+import { getRegistryComponent } from "@/lib/registry";
 
 interface ComponentPreviewProps extends React.HTMLAttributes<HTMLDivElement> {
-  name: string
-  align?: "center" | "start" | "end"
-  preview?: boolean
-  hideCode?: boolean
+  name: string;
+  align?: "center" | "start" | "end";
+  preview?: boolean;
+  hideCode?: boolean;
 }
 
 export function ComponentPreview({
@@ -18,7 +17,7 @@ export function ComponentPreview({
   hideCode = false,
   ...props
 }: ComponentPreviewProps) {
-  const Component = getRegistryComponent(name)
+  const Component = getRegistryComponent(name);
 
   if (!Component) {
     return (
@@ -29,7 +28,7 @@ export function ComponentPreview({
         </code>{" "}
         not found in registry.
       </p>
-    )
+    );
   }
   return (
     <ComponentPreviewTabs
@@ -41,5 +40,5 @@ export function ComponentPreview({
       source={<ComponentSource name={name} collapsible={false} />}
       {...props}
     />
-  )
+  );
 }

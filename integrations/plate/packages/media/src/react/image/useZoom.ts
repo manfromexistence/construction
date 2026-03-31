@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
+import { useCallback } from "react";
 
-import { ImagePreviewStore, useImagePreviewValue } from './ImagePreviewStore';
+import { ImagePreviewStore, useImagePreviewValue } from "./ImagePreviewStore";
 
 export const useZoom = () => {
-  const scale = useImagePreviewValue('scale');
+  const scale = useImagePreviewValue("scale");
 
   const zoomIn = useCallback(() => {
     if (scale >= 2) return;
@@ -12,7 +12,7 @@ export const useZoom = () => {
     const nextScale = targets.find((target) => scale < target);
 
     if (nextScale) {
-      ImagePreviewStore.set('scale', nextScale);
+      ImagePreviewStore.set("scale", nextScale);
     }
   }, [scale]);
 
@@ -20,14 +20,12 @@ export const useZoom = () => {
     if (scale <= 0) return;
 
     const targets = [0, 0.5, 1, 1.5, 2];
-    const previousScale = [...targets]
-      .reverse()
-      .find((target) => scale > target);
+    const previousScale = [...targets].reverse().find((target) => scale > target);
 
-    if (previousScale === 1) ImagePreviewStore.set('translate', { x: 0, y: 0 });
+    if (previousScale === 1) ImagePreviewStore.set("translate", { x: 0, y: 0 });
 
     if (previousScale !== undefined) {
-      ImagePreviewStore.set('scale', previousScale);
+      ImagePreviewStore.set("scale", previousScale);
     }
   }, [scale]);
 

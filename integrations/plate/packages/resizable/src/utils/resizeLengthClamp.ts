@@ -1,7 +1,7 @@
-import type { ResizeLength, ResizeLengthStatic } from '../types';
+import type { ResizeLength, ResizeLengthStatic } from "../types";
 
-import { resizeLengthToRelative } from './resizeLengthToRelative';
-import { resizeLengthToStatic } from './resizeLengthToStatic';
+import { resizeLengthToRelative } from "./resizeLengthToRelative";
+import { resizeLengthToStatic } from "./resizeLengthToStatic";
 
 export type ResizeLengthClampOptions<T = ResizeLength> = {
   max?: T;
@@ -32,22 +32,20 @@ export const resizeLengthClamp = <T extends ResizeLength>(
   const staticLength = resizeLengthToStatic(length, parentLength);
 
   const clampedStaticLength = resizeLengthClampStatic(staticLength, {
-    max:
-      max === undefined ? undefined : resizeLengthToStatic(max, parentLength),
-    min:
-      min === undefined ? undefined : resizeLengthToStatic(min, parentLength),
+    max: max === undefined ? undefined : resizeLengthToStatic(max, parentLength),
+    min: min === undefined ? undefined : resizeLengthToStatic(min, parentLength),
   });
 
   switch (typeof length) {
-    case 'number': {
+    case "number": {
       return clampedStaticLength as T;
     }
-    case 'string': {
+    case "string": {
       return resizeLengthToRelative(clampedStaticLength, parentLength) as T;
     }
 
     default: {
-      throw new Error('Invalid length type');
+      throw new Error("Invalid length type");
     }
   }
 };

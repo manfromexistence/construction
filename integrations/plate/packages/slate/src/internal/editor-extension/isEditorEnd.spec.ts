@@ -1,11 +1,11 @@
-import { isEditorEnd } from './isEditorEnd';
+import { isEditorEnd } from "./isEditorEnd";
 
-describe('isEditorEnd', () => {
-  it('returns false when the editor has no selection', () => {
+describe("isEditorEnd", () => {
+  it("returns false when the editor has no selection", () => {
     expect(isEditorEnd({ selection: null } as any)).toBe(false);
   });
 
-  it('returns true when the focus is at the editor end boundary', () => {
+  it("returns true when the focus is at the editor end boundary", () => {
     expect(
       isEditorEnd({
         api: {
@@ -20,7 +20,7 @@ describe('isEditorEnd', () => {
     ).toBe(true);
   });
 
-  it('returns false when the focus is not at the matching editor boundary', () => {
+  it("returns false when the focus is not at the matching editor boundary", () => {
     expect(
       isEditorEnd({
         api: {

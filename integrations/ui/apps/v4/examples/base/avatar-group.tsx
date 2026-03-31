@@ -1,9 +1,4 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarGroup,
-  AvatarImage,
-} from "@/styles/base-nova/ui/avatar"
+import { Avatar, AvatarFallback, AvatarGroup, AvatarImage } from "@/styles/base-nova/ui/avatar";
 
 export function AvatarGroupExample() {
   return (
@@ -17,12 +12,9 @@ export function AvatarGroupExample() {
         <AvatarFallback>LR</AvatarFallback>
       </Avatar>
       <Avatar>
-        <AvatarImage
-          src="https://github.com/evilrabbit.png"
-          alt="@evilrabbit"
-        />
+        <AvatarImage src="https://github.com/evilrabbit.png" alt="@evilrabbit" />
         <AvatarFallback>ER</AvatarFallback>
       </Avatar>
     </AvatarGroup>
-  )
+  );
 }

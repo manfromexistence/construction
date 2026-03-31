@@ -1,13 +1,13 @@
 import {
+  createTSlatePlugin,
   type EditorNodesOptions,
+  KEYS,
   type NodeEntry,
   type PluginConfig,
   type SetNodesOptions,
   type TCommentText,
-  createTSlatePlugin,
-  KEYS,
   TextApi,
-} from 'platejs';
+} from "platejs";
 
 import {
   getCommentCount,
@@ -18,11 +18,11 @@ import {
   getTransientCommentKey,
   isCommentKey,
   isCommentNodeById,
-} from './utils';
-import { withComment } from './withComments';
+} from "./utils";
+import { withComment } from "./withComments";
 
 export type BaseCommentConfig = PluginConfig<
-  'comment',
+  "comment",
   {},
   {
     comment: {
@@ -54,10 +54,10 @@ export const BaseCommentPlugin = createTSlatePlugin<BaseCommentConfig>({
   node: {
     isLeaf: true,
   },
-  rules: { selection: { affinity: 'outward' } },
+  rules: { selection: { affinity: "outward" } },
 })
   .overrideEditor(withComment)
-  .extendApi<BaseCommentConfig['api']['comment']>(({ editor, type }) => ({
+  .extendApi<BaseCommentConfig["api"]["comment"]>(({ editor, type }) => ({
     has: (options: { id: string }): boolean => {
       const { id } = options;
 
@@ -110,66 +110,60 @@ export const BaseCommentPlugin = createTSlatePlugin<BaseCommentConfig>({
       ];
     },
   }))
-  .extendTransforms<BaseCommentConfig['transforms']['comment']>(
-    ({ api, editor, tf, type }) => ({
-      removeMark: () => {
-        const nodeEntry = api.comment.node();
+  .extendTransforms<BaseCommentConfig["transforms"]["comment"]>(({ api, editor, tf, type }) => ({
+    removeMark: () => {
+      const nodeEntry = api.comment.node();
 
-        if (!nodeEntry) return;
+      if (!nodeEntry) return;
 
-        const keys = getCommentKeys(nodeEntry[0]);
+      const keys = getCommentKeys(nodeEntry[0]);
 
-        editor.tf.withoutNormalizing(() => {
-          keys.forEach((key) => {
-            editor.tf.removeMark(key);
-          });
-
-          editor.tf.removeMark(KEYS.comment);
+      editor.tf.withoutNormalizing(() => {
+        keys.forEach((key) => {
+          editor.tf.removeMark(key);
         });
-      },
-      setDraft: (options = {}) => {
-        tf.setNodes(
-          {
-            [getDraftCommentKey()]: true,
-            [type]: true,
-          },
-          { match: TextApi.isText, split: true, ...options }
-        );
-      },
-      unsetMark: (options) => {
-        const { id, transient } = options;
 
-        const nodes = api.comment.nodes({ id, at: [], transient });
+        editor.tf.removeMark(KEYS.comment);
+      });
+    },
+    setDraft: (options = {}) => {
+      tf.setNodes(
+        {
+          [getDraftCommentKey()]: true,
+          [type]: true,
+        },
+        { match: TextApi.isText, split: true, ...options }
+      );
+    },
+    unsetMark: (options) => {
+      const { id, transient } = options;
 
-        if (!nodes) return;
+      const nodes = api.comment.nodes({ id, at: [], transient });
 
-        nodes.forEach(([node]) => {
-          const isOverlapping = getCommentCount(node) > 1;
+      if (!nodes) return;
 
-          let unsetKeys: string[] = [];
+      nodes.forEach(([node]) => {
+        const isOverlapping = getCommentCount(node) > 1;
 
-          const removedId = id ?? api.comment.nodeId(node)!;
+        let unsetKeys: string[] = [];
 
-          if (isOverlapping) {
-            unsetKeys = [
-              getDraftCommentKey(),
-              getCommentKey(removedId),
-              getTransientCommentKey(),
-            ];
-          } else {
-            unsetKeys = [
-              KEYS.comment,
-              getDraftCommentKey(),
-              getCommentKey(removedId),
-              getTransientCommentKey(),
-            ];
-          }
+        const removedId = id ?? api.comment.nodeId(node)!;
 
-          editor.tf.unsetNodes<TCommentText>(unsetKeys, {
-            at: [],
-            match: (n) => n === node,
-          });
+        if (isOverlapping) {
+          unsetKeys = [getDraftCommentKey(), getCommentKey(removedId), getTransientCommentKey()];
+        } else {
+          unsetKeys = [
+            KEYS.comment,
+            getDraftCommentKey(),
+            getCommentKey(removedId),
+            getTransientCommentKey(),
+          ];
+        }
+
+        editor.tf.unsetNodes<TCommentText>(unsetKeys, {
+          at: [],
+          match: (n) => n === node,
         });
-      },
-    })
-  );
+      });
+    },
+  }));

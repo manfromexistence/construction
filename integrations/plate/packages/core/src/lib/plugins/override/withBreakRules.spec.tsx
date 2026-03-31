@@ -1,11 +1,11 @@
 /** @jsx jsxt */
 
-import { BaseH1Plugin } from '@platejs/basic-nodes';
-import { BaseListPlugin } from '@platejs/list';
-import { jsxt } from '@platejs/test-utils';
+import { BaseH1Plugin } from "@platejs/basic-nodes";
+import { BaseListPlugin } from "@platejs/list";
+import { jsxt } from "@platejs/test-utils";
 
-import { createSlateEditor } from '../../editor';
-import { createSlatePlugin } from '../../plugin/createSlatePlugin';
+import { createSlateEditor } from "../../editor";
+import { createSlatePlugin } from "../../plugin/createSlatePlugin";
 
 jsxt;
 
@@ -36,13 +36,7 @@ const createElementPlugin = ({
       : {}),
   });
 
-const getInsertBreakEditor = ({
-  input,
-  plugins,
-}: {
-  input: any;
-  plugins: any[];
-}) => {
+const getInsertBreakEditor = ({ input, plugins }: { input: any; plugins: any[] }) => {
   const editor = createSlateEditor({
     plugins,
     selection: input.selection,
@@ -54,12 +48,12 @@ const getInsertBreakEditor = ({
   return editor;
 };
 
-describe('withBreakRules', () => {
-  describe('empty reset rules', () => {
+describe("withBreakRules", () => {
+  describe("empty reset rules", () => {
     it.each([
-      ['blockquote', 'blockquote'],
-      ['heading', 'h1'],
-    ])('resets an empty %s block to a paragraph', (_label, type) => {
+      ["blockquote", "blockquote"],
+      ["heading", "h1"],
+    ])("resets an empty %s block to a paragraph", (_label, type) => {
       const input = (
         <editor>
           <element type={type}>
@@ -80,7 +74,7 @@ describe('withBreakRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            breakRules: { empty: 'reset' },
+            breakRules: { empty: "reset" },
             key: type,
           }),
         ],
@@ -91,9 +85,9 @@ describe('withBreakRules', () => {
     });
 
     it.each([
-      ['blockquote', 'blockquote', 'some content'],
-      ['heading', 'h1', 'Heading content'],
-    ])('keeps a non-empty %s block type on insertBreak', (_label, type, text) => {
+      ["blockquote", "blockquote", "some content"],
+      ["heading", "h1", "Heading content"],
+    ])("keeps a non-empty %s block type on insertBreak", (_label, type, text) => {
       const input = (
         <editor>
           <element type={type}>
@@ -116,7 +110,7 @@ describe('withBreakRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            breakRules: { empty: 'reset' },
+            breakRules: { empty: "reset" },
             key: type,
           }),
         ],
@@ -127,8 +121,8 @@ describe('withBreakRules', () => {
     });
   });
 
-  describe('property cleanup', () => {
-    it('removes custom properties when resetting', () => {
+  describe("property cleanup", () => {
+    it("removes custom properties when resetting", () => {
       const input = (
         <editor>
           <element customProp="value" level={1} type="h1">
@@ -149,8 +143,8 @@ describe('withBreakRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            breakRules: { empty: 'reset' },
-            key: 'h1',
+            breakRules: { empty: "reset" },
+            key: "h1",
           }),
         ],
       });
@@ -160,8 +154,8 @@ describe('withBreakRules', () => {
     });
   });
 
-  describe('deleteExit rules', () => {
-    it('keeps a non-empty block when deleteExit only applies to empty blocks', () => {
+  describe("deleteExit rules", () => {
+    it("keeps a non-empty block when deleteExit only applies to empty blocks", () => {
       const input = (
         <editor>
           <element type="blockquote">
@@ -184,8 +178,8 @@ describe('withBreakRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            breakRules: { empty: 'deleteExit' },
-            key: 'blockquote',
+            breakRules: { empty: "deleteExit" },
+            key: "blockquote",
           }),
         ],
       });
@@ -195,11 +189,11 @@ describe('withBreakRules', () => {
     });
   });
 
-  describe('default break behavior', () => {
+  describe("default break behavior", () => {
     it.each([
-      ['without break rules', undefined],
-      ['with an empty break rule object', {}],
-    ])('uses Slate default behavior %s', (_label, breakRules) => {
+      ["without break rules", undefined],
+      ["with an empty break rule object", {}],
+    ])("uses Slate default behavior %s", (_label, breakRules) => {
       const input = (
         <editor>
           <element type="custom">
@@ -224,7 +218,7 @@ describe('withBreakRules', () => {
         plugins: [
           createElementPlugin({
             breakRules: breakRules as Record<string, unknown> | undefined,
-            key: 'custom',
+            key: "custom",
           }),
         ],
       });
@@ -234,8 +228,8 @@ describe('withBreakRules', () => {
     });
   });
 
-  describe('match overrides', () => {
-    it('uses the matching override instead of the base break rule', () => {
+  describe("match overrides", () => {
+    it("uses the matching override instead of the base break rule", () => {
       const input = (
         <editor>
           <element customProperty="customValue" type="paragraph">
@@ -256,14 +250,14 @@ describe('withBreakRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            breakRules: { empty: 'default' },
-            key: 'paragraph',
+            breakRules: { empty: "default" },
+            key: "paragraph",
           }),
           createElementPlugin({
-            breakRules: { empty: 'reset' },
-            key: 'customOverride',
+            breakRules: { empty: "reset" },
+            key: "customOverride",
             match: ({ node }: any) => Boolean(node.customProperty),
-            type: 'override',
+            type: "override",
           }),
         ],
       });
@@ -272,7 +266,7 @@ describe('withBreakRules', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('falls back to the base break rule when the override does not match', () => {
+    it("falls back to the base break rule when the override does not match", () => {
       const input = (
         <editor>
           <element type="paragraph">
@@ -296,14 +290,14 @@ describe('withBreakRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            breakRules: { empty: 'default' },
-            key: 'paragraph',
+            breakRules: { empty: "default" },
+            key: "paragraph",
           }),
           createElementPlugin({
-            breakRules: { empty: 'reset' },
-            key: 'customOverride',
+            breakRules: { empty: "reset" },
+            key: "customOverride",
             match: ({ node }: any) => Boolean(node.customProperty),
-            type: 'override',
+            type: "override",
           }),
         ],
       });
@@ -312,11 +306,11 @@ describe('withBreakRules', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('uses the matching override for emptyLineEnd rules', () => {
+    it("uses the matching override for emptyLineEnd rules", () => {
       const input = (
         <editor>
           <element customProperty="customValue" type="paragraph">
-            line1{'\n'}
+            line1{"\n"}
             <cursor />
           </element>
         </editor>
@@ -325,7 +319,7 @@ describe('withBreakRules', () => {
       const output = (
         <editor>
           <element customProperty="customValue" type="paragraph">
-            line1{'\n'}
+            line1{"\n"}
           </element>
           <hp>
             <cursor />
@@ -337,14 +331,14 @@ describe('withBreakRules', () => {
         input,
         plugins: [
           createElementPlugin({
-            breakRules: { emptyLineEnd: 'default' },
-            key: 'paragraph',
+            breakRules: { emptyLineEnd: "default" },
+            key: "paragraph",
           }),
           createElementPlugin({
-            breakRules: { emptyLineEnd: 'exit' },
-            key: 'customOverride',
+            breakRules: { emptyLineEnd: "exit" },
+            key: "customOverride",
             match: ({ node }: any) => Boolean(node.customProperty),
-            type: 'override',
+            type: "override",
           }),
         ],
       });
@@ -354,8 +348,8 @@ describe('withBreakRules', () => {
     });
   });
 
-  describe('split reset rules', () => {
-    it('resets the new block after splitting in the middle', () => {
+  describe("split reset rules", () => {
+    it("resets the new block after splitting in the middle", () => {
       const input = (
         <editor>
           <element type="h1">
@@ -380,7 +374,7 @@ describe('withBreakRules', () => {
         plugins: [
           createElementPlugin({
             breakRules: { splitReset: true },
-            key: 'h1',
+            key: "h1",
           }),
         ],
       });
@@ -389,7 +383,7 @@ describe('withBreakRules', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('resets the new block when breaking at the start', () => {
+    it("resets the new block when breaking at the start", () => {
       const input = (
         <editor>
           <element type="h1">
@@ -416,7 +410,7 @@ describe('withBreakRules', () => {
         plugins: [
           createElementPlugin({
             breakRules: { splitReset: true },
-            key: 'h1',
+            key: "h1",
           }),
         ],
       });
@@ -425,7 +419,7 @@ describe('withBreakRules', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('resets the new block when breaking at the end', () => {
+    it("resets the new block when breaking at the end", () => {
       const input = (
         <editor>
           <element type="h1">
@@ -449,7 +443,7 @@ describe('withBreakRules', () => {
         plugins: [
           createElementPlugin({
             breakRules: { splitReset: true },
-            key: 'h1',
+            key: "h1",
           }),
         ],
       });
@@ -458,7 +452,7 @@ describe('withBreakRules', () => {
       expect(editor.selection).toEqual(output.selection);
     });
 
-    it('does not reset a heading list item', () => {
+    it("does not reset a heading list item", () => {
       const input = (
         <editor>
           <element indent={1} listStyleType="disc" type="h1">

@@ -1,13 +1,10 @@
-import Image from "next/image"
+import Image from "next/image";
 
-import { AspectRatio } from "@/styles/base-nova/ui/aspect-ratio"
+import { AspectRatio } from "@/styles/base-nova/ui/aspect-ratio";
 
 export function AspectRatioPortrait() {
   return (
-    <AspectRatio
-      ratio={9 / 16}
-      className="w-full max-w-[10rem] rounded-lg bg-muted"
-    >
+    <AspectRatio ratio={9 / 16} className="w-full max-w-[10rem] rounded-lg bg-muted">
       <Image
         src="https://avatar.vercel.sh/shadcn1"
         alt="Photo"
@@ -15,5 +12,5 @@ export function AspectRatioPortrait() {
         className="rounded-lg object-cover grayscale dark:brightness-20"
       />
     </AspectRatio>
-  )
+  );
 }

@@ -1,12 +1,7 @@
 // @ts-expect-error
-import { isPlainObject } from 'is-plain-object';
+import { isPlainObject } from "is-plain-object";
 
-import {
-  type Editor,
-  type Operation,
-  OperationApi,
-  type TRange,
-} from '../interfaces/index';
+import { type Editor, type Operation, OperationApi, type TRange } from "../interfaces/index";
 
 /** Weakmaps for attaching state to the editor. */
 
@@ -25,10 +20,8 @@ export const HistoryApi = {
       isPlainObject(value) &&
       Array.isArray(value.redos) &&
       Array.isArray(value.undos) &&
-      (value.redos.length === 0 ||
-        OperationApi.isOperationList(value.redos[0].operations)) &&
-      (value.undos.length === 0 ||
-        OperationApi.isOperationList(value.undos[0].operations))
+      (value.redos.length === 0 || OperationApi.isOperationList(value.redos[0].operations)) &&
+      (value.undos.length === 0 || OperationApi.isOperationList(value.undos[0].operations))
     );
   },
 

@@ -1,11 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
   "name": "card-demo",
-  "registryDependencies": [
-    "card",
-    "button",
-    "switch"
-  ],
+  "registryDependencies": ["card", "button", "switch"],
   "files": [
     {
       "path": "registry/new-york-v4/examples/card-demo.tsx",

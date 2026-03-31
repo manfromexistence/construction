@@ -1,41 +1,40 @@
-import * as React from 'react';
+import fs from "node:fs/promises";
+import path from "node:path";
+import { cva } from "class-variance-authority";
+import { normalizeStaticValue, type Value } from "platejs";
+import { createStaticEditor, serializeHtml } from "platejs/static";
+import * as React from "react";
 
-import { cva } from 'class-variance-authority';
-import fs from 'node:fs/promises';
-import path from 'node:path';
-import { type Value, normalizeStaticValue } from 'platejs';
-import { createStaticEditor, serializeHtml } from 'platejs/static';
-
-import { BaseEditorKit } from '@/registry/components/editor/editor-base-kit';
+import { BaseEditorKit } from "@/registry/components/editor/editor-base-kit";
 import {
   EditorClient,
   EditorViewClient,
   ExportHtmlButton,
   HtmlIframe,
-} from '@/registry/components/editor/slate-to-html';
-import { alignValue } from '@/registry/examples/values/align-value';
-import { basicBlocksValue } from '@/registry/examples/values/basic-blocks-value';
-import { basicMarksValue } from '@/registry/examples/values/basic-marks-value';
-import { columnValue } from '@/registry/examples/values/column-value';
-import { dateValue } from '@/registry/examples/values/date-value';
-import { discussionValue } from '@/registry/examples/values/discussion-value';
-import { equationValue } from '@/registry/examples/values/equation-value';
-import { fontValue } from '@/registry/examples/values/font-value';
-import { indentValue } from '@/registry/examples/values/indent-value';
-import { lineHeightValue } from '@/registry/examples/values/line-height-value';
-import { linkValue } from '@/registry/examples/values/link-value';
-import { listValue } from '@/registry/examples/values/list-value';
-import { mediaValue } from '@/registry/examples/values/media-value';
-import { mentionValue } from '@/registry/examples/values/mention-value';
-import { tableValue } from '@/registry/examples/values/table-value';
-import { tocPlaygroundValue } from '@/registry/examples/values/toc-value';
-import { createHtmlDocument } from '@/registry/lib/create-html-document';
-import { EditorStatic } from '@/registry/ui/editor-static';
+} from "@/registry/components/editor/slate-to-html";
+import { alignValue } from "@/registry/examples/values/align-value";
+import { basicBlocksValue } from "@/registry/examples/values/basic-blocks-value";
+import { basicMarksValue } from "@/registry/examples/values/basic-marks-value";
+import { columnValue } from "@/registry/examples/values/column-value";
+import { dateValue } from "@/registry/examples/values/date-value";
+import { discussionValue } from "@/registry/examples/values/discussion-value";
+import { equationValue } from "@/registry/examples/values/equation-value";
+import { fontValue } from "@/registry/examples/values/font-value";
+import { indentValue } from "@/registry/examples/values/indent-value";
+import { lineHeightValue } from "@/registry/examples/values/line-height-value";
+import { linkValue } from "@/registry/examples/values/link-value";
+import { listValue } from "@/registry/examples/values/list-value";
+import { mediaValue } from "@/registry/examples/values/media-value";
+import { mentionValue } from "@/registry/examples/values/mention-value";
+import { tableValue } from "@/registry/examples/values/table-value";
+import { tocPlaygroundValue } from "@/registry/examples/values/toc-value";
+import { createHtmlDocument } from "@/registry/lib/create-html-document";
+import { EditorStatic } from "@/registry/ui/editor-static";
 
 const getCachedTailwindCss = React.cache(async () => {
-  const cssPath = path.join(process.cwd(), 'public', 'tailwind.css');
+  const cssPath = path.join(process.cwd(), "public", "tailwind.css");
 
-  return await fs.readFile(cssPath, 'utf8');
+  return await fs.readFile(cssPath, "utf8");
 });
 
 export default async function SlateToHtmlBlock() {
@@ -69,12 +68,12 @@ export default async function SlateToHtmlBlock() {
 
   // const cookieStore = await cookies();
   // const theme = cookieStore.get('theme')?.value;
-  const theme = 'light';
+  const theme = "light";
 
   // Get the editor content HTML using EditorStatic
   const editorHtml = await serializeHtml(editor, {
     editorComponent: EditorStatic,
-    props: { style: { padding: '0 calc(50% - 350px)', paddingBottom: '' } },
+    props: { style: { padding: "0 calc(50% - 350px)", paddingBottom: "" } },
   });
 
   // Create the full HTML document
@@ -99,21 +98,13 @@ export default async function SlateToHtmlBlock() {
 
       <div className="relative p-2">
         <h3 className={headingVariants()}>HTML Iframe</h3>
-        <ExportHtmlButton
-          className="absolute top-10 right-0"
-          html={html}
-          serverTheme={theme}
-        />
-        <HtmlIframe
-          className="h-[7500px] w-full"
-          html={html}
-          serverTheme={theme}
-        />
+        <ExportHtmlButton className="absolute top-10 right-0" html={html} serverTheme={theme} />
+        <HtmlIframe className="h-[7500px] w-full" html={html} serverTheme={theme} />
       </div>
     </div>
   );
 }
 
 const headingVariants = cva(
-  'group mt-8 scroll-m-20 font-heading font-semibold text-xl tracking-tight'
+  "group mt-8 scroll-m-20 font-heading font-semibold text-xl tracking-tight"
 );

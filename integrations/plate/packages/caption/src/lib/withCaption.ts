@@ -1,13 +1,13 @@
 import {
-  type OverrideEditor,
-  type TRange,
   getPluginTypes,
   isHotkey,
   NodeApi,
+  type OverrideEditor,
   RangeApi,
-} from 'platejs';
+  type TRange,
+} from "platejs";
 
-import { type CaptionConfig, BaseCaptionPlugin } from './BaseCaptionPlugin';
+import { BaseCaptionPlugin, type CaptionConfig } from "./BaseCaptionPlugin";
 
 /** TODO: tests https://github.com/udecode/editor-protocol/issues/79 */
 
@@ -30,7 +30,7 @@ export const withCaption: OverrideEditor<CaptionConfig> = ({
       apply(operation) {
         const { query } = getOptions();
 
-        if (operation.type === 'set_selection') {
+        if (operation.type === "set_selection") {
           const newSelection = {
             ...editor.selection,
             ...operation.newProperties,
@@ -38,7 +38,7 @@ export const withCaption: OverrideEditor<CaptionConfig> = ({
 
           if (
             editor.dom.currentKeyboardEvent &&
-            isHotkey('up', editor.dom.currentKeyboardEvent) &&
+            isHotkey("up", editor.dom.currentKeyboardEvent) &&
             newSelection &&
             RangeApi.isCollapsed(newSelection)
           ) {
@@ -52,12 +52,9 @@ export const withCaption: OverrideEditor<CaptionConfig> = ({
             if (entry) {
               const [node] = entry;
 
-              if (
-                node.caption &&
-                NodeApi.string({ children: node.caption } as any).length > 0
-              ) {
+              if (node.caption && NodeApi.string({ children: node.caption } as any).length > 0) {
                 setTimeout(() => {
-                  editor.setOption(BaseCaptionPlugin, 'focusEndPath', entry[1]);
+                  editor.setOption(BaseCaptionPlugin, "focusEndPath", entry[1]);
                 }, 0);
               }
             }
@@ -78,7 +75,7 @@ export const withCaption: OverrideEditor<CaptionConfig> = ({
 
             if (!entry) return;
 
-            editor.setOption(BaseCaptionPlugin, 'focusEndPath', entry[1]);
+            editor.setOption(BaseCaptionPlugin, "focusEndPath", entry[1]);
 
             return true;
           }

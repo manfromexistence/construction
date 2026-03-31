@@ -1,21 +1,16 @@
-import type { ChatMessage } from '@/registry/components/editor/use-chat';
-import type { SlateEditor } from 'platejs';
+import { getMarkdown } from "@platejs/ai";
+import dedent from "dedent";
+import type { SlateEditor } from "platejs";
+import type { ChatMessage } from "@/registry/components/editor/use-chat";
 
-import { getMarkdown } from '@platejs/ai';
-import dedent from 'dedent';
-
-import {
-  buildStructuredPrompt,
-  formatTextFromMessages,
-  getLastUserInstruction,
-} from '../utils';
+import { buildStructuredPrompt, formatTextFromMessages, getLastUserInstruction } from "../utils";
 
 export function buildEditTableMultiCellPrompt(
   editor: SlateEditor,
   messages: ChatMessage[]
 ): string {
   const tableCellMarkdown = getMarkdown(editor, {
-    type: 'tableCellWithId',
+    type: "tableCellWithId",
   });
 
   return buildStructuredPrompt({

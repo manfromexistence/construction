@@ -1,11 +1,7 @@
 {
   "name": "rating-themes-demo",
-  "dependencies": [
-    "lucide-react"
-  ],
-  "registryDependencies": [
-    "rating"
-  ],
+  "dependencies": ["lucide-react"],
+  "registryDependencies": ["rating"],
   "files": [
     {
       "path": "examples/rating-themes-demo.tsx",

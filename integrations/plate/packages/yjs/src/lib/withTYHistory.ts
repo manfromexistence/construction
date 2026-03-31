@@ -1,13 +1,8 @@
-import type { SlateEditor } from 'platejs';
-import type * as Y from 'yjs';
+import { type WithYHistoryOptions, withYHistory, type YjsEditor } from "@slate-yjs/core";
+import type { SlateEditor } from "platejs";
+import type * as Y from "yjs";
 
-import {
-  type WithYHistoryOptions,
-  type YjsEditor,
-  withYHistory,
-} from '@slate-yjs/core';
-
-import type { YjsEditorProps } from './withTYjs';
+import type { YjsEditorProps } from "./withTYjs";
 
 export type YHistoryEditor = {
   undoManager: Y.UndoManager;
@@ -18,14 +13,9 @@ export type YHistoryEditor = {
 
 export type YHistoryEditorProps = Pick<
   YHistoryEditor,
-  'redo' | 'undo' | 'undoManager' | 'withoutSavingOrigin'
+  "redo" | "undo" | "undoManager" | "withoutSavingOrigin"
 > &
   YjsEditorProps;
 
-export const withTYHistory = (
-  editor: SlateEditor,
-  options?: WithYHistoryOptions
-) =>
-  withYHistory(editor as any, options) as SlateEditor &
-    YHistoryEditorProps &
-    YjsEditorProps;
+export const withTYHistory = (editor: SlateEditor, options?: WithYHistoryOptions) =>
+  withYHistory(editor as any, options) as SlateEditor & YHistoryEditorProps & YjsEditorProps;

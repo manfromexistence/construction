@@ -1,20 +1,18 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { type Value, createSlateEditor } from 'platejs';
+import { jsxt } from "@platejs/test-utils";
+import { createSlateEditor, type Value } from "platejs";
 
-import { getTestTablePlugins } from './__tests__/getTestTablePlugins';
+import { getTestTablePlugins } from "./__tests__/getTestTablePlugins";
 
 jsxt;
 
-describe('withNormalizeTable', () => {
-  describe('invalid table children', () => {
+describe("withNormalizeTable", () => {
+  describe("invalid table children", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('removes tables without row children (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("removes tables without row children (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const editor = createSlateEditor({
         nodeId: true,
         plugins: getTestTablePlugins({ disableMerge }),
@@ -34,13 +32,11 @@ describe('withNormalizeTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/65
-  describe('cell child is a text', () => {
+  describe("cell child is a text", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('wraps the children into a p (disableMerge: $disableMerge)', ({
-      disableMerge,
-    }) => {
+    ])("wraps the children into a p (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <fragment>
           <htable>
@@ -84,11 +80,11 @@ describe('withNormalizeTable', () => {
     });
   });
 
-  describe('initialTableWidth is defined and colSizes is not defined', () => {
+  describe("initialTableWidth is defined and colSizes is not defined", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('sets colSizes (disableMerge: $disableMerge)', ({ disableMerge }) => {
+    ])("sets colSizes (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <fragment>
           <htable>
@@ -171,11 +167,11 @@ describe('withNormalizeTable', () => {
     });
   });
 
-  describe('initialTableWidth is defined and colSizes is partially defined', () => {
+  describe("initialTableWidth is defined and colSizes is partially defined", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('sets colSizes (disableMerge: $disableMerge)', ({ disableMerge }) => {
+    ])("sets colSizes (disableMerge: $disableMerge)", ({ disableMerge }) => {
       const input = (
         <fragment>
           <htable colSizes={[0, 40, 0]}>
@@ -258,11 +254,11 @@ describe('withNormalizeTable', () => {
     });
   });
 
-  describe('initialTableWidth is defined and colSizes is fully defined', () => {
+  describe("initialTableWidth is defined and colSizes is fully defined", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('keeps existing colSizes when every column width is already defined (disableMerge: $disableMerge)', ({
+    ])("keeps existing colSizes when every column width is already defined (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (
@@ -347,11 +343,11 @@ describe('withNormalizeTable', () => {
     });
   });
 
-  describe('enableUnsetSingleColSize', () => {
+  describe("enableUnsetSingleColSize", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('unsets colSizes for single-column tables (disableMerge: $disableMerge)', ({
+    ])("unsets colSizes for single-column tables (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const editor = createSlateEditor({
@@ -392,11 +388,11 @@ describe('withNormalizeTable', () => {
   });
 
   // https://github.com/udecode/editor-protocol/issues/76
-  describe('table in a table', () => {
+  describe("table in a table", () => {
     it.each([
       { disableMerge: true },
       { disableMerge: false },
-    ])('unwraps nested table, tr, and td nodes (disableMerge: $disableMerge)', ({
+    ])("unwraps nested table, tr, and td nodes (disableMerge: $disableMerge)", ({
       disableMerge,
     }) => {
       const input = (

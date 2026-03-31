@@ -1,5 +1,5 @@
-import { inlineTagNames } from './inlineTagNames';
-import { isHtmlElement } from './isHtmlElement';
+import { inlineTagNames } from "./inlineTagNames";
+import { isHtmlElement } from "./isHtmlElement";
 
 export const isHtmlInlineElement = (node: Node): boolean => {
   if (!isHtmlElement(node)) return false;
@@ -12,15 +12,15 @@ export const isHtmlInlineElement = (node: Node): boolean => {
    * Valid display values include 'inline flow'. We only care about the first
    * part.
    */
-  const displayProperty = element.style.display.split(' ')[0];
+  const displayProperty = element.style.display.split(" ")[0];
 
-  if (displayProperty === '') {
+  if (displayProperty === "") {
     return tagNameIsInline;
   }
-  if (displayProperty.startsWith('inline')) {
+  if (displayProperty.startsWith("inline")) {
     return true;
   }
-  if (displayProperty === 'inherit' && element.parentElement) {
+  if (displayProperty === "inherit" && element.parentElement) {
     return isHtmlInlineElement(element.parentElement);
   }
   /**
@@ -32,9 +32,7 @@ export const isHtmlInlineElement = (node: Node): boolean => {
    * block status to be left unchanged.
    */
   if (
-    ['contents', 'initial', 'none', 'revert', 'revert-layer', 'unset'].includes(
-      displayProperty
-    )
+    ["contents", "initial", "none", "revert", "revert-layer", "unset"].includes(displayProperty)
   ) {
     return tagNameIsInline;
   }

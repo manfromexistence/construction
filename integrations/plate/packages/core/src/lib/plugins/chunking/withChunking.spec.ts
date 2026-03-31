@@ -1,8 +1,8 @@
-import { createSlateEditor } from '../../editor';
-import { ChunkingPlugin } from './ChunkingPlugin';
+import { createSlateEditor } from "../../editor";
+import { ChunkingPlugin } from "./ChunkingPlugin";
 
-describe('withChunking', () => {
-  it('returns the configured chunk size only for matching ancestors', () => {
+describe("withChunking", () => {
+  it("returns the configured chunk size only for matching ancestors", () => {
     let editor: ReturnType<typeof createSlateEditor>;
     const query = mock((ancestor: unknown) => ancestor === editor);
 
@@ -20,8 +20,8 @@ describe('withChunking', () => {
     expect((editor as any).getChunkSize(editor)).toBe(48);
     expect(
       (editor as any).getChunkSize({
-        children: [{ text: 'hello' }],
-        type: 'p',
+        children: [{ text: "hello" }],
+        type: "p",
       })
     ).toBeNull();
     expect(query).toHaveBeenCalledTimes(2);

@@ -1,4 +1,4 @@
-import type { Editor } from '../../interfaces';
+import type { Editor } from "../../interfaces";
 
 /**
  * Insert a soft break at the current selection. If the selection is currently
@@ -9,6 +9,6 @@ export const insertSoftBreak = (editor: Editor) => {
     if (editor.api.isExpanded()) {
       editor.tf.delete();
     }
-    editor.tf.insertText('\n');
+    editor.tf.insertText("\n");
   });
 };

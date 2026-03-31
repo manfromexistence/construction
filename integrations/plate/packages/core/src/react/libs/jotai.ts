@@ -1,11 +1,11 @@
-export { atom } from 'jotai';
+export { atom } from "jotai";
 
 export {
   createAtomStore,
   useStoreAtomState,
   useStoreAtomValue,
   useStoreSetAtom,
-} from 'jotai-x';
+} from "jotai-x";
 
 export {
   useStoreSelect,
@@ -13,4 +13,4 @@ export {
   useStoreValue,
   useTracked,
   useTrackedStore,
-} from 'zustand-x';
+} from "zustand-x";

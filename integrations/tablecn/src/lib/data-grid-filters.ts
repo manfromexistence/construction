@@ -150,8 +150,7 @@ export function getFilterFn<TData>(): FilterFn<TData> {
     }
 
     const cellValueStr = String(cellValue ?? "").toLowerCase();
-    const filterValueStr =
-      typeof value === "string" ? value.toLowerCase() : String(value);
+    const filterValueStr = typeof value === "string" ? value.toLowerCase() : String(value);
 
     if (operator === "contains") {
       return cellValueStr.includes(filterValueStr);
@@ -259,18 +258,14 @@ export function getFilterFn<TData>(): FilterFn<TData> {
 
     if (operator === "isAnyOf" && Array.isArray(value)) {
       if (Array.isArray(cellValue)) {
-        return cellValue.some((v) =>
-          value.some((fv) => String(v) === String(fv)),
-        );
+        return cellValue.some((v) => value.some((fv) => String(v) === String(fv)));
       }
       return value.some((fv) => String(cellValue) === String(fv));
     }
 
     if (operator === "isNoneOf" && Array.isArray(value)) {
       if (Array.isArray(cellValue)) {
-        return !cellValue.some((v) =>
-          value.some((fv) => String(v) === String(fv)),
-        );
+        return !cellValue.some((v) => value.some((fv) => String(v) === String(fv)));
       }
       return !value.some((fv) => String(cellValue) === String(fv));
     }

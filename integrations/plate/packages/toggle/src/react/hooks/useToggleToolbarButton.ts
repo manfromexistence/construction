@@ -1,8 +1,8 @@
-import { KEYS } from 'platejs';
-import { useEditorRef, useEditorSelector } from 'platejs/react';
+import { KEYS } from "platejs";
+import { useEditorRef, useEditorSelector } from "platejs/react";
 
-import { someToggle } from '../../lib';
-import { openNextToggles } from '../transforms';
+import { someToggle } from "../../lib";
+import { openNextToggles } from "../transforms";
 
 export const useToggleToolbarButtonState = () => {
   const pressed = useEditorSelector((editor) => someToggle(editor), []);

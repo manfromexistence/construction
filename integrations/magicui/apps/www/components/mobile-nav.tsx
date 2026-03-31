@@ -1,20 +1,15 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import Link, { LinkProps } from "next/link"
-import { useRouter } from "next/navigation"
-
-import { docsConfig } from "@/config/docs"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import Link, { LinkProps } from "next/link";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { docsConfig } from "@/config/docs";
+import { cn } from "@/lib/utils";
 
 export function MobileNav({ className }: { className?: string }) {
-  const [open, setOpen] = React.useState(false)
+  const [open, setOpen] = React.useState(false);
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -54,9 +49,7 @@ export function MobileNav({ className }: { className?: string }) {
       >
         <div className="flex flex-col gap-12 overflow-auto px-6 py-6">
           <div className="flex flex-col gap-4">
-            <div className="text-muted-foreground text-sm font-medium">
-              Menu
-            </div>
+            <div className="text-muted-foreground text-sm font-medium">Menu</div>
             <div className="flex flex-col gap-3">
               <MobileLink href="/" onOpenChange={setOpen}>
                 Home
@@ -64,11 +57,7 @@ export function MobileNav({ className }: { className?: string }) {
               {docsConfig.mainNav.map(
                 (item, index) =>
                   item.href && (
-                    <MobileLink
-                      key={index}
-                      href={item.href}
-                      onOpenChange={setOpen}
-                    >
+                    <MobileLink key={index} href={item.href} onOpenChange={setOpen}>
                       <span className="flex items-center gap-2">
                         {item.title}
                         {item.label && (
@@ -90,22 +79,13 @@ export function MobileNav({ className }: { className?: string }) {
           <div className="flex flex-col gap-8">
             {docsConfig.sidebarNav.map((section, index) => {
               return (
-                <div
-                  key={`${section.title}-${index}`}
-                  className="flex flex-col gap-4"
-                >
-                  <div className="text-muted-foreground text-sm font-medium">
-                    {section.title}
-                  </div>
+                <div key={`${section.title}-${index}`} className="flex flex-col gap-4">
+                  <div className="text-muted-foreground text-sm font-medium">{section.title}</div>
                   <div className="flex flex-col gap-3">
                     {section.items?.map(
                       (item) =>
                         item.href && (
-                          <MobileLink
-                            key={item.href}
-                            href={item.href}
-                            onOpenChange={setOpen}
-                          >
+                          <MobileLink key={item.href} href={item.href} onOpenChange={setOpen}>
                             <span className="flex items-center gap-2">
                               {item.title}
                               {item.label && (
@@ -124,13 +104,13 @@ export function MobileNav({ className }: { className?: string }) {
                     )}
                   </div>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }
 
 function MobileLink({
@@ -140,22 +120,22 @@ function MobileLink({
   children,
   ...props
 }: LinkProps & {
-  onOpenChange?: (open: boolean) => void
-  children: React.ReactNode
-  className?: string
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
 }) {
-  const router = useRouter()
+  const router = useRouter();
   return (
     <Link
       href={href}
       onClick={() => {
-        router.push(href.toString())
-        onOpenChange?.(false)
+        router.push(href.toString());
+        onOpenChange?.(false);
       }}
       className={cn("text-2xl font-medium", className)}
       {...props}
     >
       {children}
     </Link>
-  )
+  );
 }

@@ -1,13 +1,13 @@
 "use client";
 
+import { X } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useSubscription } from "@/hooks/use-subscription";
 import { authClient } from "@/lib/auth-client";
 import { AI_REQUEST_FREE_TIER_LIMIT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
-import Link from "next/link";
-import { useEffect, useState } from "react";
 
 export function AlertBanner() {
   const [showBanner, setShowBanner] = useState(false);
@@ -35,7 +35,7 @@ export function AlertBanner() {
 
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLoggedIn, isPro, freeProMessagesLeft]);
+  }, [isLoggedIn, isPro, freeProMessagesLeft, showBanner]);
 
   const getBannerContent = () => {
     if (isLoggedIn && !isPro && freeProMessagesLeft > 0) {

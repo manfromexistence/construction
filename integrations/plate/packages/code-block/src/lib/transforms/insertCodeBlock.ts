@@ -1,6 +1,6 @@
-import type { InsertNodesOptions, SlateEditor, TElement } from 'platejs';
+import type { InsertNodesOptions, SlateEditor, TElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 /**
  * Insert a code block: set the node to code line and wrap it with a code block.
@@ -8,7 +8,7 @@ import { KEYS } from 'platejs';
  */
 export const insertCodeBlock = (
   editor: SlateEditor,
-  insertNodesOptions: Omit<InsertNodesOptions, 'match'> = {}
+  insertNodesOptions: Omit<InsertNodesOptions, "match"> = {}
 ) => {
   if (!editor.selection || editor.api.isExpanded()) return;
 
@@ -28,7 +28,7 @@ export const insertCodeBlock = (
 
   editor.tf.setNodes(
     {
-      children: [{ text: '' }],
+      children: [{ text: "" }],
       type: KEYS.codeLine,
     },
     insertNodesOptions

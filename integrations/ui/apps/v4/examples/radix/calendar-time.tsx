@@ -1,31 +1,22 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Clock2Icon } from "lucide-react"
+import { Clock2Icon } from "lucide-react";
+import * as React from "react";
 
-import { Calendar } from "@/styles/radix-nova/ui/calendar"
-import { Card, CardContent, CardFooter } from "@/styles/radix-nova/ui/card"
-import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field"
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from "@/styles/radix-nova/ui/input-group"
+import { Calendar } from "@/styles/radix-nova/ui/calendar";
+import { Card, CardContent, CardFooter } from "@/styles/radix-nova/ui/card";
+import { Field, FieldGroup, FieldLabel } from "@/styles/radix-nova/ui/field";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/styles/radix-nova/ui/input-group";
 
 export function CalendarWithTime() {
   const [date, setDate] = React.useState<Date | undefined>(
     new Date(new Date().getFullYear(), new Date().getMonth(), 12)
-  )
+  );
 
   return (
     <Card size="sm" className="mx-auto w-fit">
       <CardContent>
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={setDate}
-          className="p-0"
-        />
+        <Calendar mode="single" selected={date} onSelect={setDate} className="p-0" />
       </CardContent>
       <CardFooter className="border-t bg-card">
         <FieldGroup>
@@ -62,5 +53,5 @@ export function CalendarWithTime() {
         </FieldGroup>
       </CardFooter>
     </Card>
-  )
+  );
 }

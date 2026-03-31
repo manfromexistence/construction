@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest"
+import { describe, expect, it } from "vitest";
 
-import { migrateIconsFile } from "./migrate-icons"
+import { migrateIconsFile } from "./migrate-icons";
 
 describe("migrateIconsFile", () => {
   it("should replace radix icons with lucide icons", async () => {
@@ -15,7 +15,7 @@ describe("migrateIconsFile", () => {
             <CloseIcon />
           </div>
         )
-      }`
+      }`;
 
     expect(
       await migrateIconsFile(input, "radix", "lucide", {
@@ -40,8 +40,8 @@ describe("migrateIconsFile", () => {
                 </div>
               )
             }"
-    `)
-  })
+    `);
+  });
 
   it("should return null if no radix icons are found", async () => {
     const input = `
@@ -49,17 +49,16 @@ describe("migrateIconsFile", () => {
 
       export function Component() {
         return <div>No icons here</div>
-      }`
+      }`;
 
-    expect(await migrateIconsFile(input, "lucide", "radix", {}))
-      .toMatchInlineSnapshot(`
+    expect(await migrateIconsFile(input, "lucide", "radix", {})).toMatchInlineSnapshot(`
       "import { Something } from "other-package"
 
             export function Component() {
               return <div>No icons here</div>
             }"
-    `)
-  })
+    `);
+  });
 
   it("should handle mixed icon imports from different packages", async () => {
     const input = `
@@ -76,7 +75,7 @@ describe("migrateIconsFile", () => {
             <Cross2Icon />
           </div>
         )
-      }`
+      }`;
 
     expect(
       await migrateIconsFile(input, "radix", "lucide", {
@@ -103,8 +102,8 @@ describe("migrateIconsFile", () => {
                 </div>
               )
             }"
-    `)
-  })
+    `);
+  });
 
   it("should preserve all props and children on icons", async () => {
     const input = `
@@ -123,7 +122,7 @@ describe("migrateIconsFile", () => {
             <Cross2Icon style={{ color: 'red' }} aria-label="Close" />
           </div>
         )
-      }`
+      }`;
 
     expect(
       await migrateIconsFile(input, "radix", "lucide", {
@@ -153,6 +152,6 @@ describe("migrateIconsFile", () => {
                 </div>
               )
             }"
-    `)
-  })
-})
+    `);
+  });
+});

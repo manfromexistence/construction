@@ -1,11 +1,5 @@
-import type {
-  Emoji,
-  EmojiLibrary,
-  Emojis,
-  IEmojiLibrary,
-} from './EmojiLibrary.types';
-
-import { DEFAULT_EMOJI_LIBRARY } from '../../constants';
+import { DEFAULT_EMOJI_LIBRARY } from "../../constants";
+import type { Emoji, EmojiLibrary, Emojis, IEmojiLibrary } from "./EmojiLibrary.types";
 
 export type THash = Record<string, string>;
 
@@ -22,11 +16,11 @@ export class EmojiInlineLibrary implements IEmojiLibrary {
   private createSearchableString(emoji: Emoji) {
     const { id, keywords, name } = emoji;
 
-    return `${id},${this.getName(name)},${keywords.join(',')}`;
+    return `${id},${this.getName(name)},${keywords.join(",")}`;
   }
 
   private getName(name: string) {
-    return name.toLowerCase().split(' ').join(',');
+    return name.toLowerCase().split(" ").join(",");
   }
 
   private init() {

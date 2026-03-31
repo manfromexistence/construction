@@ -1,100 +1,97 @@
-import postcss from "postcss"
+import postcss from "postcss";
 import selectorParser, {
   type ClassName,
   type Selector as SelectorNodeRoot,
-} from "postcss-selector-parser"
-import { z } from "zod"
+} from "postcss-selector-parser";
+import { z } from "zod";
 
-const CN_PREFIX = "cn-"
+const CN_PREFIX = "cn-";
 
-export const styleMapSchema = z.record(
-  z.string().startsWith(CN_PREFIX),
-  z.string()
-)
+export const styleMapSchema = z.record(z.string().startsWith(CN_PREFIX), z.string());
 
-export type StyleMap = z.infer<typeof styleMapSchema>
+export type StyleMap = z.infer<typeof styleMapSchema>;
 
 export function createStyleMap(input: string) {
-  const root = postcss.parse(input)
+  const root = postcss.parse(input);
 
-  const result: Record<string, string> = {}
+  const result: Record<string, string> = {};
 
   root.walkRules((rule) => {
-    const selectors = rule.selectors ?? []
+    const selectors = rule.selectors ?? [];
 
     if (selectors.length === 0) {
-      return
+      return;
     }
 
-    const tailwindClasses = extractTailwindClasses(rule)
+    const tailwindClasses = extractTailwindClasses(rule);
 
     if (!tailwindClasses) {
-      return
+      return;
     }
 
     for (const selector of selectors) {
-      const normalizedSelector = normalizeSelector(selector)
+      const normalizedSelector = normalizeSelector(selector);
 
       selectorParser((selectorsRoot) => {
         selectorsRoot.each((sel) => {
-          const targetClass = findSubjectClass(sel)
+          const targetClass = findSubjectClass(sel);
 
           if (!targetClass) {
-            return
+            return;
           }
 
-          const className = targetClass.value
+          const className = targetClass.value;
 
           if (!className.startsWith(CN_PREFIX)) {
-            return
+            return;
           }
 
           result[className] = result[className]
             ? `${tailwindClasses} ${result[className]}`
-            : tailwindClasses
-        })
-      }).processSync(normalizedSelector)
+            : tailwindClasses;
+        });
+      }).processSync(normalizedSelector);
     }
-  })
+  });
 
-  return styleMapSchema.parse(result)
+  return styleMapSchema.parse(result);
 }
 
 function normalizeSelector(selector: string) {
-  return selector.replace(/\s*&\s*/g, "").trim()
+  return selector.replace(/\s*&\s*/g, "").trim();
 }
 
 function extractTailwindClasses(rule: postcss.Rule) {
-  const classes: string[] = []
+  const classes: string[] = [];
 
   for (const node of rule.nodes || []) {
     if (node.type === "atrule" && node.name === "apply") {
-      const value = node.params.trim()
+      const value = node.params.trim();
       if (value) {
-        classes.push(value)
+        classes.push(value);
       }
     }
   }
 
   if (classes.length === 0) {
-    return null
+    return null;
   }
 
-  return classes.join(" ")
+  return classes.join(" ");
 }
 
 function findSubjectClass(selector: SelectorNodeRoot) {
-  const classNodes: ClassName[] = []
+  const classNodes: ClassName[] = [];
 
   selector.walkClasses((classNode) => {
     if (classNode.value.startsWith(CN_PREFIX)) {
-      classNodes.push(classNode)
+      classNodes.push(classNode);
     }
-  })
+  });
 
   if (classNodes.length === 0) {
-    return null
+    return null;
   }
 
-  return classNodes[classNodes.length - 1]
+  return classNodes[classNodes.length - 1];
 }

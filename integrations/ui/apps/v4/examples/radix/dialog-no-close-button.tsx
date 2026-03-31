@@ -1,4 +1,4 @@
-import { Button } from "@/styles/radix-nova/ui/button"
+import { Button } from "@/styles/radix-nova/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -6,7 +6,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/styles/radix-nova/ui/dialog"
+} from "@/styles/radix-nova/ui/dialog";
 
 export function DialogNoCloseButton() {
   return (
@@ -18,11 +18,10 @@ export function DialogNoCloseButton() {
         <DialogHeader>
           <DialogTitle>No Close Button</DialogTitle>
           <DialogDescription>
-            This dialog doesn&apos;t have a close button in the top-right
-            corner.
+            This dialog doesn&apos;t have a close button in the top-right corner.
           </DialogDescription>
         </DialogHeader>
       </DialogContent>
     </Dialog>
-  )
+  );
 }

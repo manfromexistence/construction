@@ -1,11 +1,11 @@
+import { smoothStream, streamText } from "ai";
+import { NextRequest } from "next/server";
 import { ENHANCE_PROMPT_SYSTEM } from "@/lib/ai/prompts";
 import { baseProviderOptions, myProvider } from "@/lib/ai/providers";
 import { handleError } from "@/lib/error-response";
 import { requireSubscriptionOrFreeUsage } from "@/lib/subscription";
 import { AIPromptData } from "@/types/ai";
 import { buildUserContentPartsFromPromptData } from "@/utils/ai/message-converter";
-import { smoothStream, streamText } from "ai";
-import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
   try {

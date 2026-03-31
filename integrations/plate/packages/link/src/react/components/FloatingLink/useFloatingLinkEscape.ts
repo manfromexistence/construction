@@ -1,14 +1,14 @@
-import { useEditorPlugin, useHotkeys, usePluginOption } from 'platejs/react';
+import { useEditorPlugin, useHotkeys, usePluginOption } from "platejs/react";
 
-import { LinkPlugin } from '../../LinkPlugin';
+import { LinkPlugin } from "../../LinkPlugin";
 
 export const useFloatingLinkEscape = () => {
   const { api, editor, getOptions } = useEditorPlugin(LinkPlugin);
 
-  const open = usePluginOption(LinkPlugin, 'isOpen', editor.id);
+  const open = usePluginOption(LinkPlugin, "isOpen", editor.id);
 
   useHotkeys(
-    'escape',
+    "escape",
     (e) => {
       const { isEditing, mode } = getOptions();
 
@@ -16,13 +16,13 @@ export const useFloatingLinkEscape = () => {
 
       e.preventDefault();
 
-      if (mode === 'edit' && isEditing) {
-        api.floatingLink.show('edit', editor.id);
+      if (mode === "edit" && isEditing) {
+        api.floatingLink.show("edit", editor.id);
         editor.tf.focus({ at: editor.selection! });
 
         return;
       }
-      if (mode === 'insert') {
+      if (mode === "insert") {
         editor.tf.focus({ at: editor.selection! });
       }
 
@@ -31,7 +31,7 @@ export const useFloatingLinkEscape = () => {
     {
       enabled: open,
       enableOnContentEditable: true,
-      enableOnFormTags: ['INPUT'],
+      enableOnFormTags: ["INPUT"],
     },
     []
   );

@@ -1,24 +1,22 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import type { Slider as SliderPrimitive } from "radix-ui"
+import type { Slider as SliderPrimitive } from "radix-ui";
+import * as React from "react";
 
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
-} from "@/registry/new-york-v4/ui/hover-card"
-import { Label } from "@/registry/new-york-v4/ui/label"
-import { Slider } from "@/registry/new-york-v4/ui/slider"
+} from "@/registry/new-york-v4/ui/hover-card";
+import { Label } from "@/registry/new-york-v4/ui/label";
+import { Slider } from "@/registry/new-york-v4/ui/slider";
 
 interface TopPSelectorProps {
-  defaultValue: React.ComponentProps<
-    typeof SliderPrimitive.Root
-  >["defaultValue"]
+  defaultValue: React.ComponentProps<typeof SliderPrimitive.Root>["defaultValue"];
 }
 
 export function TopPSelector({ defaultValue }: TopPSelectorProps) {
-  const [value, setValue] = React.useState(defaultValue)
+  const [value, setValue] = React.useState(defaultValue);
 
   return (
     <div className="grid gap-2 pt-2">
@@ -41,15 +39,11 @@ export function TopPSelector({ defaultValue }: TopPSelectorProps) {
             />
           </div>
         </HoverCardTrigger>
-        <HoverCardContent
-          align="start"
-          className="w-[260px] text-sm"
-          side="left"
-        >
-          Control diversity via nucleus sampling: 0.5 means half of all
-          likelihood-weighted options are considered.
+        <HoverCardContent align="start" className="w-[260px] text-sm" side="left">
+          Control diversity via nucleus sampling: 0.5 means half of all likelihood-weighted options
+          are considered.
         </HoverCardContent>
       </HoverCard>
     </div>
-  )
+  );
 }

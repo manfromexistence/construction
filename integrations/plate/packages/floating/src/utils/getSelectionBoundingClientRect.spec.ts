@@ -1,9 +1,9 @@
-import { getDefaultBoundingClientRect } from '../createVirtualElement';
-import { makeClientRect } from './makeClientRect';
-import { getSelectionBoundingClientRect } from './getSelectionBoundingClientRect';
+import { getDefaultBoundingClientRect } from "../createVirtualElement";
+import { getSelectionBoundingClientRect } from "./getSelectionBoundingClientRect";
+import { makeClientRect } from "./makeClientRect";
 
-describe('getSelectionBoundingClientRect', () => {
-  it('returns the default rect for a collapsed selection', () => {
+describe("getSelectionBoundingClientRect", () => {
+  it("returns the default rect for a collapsed selection", () => {
     const editor: any = {
       api: {
         isExpanded: () => false,
@@ -14,12 +14,10 @@ describe('getSelectionBoundingClientRect', () => {
       },
     };
 
-    expect(getSelectionBoundingClientRect(editor)).toEqual(
-      getDefaultBoundingClientRect()
-    );
+    expect(getSelectionBoundingClientRect(editor)).toEqual(getDefaultBoundingClientRect());
   });
 
-  it('returns the expanded selection rect', () => {
+  it("returns the expanded selection rect", () => {
     const rect = makeClientRect({
       bottom: 24,
       left: 6,

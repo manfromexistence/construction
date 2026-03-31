@@ -1,16 +1,11 @@
-import type { ExtendConfig } from 'platejs';
+import type { ExtendConfig } from "platejs";
 
-import { toTPlatePlugin } from 'platejs/react';
-
-import type { buildToggleIndex } from './toggleIndexAtom';
-
-import {
-  type BaseToggleConfig,
-  BaseTogglePlugin,
-} from '../lib/BaseTogglePlugin';
-import { renderToggleAboveNodes } from './renderToggleAboveNodes';
-import { useHooksToggle } from './useHooksToggle';
-import { withToggle } from './withToggle';
+import { toTPlatePlugin } from "platejs/react";
+import { type BaseToggleConfig, BaseTogglePlugin } from "../lib/BaseTogglePlugin";
+import { renderToggleAboveNodes } from "./renderToggleAboveNodes";
+import type { buildToggleIndex } from "./toggleIndexAtom";
+import { useHooksToggle } from "./useHooksToggle";
+import { withToggle } from "./withToggle";
 
 export type ToggleConfig = ExtendConfig<
   BaseToggleConfig,

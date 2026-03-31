@@ -1,16 +1,9 @@
-import { setNodes as setNodesBase } from 'slate';
+import { setNodes as setNodesBase } from "slate";
 
-import type {
-  DescendantOf,
-  Editor,
-  Path,
-  SetNodesOptions,
-  TNode,
-  ValueOf,
-} from '../../interfaces';
-import { PathApi, RangeApi, TextApi } from '../../interfaces';
-import type { NodeProps } from '../../interfaces/node';
-import { getAt, getQueryOptions } from '../../utils';
+import type { DescendantOf, Editor, Path, SetNodesOptions, TNode, ValueOf } from "../../interfaces";
+import { PathApi, RangeApi, TextApi } from "../../interfaces";
+import type { NodeProps } from "../../interfaces/node";
+import { getAt, getQueryOptions } from "../../utils";
 
 export const setNodes = <N extends DescendantOf<E>, E extends Editor = Editor>(
   editor: E,
@@ -35,10 +28,7 @@ export const setNodes = <N extends DescendantOf<E>, E extends Editor = Editor>(
 
       const [parentNode] = parentEntry;
 
-      return (
-        !editor.api.isVoid(parentNode as any) ||
-        editor.api.markableVoid(parentNode as any)
-      );
+      return !editor.api.isVoid(parentNode as any) || editor.api.markableVoid(parentNode as any);
     };
 
     const isExpandedRange = RangeApi.isExpanded(at);
@@ -57,8 +47,7 @@ export const setNodes = <N extends DescendantOf<E>, E extends Editor = Editor>(
         if (!parentEntry) return;
 
         const [parentNode] = parentEntry;
-        markAcceptingVoidSelected =
-          parentNode && editor.api.markableVoid(parentNode as any);
+        markAcceptingVoidSelected = parentNode && editor.api.markableVoid(parentNode as any);
       }
     }
     if (isExpandedRange || markAcceptingVoidSelected) {
@@ -76,9 +65,5 @@ export const setNodes = <N extends DescendantOf<E>, E extends Editor = Editor>(
     }
   }
 
-  return setNodesBase(
-    editor as any,
-    props as any,
-    getQueryOptions(editor, options)
-  );
+  return setNodesBase(editor as any, props as any, getQueryOptions(editor, options));
 };

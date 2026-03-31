@@ -1,6 +1,6 @@
-import type { OverrideEditor, TElement } from 'platejs';
+import type { OverrideEditor, TElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 export const withInsertDataCodeBlock: OverrideEditor = ({
   editor,
@@ -9,21 +9,20 @@ export const withInsertDataCodeBlock: OverrideEditor = ({
 }) => ({
   transforms: {
     insertData(data) {
-      const text = data.getData('text/plain');
-      const vscodeDataString = data.getData('vscode-editor-data');
+      const text = data.getData("text/plain");
+      const vscodeDataString = data.getData("vscode-editor-data");
       const codeLineType = editor.getType(KEYS.codeLine);
 
       // Handle VSCode paste with language
       if (vscodeDataString) {
         try {
           const vscodeData = JSON.parse(vscodeDataString);
-          const lines = text.split('\n');
+          const lines = text.split("\n");
 
           // Check if we're in a code block
           const [blockAbove] = editor.api.block<TElement>() ?? [];
           const isInCodeBlock =
-            blockAbove &&
-            [codeBlockType, codeLineType].includes(blockAbove?.type);
+            blockAbove && [codeBlockType, codeLineType].includes(blockAbove?.type);
 
           if (isInCodeBlock) {
             // If in code block, insert first line as text at cursor
@@ -64,9 +63,9 @@ export const withInsertDataCodeBlock: OverrideEditor = ({
       if (
         blockAbove &&
         [codeBlockType, codeLineType].includes(blockAbove?.type) &&
-        text?.includes('\n')
+        text?.includes("\n")
       ) {
-        const lines = text.split('\n');
+        const lines = text.split("\n");
 
         // Insert first line as text at cursor
         if (lines[0]) {

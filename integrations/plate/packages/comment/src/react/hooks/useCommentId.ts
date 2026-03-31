@@ -1,6 +1,6 @@
-import { useEditorSelector } from 'platejs/react';
+import { useEditorSelector } from "platejs/react";
 
-import { BaseCommentPlugin } from '../../lib';
+import { BaseCommentPlugin } from "../../lib";
 
 export const useCommentId = () =>
   useEditorSelector((editor) => {

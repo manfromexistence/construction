@@ -1,9 +1,9 @@
-import type { ReplaceNodesOptions, SlateEditor, TElement } from 'platejs';
+import type { ReplaceNodesOptions, SlateEditor, TElement } from "platejs";
 
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
-import { columnsToWidths } from '../utils/columnsToWidths';
-import { setColumns } from './setColumns';
+import { columnsToWidths } from "../utils/columnsToWidths";
+import { setColumns } from "./setColumns";
 
 export const toggleColumnGroup = (
   editor: SlateEditor,

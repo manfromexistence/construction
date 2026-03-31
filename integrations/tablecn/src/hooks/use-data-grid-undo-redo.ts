@@ -40,21 +40,15 @@ interface Store<TData> {
   notify: () => void;
 }
 
-function useStore<T>(
-  store: Store<T>,
-  selector: (state: StoreState<T>) => boolean,
-): boolean {
-  const getSnapshot = React.useCallback(
-    () => selector(store.getState()),
-    [store, selector],
-  );
+function useStore<T>(store: Store<T>, selector: (state: StoreState<T>) => boolean): boolean {
+  const getSnapshot = React.useCallback(() => selector(store.getState()), [store, selector]);
 
   return React.useSyncExternalStore(store.subscribe, getSnapshot, getSnapshot);
 }
 
 function buildIndexById<TData>(
   data: TData[],
-  getRowId: (row: TData) => string,
+  getRowId: (row: TData) => string
 ): Map<string, number> {
   const map = new Map<string, number>();
   for (let i = 0; i < data.length; i++) {
@@ -205,10 +199,7 @@ function useDataGridUndoRedo<TData>({
     };
   }, [listenersRef, stateRef, propsRef]);
 
-  const canUndo = useStore(
-    store,
-    (state) => state.undoStack.length > 0 || state.hasPendingChanges,
-  );
+  const canUndo = useStore(store, (state) => state.undoStack.length > 0 || state.hasPendingChanges);
   const canRedo = useStore(store, (state) => state.redoStack.length > 0);
 
   const onCommit = React.useCallback(() => {
@@ -281,9 +272,7 @@ function useDataGridUndoRedo<TData>({
     const newData = entry.undo(propsRef.current.data);
     propsRef.current.onDataChange(newData);
 
-    toast.success(
-      `${entry.count} action${entry.count !== 1 ? "s" : ""} undone`,
-    );
+    toast.success(`${entry.count} action${entry.count !== 1 ? "s" : ""} undone`);
   }, [store, propsRef, onCommit]);
 
   const onRedo = React.useCallback(() => {
@@ -300,9 +289,7 @@ function useDataGridUndoRedo<TData>({
     const newData = entry.redo(propsRef.current.data);
     propsRef.current.onDataChange(newData);
 
-    toast.success(
-      `${entry.count} action${entry.count !== 1 ? "s" : ""} redone`,
-    );
+    toast.success(`${entry.count} action${entry.count !== 1 ? "s" : ""} redone`);
   }, [store, propsRef, onCommit]);
 
   const onClear = React.useCallback(() => {
@@ -320,9 +307,7 @@ function useDataGridUndoRedo<TData>({
     (updates: UndoRedoCellUpdate[]) => {
       if (!propsRef.current.enabled || updates.length === 0) return;
 
-      const filteredUpdates = updates.filter(
-        (u) => !Object.is(u.previousValue, u.newValue),
-      );
+      const filteredUpdates = updates.filter((u) => !Object.is(u.previousValue, u.newValue));
       if (filteredUpdates.length === 0) return;
 
       const pending = pendingBatchRef.current;
@@ -345,7 +330,7 @@ function useDataGridUndoRedo<TData>({
       }
       pending.timeoutId = setTimeout(onCommit, BATCH_TIMEOUT);
     },
-    [store, propsRef, onCommit],
+    [store, propsRef, onCommit]
   );
 
   const trackRowsAdd = React.useCallback(
@@ -373,7 +358,7 @@ function useDataGridUndoRedo<TData>({
 
       store.push(entry);
     },
-    [store, propsRef, onCommit],
+    [store, propsRef, onCommit]
   );
 
   const trackRowsDelete = React.useCallback(
@@ -421,7 +406,7 @@ function useDataGridUndoRedo<TData>({
 
       store.push(entry);
     },
-    [store, propsRef, onCommit],
+    [store, propsRef, onCommit]
   );
 
   React.useEffect(() => {
@@ -444,11 +429,8 @@ function useDataGridUndoRedo<TData>({
 
       const activeElement = document.activeElement;
       if (activeElement) {
-        const isInput =
-          activeElement.tagName === "INPUT" ||
-          activeElement.tagName === "TEXTAREA";
-        const isContentEditable =
-          activeElement.getAttribute("contenteditable") === "true";
+        const isInput = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
+        const isContentEditable = activeElement.getAttribute("contenteditable") === "true";
         const isInPopover = getIsInPopover(activeElement);
 
         if (isInput || isContentEditable || isInPopover) return;
@@ -481,21 +463,12 @@ function useDataGridUndoRedo<TData>({
       trackRowsAdd,
       trackRowsDelete,
     }),
-    [
-      canUndo,
-      canRedo,
-      onUndo,
-      onRedo,
-      onClear,
-      trackCellsUpdate,
-      trackRowsAdd,
-      trackRowsDelete,
-    ],
+    [canUndo, canRedo, onUndo, onRedo, onClear, trackCellsUpdate, trackRowsAdd, trackRowsDelete]
   );
 }
 
 export {
-  useDataGridUndoRedo,
   //
   type UndoRedoCellUpdate,
+  useDataGridUndoRedo,
 };

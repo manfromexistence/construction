@@ -1,9 +1,8 @@
-import type { SlateEditor, TCodeBlockElement } from 'platejs';
+import type { SlateEditor, TCodeBlockElement } from "platejs";
+import { setCodeBlockContent } from "../transforms/setCodeBlockContent";
+import { formatJson, isValidJson } from "./jsonFormatter";
 
-import { formatJson, isValidJson } from './jsonFormatter';
-import { setCodeBlockContent } from '../transforms/setCodeBlockContent';
-
-const supportedLanguages = new Set(['json']);
+const supportedLanguages = new Set(["json"]);
 
 export const isLangSupported = (lang?: string): boolean =>
   Boolean(lang && supportedLanguages.has(lang));
@@ -14,7 +13,7 @@ export const isValidSyntax = (code: string, lang?: string): boolean => {
   }
 
   switch (lang) {
-    case 'json': {
+    case "json": {
       return isValidJson(code);
     }
     default: {
@@ -51,7 +50,7 @@ export const formatCodeBlock = (
 
 const formatCode = (code: string, lang?: string): string => {
   switch (lang) {
-    case 'json': {
+    case "json": {
       return formatJson(code);
     }
     default: {

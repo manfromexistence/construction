@@ -1,23 +1,23 @@
-import { BoldPlugin } from '@platejs/basic-nodes/react';
+import { BoldPlugin } from "@platejs/basic-nodes/react";
 
-import { createSlateEditor } from '../../../../../../packages/core/src/lib/editor';
+import { createSlateEditor } from "../../../../../../packages/core/src/lib/editor";
 import {
-  type HtmlDeserializer,
   createSlatePlugin,
-} from '../../../../../../packages/core/src/lib/plugin';
-import { BaseParagraphPlugin } from '../../../../../../packages/core/src/lib/plugins/paragraph';
-import { pluginDeserializeHtml } from '../../../../../../packages/core/src/lib/plugins/html/utils/pluginDeserializeHtml';
+  type HtmlDeserializer,
+} from "../../../../../../packages/core/src/lib/plugin";
+import { pluginDeserializeHtml } from "../../../../../../packages/core/src/lib/plugins/html/utils/pluginDeserializeHtml";
+import { BaseParagraphPlugin } from "../../../../../../packages/core/src/lib/plugins/paragraph";
 
 const parse = () => ({ type: BaseParagraphPlugin.key });
 
-describe('when element is p and validNodeName is P', () => {
-  it('returns a paragraph node', () => {
+describe("when element is p and validNodeName is P", () => {
+  it("returns a paragraph node", () => {
     const deserializer: HtmlDeserializer = {
       isElement: true,
       parse,
       rules: [
         {
-          validNodeName: 'P',
+          validNodeName: "P",
         },
       ],
     };
@@ -33,16 +33,16 @@ describe('when element is p and validNodeName is P', () => {
             },
           },
         }),
-        { element: document.createElement('p') }
+        { element: document.createElement("p") }
       )?.node
     ).toEqual(parse());
   });
 });
 
-describe('when element is p, validAttribute', () => {
-  it('returns p type with an existing attribute', () => {
-    const element = document.createElement('p');
-    element.setAttribute('title', '');
+describe("when element is p, validAttribute", () => {
+  it("returns p type with an existing attribute", () => {
+    const element = document.createElement("p");
+    element.setAttribute("title", "");
 
     expect(
       pluginDeserializeHtml(
@@ -56,7 +56,7 @@ describe('when element is p, validAttribute', () => {
                 parse,
                 rules: [
                   {
-                    validAttribute: { title: '' },
+                    validAttribute: { title: "" },
                   },
                 ],
               },
@@ -68,8 +68,8 @@ describe('when element is p, validAttribute', () => {
     ).toEqual(parse());
   });
 
-  it('doesnt return p type with an unset attribute', () => {
-    const element = document.createElement('p');
+  it("doesnt return p type with an unset attribute", () => {
+    const element = document.createElement("p");
 
     expect(
       pluginDeserializeHtml(
@@ -83,7 +83,7 @@ describe('when element is p, validAttribute', () => {
                 parse,
                 rules: [
                   {
-                    validAttribute: { title: '' },
+                    validAttribute: { title: "" },
                   },
                 ],
               },
@@ -96,10 +96,10 @@ describe('when element is p, validAttribute', () => {
   });
 });
 
-describe('when element is p with color and rule style is different', () => {
-  it('does not return a paragraph node', () => {
-    const element = document.createElement('p');
-    element.style.color = '#FF0000';
+describe("when element is p with color and rule style is different", () => {
+  it("does not return a paragraph node", () => {
+    const element = document.createElement("p");
+    element.style.color = "#FF0000";
 
     expect(
       pluginDeserializeHtml(
@@ -114,7 +114,7 @@ describe('when element is p with color and rule style is different', () => {
                 rules: [
                   {
                     validStyle: {
-                      color: '#333',
+                      color: "#333",
                     },
                   },
                 ],
@@ -128,10 +128,10 @@ describe('when element is p with color and rule style is different', () => {
   });
 });
 
-describe('when element is p with same style color than rule', () => {
-  it('matches an exact style rule', () => {
-    const element = document.createElement('p');
-    element.style.color = 'rgb(255, 0, 0)';
+describe("when element is p with same style color than rule", () => {
+  it("matches an exact style rule", () => {
+    const element = document.createElement("p");
+    element.style.color = "rgb(255, 0, 0)";
 
     expect(
       pluginDeserializeHtml(
@@ -146,7 +146,7 @@ describe('when element is p with same style color than rule', () => {
                 rules: [
                   {
                     validStyle: {
-                      color: 'rgb(255, 0, 0)',
+                      color: "rgb(255, 0, 0)",
                     },
                   },
                 ],
@@ -160,10 +160,10 @@ describe('when element is p with same style color than rule', () => {
   });
 });
 
-describe('when element has style color and rule style color is *', () => {
-  it('matches wildcard style rules', () => {
-    const element = document.createElement('p');
-    element.style.color = '#FF0000';
+describe("when element has style color and rule style color is *", () => {
+  it("matches wildcard style rules", () => {
+    const element = document.createElement("p");
+    element.style.color = "#FF0000";
 
     expect(
       pluginDeserializeHtml(
@@ -178,7 +178,7 @@ describe('when element has style color and rule style color is *', () => {
                 rules: [
                   {
                     validStyle: {
-                      color: '*',
+                      color: "*",
                     },
                   },
                 ],
@@ -192,10 +192,10 @@ describe('when element has style color and rule style color is *', () => {
   });
 });
 
-describe('when element is strong and validNodeName is strong', () => {
-  it('returns the matching leaf mark', () => {
-    const el = document.createElement('strong');
-    el.textContent = 'hello';
+describe("when element is strong and validNodeName is strong", () => {
+  it("returns the matching leaf mark", () => {
+    const el = document.createElement("strong");
+    el.textContent = "hello";
 
     expect(
       pluginDeserializeHtml(
@@ -207,7 +207,7 @@ describe('when element is strong and validNodeName is strong', () => {
               deserializer: {
                 rules: [
                   {
-                    validNodeName: 'STRONG',
+                    validNodeName: "STRONG",
                   },
                 ],
               },

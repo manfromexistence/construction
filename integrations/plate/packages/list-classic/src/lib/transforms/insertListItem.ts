@@ -1,4 +1,4 @@
-import { type SlateEditor, type TElement, KEYS, PathApi } from 'platejs';
+import { KEYS, PathApi, type SlateEditor, type TElement } from "platejs";
 
 export type InsertListItemOptions = {
   inheritCheckStateOnLineEndBreak?: boolean;
@@ -31,8 +31,7 @@ export const insertListItem = (
 
   if (listItemNode.type !== liType) return false;
 
-  const optionalTasklistProps =
-    'checked' in listItemNode ? { checked: false } : undefined;
+  const optionalTasklistProps = "checked" in listItemNode ? { checked: false } : undefined;
 
   let success = false;
 
@@ -55,7 +54,7 @@ export const insertListItem = (
 
       editor.tf.insertNodes(
         {
-          children: [{ children: [{ text: '' }], type: licType }],
+          children: [{ children: [{ text: "" }], type: licType }],
           ...optionalTasklistProps,
           type: liType,
         },
@@ -80,7 +79,7 @@ export const insertListItem = (
 
       editor.tf.insertNodes(
         {
-          children: [{ children: [{ text: '', ...marks }], type: licType }],
+          children: [{ children: [{ text: "", ...marks }], type: licType }],
           ...optionalTasklistProps,
           type: liType,
         },
@@ -104,7 +103,7 @@ export const insertListItem = (
         });
         editor.tf.select(nextListItemPath);
         editor.tf.collapse({
-          edge: 'start',
+          edge: "start",
         });
       });
     }

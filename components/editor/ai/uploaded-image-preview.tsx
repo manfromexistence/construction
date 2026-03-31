@@ -1,11 +1,11 @@
 "use client";
 
+import { Loader, X } from "lucide-react";
+import Image from "next/image";
 import { TooltipWrapper } from "@/components/tooltip-wrapper";
 import { Button } from "@/components/ui/button";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
-import { Loader, X } from "lucide-react";
-import Image from "next/image";
 
 interface ImagePreviewProps {
   src: string;

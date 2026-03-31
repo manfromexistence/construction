@@ -1,21 +1,20 @@
-import type { SlateEditor } from '../editor';
-import type { PluginConfig } from './BasePlugin';
-import type { AnySlatePlugin, SlatePluginContext } from './SlatePlugin';
+import type { SlateEditor } from "../editor";
+import { createSlateEditor } from "../editor";
+import type { PluginConfig } from "./BasePlugin";
+import { createSlatePlugin, createTSlatePlugin } from "./createSlatePlugin";
+import { getEditorPlugin } from "./getEditorPlugin";
+import type { AnySlatePlugin, SlatePluginContext } from "./SlatePlugin";
 
-import { createSlateEditor } from '../editor';
-import { createSlatePlugin, createTSlatePlugin } from './createSlatePlugin';
-import { getEditorPlugin } from './getEditorPlugin';
-
-describe('getEditorPlugin', () => {
+describe("getEditorPlugin", () => {
   let editor: SlateEditor;
   let testPlugin: AnySlatePlugin;
 
   beforeEach(() => {
     testPlugin = createSlatePlugin({
-      key: 'test',
-      node: { type: 'test-type' },
+      key: "test",
+      node: { type: "test-type" },
       options: {
-        testOption: 'testValue',
+        testOption: "testValue",
       },
     });
 
@@ -24,36 +23,33 @@ describe('getEditorPlugin', () => {
     });
   });
 
-  it('get plugin context by plugin object', () => {
-    const context = getEditorPlugin(
-      editor,
-      testPlugin.configure({ options: { testOption: 't' } })
-    );
+  it("get plugin context by plugin object", () => {
+    const context = getEditorPlugin(editor, testPlugin.configure({ options: { testOption: "t" } }));
 
     expect(context).toMatchObject({
       api: editor.api,
       editor,
       plugin: expect.objectContaining({
-        key: 'test',
-        node: { type: 'test-type' },
+        key: "test",
+        node: { type: "test-type" },
       }),
       tf: editor.transforms,
-      type: 'test-type',
+      type: "test-type",
     });
   });
 
-  it('work extendEditor', () => {
+  it("work extendEditor", () => {
     type Config = PluginConfig<
-      'test',
+      "test",
       {
         testOption: string;
       }
     >;
     const plugin = createTSlatePlugin<Config>({
-      key: 'test',
-      node: { type: 'test-type' },
+      key: "test",
+      node: { type: "test-type" },
       options: {
-        testOption: 'testValue',
+        testOption: "testValue",
       },
     });
 
@@ -65,27 +61,27 @@ describe('getEditorPlugin', () => {
     expect(a).toBeDefined();
   });
 
-  it('get plugin context by plugin key', () => {
-    const context = getEditorPlugin(editor, { key: 'test' });
+  it("get plugin context by plugin key", () => {
+    const context = getEditorPlugin(editor, { key: "test" });
 
     expect(context).toMatchObject({
       api: editor.api,
       editor,
       plugin: expect.objectContaining({
-        key: 'test',
-        node: { type: 'test-type' },
+        key: "test",
+        node: { type: "test-type" },
       }),
       tf: editor.transforms,
-      type: 'test-type',
+      type: "test-type",
     });
   });
 
-  it('resolve unresolved plugin', () => {
+  it("resolve unresolved plugin", () => {
     const unresolvedPlugin = createSlatePlugin({
-      key: 'unresolved',
-      node: { type: 'unresolved-type' },
+      key: "unresolved",
+      node: { type: "unresolved-type" },
       options: {
-        unresolvedOption: 'unresolvedValue',
+        unresolvedOption: "unresolvedValue",
       },
     });
 
@@ -95,11 +91,11 @@ describe('getEditorPlugin', () => {
       api: editor.api,
       editor,
       plugin: expect.objectContaining({
-        key: 'unresolved',
-        node: { type: 'unresolved-type' },
+        key: "unresolved",
+        node: { type: "unresolved-type" },
       }),
       tf: editor.transforms,
-      type: 'unresolved-type',
+      type: "unresolved-type",
     });
   });
 });

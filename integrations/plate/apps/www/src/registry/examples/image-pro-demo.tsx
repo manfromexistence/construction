@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { siteConfig } from '@/config/site';
+import { siteConfig } from "@/config/site";
 
 export default function ImageProDemo() {
   return (

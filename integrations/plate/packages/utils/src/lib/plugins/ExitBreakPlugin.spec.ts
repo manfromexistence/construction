@@ -1,26 +1,26 @@
-import { createSlateEditor } from '@platejs/core';
+import { createSlateEditor } from "@platejs/core";
 
-import { ExitBreakPlugin } from './ExitBreakPlugin';
+import { ExitBreakPlugin } from "./ExitBreakPlugin";
 
-describe('ExitBreakPlugin', () => {
-  it('delegates insert to insertExitBreak', () => {
+describe("ExitBreakPlugin", () => {
+  it("delegates insert to insertExitBreak", () => {
     const editor = createSlateEditor({
       plugins: [ExitBreakPlugin],
-      value: [{ children: [{ text: '' }], type: 'p' }],
+      value: [{ children: [{ text: "" }], type: "p" }],
     });
-    const insertExitBreakSpy = spyOn(editor.tf, 'insertExitBreak');
+    const insertExitBreakSpy = spyOn(editor.tf, "insertExitBreak");
 
     editor.tf.exitBreak.insert({});
 
     expect(insertExitBreakSpy).toHaveBeenCalledWith({});
   });
 
-  it('delegates insertBefore with reverse set to true', () => {
+  it("delegates insertBefore with reverse set to true", () => {
     const editor = createSlateEditor({
       plugins: [ExitBreakPlugin],
-      value: [{ children: [{ text: '' }], type: 'p' }],
+      value: [{ children: [{ text: "" }], type: "p" }],
     });
-    const insertExitBreakSpy = spyOn(editor.tf, 'insertExitBreak');
+    const insertExitBreakSpy = spyOn(editor.tf, "insertExitBreak");
 
     editor.tf.exitBreak.insertBefore({ match: () => true });
 

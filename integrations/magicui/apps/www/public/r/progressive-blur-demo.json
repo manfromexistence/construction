@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Progressive Blur Demo",
   "description": "Example showing progressive blur effect for scrollable content.",
-  "registryDependencies": [
-    "@magicui/progressive-blur"
-  ],
+  "registryDependencies": ["@magicui/progressive-blur"],
   "files": [
     {
       "path": "registry/example/progressive-blur-demo.tsx",

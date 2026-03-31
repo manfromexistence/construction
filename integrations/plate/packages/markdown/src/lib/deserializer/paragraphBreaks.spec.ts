@@ -1,43 +1,43 @@
-import { createTestEditor } from '../__tests__/createTestEditor';
-import { serializeMd } from '../serializer/serializeMd';
-import { deserializeMd } from './deserializeMd';
+import { createTestEditor } from "../__tests__/createTestEditor";
+import { serializeMd } from "../serializer/serializeMd";
+import { deserializeMd } from "./deserializeMd";
 
-describe('paragraph breaks preservation', () => {
+describe("paragraph breaks preservation", () => {
   const editor = createTestEditor();
 
-  it('preserve empty paragraphs during serialization and deserialization', () => {
+  it("preserve empty paragraphs during serialization and deserialization", () => {
     const originalValue = [
       {
         children: [
           {
-            text: 'line 1',
+            text: "line 1",
           },
         ],
-        type: 'p',
+        type: "p",
       },
       {
         children: [
           {
-            text: '',
+            text: "",
           },
         ],
-        type: 'p',
+        type: "p",
       },
       {
         children: [
           {
-            text: 'line 2',
+            text: "line 2",
           },
         ],
-        type: 'p',
+        type: "p",
       },
       {
         children: [
           {
-            text: 'line 3',
+            text: "line 3",
           },
         ],
-        type: 'p',
+        type: "p",
       },
     ];
 
@@ -45,7 +45,7 @@ describe('paragraph breaks preservation', () => {
     const serialized = serializeMd(editor as any, { value: originalValue });
 
     // Check that zero-width space is used in serialization
-    expect(serialized).toContain('\u200B');
+    expect(serialized).toContain("\u200B");
     expect(serialized).toMatch(/line 1\n\n\u200B\n\nline 2\n\nline 3/);
 
     // Deserialize back to Plate AST
@@ -54,31 +54,31 @@ describe('paragraph breaks preservation', () => {
     // Check that the empty paragraph is preserved
     expect(deserialized).toHaveLength(4);
     expect(deserialized[1]).toMatchObject({
-      children: [{ text: '' }],
-      type: 'p',
+      children: [{ text: "" }],
+      type: "p",
     });
 
     // The structure should match the original
     expect(deserialized).toEqual(originalValue);
   });
 
-  it('preserve multiple consecutive empty paragraphs', () => {
+  it("preserve multiple consecutive empty paragraphs", () => {
     const originalValue = [
       {
-        children: [{ text: 'line 1' }],
-        type: 'p',
+        children: [{ text: "line 1" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
       {
-        children: [{ text: 'line 2' }],
-        type: 'p',
+        children: [{ text: "line 2" }],
+        type: "p",
       },
     ];
 
@@ -86,35 +86,35 @@ describe('paragraph breaks preservation', () => {
     const deserialized = deserializeMd(editor, serialized);
 
     expect(deserialized).toHaveLength(4);
-    expect(deserialized[1].children[0].text).toBe('');
-    expect(deserialized[2].children[0].text).toBe('');
+    expect(deserialized[1].children[0].text).toBe("");
+    expect(deserialized[2].children[0].text).toBe("");
   });
 
-  it('handle mixed empty and non-empty paragraphs', () => {
+  it("handle mixed empty and non-empty paragraphs", () => {
     const originalValue = [
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
       {
-        children: [{ text: 'line 1' }],
-        type: 'p',
+        children: [{ text: "line 1" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
       {
-        children: [{ text: 'line 2' }],
-        type: 'p',
+        children: [{ text: "line 2" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
     ];
 
@@ -122,33 +122,25 @@ describe('paragraph breaks preservation', () => {
     const deserialized = deserializeMd(editor, serialized);
 
     expect(deserialized).toHaveLength(6);
-    expect(deserialized[0].children[0].text).toBe('');
-    expect(deserialized[2].children[0].text).toBe('');
-    expect(deserialized[3].children[0].text).toBe('');
-    expect(deserialized[5].children[0].text).toBe('');
+    expect(deserialized[0].children[0].text).toBe("");
+    expect(deserialized[2].children[0].text).toBe("");
+    expect(deserialized[3].children[0].text).toBe("");
+    expect(deserialized[5].children[0].text).toBe("");
   });
 
-  it('does not affect paragraphs with actual content', () => {
+  it("does not affect paragraphs with actual content", () => {
     const originalValue = [
       {
-        children: [
-          { text: 'This is ' },
-          { bold: true, text: 'bold' },
-          { text: ' text' },
-        ],
-        type: 'p',
+        children: [{ text: "This is " }, { bold: true, text: "bold" }, { text: " text" }],
+        type: "p",
       },
       {
-        children: [{ text: '' }],
-        type: 'p',
+        children: [{ text: "" }],
+        type: "p",
       },
       {
-        children: [
-          { text: 'This is ' },
-          { italic: true, text: 'italic' },
-          { text: ' text' },
-        ],
-        type: 'p',
+        children: [{ text: "This is " }, { italic: true, text: "italic" }, { text: " text" }],
+        type: "p",
       },
     ];
 
@@ -159,19 +151,19 @@ describe('paragraph breaks preservation', () => {
     expect(deserialized[0].children).toHaveLength(3);
     expect(deserialized[0].children[1]).toMatchObject({
       bold: true,
-      text: 'bold',
+      text: "bold",
     });
     expect(deserialized[2].children[1]).toMatchObject({
       italic: true,
-      text: 'italic',
+      text: "italic",
     });
   });
 
-  it('handle zero-width space in regular text content', () => {
+  it("handle zero-width space in regular text content", () => {
     const originalValue = [
       {
-        children: [{ text: 'text with \u200B zero-width space' }],
-        type: 'p',
+        children: [{ text: "text with \u200B zero-width space" }],
+        type: "p",
       },
     ];
 
@@ -179,8 +171,6 @@ describe('paragraph breaks preservation', () => {
     const deserialized = deserializeMd(editor, serialized);
 
     // The zero-width space in actual text content should be preserved
-    expect(deserialized[0].children[0].text).toBe(
-      'text with \u200B zero-width space'
-    );
+    expect(deserialized[0].children[0].text).toBe("text with \u200B zero-width space");
   });
 });

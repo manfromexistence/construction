@@ -1,10 +1,5 @@
-import {
-  Item,
-  ItemContent,
-  ItemMedia,
-  ItemTitle,
-} from "@/styles/radix-nova/ui/item"
-import { Spinner } from "@/styles/radix-nova/ui/spinner"
+import { Item, ItemContent, ItemMedia, ItemTitle } from "@/styles/radix-nova/ui/item";
+import { Spinner } from "@/styles/radix-nova/ui/spinner";
 
 export function SpinnerDemo() {
   return (
@@ -21,5 +16,5 @@ export function SpinnerDemo() {
         </ItemContent>
       </Item>
     </div>
-  )
+  );
 }

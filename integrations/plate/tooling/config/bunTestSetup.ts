@@ -1,33 +1,27 @@
-import { GlobalRegistrator } from '@happy-dom/global-registrator';
-import { afterEach, expect, mock, spyOn } from 'bun:test';
-import * as matchers from '@testing-library/jest-dom/matchers';
-import { cleanup } from '@testing-library/react';
-import { TextEncoder } from 'node:util';
+import { afterEach, expect, mock, spyOn } from "bun:test";
+import { TextEncoder } from "node:util";
+import { GlobalRegistrator } from "@happy-dom/global-registrator";
+import * as matchers from "@testing-library/jest-dom/matchers";
+import { cleanup } from "@testing-library/react";
 
 // Make mock and spyOn globally available to avoid needing to import from bun:test
 (globalThis as any).mock = mock;
 (globalThis as any).spyOn = spyOn;
 
-const VIMEO_UNAUTHORIZED_RE =
-  /^GET https:\/\/player\.vimeo\.com\/video\/.+ 401/;
+const VIMEO_UNAUTHORIZED_RE = /^GET https:\/\/player\.vimeo\.com\/video\/.+ 401/;
 const UNREACHABLE_CODE_RE = /^Unreachable code: /;
 
 const shouldIgnoreHappyDomResourceError = (value: unknown): boolean => {
-  const message =
-    value instanceof Error
-      ? value.message
-      : typeof value === 'string'
-        ? value
-        : null;
+  const message = value instanceof Error ? value.message : typeof value === "string" ? value : null;
 
   if (!message) return false;
 
   return (
     VIMEO_UNAUTHORIZED_RE.test(message) ||
     (message.includes('Failed to load iframe page "') &&
-      message.includes('Iframe page loading is disabled.')) ||
+      message.includes("Iframe page loading is disabled.")) ||
     (message.includes('Failed to load script "') &&
-      message.includes('JavaScript file loading is disabled.'))
+      message.includes("JavaScript file loading is disabled."))
   );
 };
 
@@ -41,11 +35,7 @@ globalThis.console.error = (...args: unknown[]) => {
 };
 
 globalThis.console.warn = (...args: unknown[]) => {
-  if (
-    args.some(
-      (value) => typeof value === 'string' && UNREACHABLE_CODE_RE.test(value)
-    )
-  ) {
+  if (args.some((value) => typeof value === "string" && UNREACHABLE_CODE_RE.test(value))) {
     return;
   }
 
@@ -62,33 +52,29 @@ GlobalRegistrator.register({
 });
 
 if (global.document && !global.document.doctype) {
-  const doctype = global.document.implementation.createDocumentType(
-    'html',
-    '',
-    ''
-  );
+  const doctype = global.document.implementation.createDocumentType("html", "", "");
 
   global.document.insertBefore(doctype, global.document.documentElement);
 }
 
-if (global.document?.compatMode !== 'CSS1Compat') {
-  Object.defineProperty(global.document, 'compatMode', {
+if (global.document?.compatMode !== "CSS1Compat") {
+  Object.defineProperty(global.document, "compatMode", {
     configurable: true,
-    value: 'CSS1Compat',
+    value: "CSS1Compat",
   });
 }
 
 // Ensure document.body exists
 if (global.document && !global.document.body) {
-  const body = global.document.createElement('body');
+  const body = global.document.createElement("body");
   global.document.documentElement.appendChild(body);
 }
 
 // Explicitly set DOMParser globally for module scope
 // Some built modules reference DOMParser directly without window prefix
-if (typeof window !== 'undefined' && window.DOMParser) {
+if (typeof window !== "undefined" && window.DOMParser) {
   // Force DOMParser to be globally available
-  Object.defineProperty(globalThis, 'DOMParser', {
+  Object.defineProperty(globalThis, "DOMParser", {
     value: window.DOMParser,
     writable: true,
     configurable: true,
@@ -98,13 +84,13 @@ if (typeof window !== 'undefined' && window.DOMParser) {
 // Fix Happy-DOM readonly property issue with isContentEditable
 // slate-test-utils needs to set element.isContentEditable = true
 // but Happy-DOM makes this property readonly
-if (typeof window !== 'undefined' && window.HTMLElement) {
+if (typeof window !== "undefined" && window.HTMLElement) {
   const originalDescriptor = Object.getOwnPropertyDescriptor(
     window.HTMLElement.prototype,
-    'isContentEditable'
+    "isContentEditable"
   );
 
-  Object.defineProperty(window.HTMLElement.prototype, 'isContentEditable', {
+  Object.defineProperty(window.HTMLElement.prototype, "isContentEditable", {
     configurable: true,
     enumerable: true,
     get() {

@@ -1,4 +1,4 @@
-import { KEYS } from 'platejs';
+import { KEYS } from "platejs";
 
 import {
   insertAudioPlaceholder,
@@ -6,10 +6,10 @@ import {
   insertImagePlaceholder,
   insertPlaceholder,
   insertVideoPlaceholder,
-} from './insertPlaceholder';
+} from "./insertPlaceholder";
 
-describe('insertPlaceholder', () => {
-  it('wraps placeholder insertion in withoutNormalizing', () => {
+describe("insertPlaceholder", () => {
+  it("wraps placeholder insertion in withoutNormalizing", () => {
     const insertNodes = mock();
     const withoutNormalizing = mock((fn: () => void) => fn());
     const editor = {
@@ -25,7 +25,7 @@ describe('insertPlaceholder', () => {
     expect(withoutNormalizing).toHaveBeenCalledTimes(1);
     expect(insertNodes).toHaveBeenCalledWith(
       {
-        children: [{ text: '' }],
+        children: [{ text: "" }],
         mediaType: KEYS.img,
         type: KEYS.placeholder,
       },
@@ -33,7 +33,7 @@ describe('insertPlaceholder', () => {
     );
   });
 
-  it('uses the expected media type helpers', () => {
+  it("uses the expected media type helpers", () => {
     const insertNodes = mock();
     const editor = {
       getType: (key: string) => key,

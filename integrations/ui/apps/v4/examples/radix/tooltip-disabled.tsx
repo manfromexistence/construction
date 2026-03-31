@@ -1,9 +1,5 @@
-import { Button } from "@/styles/radix-nova/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/styles/radix-nova/ui/tooltip"
+import { Button } from "@/styles/radix-nova/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/styles/radix-nova/ui/tooltip";
 
 export function TooltipDisabled() {
   return (
@@ -19,5 +15,5 @@ export function TooltipDisabled() {
         <p>This feature is currently unavailable</p>
       </TooltipContent>
     </Tooltip>
-  )
+  );
 }

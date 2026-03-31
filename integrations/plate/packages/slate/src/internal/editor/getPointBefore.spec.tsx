@@ -1,15 +1,15 @@
 /** @jsx jsxt */
 
-import { jsxt } from '@platejs/test-utils';
-import { createEditor } from '../../create-editor';
-import type { Editor, LegacyEditorMethods } from '../../interfaces';
-import { syncLegacyMethods } from '../../utils';
+import { jsxt } from "@platejs/test-utils";
+import { createEditor } from "../../create-editor";
+import type { Editor, LegacyEditorMethods } from "../../interfaces";
+import { syncLegacyMethods } from "../../utils";
 
 jsxt;
 
-describe('getPointBefore', () => {
-  describe('default', () => {
-    it('get point before cursor', () => {
+describe("getPointBefore", () => {
+  describe("default", () => {
+    it("get point before cursor", () => {
       const editor = createEditor(
         (
           <editor>
@@ -21,15 +21,13 @@ describe('getPointBefore', () => {
         ) as any
       );
 
-      expect(
-        editor.api.before(editor.selection as any, { skipInvalid: true })
-      ).toEqual({
+      expect(editor.api.before(editor.selection as any, { skipInvalid: true })).toEqual({
         offset: 3,
         path: [0, 0],
       });
     });
 
-    it('returns undefined for an invalid location instead of throwing', () => {
+    it("returns undefined for an invalid location instead of throwing", () => {
       const editor = createEditor(
         (
           <editor>
@@ -42,9 +40,9 @@ describe('getPointBefore', () => {
     });
   });
 
-  describe('when afterMatch=true', () => {
-    describe('when character match', () => {
-      it('get point after matched character', () => {
+  describe("when afterMatch=true", () => {
+    describe("when character match", () => {
+      it("get point after matched character", () => {
         const editor = createEditor(
           (
             <editor>
@@ -59,14 +57,14 @@ describe('getPointBefore', () => {
         expect(
           editor.api.before(editor.selection as any, {
             afterMatch: true,
-            matchString: ' ',
+            matchString: " ",
             skipInvalid: true,
           })
         ).toEqual({ offset: 5, path: [0, 0] });
       });
     });
 
-    describe('when there is no space', () => {
+    describe("when there is no space", () => {
       const editor = createEditor(
         (
           <editor>
@@ -78,12 +76,12 @@ describe('getPointBefore', () => {
         ) as any
       );
 
-      it('returns start', () => {
+      it("returns start", () => {
         expect(
           editor.api.before(editor.selection!, {
             afterMatch: true,
             matchBlockStart: true,
-            matchString: ' ',
+            matchString: " ",
             skipInvalid: true,
           })
         ).toEqual({
@@ -93,8 +91,8 @@ describe('getPointBefore', () => {
       });
     });
 
-    describe('when string match', () => {
-      it('get point after matched string', () => {
+    describe("when string match", () => {
+      it("get point after matched string", () => {
         const editor = createEditor(
           (
             <editor>
@@ -109,15 +107,15 @@ describe('getPointBefore', () => {
         expect(
           editor.api.before(editor.selection as any, {
             afterMatch: true,
-            matchString: '**',
+            matchString: "**",
             skipInvalid: true,
           })
         ).toEqual({ offset: 7, path: [0, 0] });
       });
     });
 
-    describe('when match function', () => {
-      it('get point after match', () => {
+    describe("when match function", () => {
+      it("get point after match", () => {
         const editor = createEditor(
           (
             <editor>
@@ -132,7 +130,7 @@ describe('getPointBefore', () => {
         expect(
           editor.api.before(editor.selection as any, {
             afterMatch: true,
-            unit: 'offset',
+            unit: "offset",
             match: () => true,
           })
         ).toEqual({ offset: 3, path: [0, 0] });
@@ -140,8 +138,8 @@ describe('getPointBefore', () => {
     });
   });
 
-  describe('when skipInvalid=true', () => {
-    it('get point before space', () => {
+  describe("when skipInvalid=true", () => {
+    it("get point before space", () => {
       const editor = createEditor(
         (
           <editor>
@@ -155,14 +153,14 @@ describe('getPointBefore', () => {
 
       expect(
         editor.api.before(editor.selection as any, {
-          matchString: ' ',
+          matchString: " ",
           skipInvalid: true,
         })
       ).toEqual({ offset: 4, path: [0, 0] });
     });
 
-    describe('when character not found', () => {
-      it('returns undefined', () => {
+    describe("when character not found", () => {
+      it("returns undefined", () => {
         const editor = createEditor(
           (
             <editor>
@@ -176,15 +174,15 @@ describe('getPointBefore', () => {
 
         expect(
           editor.api.before(editor.selection as any, {
-            matchString: '3',
+            matchString: "3",
             skipInvalid: false,
           })
         ).toBeUndefined();
       });
     });
 
-    describe('when searching across blocks', () => {
-      it('returns undefined if not found', () => {
+    describe("when searching across blocks", () => {
+      it("returns undefined if not found", () => {
         const editor = createEditor(
           (
             <editor>
@@ -199,13 +197,13 @@ describe('getPointBefore', () => {
 
         expect(
           editor.api.before(editor.selection as any, {
-            matchString: 'z',
+            matchString: "z",
             skipInvalid: true,
           })
         ).toBeUndefined();
       });
 
-      it('returns the block start when matchBlockStart is true', () => {
+      it("returns the block start when matchBlockStart is true", () => {
         const editor = createEditor(
           (
             <editor>
@@ -222,7 +220,7 @@ describe('getPointBefore', () => {
           editor.api.before(editor.selection as any, {
             afterMatch: true,
             matchBlockStart: true,
-            matchString: 'z',
+            matchString: "z",
             skipInvalid: true,
           })
         ).toEqual({
@@ -233,8 +231,8 @@ describe('getPointBefore', () => {
     });
   });
 
-  describe('when unit=word', () => {
-    it('get point before word', () => {
+  describe("when unit=word", () => {
+    it("get point before word", () => {
       const editor = createEditor(
         (
           <editor>
@@ -249,17 +247,17 @@ describe('getPointBefore', () => {
       expect(
         editor.api.before(editor.selection as any, {
           afterMatch: true,
-          matchString: 'test',
+          matchString: "test",
           skipInvalid: true,
-          unit: 'word',
+          unit: "word",
         })
       ).toEqual({ offset: 4, path: [0, 0] });
     });
   });
 
-  describe('when matchString', () => {
-    describe('when multiple characters', () => {
-      it('get point before matched string', () => {
+  describe("when matchString", () => {
+    describe("when multiple characters", () => {
+      it("get point before matched string", () => {
         const editor = createEditor(
           (
             <editor>
@@ -273,14 +271,14 @@ describe('getPointBefore', () => {
 
         expect(
           editor.api.before(editor.selection as any, {
-            matchString: '***__',
+            matchString: "***__",
           })
         ).toEqual({ offset: 5, path: [0, 0] });
       });
     });
 
-    describe('when array of strings', () => {
-      it('get point before first matched string', () => {
+    describe("when array of strings", () => {
+      it("get point before first matched string", () => {
         const editor = createEditor(
           (
             <editor>
@@ -294,15 +292,15 @@ describe('getPointBefore', () => {
 
         expect(
           editor.api.before(editor.selection as any, {
-            matchString: ['/', '***__', '/'],
+            matchString: ["/", "***__", "/"],
           })
         ).toEqual({ offset: 5, path: [0, 0] });
       });
     });
   });
 
-  describe('when moving before void node', () => {
-    it('get point before void node', () => {
+  describe("when moving before void node", () => {
+    it("get point before void node", () => {
       const editor = createEditor(
         (
           <editor>
@@ -317,8 +315,8 @@ describe('getPointBefore', () => {
         ) as any
       ) as Editor & LegacyEditorMethods;
       const { isInline, isVoid } = editor;
-      editor.isInline = (n) => n.type === 'img' || isInline(n);
-      editor.isVoid = (n) => n.type === 'img' || isVoid(n);
+      editor.isInline = (n) => n.type === "img" || isInline(n);
+      editor.isVoid = (n) => n.type === "img" || isVoid(n);
       syncLegacyMethods(editor);
 
       expect(editor.api.before(editor.selection!.anchor)).toEqual({

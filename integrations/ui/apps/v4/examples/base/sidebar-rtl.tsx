@@ -1,6 +1,5 @@
-"use client"
+"use client";
 
-import * as React from "react"
 import {
   BadgeCheck,
   Bell,
@@ -21,25 +20,22 @@ import {
   Sparkles,
   SquareTerminal,
   Trash2,
-} from "lucide-react"
+} from "lucide-react";
+import * as React from "react";
 
 import {
   LanguageProvider,
   LanguageSelector,
-  useTranslation,
   type Translations,
-} from "@/components/language-selector"
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/styles/base-nova/ui-rtl/avatar"
+  useTranslation,
+} from "@/components/language-selector";
+import { Avatar, AvatarFallback, AvatarImage } from "@/styles/base-nova/ui-rtl/avatar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@/styles/base-nova/ui-rtl/collapsible"
-import { DirectionProvider } from "@/styles/base-nova/ui-rtl/direction"
+} from "@/styles/base-nova/ui-rtl/collapsible";
+import { DirectionProvider } from "@/styles/base-nova/ui-rtl/direction";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -48,7 +44,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/styles/base-nova/ui-rtl/dropdown-menu"
+} from "@/styles/base-nova/ui-rtl/dropdown-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -68,7 +64,7 @@ import {
   SidebarRail,
   SidebarTrigger,
   useSidebar,
-} from "@/styles/base-nova/ui-rtl/sidebar"
+} from "@/styles/base-nova/ui-rtl/sidebar";
 
 const translations: Translations = {
   en: {
@@ -182,18 +178,18 @@ const translations: Translations = {
       travel: "נסיעות",
     },
   },
-}
+};
 
 export function SidebarRtl() {
   return (
     <LanguageProvider defaultLanguage="ar">
       <AppSidebarWithProvider />
     </LanguageProvider>
-  )
+  );
 }
 
 function AppSidebarWithProvider() {
-  const { language, setLanguage, dir } = useTranslation(translations, "ar")
+  const { language, setLanguage, dir } = useTranslation(translations, "ar");
 
   return (
     <DirectionProvider direction={dir}>
@@ -206,11 +202,11 @@ function AppSidebarWithProvider() {
         <AppSidebar />
       </div>
     </DirectionProvider>
-  )
+  );
 }
 
 function AppSidebar() {
-  const { dir, t } = useTranslation(translations, "ar")
+  const { dir, t } = useTranslation(translations, "ar");
 
   const navMain = [
     {
@@ -256,31 +252,25 @@ function AppSidebar() {
         { title: t.limits, url: "#" },
       ],
     },
-  ]
+  ];
 
   const projects = [
     { name: t.designEngineering, url: "#", icon: Frame },
     { name: t.salesMarketing, url: "#", icon: PieChart },
     { name: t.travel, url: "#", icon: Map },
-  ]
+  ];
 
   const user = {
     name: "shadcn",
     email: "m@example.com",
     avatar: "/avatars/shadcn.jpg",
-  }
+  };
 
   return (
     <SidebarProvider>
-      <SidebarContentInner
-        dir={dir}
-        t={t}
-        navMain={navMain}
-        projects={projects}
-        user={user}
-      />
+      <SidebarContentInner dir={dir} t={t} navMain={navMain} projects={projects} user={user} />
     </SidebarProvider>
-  )
+  );
 }
 
 function SidebarContentInner({
@@ -290,27 +280,27 @@ function SidebarContentInner({
   projects,
   user,
 }: {
-  dir: "ltr" | "rtl"
-  t: typeof translations.ar.values
+  dir: "ltr" | "rtl";
+  t: typeof translations.ar.values;
   navMain: Array<{
-    title: string
-    url: string
-    icon?: React.ElementType
-    isActive?: boolean
-    items?: Array<{ title: string; url: string }>
-  }>
+    title: string;
+    url: string;
+    icon?: React.ElementType;
+    isActive?: boolean;
+    items?: Array<{ title: string; url: string }>;
+  }>;
   projects: Array<{
-    name: string
-    url: string
-    icon: React.ElementType
-  }>
+    name: string;
+    url: string;
+    icon: React.ElementType;
+  }>;
   user: {
-    name: string
-    email: string
-    avatar: string
-  }
+    name: string;
+    email: string;
+    avatar: string;
+  };
 }) {
-  const { isMobile } = useSidebar()
+  const { isMobile } = useSidebar();
 
   return (
     <>
@@ -346,9 +336,7 @@ function SidebarContentInner({
                   className="group/collapsible"
                 >
                   <SidebarMenuItem>
-                    <CollapsibleTrigger
-                      render={<SidebarMenuButton tooltip={item.title} />}
-                    >
+                    <CollapsibleTrigger render={<SidebarMenuButton tooltip={item.title} />}>
                       {item.icon && <item.icon />}
                       <span>{item.title}</span>
                       <ChevronRight className="ms-auto transition-transform duration-200 group-data-open/collapsible:rotate-90 rtl:rotate-180 rtl:group-data-open/collapsible:rotate-90" />
@@ -357,9 +345,7 @@ function SidebarContentInner({
                       <SidebarMenuSub>
                         {item.items?.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton
-                              render={<a href={subItem.url} />}
-                            >
+                            <SidebarMenuSubButton render={<a href={subItem.url} />}>
                               <span>{subItem.title}</span>
                             </SidebarMenuSubButton>
                           </SidebarMenuSubItem>
@@ -381,9 +367,7 @@ function SidebarContentInner({
                     <span>{item.name}</span>
                   </SidebarMenuButton>
                   <DropdownMenu>
-                    <DropdownMenuTrigger
-                      render={<SidebarMenuAction showOnHover />}
-                    >
+                    <DropdownMenuTrigger render={<SidebarMenuAction showOnHover />}>
                       <MoreHorizontal />
                       <span className="sr-only">{t.more}</span>
                     </DropdownMenuTrigger>
@@ -457,14 +441,10 @@ function SidebarContentInner({
                       <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                         <Avatar>
                           <AvatarImage src={user.avatar} alt={user.name} />
-                          <AvatarFallback className="rounded-lg">
-                            CN
-                          </AvatarFallback>
+                          <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                         </Avatar>
                         <div className="grid flex-1 text-start text-sm leading-tight">
-                          <span className="truncate font-medium">
-                            {user.name}
-                          </span>
+                          <span className="truncate font-medium">{user.name}</span>
                           <span className="truncate text-xs">{user.email}</span>
                         </div>
                       </div>
@@ -517,5 +497,5 @@ function SidebarContentInner({
         </header>
       </SidebarInset>
     </>
-  )
+  );
 }

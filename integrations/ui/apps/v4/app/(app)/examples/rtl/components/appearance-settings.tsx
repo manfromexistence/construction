@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { IconMinus, IconPlus } from "@tabler/icons-react"
+import { IconMinus, IconPlus } from "@tabler/icons-react";
+import * as React from "react";
 
-import { useLanguageContext } from "@/components/language-selector"
-import { Button } from "@/styles/base-nova/ui-rtl/button"
-import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group"
+import { useLanguageContext } from "@/components/language-selector";
+import { Button } from "@/styles/base-nova/ui-rtl/button";
+import { ButtonGroup } from "@/styles/base-nova/ui-rtl/button-group";
 import {
   Field,
   FieldContent,
@@ -16,13 +16,10 @@ import {
   FieldSeparator,
   FieldSet,
   FieldTitle,
-} from "@/styles/base-nova/ui-rtl/field"
-import { Input } from "@/styles/base-nova/ui-rtl/input"
-import {
-  RadioGroup,
-  RadioGroupItem,
-} from "@/styles/base-nova/ui-rtl/radio-group"
-import { Switch } from "@/styles/base-nova/ui-rtl/switch"
+} from "@/styles/base-nova/ui-rtl/field";
+import { Input } from "@/styles/base-nova/ui-rtl/input";
+import { RadioGroup, RadioGroupItem } from "@/styles/base-nova/ui-rtl/radio-group";
+import { Switch } from "@/styles/base-nova/ui-rtl/switch";
 
 const translations = {
   ar: {
@@ -30,8 +27,7 @@ const translations = {
     computeEnvironment: "بيئة الحوسبة",
     computeDescription: "اختر بيئة الحوسبة لمجموعتك.",
     kubernetes: "كوبرنيتس",
-    kubernetesDescription:
-      "تشغيل أحمال عمل GPU على مجموعة مُهيأة بـ K8s. هذا هو الافتراضي.",
+    kubernetesDescription: "تشغيل أحمال عمل GPU على مجموعة مُهيأة بـ K8s. هذا هو الافتراضي.",
     virtualMachine: "جهاز افتراضي",
     vmDescription: "الوصول إلى مجموعة VM مُهيأة لتشغيل أحمال العمل. (قريبًا)",
     numberOfGpus: "عدد وحدات GPU",
@@ -46,8 +42,7 @@ const translations = {
     computeEnvironment: "סביבת מחשוב",
     computeDescription: "בחר את סביבת המחשוב לאשכול שלך.",
     kubernetes: "קוברנטיס",
-    kubernetesDescription:
-      "הפעל עומסי עבודה של GPU באשכול מוגדר K8s. זו ברירת המחדל.",
+    kubernetesDescription: "הפעל עומסי עבודה של GPU באשכול מוגדר K8s. זו ברירת המחדל.",
     virtualMachine: "מכונה וירטואלית",
     vmDescription: "גש לאשכול VM מוגדר להפעלת עומסי עבודה. (בקרוב)",
     numberOfGpus: "מספר GPUs",
@@ -57,29 +52,24 @@ const translations = {
     wallpaperTinting: "צביעת טפט",
     wallpaperDescription: "אפשר לטפט להיצבע.",
   },
-}
+};
 
 export function AppearanceSettings() {
-  const context = useLanguageContext()
-  const lang = context?.language === "he" ? "he" : "ar"
-  const t = translations[lang]
-  const [gpuCount, setGpuCount] = React.useState(8)
+  const context = useLanguageContext();
+  const lang = context?.language === "he" ? "he" : "ar";
+  const t = translations[lang];
+  const [gpuCount, setGpuCount] = React.useState(8);
 
   const handleGpuAdjustment = React.useCallback((adjustment: number) => {
-    setGpuCount((prevCount) =>
-      Math.max(1, Math.min(99, prevCount + adjustment))
-    )
-  }, [])
+    setGpuCount((prevCount) => Math.max(1, Math.min(99, prevCount + adjustment)));
+  }, []);
 
-  const handleGpuInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = parseInt(e.target.value, 10)
-      if (!isNaN(value) && value >= 1 && value <= 99) {
-        setGpuCount(value)
-      }
-    },
-    []
-  )
+  const handleGpuInputChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseInt(e.target.value, 10);
+    if (!isNaN(value) && value >= 1 && value <= 99) {
+      setGpuCount(value);
+    }
+  }, []);
 
   return (
     <div dir={t.dir}>
@@ -93,9 +83,7 @@ export function AppearanceSettings() {
                 <Field orientation="horizontal">
                   <FieldContent>
                     <FieldTitle>{t.kubernetes}</FieldTitle>
-                    <FieldDescription>
-                      {t.kubernetesDescription}
-                    </FieldDescription>
+                    <FieldDescription>{t.kubernetesDescription}</FieldDescription>
                   </FieldContent>
                   <RadioGroupItem
                     value="kubernetes"
@@ -110,11 +98,7 @@ export function AppearanceSettings() {
                     <FieldTitle>{t.virtualMachine}</FieldTitle>
                     <FieldDescription>{t.vmDescription}</FieldDescription>
                   </FieldContent>
-                  <RadioGroupItem
-                    value="vm"
-                    id="rtl-vm"
-                    aria-label={t.virtualMachine}
-                  />
+                  <RadioGroupItem value="vm" id="rtl-vm" aria-label={t.virtualMachine} />
                 </Field>
               </FieldLabel>
             </RadioGroup>
@@ -159,9 +143,7 @@ export function AppearanceSettings() {
           <FieldSeparator />
           <Field orientation="horizontal">
             <FieldContent>
-              <FieldLabel htmlFor="rtl-tinting">
-                {t.wallpaperTinting}
-              </FieldLabel>
+              <FieldLabel htmlFor="rtl-tinting">{t.wallpaperTinting}</FieldLabel>
               <FieldDescription>{t.wallpaperDescription}</FieldDescription>
             </FieldContent>
             <Switch id="rtl-tinting" defaultChecked />
@@ -169,5 +151,5 @@ export function AppearanceSettings() {
         </FieldGroup>
       </FieldSet>
     </div>
-  )
+  );
 }

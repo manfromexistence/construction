@@ -1,6 +1,5 @@
-import type { TEquationElement } from 'platejs';
-
-import katex, { type KatexOptions } from 'katex';
+import katex, { type KatexOptions } from "katex";
+import type { TEquationElement } from "platejs";
 
 export const getEquationHtml = ({
   element,

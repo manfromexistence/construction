@@ -1,11 +1,11 @@
-import { RangeApi, type TRange } from './range';
+import { RangeApi, type TRange } from "./range";
 
 const range: TRange = {
   anchor: { offset: 0, path: [1] },
   focus: { offset: 0, path: [3] },
 };
 
-describe('RangeApi', () => {
+describe("RangeApi", () => {
   const includeCases: Array<{
     expected: boolean;
     range?: TRange;
@@ -30,7 +30,7 @@ describe('RangeApi', () => {
     { target: { path: [0], offset: 0 }, expected: false },
   ];
 
-  it('checks containment for nested ranges', () => {
+  it("checks containment for nested ranges", () => {
     expect(
       RangeApi.contains(
         {
@@ -45,17 +45,11 @@ describe('RangeApi', () => {
     ).toBe(true);
   });
 
-  it.each(includeCases)('includes $target', ({
-    target,
-    expected,
-    range: customRange,
-  }) => {
-    expect(RangeApi.includes(customRange ?? range, target as any)).toBe(
-      expected
-    );
+  it.each(includeCases)("includes $target", ({ target, expected, range: customRange }) => {
+    expect(RangeApi.includes(customRange ?? range, target as any)).toBe(expected);
   });
 
-  it('checks equality', () => {
+  it("checks equality", () => {
     expect(
       RangeApi.equals(
         {
@@ -83,7 +77,7 @@ describe('RangeApi', () => {
     ).toBe(false);
   });
 
-  it('returns ordered edges and point entries', () => {
+  it("returns ordered edges and point entries", () => {
     const collapsed = {
       anchor: { path: [0], offset: 0 },
       focus: { path: [0], offset: 0 },
@@ -94,12 +88,12 @@ describe('RangeApi', () => {
       { path: [0], offset: 0 },
     ]);
     expect(Array.from(RangeApi.points(collapsed))).toEqual([
-      [collapsed.anchor, 'anchor'],
-      [collapsed.focus, 'focus'],
+      [collapsed.anchor, "anchor"],
+      [collapsed.focus, "focus"],
     ]);
   });
 
-  it('handles collapsed and expanded states, including nullish input', () => {
+  it("handles collapsed and expanded states, including nullish input", () => {
     const collapsed = {
       anchor: { path: [0], offset: 0 },
       focus: { path: [0], offset: 0 },
@@ -117,7 +111,7 @@ describe('RangeApi', () => {
     expect(RangeApi.isExpanded(undefined)).toBe(false);
   });
 
-  it('reports forward and backward ranges', () => {
+  it("reports forward and backward ranges", () => {
     expect(
       RangeApi.isForward({
         anchor: { path: [0], offset: 0 },
@@ -132,7 +126,7 @@ describe('RangeApi', () => {
     ).toBe(true);
   });
 
-  it('transforms ranges with inward and outward affinity', () => {
+  it("transforms ranges with inward and outward affinity", () => {
     expect(
       RangeApi.transform(
         {
@@ -140,12 +134,12 @@ describe('RangeApi', () => {
           focus: { path: [0, 0], offset: 1 },
         },
         {
-          type: 'split_node',
+          type: "split_node",
           path: [0, 0],
           position: 1,
           properties: {},
         },
-        { affinity: 'inward' }
+        { affinity: "inward" }
       )
     ).toEqual({
       anchor: { path: [0, 1], offset: 0 },
@@ -159,13 +153,13 @@ describe('RangeApi', () => {
           focus: { path: [0, 0], offset: 1 },
         },
         {
-          type: 'insert_text',
+          type: "insert_text",
           path: [0, 0],
-          text: 'a',
+          text: "a",
           offset: 1,
           properties: {},
         },
-        { affinity: 'outward' }
+        { affinity: "outward" }
       )
     ).toEqual({
       anchor: { path: [0, 0], offset: 1 },

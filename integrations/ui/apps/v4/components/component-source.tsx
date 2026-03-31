@@ -1,13 +1,12 @@
-import * as React from "react"
-
-import { formatCode } from "@/lib/format-code"
-import { highlightCode } from "@/lib/highlight-code"
-import { readFileFromRoot } from "@/lib/read-file"
-import { getDemoItem, getRegistryItem } from "@/lib/registry"
-import { cn } from "@/lib/utils"
-import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper"
-import { CopyButton } from "@/components/copy-button"
-import { getIconForLanguageExtension } from "@/components/icons"
+import * as React from "react";
+import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
+import { CopyButton } from "@/components/copy-button";
+import { getIconForLanguageExtension } from "@/components/icons";
+import { formatCode } from "@/lib/format-code";
+import { highlightCode } from "@/lib/highlight-code";
+import { readFileFromRoot } from "@/lib/read-file";
+import { getDemoItem, getRegistryItem } from "@/lib/registry";
+import { cn } from "@/lib/utils";
 
 export async function ComponentSource({
   name,
@@ -19,45 +18,43 @@ export async function ComponentSource({
   styleName = "new-york-v4",
   maxLines,
 }: React.ComponentProps<"div"> & {
-  name?: string
-  src?: string
-  title?: string
-  language?: string
-  collapsible?: boolean
-  styleName?: string
-  maxLines?: number
+  name?: string;
+  src?: string;
+  title?: string;
+  language?: string;
+  collapsible?: boolean;
+  styleName?: string;
+  maxLines?: number;
 }) {
   if (!name && !src) {
-    return null
+    return null;
   }
 
-  let code: string | undefined
+  let code: string | undefined;
 
   if (name) {
-    const item =
-      (await getDemoItem(name, styleName)) ??
-      (await getRegistryItem(name, styleName))
-    code = item?.files?.[0]?.content
+    const item = (await getDemoItem(name, styleName)) ?? (await getRegistryItem(name, styleName));
+    code = item?.files?.[0]?.content;
   }
 
   if (src) {
-    code = await readFileFromRoot(src)
+    code = await readFileFromRoot(src);
   }
 
   if (!code) {
-    return null
+    return null;
   }
 
-  code = await formatCode(code, styleName)
-  code = code.replaceAll("/* eslint-disable react/no-children-prop */\n", "")
+  code = await formatCode(code, styleName);
+  code = code.replaceAll("/* eslint-disable react/no-children-prop */\n", "");
 
   // Truncate code if maxLines is set.
   if (maxLines) {
-    code = code.split("\n").slice(0, maxLines).join("\n")
+    code = code.split("\n").slice(0, maxLines).join("\n");
   }
 
-  const lang = language ?? title?.split(".").pop() ?? "tsx"
-  const highlightedCode = await highlightCode(code, lang)
+  const lang = language ?? title?.split(".").pop() ?? "tsx";
+  const highlightedCode = await highlightCode(code, lang);
 
   if (!collapsible) {
     return (
@@ -69,19 +66,14 @@ export async function ComponentSource({
           title={title}
         />
       </div>
-    )
+    );
   }
 
   return (
     <CodeCollapsibleWrapper className={className}>
-      <ComponentCode
-        code={code}
-        highlightedCode={highlightedCode}
-        language={lang}
-        title={title}
-      />
+      <ComponentCode code={code} highlightedCode={highlightedCode} language={lang} title={title} />
     </CodeCollapsibleWrapper>
-  )
+  );
 }
 
 function ComponentCode({
@@ -90,10 +82,10 @@ function ComponentCode({
   language,
   title,
 }: {
-  code: string
-  highlightedCode: string
-  language: string
-  title: string | undefined
+  code: string;
+  highlightedCode: string;
+  language: string;
+  title: string | undefined;
 }) {
   return (
     <figure data-rehype-pretty-code-figure="" className="[&>pre]:max-h-96">
@@ -110,5 +102,5 @@ function ComponentCode({
       <CopyButton value={code} />
       <div dangerouslySetInnerHTML={{ __html: highlightedCode }} />
     </figure>
-  )
+  );
 }

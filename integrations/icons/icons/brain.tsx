@@ -143,11 +143,7 @@ const BrainIcon = forwardRef<BrainIconHandle, BrainIconProps>(
           width={size}
           xmlns="http://www.w3.org/2000/svg"
         >
-          <motion.path
-            animate={controls}
-            d="M12 18V5"
-            variants={BRAIN_STEM_VARIANTS}
-          />
+          <motion.path animate={controls} d="M12 18V5" variants={BRAIN_STEM_VARIANTS} />
           <motion.path
             animate={controls}
             d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4"

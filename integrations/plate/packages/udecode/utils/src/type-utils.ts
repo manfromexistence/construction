@@ -8,8 +8,7 @@ export const isUndefinedOrNull = (obj: any): obj is null | undefined =>
   isUndefined(obj) || isNull(obj);
 
 /** @returns Whether the provided parameter is defined. */
-export const isDefined = <T>(arg: T | null | undefined): arg is T =>
-  !isUndefinedOrNull(arg);
+export const isDefined = <T>(arg: T | null | undefined): arg is T => !isUndefinedOrNull(arg);
 
 export function bindFirst<T, Args extends any[], R>(
   fn: (first: T, ...args: Args) => R,

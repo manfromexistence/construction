@@ -1,22 +1,16 @@
-import Link from "next/link"
+import Link from "next/link";
 
-import { BlockDisplay } from "@/components/block-display"
-import { getActiveStyle } from "@/registry/_legacy-styles"
-import { Button } from "@/registry/new-york-v4/ui/button"
+import { BlockDisplay } from "@/components/block-display";
+import { getActiveStyle } from "@/registry/_legacy-styles";
+import { Button } from "@/registry/new-york-v4/ui/button";
 
-export const dynamic = "force-static"
-export const revalidate = false
+export const dynamic = "force-static";
+export const revalidate = false;
 
-const FEATURED_BLOCKS = [
-  "dashboard-01",
-  "sidebar-07",
-  "sidebar-03",
-  "login-03",
-  "login-04",
-]
+const FEATURED_BLOCKS = ["dashboard-01", "sidebar-07", "sidebar-03", "login-03", "login-04"];
 
 export default async function BlocksPage() {
-  const activeStyle = await getActiveStyle()
+  const activeStyle = await getActiveStyle();
 
   return (
     <div className="flex flex-col gap-12 md:gap-24">
@@ -31,5 +25,5 @@ export default async function BlocksPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }

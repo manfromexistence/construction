@@ -1,9 +1,8 @@
 import { Table } from "@tanstack/react-table";
 import { X } from "lucide-react";
-
+import { DataTableViewOptions } from "@/components/examples/tasks/components/data-table-view-options";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DataTableViewOptions } from "@/components/examples/tasks/components/data-table-view-options";
 
 import { priorities, statuses } from "../data/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
@@ -21,9 +20,7 @@ export function DataTableToolbar<TData>({ table }: DataTableToolbarProps<TData>)
         <Input
           placeholder="Filter tasks..."
           value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
+          onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
           className="h-8 w-[150px] lg:w-[250px]"
         />
         {table.getColumn("status") && (

@@ -4,9 +4,7 @@
   "type": "registry:example",
   "title": "Shimmer Button Demo",
   "description": "Example showing a button with a shimmering light effect.",
-  "registryDependencies": [
-    "@magicui/shimmer-button"
-  ],
+  "registryDependencies": ["@magicui/shimmer-button"],
   "files": [
     {
       "path": "registry/example/shimmer-button-demo.tsx",

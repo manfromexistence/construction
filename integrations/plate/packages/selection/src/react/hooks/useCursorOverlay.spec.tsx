@@ -1,6 +1,5 @@
-import React from 'react';
-
-import { renderHook } from '@testing-library/react';
+import { renderHook } from "@testing-library/react";
+import React from "react";
 
 const useEditorRefMock = mock();
 const useEditorContainerRefMock = mock();
@@ -13,33 +12,33 @@ const getSelectionRectsMock = mock();
 const getCursorOverlayStateMock = mock();
 const refreshMock = mock();
 
-mock.module('../CursorOverlayPlugin', () => ({
-  CursorOverlayPlugin: { key: 'cursorOverlay' },
+mock.module("../CursorOverlayPlugin", () => ({
+  CursorOverlayPlugin: { key: "cursorOverlay" },
 }));
 
-mock.module('platejs/react', async () => ({
+mock.module("platejs/react", async () => ({
   useEditorContainerRef: useEditorContainerRefMock,
   useEditorRef: useEditorRefMock,
   useIsomorphicLayoutEffect: useIsomorphicLayoutEffectMock,
   usePluginOption: usePluginOptionMock,
 }));
 
-mock.module('../queries/getSelectionRects', () => ({
+mock.module("../queries/getSelectionRects", () => ({
   getSelectionRects: getSelectionRectsMock,
 }));
 
-mock.module('../queries/getCursorOverlayState', () => ({
+mock.module("../queries/getCursorOverlayState", () => ({
   getCursorOverlayState: getCursorOverlayStateMock,
 }));
 
-mock.module('./useRefreshOnResize', () => ({
+mock.module("./useRefreshOnResize", () => ({
   useRefreshOnResize: useRefreshOnResizeMock,
 }));
 
 const loadModule = async () =>
   import(`./useCursorOverlay?test=${Math.random().toString(36).slice(2)}`);
 
-describe('useCursorOverlay', () => {
+describe("useCursorOverlay", () => {
   afterEach(() => {
     mock.restore();
     useEditorRefMock.mockReset();
@@ -52,7 +51,7 @@ describe('useCursorOverlay', () => {
     refreshMock.mockReset();
   });
 
-  it('returns empty cursor overlays when the container is missing', async () => {
+  it("returns empty cursor overlays when the container is missing", async () => {
     useEditorRefMock.mockReturnValue({});
     useEditorContainerRefMock.mockReturnValue({ current: null });
     usePluginOptionMock.mockReturnValue(undefined);
@@ -68,18 +67,18 @@ describe('useCursorOverlay', () => {
     expect(getSelectionRectsMock).not.toHaveBeenCalled();
   });
 
-  it('normalizes tiny selection rects and forwards them to cursor state composition', async () => {
+  it("normalizes tiny selection rects and forwards them to cursor state composition", async () => {
     const editor = {};
     const range = {
       anchor: { offset: 0, path: [0, 0] },
       focus: { offset: 0, path: [0, 0] },
     };
-    const container = document.createElement('div');
-    spyOn(container, 'getBoundingClientRect').mockReturnValue({
+    const container = document.createElement("div");
+    spyOn(container, "getBoundingClientRect").mockReturnValue({
       x: 50,
       y: 80,
     } as any);
-    Object.defineProperty(container, 'scrollTop', {
+    Object.defineProperty(container, "scrollTop", {
       configurable: true,
       value: 4,
     });
@@ -88,15 +87,13 @@ describe('useCursorOverlay', () => {
     useEditorContainerRefMock.mockReturnValue({ current: container });
     usePluginOptionMock.mockReturnValue({
       a: {
-        key: 'a',
+        key: "a",
         selection: range,
       },
     });
-    getSelectionRectsMock.mockReturnValue([
-      { height: 12, left: 6, top: 8, width: 0.5 },
-    ]);
+    getSelectionRectsMock.mockReturnValue([{ height: 12, left: 6, top: 8, width: 0.5 }]);
     getCursorOverlayStateMock.mockImplementation(({ selectionRects }) => [
-      { key: 'a', selectionRects: selectionRects.a },
+      { key: "a", selectionRects: selectionRects.a },
     ]);
 
     const { useCursorOverlay } = await loadModule();
@@ -114,7 +111,7 @@ describe('useCursorOverlay', () => {
     expect(getCursorOverlayStateMock).toHaveBeenCalledWith({
       cursors: {
         a: {
-          key: 'a',
+          key: "a",
           selection: range,
         },
       },

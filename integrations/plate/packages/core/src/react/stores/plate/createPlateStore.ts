@@ -1,23 +1,18 @@
-import React from 'react';
+import { atom } from "jotai";
+import { useAtomStoreSet, useAtomStoreState, useAtomStoreValue } from "jotai-x";
+import React from "react";
 
-import { atom } from 'jotai';
-import { useAtomStoreSet, useAtomStoreState, useAtomStoreValue } from 'jotai-x';
-
-import type { PlateEditor } from '../../editor/PlateEditor';
-import type { PlateChangeKey, PlateStoreState } from './PlateStore';
-
-import { createAtomStore } from '../../libs';
-import { createPlateFallbackEditor } from '../../utils';
-import {
-  usePlateControllerExists,
-  usePlateControllerStore,
-} from '../plate-controller';
+import type { PlateEditor } from "../../editor/PlateEditor";
+import { createAtomStore } from "../../libs";
+import { createPlateFallbackEditor } from "../../utils";
+import { usePlateControllerExists, usePlateControllerStore } from "../plate-controller";
+import type { PlateChangeKey, PlateStoreState } from "./PlateStore";
 
 export type PlateStore = ReturnType<typeof usePlateStore>;
 
-export const PLATE_SCOPE = 'plate';
+export const PLATE_SCOPE = "plate";
 
-export const GLOBAL_PLATE_SCOPE = Symbol('global-plate');
+export const GLOBAL_PLATE_SCOPE = Symbol("global-plate");
 
 export const createPlateStore = <E extends PlateEditor = PlateEditor>({
   id,
@@ -70,7 +65,7 @@ export const createPlateStore = <E extends PlateEditor = PlateEditor>({
       ...state,
     } as PlateStoreState<E>,
     {
-      name: 'plate',
+      name: "plate",
       suppressWarnings: true,
       extend: (atoms) => ({
         trackedEditor: atom((get) => ({
@@ -100,12 +95,11 @@ const {
 
 const { usePlateStore: useFallbackPlateStore } = createPlateStore();
 
-export { plateStore, PlateStoreProvider, usePlateLocalStore };
+export { PlateStoreProvider, plateStore, usePlateLocalStore };
 
 export const usePlateStore = (id?: string) => {
   // Try to fetch the store from a Plate provider
-  const localStore =
-    usePlateLocalStore({ scope: id, warnIfNoStore: false }) ?? null;
+  const localStore = usePlateLocalStore({ scope: id, warnIfNoStore: false }) ?? null;
 
   const [localStoreExists] = React.useState(!!localStore.store);
 
@@ -135,33 +129,25 @@ export const usePlateStore = (id?: string) => {
       return fallbackStore;
     }
 
-    throw new Error(
-      'Plate hooks must be used inside a Plate or PlateController'
-    );
+    throw new Error("Plate hooks must be used inside a Plate or PlateController");
   }
   return store;
 };
 
 export const usePlateSet: typeof usePlateLocalSet = (key, options) => {
-  const store = usePlateStore(
-    typeof options === 'string' ? options : options?.scope
-  );
+  const store = usePlateStore(typeof options === "string" ? options : options?.scope);
 
   return useAtomStoreSet(store, key);
 };
 
 export const usePlateValue = ((key, options) => {
-  const store = usePlateStore(
-    typeof options === 'string' ? options : options?.scope
-  );
+  const store = usePlateStore(typeof options === "string" ? options : options?.scope);
 
   return useAtomStoreValue(store, key);
 }) as typeof usePlateLocalValue;
 
 export const usePlateState = ((key, options) => {
-  const store = usePlateStore(
-    typeof options === 'string' ? options : options?.scope
-  );
+  const store = usePlateStore(typeof options === "string" ? options : options?.scope);
 
   return useAtomStoreState(store, key);
 }) as typeof usePlateLocalState;
@@ -169,14 +155,13 @@ export const usePlateState = ((key, options) => {
 // ─── Selectors ───────────────────────────────────────────────────────────────
 
 /** Get the closest `Plate` id. */
-export const useEditorId = (): string =>
-  useAtomStoreValue(usePlateStore(), 'editor').id;
+export const useEditorId = (): string => useAtomStoreValue(usePlateStore(), "editor").id;
 
 export const useEditorContainerRef = (id?: string) =>
-  useAtomStoreValue(usePlateStore(id), 'containerRef');
+  useAtomStoreValue(usePlateStore(id), "containerRef");
 
 export const useEditorScrollRef = (id?: string) =>
-  useAtomStoreValue(usePlateStore(id), 'scrollRef');
+  useAtomStoreValue(usePlateStore(id), "scrollRef");
 
 /** Returns the scrollRef if it exists, otherwise returns the containerRef. */
 export const useScrollRef = (id?: string) => {
@@ -187,18 +172,18 @@ export const useScrollRef = (id?: string) => {
 };
 
 export const useEditorMounted = (id?: string): boolean =>
-  !!useAtomStoreValue(usePlateStore(id), 'isMounted');
+  !!useAtomStoreValue(usePlateStore(id), "isMounted");
 
 /**
  * Whether the editor is read-only. You can also use `useReadOnly` from
  * `slate-react` in node components.
  */
 export const useEditorReadOnly = (id?: string): boolean =>
-  !!useAtomStoreValue(usePlateStore(id), 'readOnly');
+  !!useAtomStoreValue(usePlateStore(id), "readOnly");
 
 /** Whether the editor is composing. */
 export const useEditorComposing = (id?: string): boolean =>
-  !!useAtomStoreValue(usePlateStore(id), 'composing');
+  !!useAtomStoreValue(usePlateStore(id), "composing");
 
 /**
  * Get a reference to the editor instance that remains stable across re-renders.
@@ -214,8 +199,7 @@ export const useEditorRef = <E extends PlateEditor = PlateEditor>(
   id?: string
 ): E & { store: PlateStore } => {
   const store = usePlateStore(id);
-  const editor: any =
-    (useAtomStoreValue(store, 'editor') as E) ?? createPlateFallbackEditor();
+  const editor: any = (useAtomStoreValue(store, "editor") as E) ?? createPlateFallbackEditor();
 
   editor.store = store;
 
@@ -227,25 +211,23 @@ export const useEditorSelection = (id?: string) =>
   usePlateStore(id).useTrackedSelectionValue().selection;
 
 /** Get editor state which is updated on editor change. */
-export const useEditorState = <E extends PlateEditor = PlateEditor>(
-  id?: string
-): E => usePlateStore(id).useTrackedEditorValue().editor;
+export const useEditorState = <E extends PlateEditor = PlateEditor>(id?: string): E =>
+  usePlateStore(id).useTrackedEditorValue().editor;
 
 /** Version incremented on each editor change. */
 export const useEditorVersion = (id?: string) =>
-  useAtomStoreValue(usePlateStore(id), 'versionEditor');
+  useAtomStoreValue(usePlateStore(id), "versionEditor");
 
 /** Version incremented on selection change. */
 export const useSelectionVersion = (id?: string) =>
-  useAtomStoreValue(usePlateStore(id), 'versionSelection');
+  useAtomStoreValue(usePlateStore(id), "versionSelection");
 
 /** Get the editor value (deeply memoized). */
-export const useEditorValue = (id?: string) =>
-  usePlateStore(id).useTrackedValueValue().value;
+export const useEditorValue = (id?: string) => usePlateStore(id).useTrackedValueValue().value;
 
 /** Version incremented on value change. */
 export const useValueVersion = (id?: string) =>
-  useAtomStoreValue(usePlateStore(id), 'versionValue');
+  useAtomStoreValue(usePlateStore(id), "versionValue");
 
 // ─── Actions ─────────────────────────────────────────────────────────────────
 
@@ -254,31 +236,31 @@ export const useIncrementVersion = (key: PlateChangeKey, id?: string) => {
 
   const store = usePlateStore(id);
 
-  const setVersionDecorate = useAtomStoreSet(store, 'versionDecorate');
-  const setVersionSelection = useAtomStoreSet(store, 'versionSelection');
-  const setVersionValue = useAtomStoreSet(store, 'versionValue');
-  const setVersionEditor = useAtomStoreSet(store, 'versionEditor');
+  const setVersionDecorate = useAtomStoreSet(store, "versionDecorate");
+  const setVersionSelection = useAtomStoreSet(store, "versionSelection");
+  const setVersionValue = useAtomStoreSet(store, "versionValue");
+  const setVersionEditor = useAtomStoreSet(store, "versionEditor");
 
   return React.useCallback(() => {
     const nextVersion = previousVersionRef.current + 1;
 
     switch (key) {
-      case 'versionDecorate': {
+      case "versionDecorate": {
         setVersionDecorate(nextVersion);
 
         break;
       }
-      case 'versionEditor': {
+      case "versionEditor": {
         setVersionEditor(nextVersion);
 
         break;
       }
-      case 'versionSelection': {
+      case "versionSelection": {
         setVersionSelection(nextVersion);
 
         break;
       }
-      case 'versionValue': {
+      case "versionValue": {
         setVersionValue(nextVersion);
 
         break;
@@ -286,17 +268,11 @@ export const useIncrementVersion = (key: PlateChangeKey, id?: string) => {
     }
 
     previousVersionRef.current = nextVersion;
-  }, [
-    key,
-    setVersionDecorate,
-    setVersionEditor,
-    setVersionSelection,
-    setVersionValue,
-  ]);
+  }, [key, setVersionDecorate, setVersionEditor, setVersionSelection, setVersionValue]);
 };
 
 export const useRedecorate = (id?: string) => {
-  const updateDecorate = useIncrementVersion('versionDecorate', id);
+  const updateDecorate = useIncrementVersion("versionDecorate", id);
 
   return React.useCallback(() => {
     updateDecorate();

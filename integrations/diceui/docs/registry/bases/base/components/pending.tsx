@@ -23,7 +23,7 @@ interface UsePendingReturn<T extends HTMLElement = HTMLElement> {
 }
 
 function usePending<T extends HTMLElement = HTMLElement>(
-  options: UsePendingOptions = {},
+  options: UsePendingOptions = {}
 ): UsePendingReturn<T> {
   const { id, isPending = false, disabled = false } = options;
 

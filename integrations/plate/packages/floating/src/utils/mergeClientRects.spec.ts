@@ -1,7 +1,7 @@
-import { makeClientRect } from './makeClientRect';
-import { mergeClientRects } from './mergeClientRects';
+import { makeClientRect } from "./makeClientRect";
+import { mergeClientRects } from "./mergeClientRects";
 
-describe('mergeClientRects', () => {
+describe("mergeClientRects", () => {
   const rect1 = makeClientRect({
     bottom: 90,
     left: 10,
@@ -9,8 +9,8 @@ describe('mergeClientRects', () => {
     top: 10,
   });
 
-  describe('when given a single rect', () => {
-    it('returns the same rect', () => {
+  describe("when given a single rect", () => {
+    it("returns the same rect", () => {
       const merged = mergeClientRects([rect1]);
 
       expect(merged.top).toBe(10);
@@ -20,7 +20,7 @@ describe('mergeClientRects', () => {
     });
   });
 
-  describe('when the second rect is above and to the left of the first', () => {
+  describe("when the second rect is above and to the left of the first", () => {
     const rect2 = makeClientRect({
       bottom: 5,
       left: 0,
@@ -28,7 +28,7 @@ describe('mergeClientRects', () => {
       top: 0,
     });
 
-    it('extends the top and left', () => {
+    it("extends the top and left", () => {
       const merged = mergeClientRects([rect1, rect2]);
 
       expect(merged.top).toBe(0);
@@ -38,7 +38,7 @@ describe('mergeClientRects', () => {
     });
   });
 
-  describe('when the second rect overlaps the top-left corner of the first', () => {
+  describe("when the second rect overlaps the top-left corner of the first", () => {
     const rect2 = makeClientRect({
       bottom: 20,
       left: 0,
@@ -46,7 +46,7 @@ describe('mergeClientRects', () => {
       top: 0,
     });
 
-    it('extends the top and left', () => {
+    it("extends the top and left", () => {
       const merged = mergeClientRects([rect1, rect2]);
 
       expect(merged.top).toBe(0);
@@ -56,7 +56,7 @@ describe('mergeClientRects', () => {
     });
   });
 
-  describe('when the second rect is below and to the right of the first', () => {
+  describe("when the second rect is below and to the right of the first", () => {
     const rect2 = makeClientRect({
       bottom: 105,
       left: 100,
@@ -64,7 +64,7 @@ describe('mergeClientRects', () => {
       top: 100,
     });
 
-    it('extends the bottom and right', () => {
+    it("extends the bottom and right", () => {
       const merged = mergeClientRects([rect1, rect2]);
 
       expect(merged.top).toBe(10);
@@ -74,7 +74,7 @@ describe('mergeClientRects', () => {
     });
   });
 
-  describe('when the second rect overlaps the bottom-right corner of the first', () => {
+  describe("when the second rect overlaps the bottom-right corner of the first", () => {
     const rect2 = makeClientRect({
       bottom: 100,
       left: 80,
@@ -82,7 +82,7 @@ describe('mergeClientRects', () => {
       top: 80,
     });
 
-    it('extends the bottom and right', () => {
+    it("extends the bottom and right", () => {
       const merged = mergeClientRects([rect1, rect2]);
 
       expect(merged.top).toBe(10);
@@ -92,7 +92,7 @@ describe('mergeClientRects', () => {
     });
   });
 
-  describe('when the second rect is contained within the first', () => {
+  describe("when the second rect is contained within the first", () => {
     const rect2 = makeClientRect({
       bottom: 80,
       left: 20,
@@ -100,7 +100,7 @@ describe('mergeClientRects', () => {
       top: 20,
     });
 
-    it('returns the first rect', () => {
+    it("returns the first rect", () => {
       const merged = mergeClientRects([rect1, rect2]);
 
       expect(merged.top).toBe(10);
@@ -110,7 +110,7 @@ describe('mergeClientRects', () => {
     });
   });
 
-  describe('when the second rect encloses the first', () => {
+  describe("when the second rect encloses the first", () => {
     const rect2 = makeClientRect({
       bottom: 100,
       left: 0,
@@ -118,7 +118,7 @@ describe('mergeClientRects', () => {
       top: 0,
     });
 
-    it('returns the second rect', () => {
+    it("returns the second rect", () => {
       const merged = mergeClientRects([rect1, rect2]);
 
       expect(merged.top).toBe(0);
