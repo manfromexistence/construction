@@ -1,11 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { PluginKey } from "@tiptap/pm/state";
 import { ReactRenderer } from "@tiptap/react";
 import tippy from "tippy.js";
 import { MentionList } from "@/components/editor/mention-list"; // We'll create this component next
 import { useThemePresetStore } from "@/store/theme-preset-store"; // Import the theme store
 
+export const mentionPluginKey = new PluginKey("mention");
+
 export const suggestion = {
+  pluginKey: mentionPluginKey,
   items: ({ query }: { query: string }) => {
     // Get all presets from the store
     const allPresets = useThemePresetStore.getState().getAllPresets();

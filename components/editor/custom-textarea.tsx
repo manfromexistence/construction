@@ -6,7 +6,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useEffect } from "react";
-import { suggestion } from "@/components/editor/mention-suggestion";
+import { mentionPluginKey, suggestion } from "@/components/editor/mention-suggestion";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 
@@ -71,13 +71,6 @@ export default function CustomTextarea({
         }
 
         if (event.key === "Enter" && !event.shiftKey && !disabled && canSubmit) {
-          const mentionPluginKey = Mention.options.suggestion.pluginKey;
-
-          if (!mentionPluginKey) {
-            console.error("Mention plugin key not found.");
-            return false;
-          }
-
           const { state } = view;
           const mentionState = mentionPluginKey.getState(state);
 
