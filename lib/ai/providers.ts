@@ -1,25 +1,16 @@
 import "server-only";
 
-import { createGoogleGenerativeAI, GoogleGenerativeAIProviderOptions } from "@ai-sdk/google";
+import { createGroq } from "@ai-sdk/groq";
 import { customProvider } from "ai";
 
-const google = createGoogleGenerativeAI({
-  apiKey: process.env.GOOGLE_API_KEY,
+const groq = createGroq({
+  apiKey: process.env.GROQ_API_KEY,
 });
-
-export const baseProviderOptions = {
-  google: {
-    thinkingConfig: {
-      includeThoughts: false,
-      thinkingBudget: 128,
-    },
-  } satisfies GoogleGenerativeAIProviderOptions,
-};
 
 export const myProvider = customProvider({
   languageModels: {
-    base: google("gemini-2.5-flash"),
-    "theme-generation": google("gemini-3-flash-preview"),
-    "prompt-enhancement": google("gemini-2.5-flash"),
+    base: groq("llama-3.3-70b-versatile"),
+    "theme-generation": groq("llama-3.3-70b-versatile"),
+    "prompt-enhancement": groq("llama-3.3-70b-versatile"),
   },
 });
