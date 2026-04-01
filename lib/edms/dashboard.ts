@@ -74,6 +74,7 @@ export interface DashboardNotification {
   type: string;
   projectName: string | null;
   isRead: boolean;
+  actionUrl: string | null;
   createdLabel: string;
 }
 
@@ -214,6 +215,7 @@ export async function getEdmsDashboardData(
           type: notifications.type,
           projectName: projects.name,
           isRead: notifications.isRead,
+          actionUrl: notifications.actionUrl,
           createdAt: notifications.createdAt,
         })
         .from(notifications)
@@ -335,6 +337,7 @@ export async function getEdmsDashboardData(
         type: notification.type,
         projectName: notification.projectName,
         isRead: notification.isRead,
+        actionUrl: notification.actionUrl,
         createdLabel: formatDateLabel(notification.createdAt, "Created"),
       })),
       activity: activityRows.map((entry) => ({
@@ -521,6 +524,7 @@ function createFallbackDashboardData(
         type: "review_request",
         projectName: "Al Noor Logistics Hub",
         isRead: false,
+        actionUrl: "/dashboard/workflows",
         createdLabel: "Created 01 Apr 2026",
       },
       {
@@ -530,6 +534,7 @@ function createFallbackDashboardData(
         type: "transmittal_received",
         projectName: "Structura Tower Podium",
         isRead: true,
+        actionUrl: "/dashboard/transmittals",
         createdLabel: "Created 31 Mar 2026",
       },
     ],

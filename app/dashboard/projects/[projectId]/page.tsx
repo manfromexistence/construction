@@ -6,10 +6,12 @@ import {
 } from "@/components/edms/dashboard-sections";
 import { EdmsDataState } from "@/components/edms/data-state";
 import { EdmsPageHeader } from "@/components/edms/page-header";
+import { ProjectMemberSheet } from "@/components/edms/project-member-sheet";
 import { formatEdmsLabel } from "@/components/edms/status-badge";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getProjectDetailData } from "@/lib/edms/projects";
+import { normalizeEdmsRole } from "@/lib/edms/rbac";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
 
 export default async function ProjectDetailPage({
@@ -20,6 +22,7 @@ export default async function ProjectDetailPage({
   const { projectId } = await params;
   const sessionUser = await getRequiredDashboardSessionUser();
   const data = await getProjectDetailData(projectId, sessionUser);
+  const canManageMembers = ["admin", "client", "pmc"].includes(normalizeEdmsRole(sessionUser.role));
 
   if (!data) {
     notFound();
@@ -40,6 +43,9 @@ export default async function ProjectDetailPage({
         }
         actions={
           <>
+            {canManageMembers ? (
+              <ProjectMemberSheet projectId={data.project.id} users={data.assignableUsers} />
+            ) : null}
             <Badge variant="secondary" className="rounded-full px-3 py-1">
               {formatEdmsLabel(data.project.status)}
             </Badge>

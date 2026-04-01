@@ -36,6 +36,13 @@
       "when": 1772635867749,
       "tag": "0004_red_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1775040486541,
+      "tag": "0005_great_roughhouse",
+      "breakpoints": true
     }
   ]
 }

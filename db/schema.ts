@@ -25,6 +25,7 @@ export const user = pgTable("user", {
   jobTitle: text("job_title"),
   phone: text("phone"),
   department: text("department"),
+  notificationPreferences: text("notification_preferences"),
   isActive: boolean("is_active").default(true),
 });
 

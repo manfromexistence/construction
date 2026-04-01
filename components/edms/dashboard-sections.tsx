@@ -112,10 +112,18 @@ export function EdmsDocumentTable({ documents }: { documents: DashboardDocument[
                 <TableRow key={document.id}>
                   <TableCell className="px-6">
                     <div className="space-y-1">
-                      <p className="font-medium">{document.title}</p>
-                      <p className="font-mono text-xs text-muted-foreground">
+                      <Link
+                        href={`/dashboard/documents/${document.id}`}
+                        className="font-medium hover:underline"
+                      >
+                        {document.title}
+                      </Link>
+                      <Link
+                        href={`/dashboard/documents/${document.id}`}
+                        className="font-mono text-xs text-muted-foreground hover:underline"
+                      >
                         {document.documentNumber}
-                      </p>
+                      </Link>
                     </div>
                   </TableCell>
                   <TableCell>{document.projectName}</TableCell>
@@ -283,6 +291,16 @@ export function EdmsNotificationList({ items }: { items: DashboardNotification[]
                 </div>
                 {item.isRead ? <EdmsStatusBadge status="completed" /> : null}
               </div>
+              {item.actionUrl ? (
+                <div className="mt-3 flex justify-end">
+                  <Button size="sm" variant="outline" asChild>
+                    <Link href={item.actionUrl}>
+                      Open alert
+                      <ArrowRight className="size-4" />
+                    </Link>
+                  </Button>
+                </div>
+              ) : null}
               <p className="mt-3 text-sm text-muted-foreground">{item.createdLabel}</p>
             </div>
           ))

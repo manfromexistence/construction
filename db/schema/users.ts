@@ -1,4 +1,4 @@
-import { pgTable, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, pgTable, text, timestamp } from "drizzle-orm/pg-core";
 
 /**
  * Extended user table for EDMS
@@ -8,19 +8,20 @@ export const users = pgTable("user", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
-  emailVerified: text("email_verified").notNull(),
+  emailVerified: boolean("email_verified").notNull(),
   image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
 
   // EDMS-specific fields
-  role: varchar("role", { length: 50 }).default("user"),
+  role: text("role").default("user"),
   // admin, client, pmc, vendor, subcontractor, user
-  organization: varchar("organization", { length: 255 }),
-  jobTitle: varchar("job_title", { length: 255 }),
-  phone: varchar("phone", { length: 50 }),
-  department: varchar("department", { length: 255 }),
-  isActive: text("is_active").default("true"), // true, false
+  organization: text("organization"),
+  jobTitle: text("job_title"),
+  phone: text("phone"),
+  department: text("department"),
+  notificationPreferences: text("notification_preferences"),
+  isActive: boolean("is_active").default(true),
 });
 
 // Export the user table as 'users' for consistency with new schema files

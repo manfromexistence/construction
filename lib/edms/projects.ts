@@ -17,11 +17,20 @@ import type { DashboardSessionUser } from "./session";
 
 export interface ProjectMemberSummary {
   id: string;
+  userId: string;
   name: string;
   email: string;
   role: string;
   organization: string | null;
   assignedLabel: string;
+}
+
+export interface ProjectAssignableUser {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  organization: string | null;
 }
 
 export interface ProjectDetailData {
@@ -42,6 +51,7 @@ export interface ProjectDetailData {
     }[];
   };
   members: ProjectMemberSummary[];
+  assignableUsers: ProjectAssignableUser[];
   documents: DashboardDocument[];
   workflows: DashboardWorkflowItem[];
   activity: DashboardActivityItem[];
@@ -60,6 +70,7 @@ export async function getProjectDetailData(
       documentCountRows,
       workflowCountRows,
       memberRows,
+      userRows,
       documentRows,
       workflowRows,
       activityRows,
@@ -93,6 +104,7 @@ export async function getProjectDetailData(
       db
         .select({
           id: projectMembers.id,
+          userId: userTable.id,
           name: userTable.name,
           email: userTable.email,
           role: projectMembers.role,
@@ -103,6 +115,16 @@ export async function getProjectDetailData(
         .innerJoin(userTable, eq(projectMembers.userId, userTable.id))
         .where(eq(projectMembers.projectId, projectId))
         .orderBy(asc(projectMembers.assignedAt)),
+      db
+        .select({
+          id: userTable.id,
+          name: userTable.name,
+          email: userTable.email,
+          role: userTable.role,
+          organization: userTable.organization,
+        })
+        .from(userTable)
+        .orderBy(asc(userTable.name)),
       db
         .select({
           id: documents.id,
@@ -197,6 +219,7 @@ export async function getProjectDetailData(
       },
       members: memberRows.map((member) => ({
         id: String(member.id),
+        userId: member.userId,
         name: member.name,
         email: member.email,
         role: member.role,
@@ -205,6 +228,15 @@ export async function getProjectDetailData(
           ? `Assigned ${formatAbsoluteDate(member.assignedAt)}`
           : "Assignment date pending",
       })),
+      assignableUsers: userRows
+        .filter((user) => !memberRows.some((member) => member.userId === user.id))
+        .map((user) => ({
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          role: user.role ?? "user",
+          organization: user.organization,
+        })),
       documents: documentRows.map((document) => ({
         id: String(document.id),
         documentNumber: document.documentNumber,
@@ -288,6 +320,7 @@ async function createFallbackProjectDetail(
     members: [
       {
         id: "fallback-member-1",
+        userId: sessionUser.id,
         name: sessionUser.name,
         email: sessionUser.email,
         role: "admin",
@@ -296,11 +329,28 @@ async function createFallbackProjectDetail(
       },
       {
         id: "fallback-member-2",
+        userId: "fallback-user-2",
         name: "Ayesha Karim",
         email: "ayesha.karim@example.com",
         role: "pmc",
         organization: "PMC Core",
         assignedLabel: "Assigned 31 Mar 2026",
+      },
+    ],
+    assignableUsers: [
+      {
+        id: "fallback-user-3",
+        name: "Sabbir Rahman",
+        email: "sabbir.rahman@example.com",
+        role: "vendor",
+        organization: "Metro Fabrication",
+      },
+      {
+        id: "fallback-user-4",
+        name: "Nadia Islam",
+        email: "nadia.islam@example.com",
+        role: "client",
+        organization: "Structura Developments",
       },
     ],
     documents: fallbackDashboard.documents.filter(

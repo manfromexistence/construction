@@ -3,7 +3,7 @@
   "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
   "files": {
     "ignoreUnknown": false,
-    "includes": ["**", "!integrations/**"]
+    "includes": ["**", "!integrations/**", "!public/**"]
   },
   "formatter": {
     "enabled": true,
@@ -87,7 +87,7 @@
         "useNamespaceKeyword": "error"
       }
     },
-    "includes": ["**", "!.next/**", "!node_modules/**", "!integrations/**"]
+    "includes": ["**", "!.next/**", "!node_modules/**", "!integrations/**", "!public/**"]
   },
   "javascript": {
     "formatter": {

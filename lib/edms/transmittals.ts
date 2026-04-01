@@ -1,0 +1,360 @@
+import "server-only";
+
+import { asc, count, desc, eq } from "drizzle-orm";
+import { db } from "@/db";
+import { user as userTable } from "@/db/schema";
+import { documents } from "@/db/schema/documents";
+import { notifications } from "@/db/schema/notifications";
+import { projectMembers, projects } from "@/db/schema/projects";
+import { transmittalDocuments, transmittals } from "@/db/schema/transmittals";
+import { type DashboardMetric, getEdmsDashboardData } from "./dashboard";
+import type { DashboardSessionUser } from "./session";
+
+export interface TransmittalProjectOption {
+  id: string;
+  name: string;
+  projectNumber: string | null;
+}
+
+export interface TransmittalMemberOption {
+  id: string;
+  projectId: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
+export interface TransmittalDocumentOption {
+  id: string;
+  projectId: string;
+  documentNumber: string;
+  title: string;
+}
+
+export interface TransmittalSummary {
+  id: string;
+  transmittalNumber: string;
+  subject: string;
+  projectName: string;
+  status: string;
+  sentLabel: string;
+  recipientName: string;
+  documentCount: string;
+  isActionable: boolean;
+}
+
+export interface TransmittalManagementData {
+  metrics: DashboardMetric[];
+  projects: TransmittalProjectOption[];
+  members: TransmittalMemberOption[];
+  documents: TransmittalDocumentOption[];
+  transmittals: TransmittalSummary[];
+  isUsingFallbackData: boolean;
+  statusMessage: string | null;
+}
+
+export async function getTransmittalManagementData(
+  sessionUser: DashboardSessionUser
+): Promise<TransmittalManagementData> {
+  try {
+    const [
+      transmittalCountRows,
+      acknowledgedRows,
+      sentRows,
+      notificationRows,
+      projectRows,
+      memberRows,
+      documentRows,
+      transmittalRows,
+    ] = await Promise.all([
+      db.select({ value: count() }).from(transmittals),
+      db
+        .select({ value: count() })
+        .from(transmittals)
+        .where(eq(transmittals.status, "acknowledged")),
+      db.select({ value: count() }).from(transmittals).where(eq(transmittals.status, "sent")),
+      db
+        .select({ value: count() })
+        .from(notifications)
+        .where(eq(notifications.userId, sessionUser.id)),
+      db
+        .select({
+          id: projects.id,
+          name: projects.name,
+          projectNumber: projects.projectNumber,
+        })
+        .from(projects)
+        .orderBy(asc(projects.name)),
+      db
+        .select({
+          id: userTable.id,
+          projectId: projectMembers.projectId,
+          name: userTable.name,
+          email: userTable.email,
+          role: projectMembers.role,
+        })
+        .from(projectMembers)
+        .innerJoin(userTable, eq(projectMembers.userId, userTable.id))
+        .orderBy(asc(userTable.name)),
+      db
+        .select({
+          id: documents.id,
+          projectId: documents.projectId,
+          documentNumber: documents.documentNumber,
+          title: documents.title,
+        })
+        .from(documents)
+        .orderBy(desc(documents.uploadedAt)),
+      db
+        .select({
+          id: transmittals.id,
+          transmittalNumber: transmittals.transmittalNumber,
+          subject: transmittals.subject,
+          projectName: projects.name,
+          status: transmittals.status,
+          sentAt: transmittals.sentAt,
+          createdAt: transmittals.createdAt,
+          sentTo: transmittals.sentTo,
+          recipientName: userTable.name,
+          documentCount: count(transmittalDocuments.id),
+        })
+        .from(transmittals)
+        .innerJoin(projects, eq(transmittals.projectId, projects.id))
+        .leftJoin(userTable, eq(transmittals.acknowledgedBy, userTable.id))
+        .leftJoin(transmittalDocuments, eq(transmittalDocuments.transmittalId, transmittals.id))
+        .groupBy(
+          transmittals.id,
+          transmittals.transmittalNumber,
+          transmittals.subject,
+          projects.name,
+          transmittals.status,
+          transmittals.sentAt,
+          transmittals.createdAt,
+          transmittals.sentTo,
+          userTable.name
+        )
+        .orderBy(desc(transmittals.createdAt))
+        .limit(24),
+    ]);
+
+    const [transmittalCount] = transmittalCountRows;
+    const [acknowledgedCount] = acknowledgedRows;
+    const [sentCount] = sentRows;
+    const [notificationCount] = notificationRows;
+
+    return {
+      metrics: [
+        {
+          label: "Issued packages",
+          value: formatCount(transmittalCount?.value),
+          description: "Formal document issues currently tracked in the EDMS.",
+          tone: "rose",
+          icon: "transmittals",
+        },
+        {
+          label: "Awaiting acknowledgement",
+          value: formatCount(sentCount?.value),
+          description: "Packages that have been sent but not yet acknowledged by recipients.",
+          tone: "amber",
+          icon: "transmittals",
+        },
+        {
+          label: "Acknowledged",
+          value: formatCount(acknowledgedCount?.value),
+          description: "Packages confirmed by the recipient team.",
+          tone: "emerald",
+          icon: "notifications",
+        },
+        {
+          label: "Linked alerts",
+          value: formatCount(notificationCount?.value),
+          description: "Notifications tied to delivery and acknowledgement activity.",
+          tone: "slate",
+          icon: "notifications",
+        },
+      ],
+      projects: projectRows.map((project) => ({
+        id: String(project.id),
+        name: project.name,
+        projectNumber: project.projectNumber,
+      })),
+      members: memberRows.map((member) => ({
+        id: member.id,
+        projectId: String(member.projectId),
+        name: member.name,
+        email: member.email,
+        role: member.role,
+      })),
+      documents: documentRows.map((document) => ({
+        id: String(document.id),
+        projectId: String(document.projectId),
+        documentNumber: document.documentNumber,
+        title: document.title,
+      })),
+      transmittals: transmittalRows.map((transmittal) => ({
+        id: String(transmittal.id),
+        transmittalNumber: transmittal.transmittalNumber,
+        subject: transmittal.subject,
+        projectName: transmittal.projectName,
+        status: transmittal.status,
+        sentLabel: formatDateLabel(transmittal.sentAt ?? transmittal.createdAt),
+        recipientName: parseRecipientLabel(transmittal.sentTo, memberRows),
+        documentCount: formatCount(transmittal.documentCount),
+        isActionable:
+          transmittal.status === "sent" &&
+          parseRecipients(transmittal.sentTo).includes(sessionUser.id),
+      })),
+      isUsingFallbackData: false,
+      statusMessage: null,
+    };
+  } catch (error) {
+    return createFallbackTransmittalData(sessionUser, error);
+  }
+}
+
+async function createFallbackTransmittalData(
+  sessionUser: DashboardSessionUser,
+  error: unknown
+): Promise<TransmittalManagementData> {
+  const dashboard = await getEdmsDashboardData(sessionUser);
+
+  return {
+    metrics: [
+      {
+        label: "Issued packages",
+        value: String(dashboard.transmittals.length),
+        description: "Sample transmittals while the database is still being prepared.",
+        tone: "rose",
+        icon: "transmittals",
+      },
+      {
+        label: "Awaiting acknowledgement",
+        value: String(dashboard.transmittals.filter((item) => item.status === "sent").length),
+        description: "Sample packages still awaiting recipient confirmation.",
+        tone: "amber",
+        icon: "transmittals",
+      },
+      {
+        label: "Acknowledged",
+        value: "1",
+        description: "Sample acknowledged package count in fallback mode.",
+        tone: "emerald",
+        icon: "notifications",
+      },
+      {
+        label: "Linked alerts",
+        value: String(dashboard.notifications.length),
+        description: "Sample notification volume tied to transmittal activity.",
+        tone: "slate",
+        icon: "notifications",
+      },
+    ],
+    projects: dashboard.projects.map((project) => ({
+      id: project.id,
+      name: project.name,
+      projectNumber: project.projectNumber,
+    })),
+    members: [
+      {
+        id: sessionUser.id,
+        projectId: "fallback-project-1",
+        name: sessionUser.name,
+        email: sessionUser.email,
+        role: sessionUser.role,
+      },
+      {
+        id: "fallback-member-2",
+        projectId: "fallback-project-1",
+        name: "Ayesha Karim",
+        email: "ayesha.karim@example.com",
+        role: "pmc",
+      },
+      {
+        id: "fallback-member-3",
+        projectId: "fallback-project-1",
+        name: "Nadia Islam",
+        email: "nadia.islam@example.com",
+        role: "client",
+      },
+    ],
+    documents: dashboard.documents.map((document, index) => ({
+      id: document.id,
+      projectId: `fallback-project-${index + 1}`,
+      documentNumber: document.documentNumber,
+      title: document.title,
+    })),
+    transmittals: dashboard.transmittals.map((item, index) => ({
+      id: item.id,
+      transmittalNumber: item.transmittalNumber,
+      subject: item.subject,
+      projectName: item.projectName,
+      status: item.status,
+      sentLabel: item.sentLabel,
+      recipientName: index === 0 ? sessionUser.name : "Ayesha Karim",
+      documentCount: "2",
+      isActionable: index === 0 && item.status === "sent",
+    })),
+    isUsingFallbackData: true,
+    statusMessage: getFallbackMessage(error),
+  };
+}
+
+function parseRecipients(value: string) {
+  try {
+    const parsed = JSON.parse(value) as unknown;
+    return Array.isArray(parsed)
+      ? parsed.filter((entry): entry is string => typeof entry === "string")
+      : [];
+  } catch {
+    return [];
+  }
+}
+
+function parseRecipientLabel(
+  value: string,
+  members: { id: string; name: string; email: string; role: string; projectId: string }[]
+) {
+  const [firstRecipient] = parseRecipients(value);
+
+  if (!firstRecipient) {
+    return "Recipient pending";
+  }
+
+  return members.find((member) => member.id === firstRecipient)?.name ?? "Recipient pending";
+}
+
+function formatCount(value: number | string | null | undefined) {
+  return new Intl.NumberFormat("en-US").format(Number(value ?? 0));
+}
+
+function formatDateLabel(date: Date | null) {
+  if (!date) {
+    return "Updated date pending";
+  }
+
+  return `Updated ${new Intl.DateTimeFormat("en-US", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  }).format(date)}`;
+}
+
+function getFallbackMessage(error: unknown) {
+  if (!(error instanceof Error)) {
+    return "Showing sample transmittal data while the live EDMS workspace is still being connected.";
+  }
+
+  if (error.message.includes("DATABASE_URL")) {
+    return "Showing sample transmittal data because DATABASE_URL is not configured in this environment.";
+  }
+
+  if (
+    error.message.includes("does not exist") ||
+    error.message.includes("relation") ||
+    error.message.includes("column")
+  ) {
+    return "Showing sample transmittal data until the EDMS database migrations are applied.";
+  }
+
+  return "Showing sample transmittal data while the live EDMS workspace is still being connected.";
+}

@@ -9,14 +9,15 @@
 - [x] Update README.md with Construction EDMS information (completed: 2026-04-01)
 - [x] Create CHANGELOG.md for tracking changes (completed: 2026-04-01)
 - [ ] Update environment variables and configuration
+  Direct upload still needs `BLOB_READ_WRITE_TOKEN`, and production email should set `RESEND_FROM_EMAIL`.
 
 ## Phase 2: Database Schema Design [done]
 
 - [x] Design database schema for EDMS (completed: 2026-04-01)
 - [x] Update existing user table with role fields (completed: 2026-04-01)
 - [x] Create main schema index file (completed: 2026-04-01)
-- [ ] Generate Drizzle migrations
-- [ ] Run migrations
+- [x] Generate Drizzle migrations (completed: 2026-04-01)
+- [x] Run migrations (completed: 2026-04-01)
 
 ## Phase 3: UI Components and Dashboard [done]
 
@@ -30,49 +31,49 @@
 ## Phase 4: Core Modules Development [in progress]
 
 ### User Management (Existing - Enhance)
-- [ ] Add role selection during registration
-- [ ] Add organization/company field
-- [ ] Update user profile with construction-specific fields
+- [x] Add role selection during registration/profile management (completed: 2026-04-01)
+- [x] Add organization/company field (completed: 2026-04-01)
+- [x] Update user profile with construction-specific fields (completed: 2026-04-01)
 - [ ] Implement role-based access control middleware
 
 ### Project Management Module
 - [x] Create project creation page (completed: 2026-04-01)
 - [x] Project listing page (completed: 2026-04-01)
 - [x] Project details page (completed: 2026-04-01)
-- [ ] Assign users to projects
-- [ ] Define user roles per project
+- [x] Assign users to projects (completed: 2026-04-01)
+- [x] Define user roles per project (completed: 2026-04-01)
 
 ### Document Control Module
-- [ ] Document upload interface
-- [ ] File storage integration (Vercel Blob/S3)
-- [ ] Document listing with filters
-- [ ] Document preview functionality
-- [ ] Version control system
-- [ ] Document numbering system
-- [ ] Metadata management
+- [x] Document upload interface (completed: 2026-04-01)
+- [x] File storage integration (Vercel Blob upload flow with external URL fallback, completed: 2026-04-01)
+- [x] Document listing with filters (completed: 2026-04-01)
+- [x] Document preview functionality (completed: 2026-04-01)
+- [x] Version control system (completed: 2026-04-01)
+- [x] Document numbering system (completed: 2026-04-01)
+- [x] Metadata management (completed: 2026-04-01)
 
 ### Document Workflow Module
-- [ ] Submit for review functionality
-- [ ] Multi-level review workflow
-- [ ] Approve/Reject/Comment interface
-- [ ] Document status tracking
-- [ ] Comment history view
+- [x] Submit for review functionality (completed: 2026-04-01)
+- [x] Multi-level review workflow (completed: 2026-04-01)
+- [x] Approve/Reject/Comment interface (completed: 2026-04-01)
+- [x] Document status tracking (completed: 2026-04-01)
+- [x] Comment history view (completed: 2026-04-01)
 
 ### Transmittal Module
-- [ ] Create transmittal form
-- [ ] Attach multiple documents
-- [ ] Send to project parties
-- [ ] Track acknowledgement
+- [x] Create transmittal form (completed: 2026-04-01)
+- [x] Attach multiple documents (completed: 2026-04-01)
+- [x] Send to project parties (completed: 2026-04-01)
+- [x] Track acknowledgement (completed: 2026-04-01)
 
 ### Search and Filters
-- [ ] Global search functionality
-- [ ] Advanced filters (discipline, status, revision)
-- [ ] Quick document retrieval
+- [x] Global search functionality (completed: 2026-04-01)
+- [x] Advanced filters (discipline, status, revision) (completed: 2026-04-01)
+- [x] Quick document retrieval (completed: 2026-04-01)
 
 ### Notifications
-- [ ] Email notification system
-- [ ] In-app notifications
-- [ ] Notification preferences
+- [x] Email notification system (completed: 2026-04-01)
+- [x] In-app notifications (completed: 2026-04-01)
+- [x] Notification preferences (completed: 2026-04-01)
 
 ## Phase 5: Testing and Refinement
 
@@ -94,4 +95,5 @@
 ---
 
 ## Current Status: Phase 4 - Core Modules Development
+Active work now covers dashboard operations, route-level onboarding enforcement, role-aware module controls, project creation/detail, project member assignment, document control registration/filtering/detail preview/versioning/numbering, direct Blob-backed upload flow with URL fallback, workflow routing plus review decisions, transmittal issue/acknowledgement handling, account profile management, notification preferences, in-app alerts, global EDMS search, and Resend-backed outbound delivery. The biggest remaining MVP gaps are final deployment environment setup for Blob/email sender identity and optional deeper auth-time onboarding capture.
 **Last Updated:** 2026-04-01

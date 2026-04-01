@@ -8,12 +8,14 @@ import { ProjectCreateSheet } from "@/components/edms/project-create-sheet";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getEdmsDashboardData } from "@/lib/edms/dashboard";
+import { hasEdmsRoleAtLeast } from "@/lib/edms/rbac";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
 
 export default async function ProjectsPage() {
   const sessionUser = await getRequiredDashboardSessionUser();
   const data = await getEdmsDashboardData(sessionUser);
   const [projectMetric, , , , notificationMetric] = data.metrics;
+  const canCreateProject = hasEdmsRoleAtLeast(sessionUser.role, "pmc");
 
   return (
     <div className="flex flex-1 flex-col">
@@ -29,7 +31,7 @@ export default async function ProjectsPage() {
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
-            <ProjectCreateSheet />
+            {canCreateProject ? <ProjectCreateSheet /> : null}
           </>
         }
       />
@@ -70,6 +72,13 @@ export default async function ProjectsPage() {
             </CardContent>
           </Card>
         </section>
+
+        {!canCreateProject ? (
+          <section className="rounded-2xl border border-border/70 bg-muted/20 p-4 text-sm leading-6 text-muted-foreground">
+            Project creation is limited to PMC, client, and admin roles. Your current role can still
+            browse the portfolio and project records.
+          </section>
+        ) : null}
 
         <section>
           <EdmsActivityFeed items={data.activity} />
