@@ -104,12 +104,14 @@ export function ProjectMemberSheet({ projectId, users }: ProjectMemberSheetProps
           Assign member
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full overflow-y-auto sm:max-w-xl">
+      <SheetContent className="w-full overflow-y-auto px-6 sm:max-w-xl">
         <SheetHeader className="space-y-1">
-          <SheetTitle>Assign project member</SheetTitle>
-          <SheetDescription>
-            Add a project participant and define the role they will hold inside this workspace.
-          </SheetDescription>
+          <div className="px-6 pt-6">
+            <SheetTitle>Assign project member</SheetTitle>
+            <SheetDescription>
+              Add a project participant and define the role they will hold inside this workspace.
+            </SheetDescription>
+          </div>
         </SheetHeader>
 
         {users.length === 0 ? (
@@ -120,7 +122,7 @@ export function ProjectMemberSheet({ projectId, users }: ProjectMemberSheetProps
           </div>
         ) : (
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-6">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-6 px-6 pb-6">
               <FormField
                 control={form.control}
                 name="userId"

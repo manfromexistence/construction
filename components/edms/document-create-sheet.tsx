@@ -128,17 +128,19 @@ export function DocumentCreateSheet({
           Upload document
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full overflow-y-auto sm:max-w-3xl">
+      <SheetContent className="w-full overflow-y-auto px-6 sm:max-w-3xl">
         <SheetHeader className="space-y-1">
-          <SheetTitle>Register document</SheetTitle>
-          <SheetDescription>
-            Capture the first controlled revision now with direct upload support and a URL fallback
-            for environments where storage is still being finalized.
-          </SheetDescription>
+          <div className="px-6 pt-6">
+            <SheetTitle>Register document</SheetTitle>
+            <SheetDescription>
+              Capture the first controlled revision now with direct upload support and a URL
+              fallback for environments where storage is still being finalized.
+            </SheetDescription>
+          </div>
         </SheetHeader>
 
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-6 px-6 pb-6">
             <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}

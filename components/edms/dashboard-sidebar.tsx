@@ -45,11 +45,12 @@ const PRIMARY_NAVIGATION = [
 
 const ADMIN_NAVIGATION = [
   { title: "Admin Dashboard", href: "/dashboard/admin", icon: Settings },
+  { title: "Users", href: "/dashboard/admin/users", icon: Building2 },
 ] as const;
 
 const SECONDARY_NAVIGATION = [
   { title: "Settings", href: "/settings", icon: Settings },
-  { title: "Theme Editor", href: "/editor/theme", icon: Sparkles },
+  { title: "Theme Studio", href: "/editor/theme", icon: Sparkles },
 ] as const;
 
 export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {

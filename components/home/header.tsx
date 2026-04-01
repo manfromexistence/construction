@@ -125,7 +125,7 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, delay: 0.5 }}
             >
-              <Link href="/auth" prefetch>
+              <Link href="/auth?mode=signup" prefetch>
                 <Button className="cursor-pointer rounded-full font-medium transition-transform hover:scale-105">
                   Get Started
                   <ChevronRight className="ml-1 size-4" />
@@ -181,7 +181,7 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
                   </Button>
                 </Link>
               ) : (
-                <Link href="/auth" onClick={() => setMobileMenuOpen(false)}>
+                <Link href="/auth?mode=signup" onClick={() => setMobileMenuOpen(false)}>
                   <Button className="w-full rounded-full">
                     Get Started
                     <ChevronRight className="ml-2 size-4" />

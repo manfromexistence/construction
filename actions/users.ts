@@ -1,6 +1,7 @@
 "use server";
 
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import { z } from "zod";
 import { db } from "@/db";
@@ -71,6 +72,10 @@ export async function updateUserProfile(input: UpdateProfileInput): Promise<Acti
       });
     }
 
+    revalidatePath("/dashboard");
+    revalidatePath("/settings");
+    revalidatePath("/settings/account");
+
     return actionSuccess(true);
   } catch (error) {
     logError(error as Error, { action: "updateUserProfile", input });
@@ -98,6 +103,9 @@ export async function updateNotificationPreferences(
         updatedAt: new Date(),
       })
       .where(eq(userTable.id, userId));
+
+    revalidatePath("/dashboard/notifications");
+    revalidatePath("/settings/account");
 
     return actionSuccess(true);
   } catch (error) {

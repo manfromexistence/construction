@@ -1,5 +1,4 @@
 import { count } from "drizzle-orm";
-import { BellRing, FileStack, FolderKanban, Users2 } from "lucide-react";
 import Link from "next/link";
 import { EdmsMetricCard } from "@/components/edms/metric-card";
 import { EdmsPageHeader } from "@/components/edms/page-header";
@@ -9,6 +8,7 @@ import { user as userTable } from "@/db/schema";
 import { documents } from "@/db/schema/documents";
 import { notifications } from "@/db/schema/notifications";
 import { projects } from "@/db/schema/projects";
+import type { DashboardMetric } from "@/lib/edms/dashboard";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
 
 export default async function AdminDashboardPage() {
@@ -38,30 +38,34 @@ export default async function AdminDashboardPage() {
     db.select({ value: count() }).from(notifications),
   ]);
 
-  const metrics = [
+  const metrics: DashboardMetric[] = [
     {
       label: "Projects",
       value: String(projectCount[0]?.value ?? 0),
       description: "Registered construction workspaces",
-      icon: FolderKanban,
+      tone: "slate",
+      icon: "projects",
     },
     {
       label: "Documents",
       value: String(documentCount[0]?.value ?? 0),
       description: "Controlled document records",
-      icon: FileStack,
+      tone: "blue",
+      icon: "documents",
     },
     {
       label: "Users",
       value: String(userCount[0]?.value ?? 0),
       description: "Workspace users in the system",
-      icon: Users2,
+      tone: "amber",
+      icon: "reviews",
     },
     {
       label: "Notifications",
       value: String(notificationCount[0]?.value ?? 0),
       description: "Generated in-app notifications",
-      icon: BellRing,
+      tone: "rose",
+      icon: "notifications",
     },
   ];
 
@@ -82,18 +86,21 @@ export default async function AdminDashboardPage() {
 
         <section className="grid gap-4 lg:grid-cols-2">
           <div className="rounded-3xl border bg-card p-6">
-            <h2 className="text-lg font-semibold">Why this page exists</h2>
+            <h2 className="text-lg font-semibold">User management</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              The dashboard sidebar already exposed an admin route, but the route itself was
-              missing. This page provides a real landing screen so navigation no longer fails with
-              404 responses.
+              Review every user in the workspace, confirm role assignments, and validate the EDMS
+              onboarding data that controls dashboard access.
             </p>
+            <Button asChild className="mt-4" variant="outline">
+              <Link href="/dashboard/admin/users">Open user directory</Link>
+            </Button>
           </div>
           <div className="rounded-3xl border bg-card p-6">
-            <h2 className="text-lg font-semibold">Next admin slice</h2>
+            <h2 className="text-lg font-semibold">Current admin scope</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              The next step after stabilizing the current client handoff is a fuller user and role
-              management surface under the admin area.
+              This admin area now covers system metrics and workspace users. It is intentionally
+              aligned with the active Construction EDMS features instead of exposing dead or
+              placeholder links.
             </p>
           </div>
         </section>

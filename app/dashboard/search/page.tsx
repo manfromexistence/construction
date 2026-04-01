@@ -83,9 +83,9 @@ export default async function SearchPage({
                       <p className="font-mono text-xs text-muted-foreground">{result.subtitle}</p>
                       <p className="text-sm leading-6 text-muted-foreground">{result.meta}</p>
                     </div>
-                    <Button variant="ghost" size="sm">
+                    <span className="inline-flex h-9 items-center rounded-md px-3 text-sm font-medium text-foreground">
                       Open
-                    </Button>
+                    </span>
                   </div>
                 </Link>
               ))

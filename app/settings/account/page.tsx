@@ -18,7 +18,7 @@ export default async function AccountPage({
     headers: await headers(),
   });
 
-  if (!session) redirect("/");
+  if (!session) redirect("/auth");
 
   const userRows = await db
     .select({
@@ -46,7 +46,7 @@ export default async function AccountPage({
         description="Manage your EDMS profile, organizational role, and account settings."
       />
       {onboarding ? (
-        <div className="rounded-2xl border border-amber-300/60 bg-amber-50 p-4 text-sm text-amber-900 dark:border-amber-700/60 dark:bg-amber-950/40 dark:text-amber-100">
+        <div className="rounded-2xl border bg-card p-4 text-sm text-foreground">
           Complete your EDMS profile before accessing project, document, workflow, and transmittal
           modules.
         </div>

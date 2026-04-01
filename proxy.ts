@@ -24,7 +24,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (pathname === "/settings") {
-    return NextResponse.redirect(new URL("/settings/themes", request.url));
+    return NextResponse.redirect(new URL("/settings/account", request.url));
   }
 
   const profile = await getEdmsProfile(String(session.user.id));

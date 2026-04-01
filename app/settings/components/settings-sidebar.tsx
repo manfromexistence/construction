@@ -6,6 +6,7 @@ import {
   ExternalLink,
   LucideIcon,
   Palette,
+  Sparkles,
   UserCog,
 } from "lucide-react";
 import Link from "next/link";
@@ -29,10 +30,11 @@ type NavItem =
     };
 
 const BASE_NAV_ITEMS: NavItem[] = [
-  { type: "link", href: "/settings/themes", label: "Themes", icon: Palette },
-  { type: "link", href: "/settings/usage", label: "AI Usage", icon: ChartNoAxesCombined },
-  { type: "separator", id: "account-separator" },
   { type: "link", href: "/settings/account", label: "Account", icon: UserCog },
+  { type: "separator", id: "account-separator" },
+  { type: "link", href: "/editor/theme", label: "Theme Studio", icon: Sparkles },
+  { type: "link", href: "/settings/themes", label: "Theme Library", icon: Palette },
+  { type: "link", href: "/settings/usage", label: "AI Usage", icon: ChartNoAxesCombined },
 ];
 
 const getSubscriptionNavItems = (): NavItem[] => [

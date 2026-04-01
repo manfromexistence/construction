@@ -12,13 +12,13 @@ export function EdmsDataState({
   }
 
   return (
-    <div className="flex items-start gap-3 rounded-2xl border border-amber-500/20 bg-amber-500/10 px-4 py-3 text-sm text-amber-900 dark:text-amber-100">
-      <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full bg-amber-500/15">
+    <div className="flex items-start gap-3 rounded-2xl border bg-card px-4 py-3 text-sm">
+      <div className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-full border bg-muted text-foreground">
         <DatabaseZap className="size-4" />
       </div>
       <div className="space-y-1">
         <p className="font-medium">Live EDMS data is not ready yet</p>
-        <p className="leading-6 text-amber-900/80 dark:text-amber-100/80">{message}</p>
+        <p className="leading-6 text-muted-foreground">{message}</p>
       </div>
     </div>
   );

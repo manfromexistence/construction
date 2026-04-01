@@ -99,7 +99,8 @@ export function CommunityThemePreviewDialog({
   };
 
   const handleShare = () => {
-    const url = `https://tweakcn.com/themes/${theme.themeId}`;
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${origin}/themes/${theme.themeId}`;
     navigator.clipboard.writeText(url);
     toast({
       title: "Theme URL copied to clipboard!",

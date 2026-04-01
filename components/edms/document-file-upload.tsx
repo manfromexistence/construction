@@ -84,9 +84,7 @@ export function DocumentFileUpload({
           <p className="text-sm font-medium">Direct file upload</p>
           <p className="text-sm leading-6 text-muted-foreground">{helperText}</p>
           {uploadedFileName ? (
-            <p className="text-xs text-emerald-700 dark:text-emerald-300">
-              Uploaded file: {uploadedFileName}
-            </p>
+            <p className="text-xs text-foreground">Uploaded file: {uploadedFileName}</p>
           ) : null}
         </div>
         <div>

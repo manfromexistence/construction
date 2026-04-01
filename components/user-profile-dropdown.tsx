@@ -20,11 +20,9 @@ import {
 import { useSubscription } from "@/hooks/use-subscription";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
-import { useAuthStore } from "@/store/auth-store";
 
 export function UserProfileDropdown() {
   const { data: session, isPending } = authClient.useSession();
-  const { openAuthDialog } = useAuthStore();
   const { theme, toggleTheme } = useTheme();
   const posthog = usePostHog();
   const router = useRouter();
@@ -62,13 +60,13 @@ export function UserProfileDropdown() {
         >
           <Button
             variant="link"
-            onClick={() => openAuthDialog("signin")}
+            asChild
             className="text-foreground hover:text-primary hidden h-8 px-0 hover:no-underline md:inline-flex"
           >
-            Sign In
+            <Link href="/auth?mode=signin">Sign In</Link>
           </Button>
-          <Button onClick={() => openAuthDialog("signup")} className="h-8">
-            Sign Up
+          <Button asChild className="h-8">
+            <Link href="/auth?mode=signup">Sign Up</Link>
           </Button>
         </motion.div>
       ) : (

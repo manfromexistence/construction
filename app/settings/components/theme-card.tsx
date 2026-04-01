@@ -93,7 +93,8 @@ export function ThemeCard({ theme, isPublished = false, className }: ThemeCardPr
   };
 
   const handleShare = () => {
-    const url = `https://tweakcn.com/themes/${theme.id}`;
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const url = `${origin}/themes/${theme.id}`;
     navigator.clipboard.writeText(url);
     toast({
       title: "Theme URL copied to clipboard!",
