@@ -1,16 +1,18 @@
 "use client";
 
+// import { ThemePresetSelector } from "@/components/home/theme-preset-selector";
 import { useEffect, useState } from "react";
 import { Footer } from "@/components/footer";
+import { AIGenerationCTA } from "@/components/home/ai-generation-cta";
+import { CTA } from "@/components/home/cta";
+import { FAQ } from "@/components/home/faq";
+import { Features } from "@/components/home/features";
 import { Header } from "@/components/home/header";
-import { EdmsHero } from "@/components/edms-home/hero";
-import { EdmsFeatures } from "@/components/edms-home/features";
-import { EdmsHowItWorks } from "@/components/edms-home/how-it-works";
-import { EdmsTestimonials } from "@/components/edms-home/testimonials";
-import { EdmsFAQ } from "@/components/edms-home/faq";
-import { EdmsCTA } from "@/components/edms-home/cta";
+import { Hero } from "@/components/home/hero";
+import { HowItWorks } from "@/components/home/how-it-works";
+import { Testimonials } from "@/components/home/testimonials";
 
-export default function Home() {
+export default function TweakcnHome() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -35,12 +37,14 @@ export default function Home() {
         setMobileMenuOpen={setMobileMenuOpen}
       />
       <main className="w-full flex-1">
-        <EdmsHero />
-        <EdmsFeatures />
-        <EdmsHowItWorks />
-        <EdmsTestimonials />
-        <EdmsFAQ />
-        <EdmsCTA />
+        <Hero />
+        {/* <ThemePresetSelector /> */}
+        <Testimonials />
+        <Features />
+        <AIGenerationCTA />
+        <HowItWorks />
+        <FAQ />
+        <CTA />
       </main>
       <Footer />
     </div>

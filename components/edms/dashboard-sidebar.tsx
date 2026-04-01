@@ -43,6 +43,10 @@ const PRIMARY_NAVIGATION = [
   { title: "Notifications", href: "/dashboard/notifications", icon: BellRing },
 ] as const;
 
+const ADMIN_NAVIGATION = [
+  { title: "Admin Dashboard", href: "/dashboard/admin", icon: Settings },
+] as const;
+
 const SECONDARY_NAVIGATION = [
   { title: "Settings", href: "/settings", icon: Settings },
   { title: "Theme Tools", href: "/editor/theme", icon: Sparkles },
@@ -102,6 +106,30 @@ export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        {user.role === "admin" && (
+          <SidebarGroup>
+            <SidebarGroupLabel>Administration</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {ADMIN_NAVIGATION.map((item) => (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isNavItemActive(pathname, item.href)}
+                      tooltip={item.title}
+                    >
+                      <Link href={item.href}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        )}
 
         <SidebarGroup>
           <SidebarGroupLabel>Platform</SidebarGroupLabel>
