@@ -1,12 +1,21 @@
-import { Footer } from "@/components/footer";
-import { Header } from "@/components/header";
+import { EdmsDashboardShell } from "@/components/edms/dashboard-shell";
+import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
+  const sessionUser = await getRequiredDashboardSessionUser();
+
   return (
-    <div className="flex flex-col">
-      <Header />
-      <main className="flex min-h-screen flex-1 flex-col">{children}</main>
-      <Footer />
-    </div>
+    <EdmsDashboardShell
+      user={{
+        id: sessionUser.id,
+        name: sessionUser.name,
+        email: sessionUser.email,
+        image: sessionUser.image,
+        role: sessionUser.role,
+        organization: sessionUser.organization,
+      }}
+    >
+      {children}
+    </EdmsDashboardShell>
   );
 }

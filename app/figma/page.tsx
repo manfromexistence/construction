@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Cable, Check, Figma, Paintbrush, X } from "lucide-react";
+import { ArrowUpRight, Cable, Check, Paintbrush, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import FigmaIcon from "@/assets/figma.svg";
@@ -20,7 +20,7 @@ export default function FigmaPage() {
     ...step,
     icon:
       index === 0 ? (
-        <Figma className="h-6 w-6" />
+        <FigmaIcon className="h-6 w-6" />
       ) : index === 1 ? (
         <Cable className="h-6 w-6" />
       ) : (

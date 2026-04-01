@@ -50,7 +50,6 @@ export const projectsRelations = relations(projects, ({ one, many }) => ({
     relationName: "projectCreator",
   }),
   members: many(projectMembers),
-  documents: many("documents"),
 }));
 
 export const projectMembersRelations = relations(projectMembers, ({ one }) => ({

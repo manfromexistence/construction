@@ -120,7 +120,6 @@ export const documentsRelations = relations(documents, ({ one, many }) => ({
   }),
   versions: many(documentVersions),
   comments: many(documentComments),
-  workflows: many("documentWorkflows"),
 }));
 
 export const documentVersionsRelations = relations(documentVersions, ({ one }) => ({
