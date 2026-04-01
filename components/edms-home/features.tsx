@@ -1,4 +1,4 @@
-import { FileStack, Workflow, Send, FolderKanban, Bell, Search, Shield } from "lucide-react";
+import { Bell, FileStack, FolderKanban, Search, Send, Shield, Workflow } from "lucide-react";
 import { motion } from "motion/react";
 
 const features = [
@@ -10,7 +10,8 @@ const features = [
   },
   {
     title: "Workflow Management",
-    description: "Multi-level review and approval processes with automated routing and notifications.",
+    description:
+      "Multi-level review and approval processes with automated routing and notifications.",
     icon: <Workflow className="size-6" />,
   },
   {
@@ -21,7 +22,8 @@ const features = [
   },
   {
     title: "Project Management",
-    description: "Organize documents by project with role-based access control and team collaboration.",
+    description:
+      "Organize documents by project with role-based access control and team collaboration.",
     icon: <FolderKanban className="size-6" />,
   },
   {
@@ -72,7 +74,8 @@ export function Features() {
               <span className="text-muted-foreground">For Document Control</span>
             </h2>
             <p className="text-muted-foreground max-w-[400px] text-lg">
-              Complete EDMS solution for construction projects with powerful workflow and collaboration tools.
+              Complete EDMS solution for construction projects with powerful workflow and
+              collaboration tools.
             </p>
           </motion.div>
 

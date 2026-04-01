@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export function Hero() {
-
   return (
     <section className="relative isolate w-full overflow-hidden bg-background pt-20 pb-32 md:pt-32 md:pb-40">
       {/* Background Effects */}
@@ -39,7 +38,8 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mt-6 max-w-2xl text-lg text-muted-foreground md:text-xl leading-relaxed"
           >
-            Complete document control, workflow management, and transmittal tracking for construction projects. Built for PMCs, clients, vendors, and subcontractors.
+            Complete document control, workflow management, and transmittal tracking for
+            construction projects. Built for PMCs, clients, vendors, and subcontractors.
           </motion.p>
 
           {/* Buttons */}

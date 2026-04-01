@@ -35,7 +35,8 @@ export function HowItWorks() {
               <span className="text-primary">Powerful Results</span>
             </h2>
             <p className="text-muted-foreground text-lg md:text-xl max-w-[600px]">
-              Get started with Construction EDMS in three easy steps and streamline your document management.
+              Get started with Construction EDMS in three easy steps and streamline your document
+              management.
             </p>
           </motion.div>
         </div>

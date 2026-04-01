@@ -1,0 +1,29 @@
+{
+  "name": "@midday/customers",
+  "version": "1.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./enrichment": "./src/enrichment/index.ts"
+  },
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.53",
+    "@exalabs/ai-sdk": "^2.0.1",
+    "@midday/logger": "workspace:*",
+    "ai": "^6.0.138",
+    "exa-js": "^2.10.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@midday/tsconfig": "workspace:*",
+    "@types/node": "^25.5.0",
+    "typescript": "catalog:"
+  }
+}

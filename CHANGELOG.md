@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Created new Construction EDMS landing page as the default homepage
+- Copied and customized all home components for EDMS branding
+- Created components/edms-home/ directory with EDMS-specific landing components:
+  - Hero section highlighting document management for construction
+  - Features showcasing document control, workflows, transmittals, etc.
+  - How It Works section with EDMS workflow steps
+  - Testimonials from construction professionals
+  - FAQ section with EDMS-specific questions
+  - CTA section for getting started
+- Moved original tweakcn landing page to /tweakcn route
+- Preserved original header and footer components
 - Created TODO.md to track development progress
 - Created CHANGELOG.md to track project history
 - Initialized project transformation from theme manager to EDMS

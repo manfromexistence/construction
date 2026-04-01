@@ -29,7 +29,8 @@ const faqs = [
   },
   {
     question: "Can I integrate with existing tools?",
-    answer: "Construction EDMS is designed to work alongside your existing tools with file upload support and flexible workflow configurations.",
+    answer:
+      "Construction EDMS is designed to work alongside your existing tools with file upload support and flexible workflow configurations.",
   },
 ];
 
