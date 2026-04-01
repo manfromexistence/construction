@@ -12,9 +12,9 @@ export const users = pgTable("user", {
   image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
-  
+
   // EDMS-specific fields
-  role: varchar("role", { length: 50 }).default("user"), 
+  role: varchar("role", { length: 50 }).default("user"),
   // admin, client, pmc, vendor, subcontractor, user
   organization: varchar("organization", { length: 255 }),
   jobTitle: varchar("job_title", { length: 255 }),

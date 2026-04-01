@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { integer, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { users } from "./auth";
+import { user as users } from "../schema";
 import { projects } from "./projects";
 
 /**
@@ -11,35 +11,35 @@ export const documents = pgTable("documents", {
   projectId: uuid("project_id")
     .notNull()
     .references(() => projects.id, { onDelete: "cascade" }),
-  
+
   // Document identification
   documentNumber: varchar("document_number", { length: 100 }).notNull(),
   title: varchar("title", { length: 500 }).notNull(),
   description: text("description"),
-  
+
   // Document classification
   discipline: varchar("discipline", { length: 100 }), // Civil, Structural, MEP, Architectural, etc.
   category: varchar("category", { length: 100 }), // Drawing, Specification, Report, etc.
-  
+
   // Version control
   version: varchar("version", { length: 50 }).notNull().default("1.0"),
   revision: varchar("revision", { length: 50 }),
   isLatestVersion: varchar("is_latest_version", { length: 10 }).notNull().default("true"),
-  
+
   // File information
   fileName: varchar("file_name", { length: 500 }).notNull(),
   fileSize: integer("file_size"), // in bytes
   fileType: varchar("file_type", { length: 50 }), // pdf, docx, xlsx, dwg, etc.
   fileUrl: text("file_url").notNull(),
-  
+
   // Status tracking
-  status: varchar("status", { length: 50 }).notNull().default("draft"), 
+  status: varchar("status", { length: 50 }).notNull().default("draft"),
   // draft, submitted, under_review, approved, rejected, superseded
-  
+
   // Metadata
   tags: text("tags"), // JSON array of tags
   customFields: text("custom_fields"), // JSON object for custom metadata
-  
+
   // Timestamps and user tracking
   uploadedAt: timestamp("uploaded_at").notNull().defaultNow(),
   uploadedBy: text("uploaded_by")
@@ -47,7 +47,7 @@ export const documents = pgTable("documents", {
     .references(() => users.id, { onDelete: "set null" }),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   updatedBy: text("updated_by").references(() => users.id, { onDelete: "set null" }),
-  
+
   // Approval tracking
   approvedAt: timestamp("approved_at"),
   approvedBy: text("approved_by").references(() => users.id, { onDelete: "set null" }),
@@ -86,7 +86,7 @@ export const documentComments = pgTable("document_comments", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   comment: text("comment").notNull(),
-  commentType: varchar("comment_type", { length: 50 }).notNull().default("general"), 
+  commentType: varchar("comment_type", { length: 50 }).notNull().default("general"),
   // general, review, approval, rejection
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),

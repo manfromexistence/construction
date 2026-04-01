@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { integer, pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { users } from "./auth";
+import { user as users } from "../schema";
 import { documents } from "./documents";
 
 /**
@@ -14,7 +14,7 @@ export const documentWorkflows = pgTable("document_workflows", {
   workflowName: varchar("workflow_name", { length: 255 }).notNull(),
   currentStep: integer("current_step").notNull().default(1),
   totalSteps: integer("total_steps").notNull(),
-  status: varchar("status", { length: 50 }).notNull().default("pending"), 
+  status: varchar("status", { length: 50 }).notNull().default("pending"),
   // pending, in_progress, approved, rejected, cancelled
   startedAt: timestamp("started_at").notNull().defaultNow(),
   completedAt: timestamp("completed_at"),
@@ -37,7 +37,7 @@ export const workflowSteps = pgTable("workflow_steps", {
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   assignedRole: varchar("assigned_role", { length: 50 }), // pmc, client, etc.
-  status: varchar("status", { length: 50 }).notNull().default("pending"), 
+  status: varchar("status", { length: 50 }).notNull().default("pending"),
   // pending, in_progress, approved, rejected, skipped
   action: varchar("action", { length: 50 }), // approve, reject, comment
   comments: text("comments"),

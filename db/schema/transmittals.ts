@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { pgTable, text, timestamp, uuid, varchar } from "drizzle-orm/pg-core";
-import { users } from "./auth";
+import { user as users } from "../schema";
 import { documents } from "./documents";
 import { projects } from "./projects";
 
@@ -15,24 +15,24 @@ export const transmittals = pgTable("transmittals", {
   transmittalNumber: varchar("transmittal_number", { length: 100 }).notNull().unique(),
   subject: varchar("subject", { length: 500 }).notNull(),
   description: text("description"),
-  
+
   // Sender and recipient information
   sentFrom: text("sent_from")
     .notNull()
     .references(() => users.id, { onDelete: "set null" }),
   sentTo: text("sent_to").notNull(), // JSON array of user IDs
   ccTo: text("cc_to"), // JSON array of user IDs
-  
+
   // Status tracking
-  status: varchar("status", { length: 50 }).notNull().default("draft"), 
+  status: varchar("status", { length: 50 }).notNull().default("draft"),
   // draft, sent, acknowledged, closed
-  
+
   // Timestamps
   createdAt: timestamp("created_at").notNull().defaultNow(),
   sentAt: timestamp("sent_at"),
   acknowledgedAt: timestamp("acknowledged_at"),
   acknowledgedBy: text("acknowledged_by").references(() => users.id, { onDelete: "set null" }),
-  
+
   // Additional metadata
   notes: text("notes"),
   customFields: text("custom_fields"), // JSON object

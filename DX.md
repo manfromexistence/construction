@@ -12,3 +12,5 @@ Now the reason we have used this template as that starter point is that it has g
 - theming system
 That's why we use this project as a template. Learn from the gold.md file and don't delete any files; just configure our main project into the project and change details about the project, like updating the README and things like that.Learn from the GOAL.md file more about the this project and also use shadcn-ui cli to downlaod a dashbaord page and use that and In this project use Celsion UI component and current theme-based UI components to make this project. - Use to-do.md file to track what we need to do and how much we have already done.
 - Use change-log.md file to track the history of what you did so far.
+
+Maybe create a AGENTS.md so that codex gpt 5.4 latest ai model can do these and explain how to lint, test and build this project all things ou learned so far and all of this project details - do research about the latest Codex and the latest GPT 5.4 model as today is 1st April 2026. After creating the agents.md, please give me a txt description to tell the agent about the prompt of the agent that I will give. 
