@@ -1,4 +1,7 @@
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
+import { db } from "@/db";
+import { user as userTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { EDMS_ROLE_ORDER, normalizeEdmsRole } from "@/lib/edms/rbac";
 import { isBlobStorageConfigured, uploadEdmsFile } from "@/lib/edms/storage";
@@ -15,7 +18,16 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "You must be signed in to upload files." }, { status: 401 });
   }
 
-  const userRole = normalizeEdmsRole((session.user as Record<string, unknown>).role);
+  const userRows = await db
+    .select({
+      role: userTable.role,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, session.user.id))
+    .limit(1);
+
+  const [user] = userRows;
+  const userRole = normalizeEdmsRole(user?.role);
 
   if (EDMS_ROLE_ORDER.indexOf(userRole) < EDMS_ROLE_ORDER.indexOf(MINIMUM_UPLOAD_ROLE)) {
     return NextResponse.json(

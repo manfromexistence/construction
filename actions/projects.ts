@@ -65,30 +65,26 @@ export async function createProject(
     const values = validation.data;
     const now = new Date();
 
-    const [createdProject] = await db.transaction(async (tx) => {
-      const [insertedProject] = await tx
-        .insert(projects)
-        .values({
-          name: values.name,
-          description: normalizeOptionalString(values.description),
-          projectNumber: normalizeOptionalString(values.projectNumber),
-          location: normalizeOptionalString(values.location),
-          status: values.status,
-          startDate: parseOptionalDate(values.startDate),
-          endDate: parseOptionalDate(values.endDate),
-          createdBy: access.id,
-          updatedAt: now,
-        })
-        .returning({ id: projects.id });
+    const [createdProject] = await db
+      .insert(projects)
+      .values({
+        name: values.name,
+        description: normalizeOptionalString(values.description),
+        projectNumber: normalizeOptionalString(values.projectNumber),
+        location: normalizeOptionalString(values.location),
+        status: values.status,
+        startDate: parseOptionalDate(values.startDate),
+        endDate: parseOptionalDate(values.endDate),
+        createdBy: access.id,
+        updatedAt: now,
+      })
+      .returning({ id: projects.id });
 
-      await tx.insert(projectMembers).values({
-        projectId: insertedProject.id,
-        userId: access.id,
-        role: "admin",
-        assignedBy: access.id,
-      });
-
-      return [insertedProject];
+    await db.insert(projectMembers).values({
+      projectId: createdProject.id,
+      userId: access.id,
+      role: "admin",
+      assignedBy: access.id,
     });
 
     revalidatePath("/dashboard");

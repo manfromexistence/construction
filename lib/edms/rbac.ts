@@ -1,7 +1,10 @@
 import "server-only";
 
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { db } from "@/db";
+import { user as userTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { UnauthorizedError } from "@/types/errors";
 
@@ -42,7 +45,16 @@ export async function requireEdmsRole(
     throw new UnauthorizedError();
   }
 
-  const role = normalizeEdmsRole((session.user as Record<string, unknown>).role);
+  const userRows = await db
+    .select({
+      role: userTable.role,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, session.user.id))
+    .limit(1);
+
+  const [user] = userRows;
+  const role = normalizeEdmsRole(user?.role);
 
   if (ROLE_RANK[role] < ROLE_RANK[minimumRole]) {
     if (options?.redirectTo) {

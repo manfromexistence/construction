@@ -65,6 +65,26 @@ function getContextualCopy(actionType?: PostLoginActionType | null) {
   }
 }
 
+function getAuthErrorMessage(error: unknown, fallback: string) {
+  if (!error || typeof error !== "object") {
+    return fallback;
+  }
+
+  if ("error" in error && typeof error.error === "object" && error.error !== null) {
+    const nestedError = error.error as { message?: unknown };
+
+    if (typeof nestedError.message === "string" && nestedError.message.length > 0) {
+      return nestedError.message;
+    }
+  }
+
+  if ("message" in error && typeof error.message === "string" && error.message.length > 0) {
+    return error.message;
+  }
+
+  return fallback;
+}
+
 export function AuthDialog({
   open,
   onOpenChange,
@@ -103,16 +123,20 @@ export function AuthDialog({
   const handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
     try {
-      await authClient.signIn.social({
+      const result = await authClient.signIn.social({
         provider: "google",
         callbackURL: getCallbackUrl(),
       });
+
+      if (result?.error) {
+        throw result;
+      }
     } catch (error) {
       console.error("Google Sign In Error:", error);
       setIsGoogleLoading(false);
       toast({
         title: "Error",
-        description: "Failed to sign in with Google. Please try again.",
+        description: getAuthErrorMessage(error, "Failed to sign in with Google. Please try again."),
         variant: "destructive",
       });
     }
@@ -121,16 +145,20 @@ export function AuthDialog({
   const handleGithubSignIn = async () => {
     setIsGithubLoading(true);
     try {
-      await authClient.signIn.social({
+      const result = await authClient.signIn.social({
         provider: "github",
         callbackURL: getCallbackUrl(),
       });
+
+      if (result?.error) {
+        throw result;
+      }
     } catch (error) {
       console.error("GitHub Sign In Error:", error);
       setIsGithubLoading(false);
       toast({
         title: "Error",
-        description: "Failed to sign in with GitHub. Please try again.",
+        description: getAuthErrorMessage(error, "Failed to sign in with GitHub. Please try again."),
         variant: "destructive",
       });
     }
@@ -161,22 +189,32 @@ export function AuthDialog({
 
     try {
       if (isSignIn) {
-        await authClient.signIn.email({
+        const result = await authClient.signIn.email({
           email,
           password,
           callbackURL: getCallbackUrl(),
         });
+
+        if (result?.error) {
+          throw result;
+        }
+
         toast({
           title: "Success",
           description: "Signed in successfully!",
         });
       } else {
-        await authClient.signUp.email({
+        const result = await authClient.signUp.email({
           email,
           password,
           name,
           callbackURL: getCallbackUrl(),
         });
+
+        if (result?.error) {
+          throw result;
+        }
+
         toast({
           title: "Success",
           description: "Account created successfully!",
@@ -185,11 +223,12 @@ export function AuthDialog({
       onOpenChange(false);
     } catch (error: unknown) {
       console.error("Email Auth Error:", error);
-      const errorMessage = error instanceof Error ? error.message : "An error occurred";
       toast({
         title: "Error",
-        description:
-          errorMessage || `Failed to ${isSignIn ? "sign in" : "sign up"}. Please try again.`,
+        description: getAuthErrorMessage(
+          error,
+          `Failed to ${isSignIn ? "sign in" : "sign up"}. Please try again.`
+        ),
         variant: "destructive",
       });
     } finally {
