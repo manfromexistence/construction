@@ -7,9 +7,11 @@ import GitHubIcon from "@/assets/github.svg";
 import Logo from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
 import { useGithubStars } from "@/hooks/use-github-stars";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { formatCompactNumber } from "@/utils/format";
 import { ThemeToggle } from "../theme-toggle";
+import { UserProfileDropdown } from "../user-profile-dropdown";
 
 interface HeaderProps {
   isScrolled: boolean;
@@ -37,6 +39,8 @@ const navbarItems = [
 ];
 
 export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: HeaderProps) {
+  const { data: session } = authClient.useSession();
+
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute("href")?.slice(1);
@@ -91,18 +95,44 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
             />
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.5 }}
-          >
-            <Link href="/dashboard" prefetch>
-              <Button className="cursor-pointer rounded-full font-medium transition-transform hover:scale-105">
-                Get Started
-                <ChevronRight className="ml-1 size-4" />
-              </Button>
-            </Link>
-          </motion.div>
+          {session?.user ? (
+            <>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: 0.5 }}
+              >
+                <Link href="/dashboard" prefetch>
+                  <Button
+                    variant="ghost"
+                    className="cursor-pointer rounded-full font-medium transition-transform hover:scale-105"
+                  >
+                    Dashboard
+                  </Button>
+                </Link>
+              </motion.div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: 0.6 }}
+              >
+                <UserProfileDropdown />
+              </motion.div>
+            </>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3, delay: 0.5 }}
+            >
+              <Link href="/dashboard" prefetch>
+                <Button className="cursor-pointer rounded-full font-medium transition-transform hover:scale-105">
+                  Get Started
+                  <ChevronRight className="ml-1 size-4" />
+                </Button>
+              </Link>
+            </motion.div>
+          )}
         </div>
         <div className="flex items-center gap-2 md:hidden">
           <ThemeToggle variant="ghost" size="icon" />
@@ -144,12 +174,20 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
               transition={{ duration: 0.3, delay: 0.3 }}
               className="border-border/30 mt-2 border-t pt-2"
             >
-              <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full rounded-full">
-                  Get Started
-                  <ChevronRight className="ml-2 size-4" />
-                </Button>
-              </Link>
+              {session?.user ? (
+                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                  <Button variant="outline" className="w-full rounded-full">
+                    Dashboard
+                  </Button>
+                </Link>
+              ) : (
+                <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                  <Button className="w-full rounded-full">
+                    Get Started
+                    <ChevronRight className="ml-2 size-4" />
+                  </Button>
+                </Link>
+              )}
             </motion.div>
           </div>
         </motion.div>
