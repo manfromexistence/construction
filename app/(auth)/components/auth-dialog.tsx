@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import {
   ResponsiveDialog,
   ResponsiveDialogContent,
+  ResponsiveDialogDescription,
   ResponsiveDialogHeader,
   ResponsiveDialogTitle,
   ResponsiveDialogTrigger,
@@ -209,12 +210,12 @@ export function AuthDialog({
             <ResponsiveDialogTitle className="text-center text-2xl font-bold">
               {contextualCopy?.title ?? (isSignIn ? "Welcome back" : "Create account")}
             </ResponsiveDialogTitle>
-            <p className="text-muted-foreground text-center">
+            <ResponsiveDialogDescription className="text-center">
               {contextualCopy?.description ??
                 (isSignIn
                   ? "Sign in to your account to continue"
                   : "Create an account to get started")}
-            </p>
+            </ResponsiveDialogDescription>
           </ResponsiveDialogHeader>
 
           <div className="space-y-6 p-6 pt-2">
