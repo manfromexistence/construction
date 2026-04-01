@@ -1,7 +1,7 @@
 import { smoothStream, streamText } from "ai";
 import { NextRequest } from "next/server";
 import { ENHANCE_PROMPT_SYSTEM } from "@/lib/ai/prompts";
-import { myProvider } from "@/lib/ai/providers";
+import { promptEnhancementModel } from "@/lib/ai/providers";
 import { handleError } from "@/lib/error-response";
 import { requireSubscriptionOrFreeUsage } from "@/lib/subscription";
 import { AIPromptData } from "@/types/ai";
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
           content: userContentParts,
         },
       ],
-      model: myProvider.languageModel("prompt-enhancement"),
+      model: promptEnhancementModel,
       experimental_transform: smoothStream({
         delayInMs: 10,
         chunking: "word",

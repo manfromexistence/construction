@@ -84,7 +84,8 @@ const HslAdjustmentControls = () => {
 
   // Setup debounced update function
   useEffect(() => {
-    debouncedUpdateRef.current = debounce((hslAdjustments: ThemeEditorState["hslAdjustments"]) => {
+    debouncedUpdateRef.current = debounce((...args: unknown[]) => {
+      const hslAdjustments = args[0] as ThemeEditorState["hslAdjustments"];
       const {
         hueShift = defaultThemeState.hslAdjustments!.hueShift,
         saturationScale = defaultThemeState.hslAdjustments!.saturationScale,

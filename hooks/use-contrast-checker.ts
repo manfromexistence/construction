@@ -22,7 +22,8 @@ export function useContrastChecker(colorPairs: ColorPair[]) {
   const [contrastResults, setContrastResults] = useState<ContrastResult[]>([]);
 
   const debouncedCalculation = useCallback(
-    debounce((pairs: ColorPair[]) => {
+    debounce((...args: unknown[]) => {
+      const pairs = args[0] as ColorPair[];
       if (!pairs.length) {
         setContrastResults([]);
         return;

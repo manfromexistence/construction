@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { PluginKey } from "@tiptap/pm/state";
+import type { Editor } from "@tiptap/react";
 import { ReactRenderer } from "@tiptap/react";
+import type { Instance } from "tippy.js";
 import tippy from "tippy.js";
 import { MentionList } from "@/components/editor/mention-list"; // We'll create this component next
 import { useThemePresetStore } from "@/store/theme-preset-store"; // Import the theme store
@@ -33,21 +35,22 @@ export const suggestion = {
 
   render: () => {
     let component: ReactRenderer | null = null;
-    let popup: unknown | null = null;
+    let popup: Instance[] | null = null;
 
     return {
-      onStart: (props: { editor: Editor; clientRect: DOMRect }) => {
+      onStart: (props: { editor: Editor; clientRect?: (() => DOMRect | null) | null }) => {
         component = new ReactRenderer(MentionList, {
           props,
           editor: props.editor,
         });
 
-        if (!props.clientRect) {
+        const clientRect = typeof props.clientRect === "function" ? props.clientRect() : null;
+        if (!clientRect) {
           return;
         }
 
         popup = tippy("body", {
-          getReferenceClientRect: props.clientRect,
+          getReferenceClientRect: () => clientRect,
           appendTo: () => document.body,
           content: component.element,
           showOnCreate: true,
@@ -57,21 +60,26 @@ export const suggestion = {
         });
       },
 
-      onUpdate(props: { editor: Editor; clientRect: DOMRect }) {
+      onUpdate(props: { editor: Editor; clientRect?: (() => DOMRect | null) | null }) {
         component?.updateProps(props);
 
-        if (!props.clientRect) {
+        const clientRect = typeof props.clientRect === "function" ? props.clientRect() : null;
+        if (!clientRect) {
           return;
         }
 
-        popup?.[0]?.setProps({
-          getReferenceClientRect: props.clientRect,
-        });
+        if (popup && popup[0]) {
+          popup[0].setProps({
+            getReferenceClientRect: () => clientRect,
+          });
+        }
       },
 
       onKeyDown(props: { event: KeyboardEvent }) {
         if (props.event.key === "Escape") {
-          popup?.[0]?.hide();
+          if (popup && popup[0]) {
+            popup[0].hide();
+          }
           return true;
         }
 
@@ -80,7 +88,9 @@ export const suggestion = {
       },
 
       onExit() {
-        popup?.[0]?.destroy();
+        if (popup && popup[0]) {
+          popup[0].destroy();
+        }
         component?.destroy();
         popup = null;
         component = null;

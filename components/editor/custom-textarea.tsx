@@ -44,6 +44,7 @@ export default function CustomTextarea({
         HTMLAttributes: {
           class: "mention",
         },
+        // @ts-expect-error - Tiptap suggestion types are incompatible with our implementation
         suggestion: suggestion,
       }),
       Placeholder.configure({

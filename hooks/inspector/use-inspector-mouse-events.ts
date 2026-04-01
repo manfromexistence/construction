@@ -18,7 +18,8 @@ export const useInspectorMouseEvents = ({
   clearInspectorState,
 }: UseInspectorMouseEventsProps) => {
   const debouncedInspectorUpdate = useCallback(
-    debounce((target: HTMLElement) => {
+    debounce((...args: unknown[]) => {
+      const target = args[0] as HTMLElement;
       const rootElement = rootRef.current;
       if (!rootElement) return;
 
