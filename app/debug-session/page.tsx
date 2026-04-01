@@ -15,9 +15,26 @@ export default async function DebugSessionPage() {
       <div className="mt-4">
         <h2 className="text-xl font-bold mb-2">Validation Check:</h2>
         <ul className="list-disc pl-6">
-          <li>Role: {String(session?.user?.role || 'undefined')} (is "user"? {String(session?.user?.role === "user")})</li>
-          <li>Organization: {String(session?.user?.organization || 'undefined')} (is empty? {String(!session?.user?.organization || String(session?.user?.organization).trim().length === 0)})</li>
-          <li>Should redirect? {String((session?.user?.role === "user") || (!session?.user?.organization || String(session?.user?.organization).trim().length === 0))}</li>
+          <li>
+            Role: {String(session?.user?.role || "undefined")} (is "user"?{" "}
+            {String(session?.user?.role === "user")})
+          </li>
+          <li>
+            Organization: {String(session?.user?.organization || "undefined")} (is empty?{" "}
+            {String(
+              !session?.user?.organization ||
+                String(session?.user?.organization).trim().length === 0
+            )}
+            )
+          </li>
+          <li>
+            Should redirect?{" "}
+            {String(
+              session?.user?.role === "user" ||
+                !session?.user?.organization ||
+                String(session?.user?.organization).trim().length === 0
+            )}
+          </li>
         </ul>
       </div>
     </div>
