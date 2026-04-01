@@ -53,10 +53,5 @@ function isEdmsProfileIncomplete(profile: {
   jobTitle: string | null;
   department: string | null;
 }) {
-  return (
-    profile.role === "user" ||
-    profile.organization === null ||
-    profile.jobTitle === null ||
-    profile.department === null
-  );
+  return profile.role === "user" || profile.organization === null;
 }

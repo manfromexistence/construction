@@ -23,16 +23,12 @@ const navbarItems = [
     href: "#features",
   },
   {
-    label: "AI",
-    href: "/ai",
+    label: "How It Works",
+    href: "#how-it-works",
   },
   {
-    label: "Pricing",
-    href: "/pricing",
-  },
-  {
-    label: "Community",
-    href: "/community",
+    label: "Testimonials",
+    href: "#testimonials",
   },
   {
     label: "FAQ",
@@ -41,8 +37,6 @@ const navbarItems = [
 ];
 
 export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: HeaderProps) {
-  const { stargazersCount } = useGithubStars("jnsahaj", "tweakcn");
-
   const handleScrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const targetId = e.currentTarget.getAttribute("href")?.slice(1);
@@ -65,7 +59,7 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
         <Link href="/">
           <div className="flex items-center gap-2 font-bold">
             <Logo className="size-6" />
-            <span className="hidden lg:block">tweakcn</span>
+            <span className="hidden lg:block">Construction EDMS</span>
           </div>
         </Link>
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-4 md:flex lg:gap-8">
@@ -88,24 +82,6 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3, delay: 0.45 }}
-          >
-            <Button variant="ghost" asChild>
-              <a
-                href="https://github.com/jnsahaj/tweakcn"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold"
-              >
-                <GitHubIcon className="size-5" />
-                {stargazersCount > 0 && formatCompactNumber(stargazersCount)}
-              </a>
-            </Button>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.4 }}
           >
             <ThemeToggle
@@ -120,9 +96,9 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3, delay: 0.5 }}
           >
-            <Link href="/editor/theme" prefetch>
+            <Link href="/dashboard" prefetch>
               <Button className="cursor-pointer rounded-full font-medium transition-transform hover:scale-105">
-                Try It Now
+                Get Started
                 <ChevronRight className="ml-1 size-4" />
               </Button>
             </Link>
@@ -168,9 +144,9 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
               transition={{ duration: 0.3, delay: 0.3 }}
               className="border-border/30 mt-2 border-t pt-2"
             >
-              <Link href="/editor/theme" onClick={() => setMobileMenuOpen(false)}>
+              <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
                 <Button className="w-full rounded-full">
-                  Try It Now
+                  Get Started
                   <ChevronRight className="ml-2 size-4" />
                 </Button>
               </Link>

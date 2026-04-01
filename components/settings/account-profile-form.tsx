@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Save } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -33,7 +33,7 @@ const profileRoles = ["admin", "client", "pmc", "vendor", "subcontractor", "user
 const profileSchema = z.object({
   name: z.string().trim().min(2, "Name is required."),
   role: z.enum(profileRoles),
-  organization: z.string().trim(),
+  organization: z.string().trim().min(1, "Organization is required."),
   jobTitle: z.string().trim(),
   phone: z.string().trim(),
   department: z.string().trim(),
@@ -43,6 +43,8 @@ type ProfileValues = z.infer<typeof profileSchema>;
 
 export function AccountProfileForm({ defaultValues }: { defaultValues: ProfileValues }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isOnboarding = searchParams.get("onboarding") === "1";
   const [isPending, startTransition] = useTransition();
 
   const form = useForm<ProfileValues>({
@@ -68,7 +70,11 @@ export function AccountProfileForm({ defaultValues }: { defaultValues: ProfileVa
         description: "Your EDMS profile has been refreshed.",
       });
 
-      router.refresh();
+      if (isOnboarding) {
+        router.push("/dashboard");
+      } else {
+        router.refresh();
+      }
     });
   };
 
