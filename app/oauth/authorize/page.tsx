@@ -22,10 +22,10 @@ export default function OAuthAuthorizePage() {
   const [appName, setAppName] = useState<string | null>(null);
   const [redirecting, setRedirecting] = useState(false);
 
-  const clientId = searchParams.get("client_id");
+  const clientId = searchParams?.get("client_id");
   const scopes =
     searchParams
-      .get("scope")
+      ?.get("scope")
       ?.split(/[\s,]+/)
       .filter(Boolean) ?? [];
 
@@ -51,11 +51,11 @@ export default function OAuthAuthorizePage() {
     if (!session || redirecting || error) return;
 
     setRedirecting(true);
-    const apiUrl = `/api/oauth/authorize?${searchParams.toString()}`;
+    const apiUrl = `/api/oauth/authorize?${searchParams?.toString() || ""}`;
     window.location.href = apiUrl;
   }, [session, searchParams, redirecting, error]);
 
-  const callbackURL = `/oauth/authorize?${searchParams.toString()}`;
+  const callbackURL = `/oauth/authorize?${searchParams?.toString() || ""}`;
 
   const handleSignIn = async (provider: "google" | "github") => {
     setLoadingProvider(provider);

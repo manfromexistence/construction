@@ -2,4 +2,4 @@ Dashboard
 Tablecn
 Plate
 File Uploader
-Docs Preview
+Any Documents Preview

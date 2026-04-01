@@ -30,8 +30,8 @@ const ColorPicker = ({ color, onChange, label, name }: ColorPickerProps) => {
 
   const debouncedOnChange = useMemo(
     () =>
-      debounce((value: string) => {
-        onChange(value);
+      debounce((...args: unknown[]) => {
+        onChange(args[0] as string);
       }, DEBOUNCE_DELAY),
     [onChange]
   );

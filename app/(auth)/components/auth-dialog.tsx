@@ -78,7 +78,7 @@ export function AuthDialog({
 
   const getCallbackUrl = () => {
     const baseUrl = pathname || "/editor/theme";
-    const queryString = searchParams.toString();
+    const queryString = searchParams?.toString() || "";
     return queryString ? `${baseUrl}?${queryString}` : baseUrl;
   };
 

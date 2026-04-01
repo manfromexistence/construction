@@ -1,7 +1,7 @@
 "use client";
 
 import { Sliders } from "lucide-react";
-import React, { use, useEffect } from "react";
+import React, { use, useEffect, useState } from "react";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { DialogActionsProvider } from "@/hooks/use-dialog-actions";
@@ -28,6 +28,14 @@ const isThemeStyles = (styles: unknown): styles is ThemeStyles => {
 
 const Editor: React.FC<EditorProps> = ({ themePromise }) => {
   const themeState = useEditorStore((state) => state.themeState);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Use light mode as default during SSR to prevent hydration mismatch
+  const currentMode = mounted ? themeState.currentMode : "light";
   const setThemeState = useEditorStore((state) => state.setThemeState);
   const isMobile = useIsMobile();
 
@@ -83,14 +91,14 @@ const Editor: React.FC<EditorProps> = ({ themePromise }) => {
                   <ThemeControlPanel
                     styles={styles}
                     onChange={handleStyleChange}
-                    currentMode={themeState.currentMode}
+                    currentMode={currentMode}
                   />
                 </div>
               </TabsContent>
               <TabsContent value="preview" className="mt-0 h-[calc(100%-2.5rem)]">
                 <div className="flex h-full flex-col">
                   <ActionBar />
-                  <ThemePreviewPanel styles={styles} currentMode={themeState.currentMode} />
+                  <ThemePreviewPanel styles={styles} currentMode={currentMode} />
                 </div>
               </TabsContent>
             </Tabs>
@@ -111,7 +119,7 @@ const Editor: React.FC<EditorProps> = ({ themePromise }) => {
                 <ThemeControlPanel
                   styles={styles}
                   onChange={handleStyleChange}
-                  currentMode={themeState.currentMode}
+                  currentMode={currentMode}
                 />
               </div>
             </ResizablePanel>
@@ -120,7 +128,7 @@ const Editor: React.FC<EditorProps> = ({ themePromise }) => {
               <div className="flex h-full flex-col">
                 <div className="flex min-h-0 flex-1 flex-col">
                   <ActionBar />
-                  <ThemePreviewPanel styles={styles} currentMode={themeState.currentMode} />
+                  <ThemePreviewPanel styles={styles} currentMode={currentMode} />
                 </div>
               </div>
             </ResizablePanel>

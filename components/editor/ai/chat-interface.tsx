@@ -80,15 +80,18 @@ export function ChatInterface() {
     generateThemeCore(promptData);
   };
 
-  usePostLoginAction("AI_GENERATE_FROM_CHAT_SUGGESTION", ({ promptData }) => {
+  usePostLoginAction("AI_GENERATE_FROM_CHAT_SUGGESTION", (data: unknown) => {
+    const { promptData } = data as { promptData: AIPromptData };
     handleGenerateFromSuggestion(promptData);
   });
 
-  usePostLoginAction("AI_GENERATE_RETRY", ({ messageIndex }) => {
+  usePostLoginAction("AI_GENERATE_RETRY", (data: unknown) => {
+    const { messageIndex } = data as { messageIndex: number };
     handleRetry(messageIndex);
   });
 
-  usePostLoginAction("AI_GENERATE_EDIT", ({ messageIndex, promptData }) => {
+  usePostLoginAction("AI_GENERATE_EDIT", (data: unknown) => {
+    const { messageIndex, promptData } = data as { messageIndex: number; promptData: AIPromptData };
     handleEditSubmit(messageIndex, promptData);
   });
 

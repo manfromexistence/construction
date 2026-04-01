@@ -32,7 +32,8 @@ export function AIChatHero() {
     router.push("/editor/theme?tab=ai");
   };
 
-  usePostLoginAction("AI_GENERATE_FROM_PAGE", ({ promptData }) => {
+  usePostLoginAction("AI_GENERATE_FROM_PAGE", (data: unknown) => {
+    const { promptData } = data as { promptData: AIPromptData };
     handleRedirectAndThemeGeneration(promptData);
   });
 

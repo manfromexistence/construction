@@ -109,8 +109,8 @@ export function ChatInput({
     generateTheme(payload);
   };
 
-  usePostLoginAction("AI_GENERATE_FROM_CHAT", (payload) => {
-    generateTheme(payload);
+  usePostLoginAction("AI_GENERATE_FROM_CHAT", (payload: unknown) => {
+    generateTheme(payload as ThemeGenerationPayload);
   });
 
   return (
