@@ -40,14 +40,6 @@ Visit [http://localhost:3000](http://localhost:3000)
 - shadcn/ui components
 - Tailwind CSS
 
-## Documentation
-
-See the `hex/` folder for detailed documentation:
-- `hex/AGENTS.md` - AI agent collaboration guide
-- `hex/GOAL.md` - Project requirements
-- `hex/TODO.md` - Development roadmap
-- `hex/CHANGELOG.md` - Version history
-
 ## License
 
 MIT
