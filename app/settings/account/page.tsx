@@ -18,7 +18,7 @@ export default async function AccountPage({
     headers: await headers(),
   });
 
-  if (!session) redirect("/editor/theme");
+  if (!session) redirect("/");
 
   const userRows = await db
     .select({
