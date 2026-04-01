@@ -6,7 +6,7 @@ Any Documents Preview
 
 Now do a local test and then build of this project first, doing a test to check all the typescriplt. If there are no errors then we build the project and after building the project please deploy this project to vercel. I already have logged in with vercel and deployed this project with vercel with the name of construction project. 
 
-and now please create keep the tweakcn landing page as it is and just create another landing page about our Contruction EDMD and also keep the header and fother of tweach and create a copy of their code and then make that copy as the default one and then update it to be our Contruction EDMS project correctly
+and now please create keep the edms landing page as it is and just create another landing page about our Contruction EDMD and also keep the header and fother of tweach and create a copy of their code and then make that copy as the default one and then update it to be our Contruction EDMS project correctly
 
 Currently this is a theme changer website, which is good. Now we have to create an EDM out of this project. Keep this in mind: don't delete anything; just create more files about the project and change the project names and details to be like the EDM. Take the gold.md file for more info about this project.
 Now the reason we have used this template as that starter point is that it has given us:

@@ -17,12 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Testimonials from construction professionals
   - FAQ section with EDMS-specific questions
   - CTA section for getting started
-- Moved original tweakcn landing page to /tweakcn route
+- Moved original edms landing page to /edms route
 - Updated header navigation for Construction EDMS (Features, How It Works, Testimonials, FAQ)
 - Updated footer with Construction EDMS branding and relevant links
 - Changed primary CTA from "Try It Now" to "Get Started" linking to /dashboard
 - Removed GitHub stars and social links from header
-- Updated logo text from "tweakcn" to "Construction EDMS"
+- Updated logo text from "edms" to "Construction EDMS"
 - Created TODO.md to track development progress
 - Created CHANGELOG.md to track project history
 - Initialized project transformation from theme manager to EDMS
@@ -55,7 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Created modular schema structure in `db/schema/`
 
 ### Changed
-- Project name: `tweakcn-next` -> `construction-edms`
+- Project name: `edms-next` -> `construction-edms`
 - Project description: Theme customization tool -> Electronic Document Management System
 - Target users: Construction companies, PMC consultants, vendors, subcontractors
 - Updated README.md with Construction EDMS information
