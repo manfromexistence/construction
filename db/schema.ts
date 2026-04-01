@@ -18,6 +18,14 @@ export const user = pgTable("user", {
   image: text("image"),
   createdAt: timestamp("created_at").notNull(),
   updatedAt: timestamp("updated_at").notNull(),
+  
+  // EDMS-specific fields for Construction project
+  role: text("role").default("user"), // admin, client, pmc, vendor, subcontractor, user
+  organization: text("organization"),
+  jobTitle: text("job_title"),
+  phone: text("phone"),
+  department: text("department"),
+  isActive: boolean("is_active").default(true),
 });
 
 export const session = pgTable("session", {
