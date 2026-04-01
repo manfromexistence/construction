@@ -14,21 +14,21 @@ import { QueryProvider } from "@/lib/query-client";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Beautiful themes for shadcn/ui — tweakcn | Theme Editor & Generator",
+  title: "Construction EDMS | Electronic Document Management System for Construction Projects",
   description:
-    "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
+    "Streamline your construction project documentation with Construction EDMS. Manage documents, workflows, transmittals, and approvals in one powerful platform. Built for Clients, PMC, Vendors, and Subcontractors.",
   keywords:
-    "theme editor, theme generator, shadcn, ui, components, react, tailwind, button, editor, visual editor, component editor, web development, frontend, design system, UI components, React components, Tailwind CSS, shadcn/ui themes",
-  authors: [{ name: "Sahaj Jain" }],
+    "construction document management, EDMS, construction software, document control, workflow management, transmittals, project management, construction projects, document approval, version control, construction technology",
+  authors: [{ name: "Construction EDMS Team" }],
   openGraph: {
-    title: "Beautiful themes for shadcn/ui — tweakcn | Theme Editor & Generator",
+    title: "Construction EDMS | Electronic Document Management System",
     description:
-      "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
-    url: "https://tweakcn.com/",
-    siteName: "tweakcn",
+      "Streamline your construction project documentation with Construction EDMS. Manage documents, workflows, transmittals, and approvals in one powerful platform.",
+    url: "https://construction-edms.com/",
+    siteName: "Construction EDMS",
     images: [
       {
-        url: "https://tweakcn.com/og-image.v050725.png",
+        url: "https://construction-edms.com/og-image.png",
         width: 1200,
         height: 630,
       },
@@ -38,10 +38,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Beautiful themes for shadcn/ui — tweakcn | Theme Editor & Generator",
+    title: "Construction EDMS | Electronic Document Management System",
     description:
-      "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
-    images: ["https://tweakcn.com/og-image.v050725.png"],
+      "Streamline your construction project documentation with Construction EDMS. Manage documents, workflows, transmittals, and approvals in one powerful platform.",
+    images: ["https://construction-edms.com/og-image.png"],
   },
   robots: "index, follow",
 };

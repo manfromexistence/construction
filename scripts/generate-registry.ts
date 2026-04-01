@@ -13,8 +13,8 @@ interface ThemeRegistry {
 function generateRegistry() {
   const registry: ThemeRegistry = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
-    name: "tweakcn-theme-registry",
-    homepage: "https://tweakcn.com",
+    name: "construction-edms-themes",
+    homepage: "https://construction-edms.com",
     items: [],
   };
 
