@@ -11,7 +11,7 @@ export interface DashboardSessionUser {
   id: string;
   name: string;
   email: string;
-  image: string | null;
+  image: string;
   role: string;
   organization: string | null;
 }
@@ -50,11 +50,16 @@ export async function getRequiredDashboardSessionUser(): Promise<DashboardSessio
     redirect("/settings/account?onboarding=1");
   }
 
+  // Use shadcn avatar as default if no image is set
+  const defaultAvatar = "https://github.com/shadcn.png";
+  const userImage =
+    typeof user?.image === "string" && user.image.length > 0 ? user.image : defaultAvatar;
+
   return {
     id: String(user?.id ?? session.user.id),
     name: typeof user?.name === "string" && user.name.length > 0 ? user.name : "Construction User",
     email: typeof user?.email === "string" ? user.email : "",
-    image: typeof user?.image === "string" ? user.image : null,
+    image: userImage,
     role,
     organization,
   };

@@ -8,6 +8,10 @@ export const auth = betterAuth({
     provider: "pg",
     schema,
   }),
+  emailAndPassword: {
+    enabled: true,
+    requireEmailVerification: false,
+  },
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -16,6 +20,18 @@ export const auth = betterAuth({
     github: {
       clientId: process.env.GITHUB_CLIENT_ID!,
       clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+    },
+  },
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        defaultValue: "user",
+      },
+      organization: {
+        type: "string",
+        required: false,
+      },
     },
   },
 });

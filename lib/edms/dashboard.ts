@@ -14,7 +14,7 @@ export interface DashboardUser {
   id: string;
   name: string;
   email: string;
-  image: string | null;
+  image: string;
   role: string;
   organization: string | null;
 }
