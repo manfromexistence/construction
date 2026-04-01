@@ -22,7 +22,7 @@ export async function getRequiredDashboardSessionUser(): Promise<DashboardSessio
   });
 
   if (!session?.user?.id) {
-    redirect("/");
+    redirect("/auth");
   }
 
   const userRows = await db

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import React from "react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   Breadcrumb,
@@ -36,16 +37,18 @@ export function EdmsPageHeader({
                 const isLast = index === breadcrumbs.length - 1;
 
                 return (
-                  <BreadcrumbItem key={`${crumb.label}-${index}`}>
-                    {crumb.href && !isLast ? (
-                      <BreadcrumbLink asChild>
-                        <Link href={crumb.href}>{crumb.label}</Link>
-                      </BreadcrumbLink>
-                    ) : (
-                      <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
-                    )}
+                  <React.Fragment key={`${crumb.label}-${index}`}>
+                    <BreadcrumbItem>
+                      {crumb.href && !isLast ? (
+                        <BreadcrumbLink asChild>
+                          <Link href={crumb.href}>{crumb.label}</Link>
+                        </BreadcrumbLink>
+                      ) : (
+                        <BreadcrumbPage>{crumb.label}</BreadcrumbPage>
+                      )}
+                    </BreadcrumbItem>
                     {!isLast ? <BreadcrumbSeparator /> : null}
-                  </BreadcrumbItem>
+                  </React.Fragment>
                 );
               })}
             </BreadcrumbList>
