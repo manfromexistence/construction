@@ -34,15 +34,8 @@ export async function proxy(request: NextRequest) {
 function isEdmsProfileIncomplete(user: Record<string, unknown>) {
   const role = typeof user.role === "string" ? user.role : "user";
   const organization = typeof user.organization === "string" ? user.organization : "";
-  const jobTitle = typeof user.jobTitle === "string" ? user.jobTitle : "";
-  const department = typeof user.department === "string" ? user.department : "";
 
-  return (
-    role === "user" ||
-    organization.trim().length === 0 ||
-    jobTitle.trim().length === 0 ||
-    department.trim().length === 0
-  );
+  return role === "user" || organization.trim().length === 0;
 }
 
 export const config = {
