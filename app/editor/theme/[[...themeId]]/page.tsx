@@ -3,9 +3,9 @@ import { getTheme } from "@/actions/themes";
 import Editor from "@/components/editor/editor";
 
 export const metadata: Metadata = {
-  title: "tweakcn — Theme Generator for shadcn/ui",
+  title: "Construction EDMS — Theme Editor",
   description:
-    "Easily customize and preview your shadcn/ui theme with tweakcn. Modify colors, fonts, and styles in real-time.",
+    "Customize your Construction EDMS theme. Modify colors, fonts, and styles in real-time to match your brand.",
 };
 
 export default async function EditorPage({ params }: { params: Promise<{ themeId: string[] }> }) {

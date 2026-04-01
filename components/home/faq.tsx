@@ -8,9 +8,9 @@ import {
 
 const faqs = [
   {
-    question: "What is tweakcn?",
+    question: "What is Construction EDMS?",
     answer:
-      "tweakcn is a visual theme editor for shadcn/ui components. It allows you to customize your theme visually and export the code for your project.",
+      "Construction EDMS is an Electronic Document Management System designed for construction projects. It helps manage documents, workflows, transmittals, and approvals for all project stakeholders.",
   },
   {
     question: "Is it free?",
@@ -53,8 +53,8 @@ export function FAQ() {
             <div className="text-sm text-muted-foreground">
               <p>
                 Contact us at{" "}
-                <a href="#" className="text-primary underline">
-                  sahaj@tweakcn.com
+                <a href="mailto:support@construction-edms.com" className="text-primary underline">
+                  support@construction-edms.com
                 </a>
               </p>
             </div>
