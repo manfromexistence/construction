@@ -1,4 +1,7 @@
+import { eq } from "drizzle-orm";
 import { type NextRequest, NextResponse } from "next/server";
+import { db } from "@/db";
+import { user as userTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 import { API_AUTH_PREFIX, DEFAULT_LOGIN_REDIRECT } from "./routes";
@@ -24,18 +27,35 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(new URL("/settings/themes", request.url));
   }
 
-  if (pathname.startsWith("/dashboard") && isEdmsProfileIncomplete(session.user)) {
+  const profile = await getEdmsProfile(String(session.user.id));
+
+  if (pathname.startsWith("/dashboard") && isEdmsProfileIncomplete(profile)) {
     return NextResponse.redirect(new URL("/settings/account?onboarding=1", request.url));
   }
 
   return NextResponse.next();
 }
 
-function isEdmsProfileIncomplete(user: Record<string, unknown>) {
-  const role = typeof user.role === "string" ? user.role : "user";
-  const organization = typeof user.organization === "string" ? user.organization : "";
+async function getEdmsProfile(userId: string) {
+  const profileRows = await db
+    .select({
+      role: userTable.role,
+      organization: userTable.organization,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, userId))
+    .limit(1);
 
-  return role === "user" || organization.trim().length === 0;
+  const [profile] = profileRows;
+
+  return {
+    role: typeof profile?.role === "string" ? profile.role : "user",
+    organization: typeof profile?.organization === "string" ? profile.organization : "",
+  };
+}
+
+function isEdmsProfileIncomplete(profile: { role: string; organization: string }) {
+  return profile.role === "user" || profile.organization.trim().length === 0;
 }
 
 export const config = {

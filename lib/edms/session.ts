@@ -1,7 +1,10 @@
 import "server-only";
 
+import { eq } from "drizzle-orm";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { db } from "@/db";
+import { user as userTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 
 export interface DashboardSessionUser {
@@ -22,36 +25,41 @@ export async function getRequiredDashboardSessionUser(): Promise<DashboardSessio
     redirect("/");
   }
 
-  const user = session.user as Record<string, unknown>;
-  const role = typeof user.role === "string" && user.role.length > 0 ? user.role : "user";
+  const userRows = await db
+    .select({
+      id: userTable.id,
+      name: userTable.name,
+      email: userTable.email,
+      image: userTable.image,
+      role: userTable.role,
+      organization: userTable.organization,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, session.user.id))
+    .limit(1);
+
+  const [user] = userRows;
+
+  const role = typeof user?.role === "string" && user.role.length > 0 ? user.role : "user";
   const organization =
-    typeof user.organization === "string" && user.organization.length > 0
+    typeof user?.organization === "string" && user.organization.length > 0
       ? user.organization
       : null;
-  const jobTitle =
-    typeof user.jobTitle === "string" && user.jobTitle.length > 0 ? user.jobTitle : null;
-  const department =
-    typeof user.department === "string" && user.department.length > 0 ? user.department : null;
 
-  if (isEdmsProfileIncomplete({ role, organization, jobTitle, department })) {
+  if (isEdmsProfileIncomplete({ role, organization })) {
     redirect("/settings/account?onboarding=1");
   }
 
   return {
-    id: String(user.id),
-    name: typeof user.name === "string" && user.name.length > 0 ? user.name : "Construction User",
-    email: typeof user.email === "string" ? user.email : "",
-    image: typeof user.image === "string" ? user.image : null,
+    id: String(user?.id ?? session.user.id),
+    name: typeof user?.name === "string" && user.name.length > 0 ? user.name : "Construction User",
+    email: typeof user?.email === "string" ? user.email : "",
+    image: typeof user?.image === "string" ? user.image : null,
     role,
     organization,
   };
 }
 
-function isEdmsProfileIncomplete(profile: {
-  role: string;
-  organization: string | null;
-  jobTitle: string | null;
-  department: string | null;
-}) {
+function isEdmsProfileIncomplete(profile: { role: string; organization: string | null }) {
   return profile.role === "user" || profile.organization === null;
 }

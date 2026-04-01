@@ -236,13 +236,31 @@ function toAbsoluteUrl(actionUrl: string | null | undefined) {
     return actionUrl;
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? process.env.BETTER_AUTH_URL;
+  const baseUrl =
+    process.env.NEXT_PUBLIC_APP_URL ??
+    process.env.BETTER_AUTH_URL ??
+    toVercelUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL) ??
+    toVercelUrl(process.env.VERCEL_URL);
 
   if (!baseUrl) {
     return null;
   }
 
   return `${baseUrl.replace(/\/$/, "")}${actionUrl.startsWith("/") ? actionUrl : `/${actionUrl}`}`;
+}
+
+function toVercelUrl(value: string | null | undefined) {
+  if (!value) {
+    return null;
+  }
+
+  const trimmed = value.trim();
+
+  if (trimmed.length === 0) {
+    return null;
+  }
+
+  return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
 }
 
 function renderNotificationEmail(input: {

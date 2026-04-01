@@ -5,6 +5,7 @@ export default async function DebugSessionPage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+  const sessionUser = (session?.user ?? {}) as Record<string, unknown>;
 
   return (
     <div className="container mx-auto p-8">
@@ -16,23 +17,22 @@ export default async function DebugSessionPage() {
         <h2 className="text-xl font-bold mb-2">Validation Check:</h2>
         <ul className="list-disc pl-6">
           <li>
-            Role: {String(session?.user?.role || "undefined")} (is "user"?{" "}
-            {String(session?.user?.role === "user")})
+            Role: {String(sessionUser.role || "undefined")} (is "user"?{" "}
+            {String(sessionUser.role === "user")})
           </li>
           <li>
-            Organization: {String(session?.user?.organization || "undefined")} (is empty?{" "}
+            Organization: {String(sessionUser.organization || "undefined")} (is empty?{" "}
             {String(
-              !session?.user?.organization ||
-                String(session?.user?.organization).trim().length === 0
+              !sessionUser.organization || String(sessionUser.organization).trim().length === 0
             )}
             )
           </li>
           <li>
             Should redirect?{" "}
             {String(
-              session?.user?.role === "user" ||
-                !session?.user?.organization ||
-                String(session?.user?.organization).trim().length === 0
+              sessionUser.role === "user" ||
+                !sessionUser.organization ||
+                String(sessionUser.organization).trim().length === 0
             )}
           </li>
         </ul>

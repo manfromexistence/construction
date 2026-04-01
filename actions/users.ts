@@ -1,9 +1,11 @@
 "use server";
 
 import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
 import { z } from "zod";
 import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
+import { auth } from "@/lib/auth";
 import { getCurrentUserId, logError } from "@/lib/shared";
 import { type ActionResult, actionError, actionSuccess, ErrorCode } from "@/types/errors";
 
@@ -40,6 +42,7 @@ export async function updateUserProfile(input: UpdateProfileInput): Promise<Acti
 
     const userId = await getCurrentUserId();
     const values = validation.data;
+    const requestHeaders = await headers();
 
     await db
       .update(userTable)
@@ -53,6 +56,20 @@ export async function updateUserProfile(input: UpdateProfileInput): Promise<Acti
         updatedAt: new Date(),
       })
       .where(eq(userTable.id, userId));
+
+    try {
+      await auth.api.updateUser({
+        headers: requestHeaders,
+        body: {
+          name: values.name,
+        },
+      });
+    } catch (sessionRefreshError) {
+      logError(sessionRefreshError as Error, {
+        action: "updateUserProfile.sessionRefresh",
+        userId,
+      });
+    }
 
     return actionSuccess(true);
   } catch (error) {
