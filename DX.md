@@ -1,3 +1,5 @@
+and make sure all the dashboard and the website complete all the requirements of gold.md files correctly. and make sure all the dashboard and the website complete all the requirements of gold.md files correctly. And also the user onboarding and user authentication is taking too much time and the email and password authentication is not connecting correctly so please fix the entire authentication flow of this website correctly too. And please make the dashboard sidebar just use our theme instead of using any gradient color. Throughout all the dashboard please implement our theme with proper chat chain UI, like hover and other components, instead of using custom colors and gradients. 
+
 So, the mvp is done - source code on github and deployed in vercel:
 User Authentication - Sign in with Google or GitHub, with role-based access for Clients, PMC, Vendors, Subcontractors, and Admins
 Project Management - Create and manage multiple construction projects with dedicated dashboards for each
