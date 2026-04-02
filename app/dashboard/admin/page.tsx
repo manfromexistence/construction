@@ -99,8 +99,7 @@ export default async function AdminDashboardPage() {
             <h2 className="text-lg font-semibold">Current admin scope</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               This admin area now covers system metrics and workspace users. It is intentionally
-              aligned with the active QUADRA features instead of exposing dead or
-              placeholder links.
+              aligned with the active QUADRA features instead of exposing dead or placeholder links.
             </p>
           </div>
         </section>

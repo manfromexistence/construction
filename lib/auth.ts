@@ -42,8 +42,7 @@ export const auth = betterAuth({
       }
 
       const resend = new Resend(apiKey);
-      const from =
-        process.env.RESEND_FROM_EMAIL?.trim() || "QUADRA <onboarding@resend.dev>";
+      const from = process.env.RESEND_FROM_EMAIL?.trim() || "QUADRA <onboarding@resend.dev>";
 
       await resend.emails.send({
         from,

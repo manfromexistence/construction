@@ -222,9 +222,7 @@ function getResendClient() {
 
 function getResendFromAddress() {
   const fromAddress = process.env.RESEND_FROM_EMAIL?.trim();
-  return fromAddress && fromAddress.length > 0
-    ? fromAddress
-    : "QUADRA <onboarding@resend.dev>";
+  return fromAddress && fromAddress.length > 0 ? fromAddress : "QUADRA <onboarding@resend.dev>";
 }
 
 function toAbsoluteUrl(actionUrl: string | null | undefined) {
