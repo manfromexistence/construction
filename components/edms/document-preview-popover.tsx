@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { expandImageArray } from "@/lib/storage-utils";
 import { EdmsStatusBadge } from "./status-badge";
 
 interface DocumentPreviewPopoverProps {
@@ -24,18 +25,8 @@ interface DocumentPreviewPopoverProps {
   children: React.ReactNode;
 }
 
-function parseImages(imagesJson: string | null | undefined): string[] {
-  if (!imagesJson) return [];
-  try {
-    const parsed = JSON.parse(imagesJson);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
-}
-
 export function DocumentPreviewPopover({ document, children }: DocumentPreviewPopoverProps) {
-  const images = parseImages(document.images);
+  const images = expandImageArray(document.images);
   const isPdf = document.fileType?.toLowerCase() === "application/pdf";
 
   return (
@@ -146,7 +137,7 @@ export function DocumentPreviewPopover({ document, children }: DocumentPreviewPo
               <Link href={`/dashboard/documents/${document.id}`}>View Details</Link>
             </Button>
             <Button size="sm" className="flex-1" asChild>
-              <Link href={document.fileUrl} target="_blank">
+              <Link href={document.fileUrl || "#"} target="_blank">
                 Open File
                 <ExternalLink className="size-4" />
               </Link>

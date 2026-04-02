@@ -4,6 +4,7 @@ import { and, count, desc, eq, ilike, inArray, or } from "drizzle-orm";
 import { db } from "@/db";
 import { documents } from "@/db/schema/documents";
 import { projects } from "@/db/schema/projects";
+import { expandStorageUrl } from "@/lib/storage-utils";
 import { type DashboardDocument, type DashboardMetric, getEdmsDashboardData } from "./dashboard";
 import type { DashboardSessionUser } from "./session";
 
@@ -83,6 +84,9 @@ export async function getDocumentControlData(
           revision: documents.revision,
           status: documents.status,
           uploadedAt: documents.uploadedAt,
+          images: documents.images,
+          fileUrl: documents.fileUrl,
+          fileType: documents.fileType,
         })
         .from(documents)
         .innerJoin(projects, eq(documents.projectId, projects.id))
@@ -147,6 +151,9 @@ export async function getDocumentControlData(
         revision: document.revision,
         status: document.status,
         uploadedLabel: formatDateLabel(document.uploadedAt),
+        images: document.images, // Keep truncated, expand in component
+        fileUrl: expandStorageUrl(document.fileUrl), // Expand file URL
+        fileType: document.fileType,
       })),
       availableDisciplines: Array.from(
         new Set(
