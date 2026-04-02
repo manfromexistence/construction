@@ -4,8 +4,8 @@
 
 ## In Progress
 
-- [ ] 1. Add GOFILE_API_TOKEN and IMGBB to Vercel environment variables
-- [ ] 2. Test file upload integration with GoFile
+- [ ] 1. Add IMGBB to Vercel environment variables (Catbox needs no config!)
+- [ ] 2. Test file upload integration with Catbox (no API key needed!)
 - [ ] 3. Test avatar upload with ImgBB
 
 ## Pending
@@ -17,7 +17,7 @@
 ## Completed
 
 - [x] ~~Comment out Google and GitHub OAuth buttons from auth panel~~ ✅ (completed: 2026-04-02)
-- [x] ~~Replace Vercel Blob with GoFile (unlimited storage) for documents~~ ✅ (completed: 2026-04-02)
+- [x] ~~Replace Vercel Blob with Catbox (unlimited, 200MB, no API key!) for documents~~ ✅ (completed: 2026-04-02)
 - [x] ~~Add ImgBB integration for user avatars and images~~ ✅ (completed: 2026-04-02)
 - [x] Fix avatar 404 errors by restoring placeholder avatar assets
 - [x] Fix project creation sheet padding

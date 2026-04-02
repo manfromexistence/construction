@@ -4,37 +4,37 @@ This application uses **100% FREE unlimited storage** for all file uploads:
 
 ## Storage Services Overview
 
-| Service | Purpose | Storage Limit | Cost |
-|---------|---------|---------------|------|
-| **GoFile** | Documents, PDFs, large files | ✅ UNLIMITED | FREE |
-| **ImgBB** | Images, avatars, photos | ✅ UNLIMITED | FREE |
-| **Database** | Metadata only (not files) | Depends on host | Varies |
+| Service | Purpose | Storage Limit | File Size | API Key | Cost |
+|---------|---------|---------------|-----------|---------|------|
+| **Catbox.moe** | Documents, PDFs, any files | ✅ UNLIMITED | 200 MB | ❌ Not needed | FREE |
+| **ImgBB** | Images, avatars, photos | ✅ UNLIMITED | 32 MB | ✅ Required | FREE |
+| **Database** | Metadata only (not files) | Depends on host | N/A | N/A | Varies |
 
 ---
 
-## 1. GoFile (Document Storage)
+## 1. Catbox.moe (Document Storage)
 
 **Purpose:** Unlimited storage for EDMS documents, project files, PDFs, and any file type
 
 **Setup:**
-1. Go to [gofile.io](https://gofile.io)
-2. Create a free account
-3. Navigate to your Profile page
-4. Copy your API Token
-5. Add to `.env`:
-   ```
-   GOFILE_API_TOKEN="your_token_here"
-   ```
+✅ **NO SETUP REQUIRED!** Catbox works out of the box with anonymous uploads.
 
 **Features:**
 - ✅ Unlimited storage (completely free)
-- ✅ Any file type supported
-- ✅ Files up to 50MB per upload
-- ✅ Automatic file organization
+- ✅ Up to 200MB per file (4x larger than GoFile!)
+- ✅ No API key needed
+- ✅ Any file type supported (except .exe, .scr, .cpl, .doc, .docx, .jar)
+- ✅ Permanent storage
 - ✅ Direct download links
 - ✅ No bandwidth limits
+- ✅ User-funded, no ads
 
-**API Documentation:** https://gofile.io/contents/api.html
+**Restrictions:**
+- ⚠️ Cannot upload: .exe, .scr, .cpl, .doc, .docx, .jar files
+- ✅ PDFs, images, videos, .xlsx, .pptx, .dwg, .zip, etc. are all fine!
+- ⚠️ Not for commercial CDN use without approval
+
+**API Documentation:** https://catbox.moe/tools.php
 
 ---
 
@@ -83,23 +83,23 @@ Both projects and documents now support image cards:
 
 ## Environment Variables
 
-Add these to your `.env` file:
+Add this to your `.env` file:
 
 ```env
-# GoFile for document storage (UNLIMITED FREE)
-GOFILE_API_TOKEN="your_gofile_token"
-
 # ImgBB for image storage (UNLIMITED FREE)
 IMGBB="your_imgbb_key"
+
+# Catbox.moe for document storage (UNLIMITED FREE, NO API KEY NEEDED!)
+# No configuration required - works automatically!
 ```
 
 ---
 
 ## Usage in Code
 
-### Document Upload (GoFile)
+### Document Upload (Catbox)
 ```typescript
-import { uploadEdmsFile } from "@/lib/edms/storage-gofile";
+import { uploadEdmsFile } from "@/lib/edms/storage-catbox";
 
 const result = await uploadEdmsFile({
   file: myFile,
@@ -134,8 +134,9 @@ import { ImageCardUpload } from "@/components/edms/image-card-upload";
 ### Document Upload
 - **Endpoint:** `POST /api/edms/uploads`
 - **Auth:** Required
-- **Max Size:** 50MB
-- **Storage:** GoFile (unlimited)
+- **Max Size:** 200MB
+- **Storage:** Catbox.moe (unlimited, no API key)
+- **Banned:** .exe, .scr, .cpl, .doc, .docx, .jar
 
 ### Image Upload
 - **Endpoint:** `POST /api/upload/avatar`
@@ -151,32 +152,50 @@ import { ImageCardUpload } from "@/components/edms/image-card-upload";
 If you were previously using Vercel Blob storage:
 
 1. Remove `BLOB_READ_WRITE_TOKEN` from environment variables
-2. Add `GOFILE_API_TOKEN` and `IMGBB`
-3. Existing file URLs will continue to work
-4. New uploads will use GoFile/ImgBB
+2. Add `IMGBB` environment variable
+3. Catbox needs no configuration!
+4. Existing file URLs will continue to work
+5. New uploads will use Catbox/ImgBB
 
 ---
 
 ## Cost Comparison
 
-| Service | Free Tier | Paid Plans | Monthly Cost |
-|---------|-----------|------------|--------------|
-| **GoFile** | ✅ Unlimited storage | Premium features available | $0 |
-| **ImgBB** | ✅ Unlimited images | No paid plans needed | $0 |
-| **Vercel Blob** | 500MB free | $0.15/GB after | $15+ for 100GB |
+| Service | Free Tier | File Size | API Key | Monthly Cost |
+|---------|-----------|-----------|---------|--------------|
+| **Catbox.moe** | ✅ Unlimited storage | 200MB | ❌ Not needed | $0 |
+| **ImgBB** | ✅ Unlimited images | 32MB | ✅ Required | $0 |
+| **GoFile** | ✅ Unlimited storage | 50MB | ✅ Required | $0 |
+| **Vercel Blob** | 500MB free | No limit | ✅ Required | $15+ for 100GB |
 
 **Result:** Save $180+/year with unlimited free storage! 🎉
 
 ---
 
-## Why This is Better
+## Why Catbox is Better
 
-1. **Truly Unlimited:** No storage caps, no bandwidth limits
-2. **100% Free:** Both services are completely free forever
-3. **Better UX:** Image cards make projects and documents more visual
-4. **Reliable:** Both services have excellent uptime
-5. **Fast:** Global CDN for quick image delivery
-6. **Simple:** Easy API integration, no complex setup
+1. **No API Key** - Works immediately, no signup needed
+2. **Larger Files** - 200MB vs 50MB (GoFile)
+3. **Simpler API** - Just POST the file, get back URL
+4. **Permanent Storage** - Files never expire
+5. **User-Funded** - No ads, no tracking
+6. **Reliable** - Been around since 2014
+
+---
+
+## File Type Support
+
+### ✅ Supported (Catbox)
+- PDFs, images, videos, audio
+- Office files: .xlsx, .pptx, .odt, .ods
+- CAD files: .dwg, .dxf
+- Archives: .zip, .rar, .7z
+- Code: .js, .py, .java, .cpp
+- And basically everything else!
+
+### ❌ Not Supported (Catbox)
+- Executables: .exe, .scr, .cpl, .jar
+- Old Word docs: .doc, .docx (use PDF instead!)
 
 ---
 
@@ -189,3 +208,33 @@ The database only stores:
 - User data and relationships
 
 This keeps your database small and fast, while files are stored on specialized free services.
+
+---
+
+## Troubleshooting
+
+### Document upload fails?
+- Check file size is under 200MB
+- Verify file extension is not banned (.doc, .docx, .exe, etc.)
+- Convert .doc/.docx to PDF if needed
+- Check browser console for errors
+
+### Images not uploading?
+- Check `IMGBB` is set in environment variables
+- Verify API key is correct
+- Check file size is under 5MB (or 32MB max)
+- Ensure file is JPEG, PNG, GIF, or WebP
+
+---
+
+## Summary
+
+**Setup Required:**
+- ✅ ImgBB API key (for images)
+- ❌ Catbox API key (not needed!)
+
+**Total Cost:** $0/month forever
+
+**Total Storage:** Unlimited for both services
+
+**Setup Time:** 2 minutes (just get ImgBB key)
