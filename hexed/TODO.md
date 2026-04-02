@@ -1,99 +1,32 @@
-# QUADRA - Development TODO
+# QUADRA Fixes TODO
 
-> Project transformation from theme manager to Electronic Document Management System for construction projects
+> Auto-managed by AI. Updated after every completed or failed task.
 
-## Phase 1: Project Setup and Branding [done]
+## In Progress
 
-- [x] Rename project to "construction" (completed: 2026-04-01)
-- [x] Update package.json with new project details (completed: 2026-04-01)
-- [x] Update README.md with QUADRA information (completed: 2026-04-01)
-- [x] Create CHANGELOG.md for tracking changes (completed: 2026-04-01)
-- [ ] Update environment variables and configuration
-  Direct upload still needs `BLOB_READ_WRITE_TOKEN`, and production email should set `RESEND_FROM_EMAIL`.
+- [ ] 1. Add IMGBB to Vercel environment variables (Catbox needs no config!)
+- [ ] 2. Test file upload integration with Catbox (no API key needed!)
+- [ ] 3. Test avatar upload with ImgBB
 
-## Phase 2: Database Schema Design [done]
+## Pending
 
-- [x] Design database schema for EDMS (completed: 2026-04-01)
-- [x] Update existing user table with role fields (completed: 2026-04-01)
-- [x] Create main schema index file (completed: 2026-04-01)
-- [x] Generate Drizzle migrations (completed: 2026-04-01)
-- [x] Run migrations (completed: 2026-04-01)
+- [ ] 4. Verify live Resend sender configuration with `RESEND_FROM_EMAIL`
+- [ ] 5. Verify database schema and migrations in the live environment
+- [ ] 6. Run comprehensive EDMS feature tests against production auth, onboarding, create, search, workflow, and transmittal flows
 
-## Phase 3: UI Components and Dashboard [done]
+## Completed
 
-- [x] Create app directory structure for EDMS (completed: 2026-04-01)
-- [x] Set up main dashboard layout with sidebar (completed: 2026-04-01)
-- [x] Create navigation components (completed: 2026-04-01)
-- [x] Implement project-wise dashboard (completed: 2026-04-01)
-- [x] Create document status summary widgets (completed: 2026-04-01)
-- [x] Build activity log component (completed: 2026-04-01)
+- [x] ~~Comment out Google and GitHub OAuth buttons from auth panel~~ ✅ (completed: 2026-04-02)
+- [x] ~~Replace Vercel Blob with Catbox (unlimited, 200MB, no API key!) for documents~~ ✅ (completed: 2026-04-02)
+- [x] ~~Add ImgBB integration for user avatars and images~~ ✅ (completed: 2026-04-02)
+- [x] Fix avatar 404 errors by restoring placeholder avatar assets
+- [x] Fix project creation sheet padding
+- [x] Create admin dashboard and admin users management pages
+- [x] Replace the fragile modal-first auth entry with a stable `/auth` experience and improve email/password onboarding flow
+- [x] Add password reset flow with Better Auth reset tokens and Resend email delivery
+- [x] Align settings and dashboard theme navigation with Theme Studio and Theme Library
+- [x] Fix stale production auth URL environment variables and redeploy the live app
+- [x] Redirect legacy `/tweakcn` branding traffic back to the QUADRA home page
+- [x] Rebuild and verify the application with `npx tsc --noEmit`, `npm run lint`, and `npm run build`
 
-## Phase 4: Core Modules Development [in progress]
-
-### User Management (Existing - Enhance)
-- [x] Add role selection during registration/profile management (completed: 2026-04-01)
-- [x] Add organization/company field (completed: 2026-04-01)
-- [x] Update user profile with construction-specific fields (completed: 2026-04-01)
-- [ ] Implement role-based access control middleware
-
-### Project Management Module
-- [x] Create project creation page (completed: 2026-04-01)
-- [x] Project listing page (completed: 2026-04-01)
-- [x] Project details page (completed: 2026-04-01)
-- [x] Assign users to projects (completed: 2026-04-01)
-- [x] Define user roles per project (completed: 2026-04-01)
-
-### Document Control Module
-- [x] Document upload interface (completed: 2026-04-01)
-- [x] File storage integration (Vercel Blob upload flow with external URL fallback, completed: 2026-04-01)
-- [x] Document listing with filters (completed: 2026-04-01)
-- [x] Document preview functionality (completed: 2026-04-01)
-- [x] Version control system (completed: 2026-04-01)
-- [x] Document numbering system (completed: 2026-04-01)
-- [x] Metadata management (completed: 2026-04-01)
-
-### Document Workflow Module
-- [x] Submit for review functionality (completed: 2026-04-01)
-- [x] Multi-level review workflow (completed: 2026-04-01)
-- [x] Approve/Reject/Comment interface (completed: 2026-04-01)
-- [x] Document status tracking (completed: 2026-04-01)
-- [x] Comment history view (completed: 2026-04-01)
-
-### Transmittal Module
-- [x] Create transmittal form (completed: 2026-04-01)
-- [x] Attach multiple documents (completed: 2026-04-01)
-- [x] Send to project parties (completed: 2026-04-01)
-- [x] Track acknowledgement (completed: 2026-04-01)
-
-### Search and Filters
-- [x] Global search functionality (completed: 2026-04-01)
-- [x] Advanced filters (discipline, status, revision) (completed: 2026-04-01)
-- [x] Quick document retrieval (completed: 2026-04-01)
-
-### Notifications
-- [x] Email notification system (completed: 2026-04-01)
-- [x] In-app notifications (completed: 2026-04-01)
-- [x] Notification preferences (completed: 2026-04-01)
-
-## Phase 5: Testing and Refinement
-
-- [ ] Test all user roles and permissions
-- [ ] Test document workflows
-- [ ] Test file uploads and downloads
-- [ ] Performance optimization
-- [ ] Security audit
-- [ ] UI/UX refinements
-
-## Phase 6: Documentation and Deployment
-
-- [ ] API documentation
-- [ ] User guide
-- [ ] Admin guide
-- [ ] Deployment instructions
-- [ ] Environment setup guide
-
----
-
-## Current Status: Phase 4 - Core Modules Development
-Active work now covers dashboard operations, route-level onboarding enforcement, role-aware module controls, project creation/detail, project member assignment, document control registration/filtering/detail preview/versioning/numbering, direct Blob-backed upload flow with URL fallback, workflow routing plus review decisions, transmittal issue/acknowledgement handling, account profile management, notification preferences, in-app alerts, global EDMS search, and Resend-backed outbound delivery. The biggest remaining MVP gaps are final deployment environment setup for Blob/email sender identity and optional deeper auth-time onboarding capture.
-**Last Updated:** 2026-04-01
+## Blocked / Failed

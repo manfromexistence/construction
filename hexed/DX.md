@@ -1,20 +1,21 @@
-Dashboard
-Tablecn
-Plate
-File Uploader
-Any Documents Preview
+and make sure all the dashboard and the website complete all the requirements of gold.md files correctly. and make sure all the dashboard and the website complete all the requirements of gold.md files correctly. And also the user onboarding and user authentication is taking too much time and the email and password authentication is not connecting correctly so please fix the entire authentication flow of this website correctly too. And please make the dashboard sidebar just use our theme instead of using any gradient color. Throughout all the dashboard please implement our theme with proper chat chain UI, like hover and other components, instead of using custom colors and gradients. 
 
-Now do a local test and then build of this project first, doing a test to check all the typescriplt. If there are no errors then we build the project and after building the project please deploy this project to vercel. I already have logged in with vercel and deployed this project with vercel with the name of construction project. 
+and why its showing skeleton animations can't we use react-quesry to have so that dont' reload at all througout our whole dashboard
 
-and now please create keep the edms landing page as it is and just create another landing page about our Contruction EDMD and also keep the header and fother of tweach and create a copy of their code and then make that copy as the default one and then update it to be our Contruction EDMS project correctly
+So, the mvp is done - source code on github and deployed in vercel:
+User Authentication - Sign in with Google or GitHub, with role-based access for Clients, PMC, Vendors, Subcontractors, and Admins
+Project Management - Create and manage multiple construction projects with dedicated dashboards for each
+Document Control - Upload documents (PDF, Word, Excel, drawings), track versions, add metadata, preview and download files
+Workflow System - Submit documents for review, approve/reject with comments, track status from Draft to Approved
+Transmittals - Create document packages, send to project parties, track acknowledgments
+Dashboard - Real-time metrics showing document counts, pending approvals, recent activity, and workflow status
+Search & Filters - Find documents quickly by number, discipline, status, or revision
+Notifications - In-app notification center for all document activities (email notifications ready to configure)
 
-Currently this is a theme changer website, which is good. Now we have to create an EDM out of this project. Keep this in mind: don't delete anything; just create more files about the project and change the project names and details to be like the EDM. Take the gold.md file for more info about this project.
-Now the reason we have used this template as that starter point is that it has given us:
-- authentication
-- database
-- UI element
-- theming system
-That's why we use this project as a template. Learn from the gold.md file and don't delete any files; just configure our main project into the project and change details about the project, like updating the README and things like that.Learn from the GOAL.md file more about the this project and also use shadcn-ui cli to downlaod a dashbaord page and use that and In this project use Celsion UI component and current theme-based UI components to make this project. - Use to-do.md file to track what we need to do and how much we have already done.
-- Use change-log.md file to track the history of what you did so far.
-
-Maybe create a AGENTS.md so that codex gpt 5.4 latest ai model can do these and explain how to lint, test and build this project all things ou learned so far and all of this project details - do research about the latest Codex and the latest GPT 5.4 model as today is 1st April 2026. After creating the agents.md, please give me a txt description to tell the agent about the prompt of the agent that I will give. 
+As I told you earlier, I can do this project in one day. I literally did this project in less than one day. There is still some work but the main MVP of the project, the code functionalities under the hood, are all working correctly. I tested all APIs. 
+Time Tracking - Live project time tracking with productivity insights and team collaboration
+Magic Inbox - Automatically matches incoming invoices and receipts to transactions
+Vault - Secure document storage for contracts and important files
+Financial Export - Easy CSV export of financial data for accountants
+AI Assistant - Provides insights on spending patterns, cost optimization, and document retrieval
+Invoicing - Web-based invoice creation with real-time collaboration (upcoming)
