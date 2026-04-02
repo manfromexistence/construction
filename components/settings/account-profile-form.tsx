@@ -97,10 +97,7 @@ export function AccountProfileForm({ defaultValues }: { defaultValues: ProfileVa
               name="image"
               render={({ field }) => (
                 <FormItem>
-                  <AvatarUpload
-                    currentAvatar={field.value}
-                    onAvatarChange={field.onChange}
-                  />
+                  <AvatarUpload currentAvatar={field.value} onAvatarChange={field.onChange} />
                   <FormMessage />
                 </FormItem>
               )}
