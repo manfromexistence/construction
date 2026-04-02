@@ -14,18 +14,18 @@ import { QueryProvider } from "@/lib/query-client";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Construction EDMS | Electronic Document Management System for Construction Projects",
+  title: "QUADRA | Electronic Document Management System for Construction Projects",
   description:
-    "Streamline your construction project documentation with Construction EDMS. Manage documents, workflows, transmittals, and approvals in one powerful platform. Built for Clients, PMC, Vendors, and Subcontractors.",
+    "Streamline your construction project documentation with QUADRA. Manage documents, workflows, transmittals, and approvals in one powerful platform. Built for Clients, PMC, Vendors, and Subcontractors.",
   keywords:
     "construction document management, EDMS, construction software, document control, workflow management, transmittals, project management, construction projects, document approval, version control, construction technology",
-  authors: [{ name: "Construction EDMS Team" }],
+  authors: [{ name: "QUADRA Team" }],
   openGraph: {
-    title: "Construction EDMS | Electronic Document Management System",
+    title: "QUADRA | Electronic Document Management System",
     description:
-      "Streamline your construction project documentation with Construction EDMS. Manage documents, workflows, transmittals, and approvals in one powerful platform.",
+      "Streamline your construction project documentation with QUADRA. Manage documents, workflows, transmittals, and approvals in one powerful platform.",
     url: "https://construction-edms.com/",
-    siteName: "Construction EDMS",
+    siteName: "QUADRA",
     images: [
       {
         url: "https://construction-edms.com/og-image.png",
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Construction EDMS | Electronic Document Management System",
+    title: "QUADRA | Electronic Document Management System",
     description:
-      "Streamline your construction project documentation with Construction EDMS. Manage documents, workflows, transmittals, and approvals in one powerful platform.",
+      "Streamline your construction project documentation with QUADRA. Manage documents, workflows, transmittals, and approvals in one powerful platform.",
     images: ["https://construction-edms.com/og-image.png"],
   },
   robots: "index, follow",

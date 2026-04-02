@@ -126,7 +126,7 @@ export async function createDocument(
         relatedEntityType: "document",
         relatedEntityId: createdDocument.id,
         actionUrl: `/dashboard/documents/${createdDocument.id}`,
-        emailSubject: `Construction EDMS: ${documentNumber} submitted`,
+        emailSubject: `QUADRA: ${documentNumber} submitted`,
       }),
       logEdmsActivity({
         userId: access.id,
@@ -237,7 +237,7 @@ export async function createDocumentVersion(
         relatedEntityType: "document",
         relatedEntityId: values.documentId,
         actionUrl: `/dashboard/documents/${values.documentId}`,
-        emailSubject: `Construction EDMS: ${documentRecord.documentNumber} revised`,
+        emailSubject: `QUADRA: ${documentRecord.documentNumber} revised`,
       }),
       logEdmsActivity({
         userId: access.id,

@@ -2,7 +2,7 @@
 CONSTRUCTION EDMS - AI AGENT ONBOARDING PROMPT
 ================================================================================
 
-You are working on the Construction EDMS project - an Electronic Document 
+You are working on the QUADRA project - an Electronic Document 
 Management System for construction projects built with Next.js 16, React 19, 
 TypeScript, PostgreSQL (Neon), Drizzle ORM, and Better Auth.
 
@@ -291,7 +291,7 @@ GPT-5.4 Resources:
 YOUR MISSION
 ================================================================================
 
-Work autonomously on the Construction EDMS project following the workflow in
+Work autonomously on the QUADRA project following the workflow in
 AGENTS.md. Break down complex features, execute implementations, verify with
 type checks and lints, and update documentation as you progress.
 

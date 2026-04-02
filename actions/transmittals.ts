@@ -94,7 +94,7 @@ export async function createTransmittal(
         relatedEntityType: "transmittal",
         relatedEntityId: createdTransmittal.id,
         actionUrl: "/dashboard/transmittals",
-        emailSubject: `Construction EDMS: transmittal ${values.transmittalNumber}`,
+        emailSubject: `QUADRA: transmittal ${values.transmittalNumber}`,
       }),
       logEdmsActivity({
         userId: access.id,
@@ -194,7 +194,7 @@ export async function acknowledgeTransmittal(
         relatedEntityType: "transmittal",
         relatedEntityId: transmittalRecord.id,
         actionUrl: "/dashboard/transmittals",
-        emailSubject: `Construction EDMS: transmittal ${transmittalRecord.transmittalNumber} acknowledged`,
+        emailSubject: `QUADRA: transmittal ${transmittalRecord.transmittalNumber} acknowledged`,
       }),
       logEdmsActivity({
         userId: access.id,

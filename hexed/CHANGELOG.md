@@ -1,4 +1,4 @@
-# Construction EDMS - Changelog
+# QUADRA - Changelog
 
 All notable changes to this project will be documented in this file.
 
@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Created new Construction EDMS landing page as the default homepage
+- Created new QUADRA landing page as the default homepage
 - Copied and customized all home components for EDMS branding
 - Created components/edms-home/ directory with EDMS-specific landing components:
   - Hero section highlighting document management for construction
@@ -18,11 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - FAQ section with EDMS-specific questions
   - CTA section for getting started
 - Moved original edms landing page to /edms route
-- Updated header navigation for Construction EDMS (Features, How It Works, Testimonials, FAQ)
-- Updated footer with Construction EDMS branding and relevant links
+- Updated header navigation for QUADRA (Features, How It Works, Testimonials, FAQ)
+- Updated footer with QUADRA branding and relevant links
 - Changed primary CTA from "Try It Now" to "Get Started" linking to /dashboard
 - Removed GitHub stars and social links from header
-- Updated logo text from "edms" to "Construction EDMS"
+- Updated logo text from "edms" to "QUADRA"
 - Created TODO.md to track development progress
 - Created CHANGELOG.md to track project history
 - Initialized project transformation from theme manager to EDMS
@@ -58,9 +58,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Project name: `edms-next` -> `construction-edms`
 - Project description: Theme customization tool -> Electronic Document Management System
 - Target users: Construction companies, PMC consultants, vendors, subcontractors
-- Updated README.md with Construction EDMS information
+- Updated README.md with QUADRA information
 - Updated package.json with new project details
-- Replaced the legacy `/dashboard` redirect with the first Construction EDMS operations dashboard
+- Replaced the legacy `/dashboard` redirect with the first QUADRA operations dashboard
 - Turned the projects area into the first working core module with create/list/detail behavior and automatic creator assignment
 - Expanded the projects module with live team assignment and role updates, and expanded document control with creation and filterable listings
 - Turned the workflows area from a placeholder queue into an actionable review surface with create, approve, reject, and comment flows

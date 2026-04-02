@@ -74,7 +74,7 @@ export default async function AdminDashboardPage() {
       <EdmsPageHeader
         breadcrumbs={[{ label: "Dashboard", href: "/dashboard" }, { label: "Admin" }]}
         title="Admin dashboard"
-        description="System-level oversight for the live Construction EDMS workspace."
+        description="System-level oversight for the live QUADRA workspace."
       />
 
       <div className="mx-auto flex w-full max-w-7xl flex-1 flex-col gap-6 px-4 py-6 md:px-6 lg:px-8">
@@ -99,7 +99,7 @@ export default async function AdminDashboardPage() {
             <h2 className="text-lg font-semibold">Current admin scope</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
               This admin area now covers system metrics and workspace users. It is intentionally
-              aligned with the active Construction EDMS features instead of exposing dead or
+              aligned with the active QUADRA features instead of exposing dead or
               placeholder links.
             </p>
           </div>

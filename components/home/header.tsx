@@ -63,7 +63,7 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
         <Link href="/">
           <div className="flex items-center gap-2 font-bold">
             <Logo className="size-6" />
-            <span className="hidden lg:block">Construction EDMS</span>
+            <span className="hidden lg:block">QUADRA</span>
           </div>
         </Link>
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-4 md:flex lg:gap-8">

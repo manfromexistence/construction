@@ -1,8 +1,8 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Construction EDMS",
-  description: "Privacy Policy for Construction EDMS.",
+  title: "Privacy Policy | QUADRA",
+  description: "Privacy Policy for QUADRA.",
 };
 
 export default function PrivacyPolicyPage() {

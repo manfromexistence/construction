@@ -3,9 +3,9 @@ import { getTheme } from "@/actions/themes";
 import Editor from "@/components/editor/editor";
 
 export const metadata: Metadata = {
-  title: "Construction EDMS - Theme Studio",
+  title: "QUADRA - Theme Studio",
   description:
-    "Customize your Construction EDMS theme. Modify colors, fonts, and styles in real time to match your workspace brand.",
+    "Customize your QUADRA theme. Modify colors, fonts, and styles in real time to match your workspace brand.",
 };
 
 export default async function EditorPage({ params }: { params: Promise<{ themeId: string[] }> }) {

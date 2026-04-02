@@ -12,7 +12,7 @@ export function Footer() {
           <div className="col-span-2 max-w-md space-y-4">
             <Link href="/" className="flex items-center gap-2 font-bold">
               <Logo className="size-6" />
-              <span>Construction EDMS</span>
+              <span>QUADRA</span>
             </Link>
             <p className="text-muted-foreground text-sm">
               Electronic Document Management System for construction projects. Streamline document
@@ -90,7 +90,7 @@ export function Footer() {
 
         <div className="border-border/40 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row">
           <p className="text-muted-foreground text-xs">
-            &copy; {new Date().getFullYear()} Construction EDMS. All rights reserved.
+            &copy; {new Date().getFullYear()} QUADRA. All rights reserved.
           </p>
           <p className="text-muted-foreground text-xs">
             <Link href="/privacy-policy">Privacy Policy</Link>

@@ -198,7 +198,7 @@ export async function createDocumentWorkflow(
         relatedEntityType: "workflow",
         relatedEntityId: createdWorkflow.id,
         actionUrl: "/dashboard/workflows",
-        emailSubject: `Construction EDMS: review requested for ${documentRecord.documentNumber}`,
+        emailSubject: `QUADRA: review requested for ${documentRecord.documentNumber}`,
       }),
       logEdmsActivity({
         userId: access.id,
@@ -347,7 +347,7 @@ export async function recordWorkflowDecision(
           title: `Document rejected: ${stepRecord.documentNumber}`,
           message: `${stepRecord.documentTitle} was rejected during workflow review.`,
           actionUrl: `/dashboard/documents/${stepRecord.documentId}`,
-          emailSubject: `Construction EDMS: ${stepRecord.documentNumber} rejected`,
+          emailSubject: `QUADRA: ${stepRecord.documentNumber} rejected`,
         };
 
         return;
@@ -404,7 +404,7 @@ export async function recordWorkflowDecision(
           title: `Review requested: ${stepRecord.documentNumber}`,
           message: `${stepRecord.documentTitle} has advanced to ${nextStep.stepName.toLowerCase()}.`,
           actionUrl: "/dashboard/workflows",
-          emailSubject: `Construction EDMS: next review step for ${stepRecord.documentNumber}`,
+          emailSubject: `QUADRA: next review step for ${stepRecord.documentNumber}`,
         };
 
         return;
@@ -439,7 +439,7 @@ export async function recordWorkflowDecision(
         title: `Document approved: ${stepRecord.documentNumber}`,
         message: `${stepRecord.documentTitle} completed the workflow and is now approved.`,
         actionUrl: `/dashboard/documents/${stepRecord.documentId}`,
-        emailSubject: `Construction EDMS: ${stepRecord.documentNumber} approved`,
+        emailSubject: `QUADRA: ${stepRecord.documentNumber} approved`,
       };
     });
 

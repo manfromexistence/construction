@@ -40,7 +40,7 @@ export function GetProDialog({ isOpen, onClose }: GetProDialogProps) {
           <section className="w-full space-y-8 border-r md:w-1/2">
             <ResponsiveDialogHeader className="sm:p-6 sm:pb-0">
               <ResponsiveDialogTitle>Get Pro</ResponsiveDialogTitle>
-              <ResponsiveDialogDescription>{`Unlock all of Construction EDMS's features`}</ResponsiveDialogDescription>
+              <ResponsiveDialogDescription>{`Unlock all of QUADRA's features`}</ResponsiveDialogDescription>
             </ResponsiveDialogHeader>
 
             <div className="space-y-6 px-6">

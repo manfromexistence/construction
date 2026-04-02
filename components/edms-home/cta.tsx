@@ -36,7 +36,7 @@ export function CTA() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mx-auto max-w-[700px] text-primary-foreground/80 md:text-xl"
           >
-            Join construction teams using Construction EDMS to streamline document control,
+            Join construction teams using QUADRA to streamline document control,
             workflows, and collaboration.
           </motion.p>
           <motion.div

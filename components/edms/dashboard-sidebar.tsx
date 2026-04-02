@@ -67,7 +67,7 @@ export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
             <Building2 className="size-5" />
           </div>
           <div className="min-w-0 space-y-1">
-            <p className="truncate font-semibold">Construction EDMS</p>
+            <p className="truncate font-semibold">QUADRA</p>
             <p className="truncate text-xs text-sidebar-foreground/70">
               Project delivery control room
             </p>

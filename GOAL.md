@@ -3,7 +3,7 @@ Project Details
 
 Project Title
 
-Develop a Construction EDMS (Electronic Document Management System) – Web Application
+Develop a QUADRA (Electronic Document Management System) – Web Application
 
 Project Description
 

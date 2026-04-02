@@ -2,13 +2,13 @@
 
 > **Last Updated:** April 1, 2026  
 > **Target Models:** GPT-5.4, GPT-5.4 Pro, GPT-5.4 Thinking, Codex (March 2026+)  
-> **Project:** Construction EDMS (Electronic Document Management System)
+> **Project:** QUADRA (Electronic Document Management System)
 
 ---
 
 ## 🤖 About This Document
 
-This file provides comprehensive guidance for AI agents (particularly GPT-5.4 and Codex) working on the Construction EDMS project. It leverages the latest capabilities of GPT-5.4 including:
+This file provides comprehensive guidance for AI agents (particularly GPT-5.4 and Codex) working on the QUADRA project. It leverages the latest capabilities of GPT-5.4 including:
 
 - **1M token context window** for understanding large codebases
 - **Native computer use** for direct software environment interaction
@@ -20,7 +20,7 @@ This file provides comprehensive guidance for AI agents (particularly GPT-5.4 an
 
 ## 📋 Project Overview
 
-### What is Construction EDMS?
+### What is QUADRA?
 
 Construction is an Electronic Document Management System designed specifically for construction projects. It provides:
 
@@ -716,4 +716,4 @@ npm run db:push
 
 **Target Audience:** GPT-5.4, GPT-5.4 Pro, GPT-5.4 Thinking, Codex, and other advanced AI agents working on this codebase.
 
-**Goal:** Enable AI agents to work autonomously and effectively on the Construction EDMS project with minimal human intervention.
+**Goal:** Enable AI agents to work autonomously and effectively on the QUADRA project with minimal human intervention.

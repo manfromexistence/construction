@@ -25,8 +25,8 @@ export function Header() {
       <div className="flex items-center justify-between gap-2 p-4">
         <div className="flex items-center gap-1">
           <Link href="/" className="flex items-center gap-2">
-            <Logo className="size-6" title="Construction EDMS" />
-            <span className="hidden font-bold md:block">Construction EDMS</span>
+            <Logo className="size-6" title="QUADRA" />
+            <span className="hidden font-bold md:block">QUADRA</span>
           </Link>
         </div>
         <div className="flex items-center gap-3.5">

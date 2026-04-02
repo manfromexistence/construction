@@ -1,6 +1,6 @@
 # CODEX DEPLOYMENT & GOAL COMPLETION PROMPT
 
-## PROJECT: Construction EDMS (Electronic Document Management System)
+## PROJECT: QUADRA (Electronic Document Management System)
 
 ---
 

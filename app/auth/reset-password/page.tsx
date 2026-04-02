@@ -101,7 +101,7 @@ export default function ResetPasswordPage() {
               Choose a new password
             </CardTitle>
             <CardDescription className="text-center">
-              Set a new password for your Construction EDMS account.
+              Set a new password for your QUADRA account.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">

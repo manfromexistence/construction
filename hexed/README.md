@@ -1,4 +1,4 @@
-# Construction EDMS
+# QUADRA
 
 > Electronic Document Management System for Construction Projects
 
@@ -307,4 +307,4 @@ For support, email support@construction-edms.com or join our Slack channel.
 
 ---
 
-**Construction EDMS** - Streamlining construction document management, one project at a time.
+**QUADRA** - Streamlining construction document management, one project at a time.

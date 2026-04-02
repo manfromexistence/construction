@@ -239,13 +239,13 @@ const profileSchema = z.object({
 **Email:** ajju40959@gmail.com  
 **Name:** manfromexistence  
 **Role:** admin ✓  
-**Organization:** Construction EDMS ✓  
+**Organization:** QUADRA ✓  
 **Job Title:** System Administrator  
 **Department:** IT  
 **Phone:** 454545  
 **Is Active:** true  
 
-**Validation Result:** Should pass (role is "admin", organization is "Construction EDMS")
+**Validation Result:** Should pass (role is "admin", organization is "QUADRA")
 
 ---
 

@@ -224,7 +224,7 @@ function getResendFromAddress() {
   const fromAddress = process.env.RESEND_FROM_EMAIL?.trim();
   return fromAddress && fromAddress.length > 0
     ? fromAddress
-    : "Construction EDMS <onboarding@resend.dev>";
+    : "QUADRA <onboarding@resend.dev>";
 }
 
 function toAbsoluteUrl(actionUrl: string | null | undefined) {
@@ -270,7 +270,7 @@ function renderNotificationEmail(input: {
   actionUrl: string | null;
 }) {
   const actionMarkup = input.actionUrl
-    ? `<p style="margin:24px 0 0"><a href="${escapeHtmlAttribute(input.actionUrl)}" style="display:inline-block;border-radius:9999px;background:#0f172a;color:#ffffff;padding:12px 18px;text-decoration:none;font-weight:600">Open in Construction EDMS</a></p>`
+    ? `<p style="margin:24px 0 0"><a href="${escapeHtmlAttribute(input.actionUrl)}" style="display:inline-block;border-radius:9999px;background:#0f172a;color:#ffffff;padding:12px 18px;text-decoration:none;font-weight:600">Open in QUADRA</a></p>`
     : "";
 
   return [
@@ -278,12 +278,12 @@ function renderNotificationEmail(input: {
     '<html lang="en">',
     '<body style="margin:0;padding:32px;background:#f8fafc;font-family:Arial,sans-serif;color:#0f172a">',
     '<div style="margin:0 auto;max-width:640px;border-radius:24px;background:#ffffff;padding:32px;box-shadow:0 18px 50px rgba(15,23,42,0.08)">',
-    '<p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#64748b">Construction EDMS</p>',
+    '<p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#64748b">QUADRA</p>',
     `<h1 style="margin:0 0 16px;font-size:24px;line-height:1.3">${escapeHtml(input.title)}</h1>`,
     `<p style="margin:0 0 16px;font-size:14px;line-height:1.7;color:#334155">Hello ${escapeHtml(input.recipientName)},</p>`,
     `<p style="margin:0;font-size:14px;line-height:1.7;color:#334155">${escapeHtml(input.message)}</p>`,
     actionMarkup,
-    '<p style="margin:24px 0 0;font-size:12px;line-height:1.7;color:#94a3b8">This message was sent by the Construction EDMS notification service.</p>',
+    '<p style="margin:24px 0 0;font-size:12px;line-height:1.7;color:#94a3b8">This message was sent by the QUADRA notification service.</p>',
     "</div>",
     "</body>",
     "</html>",

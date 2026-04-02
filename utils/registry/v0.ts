@@ -348,7 +348,7 @@ export default function Page() {
       {/* Footer */}
       <footer className="border-t border-border py-8">
         <div className="max-w-5xl mx-auto px-6 flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">Built with Construction EDMS</p>
+          <p className="text-sm text-muted-foreground">Built with QUADRA</p>
         </div>
       </footer>
     </main>

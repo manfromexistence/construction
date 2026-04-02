@@ -1,4 +1,4 @@
-# Construction EDMS - Development TODO
+# QUADRA - Development TODO
 
 > Project transformation from theme manager to Electronic Document Management System for construction projects
 
@@ -6,7 +6,7 @@
 
 - [x] Rename project to "construction" (completed: 2026-04-01)
 - [x] Update package.json with new project details (completed: 2026-04-01)
-- [x] Update README.md with Construction EDMS information (completed: 2026-04-01)
+- [x] Update README.md with QUADRA information (completed: 2026-04-01)
 - [x] Create CHANGELOG.md for tracking changes (completed: 2026-04-01)
 - [ ] Update environment variables and configuration
   Direct upload still needs `BLOB_READ_WRITE_TOKEN`, and production email should set `RESEND_FROM_EMAIL`.

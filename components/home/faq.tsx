@@ -8,9 +8,9 @@ import {
 
 const faqs = [
   {
-    question: "What is Construction EDMS?",
+    question: "What is QUADRA?",
     answer:
-      "Construction EDMS is an Electronic Document Management System designed for construction projects. It helps manage documents, workflows, transmittals, and approvals for all project stakeholders.",
+      "QUADRA is an Electronic Document Management System designed for construction projects. It helps manage documents, workflows, transmittals, and approvals for all project stakeholders.",
   },
   {
     question: "Is it free?",

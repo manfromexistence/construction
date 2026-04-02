@@ -1,8 +1,8 @@
-# Construction EDMS - Project Delivery Summary
+# QUADRA - Project Delivery Summary
 
 ## Project Overview
 
-I'm pleased to deliver the Construction EDMS (Electronic Document Management System) - a modern, full-stack web application specifically designed for civil construction project management. This MVP provides a solid foundation for managing documents, workflows, and collaboration between Clients, PMC, Vendors, and Subcontractors.
+I'm pleased to deliver the QUADRA (Electronic Document Management System) - a modern, full-stack web application specifically designed for civil construction project management. This MVP provides a solid foundation for managing documents, workflows, and collaboration between Clients, PMC, Vendors, and Subcontractors.
 
 ## Live Deployment
 
@@ -531,7 +531,7 @@ While this MVP covers all core requirements, here are suggestions for future enh
 
 ## Conclusion
 
-This Construction EDMS MVP successfully delivers all requested features with a modern, scalable architecture. The system is production-ready and can handle real construction projects immediately. The clean, professional UI provides an excellent user experience, and the robust backend ensures data security and reliability.
+This QUADRA MVP successfully delivers all requested features with a modern, scalable architecture. The system is production-ready and can handle real construction projects immediately. The clean, professional UI provides an excellent user experience, and the robust backend ensures data security and reliability.
 
 The application is built with future expansion in mind, using industry-standard technologies and best practices. It's ready to scale to the GCC/UAE market and can easily accommodate additional features as your business grows.
 

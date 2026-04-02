@@ -12,7 +12,7 @@ const testimonials = [
     image: "https://api.dicebear.com/7.x/avataaars/svg?seed=John",
     name: "John Smith",
     tag: "PMC Director",
-    description: `Construction EDMS has transformed how we manage project documents. The workflow system ensures nothing falls through the cracks, and our team loves the real-time notifications.`,
+    description: `QUADRA has transformed how we manage project documents. The workflow system ensures nothing falls through the cracks, and our team loves the real-time notifications.`,
     href: "#",
   },
   {
@@ -33,7 +33,7 @@ const testimonials = [
     image: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
     name: "Emily Rodriguez",
     tag: "Document Controller",
-    description: `Managing thousands of documents across multiple projects used to be overwhelming. Construction EDMS makes it simple with powerful search and filtering.`,
+    description: `Managing thousands of documents across multiple projects used to be overwhelming. QUADRA makes it simple with powerful search and filtering.`,
     href: "#",
   },
   {

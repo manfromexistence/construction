@@ -17,7 +17,7 @@ import { FREE_SUB_FEATURES, PRO_SUB_FEATURES } from "@/utils/subscription";
 import { CheckoutButton } from "./components/checkout-button";
 
 export const metadata: Metadata = {
-  title: "Pricing — Construction EDMS",
+  title: "Pricing — QUADRA",
   robots: "index, follow",
 };
 

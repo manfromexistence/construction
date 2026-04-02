@@ -1,7 +1,7 @@
 /**
  * Database Schema Index
  *
- * This file exports all database schemas for the Construction EDMS.
+ * This file exports all database schemas for the QUADRA.
  * Organized by domain for better maintainability.
  */
 

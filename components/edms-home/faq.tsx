@@ -8,12 +8,12 @@ import {
 
 const faqs = [
   {
-    question: "What is Construction EDMS?",
+    question: "What is QUADRA?",
     answer:
-      "Construction EDMS is an Electronic Document Management System designed specifically for construction projects. It provides document control, workflow management, transmittal tracking, and team collaboration tools.",
+      "QUADRA is an Electronic Document Management System designed specifically for construction projects. It provides document control, workflow management, transmittal tracking, and team collaboration tools.",
   },
   {
-    question: "Who can use Construction EDMS?",
+    question: "Who can use QUADRA?",
     answer:
       "It's built for construction professionals including PMCs, clients, vendors, subcontractors, and project teams who need to manage documents and workflows efficiently.",
   },
@@ -30,7 +30,7 @@ const faqs = [
   {
     question: "Can I integrate with existing tools?",
     answer:
-      "Construction EDMS is designed to work alongside your existing tools with file upload support and flexible workflow configurations.",
+      "QUADRA is designed to work alongside your existing tools with file upload support and flexible workflow configurations.",
   },
 ];
 

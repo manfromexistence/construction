@@ -22,7 +22,7 @@ async function setAdmin() {
     .update(user)
     .set({
       role: "admin",
-      organization: "Construction EDMS",
+      organization: "QUADRA",
       jobTitle: "System Administrator",
       department: "IT",
       isActive: true,

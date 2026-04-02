@@ -474,7 +474,7 @@ export function AuthPanel({
 
         {variant === "page" ? (
           <p className="text-center text-xs leading-6 text-muted-foreground">
-            By continuing, you agree to use Construction EDMS for your project collaboration and
+            By continuing, you agree to use QUADRA for your project collaboration and
             document-control workflow. Theme Studio remains available in{" "}
             <Link href="/editor/theme" className="text-primary hover:underline">
               the editor

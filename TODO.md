@@ -1,4 +1,4 @@
-# Construction EDMS Fixes TODO
+# QUADRA Fixes TODO
 
 > Auto-managed by AI. Updated after every completed or failed task.
 
@@ -22,7 +22,7 @@
 - [x] Add password reset flow with Better Auth reset tokens and Resend email delivery
 - [x] Align settings and dashboard theme navigation with Theme Studio and Theme Library
 - [x] Fix stale production auth URL environment variables and redeploy the live app
-- [x] Redirect legacy `/tweakcn` branding traffic back to the Construction EDMS home page
+- [x] Redirect legacy `/tweakcn` branding traffic back to the QUADRA home page
 - [x] Rebuild and verify the application with `npx tsc --noEmit`, `npm run lint`, and `npm run build`
 
 ## Blocked / Failed
