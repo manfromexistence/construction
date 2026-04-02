@@ -91,9 +91,7 @@ export function ImageCardUpload({
           <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
             {label}
           </label>
-          {helperText ? (
-            <p className="mt-1 text-sm text-muted-foreground">{helperText}</p>
-          ) : null}
+          {helperText ? <p className="mt-1 text-sm text-muted-foreground">{helperText}</p> : null}
         </div>
         {images.length < maxImages ? (
           <Button

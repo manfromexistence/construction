@@ -43,6 +43,13 @@
       "when": 1775040486541,
       "tag": "0005_great_roughhouse",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1775128263519,
+      "tag": "0006_complete_wonder_man",
+      "breakpoints": true
     }
   ]
 }
