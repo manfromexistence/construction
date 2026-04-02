@@ -7,6 +7,7 @@ import { db } from "@/db";
 import { projectMembers, projects } from "@/db/schema/projects";
 import { requireEdmsRole } from "@/lib/edms/rbac";
 import { logError } from "@/lib/shared";
+import { prepareDatabaseUrls } from "@/lib/storage-utils";
 import { type ActionResult, actionError, actionSuccess, ErrorCode } from "@/types/errors";
 
 const projectStatuses = ["active", "on-hold", "completed", "archived"] as const;
@@ -66,6 +67,11 @@ export async function createProject(
     const values = validation.data;
     const now = new Date();
 
+    // Optimize URLs for database storage
+    const optimizedData = prepareDatabaseUrls({
+      images: values.images,
+    });
+
     const [createdProject] = await db
       .insert(projects)
       .values({
@@ -76,7 +82,7 @@ export async function createProject(
         status: values.status,
         startDate: parseOptionalDate(values.startDate),
         endDate: parseOptionalDate(values.endDate),
-        images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
+        images: optimizedData.images || null,
         createdBy: access.id,
         updatedAt: now,
       })

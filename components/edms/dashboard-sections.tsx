@@ -17,6 +17,7 @@ import type {
   DashboardTransmittal,
   DashboardWorkflowItem,
 } from "@/lib/edms/dashboard";
+import { expandImageArray } from "@/lib/storage-utils";
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";

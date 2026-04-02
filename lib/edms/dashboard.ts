@@ -8,6 +8,7 @@ import { activityLog, notifications } from "@/db/schema/notifications";
 import { projects } from "@/db/schema/projects";
 import { transmittals } from "@/db/schema/transmittals";
 import { documentWorkflows, workflowSteps } from "@/db/schema/workflows";
+import { expandStorageUrl, expandImageArray } from "@/lib/storage-utils";
 import type { DashboardSessionUser } from "./session";
 
 export interface DashboardUser {
@@ -309,7 +310,7 @@ export async function getEdmsDashboardData(
         location: project.location,
         status: project.status,
         schedule: formatProjectSchedule(project.startDate, project.endDate, project.updatedAt),
-        images: project.images,
+        images: project.images, // Keep truncated for now, expand in component
       })),
       documents: documentRows.map((document) => ({
         id: String(document.id),
@@ -320,8 +321,8 @@ export async function getEdmsDashboardData(
         revision: document.revision,
         status: document.status,
         uploadedLabel: formatDateLabel(document.uploadedAt, "Uploaded"),
-        images: document.images,
-        fileUrl: document.fileUrl,
+        images: document.images, // Keep truncated for now, expand in component
+        fileUrl: expandStorageUrl(document.fileUrl), // Expand file URL
         fileType: document.fileType,
       })),
       workflowQueue: workflowRows.map((workflow) => ({

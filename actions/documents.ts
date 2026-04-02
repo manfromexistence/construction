@@ -9,6 +9,7 @@ import { projectMembers, projects } from "@/db/schema/projects";
 import { logEdmsActivity, notifyUsers } from "@/lib/edms/notifications";
 import { requireEdmsRole } from "@/lib/edms/rbac";
 import { logError } from "@/lib/shared";
+import { prepareDatabaseUrls } from "@/lib/storage-utils";
 import { type ActionResult, actionError, actionSuccess, ErrorCode } from "@/types/errors";
 
 const documentStatuses = [
@@ -76,6 +77,12 @@ export async function createDocument(
         ? values.documentNumber.trim()
         : await generateDocumentNumber(values.projectId, values.discipline, values.category);
 
+    // Optimize URLs for database storage (saves ~40-60 chars per URL)
+    const optimizedData = prepareDatabaseUrls({
+      fileUrl: values.fileUrl,
+      images: values.images,
+    });
+
     // Insert document
     const [insertedDocument] = await db
       .insert(documents)
@@ -91,10 +98,10 @@ export async function createDocument(
         fileName: values.fileName,
         fileSize: values.fileSize,
         fileType: normalizeOptionalString(values.fileType),
-        fileUrl: values.fileUrl,
+        fileUrl: optimizedData.fileUrl!,
         status: values.status,
         tags: normalizeTags(values.tags),
-        images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
+        images: optimizedData.images || null,
         uploadedBy: access.id,
         updatedBy: access.id,
         updatedAt: now,
