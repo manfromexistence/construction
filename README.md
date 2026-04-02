@@ -1,6 +1,6 @@
 # QUADRA
 
-> Electronic Document Management System for Construction Projects.
+> Electronic Document Management System for Construction Projects
 
 A modern EDMS platform built with Next.js 16, React 19, and TypeScript for managing construction project documentation, workflows, and transmittals.
 
