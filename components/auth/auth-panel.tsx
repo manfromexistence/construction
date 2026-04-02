@@ -163,7 +163,7 @@ export function AuthPanel({
     router.refresh();
   };
 
-  const handleGoogleSignIn = async () => {
+  const _handleGoogleSignIn = async () => {
     setIsGoogleLoading(true);
     try {
       const result = await authClient.signIn.social({
@@ -187,7 +187,7 @@ export function AuthPanel({
     }
   };
 
-  const handleGithubSignIn = async () => {
+  const _handleGithubSignIn = async () => {
     setIsGithubLoading(true);
     try {
       const result = await authClient.signIn.social({
@@ -411,7 +411,8 @@ export function AuthPanel({
           </Button>
         </form>
 
-        {mode !== "forgot" ? (
+        {/* OAuth buttons temporarily disabled */}
+        {/* {mode !== "forgot" ? (
           <>
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -450,7 +451,7 @@ export function AuthPanel({
               </Button>
             </div>
           </>
-        ) : null}
+        ) : null} */}
 
         <div className="border-t pt-6 text-center text-sm">
           {mode === "forgot" ? (
