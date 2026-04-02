@@ -34,6 +34,7 @@ export interface DashboardProject {
   location: string | null;
   status: string;
   schedule: string;
+  images: string | null;
 }
 
 export interface DashboardDocument {
@@ -45,6 +46,7 @@ export interface DashboardDocument {
   revision: string | null;
   status: string;
   uploadedLabel: string;
+  images: string | null;
 }
 
 export interface DashboardWorkflowItem {
@@ -156,6 +158,7 @@ export async function getEdmsDashboardData(
           startDate: projects.startDate,
           endDate: projects.endDate,
           updatedAt: projects.updatedAt,
+          images: projects.images,
         })
         .from(projects)
         .orderBy(desc(projects.updatedAt))
@@ -170,6 +173,7 @@ export async function getEdmsDashboardData(
           revision: documents.revision,
           status: documents.status,
           uploadedAt: documents.uploadedAt,
+          images: documents.images,
         })
         .from(documents)
         .innerJoin(projects, eq(documents.projectId, projects.id))
@@ -301,6 +305,7 @@ export async function getEdmsDashboardData(
         location: project.location,
         status: project.status,
         schedule: formatProjectSchedule(project.startDate, project.endDate, project.updatedAt),
+        images: project.images,
       })),
       documents: documentRows.map((document) => ({
         id: String(document.id),
@@ -311,6 +316,7 @@ export async function getEdmsDashboardData(
         revision: document.revision,
         status: document.status,
         uploadedLabel: formatDateLabel(document.uploadedAt, "Uploaded"),
+        images: document.images,
       })),
       workflowQueue: workflowRows.map((workflow) => ({
         id: String(workflow.id),
@@ -416,6 +422,7 @@ function createFallbackDashboardData(
         location: "Dhaka",
         status: "active",
         schedule: "Updated 01 Apr 2026",
+        images: null,
       },
       {
         id: "fallback-project-2",
@@ -424,6 +431,7 @@ function createFallbackDashboardData(
         location: "Chattogram",
         status: "on-hold",
         schedule: "Updated 31 Mar 2026",
+        images: null,
       },
       {
         id: "fallback-project-3",
@@ -432,6 +440,7 @@ function createFallbackDashboardData(
         location: "Dubai",
         status: "completed",
         schedule: "Closed out 28 Mar 2026",
+        images: null,
       },
     ],
     documents: [
@@ -444,6 +453,7 @@ function createFallbackDashboardData(
         revision: "C",
         status: "under_review",
         uploadedLabel: "Uploaded 01 Apr 2026",
+        images: null,
       },
       {
         id: "fallback-document-2",
@@ -454,6 +464,7 @@ function createFallbackDashboardData(
         revision: "B",
         status: "submitted",
         uploadedLabel: "Uploaded 31 Mar 2026",
+        images: null,
       },
       {
         id: "fallback-document-3",
@@ -464,6 +475,7 @@ function createFallbackDashboardData(
         revision: "A",
         status: "approved",
         uploadedLabel: "Uploaded 30 Mar 2026",
+        images: null,
       },
     ],
     workflowQueue: [

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   EdmsActivityFeed,
@@ -27,6 +28,8 @@ export default async function ProjectDetailPage({
   if (!data) {
     notFound();
   }
+
+  const projectImages = parseImages(data.project.images);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -79,6 +82,40 @@ export default async function ProjectDetailPage({
             </Card>
           ))}
         </section>
+
+        {projectImages.length > 0 ? (
+          <section>
+            <Card className="bg-card/95">
+              <CardHeader className="space-y-1">
+                <CardTitle>Project gallery</CardTitle>
+                <CardDescription>
+                  Visual documentation and site photos for this project.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+                  {projectImages.map((imageUrl, index) => (
+                    <a
+                      key={index}
+                      href={imageUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group relative aspect-square overflow-hidden rounded-xl border border-border/70 bg-muted transition-all hover:shadow-lg"
+                    >
+                      <Image
+                        src={imageUrl}
+                        alt={`${data.project.name} - Image ${index + 1}`}
+                        fill
+                        className="object-cover transition-transform group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 20vw"
+                      />
+                    </a>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </section>
+        ) : null}
 
         <section className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
           <Card className="bg-card/95">
@@ -159,4 +196,14 @@ function OverviewField({ label, value }: { label: string; value: string }) {
       <p className="mt-2 text-sm leading-6">{value}</p>
     </div>
   );
+}
+
+function parseImages(imagesJson: string | null | undefined): string[] {
+  if (!imagesJson) return [];
+  try {
+    const parsed = JSON.parse(imagesJson);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }

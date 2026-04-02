@@ -1,4 +1,13 @@
-import { ArrowRight, BellRing, ClipboardList, FolderKanban, History, Send } from "lucide-react";
+import {
+  ArrowRight,
+  BellRing,
+  ClipboardList,
+  FolderKanban,
+  History,
+  Image as ImageIcon,
+  Send,
+} from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import type {
   DashboardActivityItem,
@@ -38,31 +47,60 @@ export function EdmsProjectList({ projects }: { projects: DashboardProject[] }) 
             description="Create the first project to start routing documents, reviews, and transmittals."
           />
         ) : (
-          projects.map((project) => (
-            <Link
-              key={project.id}
-              href={`/dashboard/projects/${project.id}`}
-              className="rounded-2xl border border-border/70 bg-muted/25 p-4 shadow-sm"
-            >
-              <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
-                <div className="space-y-2">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-medium">{project.name}</p>
-                    <EdmsStatusBadge status={project.status} />
-                  </div>
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-                    {project.projectNumber ? (
-                      <span className="rounded-full bg-background px-2 py-1 font-mono text-xs">
-                        {project.projectNumber}
-                      </span>
-                    ) : null}
-                    <span>{project.location ?? "Location pending"}</span>
+          projects.map((project) => {
+            const images = parseImages(project.images);
+            const thumbnail = images[0];
+
+            return (
+              <Link
+                key={project.id}
+                href={`/dashboard/projects/${project.id}`}
+                className="rounded-2xl border border-border/70 bg-muted/25 p-4 shadow-sm transition-all hover:shadow-md"
+              >
+                <div className="flex gap-4">
+                  {thumbnail ? (
+                    <div className="relative size-20 shrink-0 overflow-hidden rounded-xl border border-border/70 bg-muted">
+                      <Image
+                        src={thumbnail}
+                        alt={project.name}
+                        fill
+                        className="object-cover"
+                        sizes="80px"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex size-20 shrink-0 items-center justify-center rounded-xl border border-dashed border-border/70 bg-muted/50">
+                      <FolderKanban className="size-8 text-muted-foreground/50" />
+                    </div>
+                  )}
+
+                  <div className="flex flex-1 flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="space-y-2">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="font-medium">{project.name}</p>
+                        <EdmsStatusBadge status={project.status} />
+                      </div>
+                      <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+                        {project.projectNumber ? (
+                          <span className="rounded-full bg-background px-2 py-1 font-mono text-xs">
+                            {project.projectNumber}
+                          </span>
+                        ) : null}
+                        <span>{project.location ?? "Location pending"}</span>
+                      </div>
+                      {images.length > 1 ? (
+                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                          <ImageIcon className="size-3" />
+                          <span>{images.length} images</span>
+                        </div>
+                      ) : null}
+                    </div>
+                    <p className="text-sm text-muted-foreground">{project.schedule}</p>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground">{project.schedule}</p>
-              </div>
-            </Link>
-          ))
+              </Link>
+            );
+          })
         )}
       </CardContent>
     </Card>
@@ -99,7 +137,8 @@ export function EdmsDocumentTable({ documents }: { documents: DashboardDocument[
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="px-6">Document</TableHead>
+                <TableHead className="px-6">Preview</TableHead>
+                <TableHead>Document</TableHead>
                 <TableHead>Project</TableHead>
                 <TableHead>Discipline</TableHead>
                 <TableHead>Revision</TableHead>
@@ -108,35 +147,63 @@ export function EdmsDocumentTable({ documents }: { documents: DashboardDocument[
               </TableRow>
             </TableHeader>
             <TableBody>
-              {documents.map((document) => (
-                <TableRow key={document.id}>
-                  <TableCell className="px-6">
-                    <div className="space-y-1">
-                      <Link
-                        href={`/dashboard/documents/${document.id}`}
-                        className="font-medium hover:underline"
-                      >
-                        {document.title}
-                      </Link>
-                      <Link
-                        href={`/dashboard/documents/${document.id}`}
-                        className="font-mono text-xs text-muted-foreground hover:underline"
-                      >
-                        {document.documentNumber}
-                      </Link>
-                    </div>
-                  </TableCell>
-                  <TableCell>{document.projectName}</TableCell>
-                  <TableCell>{document.discipline ?? "General"}</TableCell>
-                  <TableCell>{document.revision ?? "-"}</TableCell>
-                  <TableCell>
-                    <EdmsStatusBadge status={document.status} />
-                  </TableCell>
-                  <TableCell className="px-6 text-muted-foreground">
-                    {document.uploadedLabel}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {documents.map((document) => {
+                const images = parseImages(document.images);
+                const thumbnail = images[0];
+
+                return (
+                  <TableRow key={document.id}>
+                    <TableCell className="px-6">
+                      {thumbnail ? (
+                        <div className="relative size-12 overflow-hidden rounded-lg border border-border/70 bg-muted">
+                          <Image
+                            src={thumbnail}
+                            alt={document.title}
+                            fill
+                            className="object-cover"
+                            sizes="48px"
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex size-12 items-center justify-center rounded-lg border border-dashed border-border/70 bg-muted/50">
+                          <ClipboardList className="size-5 text-muted-foreground/50" />
+                        </div>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <div className="space-y-1">
+                        <Link
+                          href={`/dashboard/documents/${document.id}`}
+                          className="font-medium hover:underline"
+                        >
+                          {document.title}
+                        </Link>
+                        <Link
+                          href={`/dashboard/documents/${document.id}`}
+                          className="font-mono text-xs text-muted-foreground hover:underline"
+                        >
+                          {document.documentNumber}
+                        </Link>
+                        {images.length > 0 ? (
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <ImageIcon className="size-3" />
+                            <span>{images.length}</span>
+                          </div>
+                        ) : null}
+                      </div>
+                    </TableCell>
+                    <TableCell>{document.projectName}</TableCell>
+                    <TableCell>{document.discipline ?? "General"}</TableCell>
+                    <TableCell>{document.revision ?? "-"}</TableCell>
+                    <TableCell>
+                      <EdmsStatusBadge status={document.status} />
+                    </TableCell>
+                    <TableCell className="px-6 text-muted-foreground">
+                      {document.uploadedLabel}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         )}
@@ -375,4 +442,14 @@ function EdmsEmptyState({
       </div>
     </div>
   );
+}
+
+function parseImages(imagesJson: string | null | undefined): string[] {
+  if (!imagesJson) return [];
+  try {
+    const parsed = JSON.parse(imagesJson);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }

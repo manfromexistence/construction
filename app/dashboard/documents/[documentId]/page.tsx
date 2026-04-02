@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EdmsDataState } from "@/components/edms/data-state";
@@ -25,6 +26,7 @@ export default async function DocumentDetailPage({
   }
 
   const isPdfPreview = data.document.fileType?.toLowerCase() === "pdf";
+  const documentImages = parseImages(data.document.images);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -71,31 +73,65 @@ export default async function DocumentDetailPage({
         />
 
         <section className="grid gap-6 xl:grid-cols-[1.1fr_0.9fr]">
-          <Card className="bg-card/95">
-            <CardHeader className="space-y-1">
-              <CardTitle>Document preview</CardTitle>
-              <CardDescription>
-                Review the latest controlled issue directly from the EDMS.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isPdfPreview ? (
-                <iframe
-                  src={data.document.fileUrl}
-                  title={data.document.title}
-                  className="h-[620px] w-full rounded-2xl border border-border/70"
-                />
-              ) : (
-                <div className="rounded-2xl border border-dashed border-border/70 bg-muted/20 p-6">
-                  <p className="font-medium">Inline preview unavailable</p>
-                  <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                    This file type opens in a separate tab. Use the file link above to inspect the
-                    latest issue.
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+          <div className="space-y-6">
+            <Card className="bg-card/95">
+              <CardHeader className="space-y-1">
+                <CardTitle>Document preview</CardTitle>
+                <CardDescription>
+                  Review the latest controlled issue directly from the EDMS.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isPdfPreview ? (
+                  <iframe
+                    src={data.document.fileUrl}
+                    title={data.document.title}
+                    className="h-[620px] w-full rounded-2xl border border-border/70"
+                  />
+                ) : (
+                  <div className="rounded-2xl border border-dashed border-border/70 bg-muted/20 p-6">
+                    <p className="font-medium">Inline preview unavailable</p>
+                    <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                      This file type opens in a separate tab. Use the file link above to inspect the
+                      latest issue.
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {documentImages.length > 0 ? (
+              <Card className="bg-card/95">
+                <CardHeader className="space-y-1">
+                  <CardTitle>Document images</CardTitle>
+                  <CardDescription>
+                    Visual references and preview images for this document.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {documentImages.map((imageUrl, index) => (
+                      <a
+                        key={index}
+                        href={imageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group relative aspect-square overflow-hidden rounded-xl border border-border/70 bg-muted transition-all hover:shadow-lg"
+                      >
+                        <Image
+                          src={imageUrl}
+                          alt={`${data.document.title} - Image ${index + 1}`}
+                          fill
+                          className="object-cover transition-transform group-hover:scale-105"
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            ) : null}
+          </div>
 
           <Card className="bg-card/95">
             <CardHeader className="space-y-1">
@@ -268,4 +304,14 @@ function MetadataRow({ label, value }: { label: string; value: string }) {
       <p className="mt-2 text-sm leading-6">{value}</p>
     </div>
   );
+}
+
+function parseImages(imagesJson: string | null | undefined): string[] {
+  if (!imagesJson) return [];
+  try {
+    const parsed = JSON.parse(imagesJson);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
 }
