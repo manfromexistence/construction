@@ -47,8 +47,7 @@ export async function POST(request: Request) {
   if (!isCatboxConfigured()) {
     return NextResponse.json(
       {
-        error:
-          "File upload service is not available. Please contact support.",
+        error: "File upload service is not available. Please contact support.",
       },
       { status: 503 }
     );
