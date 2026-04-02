@@ -154,50 +154,56 @@ export function EdmsDocumentTable({ documents }: { documents: DashboardDocument[
                 const thumbnail = images[0];
 
                 return (
-                  <DocumentPreviewPopover key={document.id} document={document}>
-                    <TableRow className="cursor-pointer">
-                      <TableCell className="px-6">
-                        {thumbnail ? (
-                          <div className="relative size-12 overflow-hidden rounded-lg border border-border/70 bg-muted">
-                            <Image
-                              src={thumbnail}
-                              alt={document.title}
-                              fill
-                              className="object-cover"
-                              sizes="48px"
-                            />
-                          </div>
-                        ) : (
-                          <div className="flex size-12 items-center justify-center rounded-lg border border-dashed border-border/70 bg-muted/50">
-                            <ClipboardList className="size-5 text-muted-foreground/50" />
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="space-y-1">
-                          <p className="font-medium">{document.title}</p>
-                          <p className="font-mono text-xs text-muted-foreground">
-                            {document.documentNumber}
-                          </p>
-                          {images.length > 0 ? (
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                              <ImageIcon className="size-3" />
-                              <span>{images.length}</span>
+                  <TableRow key={document.id} className="group">
+                    <TableCell className="px-6">
+                      <DocumentPreviewPopover document={document}>
+                        <button type="button" className="cursor-pointer">
+                          {thumbnail ? (
+                            <div className="relative size-12 overflow-hidden rounded-lg border border-border/70 bg-muted transition-all group-hover:shadow-md">
+                              <Image
+                                src={thumbnail}
+                                alt={document.title}
+                                fill
+                                className="object-cover"
+                                sizes="48px"
+                              />
                             </div>
-                          ) : null}
-                        </div>
-                      </TableCell>
-                      <TableCell>{document.projectName}</TableCell>
-                      <TableCell>{document.discipline ?? "General"}</TableCell>
-                      <TableCell>{document.revision ?? "-"}</TableCell>
-                      <TableCell>
-                        <EdmsStatusBadge status={document.status} />
-                      </TableCell>
-                      <TableCell className="px-6 text-muted-foreground">
-                        {document.uploadedLabel}
-                      </TableCell>
-                    </TableRow>
-                  </DocumentPreviewPopover>
+                          ) : (
+                            <div className="flex size-12 items-center justify-center rounded-lg border border-dashed border-border/70 bg-muted/50 transition-all group-hover:bg-muted">
+                              <ClipboardList className="size-5 text-muted-foreground/50" />
+                            </div>
+                          )}
+                        </button>
+                      </DocumentPreviewPopover>
+                    </TableCell>
+                    <TableCell>
+                      <DocumentPreviewPopover document={document}>
+                        <button type="button" className="cursor-pointer text-left">
+                          <div className="space-y-1">
+                            <p className="font-medium hover:underline">{document.title}</p>
+                            <p className="font-mono text-xs text-muted-foreground hover:underline">
+                              {document.documentNumber}
+                            </p>
+                            {images.length > 0 ? (
+                              <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                                <ImageIcon className="size-3" />
+                                <span>{images.length}</span>
+                              </div>
+                            ) : null}
+                          </div>
+                        </button>
+                      </DocumentPreviewPopover>
+                    </TableCell>
+                    <TableCell>{document.projectName}</TableCell>
+                    <TableCell>{document.discipline ?? "General"}</TableCell>
+                    <TableCell>{document.revision ?? "-"}</TableCell>
+                    <TableCell>
+                      <EdmsStatusBadge status={document.status} />
+                    </TableCell>
+                    <TableCell className="px-6 text-muted-foreground">
+                      {document.uploadedLabel}
+                    </TableCell>
+                  </TableRow>
                 );
               })}
             </TableBody>
