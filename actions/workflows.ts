@@ -305,7 +305,7 @@ export async function recordWorkflowDecision(
         .where(eq(workflowSteps.id, stepRecord.id));
 
       revalidateWorkflowPaths(stepRecord.projectId);
-      return actionSuccess({ id: stepRecord.id });
+      return actionSuccess({ workflowId: stepRecord.workflowId });
     }
 
     // Handle approve/reject decision
@@ -471,11 +471,9 @@ export async function recordWorkflowDecision(
         userId: access.id,
         projectId: stepRecord.projectId,
         action:
-          values.decision === "comment"
-            ? "workflow_commented"
-            : values.decision === "approve"
-              ? "workflow_approved"
-              : "workflow_rejected",
+          values.decision === "approve"
+            ? "workflow_approved"
+            : "workflow_rejected",
         entityType: "workflow",
         entityId: stepRecord.workflowId,
         entityName: stepRecord.workflowName,

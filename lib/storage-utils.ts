@@ -139,7 +139,7 @@ export function truncateImageArray(urls: string[]): string {
  * Input: ["imgbb:Z6hL6DGY/img1.png", "imgbb:ABC123/img2.png"]
  * Output: ["https://i.ibb.co/Z6hL6DGY/img1.png", "https://i.ibb.co/ABC123/img2.png"]
  */
-export function expandImageArray(truncatedJson: string | null): string[] {
+export function expandImageArray(truncatedJson: string | null | undefined): string[] {
   if (!truncatedJson) return [];
 
   try {
@@ -175,14 +175,19 @@ export function prepareDatabaseUrls(data: {
   images?: string;
   [key: string]: unknown;
 } {
-  const prepared = { ...data };
+  const { fileUrl, images, ...rest } = data;
+  const prepared: {
+    fileUrl?: string;
+    images?: string;
+    [key: string]: unknown;
+  } = { ...rest };
 
-  if (data.fileUrl) {
-    prepared.fileUrl = truncateStorageUrl(data.fileUrl);
+  if (fileUrl) {
+    prepared.fileUrl = truncateStorageUrl(fileUrl);
   }
 
-  if (data.images && Array.isArray(data.images)) {
-    prepared.images = truncateImageArray(data.images);
+  if (images && Array.isArray(images)) {
+    prepared.images = truncateImageArray(images);
   }
 
   return prepared;
@@ -194,7 +199,7 @@ export function prepareDatabaseUrls(data: {
 export function expandDatabaseUrls<
   T extends {
     fileUrl?: string | null;
-    images?: string | null;
+    images?: string | null | undefined;
     [key: string]: unknown;
   },
 >(

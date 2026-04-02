@@ -42,6 +42,7 @@ export interface ProjectDetailData {
     location: string | null;
     status: string;
     clientName: string | null;
+    images: string | null;
     startLabel: string;
     endLabel: string;
     metrics: {
@@ -86,6 +87,7 @@ export async function getProjectDetailData(
           startDate: projects.startDate,
           endDate: projects.endDate,
           clientName: userTable.name,
+          images: projects.images,
         })
         .from(projects)
         .leftJoin(userTable, eq(projects.clientId, userTable.id))
@@ -135,6 +137,9 @@ export async function getProjectDetailData(
           revision: documents.revision,
           status: documents.status,
           uploadedAt: documents.uploadedAt,
+          images: documents.images,
+          fileUrl: documents.fileUrl,
+          fileType: documents.fileType,
         })
         .from(documents)
         .innerJoin(projects, eq(documents.projectId, projects.id))
@@ -197,6 +202,7 @@ export async function getProjectDetailData(
         location: project.location,
         status: project.status,
         clientName: project.clientName,
+        images: project.images,
         startLabel: project.startDate ? formatAbsoluteDate(project.startDate) : "Not scheduled",
         endLabel: project.endDate ? formatAbsoluteDate(project.endDate) : "Open-ended",
         metrics: [
@@ -246,6 +252,9 @@ export async function getProjectDetailData(
         revision: document.revision,
         status: document.status,
         uploadedLabel: formatDateLabel(document.uploadedAt, "Uploaded"),
+        images: document.images,
+        fileUrl: document.fileUrl,
+        fileType: document.fileType,
       })),
       workflows: workflowRows.map((workflow) => ({
         id: String(workflow.id),
@@ -297,6 +306,7 @@ async function createFallbackProjectDetail(
       location: project.location,
       status: project.status,
       clientName: "Client assignment pending",
+      images: null,
       startLabel: project.schedule,
       endLabel: "Schedule managed after migration",
       metrics: [

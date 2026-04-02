@@ -25,6 +25,7 @@ export interface DocumentDetailData {
     fileName: string;
     fileType: string | null;
     fileUrl: string;
+    images: string | null;
     tags: string[];
     uploadedLabel: string;
   };
@@ -85,6 +86,7 @@ export async function getDocumentDetailData(
           fileName: documents.fileName,
           fileType: documents.fileType,
           fileUrl: documents.fileUrl,
+          images: documents.images,
           tags: documents.tags,
           uploadedAt: documents.uploadedAt,
         })
@@ -172,6 +174,7 @@ export async function getDocumentDetailData(
         fileName: document.fileName,
         fileType: document.fileType,
         fileUrl: document.fileUrl,
+        images: document.images,
         tags: parseTags(document.tags),
         uploadedLabel: formatDateLabel(document.uploadedAt, "Uploaded"),
       },
@@ -245,6 +248,7 @@ async function createFallbackDocumentDetail(
       fileName: "sample-document.pdf",
       fileType: "pdf",
       fileUrl: "https://example.com/sample-document.pdf",
+      images: null,
       tags: ["sample", "fallback"],
       uploadedLabel: document.uploadedLabel,
     },
