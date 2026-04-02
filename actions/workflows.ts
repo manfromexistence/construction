@@ -470,10 +470,7 @@ export async function recordWorkflowDecision(
       logEdmsActivity({
         userId: access.id,
         projectId: stepRecord.projectId,
-        action:
-          values.decision === "approve"
-            ? "workflow_approved"
-            : "workflow_rejected",
+        action: values.decision === "approve" ? "workflow_approved" : "workflow_rejected",
         entityType: "workflow",
         entityId: stepRecord.workflowId,
         entityName: stepRecord.workflowName,
