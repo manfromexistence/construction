@@ -20,6 +20,7 @@ const createTransmittalSchema = z.object({
   ccUserId: z.string().trim().optional(),
   documentIds: z.array(z.string().uuid()).min(1, "Select at least one document."),
   notes: z.string().trim().max(2000).optional(),
+  images: z.array(z.string().url()).optional(),
 });
 
 const acknowledgeTransmittalSchema = z.object({
@@ -62,6 +63,7 @@ export async function createTransmittal(
           createdAt: now,
           sentAt: now,
           notes: normalizeOptionalString(values.notes),
+          images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
         })
         .returning({ id: transmittals.id });
 

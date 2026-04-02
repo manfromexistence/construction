@@ -36,6 +36,7 @@ export const transmittals = pgTable("transmittals", {
   // Additional metadata
   notes: text("notes"),
   customFields: text("custom_fields"), // JSON object
+  images: text("images"), // JSON array of image URLs from ImgBB
 });
 
 /**

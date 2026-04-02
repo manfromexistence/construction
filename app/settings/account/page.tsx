@@ -28,6 +28,7 @@ export default async function AccountPage({
       jobTitle: userTable.jobTitle,
       phone: userTable.phone,
       department: userTable.department,
+      image: userTable.image,
       notificationPreferences: userTable.notificationPreferences,
     })
     .from(userTable)
@@ -63,6 +64,7 @@ export default async function AccountPage({
           jobTitle: user?.jobTitle ?? "",
           phone: user?.phone ?? "",
           department: user?.department ?? "",
+          image: user?.image ?? session.user.image ?? "",
         }}
       />
       <NotificationPreferencesForm defaultValues={notificationPreferences} />

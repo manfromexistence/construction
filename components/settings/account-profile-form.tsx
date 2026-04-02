@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
+import { AvatarUpload } from "./avatar-upload";
 
 const profileRoles = ["admin", "client", "pmc", "vendor", "subcontractor", "user"] as const;
 
@@ -37,6 +38,7 @@ const profileSchema = z.object({
   jobTitle: z.string().trim(),
   phone: z.string().trim(),
   department: z.string().trim(),
+  image: z.string().url().optional().or(z.literal("")),
 });
 
 type ProfileValues = z.infer<typeof profileSchema>;
@@ -90,6 +92,20 @@ export function AccountProfileForm({ defaultValues }: { defaultValues: ProfileVa
       <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <AvatarUpload
+                    currentAvatar={field.value}
+                    onAvatarChange={field.onChange}
+                  />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             <div className="grid gap-4 md:grid-cols-2">
               <FormField
                 control={form.control}

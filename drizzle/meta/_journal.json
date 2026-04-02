@@ -50,6 +50,13 @@
       "when": 1775128263519,
       "tag": "0006_complete_wonder_man",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1775128465569,
+      "tag": "0007_yellow_mysterio",
+      "breakpoints": true
     }
   ]
 }

@@ -30,6 +30,7 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { Textarea } from "../ui/textarea";
+import { ImageCardUpload } from "./image-card-upload";
 
 const transmittalCreateSchema = z.object({
   projectId: z.string().min(1, "Project selection is required."),
@@ -40,6 +41,7 @@ const transmittalCreateSchema = z.object({
   ccUserId: z.string().trim(),
   documentIds: z.array(z.string()).min(1, "Select at least one document."),
   notes: z.string().trim(),
+  images: z.array(z.string().url()).optional(),
 });
 
 type TransmittalCreateValues = z.infer<typeof transmittalCreateSchema>;
@@ -53,6 +55,7 @@ const defaultValues: TransmittalCreateValues = {
   ccUserId: "",
   documentIds: [],
   notes: "",
+  images: [],
 };
 
 interface TransmittalCreateSheetProps {
@@ -122,6 +125,7 @@ export function TransmittalCreateSheet({
         ccUserId: values.ccUserId,
         documentIds: values.documentIds,
         notes: values.notes,
+        images: values.images,
       });
 
       if (!result.success) {
@@ -361,6 +365,23 @@ export function TransmittalCreateSheet({
                   <FormControl>
                     <Textarea className="min-h-24 resize-none" {...field} />
                   </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="images"
+              render={({ field }) => (
+                <FormItem>
+                  <ImageCardUpload
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="Transmittal images"
+                    helperText="Add cover sheets, sign-offs, or supporting visuals (up to 5 images)"
+                    maxImages={5}
+                  />
                   <FormMessage />
                 </FormItem>
               )}

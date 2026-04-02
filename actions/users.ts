@@ -19,6 +19,7 @@ const updateProfileSchema = z.object({
   jobTitle: z.string().trim().max(255).optional(),
   phone: z.string().trim().max(50).optional(),
   department: z.string().trim().max(255).optional(),
+  image: z.string().url().optional().or(z.literal("")),
 });
 
 const notificationPreferencesSchema = z.object({
@@ -54,6 +55,7 @@ export async function updateUserProfile(input: UpdateProfileInput): Promise<Acti
         jobTitle: normalizeOptional(values.jobTitle),
         phone: normalizeOptional(values.phone),
         department: normalizeOptional(values.department),
+        image: normalizeOptional(values.image),
         updatedAt: new Date(),
       })
       .where(eq(userTable.id, userId));
