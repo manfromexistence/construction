@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS=\"--no-experimental-webstorage\" next dev --turbopack",
-    "build": "cross-env NODE_OPTIONS=\"--no-experimental-webstorage --max-old-space-size=4096\" next build --turbopack",
+    "build": "cross-env NODE_OPTIONS=\"--max-old-space-size=4096\" next build --turbopack",
     "start": "next start",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
