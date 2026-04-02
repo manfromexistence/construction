@@ -25,6 +25,7 @@ const createProjectSchema = z
     status: z.enum(projectStatuses),
     startDate: z.string().optional(),
     endDate: z.string().optional(),
+    images: z.array(z.string().url()).optional(),
   })
   .refine(
     (value) => {
@@ -75,6 +76,7 @@ export async function createProject(
         status: values.status,
         startDate: parseOptionalDate(values.startDate),
         endDate: parseOptionalDate(values.endDate),
+        images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
         createdBy: access.id,
         updatedAt: now,
       })

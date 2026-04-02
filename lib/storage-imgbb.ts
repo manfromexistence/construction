@@ -60,9 +60,7 @@ export async function uploadImageToImgBB(input: {
   const data = await response.json();
 
   if (!data.success) {
-    throw new Error(
-      data.error?.message || "ImgBB upload failed with unknown error"
-    );
+    throw new Error(data.error?.message || "ImgBB upload failed with unknown error");
   }
 
   const imageData = data.data;

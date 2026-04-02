@@ -30,6 +30,7 @@ import {
 } from "../ui/sheet";
 import { Textarea } from "../ui/textarea";
 import { DocumentFileUpload } from "./document-file-upload";
+import { ImageCardUpload } from "./image-card-upload";
 
 const documentStatuses = [
   "draft",
@@ -55,6 +56,7 @@ const documentCreateSchema = z.object({
   fileType: z.string().trim(),
   fileUrl: z.string().trim().url("Enter a valid file URL."),
   tags: z.string().trim(),
+  images: z.array(z.string().url()).optional(),
 });
 
 type DocumentCreateValues = z.infer<typeof documentCreateSchema>;
@@ -74,6 +76,7 @@ const defaultValues: DocumentCreateValues = {
   fileType: "pdf",
   fileUrl: "",
   tags: "",
+  images: [],
 };
 
 export function DocumentCreateSheet({
@@ -366,6 +369,23 @@ export function DocumentCreateSheet({
                     <Input placeholder="podium, structural, issue-for-review" {...field} />
                   </FormControl>
                   <FormDescription>Comma-separated tags for quick retrieval.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="images"
+              render={({ field }) => (
+                <FormItem>
+                  <ImageCardUpload
+                    value={field.value}
+                    onChange={field.onChange}
+                    label="Document images"
+                    helperText="Add preview images, diagrams, or visual references (up to 5 images)"
+                    maxImages={5}
+                  />
                   <FormMessage />
                 </FormItem>
               )}

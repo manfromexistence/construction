@@ -15,6 +15,7 @@ export const projects = pgTable("projects", {
   status: varchar("status", { length: 50 }).notNull().default("active"), // active, on-hold, completed, archived
   startDate: timestamp("start_date"),
   endDate: timestamp("end_date"),
+  images: text("images"), // JSON array of image URLs from ImgBB
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at").notNull().defaultNow(),
   createdBy: text("created_by").references(() => users.id, { onDelete: "set null" }),

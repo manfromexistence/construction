@@ -29,6 +29,7 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import { Textarea } from "../ui/textarea";
+import { ImageCardUpload } from "./image-card-upload";
 
 const projectStatuses = ["active", "on-hold", "completed", "archived"] as const;
 
@@ -44,6 +45,7 @@ const createProjectFormSchema = z.object({
   status: z.enum(projectStatuses),
   startDate: z.string(),
   endDate: z.string(),
+  images: z.array(z.string().url()).optional(),
 });
 
 type CreateProjectFormValues = z.infer<typeof createProjectFormSchema>;
@@ -56,6 +58,7 @@ const defaultValues: CreateProjectFormValues = {
   status: "active",
   startDate: "",
   endDate: "",
+  images: [],
 };
 
 export function ProjectCreateSheet() {
@@ -235,6 +238,23 @@ export function ProjectCreateSheet() {
                         {...field}
                       />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="images"
+                render={({ field }) => (
+                  <FormItem>
+                    <ImageCardUpload
+                      value={field.value}
+                      onChange={field.onChange}
+                      label="Project images"
+                      helperText="Add site photos, design mockups, or visual references (up to 5 images)"
+                      maxImages={5}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

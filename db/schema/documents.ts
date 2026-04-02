@@ -39,6 +39,7 @@ export const documents = pgTable("documents", {
   // Metadata
   tags: text("tags"), // JSON array of tags
   customFields: text("custom_fields"), // JSON object for custom metadata
+  images: text("images"), // JSON array of image URLs from ImgBB
 
   // Timestamps and user tracking
   uploadedAt: timestamp("uploaded_at").notNull().defaultNow(),

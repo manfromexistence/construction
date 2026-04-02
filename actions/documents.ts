@@ -35,6 +35,7 @@ const createDocumentSchema = z.object({
   fileType: z.string().trim().max(50, "File type is too long."),
   fileUrl: z.string().trim().url("Enter a valid file URL."),
   tags: z.string().trim().max(500, "Tags are too long."),
+  images: z.array(z.string().url()).optional(),
 });
 
 const createDocumentVersionSchema = z.object({
@@ -93,6 +94,7 @@ export async function createDocument(
           fileUrl: values.fileUrl,
           status: values.status,
           tags: normalizeTags(values.tags),
+          images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
           uploadedBy: access.id,
           updatedBy: access.id,
           updatedAt: now,

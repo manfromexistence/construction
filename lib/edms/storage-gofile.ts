@@ -59,9 +59,7 @@ export async function uploadEdmsFile(input: {
   const uploadData = await uploadResponse.json();
 
   if (uploadData.status !== "ok") {
-    throw new Error(
-      uploadData.message || "GoFile upload failed with unknown error"
-    );
+    throw new Error(uploadData.message || "GoFile upload failed with unknown error");
   }
 
   const fileData = uploadData.data;
