@@ -4,7 +4,7 @@ import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
 import { auth } from "@/lib/auth";
 import { EDMS_ROLE_ORDER, normalizeEdmsRole } from "@/lib/edms/rbac";
-import { isBlobStorageConfigured, uploadEdmsFile } from "@/lib/edms/storage";
+import { isGoFileConfigured, uploadEdmsFile } from "@/lib/edms/storage-gofile";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 const MINIMUM_UPLOAD_ROLE = "vendor";
@@ -36,11 +36,11 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!isBlobStorageConfigured()) {
+  if (!isGoFileConfigured()) {
     return NextResponse.json(
       {
         error:
-          "Direct file upload is not configured yet. Add BLOB_READ_WRITE_TOKEN, or keep using external file URLs in the form.",
+          "Direct file upload is not configured yet. Add GOFILE_API_TOKEN, or keep using external file URLs in the form.",
       },
       { status: 503 }
     );

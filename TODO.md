@@ -4,17 +4,21 @@
 
 ## In Progress
 
-- [ ] 1. Add BLOB_READ_WRITE_TOKEN to .env.example
-- [ ] 2. Verify live Resend sender configuration with `RESEND_FROM_EMAIL`
+- [ ] 1. Add GOFILE_API_TOKEN and IMGBB_API_KEY to Vercel environment variables
+- [ ] 2. Test file upload integration with GoFile
+- [ ] 3. Test avatar upload with ImgBB
 
 ## Pending
 
-- [ ] 3. Test file upload integration end to end with `BLOB_READ_WRITE_TOKEN`
-- [ ] 4. Verify database schema and migrations in the live environment
-- [ ] 5. Run comprehensive EDMS feature tests against production auth, onboarding, create, search, workflow, and transmittal flows
+- [ ] 4. Verify live Resend sender configuration with `RESEND_FROM_EMAIL`
+- [ ] 5. Verify database schema and migrations in the live environment
+- [ ] 6. Run comprehensive EDMS feature tests against production auth, onboarding, create, search, workflow, and transmittal flows
 
 ## Completed
 
+- [x] ~~Comment out Google and GitHub OAuth buttons from auth panel~~ ✅ (completed: 2026-04-02)
+- [x] ~~Replace Vercel Blob with GoFile (unlimited storage) for documents~~ ✅ (completed: 2026-04-02)
+- [x] ~~Add ImgBB integration for user avatars and images~~ ✅ (completed: 2026-04-02)
 - [x] Fix avatar 404 errors by restoring placeholder avatar assets
 - [x] Fix project creation sheet padding
 - [x] Create admin dashboard and admin users management pages
