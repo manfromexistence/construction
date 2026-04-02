@@ -47,6 +47,8 @@ export interface DashboardDocument {
   status: string;
   uploadedLabel: string;
   images: string | null;
+  fileUrl: string;
+  fileType: string | null;
 }
 
 export interface DashboardWorkflowItem {
@@ -174,6 +176,8 @@ export async function getEdmsDashboardData(
           status: documents.status,
           uploadedAt: documents.uploadedAt,
           images: documents.images,
+          fileUrl: documents.fileUrl,
+          fileType: documents.fileType,
         })
         .from(documents)
         .innerJoin(projects, eq(documents.projectId, projects.id))
@@ -317,6 +321,8 @@ export async function getEdmsDashboardData(
         status: document.status,
         uploadedLabel: formatDateLabel(document.uploadedAt, "Uploaded"),
         images: document.images,
+        fileUrl: document.fileUrl,
+        fileType: document.fileType,
       })),
       workflowQueue: workflowRows.map((workflow) => ({
         id: String(workflow.id),
@@ -454,6 +460,8 @@ function createFallbackDashboardData(
         status: "under_review",
         uploadedLabel: "Uploaded 01 Apr 2026",
         images: null,
+        fileUrl: "#",
+        fileType: "application/pdf",
       },
       {
         id: "fallback-document-2",
@@ -465,6 +473,8 @@ function createFallbackDashboardData(
         status: "submitted",
         uploadedLabel: "Uploaded 31 Mar 2026",
         images: null,
+        fileUrl: "#",
+        fileType: "application/pdf",
       },
       {
         id: "fallback-document-3",
@@ -476,6 +486,8 @@ function createFallbackDashboardData(
         status: "approved",
         uploadedLabel: "Uploaded 30 Mar 2026",
         images: null,
+        fileUrl: "#",
+        fileType: "application/pdf",
       },
     ],
     workflowQueue: [

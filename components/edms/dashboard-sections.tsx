@@ -20,6 +20,7 @@ import type {
 import { Button } from "../ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import { DocumentPreviewPopover } from "./document-preview-popover";
 import { EdmsStatusBadge, formatEdmsLabel } from "./status-badge";
 
 export function EdmsProjectList({ projects }: { projects: DashboardProject[] }) {
@@ -152,56 +153,50 @@ export function EdmsDocumentTable({ documents }: { documents: DashboardDocument[
                 const thumbnail = images[0];
 
                 return (
-                  <TableRow key={document.id}>
-                    <TableCell className="px-6">
-                      {thumbnail ? (
-                        <div className="relative size-12 overflow-hidden rounded-lg border border-border/70 bg-muted">
-                          <Image
-                            src={thumbnail}
-                            alt={document.title}
-                            fill
-                            className="object-cover"
-                            sizes="48px"
-                          />
-                        </div>
-                      ) : (
-                        <div className="flex size-12 items-center justify-center rounded-lg border border-dashed border-border/70 bg-muted/50">
-                          <ClipboardList className="size-5 text-muted-foreground/50" />
-                        </div>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-1">
-                        <Link
-                          href={`/dashboard/documents/${document.id}`}
-                          className="font-medium hover:underline"
-                        >
-                          {document.title}
-                        </Link>
-                        <Link
-                          href={`/dashboard/documents/${document.id}`}
-                          className="font-mono text-xs text-muted-foreground hover:underline"
-                        >
-                          {document.documentNumber}
-                        </Link>
-                        {images.length > 0 ? (
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <ImageIcon className="size-3" />
-                            <span>{images.length}</span>
+                  <DocumentPreviewPopover key={document.id} document={document}>
+                    <TableRow className="cursor-pointer">
+                      <TableCell className="px-6">
+                        {thumbnail ? (
+                          <div className="relative size-12 overflow-hidden rounded-lg border border-border/70 bg-muted">
+                            <Image
+                              src={thumbnail}
+                              alt={document.title}
+                              fill
+                              className="object-cover"
+                              sizes="48px"
+                            />
                           </div>
-                        ) : null}
-                      </div>
-                    </TableCell>
-                    <TableCell>{document.projectName}</TableCell>
-                    <TableCell>{document.discipline ?? "General"}</TableCell>
-                    <TableCell>{document.revision ?? "-"}</TableCell>
-                    <TableCell>
-                      <EdmsStatusBadge status={document.status} />
-                    </TableCell>
-                    <TableCell className="px-6 text-muted-foreground">
-                      {document.uploadedLabel}
-                    </TableCell>
-                  </TableRow>
+                        ) : (
+                          <div className="flex size-12 items-center justify-center rounded-lg border border-dashed border-border/70 bg-muted/50">
+                            <ClipboardList className="size-5 text-muted-foreground/50" />
+                          </div>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <div className="space-y-1">
+                          <p className="font-medium">{document.title}</p>
+                          <p className="font-mono text-xs text-muted-foreground">
+                            {document.documentNumber}
+                          </p>
+                          {images.length > 0 ? (
+                            <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                              <ImageIcon className="size-3" />
+                              <span>{images.length}</span>
+                            </div>
+                          ) : null}
+                        </div>
+                      </TableCell>
+                      <TableCell>{document.projectName}</TableCell>
+                      <TableCell>{document.discipline ?? "General"}</TableCell>
+                      <TableCell>{document.revision ?? "-"}</TableCell>
+                      <TableCell>
+                        <EdmsStatusBadge status={document.status} />
+                      </TableCell>
+                      <TableCell className="px-6 text-muted-foreground">
+                        {document.uploadedLabel}
+                      </TableCell>
+                    </TableRow>
+                  </DocumentPreviewPopover>
                 );
               })}
             </TableBody>
