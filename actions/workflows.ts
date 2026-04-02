@@ -147,44 +147,45 @@ export async function createDocumentWorkflow(
 
     const now = new Date();
 
-    const [createdWorkflow] = await db.transaction(async (tx) => {
-      const [insertedWorkflow] = await tx
-        .insert(documentWorkflows)
-        .values({
-          documentId: values.documentId,
-          workflowName: values.workflowName,
-          currentStep: 1,
-          totalSteps: workflowStepDefinitions.length,
-          status: "in_progress",
-          startedAt: now,
-          createdBy: access.id,
-        })
-        .returning({ id: documentWorkflows.id });
+    // Insert workflow
+    const [insertedWorkflow] = await db
+      .insert(documentWorkflows)
+      .values({
+        documentId: values.documentId,
+        workflowName: values.workflowName,
+        currentStep: 1,
+        totalSteps: workflowStepDefinitions.length,
+        status: "in_progress",
+        startedAt: now,
+        createdBy: access.id,
+      })
+      .returning({ id: documentWorkflows.id });
 
-      await tx.insert(workflowSteps).values(
-        workflowStepDefinitions.map((step) => ({
-          workflowId: insertedWorkflow.id,
-          stepNumber: step.stepNumber,
-          stepName: step.stepName,
-          assignedTo: step.assignedTo,
-          assignedRole: step.assignedRole,
-          status: step.status,
-          startedAt: step.status === "in_progress" ? now : null,
-          dueDate: parseOptionalDate(values.dueDate),
-        }))
-      );
+    // Insert workflow steps
+    await db.insert(workflowSteps).values(
+      workflowStepDefinitions.map((step) => ({
+        workflowId: insertedWorkflow.id,
+        stepNumber: step.stepNumber,
+        stepName: step.stepName,
+        assignedTo: step.assignedTo,
+        assignedRole: step.assignedRole,
+        status: step.status,
+        startedAt: step.status === "in_progress" ? now : null,
+        dueDate: parseOptionalDate(values.dueDate),
+      }))
+    );
 
-      await tx
-        .update(documents)
-        .set({
-          status: "under_review",
-          updatedAt: now,
-          updatedBy: access.id,
-        })
-        .where(eq(documents.id, values.documentId));
+    // Update document status
+    await db
+      .update(documents)
+      .set({
+        status: "under_review",
+        updatedAt: now,
+        updatedBy: access.id,
+      })
+      .where(eq(documents.id, values.documentId));
 
-      return [insertedWorkflow];
-    });
+    const createdWorkflow = insertedWorkflow;
 
     await Promise.allSettled([
       notifyUsers({
@@ -285,75 +286,75 @@ export async function recordWorkflowDecision(
       );
     }
 
-    await db.transaction(async (tx) => {
-      if (values.decision === "comment") {
-        await tx.insert(documentComments).values({
-          documentId: stepRecord.documentId,
-          userId: access.id,
-          comment: values.comments ?? "",
-          commentType: "review",
-          updatedAt: now,
-        });
+    // Handle comment-only decision
+    if (values.decision === "comment") {
+      await db.insert(documentComments).values({
+        documentId: stepRecord.documentId,
+        userId: access.id,
+        comment: values.comments ?? "",
+        commentType: "review",
+        updatedAt: now,
+      });
 
-        await tx
-          .update(workflowSteps)
-          .set({
-            action: "comment",
-            comments: mergeComments(stepRecord.stepComments, values.comments),
-          })
-          .where(eq(workflowSteps.id, stepRecord.id));
-
-        return;
-      }
-
-      const resolvedStepStatus = values.decision === "approve" ? "approved" : "rejected";
-
-      await tx
+      await db
         .update(workflowSteps)
         .set({
-          status: resolvedStepStatus,
-          action: values.decision,
+          action: "comment",
           comments: mergeComments(stepRecord.stepComments, values.comments),
-          completedAt: now,
         })
         .where(eq(workflowSteps.id, stepRecord.id));
 
-      if (values.decision === "reject") {
-        await tx
-          .update(documentWorkflows)
-          .set({
-            status: "rejected",
-            completedAt: now,
-          })
-          .where(eq(documentWorkflows.id, stepRecord.workflowId));
+      revalidateWorkflowPaths(stepRecord.projectId);
+      return actionSuccess({ id: stepRecord.id });
+    }
 
-        await tx
-          .update(documents)
-          .set({
-            status: "rejected",
-            rejectedAt: now,
-            rejectedBy: access.id,
-            updatedAt: now,
-            updatedBy: access.id,
-          })
-          .where(eq(documents.id, stepRecord.documentId));
+    // Handle approve/reject decision
+    const resolvedStepStatus = values.decision === "approve" ? "approved" : "rejected";
 
-        notificationEffect = {
-          userIds: [stepRecord.createdBy, stepRecord.uploadedBy].filter(
-            (userId) => userId !== access.id
-          ),
-          preferenceKey: "approvalDecision",
-          type: "document_rejected",
-          title: `Document rejected: ${stepRecord.documentNumber}`,
-          message: `${stepRecord.documentTitle} was rejected during workflow review.`,
-          actionUrl: `/dashboard/documents/${stepRecord.documentId}`,
-          emailSubject: `QUADRA: ${stepRecord.documentNumber} rejected`,
-        };
+    await db
+      .update(workflowSteps)
+      .set({
+        status: resolvedStepStatus,
+        action: values.decision,
+        comments: mergeComments(stepRecord.stepComments, values.comments),
+        completedAt: now,
+      })
+      .where(eq(workflowSteps.id, stepRecord.id));
 
-        return;
-      }
+    if (values.decision === "reject") {
+      await db
+        .update(documentWorkflows)
+        .set({
+          status: "rejected",
+          completedAt: now,
+        })
+        .where(eq(documentWorkflows.id, stepRecord.workflowId));
 
-      const nextStepRows = await tx
+      await db
+        .update(documents)
+        .set({
+          status: "rejected",
+          rejectedAt: now,
+          rejectedBy: access.id,
+          updatedAt: now,
+          updatedBy: access.id,
+        })
+        .where(eq(documents.id, stepRecord.documentId));
+
+      notificationEffect = {
+        userIds: [stepRecord.createdBy, stepRecord.uploadedBy].filter(
+          (userId) => userId !== access.id
+        ),
+        preferenceKey: "approvalDecision",
+        type: "document_rejected",
+        title: `Document rejected: ${stepRecord.documentNumber}`,
+        message: `${stepRecord.documentTitle} was rejected during workflow review.`,
+        actionUrl: `/dashboard/documents/${stepRecord.documentId}`,
+        emailSubject: `QUADRA: ${stepRecord.documentNumber} rejected`,
+      };
+    } else {
+      // Handle approve decision - check for next step
+      const nextStepRows = await db
         .select({
           id: workflowSteps.id,
           assignedTo: workflowSteps.assignedTo,
@@ -372,7 +373,8 @@ export async function recordWorkflowDecision(
       const [nextStep] = nextStepRows;
 
       if (nextStep) {
-        await tx
+        // Advance to next step
+        await db
           .update(workflowSteps)
           .set({
             status: "in_progress",
@@ -380,7 +382,7 @@ export async function recordWorkflowDecision(
           })
           .where(eq(workflowSteps.id, nextStep.id));
 
-        await tx
+        await db
           .update(documentWorkflows)
           .set({
             currentStep: stepRecord.currentStep + 1,
@@ -388,7 +390,7 @@ export async function recordWorkflowDecision(
           })
           .where(eq(documentWorkflows.id, stepRecord.workflowId));
 
-        await tx
+        await db
           .update(documents)
           .set({
             status: "under_review",
@@ -406,42 +408,41 @@ export async function recordWorkflowDecision(
           actionUrl: "/dashboard/workflows",
           emailSubject: `QUADRA: next review step for ${stepRecord.documentNumber}`,
         };
+      } else {
+        // No next step - workflow is complete and approved
+        await db
+          .update(documentWorkflows)
+          .set({
+            currentStep: stepRecord.totalSteps,
+            status: "approved",
+            completedAt: now,
+          })
+          .where(eq(documentWorkflows.id, stepRecord.workflowId));
 
-        return;
+        await db
+          .update(documents)
+          .set({
+            status: "approved",
+            approvedAt: now,
+            approvedBy: access.id,
+            updatedAt: now,
+            updatedBy: access.id,
+          })
+          .where(eq(documents.id, stepRecord.documentId));
+
+        notificationEffect = {
+          userIds: [stepRecord.createdBy, stepRecord.uploadedBy].filter(
+            (userId) => userId !== access.id
+          ),
+          preferenceKey: "approvalDecision",
+          type: "document_approved",
+          title: `Document approved: ${stepRecord.documentNumber}`,
+          message: `${stepRecord.documentTitle} completed the workflow and is now approved.`,
+          actionUrl: `/dashboard/documents/${stepRecord.documentId}`,
+          emailSubject: `QUADRA: ${stepRecord.documentNumber} approved`,
+        };
       }
-
-      await tx
-        .update(documentWorkflows)
-        .set({
-          currentStep: stepRecord.totalSteps,
-          status: "approved",
-          completedAt: now,
-        })
-        .where(eq(documentWorkflows.id, stepRecord.workflowId));
-
-      await tx
-        .update(documents)
-        .set({
-          status: "approved",
-          approvedAt: now,
-          approvedBy: access.id,
-          updatedAt: now,
-          updatedBy: access.id,
-        })
-        .where(eq(documents.id, stepRecord.documentId));
-
-      notificationEffect = {
-        userIds: [stepRecord.createdBy, stepRecord.uploadedBy].filter(
-          (userId) => userId !== access.id
-        ),
-        preferenceKey: "approvalDecision",
-        type: "document_approved",
-        title: `Document approved: ${stepRecord.documentNumber}`,
-        message: `${stepRecord.documentTitle} completed the workflow and is now approved.`,
-        actionUrl: `/dashboard/documents/${stepRecord.documentId}`,
-        emailSubject: `QUADRA: ${stepRecord.documentNumber} approved`,
-      };
-    });
+    }
 
     let notificationPromise: Promise<void>;
 

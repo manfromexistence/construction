@@ -48,42 +48,43 @@ export async function createTransmittal(
       (userId): userId is string => Boolean(userId && userId !== access.id)
     );
 
-    const [createdTransmittal] = await db.transaction(async (tx) => {
-      const [insertedTransmittal] = await tx
-        .insert(transmittals)
-        .values({
-          projectId: values.projectId,
-          transmittalNumber: values.transmittalNumber,
-          subject: values.subject,
-          description: normalizeOptionalString(values.description),
-          sentFrom: access.id,
-          sentTo: JSON.stringify([values.recipientUserId]),
-          ccTo: values.ccUserId ? JSON.stringify([values.ccUserId]) : null,
-          status: "sent",
-          createdAt: now,
-          sentAt: now,
-          notes: normalizeOptionalString(values.notes),
-          images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
-        })
-        .returning({ id: transmittals.id });
+    // Insert transmittal
+    const [insertedTransmittal] = await db
+      .insert(transmittals)
+      .values({
+        projectId: values.projectId,
+        transmittalNumber: values.transmittalNumber,
+        subject: values.subject,
+        description: normalizeOptionalString(values.description),
+        sentFrom: access.id,
+        sentTo: JSON.stringify([values.recipientUserId]),
+        ccTo: values.ccUserId ? JSON.stringify([values.ccUserId]) : null,
+        status: "sent",
+        createdAt: now,
+        sentAt: now,
+        notes: normalizeOptionalString(values.notes),
+        images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
+      })
+      .returning({ id: transmittals.id });
 
-      await tx.insert(transmittalDocuments).values(
-        values.documentIds.map((documentId) => ({
-          transmittalId: insertedTransmittal.id,
-          documentId,
-        }))
-      );
+    // Insert transmittal documents
+    await db.insert(transmittalDocuments).values(
+      values.documentIds.map((documentId) => ({
+        transmittalId: insertedTransmittal.id,
+        documentId,
+      }))
+    );
 
-      await tx
-        .update(documents)
-        .set({
-          updatedAt: now,
-          updatedBy: access.id,
-        })
-        .where(eq(documents.projectId, values.projectId));
+    // Update documents
+    await db
+      .update(documents)
+      .set({
+        updatedAt: now,
+        updatedBy: access.id,
+      })
+      .where(eq(documents.projectId, values.projectId));
 
-      return [insertedTransmittal];
-    });
+    const createdTransmittal = insertedTransmittal;
 
     await Promise.allSettled([
       notifyUsers({

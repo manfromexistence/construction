@@ -76,44 +76,43 @@ export async function createDocument(
         ? values.documentNumber.trim()
         : await generateDocumentNumber(values.projectId, values.discipline, values.category);
 
-    const [createdDocument] = await db.transaction(async (tx) => {
-      const [insertedDocument] = await tx
-        .insert(documents)
-        .values({
-          projectId: values.projectId,
-          documentNumber,
-          title: values.title,
-          description: normalizeOptionalString(values.description),
-          discipline: normalizeOptionalString(values.discipline),
-          category: normalizeOptionalString(values.category),
-          version: values.version,
-          revision: normalizeOptionalString(values.revision),
-          fileName: values.fileName,
-          fileSize: values.fileSize,
-          fileType: normalizeOptionalString(values.fileType),
-          fileUrl: values.fileUrl,
-          status: values.status,
-          tags: normalizeTags(values.tags),
-          images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
-          uploadedBy: access.id,
-          updatedBy: access.id,
-          updatedAt: now,
-        })
-        .returning({ id: documents.id });
-
-      await tx.insert(documentVersions).values({
-        documentId: insertedDocument.id,
+    // Insert document
+    const [insertedDocument] = await db
+      .insert(documents)
+      .values({
+        projectId: values.projectId,
+        documentNumber,
+        title: values.title,
+        description: normalizeOptionalString(values.description),
+        discipline: normalizeOptionalString(values.discipline),
+        category: normalizeOptionalString(values.category),
         version: values.version,
+        revision: normalizeOptionalString(values.revision),
         fileName: values.fileName,
-        fileUrl: values.fileUrl,
         fileSize: values.fileSize,
-        changeDescription: "Initial issue",
+        fileType: normalizeOptionalString(values.fileType),
+        fileUrl: values.fileUrl,
+        status: values.status,
+        tags: normalizeTags(values.tags),
+        images: values.images && values.images.length > 0 ? JSON.stringify(values.images) : null,
         uploadedBy: access.id,
-      });
+        updatedBy: access.id,
+        updatedAt: now,
+      })
+      .returning({ id: documents.id });
 
-      return [insertedDocument];
+    // Insert initial version
+    await db.insert(documentVersions).values({
+      documentId: insertedDocument.id,
+      version: values.version,
+      fileName: values.fileName,
+      fileUrl: values.fileUrl,
+      fileSize: values.fileSize,
+      changeDescription: "Initial issue",
+      uploadedBy: access.id,
     });
 
+    const createdDocument = insertedDocument;
     const recipientIds = await getProjectMemberUserIds(values.projectId, access.id);
 
     await Promise.allSettled([
@@ -198,31 +197,29 @@ export async function createDocumentVersion(
       );
     }
 
-    await db.transaction(async (tx) => {
-      await tx
-        .update(documents)
-        .set({
-          version: values.version,
-          revision: normalizeOptionalString(values.revision),
-          fileName: values.fileName,
-          fileSize: values.fileSize,
-          fileType: normalizeOptionalString(values.fileType),
-          fileUrl: values.fileUrl,
-          status: values.status,
-          updatedAt: now,
-          updatedBy: access.id,
-        })
-        .where(eq(documents.id, values.documentId));
-
-      await tx.insert(documentVersions).values({
-        documentId: values.documentId,
+    await db
+      .update(documents)
+      .set({
         version: values.version,
+        revision: normalizeOptionalString(values.revision),
         fileName: values.fileName,
-        fileUrl: values.fileUrl,
         fileSize: values.fileSize,
-        changeDescription: values.changeDescription,
-        uploadedBy: access.id,
-      });
+        fileType: normalizeOptionalString(values.fileType),
+        fileUrl: values.fileUrl,
+        status: values.status,
+        updatedAt: now,
+        updatedBy: access.id,
+      })
+      .where(eq(documents.id, values.documentId));
+
+    await db.insert(documentVersions).values({
+      documentId: values.documentId,
+      version: values.version,
+      fileName: values.fileName,
+      fileUrl: values.fileUrl,
+      fileSize: values.fileSize,
+      changeDescription: values.changeDescription,
+      uploadedBy: access.id,
     });
 
     const recipientIds = await getProjectMemberUserIds(documentRecord.projectId, access.id);
