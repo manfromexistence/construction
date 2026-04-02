@@ -14,6 +14,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getProjectDetailData } from "@/lib/edms/projects";
 import { normalizeEdmsRole } from "@/lib/edms/rbac";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
+import { expandImageArray } from "@/lib/storage-utils";
 
 export default async function ProjectDetailPage({
   params,
@@ -29,7 +30,7 @@ export default async function ProjectDetailPage({
     notFound();
   }
 
-  const projectImages = parseImages(data.project.images);
+  const projectImages = expandImageArray(data.project.images);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -196,14 +197,4 @@ function OverviewField({ label, value }: { label: string; value: string }) {
       <p className="mt-2 text-sm leading-6">{value}</p>
     </div>
   );
-}
-
-function parseImages(imagesJson: string | null | undefined): string[] {
-  if (!imagesJson) return [];
-  try {
-    const parsed = JSON.parse(imagesJson);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
 }

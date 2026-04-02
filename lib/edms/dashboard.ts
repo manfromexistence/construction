@@ -8,7 +8,7 @@ import { activityLog, notifications } from "@/db/schema/notifications";
 import { projects } from "@/db/schema/projects";
 import { transmittals } from "@/db/schema/transmittals";
 import { documentWorkflows, workflowSteps } from "@/db/schema/workflows";
-import { expandStorageUrl, expandImageArray } from "@/lib/storage-utils";
+import { expandImageArray, expandStorageUrl } from "@/lib/storage-utils";
 import type { DashboardSessionUser } from "./session";
 
 export interface DashboardUser {

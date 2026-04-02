@@ -1,6 +1,6 @@
 /**
  * Storage URL Optimization Utilities
- * 
+ *
  * Minimize database storage by storing only file IDs instead of full URLs.
  * Reconstruct full URLs on the client side.
  */
@@ -83,19 +83,19 @@ export function buildTelegramUrl(filePath: string): string {
  */
 export function truncateStorageUrl(url: string): string {
   if (!url || !url.startsWith("http")) return url;
-  
+
   if (url.includes("i.ibb.co")) {
     return `imgbb:${extractImgBBId(url)}`;
   }
-  
+
   if (url.includes("catbox.moe")) {
     return `catbox:${extractCatboxId(url)}`;
   }
-  
+
   if (url.includes("api.telegram.org/file/bot")) {
     return `tg:${extractTelegramPath(url)}`;
   }
-  
+
   return url; // Unknown service, store as-is
 }
 
@@ -104,23 +104,23 @@ export function truncateStorageUrl(url: string): string {
  */
 export function expandStorageUrl(truncatedUrl: string): string {
   if (!truncatedUrl) return "";
-  
+
   if (truncatedUrl.startsWith("imgbb:")) {
     return buildImgBBUrl(truncatedUrl.replace("imgbb:", ""));
   }
-  
+
   if (truncatedUrl.startsWith("catbox:")) {
     return buildCatboxUrl(truncatedUrl.replace("catbox:", ""));
   }
-  
+
   if (truncatedUrl.startsWith("tg:")) {
     return buildTelegramUrl(truncatedUrl.replace("tg:", ""));
   }
-  
+
   if (truncatedUrl.startsWith("http")) {
     return truncatedUrl; // Already full URL
   }
-  
+
   return truncatedUrl;
 }
 
@@ -141,7 +141,7 @@ export function truncateImageArray(urls: string[]): string {
  */
 export function expandImageArray(truncatedJson: string | null): string[] {
   if (!truncatedJson) return [];
-  
+
   try {
     const parsed = JSON.parse(truncatedJson);
     if (!Array.isArray(parsed)) return [];
@@ -176,26 +176,30 @@ export function prepareDatabaseUrls(data: {
   [key: string]: unknown;
 } {
   const prepared = { ...data };
-  
+
   if (data.fileUrl) {
     prepared.fileUrl = truncateStorageUrl(data.fileUrl);
   }
-  
+
   if (data.images && Array.isArray(data.images)) {
     prepared.images = truncateImageArray(data.images);
   }
-  
+
   return prepared;
 }
 
 /**
  * Batch expand URLs from database query
  */
-export function expandDatabaseUrls<T extends {
-  fileUrl?: string | null;
-  images?: string | null;
-  [key: string]: unknown;
-}>(data: T): T & {
+export function expandDatabaseUrls<
+  T extends {
+    fileUrl?: string | null;
+    images?: string | null;
+    [key: string]: unknown;
+  },
+>(
+  data: T
+): T & {
   fileUrl: string;
   images: string[];
 } {

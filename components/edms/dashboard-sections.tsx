@@ -50,7 +50,7 @@ export function EdmsProjectList({ projects }: { projects: DashboardProject[] }) 
           />
         ) : (
           projects.map((project) => {
-            const images = parseImages(project.images);
+            const images = expandImageArray(project.images);
             const thumbnail = images[0];
 
             return (
@@ -150,7 +150,7 @@ export function EdmsDocumentTable({ documents }: { documents: DashboardDocument[
             </TableHeader>
             <TableBody>
               {documents.map((document) => {
-                const images = parseImages(document.images);
+                const images = expandImageArray(document.images);
                 const thumbnail = images[0];
 
                 return (
@@ -207,6 +207,8 @@ export function EdmsDocumentTable({ documents }: { documents: DashboardDocument[
     </Card>
   );
 }
+
+// Helper function removed - now using expandImageArray from storage-utils
 
 export function EdmsWorkflowQueue({ items }: { items: DashboardWorkflowItem[] }) {
   return (
@@ -438,14 +440,4 @@ function EdmsEmptyState({
       </div>
     </div>
   );
-}
-
-function parseImages(imagesJson: string | null | undefined): string[] {
-  if (!imagesJson) return [];
-  try {
-    const parsed = JSON.parse(imagesJson);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
 }

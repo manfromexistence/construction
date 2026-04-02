@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getDocumentDetailData } from "@/lib/edms/document-detail";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
+import { expandImageArray } from "@/lib/storage-utils";
 
 export default async function DocumentDetailPage({
   params,
@@ -26,7 +27,7 @@ export default async function DocumentDetailPage({
   }
 
   const isPdfPreview = data.document.fileType?.toLowerCase() === "pdf";
-  const documentImages = parseImages(data.document.images);
+  const documentImages = expandImageArray(data.document.images);
 
   return (
     <div className="flex flex-1 flex-col">
@@ -304,14 +305,4 @@ function MetadataRow({ label, value }: { label: string; value: string }) {
       <p className="mt-2 text-sm leading-6">{value}</p>
     </div>
   );
-}
-
-function parseImages(imagesJson: string | null | undefined): string[] {
-  if (!imagesJson) return [];
-  try {
-    const parsed = JSON.parse(imagesJson);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch {
-    return [];
-  }
 }
