@@ -261,7 +261,7 @@ Add to your `.env` file:
 
 ```env
 # ImgBB for unlimited image storage
-IMGBB_API_KEY="your_imgbb_api_key_here"
+IMGBB="your_imgbb_api_key_here"
 
 # GoFile for unlimited document storage
 GOFILE_API_TOKEN="your_gofile_token_here"

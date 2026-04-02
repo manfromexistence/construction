@@ -4,7 +4,7 @@
 
 ## In Progress
 
-- [ ] 1. Add GOFILE_API_TOKEN and IMGBB_API_KEY to Vercel environment variables
+- [ ] 1. Add GOFILE_API_TOKEN and IMGBB to Vercel environment variables
 - [ ] 2. Test file upload integration with GoFile
 - [ ] 3. Test avatar upload with ImgBB
 

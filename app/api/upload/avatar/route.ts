@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   if (!isImgBBConfigured()) {
     return NextResponse.json(
       {
-        error: "Image upload is not configured yet. Add IMGBB_API_KEY to enable avatar uploads.",
+        error: "Image upload is not configured yet. Add IMGBB to enable avatar uploads.",
       },
       { status: 503 }
     );

@@ -14,7 +14,7 @@ GOFILE_API_TOKEN=your_token_from_gofile.io
 
 ### 2. ImgBB (Image Storage)
 ```
-IMGBB_API_KEY=your_key_from_api.imgbb.com
+IMGBB=your_key_from_api.imgbb.com
 ```
 - Sign up at https://api.imgbb.com/
 - Get API key from dashboard
@@ -32,7 +32,7 @@ RESEND_FROM_EMAIL=your-verified-email@domain.com
 ### Add to Vercel via CLI:
 ```bash
 vercel env add GOFILE_API_TOKEN
-vercel env add IMGBB_API_KEY
+vercel env add IMGBB
 vercel env add RESEND_FROM_EMAIL
 ```
 

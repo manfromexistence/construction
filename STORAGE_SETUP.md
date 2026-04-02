@@ -48,7 +48,7 @@ This application uses **100% FREE unlimited storage** for all file uploads:
 3. Get your API key from the dashboard
 4. Add to `.env`:
    ```
-   IMGBB_API_KEY="your_api_key_here"
+   IMGBB="your_api_key_here"
    ```
 
 **Features:**
@@ -90,7 +90,7 @@ Add these to your `.env` file:
 GOFILE_API_TOKEN="your_gofile_token"
 
 # ImgBB for image storage (UNLIMITED FREE)
-IMGBB_API_KEY="your_imgbb_key"
+IMGBB="your_imgbb_key"
 ```
 
 ---
@@ -151,7 +151,7 @@ import { ImageCardUpload } from "@/components/edms/image-card-upload";
 If you were previously using Vercel Blob storage:
 
 1. Remove `BLOB_READ_WRITE_TOKEN` from environment variables
-2. Add `GOFILE_API_TOKEN` and `IMGBB_API_KEY`
+2. Add `GOFILE_API_TOKEN` and `IMGBB`
 3. Existing file URLs will continue to work
 4. New uploads will use GoFile/ImgBB
 

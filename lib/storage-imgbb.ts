@@ -11,7 +11,7 @@ export interface UploadedImage {
 }
 
 export function isImgBBConfigured() {
-  return Boolean(process.env.IMGBB_API_KEY);
+  return Boolean(process.env.IMGBB);
 }
 
 export async function uploadImageToImgBB(input: {
@@ -20,12 +20,12 @@ export async function uploadImageToImgBB(input: {
   expiration?: number; // in seconds, 60-15552000
 }): Promise<UploadedImage> {
   if (!isImgBBConfigured()) {
-    throw new Error("IMGBB_API_KEY is not configured.");
+    throw new Error("IMGBB is not configured.");
   }
 
-  const apiKey = process.env.IMGBB_API_KEY;
+  const apiKey = process.env.IMGBB;
   if (!apiKey) {
-    throw new Error("IMGBB_API_KEY is not configured.");
+    throw new Error("IMGBB is not configured.");
   }
 
   // Convert file to base64
