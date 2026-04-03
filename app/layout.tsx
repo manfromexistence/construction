@@ -1,3 +1,4 @@
+import "@/lib/localstorage-polyfill";
 import type { Metadata, Viewport } from "next";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Suspense } from "react";
