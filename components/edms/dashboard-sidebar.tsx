@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import type { DashboardUser } from "@/lib/edms/dashboard";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
@@ -31,6 +32,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "../ui/sidebar";
+import { SearchCommand } from "./search-command";
 import { formatEdmsLabel } from "./status-badge";
 
 const PRIMARY_NAVIGATION = [
@@ -64,11 +66,7 @@ export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
           className="flex items-center gap-3 rounded-2xl border border-sidebar-border/80 bg-sidebar-accent/40 p-3"
         >
           <div className="flex size-10 items-center justify-center rounded-2xl bg-sidebar-primary text-sidebar-primary-foreground shadow-sm">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 256 256"
-              className="size-6"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="size-6">
               <rect width="256" height="256" fill="none" />
               <line
                 x1="208"
