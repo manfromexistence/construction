@@ -6,10 +6,10 @@
   "author": "Construction Team",
   "license": "MIT",
   "scripts": {
-    "dev": "bun --bun next dev --turbopack",
-    "build": "bun --bun next build --turbopack",
+    "dev": "bun --bun next dev",
+    "build": "bun --bun next build",
     "build:local": "cross-env SILENT_BUILD=true NODE_OPTIONS=\"--max-old-space-size=4096\" bun --bun next build",
-    "start": "next start",
+    "start": "bun --bun next start",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
@@ -20,7 +20,7 @@
     "db:studio": "drizzle-kit studio",
     "generate-theme-registry": "tsx scripts/generate-theme-registry.ts && tsx scripts/generate-registry.ts",
     "minify-live-preview": "pnpm dlx terser public/live-preview.js -o public/live-preview.min.js -c -m",
-    "prebuild": "pnpm generate-theme-registry",
+    "prebuild": "cross-env SILENT_BUILD=true pnpm generate-theme-registry",
     "postbuild": "pnpm minify-live-preview",
     "prepare": "husky"
   },
