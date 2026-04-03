@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { DashboardUser } from "@/lib/edms/dashboard";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
@@ -57,105 +57,111 @@ const SECONDARY_NAVIGATION = [
 
 export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
   const pathname = usePathname();
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  // Keyboard shortcut for search
+  useEffect(() => {
+    const down = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setSearchOpen((open) => !open);
+      }
+    };
+
+    document.addEventListener("keydown", down);
+    return () => document.removeEventListener("keydown", down);
+  }, []);
 
   return (
-    <Sidebar variant="inset" collapsible="offcanvas">
-      <SidebarHeader className="gap-3 border-b border-sidebar-border/80 px-3 py-4">
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-3 rounded-2xl border border-sidebar-border/80 bg-sidebar-accent/40 p-3"
-        >
-          <div className="flex size-10 items-center justify-center rounded-2xl bg-sidebar-primary text-sidebar-primary-foreground shadow-sm">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="size-6">
-              <rect width="256" height="256" fill="none" />
-              <line
-                x1="208"
-                y1="128"
-                x2="207.8"
-                y2="128.2"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="24"
-              />
-              <line
-                x1="168.2"
-                y1="167.8"
-                x2="128"
-                y2="208"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="24"
-              />
-              <line
-                x1="192"
-                y1="40"
-                x2="115.8"
-                y2="116.2"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="24"
-              />
-              <line
-                x1="76.2"
-                y1="155.8"
-                x2="40"
-                y2="192"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeWidth="24"
-              />
-              <circle cx="188" cy="148" r="24" fill="none" stroke="currentColor" strokeWidth="24" />
-              <circle cx="96" cy="136" r="24" fill="none" stroke="currentColor" strokeWidth="24" />
-            </svg>
-          </div>
-          <div className="min-w-0 space-y-1">
-            <p className="truncate text-lg font-bold">QUADRA</p>
-            <p className="truncate text-xs text-sidebar-foreground/70">
-              Document Management System
-            </p>
-          </div>
-        </Link>
-        <div className="flex flex-wrap gap-2 px-1">
-          <Badge variant="secondary" className="rounded-full">
-            {formatEdmsLabel(user.role)}
-          </Badge>
-          {user.organization ? (
-            <Badge variant="outline" className="rounded-full border-sidebar-border">
-              {user.organization}
+    <>
+      <Sidebar variant="inset" collapsible="offcanvas">
+        <SidebarHeader className="gap-3 border-b border-sidebar-border/80 px-3 py-4">
+          <Link
+            href="/dashboard"
+            className="flex items-center gap-3 rounded-2xl border border-sidebar-border/80 bg-sidebar-accent/40 p-3"
+          >
+            <div className="flex size-10 items-center justify-center rounded-2xl bg-sidebar-primary text-sidebar-primary-foreground shadow-sm">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" className="size-6">
+                <rect width="256" height="256" fill="none" />
+                <line
+                  x1="208"
+                  y1="128"
+                  x2="207.8"
+                  y2="128.2"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="24"
+                />
+                <line
+                  x1="168.2"
+                  y1="167.8"
+                  x2="128"
+                  y2="208"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="24"
+                />
+                <line
+                  x1="192"
+                  y1="40"
+                  x2="115.8"
+                  y2="116.2"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="24"
+                />
+                <line
+                  x1="76.2"
+                  y1="155.8"
+                  x2="40"
+                  y2="192"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeWidth="24"
+                />
+                <circle cx="188" cy="148" r="24" fill="none" stroke="currentColor" strokeWidth="24" />
+                <circle cx="96" cy="136" r="24" fill="none" stroke="currentColor" strokeWidth="24" />
+              </svg>
+            </div>
+            <div className="min-w-0 space-y-1">
+              <p className="truncate text-lg font-bold">QUADRA</p>
+              <p className="truncate text-xs text-sidebar-foreground/70">
+                Document Management System
+              </p>
+            </div>
+          </Link>
+
+          {/* Search Command Button */}
+          <Button
+            variant="outline"
+            className="w-full justify-start gap-2 border-sidebar-border bg-sidebar-accent/40 text-sidebar-foreground hover:bg-sidebar-accent"
+            onClick={() => setSearchOpen(true)}
+          >
+            <Search className="size-4" />
+            <span className="flex-1 text-left text-sm">Search workspace...</span>
+            <kbd className="pointer-events-none hidden h-5 select-none items-center gap-1 rounded border border-sidebar-border bg-sidebar px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex">
+              <span className="text-xs">⌘</span>K
+            </kbd>
+          </Button>
+
+          <div className="flex flex-wrap gap-2 px-1">
+            <Badge variant="secondary" className="rounded-full">
+              {formatEdmsLabel(user.role)}
             </Badge>
-          ) : null}
-        </div>
-      </SidebarHeader>
+            {user.organization ? (
+              <Badge variant="outline" className="rounded-full border-sidebar-border">
+                {user.organization}
+              </Badge>
+            ) : null}
+          </div>
+        </SidebarHeader>
 
-      <SidebarContent className="px-2 py-3">
-        <SidebarGroup>
-          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {PRIMARY_NAVIGATION.map((item) => (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isNavItemActive(pathname, item.href)}
-                    tooltip={item.title}
-                  >
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        {user.role === "admin" && (
+        <SidebarContent className="px-2 py-3">
           <SidebarGroup>
-            <SidebarGroupLabel>Administration</SidebarGroupLabel>
+            <SidebarGroupLabel>Workspace</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                {ADMIN_NAVIGATION.map((item) => (
+                {PRIMARY_NAVIGATION.map((item) => (
                   <SidebarMenuItem key={item.href}>
                     <SidebarMenuButton
                       asChild
@@ -172,57 +178,84 @@ export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>
-        )}
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Platform</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {SECONDARY_NAVIGATION.map((item) => (
-                <SidebarMenuItem key={item.href}>
-                  <SidebarMenuButton
-                    asChild
-                    isActive={isNavItemActive(pathname, item.href)}
-                    tooltip={item.title}
-                  >
-                    <Link href={item.href}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
+          {user.role === "admin" && (
+            <SidebarGroup>
+              <SidebarGroupLabel>Administration</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {ADMIN_NAVIGATION.map((item) => (
+                    <SidebarMenuItem key={item.href}>
+                      <SidebarMenuButton
+                        asChild
+                        isActive={isNavItemActive(pathname, item.href)}
+                        tooltip={item.title}
+                      >
+                        <Link href={item.href}>
+                          <item.icon />
+                          <span>{item.title}</span>
+                        </Link>
+                      </SidebarMenuButton>
+                    </SidebarMenuItem>
+                  ))}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          )}
 
-      <SidebarFooter className="border-t border-sidebar-border/80 p-3">
-        <div className="rounded-2xl border border-sidebar-border/80 bg-sidebar-accent/40 p-3">
-          <div className="flex items-center gap-3">
-            <Avatar className="size-10 border border-sidebar-border/80">
-              <AvatarImage src={user.image ?? ""} alt={user.name} />
-              <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
-            </Avatar>
-            <div className="min-w-0">
-              <p className="truncate text-sm font-medium">{user.name}</p>
-              <p className="truncate text-xs text-sidebar-foreground/70">{user.email}</p>
+          <SidebarGroup>
+            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {SECONDARY_NAVIGATION.map((item) => (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={isNavItemActive(pathname, item.href)}
+                      tooltip={item.title}
+                    >
+                      <Link href={item.href}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+
+        <SidebarFooter className="border-t border-sidebar-border/80 p-3">
+          <div className="rounded-2xl border border-sidebar-border/80 bg-sidebar-accent/40 p-3">
+            <div className="flex items-center gap-3">
+              <Avatar className="size-10 border border-sidebar-border/80">
+                <AvatarImage src={user.image ?? ""} alt={user.name} />
+                <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+              </Avatar>
+              <div className="min-w-0">
+                <p className="truncate text-sm font-medium">{user.name}</p>
+                <p className="truncate text-xs text-sidebar-foreground/70">{user.email}</p>
+              </div>
             </div>
+            <Button
+              variant="outline"
+              className="mt-3 w-full justify-start border-sidebar-border bg-transparent"
+              asChild
+            >
+              <Link href="/settings">
+                <Settings className="size-4" />
+                Account settings
+              </Link>
+            </Button>
           </div>
-          <Button
-            variant="outline"
-            className="mt-3 w-full justify-start border-sidebar-border bg-transparent"
-            asChild
-          >
-            <Link href="/settings">
-              <Settings className="size-4" />
-              Account settings
-            </Link>
-          </Button>
-        </div>
-      </SidebarFooter>
-      <SidebarRail />
-    </Sidebar>
+        </SidebarFooter>
+        <SidebarRail />
+      </Sidebar>
+
+      {/* Search Command Dialog */}
+      <SearchCommand open={searchOpen} onOpenChange={setSearchOpen} />
+    </>
   );
 }
 

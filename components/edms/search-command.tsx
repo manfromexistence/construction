@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  BellRing,
-  FileStack,
-  FolderKanban,
-  Loader2,
-  Search,
-  Send,
-  Workflow,
-} from "lucide-react";
+import { BellRing, FileStack, FolderKanban, Loader2, Search, Send, Workflow } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Badge } from "@/components/ui/badge";
@@ -47,7 +39,13 @@ const CATEGORY_LABELS = {
   notification: "Notifications",
 } as const;
 
-export function SearchCommand({ open, onOpenChange }: { open: boolean; onOpenChange: (open: boolean) => void }) {
+export function SearchCommand({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const router = useRouter();
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
