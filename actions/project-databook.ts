@@ -1,13 +1,13 @@
-"use server";
+﻿"use server";
 
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { documents } from "@/db/schema/documents";
 import { projects } from "@/db/schema/projects";
-import { type ActionResponse, actionError, actionSuccess } from "@/lib/action-response";
+import { actionError, actionSuccess } from "@/types/errors";
+import type { ActionResult } from "@/types/errors";
 import { canManageEdmsContent } from "@/lib/edms/rbac";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
-import { uploadToCatbox } from "@/lib/edms/storage-catbox";
 import { mergePDFsWithCover } from "@/lib/pdf-merger";
 import { expandStorageUrl } from "@/lib/storage-utils";
 
@@ -22,9 +22,32 @@ interface DataBookDocument {
   fileName: string;
 }
 
+async function uploadPDFToCatbox(pdfBuffer: Buffer, fileName: string): Promise<{ success: boolean; url: string }> {
+  try {
+    const formData = new FormData();
+    formData.append("reqtype", "fileupload");
+    formData.append("fileToUpload", new Blob([pdfBuffer], { type: "application/pdf" }), fileName);
+
+    const response = await fetch("https://catbox.moe/user/api.php", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!response.ok) {
+      return { success: false, url: "" };
+    }
+
+    const fileUrl = await response.text();
+    return { success: true, url: fileUrl.trim() };
+  } catch (error) {
+    console.error("Catbox upload error:", error);
+    return { success: false, url: "" };
+  }
+}
+
 export async function getProjectDataBookDocuments(
   projectId: string
-): Promise<ActionResponse<{ documents: DataBookDocument[]; projectName: string }>> {
+): Promise<ActionResult<{ documents: DataBookDocument[]; projectName: string }>> {
   try {
     const access = await getRequiredDashboardSessionUser();
 
@@ -79,7 +102,7 @@ export async function getProjectDataBookDocuments(
 export async function generateProjectDataBook(
   projectId: string,
   documentIds: string[]
-): Promise<ActionResponse<{ downloadUrl: string; fileName: string }>> {
+): Promise<ActionResult<{ downloadUrl: string; fileName: string }>> {
   try {
     const access = await getRequiredDashboardSessionUser();
 
@@ -109,7 +132,9 @@ export async function generateProjectDataBook(
       .where(eq(documents.projectId, projectId))
       .orderBy(documents.documentNumber);
 
-    const selectedDocs = allDocs.filter((doc) => documentIds.includes(String(doc.id)));
+    const selectedDocs = allDocs.filter((doc) =>
+      documentIds.includes(String(doc.id))
+    );
 
     if (selectedDocs.length === 0) {
       return actionError("No documents selected for compilation.");
@@ -120,14 +145,18 @@ export async function generateProjectDataBook(
       fileName: doc.fileName,
     }));
 
-    const mergedPdfBytes = await mergePDFsWithCover(pdfFiles, project.name, project.projectNumber);
+    const mergedPdfBytes = await mergePDFsWithCover(
+      pdfFiles,
+      project.name,
+      project.projectNumber
+    );
 
     const timestamp = new Date().toISOString().split("T")[0];
     const dataBookFileName = `${project.projectNumber || "PROJECT"}_DataBook_${timestamp}.pdf`;
 
     const pdfBuffer = Buffer.from(mergedPdfBytes);
 
-    const uploadResult = await uploadToCatbox(pdfBuffer, dataBookFileName);
+    const uploadResult = await uploadPDFToCatbox(pdfBuffer, dataBookFileName);
 
     if (!uploadResult.success) {
       return actionError("Failed to upload merged PDF to storage.");
