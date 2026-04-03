@@ -4,12 +4,12 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { documents } from "@/db/schema/documents";
 import { projects } from "@/db/schema/projects";
-import { actionError, actionSuccess } from "@/types/errors";
-import type { ActionResult } from "@/types/errors";
 import { canManageEdmsContent } from "@/lib/edms/rbac";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
 import { mergePDFsWithCover } from "@/lib/pdf-merger";
 import { expandStorageUrl } from "@/lib/storage-utils";
+import type { ActionResult } from "@/types/errors";
+import { actionError, actionSuccess } from "@/types/errors";
 
 interface DataBookDocument {
   id: string;
@@ -22,7 +22,10 @@ interface DataBookDocument {
   fileName: string;
 }
 
-async function uploadPDFToCatbox(pdfBuffer: Buffer, fileName: string): Promise<{ success: boolean; url: string }> {
+async function uploadPDFToCatbox(
+  pdfBuffer: Buffer,
+  fileName: string
+): Promise<{ success: boolean; url: string }> {
   try {
     const formData = new FormData();
     formData.append("reqtype", "fileupload");
@@ -132,9 +135,7 @@ export async function generateProjectDataBook(
       .where(eq(documents.projectId, projectId))
       .orderBy(documents.documentNumber);
 
-    const selectedDocs = allDocs.filter((doc) =>
-      documentIds.includes(String(doc.id))
-    );
+    const selectedDocs = allDocs.filter((doc) => documentIds.includes(String(doc.id)));
 
     if (selectedDocs.length === 0) {
       return actionError("No documents selected for compilation.");
@@ -145,11 +146,7 @@ export async function generateProjectDataBook(
       fileName: doc.fileName,
     }));
 
-    const mergedPdfBytes = await mergePDFsWithCover(
-      pdfFiles,
-      project.name,
-      project.projectNumber
-    );
+    const mergedPdfBytes = await mergePDFsWithCover(pdfFiles, project.name, project.projectNumber);
 
     const timestamp = new Date().toISOString().split("T")[0];
     const dataBookFileName = `${project.projectNumber || "PROJECT"}_DataBook_${timestamp}.pdf`;

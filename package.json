@@ -6,8 +6,8 @@
   "author": "Construction Team",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "cross-env NODE_OPTIONS=\"--max-old-space-size=4096\" next build --turbopack",
+    "dev": "bun --bun next dev --turbopack",
+    "build": "bun --bun next build --turbopack",
     "start": "next start",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
