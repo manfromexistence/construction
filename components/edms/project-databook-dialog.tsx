@@ -96,18 +96,11 @@ export function ProjectDataBookDialog({ projectId, projectName }: ProjectDataBoo
       if (result.success && result.data) {
         toast({
           title: "Data Book Generated",
-          description: `Successfully compiled ${selectedDocs.size} document(s) into Project Data Book.`,
+          description: `Successfully compiled ${selectedDocs.size} document(s) into ${result.data.fileName}.`,
         });
 
-        // In a real implementation, trigger download here
-        // window.open(result.data.downloadUrl, '_blank');
-
-        // For now, show a message
-        toast({
-          title: "Download Ready",
-          description:
-            "Your Project Data Book is ready for download. This feature will be fully implemented with PDF merging.",
-        });
+        // Trigger download
+        window.open(result.data.downloadUrl, "_blank");
 
         setIsOpen(false);
       } else {

@@ -7,6 +7,9 @@ import { projects } from "@/db/schema/projects";
 import { type ActionResponse, actionError, actionSuccess } from "@/lib/action-response";
 import { canManageEdmsContent } from "@/lib/edms/rbac";
 import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
+import { uploadToCatbox } from "@/lib/edms/storage-catbox";
+import { mergePDFsWithCover } from "@/lib/pdf-merger";
+import { expandStorageUrl } from "@/lib/storage-utils";
 
 interface DataBookDocument {
   id: string;
@@ -29,7 +32,6 @@ export async function getProjectDataBookDocuments(
       return actionError("You do not have permission to generate project data books.");
     }
 
-    // Get project details
     const [project] = await db
       .select({ name: projects.name })
       .from(projects)
@@ -40,7 +42,6 @@ export async function getProjectDataBookDocuments(
       return actionError("Project not found.");
     }
 
-    // Get all approved documents for the project
     const approvedDocs = await db
       .select({
         id: documents.id,
@@ -56,21 +57,15 @@ export async function getProjectDataBookDocuments(
       .where(eq(documents.projectId, projectId))
       .orderBy(documents.documentNumber);
 
-    // Filter only approved documents
-    const approvedDocuments = approvedDocs.filter((doc) => {
-      // You can add more sophisticated filtering here
-      return true; // For now, include all documents
-    });
-
     return actionSuccess({
-      documents: approvedDocuments.map((doc) => ({
+      documents: approvedDocs.map((doc) => ({
         id: String(doc.id),
         documentNumber: doc.documentNumber,
         title: doc.title,
         discipline: doc.discipline,
         category: doc.category,
         revision: doc.revision,
-        fileUrl: doc.fileUrl,
+        fileUrl: expandStorageUrl(doc.fileUrl),
         fileName: doc.fileName,
       })),
       projectName: project.name,
@@ -84,7 +79,7 @@ export async function getProjectDataBookDocuments(
 export async function generateProjectDataBook(
   projectId: string,
   documentIds: string[]
-): Promise<ActionResponse<{ downloadUrl: string }>> {
+): Promise<ActionResponse<{ downloadUrl: string; fileName: string }>> {
   try {
     const access = await getRequiredDashboardSessionUser();
 
@@ -92,7 +87,6 @@ export async function generateProjectDataBook(
       return actionError("You do not have permission to generate project data books.");
     }
 
-    // Get project details
     const [project] = await db
       .select({ name: projects.name, projectNumber: projects.projectNumber })
       .from(projects)
@@ -103,37 +97,50 @@ export async function generateProjectDataBook(
       return actionError("Project not found.");
     }
 
-    // Get selected documents
-    const selectedDocs = await db
+    const allDocs = await db
       .select({
+        id: documents.id,
         documentNumber: documents.documentNumber,
         title: documents.title,
         fileUrl: documents.fileUrl,
         fileName: documents.fileName,
       })
       .from(documents)
-      .where(eq(documents.projectId, projectId));
+      .where(eq(documents.projectId, projectId))
+      .orderBy(documents.documentNumber);
 
-    const filteredDocs = selectedDocs.filter((doc) => documentIds.includes(String(doc.id)));
+    const selectedDocs = allDocs.filter((doc) => documentIds.includes(String(doc.id)));
 
-    if (filteredDocs.length === 0) {
+    if (selectedDocs.length === 0) {
       return actionError("No documents selected for compilation.");
     }
 
-    // In a real implementation, you would:
-    // 1. Download all PDFs from their URLs
-    // 2. Merge them using a PDF library (like pdf-lib or PDFKit)
-    // 3. Upload the merged PDF to storage
-    // 4. Return the download URL
+    const pdfFiles = selectedDocs.map((doc) => ({
+      url: expandStorageUrl(doc.fileUrl),
+      fileName: doc.fileName,
+    }));
 
-    // For now, return a placeholder
-    const _dataBookFileName = `${project.projectNumber || "PROJECT"}_DataBook_${new Date().toISOString().split("T")[0]}.pdf`;
+    const mergedPdfBytes = await mergePDFsWithCover(pdfFiles, project.name, project.projectNumber);
+
+    const timestamp = new Date().toISOString().split("T")[0];
+    const dataBookFileName = `${project.projectNumber || "PROJECT"}_DataBook_${timestamp}.pdf`;
+
+    const pdfBuffer = Buffer.from(mergedPdfBytes);
+
+    const uploadResult = await uploadToCatbox(pdfBuffer, dataBookFileName);
+
+    if (!uploadResult.success) {
+      return actionError("Failed to upload merged PDF to storage.");
+    }
 
     return actionSuccess({
-      downloadUrl: "#", // This would be the actual merged PDF URL
+      downloadUrl: uploadResult.url,
+      fileName: dataBookFileName,
     });
   } catch (error) {
     console.error("Error generating project data book:", error);
-    return actionError("Failed to generate project data book.");
+    return actionError(
+      error instanceof Error ? error.message : "Failed to generate project data book."
+    );
   }
 }
