@@ -1,20 +1,12 @@
 "use client";
 
-import { Bell, Building2, Menu, Search, User } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 
 interface DashboardHeaderProps {
   userName?: string;
@@ -28,8 +20,11 @@ export function DashboardHeader({ userName, userEmail, userRole }: DashboardHead
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="flex h-16 items-center gap-4 px-4 md:px-6">
-        {/* Logo and Brand */}
-        <Link href="/dashboard" className="flex items-center gap-3">
+        {/* Sidebar Toggle */}
+        <SidebarTrigger className="-ml-1" />
+
+        {/* Logo and Brand - Only visible on mobile when sidebar is closed */}
+        <Link href="/dashboard" className="flex items-center gap-3 md:hidden">
           <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -77,9 +72,8 @@ export function DashboardHeader({ userName, userEmail, userRole }: DashboardHead
               <circle cx="96" cy="136" r="24" fill="none" stroke="currentColor" strokeWidth="24" />
             </svg>
           </div>
-          <div className="hidden md:block">
+          <div>
             <h1 className="text-lg font-bold">QUADRA</h1>
-            <p className="text-xs text-muted-foreground">Document Management</p>
           </div>
         </Link>
 
@@ -103,60 +97,8 @@ export function DashboardHeader({ userName, userEmail, userRole }: DashboardHead
           </Button>
         </div>
 
-        {/* Actions */}
-        <div className="flex items-center gap-2">
-          {/* Notifications */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="relative">
-                <Bell className="size-5" />
-                <span className="absolute right-1.5 top-1.5 flex size-2">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary opacity-75" />
-                  <span className="relative inline-flex size-2 rounded-full bg-primary" />
-                </span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-80">
-              <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <div className="p-4 text-center text-sm text-muted-foreground">
-                No new notifications
-              </div>
-            </DropdownMenuContent>
-          </DropdownMenu>
-
-          {/* User Menu */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="gap-2">
-                <div className="flex size-8 items-center justify-center rounded-full bg-primary/10">
-                  <User className="size-4 text-primary" />
-                </div>
-                <div className="hidden text-left md:block">
-                  <p className="text-sm font-medium">{userName || "User"}</p>
-                  <p className="text-xs text-muted-foreground">{userRole || "Member"}</p>
-                </div>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-56">
-              <DropdownMenuLabel>
-                <div className="flex flex-col space-y-1">
-                  <p className="text-sm font-medium">{userName || "User"}</p>
-                  <p className="text-xs text-muted-foreground">{userEmail || "user@example.com"}</p>
-                </div>
-              </DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/settings">Settings</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/settings/account">Account</Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>Sign out</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {/* Breadcrumb or page title can go here */}
+        <div className="hidden flex-1 md:block" />
       </div>
 
       {/* Mobile Search */}
@@ -168,6 +110,7 @@ export function DashboardHeader({ userName, userEmail, userRole }: DashboardHead
               type="search"
               placeholder="Search documents, projects..."
               className="w-full pl-10"
+              autoFocus
             />
           </div>
         </div>
