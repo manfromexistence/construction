@@ -16,6 +16,7 @@ import { EdmsPageHeader } from "@/components/edms/page-header";
 import { PrefetchLink } from "@/components/prefetch-link";
 import { Button } from "@/components/ui/button";
 import { useDashboardData } from "@/hooks/use-dashboard-data";
+import type { DashboardMetric } from "@/lib/edms/dashboard";
 
 export default function DashboardPage() {
   const { data, isLoading, error } = useDashboardData();
@@ -68,7 +69,7 @@ export default function DashboardPage() {
         />
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-          {data.metrics.map((metric) => (
+          {data.metrics.map((metric: DashboardMetric) => (
             <EdmsMetricCard key={metric.label} metric={metric} />
           ))}
         </section>

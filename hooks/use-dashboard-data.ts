@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { DashboardData } from "@/lib/edms/dashboard";
+import type { EdmsDashboardData } from "@/lib/edms/dashboard";
 
 export function useDashboardData() {
   return useQuery({
@@ -11,7 +11,7 @@ export function useDashboardData() {
       if (!response.ok) {
         throw new Error("Failed to fetch dashboard data");
       }
-      return response.json() as Promise<DashboardData>;
+      return response.json() as Promise<EdmsDashboardData>;
     },
     staleTime: 30000, // Consider data fresh for 30 seconds
     gcTime: 5 * 60 * 1000, // Keep in cache for 5 minutes

@@ -51,7 +51,7 @@ export function ProjectDataBookDialog({ projectId, projectName }: ProjectDataBoo
         } else {
           toast({
             title: "Failed to load documents",
-            description: result.error?.message || "Could not fetch project documents",
+            description: !result.success ? result.error.message : "Could not fetch project documents",
             variant: "destructive",
           });
         }
@@ -106,7 +106,7 @@ export function ProjectDataBookDialog({ projectId, projectName }: ProjectDataBoo
       } else {
         toast({
           title: "Generation failed",
-          description: result.error?.message || "Failed to generate Project Data Book",
+          description: !result.success ? result.error.message : "Failed to generate Project Data Book",
           variant: "destructive",
         });
       }

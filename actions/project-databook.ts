@@ -55,7 +55,7 @@ export async function getProjectDataBookDocuments(
     const access = await getRequiredDashboardSessionUser();
 
     if (!canManageEdmsContent(access.role)) {
-      return actionError("You do not have permission to generate project data books.");
+      return actionError("UNAUTHORIZED", "You do not have permission to generate project data books.");
     }
 
     const [project] = await db
@@ -65,7 +65,7 @@ export async function getProjectDataBookDocuments(
       .limit(1);
 
     if (!project) {
-      return actionError("Project not found.");
+      return actionError("VALIDATION_ERROR", "Project not found.");
     }
 
     const approvedDocs = await db
@@ -98,7 +98,7 @@ export async function getProjectDataBookDocuments(
     });
   } catch (error) {
     console.error("Error fetching project data book documents:", error);
-    return actionError("Failed to fetch project documents for data book compilation.");
+    return actionError("UNKNOWN_ERROR", "Failed to fetch project documents for data book compilation.");
   }
 }
 
@@ -110,7 +110,7 @@ export async function generateProjectDataBook(
     const access = await getRequiredDashboardSessionUser();
 
     if (!canManageEdmsContent(access.role)) {
-      return actionError("You do not have permission to generate project data books.");
+      return actionError("UNAUTHORIZED", "You do not have permission to generate project data books.");
     }
 
     const [project] = await db
@@ -120,7 +120,7 @@ export async function generateProjectDataBook(
       .limit(1);
 
     if (!project) {
-      return actionError("Project not found.");
+      return actionError("VALIDATION_ERROR", "Project not found.");
     }
 
     const allDocs = await db
@@ -138,7 +138,7 @@ export async function generateProjectDataBook(
     const selectedDocs = allDocs.filter((doc) => documentIds.includes(String(doc.id)));
 
     if (selectedDocs.length === 0) {
-      return actionError("No documents selected for compilation.");
+      return actionError("VALIDATION_ERROR", "No documents selected for compilation.");
     }
 
     const pdfFiles = selectedDocs.map((doc) => ({
@@ -156,7 +156,7 @@ export async function generateProjectDataBook(
     const uploadResult = await uploadPDFToCatbox(pdfBuffer, dataBookFileName);
 
     if (!uploadResult.success) {
-      return actionError("Failed to upload merged PDF to storage.");
+      return actionError("UNKNOWN_ERROR", "Failed to upload merged PDF to storage.");
     }
 
     return actionSuccess({
@@ -166,6 +166,7 @@ export async function generateProjectDataBook(
   } catch (error) {
     console.error("Error generating project data book:", error);
     return actionError(
+      "UNKNOWN_ERROR",
       error instanceof Error ? error.message : "Failed to generate project data book."
     );
   }
