@@ -3,6 +3,8 @@ import path from "path";
 import { generateThemeRegistryFromPreset } from "@/utils/registry/themes";
 import { defaultPresets } from "../utils/theme-presets";
 
+const SILENT = process.env.SILENT_BUILD === "true";
+
 interface ThemeRegistry {
   $schema: string;
   name: string;
@@ -41,7 +43,7 @@ function generateRegistry() {
   // Write the registry file
   const registryPath = path.join(publicDir, "registry.json");
   fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2));
-  console.log(`Registry file generated at ${registryPath}`);
+  if (!SILENT) console.log(`Registry file generated at ${registryPath}`);
 }
 
 generateRegistry();

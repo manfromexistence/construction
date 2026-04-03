@@ -29,7 +29,7 @@ async function uploadPDFToCatbox(
   try {
     const formData = new FormData();
     formData.append("reqtype", "fileupload");
-    formData.append("fileToUpload", new Blob([pdfBuffer], { type: "application/pdf" }), fileName);
+    formData.append("fileToUpload", new Blob([new Uint8Array(pdfBuffer)], { type: "application/pdf" }), fileName);
 
     const response = await fetch("https://catbox.moe/user/api.php", {
       method: "POST",

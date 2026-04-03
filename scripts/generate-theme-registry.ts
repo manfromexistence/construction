@@ -8,6 +8,7 @@ import { defaultPresets } from "@/utils/theme-presets";
 
 const THEMES_DIR = path.join(process.cwd(), "public", "r", "themes");
 const V0_DIR = path.join(process.cwd(), "public", "r", "v0");
+const SILENT = process.env.SILENT_BUILD === "true";
 
 // Ensure directories exist
 [THEMES_DIR, V0_DIR].forEach((dir) => {
@@ -51,11 +52,11 @@ Object.keys(defaultPresets).forEach((name) => {
   const registryItem = generateThemeRegistryItemFromStyles(name, themeStyles);
   const filePath = path.join(THEMES_DIR, `${name}.json`);
   fs.writeFileSync(filePath, JSON.stringify(registryItem, null, 2));
-  console.log(`Generated registry file for theme: ${name}`);
+  if (!SILENT) console.log(`Generated registry file for theme: ${name}`);
 
   // Generate v0 format
   const v0Payload = generateV0RegistryPayload(themeName, themeStyles);
   const v0FilePath = path.join(V0_DIR, `${name}.json`);
   fs.writeFileSync(v0FilePath, JSON.stringify(v0Payload, null, 2));
-  console.log(`Generated v0 file for theme: ${name}`);
+  if (!SILENT) console.log(`Generated v0 file for theme: ${name}`);
 });
