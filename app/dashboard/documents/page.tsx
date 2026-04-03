@@ -6,6 +6,7 @@ import {
   EdmsWorkflowQueue,
 } from "@/components/edms/dashboard-sections";
 import { EdmsDataState } from "@/components/edms/data-state";
+import { DocumentBulkUploadSheet } from "@/components/edms/document-bulk-upload-sheet";
 import { DocumentCreateSheet } from "@/components/edms/document-create-sheet";
 import { EdmsMetricCard } from "@/components/edms/metric-card";
 import { EdmsPageHeader } from "@/components/edms/page-header";
@@ -49,7 +50,12 @@ export default async function DocumentsPage({
                 <ArrowRight className="size-4" />
               </Link>
             </Button>
-            {canCreateDocument ? <DocumentCreateSheet projects={dashboardData.projects} /> : null}
+            {canCreateDocument ? (
+              <>
+                <DocumentBulkUploadSheet projects={dashboardData.projects} />
+                <DocumentCreateSheet projects={dashboardData.projects} />
+              </>
+            ) : null}
           </>
         }
       />

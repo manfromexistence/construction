@@ -8,13 +8,10 @@ export async function GET() {
   try {
     const sessionUser = await getRequiredDashboardSessionUser();
     const data = await getEdmsDashboardData(sessionUser);
-    
+
     return NextResponse.json(data);
   } catch (error) {
     console.error("Dashboard API error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch dashboard data" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to fetch dashboard data" }, { status: 500 });
   }
 }
