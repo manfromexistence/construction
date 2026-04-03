@@ -1,3 +1,5 @@
+"use client";
+
 import { ArrowRight, FileStack, Workflow } from "lucide-react";
 import Link from "next/link";
 import {
@@ -11,13 +13,28 @@ import {
 import { EdmsDataState } from "@/components/edms/data-state";
 import { EdmsMetricCard } from "@/components/edms/metric-card";
 import { EdmsPageHeader } from "@/components/edms/page-header";
+import { PrefetchLink } from "@/components/prefetch-link";
 import { Button } from "@/components/ui/button";
-import { getEdmsDashboardData } from "@/lib/edms/dashboard";
-import { getRequiredDashboardSessionUser } from "@/lib/edms/session";
+import { useDashboardData } from "@/hooks/use-dashboard-data";
 
-export default async function DashboardPage() {
-  const sessionUser = await getRequiredDashboardSessionUser();
-  const data = await getEdmsDashboardData(sessionUser);
+export default function DashboardPage() {
+  const { data, isLoading, error } = useDashboardData();
+
+  if (isLoading) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <div className="text-muted-foreground">Loading dashboard...</div>
+      </div>
+    );
+  }
+
+  if (error || !data) {
+    return (
+      <div className="flex flex-1 items-center justify-center">
+        <div className="text-destructive">Failed to load dashboard data</div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-1 flex-col">
@@ -28,10 +45,10 @@ export default async function DashboardPage() {
         actions={
           <>
             <Button asChild>
-              <Link href="/dashboard/documents">
+              <PrefetchLink href="/dashboard/documents" prefetchRoute="documents">
                 <FileStack className="size-4" />
                 Document control
-              </Link>
+              </PrefetchLink>
             </Button>
             <Button variant="outline" asChild>
               <Link href="/dashboard/workflows">

@@ -35,6 +35,10 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  experimental: {
+    // Enable optimistic client-side navigation
+    optimisticClientCache: true,
+  },
 };
 
 export default nextConfig;
