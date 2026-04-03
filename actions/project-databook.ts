@@ -55,7 +55,10 @@ export async function getProjectDataBookDocuments(
     const access = await getRequiredDashboardSessionUser();
 
     if (!canManageEdmsContent(access.role)) {
-      return actionError("UNAUTHORIZED", "You do not have permission to generate project data books.");
+      return actionError(
+        "UNAUTHORIZED",
+        "You do not have permission to generate project data books."
+      );
     }
 
     const [project] = await db
@@ -98,7 +101,10 @@ export async function getProjectDataBookDocuments(
     });
   } catch (error) {
     console.error("Error fetching project data book documents:", error);
-    return actionError("UNKNOWN_ERROR", "Failed to fetch project documents for data book compilation.");
+    return actionError(
+      "UNKNOWN_ERROR",
+      "Failed to fetch project documents for data book compilation."
+    );
   }
 }
 
@@ -110,7 +116,10 @@ export async function generateProjectDataBook(
     const access = await getRequiredDashboardSessionUser();
 
     if (!canManageEdmsContent(access.role)) {
-      return actionError("UNAUTHORIZED", "You do not have permission to generate project data books.");
+      return actionError(
+        "UNAUTHORIZED",
+        "You do not have permission to generate project data books."
+      );
     }
 
     const [project] = await db
