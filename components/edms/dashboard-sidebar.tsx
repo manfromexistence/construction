@@ -119,8 +119,22 @@ export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
                   strokeLinecap="round"
                   strokeWidth="24"
                 />
-                <circle cx="188" cy="148" r="24" fill="none" stroke="currentColor" strokeWidth="24" />
-                <circle cx="96" cy="136" r="24" fill="none" stroke="currentColor" strokeWidth="24" />
+                <circle
+                  cx="188"
+                  cy="148"
+                  r="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="24"
+                />
+                <circle
+                  cx="96"
+                  cy="136"
+                  r="24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="24"
+                />
               </svg>
             </div>
             <div className="min-w-0 space-y-1">
