@@ -7,6 +7,7 @@ import {
 } from "@/components/edms/dashboard-sections";
 import { EdmsDataState } from "@/components/edms/data-state";
 import { EdmsPageHeader } from "@/components/edms/page-header";
+import { ProjectDataBookDialog } from "@/components/edms/project-databook-dialog";
 import { ProjectMemberSheet } from "@/components/edms/project-member-sheet";
 import { formatEdmsLabel } from "@/components/edms/status-badge";
 import { Badge } from "@/components/ui/badge";
@@ -47,6 +48,7 @@ export default async function ProjectDetailPage({
         }
         actions={
           <>
+            <ProjectDataBookDialog projectId={data.project.id} projectName={data.project.name} />
             {canManageMembers ? (
               <ProjectMemberSheet projectId={data.project.id} users={data.assignableUsers} />
             ) : null}
