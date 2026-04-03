@@ -96,7 +96,7 @@ export async function uploadToTelegram(
   if (file instanceof File) {
     formData.append(isImage ? "photo" : "document", file, fileName);
   } else {
-    const blob = new Blob([file]);
+    const blob = new Blob([new Uint8Array(file)]);
     formData.append(isImage ? "photo" : "document", blob, fileName);
   }
 

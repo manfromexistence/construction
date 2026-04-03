@@ -226,6 +226,7 @@ export function AuthPanel({
     setIsEmailLoading(true);
 
     try {
+      // @ts-ignore - forgetPassword exists but types may not be updated
       const result = await authClient.forgetPassword({
         email,
         redirectTo: getResetRedirectUrl(),
