@@ -48,6 +48,7 @@ const PRIMARY_NAVIGATION = [
 const ADMIN_NAVIGATION = [
   { title: "Admin Dashboard", href: "/dashboard/admin", icon: Settings },
   { title: "Users", href: "/dashboard/admin/users", icon: Building2 },
+  { title: "Analytics", href: "/dashboard/admin/analytics", icon: LayoutDashboard },
 ] as const;
 
 const SECONDARY_NAVIGATION = [

@@ -96,11 +96,14 @@ export default async function AdminDashboardPage() {
             </Button>
           </div>
           <div className="rounded-3xl border bg-card p-6">
-            <h2 className="text-lg font-semibold">Current admin scope</h2>
+            <h2 className="text-lg font-semibold">Analytics and oversight</h2>
             <p className="mt-2 text-sm leading-6 text-muted-foreground">
-              This admin area now covers system metrics and workspace users. It is intentionally
-              aligned with the active QUADRA features instead of exposing dead or placeholder links.
+              Review system activity trends, user growth, project momentum, and document flow from
+              the analytics dashboard.
             </p>
+            <Button asChild className="mt-4" variant="outline">
+              <Link href="/dashboard/admin/analytics">Open analytics</Link>
+            </Button>
           </div>
         </section>
       </div>

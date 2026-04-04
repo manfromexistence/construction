@@ -38,6 +38,10 @@ const nextConfig: NextConfig = {
   experimental: {
     // Enable optimistic client-side navigation
     optimisticClientCache: true,
+    // Keep static generation from exhausting local build workers on large route sets.
+    staticGenerationMaxConcurrency: 1,
+    staticGenerationMinPagesPerWorker: 200,
+    staticGenerationRetryCount: 1,
   },
 };
 
