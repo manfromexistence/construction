@@ -1,10 +1,129 @@
 ---
 inclusion: always
 ---
+
+# QUADRA EDMS Project Rules
+
+## 🚫 CRITICAL FILE MANAGEMENT RULES
+
+### Root Directory Files - STRICT POLICY
+**ONLY these 3 markdown files are allowed in root:**
+1. `DX.md` - Developer experience guidelines (HUMAN EDITS ONLY - AI MUST NEVER TOUCH)
+2. `AGENTS.md` - AI agent instructions (AI can update)
+3. `README.md` - Project readme (AI can update)
+
+### Forbidden Actions
+- ❌ NEVER create any other markdown files in root
+- ❌ NEVER create TODO.md in root
+- ❌ NEVER create HELP.md in root
+- ❌ NEVER create IMPLEMENTATION.md or similar in root
+- ❌ NEVER create summary files in root
+- ❌ NEVER create documentation files in root
+- ❌ NEVER create script files in root
+- ❌ NEVER modify or edit DX.md (it's for humans only)
+
+### Where to Put Files
+- ✅ All documentation → `hexed/` folder
+- ✅ All temporary files → `hexed/` folder
+- ✅ All analysis files → `hexed/` folder
+- ✅ All summary files → `hexed/` folder
+
 ---
-description: 
-globs: 
-alwaysApply: true
+
+## 📁 Project Structure
+
+```
+construction/
+├── DX.md                   # Human-only file (DO NOT TOUCH)
+├── AGENTS.md               # AI instructions (can update)
+├── README.md               # Project readme (can update)
+├── app/                    # Next.js App Router
+├── actions/                # Server actions
+├── components/             # React components
+├── lib/                    # Utilities
+├── db/                     # Database
+└── hexed/                  # All documentation goes here
+```
+
+---
+
+## 🎯 Current Project Status
+
+**Project:** QUADRA Construction EDMS  
+**Status:** 85% Complete - Core features built, admin features needed
+
+### ✅ What's Complete
+- Database schema (users, documents, workflows, projects)
+- Role-based access control (6 roles)
+- Document management (upload, version control, PDF preview)
+- Workflow system (multi-step approvals)
+- Notification system (in-app + email)
+- Project management
+- Transmittal system (basic)
+
+### ❌ What's Missing (PRIORITY)
+1. **Admin user management** - Cannot edit roles, activate/deactivate, delete users
+2. **User activity statistics** - No stats shown
+3. **Bulk user operations** - No bulk actions
+4. **System analytics** - No charts/metrics
+5. **Advanced search** - Limited search functionality
+
+---
+
+## 🔧 Technical Standards
+
+### Code Requirements
+- Use TypeScript strictly (no `any` types)
+- Use Zod for validation
+- Use `ActionResult<T>` pattern for server actions
+- Use `requireEdmsRole("admin")` for permission checks
+- Log all admin actions with `logEdmsActivity()`
+- Use `revalidatePath()` after data changes
+- Use `useTransition()` for loading states
+- Use `toast()` for user feedback
+
+### Security Requirements
+- Only admins can access admin routes
+- Validate all inputs with Zod
+- Prevent self-demotion from admin
+- Prevent last admin deletion
+- Prevent self-deactivation
+- Log all admin actions to activity log
+
+### UI Requirements
+- Use Shadcn UI components
+- Follow existing design patterns
+- Mobile-first responsive design
+- Add loading states
+- Add error states
+- Add empty states
+
+---
+
+## 📝 Files to Create (Priority Order)
+
+### 1. Admin User Management (CRITICAL)
+- `actions/admin-users.ts` - Admin actions for user management
+- `components/edms/admin-user-edit-sheet.tsx` - Edit user UI
+- Update `app/dashboard/admin/users/page.tsx` - Add edit buttons
+
+### 2. User Statistics
+- Add statistics to user detail pages
+- Show documents uploaded, workflows created, comments made
+
+### 3. Bulk Operations
+- Add checkboxes to user list
+- Add bulk actions dropdown
+- Implement bulk role change, activate/deactivate, delete
+
+### 4. Analytics Dashboard
+- `app/dashboard/admin/analytics/page.tsx` - Charts and metrics
+- Use Recharts library (already installed)
+
+### 5. Advanced Search
+- Enhance `app/dashboard/search/page.tsx`
+- Add filters, save queries, search history
+
 ---
 
 # React Patterns and Best Practices

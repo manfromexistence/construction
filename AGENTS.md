@@ -8,9 +8,43 @@
 
 **Project:** QUADRA Construction EDMS (Electronic Document Management System)  
 **Location:** `F:/construction/`  
-**Tech Stack:** Next.js 16.2, React 19, TypeScript 5.9, Drizzle ORM, PostgreSQL (Neon), Better Auth  
-**Status:** 85% Complete - Core features built, admin features needed  
+**Tech Stack:** Next.js 16.2.1, React 19.2.4, TypeScript 5.9.3, Drizzle ORM 0.42, PostgreSQL (Neon), Better Auth 1.5.6  
+**Runtime:** Bun (preferred) or Node.js  
+**Status:** 85% Complete - Core features implemented but untested, admin features needed  
 **Goal:** Build the most unique, classy, and feature-complete construction EDMS
+
+### Current State:
+- ✅ **Database Schema** - Complete (users, documents, workflows, projects, transmittals, notifications)
+- ✅ **Role-Based Access Control** - Complete (admin, client, pmc, vendor, subcontractor, user)
+- ✅ **Document Management** - Complete (upload, version control, status tracking, PDF preview)
+- ✅ **Workflow System** - Complete (multi-step approvals, approve/reject/comment)
+- ✅ **Notification System** - Complete (in-app + email via Resend)
+- ✅ **Project Management** - Complete (projects, members, assignments)
+- ✅ **Transmittal System** - Basic implementation complete
+- ❌ **Admin User Management** - Can only VIEW users, cannot edit (CRITICAL GAP)
+- ❌ **User Activity Statistics** - Not implemented
+- ❌ **Bulk User Operations** - Not implemented
+- ❌ **System Analytics** - Not implemented
+- ❌ **Advanced Search** - Basic search exists, needs enhancement
+
+### What Works:
+1. Contractor (vendor) can upload documents
+2. Contractor can create workflows and assign to Client for review
+3. Client can see pending workflows
+4. Client can approve/reject/comment on documents
+5. Contractor can see Client's comments
+6. Notifications are sent at each step
+7. Full audit trail in activity log
+
+### What Doesn't Work:
+1. Admin cannot edit user roles
+2. Admin cannot manage user details
+3. Admin cannot activate/deactivate users
+4. Admin cannot delete users
+5. No user activity statistics
+6. No bulk user operations
+7. No analytics dashboard
+8. Limited search functionality
 
 ---
 
@@ -18,49 +52,77 @@
 
 ### ✅ TASK 1: Admin User Management (DO THIS FIRST)
 
-**Problem:** Admin can only VIEW users, cannot edit roles or manage users.
+**Current Problem:** 
+- Admin can VIEW users at `/dashboard/admin/users`
+- Admin CANNOT edit user roles (cannot change "user" to "vendor", etc.)
+- Admin CANNOT edit user details (organization, job title, phone, department)
+- Admin CANNOT activate/deactivate users
+- Admin CANNOT delete users
+- No bulk operations available
 
-**What to Build:**
+**What You Must Build:**
 
-#### 1. Create Admin Actions
-**File:** `actions/admin-users.ts` (NEW)
+#### 1.1 Create Admin Actions File
+**File:** `actions/admin-users.ts` (NEW FILE - DOES NOT EXIST)
 
-Functions needed:
-- `updateUserRole(userId, role)` - Change user role
-- `updateUserDetails(userId, data)` - Update organization, job title, phone, department
-- `toggleUserStatus(userId, isActive)` - Activate/deactivate user
-- `deleteUser(userId)` - Delete user account
-- `getUserActivitySummary(userId)` - Get user statistics
+Required functions:
+```typescript
+export async function updateUserRole(input: { userId: string; role: EdmsRole }): Promise<ActionResult<boolean>>
+export async function updateUserDetails(input: { userId: string; organization?: string; jobTitle?: string; phone?: string; department?: string }): Promise<ActionResult<boolean>>
+export async function toggleUserStatus(input: { userId: string; isActive: boolean }): Promise<ActionResult<boolean>>
+export async function deleteUser(userId: string): Promise<ActionResult<boolean>>
+export async function getUserActivitySummary(userId: string): Promise<ActionResult<UserActivitySummary>>
+export async function bulkUpdateUserRoles(updates: Array<{ userId: string; role: EdmsRole }>): Promise<ActionResult<number>>
+```
 
-Security checks:
-- Only admins can edit users
-- Cannot self-demote from admin
-- Cannot delete last admin
-- Cannot self-deactivate
-- Log all actions to activity log
+Security requirements:
+- Use `requireEdmsRole("admin")` to check permissions
+- Prevent self-demotion (admin cannot demote themselves)
+- Prevent last admin deletion (must have at least 1 admin)
+- Prevent self-deactivation (admin cannot deactivate themselves)
+- Log all actions using `logEdmsActivity()` from `lib/edms/notifications.ts`
+- Use Zod schemas for input validation
+- Return `ActionResult<T>` pattern (see `types/errors.ts`)
 
-#### 2. Create Edit UI Component
-**File:** `components/edms/admin-user-edit-sheet.tsx` (NEW)
+#### 1.2 Create Admin User Edit Component
+**File:** `components/edms/admin-user-edit-sheet.tsx` (NEW FILE - DOES NOT EXIST)
 
-Features:
-- Sheet/dialog with form
-- Dropdown to change role (admin, client, pmc, vendor, subcontractor, user)
-- Input fields for organization, job title, phone, department
-- Toggle for active/inactive status
-- Delete button with confirmation dialog
+Required features:
+- Sheet/Dialog component (use Shadcn UI Sheet)
+- Form with react-hook-form + Zod validation
+- Role dropdown: admin, client, pmc, vendor, subcontractor, user
+- Input fields: organization, job title, phone, department
+- Active/Inactive toggle (Switch component)
+- Delete button with AlertDialog confirmation
 - Save button that calls admin actions
-- Loading states and error handling
+- Loading states with `useTransition()`
+- Success/error toasts with `toast()` from `hooks/use-toast`
+- Mobile responsive
 
-#### 3. Update Admin Users Page
-**File:** `app/dashboard/admin/users/page.tsx` (MODIFY)
+#### 1.3 Update Admin Users Page
+**File:** `app/dashboard/admin/users/page.tsx` (MODIFY EXISTING)
 
-Add:
-- Edit button for each user row
-- Search/filter functionality
-- Sort by columns
-- Bulk select checkboxes
-- Bulk actions dropdown
-- Export to CSV button
+Current state: Shows user list with name, email, role, organization, status
+
+Add these features:
+- Import and use `AdminUserEditSheet` component
+- Add "Edit" button to each user row
+- Add search input (filter by name, email, role, organization)
+- Add column sorting (click column header to sort)
+- Add bulk select checkboxes
+- Add bulk actions dropdown (change role, activate, deactivate, delete)
+- Add "Export to CSV" button
+- Add pagination if user count > 50
+
+#### 1.4 Create User Detail Page (OPTIONAL - NICE TO HAVE)
+**File:** `app/dashboard/admin/users/[userId]/page.tsx` (NEW FILE)
+
+Show:
+- User profile with edit button
+- User statistics (documents uploaded, workflows created, comments made, projects)
+- Recent activity timeline
+- List of projects user is member of
+- List of documents uploaded by user
 
 ---
 
@@ -213,15 +275,20 @@ Before marking complete:
 
 ---
 
-## 🚫 RULES
+## 🚫 CRITICAL RULES
 
-1. **Never create markdown files in root** - Only DX.md, AGENTS.md, README.md allowed
-2. **All documentation goes in `hexed/` folder**
-3. **Don't break existing features** - Test thoroughly
-4. **Follow existing patterns** - Look at similar components
-5. **Use TypeScript strictly** - No `any` types
-6. **Mobile responsive** - Test on mobile
-7. **Security first** - Always check permissions
+1. **Never create markdown files in root** - Only AGENTS.md and README.md allowed (DX.md is for human to write)
+2. **All documentation goes in `hexed/` folder** - Never create docs in root
+3. **Don't break existing features** - Test thoroughly before committing
+4. **Follow existing patterns** - Look at `actions/documents.ts`, `actions/workflows.ts` for examples
+5. **Use TypeScript strictly** - No `any` types, proper type inference
+6. **Use Zod for validation** - All user inputs must be validated
+7. **Use ActionResult pattern** - All server actions return `ActionResult<T>` (see `types/errors.ts`)
+8. **Check permissions** - Use `requireEdmsRole("admin")` for admin-only actions
+9. **Log all admin actions** - Use `logEdmsActivity()` for audit trail
+10. **Revalidate paths** - Use `revalidatePath()` after data changes
+11. **Mobile responsive** - Test on mobile devices
+12. **Security first** - Always validate, never trust user input
 
 ---
 
