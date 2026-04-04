@@ -6,6 +6,7 @@ import { user as userTable } from "@/db/schema";
 import { documentComments, documents, documentVersions } from "@/db/schema/documents";
 import { projects } from "@/db/schema/projects";
 import { documentWorkflows, workflowSteps } from "@/db/schema/workflows";
+import { canAccessProject } from "./access";
 import { getEdmsDashboardData } from "./dashboard";
 import type { DashboardSessionUser } from "./session";
 
@@ -137,6 +138,12 @@ export async function getDocumentDetailData(
     const [document] = documentRows;
 
     if (!document) {
+      return null;
+    }
+
+    const hasAccess = await canAccessProject(sessionUser, String(document.projectId));
+
+    if (!hasAccess) {
       return null;
     }
 

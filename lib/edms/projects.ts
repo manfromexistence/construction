@@ -13,6 +13,7 @@ import type {
   DashboardWorkflowItem,
 } from "@/lib/edms/dashboard";
 import { getEdmsDashboardData } from "@/lib/edms/dashboard";
+import { canAccessProject } from "./access";
 import type { DashboardSessionUser } from "./session";
 
 export interface ProjectMemberSummary {
@@ -65,6 +66,12 @@ export async function getProjectDetailData(
   sessionUser: DashboardSessionUser
 ): Promise<ProjectDetailData | null> {
   try {
+    const hasAccess = await canAccessProject(sessionUser, projectId);
+
+    if (!hasAccess) {
+      return null;
+    }
+
     const [
       projectRows,
       memberCountRows,

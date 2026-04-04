@@ -5,6 +5,7 @@ import { db } from "@/db";
 import { documents } from "@/db/schema/documents";
 import { projects } from "@/db/schema/projects";
 import { expandStorageUrl } from "@/lib/storage-utils";
+import { getProjectAccessScope } from "./access";
 import { type DashboardDocument, type DashboardMetric, getEdmsDashboardData } from "./dashboard";
 import type { DashboardSessionUser } from "./session";
 
@@ -34,7 +35,20 @@ export async function getDocumentControlData(
   filters: DocumentFilters
 ): Promise<DocumentControlData> {
   try {
+    const accessScope = await getProjectAccessScope(sessionUser);
+    const scopedDocumentCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(documents.projectId, accessScope.projectIds)
+        : null;
+    const scopedProjectCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(projects.id, accessScope.projectIds)
+        : null;
+
     const conditions = [
+      scopedDocumentCondition ?? undefined,
       filters.query
         ? or(
             ilike(documents.documentNumber, `%${filters.query}%`),
@@ -59,46 +73,76 @@ export async function getDocumentControlData(
       disciplineRows,
       revisionRows,
     ] = await Promise.all([
-      db.select({ value: count() }).from(documents),
+      scopedDocumentCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db.select({ value: count() }).from(documents).where(scopedDocumentCondition),
       db
         .select({ value: count() })
         .from(documents)
-        .where(inArray(documents.status, ["submitted", "under_review"])),
-      db.select({ value: count() }).from(documents).where(eq(documents.status, "under_review")),
-      db.select({ value: count() }).from(documents).where(eq(documents.status, "approved")),
-      db
-        .select({
-          id: projects.id,
-          name: projects.name,
-          projectNumber: projects.projectNumber,
-        })
-        .from(projects)
-        .orderBy(projects.name),
-      db
-        .select({
-          id: documents.id,
-          documentNumber: documents.documentNumber,
-          title: documents.title,
-          projectName: projects.name,
-          discipline: documents.discipline,
-          revision: documents.revision,
-          status: documents.status,
-          uploadedAt: documents.uploadedAt,
-          images: documents.images,
-          fileUrl: documents.fileUrl,
-          fileType: documents.fileType,
-        })
-        .from(documents)
-        .innerJoin(projects, eq(documents.projectId, projects.id))
-        .where(whereClause)
-        .orderBy(desc(documents.uploadedAt))
-        .limit(24),
-      db
-        .select({ discipline: documents.discipline })
-        .from(documents)
-        .where(ilike(documents.discipline, `%`))
-        .orderBy(documents.discipline),
-      db.select({ revision: documents.revision }).from(documents).orderBy(documents.revision),
+        .where(
+          and(
+            inArray(documents.status, ["submitted", "under_review"]),
+            scopedDocumentCondition ?? undefined
+          )
+        ),
+      scopedDocumentCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db
+            .select({ value: count() })
+            .from(documents)
+            .where(and(eq(documents.status, "under_review"), scopedDocumentCondition)),
+      scopedDocumentCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db
+            .select({ value: count() })
+            .from(documents)
+            .where(and(eq(documents.status, "approved"), scopedDocumentCondition)),
+      scopedProjectCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: projects.id,
+              name: projects.name,
+              projectNumber: projects.projectNumber,
+            })
+            .from(projects)
+            .where(scopedProjectCondition)
+            .orderBy(projects.name),
+      scopedDocumentCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: documents.id,
+              documentNumber: documents.documentNumber,
+              title: documents.title,
+              projectName: projects.name,
+              discipline: documents.discipline,
+              revision: documents.revision,
+              status: documents.status,
+              uploadedAt: documents.uploadedAt,
+              images: documents.images,
+              fileUrl: documents.fileUrl,
+              fileType: documents.fileType,
+            })
+            .from(documents)
+            .innerJoin(projects, eq(documents.projectId, projects.id))
+            .where(whereClause)
+            .orderBy(desc(documents.uploadedAt))
+            .limit(24),
+      scopedDocumentCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({ discipline: documents.discipline })
+            .from(documents)
+            .where(and(ilike(documents.discipline, `%`), scopedDocumentCondition))
+            .orderBy(documents.discipline),
+      scopedDocumentCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({ revision: documents.revision })
+            .from(documents)
+            .where(scopedDocumentCondition)
+            .orderBy(documents.revision),
     ]);
 
     const [total] = totalRows;

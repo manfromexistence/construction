@@ -1,12 +1,13 @@
 import "server-only";
 
-import { asc, count, desc, eq } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
 import { documents } from "@/db/schema/documents";
 import { notifications } from "@/db/schema/notifications";
 import { projectMembers, projects } from "@/db/schema/projects";
 import { transmittalDocuments, transmittals } from "@/db/schema/transmittals";
+import { getProjectAccessScope } from "./access";
 import { type DashboardMetric, getEdmsDashboardData } from "./dashboard";
 import type { DashboardSessionUser } from "./session";
 
@@ -57,6 +58,28 @@ export async function getTransmittalManagementData(
   sessionUser: DashboardSessionUser
 ): Promise<TransmittalManagementData> {
   try {
+    const accessScope = await getProjectAccessScope(sessionUser);
+    const scopedTransmittalCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(transmittals.projectId, accessScope.projectIds)
+        : null;
+    const scopedProjectCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(projects.id, accessScope.projectIds)
+        : null;
+    const scopedMemberCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(projectMembers.projectId, accessScope.projectIds)
+        : null;
+    const scopedDocumentCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(documents.projectId, accessScope.projectIds)
+        : null;
+
     const [
       transmittalCountRows,
       acknowledgedRows,
@@ -67,74 +90,95 @@ export async function getTransmittalManagementData(
       documentRows,
       transmittalRows,
     ] = await Promise.all([
-      db.select({ value: count() }).from(transmittals),
-      db
-        .select({ value: count() })
-        .from(transmittals)
-        .where(eq(transmittals.status, "acknowledged")),
-      db.select({ value: count() }).from(transmittals).where(eq(transmittals.status, "sent")),
+      scopedTransmittalCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db.select({ value: count() }).from(transmittals).where(scopedTransmittalCondition),
+      scopedTransmittalCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db
+            .select({ value: count() })
+            .from(transmittals)
+            .where(and(eq(transmittals.status, "acknowledged"), scopedTransmittalCondition)),
+      scopedTransmittalCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db
+            .select({ value: count() })
+            .from(transmittals)
+            .where(and(eq(transmittals.status, "sent"), scopedTransmittalCondition)),
       db
         .select({ value: count() })
         .from(notifications)
         .where(eq(notifications.userId, sessionUser.id)),
-      db
-        .select({
-          id: projects.id,
-          name: projects.name,
-          projectNumber: projects.projectNumber,
-        })
-        .from(projects)
-        .orderBy(asc(projects.name)),
-      db
-        .select({
-          id: userTable.id,
-          projectId: projectMembers.projectId,
-          name: userTable.name,
-          email: userTable.email,
-          role: projectMembers.role,
-        })
-        .from(projectMembers)
-        .innerJoin(userTable, eq(projectMembers.userId, userTable.id))
-        .orderBy(asc(userTable.name)),
-      db
-        .select({
-          id: documents.id,
-          projectId: documents.projectId,
-          documentNumber: documents.documentNumber,
-          title: documents.title,
-        })
-        .from(documents)
-        .orderBy(desc(documents.uploadedAt)),
-      db
-        .select({
-          id: transmittals.id,
-          transmittalNumber: transmittals.transmittalNumber,
-          subject: transmittals.subject,
-          projectName: projects.name,
-          status: transmittals.status,
-          sentAt: transmittals.sentAt,
-          createdAt: transmittals.createdAt,
-          sentTo: transmittals.sentTo,
-          recipientName: userTable.name,
-          documentCount: count(transmittalDocuments.id),
-        })
-        .from(transmittals)
-        .innerJoin(projects, eq(transmittals.projectId, projects.id))
-        .leftJoin(userTable, eq(transmittals.acknowledgedBy, userTable.id))
-        .leftJoin(transmittalDocuments, eq(transmittalDocuments.transmittalId, transmittals.id))
-        .groupBy(
-          transmittals.id,
-          transmittals.transmittalNumber,
-          transmittals.subject,
-          projects.name,
-          transmittals.status,
-          transmittals.sentAt,
-          transmittals.createdAt,
-          transmittals.sentTo,
-          userTable.name
-        )
-        .orderBy(desc(transmittals.createdAt))
-        .limit(24),
+      scopedProjectCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: projects.id,
+              name: projects.name,
+              projectNumber: projects.projectNumber,
+            })
+            .from(projects)
+            .where(scopedProjectCondition)
+            .orderBy(asc(projects.name)),
+      scopedMemberCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: userTable.id,
+              projectId: projectMembers.projectId,
+              name: userTable.name,
+              email: userTable.email,
+              role: projectMembers.role,
+            })
+            .from(projectMembers)
+            .innerJoin(userTable, eq(projectMembers.userId, userTable.id))
+            .where(scopedMemberCondition)
+            .orderBy(asc(userTable.name)),
+      scopedDocumentCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: documents.id,
+              projectId: documents.projectId,
+              documentNumber: documents.documentNumber,
+              title: documents.title,
+            })
+            .from(documents)
+            .where(scopedDocumentCondition)
+            .orderBy(desc(documents.uploadedAt)),
+      scopedTransmittalCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: transmittals.id,
+              transmittalNumber: transmittals.transmittalNumber,
+              subject: transmittals.subject,
+              projectName: projects.name,
+              status: transmittals.status,
+              sentAt: transmittals.sentAt,
+              createdAt: transmittals.createdAt,
+              sentTo: transmittals.sentTo,
+              recipientName: userTable.name,
+              documentCount: count(transmittalDocuments.id),
+            })
+            .from(transmittals)
+            .innerJoin(projects, eq(transmittals.projectId, projects.id))
+            .leftJoin(userTable, eq(transmittals.acknowledgedBy, userTable.id))
+            .leftJoin(transmittalDocuments, eq(transmittalDocuments.transmittalId, transmittals.id))
+            .where(scopedTransmittalCondition)
+            .groupBy(
+              transmittals.id,
+              transmittals.transmittalNumber,
+              transmittals.subject,
+              projects.name,
+              transmittals.status,
+              transmittals.sentAt,
+              transmittals.createdAt,
+              transmittals.sentTo,
+              userTable.name
+            )
+            .orderBy(desc(transmittals.createdAt))
+            .limit(24),
     ]);
 
     const [transmittalCount] = transmittalCountRows;

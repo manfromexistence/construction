@@ -1,6 +1,6 @@
 import "server-only";
 
-import { and, desc, eq, gte, ilike, lte, or, type SQL } from "drizzle-orm";
+import { and, desc, eq, gte, ilike, inArray, lte, or, type SQL } from "drizzle-orm";
 import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
 import { documentComments, documents } from "@/db/schema/documents";
@@ -8,6 +8,7 @@ import { notifications } from "@/db/schema/notifications";
 import { projects } from "@/db/schema/projects";
 import { transmittals } from "@/db/schema/transmittals";
 import { documentWorkflows, workflowSteps } from "@/db/schema/workflows";
+import { getProjectAccessScope } from "./access";
 import { getEdmsDashboardData } from "./dashboard";
 import type { DashboardSessionUser } from "./session";
 
@@ -97,8 +98,8 @@ export async function getGlobalSearchData(
       : normalizeGlobalSearchFilters(input);
 
   const [availableProjects, availableUploaders] = await Promise.all([
-    getProjectOptions(),
-    getUploaderOptions(),
+    getProjectOptions(sessionUser),
+    getUploaderOptions(sessionUser),
   ]);
 
   if (!hasSearchIntent(filters)) {
@@ -114,267 +115,305 @@ export async function getGlobalSearchData(
   }
 
   try {
+    const accessScope = await getProjectAccessScope(sessionUser);
     const normalizedQuery = filters.query;
     const pattern = normalizedQuery.length > 0 ? `%${normalizedQuery}%` : null;
     const results: GlobalSearchResult[] = [];
+    const scopedProjectCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(projects.id, accessScope.projectIds)
+        : null;
+    const scopedDocumentCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(documents.projectId, accessScope.projectIds)
+        : null;
+    const scopedTransmittalCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(transmittals.projectId, accessScope.projectIds)
+        : null;
 
     if (includesCategory(filters, "project")) {
-      const projectConditions = compactConditions([
-        pattern
-          ? or(
-              ilike(projects.name, pattern),
-              ilike(projects.projectNumber, pattern),
-              ilike(projects.location, pattern)
-            )
-          : undefined,
-        filters.projectId ? eq(projects.id, filters.projectId) : undefined,
-        filters.status ? eq(projects.status, filters.status) : undefined,
-        createDateBounds(projects.createdAt, filters),
-      ]);
+      if (scopedProjectCondition === null) {
+        // no accessible projects
+      } else {
+        const projectConditions = compactConditions([
+          scopedProjectCondition ?? undefined,
+          pattern
+            ? or(
+                ilike(projects.name, pattern),
+                ilike(projects.projectNumber, pattern),
+                ilike(projects.location, pattern)
+              )
+            : undefined,
+          filters.projectId ? eq(projects.id, filters.projectId) : undefined,
+          filters.status ? eq(projects.status, filters.status) : undefined,
+          createDateBounds(projects.createdAt, filters),
+        ]);
 
-      const projectRows = await db
-        .select({
-          id: projects.id,
-          name: projects.name,
-          projectNumber: projects.projectNumber,
-          location: projects.location,
-          status: projects.status,
-        })
-        .from(projects)
-        .where(combineConditions(projectConditions))
-        .orderBy(desc(projects.updatedAt))
-        .limit(8);
+        const projectRows = await db
+          .select({
+            id: projects.id,
+            name: projects.name,
+            projectNumber: projects.projectNumber,
+            location: projects.location,
+            status: projects.status,
+          })
+          .from(projects)
+          .where(combineConditions(projectConditions))
+          .orderBy(desc(projects.updatedAt))
+          .limit(8);
 
-      results.push(
-        ...projectRows.map((project) => ({
-          id: project.id,
-          title: project.name,
-          subtitle: project.projectNumber ?? "Project",
-          category: "project" as const,
-          href: `/dashboard/projects/${project.id}`,
-          meta: project.location ?? "Location pending",
-          source: "project record",
-          status: project.status ?? undefined,
-        }))
-      );
+        results.push(
+          ...projectRows.map((project) => ({
+            id: project.id,
+            title: project.name,
+            subtitle: project.projectNumber ?? "Project",
+            category: "project" as const,
+            href: `/dashboard/projects/${project.id}`,
+            meta: project.location ?? "Location pending",
+            source: "project record",
+            status: project.status ?? undefined,
+          }))
+        );
+      }
     }
 
     if (includesCategory(filters, "document")) {
-      const documentConditions = compactConditions([
-        pattern
-          ? or(
-              ilike(documents.title, pattern),
-              ilike(documents.documentNumber, pattern),
-              ilike(documents.description, pattern),
-              ilike(documents.category, pattern),
-              ilike(documents.discipline, pattern)
-            )
-          : undefined,
-        filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
-        filters.status ? eq(documents.status, filters.status) : undefined,
-        filters.uploaderId ? eq(documents.uploadedBy, filters.uploaderId) : undefined,
-        createDateBounds(documents.uploadedAt, filters),
-      ]);
+      if (scopedDocumentCondition === null) {
+        // no accessible documents
+      } else {
+        const documentConditions = compactConditions([
+          scopedDocumentCondition ?? undefined,
+          pattern
+            ? or(
+                ilike(documents.title, pattern),
+                ilike(documents.documentNumber, pattern),
+                ilike(documents.description, pattern),
+                ilike(documents.category, pattern),
+                ilike(documents.discipline, pattern)
+              )
+            : undefined,
+          filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
+          filters.status ? eq(documents.status, filters.status) : undefined,
+          filters.uploaderId ? eq(documents.uploadedBy, filters.uploaderId) : undefined,
+          createDateBounds(documents.uploadedAt, filters),
+        ]);
 
-      const documentRows = await db
-        .select({
-          id: documents.id,
-          title: documents.title,
-          documentNumber: documents.documentNumber,
-          revision: documents.revision,
-          status: documents.status,
-          projectName: projects.name,
-        })
-        .from(documents)
-        .innerJoin(projects, eq(documents.projectId, projects.id))
-        .where(combineConditions(documentConditions))
-        .orderBy(desc(documents.updatedAt))
-        .limit(8);
+        const documentRows = await db
+          .select({
+            id: documents.id,
+            title: documents.title,
+            documentNumber: documents.documentNumber,
+            revision: documents.revision,
+            status: documents.status,
+            projectName: projects.name,
+          })
+          .from(documents)
+          .innerJoin(projects, eq(documents.projectId, projects.id))
+          .where(combineConditions(documentConditions))
+          .orderBy(desc(documents.updatedAt))
+          .limit(8);
 
-      const commentConditions = compactConditions([
-        pattern
-          ? or(
-              ilike(documentComments.comment, pattern),
-              ilike(documents.title, pattern),
-              ilike(documents.documentNumber, pattern)
-            )
-          : undefined,
-        filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
-        filters.uploaderId ? eq(documentComments.userId, filters.uploaderId) : undefined,
-        createDateBounds(documentComments.createdAt, filters),
-      ]);
+        const commentConditions = compactConditions([
+          scopedDocumentCondition ?? undefined,
+          pattern
+            ? or(
+                ilike(documentComments.comment, pattern),
+                ilike(documents.title, pattern),
+                ilike(documents.documentNumber, pattern)
+              )
+            : undefined,
+          filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
+          filters.uploaderId ? eq(documentComments.userId, filters.uploaderId) : undefined,
+          createDateBounds(documentComments.createdAt, filters),
+        ]);
 
-      const commentRows = await db
-        .select({
-          id: documentComments.id,
-          documentId: documents.id,
-          title: documents.title,
-          documentNumber: documents.documentNumber,
-          status: documents.status,
-          projectName: projects.name,
-          comment: documentComments.comment,
-        })
-        .from(documentComments)
-        .innerJoin(documents, eq(documentComments.documentId, documents.id))
-        .innerJoin(projects, eq(documents.projectId, projects.id))
-        .where(combineConditions(commentConditions))
-        .orderBy(desc(documentComments.createdAt))
-        .limit(6);
+        const commentRows = await db
+          .select({
+            id: documentComments.id,
+            documentId: documents.id,
+            title: documents.title,
+            documentNumber: documents.documentNumber,
+            status: documents.status,
+            projectName: projects.name,
+            comment: documentComments.comment,
+          })
+          .from(documentComments)
+          .innerJoin(documents, eq(documentComments.documentId, documents.id))
+          .innerJoin(projects, eq(documents.projectId, projects.id))
+          .where(combineConditions(commentConditions))
+          .orderBy(desc(documentComments.createdAt))
+          .limit(6);
 
-      results.push(
-        ...documentRows.map((document) => ({
-          id: document.id,
-          title: document.title,
-          subtitle: document.documentNumber,
-          category: "document" as const,
-          href: `/dashboard/documents/${document.id}`,
-          meta: `${document.projectName}${document.revision ? ` • Rev ${document.revision}` : ""}`,
-          source: "document register",
-          status: document.status ?? undefined,
-        })),
-        ...commentRows.map((comment) => ({
-          id: comment.id,
-          title: comment.title,
-          subtitle: comment.documentNumber,
-          category: "document" as const,
-          href: `/dashboard/documents/${comment.documentId}`,
-          meta: truncateText(comment.comment, 140),
-          source: "comment match",
-          status: comment.status ?? undefined,
-        }))
-      );
+        results.push(
+          ...documentRows.map((document) => ({
+            id: document.id,
+            title: document.title,
+            subtitle: document.documentNumber,
+            category: "document" as const,
+            href: `/dashboard/documents/${document.id}`,
+            meta: `${document.projectName}${document.revision ? ` • Rev ${document.revision}` : ""}`,
+            source: "document register",
+            status: document.status ?? undefined,
+          })),
+          ...commentRows.map((comment) => ({
+            id: comment.id,
+            title: comment.title,
+            subtitle: comment.documentNumber,
+            category: "document" as const,
+            href: `/dashboard/documents/${comment.documentId}`,
+            meta: truncateText(comment.comment, 140),
+            source: "comment match",
+            status: comment.status ?? undefined,
+          }))
+        );
+      }
     }
 
     if (includesCategory(filters, "workflow")) {
-      const workflowConditions = compactConditions([
-        pattern
-          ? or(
-              ilike(documentWorkflows.workflowName, pattern),
-              ilike(documents.title, pattern),
-              ilike(documents.documentNumber, pattern)
-            )
-          : undefined,
-        filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
-        filters.status ? eq(documentWorkflows.status, filters.status) : undefined,
-        createDateBounds(documentWorkflows.startedAt, filters),
-      ]);
+      if (scopedDocumentCondition === null) {
+        // no accessible workflows
+      } else {
+        const workflowConditions = compactConditions([
+          scopedDocumentCondition ?? undefined,
+          pattern
+            ? or(
+                ilike(documentWorkflows.workflowName, pattern),
+                ilike(documents.title, pattern),
+                ilike(documents.documentNumber, pattern)
+              )
+            : undefined,
+          filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
+          filters.status ? eq(documentWorkflows.status, filters.status) : undefined,
+          createDateBounds(documentWorkflows.startedAt, filters),
+        ]);
 
-      const workflowRows = await db
-        .select({
-          id: documentWorkflows.id,
-          workflowName: documentWorkflows.workflowName,
-          status: documentWorkflows.status,
-          documentTitle: documents.title,
-          documentNumber: documents.documentNumber,
-          projectName: projects.name,
-        })
-        .from(documentWorkflows)
-        .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
-        .innerJoin(projects, eq(documents.projectId, projects.id))
-        .where(combineConditions(workflowConditions))
-        .orderBy(desc(documentWorkflows.startedAt))
-        .limit(8);
+        const workflowRows = await db
+          .select({
+            id: documentWorkflows.id,
+            workflowName: documentWorkflows.workflowName,
+            status: documentWorkflows.status,
+            documentTitle: documents.title,
+            documentNumber: documents.documentNumber,
+            projectName: projects.name,
+          })
+          .from(documentWorkflows)
+          .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
+          .innerJoin(projects, eq(documents.projectId, projects.id))
+          .where(combineConditions(workflowConditions))
+          .orderBy(desc(documentWorkflows.startedAt))
+          .limit(8);
 
-      const workflowNoteConditions = compactConditions([
-        pattern
-          ? or(
-              ilike(workflowSteps.comments, pattern),
-              ilike(workflowSteps.stepName, pattern),
-              ilike(documentWorkflows.workflowName, pattern)
-            )
-          : undefined,
-        filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
-        filters.uploaderId ? eq(workflowSteps.assignedTo, filters.uploaderId) : undefined,
-        filters.status ? eq(workflowSteps.status, filters.status) : undefined,
-        createDateBounds(workflowSteps.completedAt, filters) ??
-          createDateBounds(workflowSteps.startedAt, filters),
-      ]);
+        const workflowNoteConditions = compactConditions([
+          scopedDocumentCondition ?? undefined,
+          pattern
+            ? or(
+                ilike(workflowSteps.comments, pattern),
+                ilike(workflowSteps.stepName, pattern),
+                ilike(documentWorkflows.workflowName, pattern)
+              )
+            : undefined,
+          filters.projectId ? eq(documents.projectId, filters.projectId) : undefined,
+          filters.uploaderId ? eq(workflowSteps.assignedTo, filters.uploaderId) : undefined,
+          filters.status ? eq(workflowSteps.status, filters.status) : undefined,
+          createDateBounds(workflowSteps.completedAt, filters) ??
+            createDateBounds(workflowSteps.startedAt, filters),
+        ]);
 
-      const workflowNoteRows = await db
-        .select({
-          id: workflowSteps.id,
-          workflowId: documentWorkflows.id,
-          workflowName: documentWorkflows.workflowName,
-          status: workflowSteps.status,
-          documentTitle: documents.title,
-          documentNumber: documents.documentNumber,
-          comments: workflowSteps.comments,
-          projectName: projects.name,
-        })
-        .from(workflowSteps)
-        .innerJoin(documentWorkflows, eq(workflowSteps.workflowId, documentWorkflows.id))
-        .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
-        .innerJoin(projects, eq(documents.projectId, projects.id))
-        .where(combineConditions(workflowNoteConditions))
-        .orderBy(desc(workflowSteps.completedAt), desc(workflowSteps.startedAt))
-        .limit(6);
+        const workflowNoteRows = await db
+          .select({
+            id: workflowSteps.id,
+            workflowId: documentWorkflows.id,
+            workflowName: documentWorkflows.workflowName,
+            status: workflowSteps.status,
+            documentTitle: documents.title,
+            documentNumber: documents.documentNumber,
+            comments: workflowSteps.comments,
+            projectName: projects.name,
+          })
+          .from(workflowSteps)
+          .innerJoin(documentWorkflows, eq(workflowSteps.workflowId, documentWorkflows.id))
+          .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
+          .innerJoin(projects, eq(documents.projectId, projects.id))
+          .where(combineConditions(workflowNoteConditions))
+          .orderBy(desc(workflowSteps.completedAt), desc(workflowSteps.startedAt))
+          .limit(6);
 
-      results.push(
-        ...workflowRows.map((workflow) => ({
-          id: workflow.id,
-          title: workflow.workflowName,
-          subtitle: workflow.documentNumber,
-          category: "workflow" as const,
-          href: "/dashboard/workflows",
-          meta: `${workflow.projectName} • ${workflow.documentTitle}`,
-          source: "workflow record",
-          status: workflow.status ?? undefined,
-        })),
-        ...workflowNoteRows.map((note) => ({
-          id: note.id,
-          title: note.workflowName,
-          subtitle: note.documentNumber,
-          category: "workflow" as const,
-          href: "/dashboard/workflows",
-          meta: truncateText(note.comments || `${note.projectName} • ${note.documentTitle}`, 140),
-          source: "workflow note",
-          status: note.status ?? undefined,
-        }))
-      );
+        results.push(
+          ...workflowRows.map((workflow) => ({
+            id: workflow.id,
+            title: workflow.workflowName,
+            subtitle: workflow.documentNumber,
+            category: "workflow" as const,
+            href: "/dashboard/workflows",
+            meta: `${workflow.projectName} • ${workflow.documentTitle}`,
+            source: "workflow record",
+            status: workflow.status ?? undefined,
+          })),
+          ...workflowNoteRows.map((note) => ({
+            id: note.id,
+            title: note.workflowName,
+            subtitle: note.documentNumber,
+            category: "workflow" as const,
+            href: "/dashboard/workflows",
+            meta: truncateText(note.comments || `${note.projectName} • ${note.documentTitle}`, 140),
+            source: "workflow note",
+            status: note.status ?? undefined,
+          }))
+        );
+      }
     }
 
     if (includesCategory(filters, "transmittal")) {
-      const transmittalConditions = compactConditions([
-        pattern
-          ? or(
-              ilike(transmittals.transmittalNumber, pattern),
-              ilike(transmittals.subject, pattern),
-              ilike(transmittals.description, pattern),
-              ilike(transmittals.notes, pattern)
-            )
-          : undefined,
-        filters.projectId ? eq(transmittals.projectId, filters.projectId) : undefined,
-        filters.status ? eq(transmittals.status, filters.status) : undefined,
-        filters.uploaderId ? eq(transmittals.sentFrom, filters.uploaderId) : undefined,
-        createDateBounds(transmittals.createdAt, filters),
-      ]);
+      if (scopedTransmittalCondition === null) {
+        // no accessible transmittals
+      } else {
+        const transmittalConditions = compactConditions([
+          scopedTransmittalCondition ?? undefined,
+          pattern
+            ? or(
+                ilike(transmittals.transmittalNumber, pattern),
+                ilike(transmittals.subject, pattern),
+                ilike(transmittals.description, pattern),
+                ilike(transmittals.notes, pattern)
+              )
+            : undefined,
+          filters.projectId ? eq(transmittals.projectId, filters.projectId) : undefined,
+          filters.status ? eq(transmittals.status, filters.status) : undefined,
+          filters.uploaderId ? eq(transmittals.sentFrom, filters.uploaderId) : undefined,
+          createDateBounds(transmittals.createdAt, filters),
+        ]);
 
-      const transmittalRows = await db
-        .select({
-          id: transmittals.id,
-          transmittalNumber: transmittals.transmittalNumber,
-          subject: transmittals.subject,
-          status: transmittals.status,
-          projectName: projects.name,
-        })
-        .from(transmittals)
-        .innerJoin(projects, eq(transmittals.projectId, projects.id))
-        .where(combineConditions(transmittalConditions))
-        .orderBy(desc(transmittals.createdAt))
-        .limit(8);
+        const transmittalRows = await db
+          .select({
+            id: transmittals.id,
+            transmittalNumber: transmittals.transmittalNumber,
+            subject: transmittals.subject,
+            status: transmittals.status,
+            projectName: projects.name,
+          })
+          .from(transmittals)
+          .innerJoin(projects, eq(transmittals.projectId, projects.id))
+          .where(combineConditions(transmittalConditions))
+          .orderBy(desc(transmittals.createdAt))
+          .limit(8);
 
-      results.push(
-        ...transmittalRows.map((transmittal) => ({
-          id: transmittal.id,
-          title: transmittal.subject,
-          subtitle: transmittal.transmittalNumber,
-          category: "transmittal" as const,
-          href: "/dashboard/transmittals",
-          meta: transmittal.projectName,
-          source: "transmittal record",
-          status: transmittal.status ?? undefined,
-        }))
-      );
+        results.push(
+          ...transmittalRows.map((transmittal) => ({
+            id: transmittal.id,
+            title: transmittal.subject,
+            subtitle: transmittal.transmittalNumber,
+            category: "transmittal" as const,
+            href: "/dashboard/transmittals",
+            meta: transmittal.projectName,
+            source: "transmittal record",
+            status: transmittal.status ?? undefined,
+          }))
+        );
+      }
     }
 
     if (includesCategory(filters, "notification")) {
@@ -441,7 +480,18 @@ export async function getGlobalSearchData(
   }
 }
 
-async function getProjectOptions(): Promise<SearchOption[]> {
+async function getProjectOptions(sessionUser: DashboardSessionUser): Promise<SearchOption[]> {
+  const accessScope = await getProjectAccessScope(sessionUser);
+  const scopedCondition = accessScope.isAdmin
+    ? undefined
+    : accessScope.projectIds.length > 0
+      ? inArray(projects.id, accessScope.projectIds)
+      : null;
+
+  if (scopedCondition === null) {
+    return [];
+  }
+
   const rows = await db
     .select({
       id: projects.id,
@@ -449,6 +499,7 @@ async function getProjectOptions(): Promise<SearchOption[]> {
       description: projects.projectNumber,
     })
     .from(projects)
+    .where(scopedCondition)
     .orderBy(desc(projects.updatedAt))
     .limit(50);
 
@@ -459,7 +510,13 @@ async function getProjectOptions(): Promise<SearchOption[]> {
   }));
 }
 
-async function getUploaderOptions(): Promise<SearchOption[]> {
+async function getUploaderOptions(sessionUser: DashboardSessionUser): Promise<SearchOption[]> {
+  const accessScope = await getProjectAccessScope(sessionUser);
+
+  if (!accessScope.isAdmin && accessScope.projectIds.length === 0) {
+    return [];
+  }
+
   const rows = await db
     .select({
       id: userTable.id,
@@ -467,14 +524,23 @@ async function getUploaderOptions(): Promise<SearchOption[]> {
       description: userTable.email,
     })
     .from(userTable)
+    .innerJoin(documents, eq(userTable.id, documents.uploadedBy))
+    .where(accessScope.isAdmin ? undefined : inArray(documents.projectId, accessScope.projectIds))
     .orderBy(desc(userTable.updatedAt))
     .limit(50);
 
-  return rows.map((row) => ({
-    id: row.id,
-    label: row.label,
-    description: row.description,
-  }));
+  return Array.from(
+    new Map(
+      rows.map((row) => [
+        row.id,
+        {
+          id: row.id,
+          label: row.label,
+          description: row.description,
+        },
+      ])
+    ).values()
+  );
 }
 
 function compactConditions(conditions: Array<SQL | undefined>) {

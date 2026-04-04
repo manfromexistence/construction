@@ -304,6 +304,38 @@ export async function recordWorkflowDecision(
         })
         .where(eq(workflowSteps.id, stepRecord.id));
 
+      await Promise.allSettled([
+        notifyUsers({
+          userIds: [stepRecord.createdBy, stepRecord.uploadedBy].filter(
+            (userId) => userId !== access.id
+          ),
+          preferenceKey: "approvalDecision",
+          type: "document_commented",
+          title: `Comments received: ${stepRecord.documentNumber}`,
+          message: `${stepRecord.documentTitle} received review comments and is waiting on your follow-up.`,
+          projectId: stepRecord.projectId,
+          documentId: stepRecord.documentId,
+          relatedEntityType: "workflow",
+          relatedEntityId: stepRecord.workflowId,
+          actionUrl: `/dashboard/documents/${stepRecord.documentId}`,
+          emailSubject: `QUADRA: comments received for ${stepRecord.documentNumber}`,
+        }),
+        logEdmsActivity({
+          userId: access.id,
+          projectId: stepRecord.projectId,
+          action: "workflow_commented",
+          entityType: "workflow",
+          entityId: stepRecord.workflowId,
+          entityName: stepRecord.workflowName,
+          description: `${stepRecord.documentNumber} received review comments at step ${stepRecord.stepNumber}.`,
+          metadata: {
+            decision: values.decision,
+            stepId: stepRecord.id,
+            comments: values.comments ?? null,
+          },
+        }),
+      ]);
+
       revalidateWorkflowPaths(stepRecord.projectId);
       return actionSuccess({ workflowId: stepRecord.workflowId });
     }

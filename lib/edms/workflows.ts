@@ -1,12 +1,13 @@
 import "server-only";
 
-import { asc, count, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, count, desc, eq, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import { user as userTable } from "@/db/schema";
 import { documents } from "@/db/schema/documents";
 import { notifications } from "@/db/schema/notifications";
 import { projectMembers, projects } from "@/db/schema/projects";
 import { documentWorkflows, workflowSteps } from "@/db/schema/workflows";
+import { getProjectAccessScope } from "./access";
 import { type DashboardMetric, getEdmsDashboardData } from "./dashboard";
 import type { DashboardSessionUser } from "./session";
 
@@ -60,6 +61,18 @@ export async function getWorkflowManagementData(
   sessionUser: DashboardSessionUser
 ): Promise<WorkflowManagementData> {
   try {
+    const accessScope = await getProjectAccessScope(sessionUser);
+    const scopedDocumentCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(documents.projectId, accessScope.projectIds)
+        : null;
+    const scopedProjectMemberCondition = accessScope.isAdmin
+      ? undefined
+      : accessScope.projectIds.length > 0
+        ? inArray(projectMembers.projectId, accessScope.projectIds)
+        : null;
+
     const [
       workflowCountRows,
       pendingStepRows,
@@ -69,70 +82,95 @@ export async function getWorkflowManagementData(
       assigneeRows,
       stepRows,
     ] = await Promise.all([
-      db.select({ value: count() }).from(documentWorkflows),
+      scopedDocumentCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db
+            .select({ value: count() })
+            .from(documentWorkflows)
+            .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
+            .where(scopedDocumentCondition),
       db
         .select({ value: count() })
         .from(workflowSteps)
-        .where(inArray(workflowSteps.status, ["pending", "in_progress"])),
-      db
-        .select({ value: count() })
-        .from(documentWorkflows)
-        .where(eq(documentWorkflows.status, "approved")),
+        .innerJoin(documentWorkflows, eq(workflowSteps.workflowId, documentWorkflows.id))
+        .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
+        .where(
+          and(
+            inArray(workflowSteps.status, ["pending", "in_progress"]),
+            scopedDocumentCondition ?? undefined
+          )
+        ),
+      scopedDocumentCondition === null
+        ? Promise.resolve([{ value: 0 }])
+        : db
+            .select({ value: count() })
+            .from(documentWorkflows)
+            .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
+            .where(and(eq(documentWorkflows.status, "approved"), scopedDocumentCondition)),
       db
         .select({ value: count() })
         .from(notifications)
         .where(eq(notifications.userId, sessionUser.id)),
-      db
-        .select({
-          id: documents.id,
-          projectId: documents.projectId,
-          documentNumber: documents.documentNumber,
-          title: documents.title,
-          projectName: projects.name,
-          status: documents.status,
-        })
-        .from(documents)
-        .innerJoin(projects, eq(documents.projectId, projects.id))
-        .orderBy(desc(documents.uploadedAt))
-        .limit(24),
-      db
-        .select({
-          id: userTable.id,
-          projectId: projectMembers.projectId,
-          name: userTable.name,
-          email: userTable.email,
-          role: projectMembers.role,
-          organization: userTable.organization,
-        })
-        .from(projectMembers)
-        .innerJoin(userTable, eq(projectMembers.userId, userTable.id))
-        .orderBy(asc(userTable.name)),
-      db
-        .select({
-          id: workflowSteps.id,
-          workflowId: documentWorkflows.id,
-          documentId: documents.id,
-          documentNumber: documents.documentNumber,
-          title: documents.title,
-          projectName: projects.name,
-          workflowName: documentWorkflows.workflowName,
-          stepNumber: workflowSteps.stepNumber,
-          totalSteps: documentWorkflows.totalSteps,
-          stepName: workflowSteps.stepName,
-          status: workflowSteps.status,
-          assignedRole: workflowSteps.assignedRole,
-          assignedToName: userTable.name,
-          assignedToId: workflowSteps.assignedTo,
-          dueDate: workflowSteps.dueDate,
-          comments: workflowSteps.comments,
-        })
-        .from(workflowSteps)
-        .innerJoin(documentWorkflows, eq(workflowSteps.workflowId, documentWorkflows.id))
-        .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
-        .innerJoin(projects, eq(documents.projectId, projects.id))
-        .innerJoin(userTable, eq(workflowSteps.assignedTo, userTable.id))
-        .orderBy(desc(documentWorkflows.startedAt), asc(workflowSteps.stepNumber))
-        .limit(24),
+      scopedDocumentCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: documents.id,
+              projectId: documents.projectId,
+              documentNumber: documents.documentNumber,
+              title: documents.title,
+              projectName: projects.name,
+              status: documents.status,
+            })
+            .from(documents)
+            .innerJoin(projects, eq(documents.projectId, projects.id))
+            .where(scopedDocumentCondition)
+            .orderBy(desc(documents.uploadedAt))
+            .limit(24),
+      scopedProjectMemberCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: userTable.id,
+              projectId: projectMembers.projectId,
+              name: userTable.name,
+              email: userTable.email,
+              role: projectMembers.role,
+              organization: userTable.organization,
+            })
+            .from(projectMembers)
+            .innerJoin(userTable, eq(projectMembers.userId, userTable.id))
+            .where(scopedProjectMemberCondition)
+            .orderBy(asc(userTable.name)),
+      scopedDocumentCondition === null
+        ? Promise.resolve([])
+        : db
+            .select({
+              id: workflowSteps.id,
+              workflowId: documentWorkflows.id,
+              documentId: documents.id,
+              documentNumber: documents.documentNumber,
+              title: documents.title,
+              projectName: projects.name,
+              workflowName: documentWorkflows.workflowName,
+              stepNumber: workflowSteps.stepNumber,
+              totalSteps: documentWorkflows.totalSteps,
+              stepName: workflowSteps.stepName,
+              status: workflowSteps.status,
+              assignedRole: workflowSteps.assignedRole,
+              assignedToName: userTable.name,
+              assignedToId: workflowSteps.assignedTo,
+              dueDate: workflowSteps.dueDate,
+              comments: workflowSteps.comments,
+            })
+            .from(workflowSteps)
+            .innerJoin(documentWorkflows, eq(workflowSteps.workflowId, documentWorkflows.id))
+            .innerJoin(documents, eq(documentWorkflows.documentId, documents.id))
+            .innerJoin(projects, eq(documents.projectId, projects.id))
+            .innerJoin(userTable, eq(workflowSteps.assignedTo, userTable.id))
+            .where(scopedDocumentCondition)
+            .orderBy(desc(documentWorkflows.startedAt), asc(workflowSteps.stepNumber))
+            .limit(24),
     ]);
 
     const [workflowCount] = workflowCountRows;
