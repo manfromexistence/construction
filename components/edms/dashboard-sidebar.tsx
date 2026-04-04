@@ -6,6 +6,7 @@ import {
   FileStack,
   FolderKanban,
   LayoutDashboard,
+  LogOut,
   Search,
   Send,
   Settings,
@@ -13,8 +14,9 @@ import {
   Workflow,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
 import type { DashboardUser } from "@/lib/edms/dashboard";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Badge } from "../ui/badge";
@@ -58,6 +60,7 @@ const SECONDARY_NAVIGATION = [
 
 export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
   const pathname = usePathname();
+  const router = useRouter();
   const [searchOpen, setSearchOpen] = useState(false);
 
   // Keyboard shortcut for search
@@ -72,6 +75,12 @@ export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
     document.addEventListener("keydown", down);
     return () => document.removeEventListener("keydown", down);
   }, []);
+
+  const handleLogOut = async () => {
+    await authClient.signOut();
+    router.push("/");
+    router.refresh();
+  };
 
   return (
     <>
@@ -264,6 +273,14 @@ export function EdmsDashboardSidebar({ user }: { user: DashboardUser }) {
               </Link>
             </Button>
           </div>
+          <Button
+            variant="outline"
+            className="mt-2 w-full justify-start border-sidebar-border bg-transparent text-destructive hover:bg-destructive/10 hover:text-destructive"
+            onClick={handleLogOut}
+          >
+            <LogOut className="size-4" />
+            Log out
+          </Button>
         </SidebarFooter>
         <SidebarRail />
       </Sidebar>
