@@ -65,6 +65,7 @@ interface SavedSearchEntry {
 
 const LOCAL_STORAGE_HISTORY_KEY = "quadra-edms-search-history";
 const LOCAL_STORAGE_SAVED_KEY = "quadra-edms-search-presets";
+const ALL_OPTION_VALUE = "__all__";
 
 const STATUS_OPTIONS = [
   "",
@@ -225,7 +226,7 @@ export function SearchToolbar({ initialFilters, projects, uploaders }: SearchToo
               value={filters.status}
               placeholder="Any status"
               options={STATUS_OPTIONS.map((status) => ({
-                value: status,
+                value: status || ALL_OPTION_VALUE,
                 label: status ? formatStatus(status) : "Any status",
               }))}
               onValueChange={(value) => updateFilter("status", value)}
@@ -235,11 +236,11 @@ export function SearchToolbar({ initialFilters, projects, uploaders }: SearchToo
               value={filters.projectId}
               placeholder="Any project"
               options={[
-                { value: "", label: "Any project" },
+                { value: ALL_OPTION_VALUE, label: "Any project" },
                 ...projects.map((project) => ({
                   value: project.id,
                   label: project.description
-                    ? `${project.label} • ${project.description}`
+                    ? `${project.label} - ${project.description}`
                     : project.label,
                 })),
               ]}
@@ -250,11 +251,11 @@ export function SearchToolbar({ initialFilters, projects, uploaders }: SearchToo
               value={filters.uploaderId}
               placeholder="Any uploader"
               options={[
-                { value: "", label: "Any uploader" },
+                { value: ALL_OPTION_VALUE, label: "Any uploader" },
                 ...uploaders.map((uploader) => ({
                   value: uploader.id,
                   label: uploader.description
-                    ? `${uploader.label} • ${uploader.description}`
+                    ? `${uploader.label} - ${uploader.description}`
                     : uploader.label,
                 })),
               ]}
@@ -347,13 +348,18 @@ function FieldSelect({
   return (
     <div className="grid gap-2">
       <label className="text-sm font-medium">{label}</label>
-      <Select value={value} onValueChange={onValueChange}>
+      <Select
+        value={value || ALL_OPTION_VALUE}
+        onValueChange={(nextValue) =>
+          onValueChange(nextValue === ALL_OPTION_VALUE ? "" : nextValue)
+        }
+      >
         <SelectTrigger className="w-full">
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent>
           {options.map((option) => (
-            <SelectItem key={option.value || placeholder} value={option.value}>
+            <SelectItem key={`${label}-${option.value}`} value={option.value}>
               {option.label}
             </SelectItem>
           ))}
@@ -518,7 +524,7 @@ function buildSummaryLabel(filters: GlobalSearchFilters) {
     parts.push(`${filters.fromDate || "start"} to ${filters.toDate || "now"}`);
   }
 
-  return parts.join(" • ").slice(0, 96);
+  return parts.join(" | ").slice(0, 96);
 }
 
 function formatCategory(category: string) {
