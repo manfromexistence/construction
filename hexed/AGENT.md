@@ -1,691 +1,1719 @@
-# AGENT.md - Dashboard Access Issue (CRITICAL)
-
-> **TL;DR:** Users cannot access `/dashboard` because Better Auth sessions don't auto-refresh after database updates. The middleware sees stale session data and keeps redirecting to onboarding. **Solution:** User must logout/login to refresh session, OR we need to implement session refresh in `actions/users.ts`.
-
----
-
-## Quick Summary
-
-**Problem:** Dashboard access blocked by infinite redirect loop  
-**Root Cause:** Session cache not refreshing after profile update  
-**Impact:** All users stuck on onboarding page  
-**Severity:** CRITICAL - Blocks entire application  
-**Status:** Identified, solution documented, awaiting implementation  
-
-**Immediate Workaround:** User must logout and login again  
-**Permanent Fix:** Implement session refresh in `actions/users.ts`  
+# AGENT INSTRUCTIONS FOR CONSTRUCTION EDMS COMPLETION
+## For Codex-CLI or Advanced AI Agent
 
 ---
 
-## Problem Statement
+## 🎯 PROJECT OVERVIEW
 
-**Issue:** Users cannot access the dashboard page (`/dashboard`). The application keeps redirecting to `/settings/account?onboarding=1` even after completing the profile form with all required fields.
+**Project Name:** QUADRA Construction EDMS (Electronic Document Management System)  
+**Location:** `/f:/construction/`  
+**Tech Stack:** Next.js 16.2.1, React 19, TypeScript 5.9, Drizzle ORM 0.42, PostgreSQL (Neon), Better Auth 1.5  
+**Runtime:** Bun (preferred) or Node.js  
+**Current Status:** 85% Complete - Core features implemented but untested  
+**Goal:** Make this the most unique, classy, and feature-complete construction EDMS
 
-**RECURRING ISSUE:** This problem has persisted across multiple fix attempts. The user has reported this issue repeatedly, indicating that previous fixes did not fully resolve the root cause.
+### Key Dependencies:
+- **UI:** Shadcn UI, Radix UI, Tailwind CSS 4.2
+- **Forms:** React Hook Form 7.72, Zod 3.25
+- **Database:** Drizzle ORM, @neondatabase/serverless
+- **Auth:** Better Auth with GitHub/Google OAuth
+- **AI:** Google Generative AI, Groq
+- **File Storage:** ImgBB (images), Vercel Blob (documents)
+- **Email:** Resend
+- **Styling:** Tailwind CSS, Motion (animations)
 
-**Error Message:**
+### Project Structure:
 ```
-[browser] Failed to fetch RSC payload for http://localhost:3000/dashboard. Falling back to browser navigation. TypeError: Failed to fetch
+construction/
+├── app/                    # Next.js App Router pages
+│   ├── dashboard/          # Main EDMS dashboard
+│   │   ├── admin/          # Admin pages (users, settings)
+│   │   ├── documents/      # Document management
+│   │   ├── workflows/      # Workflow management
+│   │   ├── projects/       # Project management
+│   │   ├── transmittals/   # Transmittal management
+│   │   └── notifications/  # Notification center
+│   ├── api/                # API routes
+│   ├── auth/               # Authentication pages
+│   └── settings/           # User settings
+├── actions/                # Server actions (backend logic)
+│   ├── documents.ts        # Document CRUD
+│   ├── workflows.ts        # Workflow CRUD
+│   ├── projects.ts         # Project CRUD
+│   ├── users.ts            # User profile updates
+│   └── [MISSING] admin-users.ts  # Admin user management
+├── components/             # React components
+│   ├── edms/               # EDMS-specific components
+│   │   ├── document-*.tsx  # Document components
+│   │   ├── workflow-*.tsx  # Workflow components
+│   │   └── [MISSING] admin-user-edit-sheet.tsx
+│   └── ui/                 # Shadcn UI components
+├── lib/                    # Utility libraries
+│   ├── edms/               # EDMS business logic
+│   │   ├── rbac.ts         # Role-based access control
+│   │   ├── session.ts      # Session management
+│   │   ├── dashboard.ts    # Dashboard data fetching
+│   │   ├── documents.ts    # Document utilities
+│   │   ├── workflows.ts    # Workflow utilities
+│   │   └── notifications.ts # Notification logic
+│   ├── auth.ts             # Better Auth configuration
+│   └── shared.ts           # Shared utilities
+├── db/                     # Database schema
+│   ├── schema/             # Drizzle schemas
+│   │   ├── users.ts        # User schema
+│   │   ├── documents.ts    # Document schemas
+│   │   ├── workflows.ts    # Workflow schemas
+│   │   ├── projects.ts     # Project schemas
+│   │   └── notifications.ts # Notification schema
+│   └── index.ts            # Database connection
+├── drizzle/                # Database migrations
+│   └── 0005_great_roughhouse.sql  # Latest migration (EDMS tables)
+├── types/                  # TypeScript types
+├── hooks/                  # React hooks
+├── store/                  # Zustand stores
+├── hexed/                  # Documentation & analysis files
+└── public/                 # Static assets
 ```
-
-**Server Logs:**
-```
-GET / 200 in 1309ms (next.js: 470ms, application-code: 839ms)
-GET /api/auth/get-session 200 in 4.0s (next.js: 1102ms, application-code: 2.9s)
-GET /settings/account?onboarding=1 200 in 1564ms (next.js: 152ms, proxy.ts: 530ms, application-code: 883ms)
-GET /api/subscription 200 in 1969ms (next.js: 72ms, application-code: 1897ms)
-POST /settings/account?onboarding=1 200 in 3.0s (next.js: 4ms, proxy.ts: 2.1s, application-code: 891ms)
-└─ ƒ updateUserProfile({"department":"gfdgdf","jobTitle":"asdfa","name":"manfromexistence","...":"3 items not stringified"}) in 794ms actions/users.
-```
-
-**Key Observation:** Notice that there is NO `GET /dashboard` request in the logs. The request fails on the client-side before it even reaches the server.
-
-**Current Behavior:**
-1. User logs in successfully
-2. Gets redirected to `/settings/account?onboarding=1`
-3. Fills out profile form (name, role, organization, job title, department, phone)
-4. Clicks "Save profile"
-5. Form submits successfully (POST returns 200)
-6. Page stays on `/settings/account?onboarding=1` (redirect not working)
-7. Attempting to navigate to `/dashboard` results in "Failed to fetch RSC payload" error
-8. User is stuck in an infinite redirect loop
-
-**Expected Behavior:**
-1. User logs in
-2. If profile incomplete, redirect to onboarding
-3. User fills required fields (role + organization)
-4. After saving, redirect to `/dashboard`
-5. Dashboard loads successfully
 
 ---
 
-## Root Cause Analysis
+## 🚨 CRITICAL PRIORITY TASKS (DO THESE FIRST)
 
-### PRIMARY ISSUE: Session Data Not Refreshing After Profile Update
+### Task 1: Admin User Management (HIGHEST PRIORITY)
 
-**The Core Problem:** Better Auth sessions are cached and do not automatically refresh when the database is updated. This creates a disconnect between what's in the database and what's in the user's session.
+**Problem:** Admin can only VIEW users, cannot edit roles or manage users.
 
-**Why This Happens:**
-1. User logs in → Better Auth creates session from database
-2. Session is cached in browser (cookies/localStorage)
-3. User updates profile → Database is updated
-4. Session still contains OLD data (not refreshed)
-5. Middleware checks session → Sees old data → Redirects to onboarding
-6. Infinite loop because session never updates
+**What You Must Build:**
 
-**Location:** Browser session storage / Better Auth session cache
+#### 1.1 Create Admin Actions File
+**File:** `actions/admin-users.ts` (NEW FILE)
 
-**Evidence:**
-- Database shows correct user data (verified via `scripts/set-admin.ts`)
-- Session validation keeps failing despite correct DB values
-- No `GET /dashboard` request reaches the server (fails on client-side)
-- POST to update profile succeeds but doesn't trigger session refresh
-- User remains stuck on onboarding page even after multiple form submissions
-
-**Critical Insight:** The `updateUserProfile` action updates the database but does NOT update the Better Auth session. This is why logging out and back in fixes the issue - it creates a new session from the current database state.
-
-### SECONDARY ISSUE: Middleware Validation Mismatch (FIXED)
-
-The `proxy.ts` middleware and `lib/edms/session.ts` had different validation requirements.
-
-**Files Affected:**
-- `proxy.ts` - Middleware that runs before route access
-- `lib/edms/session.ts` - Server-side session validation
-- `components/settings/account-profile-form.tsx` - Form submission handler
-
-**Original Issue:**
-- Middleware required: role, organization, jobTitle, department (all 4 fields)
-- Session validation required: role, organization (only 2 fields)
-- Form schema required: all fields but didn't enforce non-empty
-
-**Fix Applied:**
-- Updated both to require only: role (not "user") + organization (not empty)
-- Made jobTitle, department, phone optional
-
-**Status:** ✅ FIXED - Both files now have matching validation logic
-
-### TERTIARY ISSUE: Form Submission Not Redirecting (FIXED)
-
-After saving profile during onboarding, the form just refreshes the page instead of redirecting to dashboard.
-
-**Location:** `components/settings/account-profile-form.tsx`
-
-**Fix Applied:**
-- Added check for `onboarding=1` query parameter
-- If onboarding, redirect to `/dashboard` after successful save
-- Otherwise, just refresh the page
-
-**Status:** ✅ FIXED - Form now redirects to dashboard after onboarding
-
-### REMAINING ISSUE: Session Not Refreshing (CRITICAL)
-
-**The Real Problem:** Even with the redirect working, the session still contains old data. When the user is redirected to `/dashboard`, the middleware checks the session, sees old data, and redirects back to onboarding.
-
-**Why The Redirect Fails:**
-1. Form submits → Database updated ✅
-2. Form redirects to `/dashboard` ✅
-3. Browser navigates to `/dashboard` ✅
-4. Middleware intercepts request ❌
-5. Middleware checks session (still has old data) ❌
-6. Middleware redirects back to `/settings/account?onboarding=1` ❌
-7. Infinite loop ❌
-
-**Solution Required:** Force session refresh after profile update OR require logout/login to create new session.
-
----
-
-## Files Modified
-
-### 1. `proxy.ts` (Middleware)
-**Purpose:** Intercepts requests before they reach routes
-
-**Changes:**
 ```typescript
-// BEFORE - Required all 4 fields
-function isEdmsProfileIncomplete(user: Record<string, unknown>) {
-  const role = typeof user.role === "string" ? user.role : "user";
-  const organization = typeof user.organization === "string" ? user.organization : "";
-  const jobTitle = typeof user.jobTitle === "string" ? user.jobTitle : "";
-  const department = typeof user.department === "string" ? user.department : "";
+"use server";
 
-  return (
-    role === "user" ||
-    organization.trim().length === 0 ||
-    jobTitle.trim().length === 0 ||
-    department.trim().length === 0
-  );
-}
+import { eq, and, count } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { z } from "zod";
+import { db } from "@/db";
+import { user as userTable } from "@/db/schema";
+import { requireEdmsRole, type EdmsRole, EDMS_ROLE_ORDER } from "@/lib/edms/rbac";
+import { logEdmsActivity } from "@/lib/edms/notifications";
+import { logError } from "@/lib/shared";
+import { type ActionResult, actionError, actionSuccess, ErrorCode } from "@/types/errors";
 
-// AFTER - Only requires role + organization
-function isEdmsProfileIncomplete(user: Record<string, unknown>) {
-  const role = typeof user.role === "string" ? user.role : "user";
-  const organization = typeof user.organization === "string" ? user.organization : "";
+const userRoles = ["admin", "client", "pmc", "vendor", "subcontractor", "user"] as const;
 
-  return role === "user" || organization.trim().length === 0;
-}
-```
+const updateUserRoleSchema = z.object({
+  userId: z.string().min(1, "User ID is required"),
+  role: z.enum(userRoles),
+});
 
-### 2. `lib/edms/session.ts`
-**Purpose:** Server-side session validation
+const updateUserDetailsSchema = z.object({
+  userId: z.string().min(1, "User ID is required"),
+  organization: z.string().trim().max(255).optional(),
+  jobTitle: z.string().trim().max(255).optional(),
+  phone: z.string().trim().max(50).optional(),
+  department: z.string().trim().max(255).optional(),
+});
 
-**Changes:**
-```typescript
-// Updated validation function to match middleware
-function isEdmsProfileIncomplete(profile: {
-  role: string;
-  organization: string | null;
-  jobTitle: string | null;
-  department: string | null;
-}) {
-  return profile.role === "user" || profile.organization === null;
-}
-```
+const toggleUserStatusSchema = z.object({
+  userId: z.string().min(1, "User ID is required"),
+  isActive: z.boolean(),
+});
 
-### 3. `components/settings/account-profile-form.tsx`
-**Purpose:** Profile form submission
+export type UpdateUserRoleInput = z.infer<typeof updateUserRoleSchema>;
+export type UpdateUserDetailsInput = z.infer<typeof updateUserDetailsSchema>;
+export type ToggleUserStatusInput = z.infer<typeof toggleUserStatusSchema>;
 
-**Changes:**
-```typescript
-// Added imports
-import { useSearchParams } from "next/navigation";
-
-// Added onboarding check
-const searchParams = useSearchParams();
-const isOnboarding = searchParams.get("onboarding") === "1";
-
-// Updated submit handler
-const onSubmit = (values: ProfileValues) => {
-  startTransition(async () => {
-    const result = await updateUserProfile(values);
-
-    if (!result.success) {
-      toast({
-        title: "Profile update failed",
-        description: result.error.message,
-        variant: "destructive",
-      });
-      return;
+export async function updateUserRole(input: UpdateUserRoleInput): Promise<ActionResult<boolean>> {
+  try {
+    const validation = updateUserRoleSchema.safeParse(input);
+    if (!validation.success) {
+      const firstError = validation.error.issues[0]?.message ?? "Invalid input";
+      return actionError(ErrorCode.VALIDATION_ERROR, firstError);
     }
 
-    toast({
-      title: "Profile updated",
-      description: "Your EDMS profile has been refreshed.",
+    const access = await requireEdmsRole("admin");
+    const { userId, role } = validation.data;
+
+    // Prevent self-demotion
+    if (userId === access.id && role !== "admin") {
+      return actionError(ErrorCode.VALIDATION_ERROR, "Cannot demote yourself from admin role");
+    }
+
+    // Get current user data
+    const [currentUser] = await db
+      .select({ role: userTable.role, name: userTable.name })
+      .from(userTable)
+      .where(eq(userTable.id, userId))
+      .limit(1);
+
+    if (!currentUser) {
+      return actionError(ErrorCode.VALIDATION_ERROR, "User not found");
+    }
+
+    const oldRole = currentUser.role ?? "user";
+
+    // Prevent deleting last admin
+    if (oldRole === "admin" && role !== "admin") {
+      const [adminCount] = await db
+        .select({ count: count() })
+        .from(userTable)
+        .where(eq(userTable.role, "admin"));
+
+      if ((adminCount?.count ?? 0) <= 1) {
+        return actionError(ErrorCode.VALIDATION_ERROR, "Cannot demote the last admin user");
+      }
+    }
+
+    // Update role
+    await db
+      .update(userTable)
+      .set({
+        role,
+        updatedAt: new Date(),
+      })
+      .where(eq(userTable.id, userId));
+
+    // Log activity
+    await logEdmsActivity({
+      userId: access.id,
+      action: "user_role_updated",
+      entityType: "user",
+      entityId: userId,
+      entityName: currentUser.name ?? "Unknown User",
+      description: `Changed user role from ${oldRole} to ${role}`,
+      metadata: { oldRole, newRole: role },
     });
 
-    // NEW: Redirect to dashboard if onboarding
-    if (isOnboarding) {
-      router.push("/dashboard");
-    } else {
-      router.refresh();
-    }
-  });
-};
+    revalidatePath("/dashboard/admin/users");
+    revalidatePath(`/dashboard/admin/users/${userId}`);
 
-// Updated schema to require organization
-const profileSchema = z.object({
-  name: z.string().trim().min(2, "Name is required."),
-  role: z.enum(profileRoles),
-  organization: z.string().trim().min(1, "Organization is required."), // Added .min(1)
+    return actionSuccess(true);
+  } catch (error) {
+    logError(error as Error, { action: "updateUserRole", input });
+    return actionError(ErrorCode.UNKNOWN_ERROR, "Failed to update user role");
+  }
+}
+
+export async function updateUserDetails(input: UpdateUserDetailsInput): Promise<ActionResult<boolean>> {
+  try {
+    const validation = updateUserDetailsSchema.safeParse(input);
+    if (!validation.success) {
+      const firstError = validation.error.issues[0]?.message ?? "Invalid input";
+      return actionError(ErrorCode.VALIDATION_ERROR, firstError);
+    }
+
+    const access = await requireEdmsRole("admin");
+    const { userId, ...updates } = validation.data;
+
+    await db
+      .update(userTable)
+      .set({
+        organization: updates.organization || null,
+        jobTitle: updates.jobTitle || null,
+        phone: updates.phone || null,
+        department: updates.department || null,
+        updatedAt: new Date(),
+      })
+      .where(eq(userTable.id, userId));
+
+    await logEdmsActivity({
+      userId: access.id,
+      action: "user_details_updated",
+      entityType: "user",
+      entityId: userId,
+      description: "Updated user details",
+      metadata: updates,
+    });
+
+    revalidatePath("/dashboard/admin/users");
+    revalidatePath(`/dashboard/admin/users/${userId}`);
+
+    return actionSuccess(true);
+  } catch (error) {
+    logError(error as Error, { action: "updateUserDetails", input });
+    return actionError(ErrorCode.UNKNOWN_ERROR, "Failed to update user details");
+  }
+}
+
+export async function toggleUserStatus(input: ToggleUserStatusInput): Promise<ActionResult<boolean>> {
+  try {
+    const validation = toggleUserStatusSchema.safeParse(input);
+    if (!validation.success) {
+      const firstError = validation.error.issues[0]?.message ?? "Invalid input";
+      return actionError(ErrorCode.VALIDATION_ERROR, firstError);
+    }
+
+    const access = await requireEdmsRole("admin");
+    const { userId, isActive } = validation.data;
+
+    // Prevent self-deactivation
+    if (userId === access.id && !isActive) {
+      return actionError(ErrorCode.VALIDATION_ERROR, "Cannot deactivate your own account");
+    }
+
+    await db
+      .update(userTable)
+      .set({
+        isActive,
+        updatedAt: new Date(),
+      })
+      .where(eq(userTable.id, userId));
+
+    await logEdmsActivity({
+      userId: access.id,
+      action: isActive ? "user_activated" : "user_deactivated",
+      entityType: "user",
+      entityId: userId,
+      description: `User ${isActive ? "activated" : "deactivated"}`,
+    });
+
+    revalidatePath("/dashboard/admin/users");
+    revalidatePath(`/dashboard/admin/users/${userId}`);
+
+    return actionSuccess(true);
+  } catch (error) {
+    logError(error as Error, { action: "toggleUserStatus", input });
+    return actionError(ErrorCode.UNKNOWN_ERROR, "Failed to toggle user status");
+  }
+}
+
+export async function deleteUser(userId: string): Promise<ActionResult<boolean>> {
+  try {
+    const access = await requireEdmsRole("admin");
+
+    // Prevent self-deletion
+    if (userId === access.id) {
+      return actionError(ErrorCode.VALIDATION_ERROR, "Cannot delete your own account");
+    }
+
+    // Get user data
+    const [user] = await db
+      .select({ role: userTable.role, name: userTable.name })
+      .from(userTable)
+      .where(eq(userTable.id, userId))
+      .limit(1);
+
+    if (!user) {
+      return actionError(ErrorCode.VALIDATION_ERROR, "User not found");
+    }
+
+    // Prevent deleting last admin
+    if (user.role === "admin") {
+      const [adminCount] = await db
+        .select({ count: count() })
+        .from(userTable)
+        .where(eq(userTable.role, "admin"));
+
+      if ((adminCount?.count ?? 0) <= 1) {
+        return actionError(ErrorCode.VALIDATION_ERROR, "Cannot delete the last admin user");
+      }
+    }
+
+    // Delete user (cascade will handle related records)
+    await db.delete(userTable).where(eq(userTable.id, userId));
+
+    await logEdmsActivity({
+      userId: access.id,
+      action: "user_deleted",
+      entityType: "user",
+      entityId: userId,
+      entityName: user.name ?? "Unknown User",
+      description: `Deleted user account`,
+    });
+
+    revalidatePath("/dashboard/admin/users");
+
+    return actionSuccess(true);
+  } catch (error) {
+    logError(error as Error, { action: "deleteUser", userId });
+    return actionError(ErrorCode.UNKNOWN_ERROR, "Failed to delete user");
+  }
+}
+
+export async function getUserActivitySummary(userId: string) {
+  try {
+    const access = await requireEdmsRole("admin");
+
+    // Import schemas
+    const { documents } = await import("@/db/schema/documents");
+    const { documentWorkflows } = await import("@/db/schema/workflows");
+    const { documentComments } = await import("@/db/schema/documents");
+    const { projectMembers } = await import("@/db/schema/projects");
+
+    const [documentsCount, workflowsCount, commentsCount, projectsCount] = await Promise.all([
+      db.select({ count: count() }).from(documents).where(eq(documents.uploadedBy, userId)),
+      db.select({ count: count() }).from(documentWorkflows).where(eq(documentWorkflows.createdBy, userId)),
+      db.select({ count: count() }).from(documentComments).where(eq(documentComments.userId, userId)),
+      db.select({ count: count() }).from(projectMembers).where(eq(projectMembers.userId, userId)),
+    ]);
+
+    return actionSuccess({
+      documentsUploaded: documentsCount[0]?.count ?? 0,
+      workflowsCreated: workflowsCount[0]?.count ?? 0,
+      commentsMade: commentsCount[0]?.count ?? 0,
+      projectsMemberOf: projectsCount[0]?.count ?? 0,
+    });
+  } catch (error) {
+    logError(error as Error, { action: "getUserActivitySummary", userId });
+    return actionError(ErrorCode.UNKNOWN_ERROR, "Failed to fetch user activity");
+  }
+}
+```
+
+#### 1.2 Create Admin User Edit Component
+**File:** `components/edms/admin-user-edit-sheet.tsx` (NEW FILE)
+
+```typescript
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Trash2, UserCog } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState, useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { updateUserRole, updateUserDetails, toggleUserStatus, deleteUser } from "@/actions/admin-users";
+import { toast } from "@/hooks/use-toast";
+import { Button } from "../ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
+import { Input } from "../ui/input";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "../ui/sheet";
+import { Switch } from "../ui/switch";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+
+const userRoles = ["admin", "client", "pmc", "vendor", "subcontractor", "user"] as const;
+
+const userEditSchema = z.object({
+  role: z.enum(userRoles),
+  organization: z.string().trim(),
   jobTitle: z.string().trim(),
   phone: z.string().trim(),
   department: z.string().trim(),
+  isActive: z.boolean(),
 });
-```
 
----
+type UserEditValues = z.infer<typeof userEditSchema>;
 
-## Current User Data (Database)
-
-**Email:** ajju40959@gmail.com  
-**Name:** manfromexistence  
-**Role:** admin ✓  
-**Organization:** QUADRA ✓  
-**Job Title:** System Administrator  
-**Department:** IT  
-**Phone:** 454545  
-**Is Active:** true  
-
-**Validation Result:** Should pass (role is "admin", organization is "QUADRA")
-
----
-
-## Solution Steps
-
-### IMMEDIATE FIX (Required - Manual User Action)
-
-**The user MUST do one of the following to refresh their session:**
-
-#### Option 1: Logout and Login (RECOMMENDED)
-1. Click profile picture in top-right corner
-2. Click "Log out"
-3. Clear browser cache/cookies for localhost:3000 (optional but recommended)
-4. Log back in with GitHub/Google OAuth
-5. Session will be created fresh from current database values
-6. Dashboard should be accessible immediately
-
-#### Option 2: Clear Browser Data
-1. Open browser DevTools (F12)
-2. Go to Application tab
-3. Clear all site data for localhost:3000
-4. Refresh page
-5. Log in again
-
-#### Option 3: Use Incognito/Private Window
-1. Open new incognito/private browser window
-2. Navigate to localhost:3000
-3. Log in
-4. Fresh session will be created
-
-### PERMANENT FIX (Code Change Required)
-
-**The `updateUserProfile` action needs to refresh the Better Auth session after updating the database.**
-
-**File to modify:** `actions/users.ts`
-
-**Current code:**
-```typescript
-export async function updateUserProfile(values: ProfileValues) {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session?.user?.id) {
-    return { success: false, error: { message: "Not authenticated" } };
-  }
-
-  await db
-    .update(user)
-    .set({
-      name: values.name,
-      role: values.role,
-      organization: values.organization,
-      jobTitle: values.jobTitle,
-      phone: values.phone,
-      department: values.department,
-    })
-    .where(eq(user.id, session.user.id));
-
-  return { success: true };
+interface AdminUserEditSheetProps {
+  userId: string;
+  userName: string;
+  userEmail: string;
+  currentRole: string;
+  currentOrganization: string | null;
+  currentJobTitle: string | null;
+  currentPhone: string | null;
+  currentDepartment: string | null;
+  isActive: boolean;
 }
-```
 
-**Required fix:**
-```typescript
-export async function updateUserProfile(values: ProfileValues) {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session?.user?.id) {
-    return { success: false, error: { message: "Not authenticated" } };
-  }
+export function AdminUserEditSheet({
+  userId,
+  userName,
+  userEmail,
+  currentRole,
+  currentOrganization,
+  currentJobTitle,
+  currentPhone,
+  currentDepartment,
+  isActive,
+}: AdminUserEditSheetProps) {
+  const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  // Update database
-  await db
-    .update(user)
-    .set({
-      name: values.name,
-      role: values.role,
-      organization: values.organization,
-      jobTitle: values.jobTitle,
-      phone: values.phone,
-      department: values.department,
-    })
-    .where(eq(user.id, session.user.id));
+  const form = useForm<UserEditValues>({
+    resolver: zodResolver(userEditSchema),
+    defaultValues: {
+      role: (currentRole as typeof userRoles[number]) || "user",
+      organization: currentOrganization || "",
+      jobTitle: currentJobTitle || "",
+      phone: currentPhone || "",
+      department: currentDepartment || "",
+      isActive,
+    },
+  });
 
-  // CRITICAL: Refresh the session with updated data
-  // This ensures the middleware sees the new values immediately
-  try {
-    // Force Better Auth to refresh the session from database
-    await auth.api.updateUser({
-      headers: await headers(),
-      body: {
-        name: values.name,
-        // Better Auth will automatically refresh the session
-      },
+  useEffect(() => {
+    if (isOpen) {
+      form.reset({
+        role: (currentRole as typeof userRoles[number]) || "user",
+        organization: currentOrganization || "",
+        jobTitle: currentJobTitle || "",
+        phone: currentPhone || "",
+        department: currentDepartment || "",
+        isActive,
+      });
+    }
+  }, [form, isOpen, currentRole, currentOrganization, currentJobTitle, currentPhone, currentDepartment, isActive]);
+
+  const onSubmit = (values: UserEditValues) => {
+    startTransition(async () => {
+      // Update role if changed
+      if (values.role !== currentRole) {
+        const roleResult = await updateUserRole({ userId, role: values.role });
+        if (!roleResult.success) {
+          toast({
+            title: "Failed to update role",
+            description: roleResult.error.message,
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+
+      // Update details
+      const detailsResult = await updateUserDetails({
+        userId,
+        organization: values.organization,
+        jobTitle: values.jobTitle,
+        phone: values.phone,
+        department: values.department,
+      });
+
+      if (!detailsResult.success) {
+        toast({
+          title: "Failed to update details",
+          description: detailsResult.error.message,
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Update status if changed
+      if (values.isActive !== isActive) {
+        const statusResult = await toggleUserStatus({ userId, isActive: values.isActive });
+        if (!statusResult.success) {
+          toast({
+            title: "Failed to update status",
+            description: statusResult.error.message,
+            variant: "destructive",
+          });
+          return;
+        }
+      }
+
+      toast({
+        title: "User updated",
+        description: "User details have been updated successfully",
+      });
+
+      setIsOpen(false);
+      router.refresh();
     });
-  } catch (error) {
-    console.error("Failed to refresh session:", error);
-    // Continue anyway - user can logout/login to refresh
-  }
+  };
 
-  return { success: true };
-}
-```
+  const handleDelete = () => {
+    setIsDeleting(true);
+    startTransition(async () => {
+      const result = await deleteUser(userId);
 
-**Alternative approach using Better Auth's session update:**
-```typescript
-import { cookies } from "next/headers";
+      if (!result.success) {
+        toast({
+          title: "Failed to delete user",
+          description: result.error.message,
+          variant: "destructive",
+        });
+        setIsDeleting(false);
+        return;
+      }
 
-export async function updateUserProfile(values: ProfileValues) {
-  const session = await auth.api.getSession({ headers: await headers() });
-  if (!session?.user?.id) {
-    return { success: false, error: { message: "Not authenticated" } };
-  }
+      toast({
+        title: "User deleted",
+        description: "User account has been permanently deleted",
+      });
 
-  // Update database
-  await db
-    .update(user)
-    .set({
-      name: values.name,
-      role: values.role,
-      organization: values.organization,
-      jobTitle: values.jobTitle,
-      phone: values.phone,
-      department: values.department,
-    })
-    .where(eq(user.id, session.user.id));
-
-  // Force session refresh by invalidating current session
-  const cookieStore = await cookies();
-  const sessionToken = cookieStore.get("better-auth.session_token");
-  
-  if (sessionToken) {
-    // Delete and recreate session to force refresh
-    await auth.api.deleteSession({
-      headers: await headers(),
+      setIsOpen(false);
+      router.refresh();
     });
-    
-    // Better Auth will automatically create new session on next request
-  }
+  };
 
-  return { success: true };
+  return (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <Button size="sm" variant="outline">
+          <UserCog className="size-4" />
+          Edit
+        </Button>
+      </SheetTrigger>
+      <SheetContent className="w-full overflow-y-auto sm:max-w-lg">
+        <SheetHeader className="space-y-1">
+          <SheetTitle>Edit User</SheetTitle>
+          <SheetDescription>
+            {userName} ({userEmail})
+          </SheetDescription>
+        </SheetHeader>
+
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="mt-8 space-y-6">
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Role</FormLabel>
+                  <Select value={field.value} onValueChange={field.onChange}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select role" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value="user">User</SelectItem>
+                      <SelectItem value="subcontractor">Subcontractor</SelectItem>
+                      <SelectItem value="vendor">Vendor (Contractor)</SelectItem>
+                      <SelectItem value="pmc">PMC</SelectItem>
+                      <SelectItem value="client">Client</SelectItem>
+                      <SelectItem value="admin">Admin</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>User's access level in the system</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="organization"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Organization</FormLabel>
+                  <FormControl>
+                    <Input placeholder="ABC Construction" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="jobTitle"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Job Title</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Project Manager" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone</FormLabel>
+                  <FormControl>
+                    <Input placeholder="+1 234 567 8900" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="department"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Department</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Engineering" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
+              name="isActive"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel className="text-base">Active Status</FormLabel>
+                    <FormDescription>User can log in and access the system</FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch checked={field.value} onCheckedChange={field.onChange} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+
+            <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
+              <h3 className="mb-2 font-semibold text-destructive">Danger Zone</h3>
+              <p className="mb-4 text-sm text-muted-foreground">
+                Permanently delete this user account. This action cannot be undone.
+              </p>
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button type="button" variant="destructive" size="sm" disabled={isPending || isDeleting}>
+                    <Trash2 className="size-4" />
+                    Delete User
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This will permanently delete {userName}'s account and remove all associated data. This action
+                      cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleDelete} className="bg-destructive text-destructive-foreground">
+                      {isDeleting ? (
+                        <>
+                          <Loader2 className="size-4 animate-spin" />
+                          Deleting...
+                        </>
+                      ) : (
+                        "Delete User"
+                      )}
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 border-t pt-6">
+              <Button type="button" variant="ghost" onClick={() => setIsOpen(false)}>
+                Cancel
+              </Button>
+              <Button type="submit" disabled={isPending || isDeleting}>
+                {isPending ? (
+                  <>
+                    <Loader2 className="size-4 animate-spin" />
+                    Saving
+                  </>
+                ) : (
+                  <>
+                    <UserCog className="size-4" />
+                    Save Changes
+                  </>
+                )}
+              </Button>
+            </div>
+          </form>
+        </Form>
+      </SheetContent>
+    </Sheet>
+  );
 }
 ```
 
-### VERIFICATION STEPS
+#### 1.3 Update Admin Users Page
+**File:** `app/dashboard/admin/users/page.tsx` (MODIFY EXISTING)
 
-After implementing the fix:
+Add the edit button to each user row:
 
-1. **Test new user onboarding:**
-   - Create new account
-   - Should redirect to onboarding
-   - Fill required fields (role + organization)
-   - Click "Save profile"
-   - Should redirect to dashboard immediately
-   - Dashboard should load without errors
-
-2. **Test existing user profile update:**
-   - Login as existing user
-   - Go to `/settings/account`
-   - Update profile fields
-   - Click "Save profile"
-   - Should stay on settings page
-   - Navigate to `/dashboard` manually
-   - Should load without errors
-
-3. **Test session persistence:**
-   - Complete onboarding
-   - Close browser
-   - Reopen and navigate to site
-   - Should still be logged in
-   - Dashboard should be accessible
-
-### DEBUG STEPS
-
-If issue persists after fix:
-
-1. Navigate to `/debug-session` to inspect session data
-2. Check if `session.user.role` matches database
-3. Check if `session.user.organization` matches database
-4. Check browser console for errors
-5. Check server terminal for middleware logs
-6. Verify database has correct values using Drizzle Studio
-
----
-
-## Technical Details
-
-### Session Flow
-```
-1. User logs in via OAuth (GitHub/Google)
-   ↓
-2. Better Auth creates session with user data from database
-   ↓
-3. Session stored in browser (cookies/localStorage)
-   ↓
-4. Middleware checks session on every request
-   ↓
-5. If profile incomplete → redirect to /settings/account?onboarding=1
-   ↓
-6. If profile complete → allow access to /dashboard
-```
-
-### Validation Logic
 ```typescript
-// Profile is INCOMPLETE if:
-- role === "user" (default role)
-  OR
-- organization is null/empty
+import { AdminUserEditSheet } from "@/components/edms/admin-user-edit-sheet";
 
-// Profile is COMPLETE if:
-- role is one of: admin, client, pmc, vendor, subcontractor
-  AND
-- organization is not empty
-
-// Optional fields (not checked):
-- jobTitle
-- department
-- phone
+// In the user list rendering:
+<div className="flex items-center gap-2">
+  <AdminUserEditSheet
+    userId={user.id}
+    userName={user.name}
+    userEmail={user.email}
+    currentRole={user.role ?? "user"}
+    currentOrganization={user.organization}
+    currentJobTitle={user.jobTitle}
+    currentPhone={user.phone}
+    currentDepartment={user.department}
+    isActive={user.isActive ?? true}
+  />
+</div>
 ```
 
-### Why Session Doesn't Auto-Update
-Better Auth sessions are cached and don't automatically sync with database changes. When we updated the database directly via script, the session remained unchanged. Solutions:
-1. **Logout/Login** - Creates new session from current DB data
-2. **Session Refresh** - Force Better Auth to re-fetch from DB
-3. **Clear Cookies** - Removes cached session data
+---
+
+## 📋 CURRENT STATE ANALYSIS
+
+### ✅ What's Already Built (DO NOT REBUILD)
+
+1. **Database Schema** - Complete
+   - Users with roles (admin, client, pmc, vendor, subcontractor, user)
+   - Projects with members
+   - Documents with versions
+   - Workflows with multi-step approvals
+   - Comments and notifications
+   - Activity logging
+
+2. **Role-Based Access Control (RBAC)** - Complete
+   - Role hierarchy enforcement
+   - Permission checks
+   - Route protection
+
+3. **Document Management** - Complete
+   - Upload documents
+   - Version control
+   - Status tracking (draft → submitted → under_review → approved/rejected)
+   - PDF preview
+   - Image attachments (ImgBB integration)
+
+4. **Workflow System** - Complete
+   - Create review workflows
+   - Assign reviewers
+   - Approve/Reject/Comment
+   - Multi-step approvals
+   - Automatic status updates
+
+5. **Notification System** - Complete
+   - In-app notifications
+   - Email notifications (Resend)
+   - User preferences
+
+6. **UI Components** - Complete
+   - Shadcn UI components
+   - Responsive design
+   - Dark/light theme
+   - Professional styling
 
 ---
 
-## Testing Checklist
+## ❌ CRITICAL GAPS TO FIX
 
-- [ ] User can log in successfully
-- [ ] New users are redirected to onboarding
-- [ ] Onboarding form requires role (not "user") and organization
-- [ ] After saving onboarding form, user is redirected to /dashboard
-- [ ] Dashboard loads without "Failed to fetch RSC payload" error
-- [ ] Existing users with complete profiles can access dashboard directly
-- [ ] Middleware allows access when role + organization are valid
-- [ ] Session validation matches middleware validation
-- [ ] Logging out and back in refreshes session data
+### 1. ADMIN USER MANAGEMENT (HIGHEST PRIORITY)
 
----
+**Current State:**
+- Admin can VIEW users at `/dashboard/admin/users`
+- Admin CANNOT edit user roles or access levels
+- No UI to change user roles
+- No bulk user management
 
-## Environment Information
+**What You Must Build:**
 
-**Framework:** Next.js 16.2.1 (Turbopack)  
-**Runtime:** React 19.2.4  
-**Language:** TypeScript 5.x  
-**Database:** PostgreSQL (Neon) + Drizzle ORM 0.42.0  
-**Auth:** Better Auth 1.2.7 (Google/GitHub OAuth)  
-**Package Manager:** npm / bun  
-**Dev Server:** `npm run dev` or `bun run dev`  
+#### A. User Edit Dialog/Sheet
+**Location:** `components/edms/admin-user-edit-sheet.tsx`
 
----
+```typescript
+// Features Required:
+- Edit user role (dropdown: admin, client, pmc, vendor, subcontractor, user)
+- Edit organization
+- Edit job title
+- Edit phone
+- Edit department
+- Toggle user active/inactive status
+- Delete user (with confirmation)
+- View user's projects
+- View user's documents
+- View user's activity log
+```
 
-## Related Files
+#### B. Admin User Management Actions
+**Location:** `actions/admin-users.ts`
 
-### Core Files
-- `proxy.ts` - Middleware with route protection
-- `lib/edms/session.ts` - Session validation logic
-- `lib/auth.ts` - Better Auth configuration
-- `lib/auth-client.ts` - Client-side auth utilities
+```typescript
+// Required Functions:
+export async function updateUserRole(userId: string, role: EdmsRole): Promise<ActionResult<boolean>>
+export async function updateUserDetails(userId: string, data: UserUpdateInput): Promise<ActionResult<boolean>>
+export async function toggleUserStatus(userId: string, isActive: boolean): Promise<ActionResult<boolean>>
+export async function deleteUser(userId: string): Promise<ActionResult<boolean>>
+export async function bulkUpdateUserRoles(updates: Array<{userId: string, role: EdmsRole}>): Promise<ActionResult<boolean>>
+export async function getUserActivitySummary(userId: string): Promise<ActionResult<UserActivitySummary>>
+```
 
-### UI Components
-- `components/settings/account-profile-form.tsx` - Profile form
-- `components/user-profile-dropdown.tsx` - Logout functionality
-- `app/settings/account/page.tsx` - Account settings page
-- `app/dashboard/page.tsx` - Dashboard page
-- `app/dashboard/layout.tsx` - Dashboard layout with session check
+#### C. Enhanced Admin Users Page
+**Location:** `app/dashboard/admin/users/page.tsx`
 
-### Database
-- `db/schema.ts` - User table schema
-- `scripts/set-admin.ts` - Admin user setup script
-- `actions/users.ts` - User update actions
+```typescript
+// Add These Features:
+- Search/filter users by name, email, role, organization
+- Sort by any column
+- Bulk select users
+- Bulk actions (change role, activate/deactivate, delete)
+- Export users to CSV
+- User statistics (documents uploaded, workflows completed, etc.)
+- Last login timestamp
+- Click user row to open edit sheet
+```
 
-### Debug
-- `app/debug-session/page.tsx` - Session debug page (newly created)
+#### D. Admin User Detail Page
+**Location:** `app/dashboard/admin/users/[userId]/page.tsx` (NEW)
 
----
-
-## Known Issues
-
-1. **Session Cache (CRITICAL):** Session data doesn't auto-update when database changes. This is the root cause of the dashboard access issue.
-2. **Client-Side Navigation:** RSC payload fetch fails when middleware redirects, causing "Failed to fetch" errors
-3. **Onboarding Loop:** Without session refresh, users get stuck on settings page even after completing profile
-4. **Better Auth Limitation:** Better Auth doesn't provide built-in session refresh after database updates
-5. **Middleware Timing:** Middleware runs before the page loads, so it always sees cached session data
-
-## Why Previous Fixes Didn't Work
-
-### Fix Attempt 1: Updated Middleware Validation
-- **What we did:** Made middleware only require role + organization
-- **Why it didn't work:** Session still had old data, so validation still failed
-- **Status:** Necessary but not sufficient
-
-### Fix Attempt 2: Added Form Redirect
-- **What we did:** Made form redirect to `/dashboard` after save
-- **Why it didn't work:** Redirect worked, but middleware intercepted and redirected back to onboarding
-- **Status:** Necessary but not sufficient
-
-### Fix Attempt 3: Updated Database Directly
-- **What we did:** Ran script to set user as admin in database
-- **Why it didn't work:** Database was updated, but session wasn't refreshed
-- **Status:** Database is correct, but session is stale
-
-### The Missing Piece: Session Refresh
-**None of the previous fixes addressed the core issue:** The session needs to be refreshed after the database is updated. Without this, the middleware will always see old data and keep redirecting to onboarding.
+```typescript
+// Show:
+- User profile with edit button
+- User's projects (with role in each project)
+- User's uploaded documents
+- User's workflow activity
+- User's comments
+- User's notifications
+- Activity timeline
+- Login history
+```
 
 ---
 
-## Future Improvements
+### 2. ADVANCED ADMIN FEATURES
 
-1. **Auto Session Refresh (CRITICAL):** Implement session refresh after profile update in `actions/users.ts`
-2. **Better Error Messages:** Show specific validation errors to users (e.g., "Please select a role other than 'user'")
-3. **Progressive Onboarding:** Allow partial profile completion with warnings instead of hard blocks
-4. **Session Debug UI:** Add admin panel to view/refresh sessions for all users
-5. **Middleware Logging:** Add detailed logs for debugging redirects (with environment flag)
-6. **Session Refresh API:** Create dedicated endpoint to force session refresh
-7. **Client-Side Session Check:** Add client-side validation before navigation to provide better UX
-8. **Onboarding Progress Indicator:** Show users which fields are required vs optional
-9. **Better Auth Hooks:** Investigate Better Auth lifecycle hooks for automatic session updates
-10. **Session Expiry Handling:** Gracefully handle expired sessions with automatic refresh
+#### A. Role Management System
+**Location:** `app/dashboard/admin/roles/page.tsx` (NEW)
 
-## Recommended Next Steps for AI Agents
+```typescript
+// Features:
+- View all roles and their permissions
+- Create custom roles (future-proof)
+- Edit role permissions
+- Assign default permissions per role
+- Role hierarchy visualization
+```
 
-1. **FIRST:** Implement session refresh in `actions/users.ts` (see PERMANENT FIX section)
-2. **SECOND:** Test the fix with new user onboarding flow
-3. **THIRD:** Test the fix with existing user profile updates
-4. **FOURTH:** Add session refresh endpoint for manual refresh if needed
-5. **FIFTH:** Add better error messages and user feedback
-6. **SIXTH:** Document the session refresh pattern for future reference
-7. **SEVENTH:** Consider adding session refresh to other user update actions
+#### B. System Settings
+**Location:** `app/dashboard/admin/settings/page.tsx` (NEW)
 
-## For Human Developers
+```typescript
+// Settings to Add:
+- Default document statuses (customizable)
+- Default workflow templates
+- Email notification templates
+- File upload limits
+- Allowed file types
+- Document retention policies
+- Audit log retention
+- System-wide announcements
+```
 
-**If you're stuck on the onboarding page:**
-1. Open browser DevTools (F12)
-2. Go to Application → Storage → Clear site data
-3. Refresh page and log in again
-4. Your session will be fresh and dashboard will be accessible
+#### C. Analytics Dashboard
+**Location:** `app/dashboard/admin/analytics/page.tsx` (NEW)
 
-**If you're implementing a fix:**
-1. Read the PERMANENT FIX section carefully
-2. Understand that database updates don't automatically refresh sessions
-3. Always refresh the session after updating user data
-4. Test with both new users and existing users
-5. Verify session data using `/debug-session` page
+```typescript
+// Metrics to Show:
+- Documents uploaded per day/week/month (chart)
+- Workflows completed vs pending (chart)
+- Average review time per role
+- Most active users
+- Most active projects
+- Document approval rate
+- Rejection reasons (from comments)
+- User growth over time
+- Storage usage
+```
 
 ---
 
-## Commands Reference
+### 3. ENHANCED DOCUMENT FEATURES
 
+#### A. Document Templates
+**Location:** `app/dashboard/documents/templates/page.tsx` (NEW)
+
+```typescript
+// Features:
+- Create document templates with pre-filled metadata
+- Template categories (RFI, Submittal, Drawing, Specification, etc.)
+- Template variables (project name, date, etc.)
+- Quick create from template
+```
+
+#### B. Document Comparison
+**Location:** `components/edms/document-compare-dialog.tsx` (NEW)
+
+```typescript
+// Features:
+- Compare two versions of a document
+- Highlight changes (if PDF)
+- Side-by-side view
+- Download comparison report
+```
+
+#### C. Document Linking
+**Location:** Add to existing document detail page
+
+```typescript
+// Features:
+- Link related documents
+- Show document relationships (parent/child, supersedes, references)
+- Visual relationship graph
+```
+
+#### D. Advanced Search
+**Location:** `app/dashboard/search/page.tsx` (ENHANCE)
+
+```typescript
+// Add:
+- Full-text search in document content (if possible)
+- Search in comments
+- Search in workflow notes
+- Advanced filters (date range, file type, size, uploader, status)
+- Save search queries
+- Search history
+```
+
+---
+
+### 4. WORKFLOW ENHANCEMENTS
+
+#### A. Workflow Templates
+**Location:** `app/dashboard/workflows/templates/page.tsx` (NEW)
+
+```typescript
+// Features:
+- Create reusable workflow templates
+- Template with multiple steps
+- Default reviewers per role
+- Default due dates (e.g., 3 days for review, 5 days for approval)
+- Quick create workflow from template
+```
+
+#### B. Workflow Analytics
+**Location:** Add to workflows page
+
+```typescript
+// Show:
+- Average time per workflow step
+- Bottlenecks (which step takes longest)
+- Reviewer performance (average response time)
+- Workflow completion rate
+```
+
+#### C. Workflow Reminders
+**Location:** `lib/edms/workflow-reminders.ts` (NEW)
+
+```typescript
+// Features:
+- Automatic reminders for overdue workflow steps
+- Escalation (notify supervisor if no response in X days)
+- Daily digest of pending workflows
+```
+
+#### D. Parallel Workflows
+**Location:** Enhance existing workflow system
+
+```typescript
+// Features:
+- Allow multiple reviewers at the same step (all must approve)
+- Conditional workflows (if rejected, route to different person)
+- Optional steps (can be skipped)
+```
+
+---
+
+### 5. PROJECT ENHANCEMENTS
+
+#### A. Project Dashboard
+**Location:** `app/dashboard/projects/[projectId]/page.tsx` (ENHANCE)
+
+```typescript
+// Add:
+- Project timeline (Gantt chart or timeline view)
+- Project milestones
+- Document submission schedule
+- Workflow status overview
+- Project team directory with contact info
+- Project announcements
+- Project files (non-controlled documents)
+```
+
+#### B. Project Templates
+**Location:** `app/dashboard/projects/templates/page.tsx` (NEW)
+
+```typescript
+// Features:
+- Create project templates with default members
+- Template with default document categories
+- Template with default workflow templates
+- Quick create project from template
+```
+
+#### C. Project Reports
+**Location:** `app/dashboard/projects/[projectId]/reports/page.tsx` (NEW)
+
+```typescript
+// Reports:
+- Document register (all documents in project)
+- Workflow status report
+- Submittal log
+- RFI log
+- Transmittal log
+- Project activity report
+- Export to PDF/Excel
+```
+
+---
+
+### 6. TRANSMITTAL ENHANCEMENTS
+
+**Current State:** Basic transmittal system exists but minimal features
+
+#### A. Enhanced Transmittal Creation
+**Location:** Enhance existing transmittal components
+
+```typescript
+// Add:
+- Attach multiple documents
+- Add cover letter/notes
+- Select recipients (multiple)
+- Request acknowledgement
+- Set response due date
+- Add custom fields
+```
+
+#### B. Transmittal Tracking
+**Location:** `app/dashboard/transmittals/[transmittalId]/page.tsx` (NEW)
+
+```typescript
+// Show:
+- Transmittal details
+- Attached documents
+- Recipients and acknowledgement status
+- Response history
+- Download transmittal package (ZIP)
+- Print transmittal cover sheet
+```
+
+---
+
+### 7. COLLABORATION FEATURES
+
+#### A. Real-time Notifications
+**Location:** Enhance existing notification system
+
+```typescript
+// Add:
+- WebSocket for real-time updates
+- Toast notifications for new comments
+- Badge count on sidebar
+- Sound notifications (optional)
+```
+
+#### B. @Mentions in Comments
+**Location:** Enhance comment system
+
+```typescript
+// Features:
+- @mention users in comments
+- Notify mentioned users
+- Autocomplete user names
+```
+
+#### C. Document Discussion Threads
+**Location:** Add to document detail page
+
+```typescript
+// Features:
+- Threaded comments (reply to comments)
+- Mark comments as resolved
+- Filter comments (all, unresolved, mine)
+```
+
+---
+
+### 8. MOBILE RESPONSIVENESS
+
+**Current State:** Responsive but not optimized for mobile
+
+#### Tasks:
+- Test all pages on mobile devices
+- Add mobile-specific navigation (bottom nav bar)
+- Optimize tables for mobile (card view)
+- Add swipe gestures for actions
+- Mobile-friendly file upload
+- Mobile document viewer
+
+---
+
+### 9. SECURITY ENHANCEMENTS
+
+#### A. Audit Log Viewer
+**Location:** `app/dashboard/admin/audit-log/page.tsx` (NEW)
+
+```typescript
+// Features:
+- View all system activity
+- Filter by user, action, entity type, date range
+- Export audit log
+- Highlight security events (failed logins, permission changes)
+```
+
+#### B. Two-Factor Authentication
+**Location:** Integrate with Better Auth
+
+```typescript
+// Add:
+- Enable 2FA for users
+- QR code for authenticator apps
+- Backup codes
+- Force 2FA for admin users
+```
+
+#### C. Session Management
+**Location:** `app/settings/security/page.tsx` (NEW)
+
+```typescript
+// Features:
+- View active sessions
+- Revoke sessions
+- Session timeout settings
+- Login history
+```
+
+---
+
+### 10. UNIQUE & CLASSY FEATURES
+
+#### A. AI-Powered Features
+**Location:** Various
+
+```typescript
+// Ideas:
+- AI document summarization (using existing Google AI)
+- AI-suggested reviewers based on document type
+- AI-generated document descriptions
+- AI-powered search (semantic search)
+- AI comment sentiment analysis
+- AI workflow optimization suggestions
+```
+
+#### B. Document OCR
+**Location:** `lib/edms/ocr.ts` (NEW)
+
+```typescript
+// Features:
+- Extract text from scanned PDFs
+- Make documents searchable
+- Auto-fill metadata from document content
+```
+
+#### C. Digital Signatures
+**Location:** `components/edms/document-signature.tsx` (NEW)
+
+```typescript
+// Features:
+- Sign documents digitally
+- Signature verification
+- Signature audit trail
+- Multiple signers
+```
+
+#### D. Document Watermarking
+**Location:** `lib/edms/watermark.ts` (NEW)
+
+```typescript
+// Features:
+- Add watermarks to documents (DRAFT, APPROVED, CONFIDENTIAL)
+- Custom watermarks per project
+- Automatic watermarking based on status
+```
+
+#### E. QR Code Generation
+**Location:** Add to document detail page
+
+```typescript
+// Features:
+- Generate QR code for each document
+- QR code links to document detail page
+- Print QR code labels
+- Scan QR code to view document on mobile
+```
+
+#### F. Document Expiry & Retention
+**Location:** Add to document schema and management
+
+```typescript
+// Features:
+- Set document expiry dates
+- Automatic archival of expired documents
+- Retention policies per document type
+- Automatic deletion after retention period
+```
+
+#### G. Custom Branding
+**Location:** `app/dashboard/admin/branding/page.tsx` (NEW)
+
+```typescript
+// Features:
+- Upload company logo
+- Custom color scheme
+- Custom email templates
+- Custom document headers/footers
+- White-label option
+```
+
+---
+
+---
+
+## 📊 ADDITIONAL PRIORITY FEATURES
+
+### Task 2: User Activity Statistics
+**File:** `app/dashboard/admin/users/[userId]/page.tsx` (NEW FILE)
+
+Show detailed user activity and statistics.
+
+### Task 3: Bulk User Operations
+**File:** `app/dashboard/admin/users/page.tsx` (ENHANCE)
+
+Add checkboxes, bulk select, and bulk actions (change role, activate/deactivate).
+
+### Task 4: System Analytics Dashboard
+**File:** `app/dashboard/admin/analytics/page.tsx` (NEW FILE)
+
+Charts showing:
+- Documents uploaded over time
+- Workflows completed vs pending
+- User growth
+- Most active users/projects
+
+### Task 5: Advanced Search
+**File:** `app/dashboard/search/page.tsx` (ENHANCE)
+
+Full-text search across documents, comments, workflows with advanced filters.
+
+---
+
+## 🔧 TECHNICAL REQUIREMENTS
+
+### Code Quality Standards
+
+1. **TypeScript Strict Mode**
+   - No `any` types
+   - Proper type inference
+   - Use Zod for validation
+
+2. **Error Handling**
+   - Use `ActionResult<T>` pattern
+   - Proper error messages
+   - Log errors with context
+
+3. **Performance**
+   - Use React Server Components where possible
+   - Minimize client-side JavaScript
+   - Optimize database queries (use indexes)
+   - Implement pagination for large lists
+
+4. **Security**
+   - Always check user permissions
+   - Use `requireEdmsRole()` for protected actions
+   - Sanitize user inputs
+   - Prevent SQL injection (Drizzle handles this)
+   - Validate file uploads
+
+5. **UI/UX**
+   - Follow existing design patterns
+   - Use Shadcn UI components
+   - Maintain consistent spacing and typography
+   - Add loading states
+   - Add empty states
+   - Add error states
+   - Mobile-first responsive design
+
+6. **Testing**
+   - Write unit tests for critical functions
+   - Write integration tests for workflows
+   - Test with different user roles
+   - Test edge cases
+
+---
+
+## 📁 FILE STRUCTURE CONVENTIONS
+
+```
+app/
+├── dashboard/
+│   ├── admin/              # Admin-only pages
+│   │   ├── users/          # User management
+│   │   ├── roles/          # Role management
+│   │   ├── settings/       # System settings
+│   │   ├── analytics/      # Analytics dashboard
+│   │   └── audit-log/      # Audit log viewer
+│   ├── documents/          # Document management
+│   ├── workflows/          # Workflow management
+│   ├── projects/           # Project management
+│   └── transmittals/       # Transmittal management
+
+actions/
+├── admin-users.ts          # Admin user management actions
+├── documents.ts            # Document actions
+├── workflows.ts            # Workflow actions
+├── projects.ts             # Project actions
+└── transmittals.ts         # Transmittal actions
+
+components/
+├── edms/                   # EDMS-specific components
+│   ├── admin-user-edit-sheet.tsx
+│   ├── document-compare-dialog.tsx
+│   ├── workflow-template-sheet.tsx
+│   └── ...
+└── ui/                     # Shadcn UI components
+
+lib/
+├── edms/                   # EDMS business logic
+│   ├── rbac.ts             # Role-based access control
+│   ├── session.ts          # Session management
+│   ├── notifications.ts    # Notification logic
+│   ├── workflow-reminders.ts
+│   ├── ocr.ts
+│   └── watermark.ts
+└── shared.ts               # Shared utilities
+
+db/
+├── schema/                 # Database schemas
+│   ├── users.ts
+│   ├── documents.ts
+│   ├── workflows.ts
+│   ├── projects.ts
+│   └── ...
+└── index.ts
+```
+
+---
+
+## 🎨 DESIGN GUIDELINES
+
+### Color Scheme
+- Use existing Tailwind theme
+- Primary: Blue tones for actions
+- Success: Green for approvals
+- Warning: Amber for pending
+- Danger: Red for rejections
+- Neutral: Slate for text and borders
+
+### Typography
+- Headings: Font semibold
+- Body: Font normal
+- Labels: Font medium, uppercase, tracking-wide
+- Code: Font mono
+
+### Spacing
+- Use Tailwind spacing scale (4px increments)
+- Consistent padding: p-4, p-6, p-8
+- Consistent gaps: gap-4, gap-6, gap-8
+
+### Components
+- Use rounded-2xl or rounded-3xl for cards
+- Use border-border/70 for subtle borders
+- Use bg-card/95 for card backgrounds
+- Use shadow-sm for subtle shadows
+
+---
+
+## 🚀 IMPLEMENTATION PRIORITY
+
+### Phase 1: Critical (Do First)
+1. ✅ Admin user role editing
+2. ✅ Admin user management UI
+3. ✅ User detail page
+4. ✅ Bulk user operations
+
+### Phase 2: High Priority
+5. ✅ Workflow templates
+6. ✅ Document templates
+7. ✅ Advanced search
+8. ✅ Analytics dashboard
+
+### Phase 3: Medium Priority
+9. ✅ Project enhancements
+10. ✅ Transmittal enhancements
+11. ✅ Collaboration features
+12. ✅ Mobile optimization
+
+### Phase 4: Nice to Have
+13. ✅ AI-powered features
+14. ✅ Digital signatures
+15. ✅ Document watermarking
+16. ✅ Custom branding
+
+---
+
+## 🧪 TESTING CHECKLIST
+
+### Before Marking Complete:
+
+1. **Database**
+   - [ ] Run migrations successfully
+   - [ ] Verify all tables exist
+   - [ ] Test foreign key constraints
+
+2. **User Roles**
+   - [ ] Create test users for each role
+   - [ ] Verify role hierarchy works
+   - [ ] Test permission checks
+
+3. **Document Workflow**
+   - [ ] Upload document as Contractor
+   - [ ] Create workflow
+   - [ ] Review as Client
+   - [ ] Approve/Reject
+   - [ ] Verify status updates
+   - [ ] Check notifications sent
+
+4. **Admin Features**
+   - [ ] Edit user role
+   - [ ] Deactivate user
+   - [ ] View user activity
+   - [ ] Export user list
+
+5. **Edge Cases**
+   - [ ] Test with no data
+   - [ ] Test with large datasets
+   - [ ] Test concurrent workflows
+   - [ ] Test file upload limits
+   - [ ] Test invalid inputs
+
+---
+
+## 📝 DOCUMENTATION REQUIREMENTS
+
+### For Each New Feature:
+
+1. **Code Comments**
+   - Explain complex logic
+   - Document function parameters
+   - Add JSDoc comments for public APIs
+
+2. **README Updates**
+   - Add feature to feature list
+   - Update setup instructions if needed
+   - Add screenshots for UI features
+
+3. **API Documentation**
+   - Document new actions
+   - Document request/response types
+   - Add usage examples
+
+---
+
+## 🚀 IMPLEMENTATION PRIORITY
+
+### Phase 1: Critical (DO THESE FIRST) ⚠️
+1. ✅ **Admin user role editing** - `actions/admin-users.ts`
+2. ✅ **Admin user edit UI** - `components/edms/admin-user-edit-sheet.tsx`
+3. ✅ **Update admin users page** - Add edit buttons
+4. ✅ **User activity statistics** - Show documents, workflows, comments count
+5. ✅ **Bulk user operations** - Select multiple users, bulk actions
+6. ✅ **System analytics** - Charts and metrics dashboard
+
+### Phase 2: High Priority
+7. ✅ Workflow templates
+8. ✅ Document templates
+9. ✅ Advanced search with filters
+10. ✅ User detail page with activity timeline
+
+### Phase 3: Medium Priority
+11. ✅ Project enhancements (timeline, milestones)
+12. ✅ Transmittal enhancements
+13. ✅ Real-time notifications (WebSocket)
+14. ✅ Mobile optimization
+
+### Phase 4: Nice to Have
+15. ✅ AI-powered features (document summarization, smart suggestions)
+16. ✅ Digital signatures
+17. ✅ Document watermarking
+18. ✅ Custom branding
+
+---
+
+## 🧪 TESTING CHECKLIST
+
+### Before Marking Complete:
+
+1. **Database**
+   - [ ] Run `npm run db:push` successfully
+   - [ ] Verify all tables exist
+   - [ ] Test foreign key constraints
+
+2. **Admin User Management**
+   - [ ] Admin can edit user roles
+   - [ ] Admin can edit user details
+   - [ ] Admin can activate/deactivate users
+   - [ ] Admin can delete users
+   - [ ] Cannot delete last admin
+   - [ ] Cannot self-demote
+   - [ ] Cannot self-deactivate
+   - [ ] All actions are logged
+   - [ ] UI is responsive
+
+3. **User Roles**
+   - [ ] Create test users for each role
+   - [ ] Verify role hierarchy works
+   - [ ] Test permission checks
+
+4. **Document Workflow**
+   - [ ] Upload document as Contractor (vendor)
+   - [ ] Create workflow
+   - [ ] Review as Client
+   - [ ] Approve/Reject
+   - [ ] Verify status updates
+   - [ ] Check notifications sent
+
+5. **Edge Cases**
+   - [ ] Test with no data
+   - [ ] Test with large datasets
+   - [ ] Test concurrent workflows
+   - [ ] Test file upload limits
+   - [ ] Test invalid inputs
+
+---
+
+## 📝 COMMANDS TO RUN
+
+### Development
 ```bash
-# Start dev server
+# Start development server
 npm run dev
 # or
-bun run dev
+bun dev
 
-# Type check
-npx tsc --noEmit
+# Open database studio
+npm run db:studio
 
-# Run admin script
-npx tsx scripts/set-admin.ts
+# Run linter
+npm run lint
 
-# Clear Next.js cache
-rm -rf .next
+# Format code
+npm run format
+```
 
-# Database operations
-npm run db:generate  # Generate migrations
-npm run db:migrate   # Run migrations
-npm run db:studio    # Open Drizzle Studio
+### Database
+```bash
+# Push schema changes to database
+npm run db:push
+
+# Generate migrations
+npm run db:generate
+
+# Run migrations
+npm run db:migrate
+```
+
+### Build
+```bash
+# Build for production
+npm run build
+
+# Start production server
+npm start
 ```
 
 ---
 
-## Contact & Support
+## 🎯 SUCCESS CRITERIA
 
-If this issue persists after following all steps:
-1. Check browser console for detailed errors
-2. Check server terminal for backend errors
-3. Navigate to `/debug-session` to inspect session data
-4. Verify database has correct user data
-5. Try different browser or incognito mode
-6. Clear all site data and cookies
+The EDMS is complete when:
 
----
-
-**Last Updated:** April 1, 2026  
-**Status:** Identified - Session refresh implementation required  
-**Priority:** CRITICAL - Blocks dashboard access for all users  
-**Assigned To:** AI Agent / Developer  
-
----
-
-## For AI Agents: What To Do
-
-### Step 1: Read This Entire File
-Understand the problem, root cause, and solution before making changes.
-
-### Step 2: Implement Session Refresh
-Modify `actions/users.ts` to refresh the Better Auth session after updating the database. See the PERMANENT FIX section for code examples.
-
-### Step 3: Test Thoroughly
-- Test new user onboarding flow
-- Test existing user profile updates
-- Verify session persists across browser restarts
-- Check `/debug-session` to confirm session data matches database
-
-### Step 4: Update Documentation
-- Update CHANGELOG.md with the fix
-- Update TODO.md to mark session refresh as complete
-- Add comments in code explaining why session refresh is needed
-
-### Step 5: Verify With User
-- Ask user to test the fix
-- Confirm dashboard is accessible after onboarding
-- Confirm no more infinite redirect loops
-
-### Important Notes for AI Agents:
-- **DO NOT** just update the middleware or form - that won't fix the session cache issue
-- **DO NOT** assume the database is wrong - it has correct values
-- **DO** focus on refreshing the session after profile updates
-- **DO** test with actual user flow, not just type checking
-- **DO** read Better Auth documentation for session management APIs
+1. ✅ Admin can fully manage users (edit roles, deactivate, delete)
+2. ✅ Admin can view user activity statistics
+3. ✅ Admin can perform bulk operations on users
+4. ✅ Analytics dashboard shows meaningful data
+5. ✅ All workflows are tested and working
+6. ✅ All pages are mobile-responsive
+7. ✅ Search works across all entities
+8. ✅ Notifications work reliably
+9. ✅ No console errors
+10. ✅ No TypeScript errors
+11. ✅ All features documented
+12. ✅ Client is happy and impressed
 
 ---
 
-## For Human Developers: What To Do
+## 💡 UNIQUE SELLING POINTS
 
-### If You're Stuck on Onboarding:
-1. Logout (click profile picture → "Log out")
-2. Clear browser cache/cookies for localhost:3000
-3. Login again
-4. Dashboard should now be accessible
+Make this EDMS stand out by:
 
-### If You're Implementing the Fix:
-1. Read the PERMANENT FIX section
-2. Understand that database updates ≠ session updates
-3. Implement session refresh in `actions/users.ts`
-4. Test with both new and existing users
-5. Verify using `/debug-session` page
+1. **AI Integration** - Smart suggestions, auto-categorization
+2. **Beautiful UI** - Classy, modern, professional design
+3. **Real-time Collaboration** - Live updates, instant notifications
+4. **Mobile-First** - Works perfectly on phones and tablets
+5. **Customizable** - Branding, workflows, templates
+6. **Secure** - Audit logs, 2FA, role-based access
+7. **Fast** - Optimized performance, instant search
+8. **Intuitive** - Easy to use, minimal training needed
+9. **Comprehensive** - All construction document needs in one place
+10. **Scalable** - Works for small teams and large enterprises
 
 ---
 
-**Last Updated:** April 1, 2026  
-**Status:** Fixed - Awaiting session refresh via logout/login  
-**Priority:** High - Blocks dashboard access for all users
+## 🔥 FINAL NOTES FOR CODEX-CLI
+
+- **Start with Phase 1** - Admin user management is the highest priority
+- **Don't break existing features** - Test thoroughly before committing
+- **Follow existing patterns** - Look at how similar features are implemented
+- **Use TypeScript strictly** - No `any` types, proper type inference
+- **Use Zod for validation** - All user inputs must be validated
+- **Use ActionResult pattern** - All server actions return `ActionResult<T>`
+- **Log all admin actions** - Use `logEdmsActivity()` for audit trail
+- **Revalidate paths** - Use `revalidatePath()` after data changes
+- **Show loading states** - Use `useTransition()` for pending states
+- **Show success/error toasts** - Use `toast()` for user feedback
+- **Test with different roles** - Verify permissions work correctly
+- **Mobile responsive** - Test on mobile devices
+- **Ask for clarification** - If requirements are unclear, ask
+
+---
+
+## 📞 CLIENT EXPECTATIONS
+
+The client wants:
+- A **unique** EDMS that stands out from competitors
+- A **classy** design that looks professional
+- **Complete** features with no half-baked implementations
+- **Admin powers** to manage users and system settings (HIGHEST PRIORITY)
+- **Reliable** workflows that construction teams can depend on
+- **Mobile access** for field workers
+- **Fast** performance with no lag
+- **Secure** system with proper access controls
+
+**Budget:** Client is willing to pay extra for quality work  
+**Timeline:** Complete Phase 1 (Admin features) ASAP, then proceed with other phases
+
+---
+
+## 🎬 GET STARTED
+
+1. Read this entire document carefully
+2. Review existing codebase structure
+3. Start with Task 1 (Admin user management)
+4. Create `actions/admin-users.ts`
+5. Create `components/edms/admin-user-edit-sheet.tsx`
+6. Update `app/dashboard/admin/users/page.tsx`
+7. Test each feature thoroughly
+8. Move to next task
+9. Communicate progress regularly
+
+**Let's build the best construction EDMS ever! 🚀**
+
+---
+
+## 📚 REFERENCE FILES
+
+All analysis and documentation files are in the `hexed/` folder:
+- `hexed/BRUTAL_CHECK_RESULTS.md` - Complete feature analysis
+- `hexed/ADMIN_POWERS_ANALYSIS.md` - Detailed admin requirements
+- `hexed/DATABASE.md` - Database schema documentation
+- `hexed/REVOLUTION.md` - Project vision and goals
+- `hexed/Dx.md` - Developer experience notes
